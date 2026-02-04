@@ -1,0 +1,489 @@
+{
+  "demo": {
+    "lang": "English",
+    "description": "The starting point for your next project is based on MUI. Easy customization helps you build apps faster and better."
+  },
+  "nav": {
+    "viewProfile": "View Profile",
+    "viewDashboard": "View Dashboard",
+    "welcome": "Welcome!",
+    "businessSystem": "Business System",
+    "user": "User",
+    "noEmail": "No email"
+  },
+  "accountMenu": {
+    "dashboard": "Dashboard",
+    "profile": "My Profile",
+    "biometricActivation": "Biometric Activation"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to your account",
+      "subtitle": "Don't have an account?",
+      "getStarted": "Get started",
+      "email": "Email address",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "signInLoader": "Loading...",
+      "faceIdSignIn": "Face Sign-In",
+      "faceIdReset": "Reset Biometric User",
+      "submit": "Sign in"
+    },
+    "logout": {
+      "title": "Log out",
+      "unable": "Unable to log out!"
+    },
+    "greeting": "Hi, Welcome back!",
+    "slogan": "Make quick decisions, clear results",
+    "signInTitle": "Sign in to your account",
+    "dontHaveAccount": "Don't have an account?",
+    "getStarted": "Get started",
+    "emailAddress": "Email address",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "signIn": "Sign in",
+    "signingIn": "Sign in...",
+    "recaptchaRequired": "Please complete the reCAPTCHA verification",
+    "recaptchaExpired": "reCAPTCHA expired. Please try again.",
+    "recaptchaError": "reCAPTCHA error. Please try again.",
+    "biometricDivider": "START",
+    "securityBadge": "Protected connection with 256-bit SSL encryption"
+  },
+  "authSection": {
+    "features": {
+      "security": {
+        "title": "Advanced Security",
+        "description": "Data protection with state-of-the-art encryption"
+      },
+      "analytics": {
+        "title": "Real-time Analytics",
+        "description": "Monitor your business with interactive dashboards"
+      },
+      "teamManagement": {
+        "title": "Team Management",
+        "description": "Collaborate efficiently with your work team"
+      }
+    },
+    "trustedPlatform": "Trusted enterprise platform"
+  },
+  "dashboard": {
+    "welcome": "Welcome!",
+    "welcomeDescription": "A smart dashboard to make decisions that drive your results",
+    "goNow": "Go now"
+  },
+  "filters": {
+    "search": "Search...",
+    "resultsFound": "Results found",
+    "clear": "Clear",
+    "noResults": "No results found"
+  },
+  "table": {
+    "dense": "Dense"
+  },
+  "breadcrumbs": {
+    "dashboard": "Dashboard"
+  },
+  "actions": {
+    "create": "Create",
+    "update": "Update",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving...",
+    "edit": "Edit",
+    "close": "Close"
+  },
+  "tableSettings": {
+    "compactDensity": "Compact Density",
+    "standardDensity": "Standard Density",
+    "comfortableDensity": "Comfortable Density",
+    "showColumnsBorders": "Show Columns Borders",
+    "showCellsBorders": "Show Cells Borders"
+  },
+  "register": {
+    "title": "User Registration",
+    "subtitle": "Complete the verification process to create your account",
+    "successTitle": "Registration Successful!",
+    "successMessage": "Your account has been created successfully. You will be redirected to login shortly...",
+    "successAlertTitle": "What's next?",
+    "successAlertMessage": "Sign in with your credentials to access the platform",
+    "alreadyHaveAccount": "Already have an account?",
+    "signInHere": "Sign in here",
+    "documentCapture": {
+      "title": "Document Capture",
+      "front": "Front",
+      "back": "Back",
+      "complete": "Complete Document",
+      "detected": "DETECTED",
+      "searching": "SEARCHING",
+      "ready": "READY!",
+      "almost": "ALMOST...",
+      "continue": "CONTINUE",
+      "documentDetected": "Document detected! Capturing...",
+      "placeDocument": "Place your document inside the frame",
+      "keepPosition": "Please keep the position",
+      "useButton": "Use the \"Capture Now\" button when ready",
+      "processing": "Processing document...",
+      "startCamera": "Start Camera",
+      "startingCamera": "Starting camera...",
+      "captureNow": "Capture Now",
+      "cancel": "Cancel",
+      "goBack": "Go Back",
+      "confirmPhoto": "Confirm Photo",
+      "retakePhoto": "Take Another Photo",
+      "tryAgain": "Try Again",
+      "pressStartCamera": "Press \"Start Camera\" to begin",
+      "documentIdLabel": "Document Number",
+      "documentIdPlaceholder": "Enter your identity document number",
+      "documentIdHelper": "You must enter your document before capturing the photo",
+      "documentIdRequired": "Please enter your document number before validating.",
+      "validate": "Validate",
+      "capturingIn": "Capturing in",
+      "preparing": "Preparing...",
+      "validationError": "Error validating the document. Please try again.",
+      "instructions": {
+        "title": "Step-by-step instructions:",
+        "step1": "Place the document inside the guide lines.",
+        "step1Bold": "inside the guide lines",
+        "step2": "Make sure it is well lit (no reflections or shadows).",
+        "step2Bold": "well lit",
+        "step3": "Prevent your hand from covering any part of the document.",
+        "step3Bold": "covering any part",
+        "step4": "Keep the document centered and fully visible.",
+        "step4Bold": "centered and fully visible",
+        "step5": "The image must be focused and legible.",
+        "step5Bold": "focused and legible"
+      },
+      "successMessage": "Document validated successfully",
+      "creatingLivenessSession": "Creating biometric validation session...",
+      "sessionCreated": "Session created successfully",
+      "sessionError": "Error creating validation session",
+      "validatingLiveness": "Validating liveness proof...",
+      "livenessSuccess": "✓ Liveness proof successful",
+      "livenessFailure": "× Liveness proof failed. Please try again.",
+      "manualUpload": {
+        "switchToCamera": "Capture with Camera",
+        "switchToManual": "Upload Document",
+        "cameraDescription": "📸 Capture the front and back of your document with the camera",
+        "manualDescription": "📄 Upload an image with both sides of your document (front and back)",
+        "dropZoneTitle": "Drag and drop your document",
+        "dropZoneTitleActive": "Drop your document here!",
+        "dropZoneSubtitle": "or click to select from your device",
+        "dropZoneFormat": "Format: JPG, PNG • Maximum: 10MB",
+        "invalidFileType": "Please select a valid image file",
+        "fileTooLarge": "File is too large. Maximum 10MB",
+        "uploadSuccess": "Document uploaded successfully",
+        "uploadError": "Error uploading document",
+        "processing": "Processing document..."
+      }
+    },
+    "livenessDetection": {
+      "title": "Facial Identity Verification",
+      "subtitle": "Follow the on-screen instructions to complete your identity verification",
+      "faceDetected": "READY! Starting capture...",
+      "perfect": "Perfect! Keep it like that...",
+      "center": "ALMOST... Center your face",
+      "place": "Place your face inside the oval",
+      "captureNow": "Capture Now",
+      "cancel": "Cancel",
+      "processing": "Processing...",
+      "confirmPhoto": "Confirm Photo",
+      "retakePhoto": "Take Another Photo",
+      "tryAgain": "Try Again",
+      "capturedFace": "Captured face",
+      "positionFace": "Position your face in the oval",
+      "holdStill": "DON'T MOVE! Hold still...",
+      "perfectHoldPosition": "Perfect! Hold that position...",
+      "movementDetected": "Movement detected. Please hold still.",
+      "uploadingFace": "Uploading facial photo...",
+      "uploadSuccess": "Facial photo uploaded successfully",
+      "creatingSession": "Creating verification session...",
+      "sessionCreated": "Session created successfully",
+      "validatingLiveness": "Validating liveness...",
+      "livenessSuccess": "Verification successful! You are a real person.",
+      "livenessFailure": "Could not verify liveness. Please try again.",
+      "sessionError": "Error creating verification session",
+      "validationError": "Validation error. Please try again.",
+      "instructions": {
+        "step1": "Place your face inside the oval guide. The camera will start automatically.",
+        "step2": "Keep your face centered until the system detects it. The oval border will turn green.",
+        "step3": "When your face is detected AND you're still, a 5-second countdown will begin. DON'T MOVE.",
+        "step4": "The photo will be captured automatically. If needed, use the \"Capture Now\" button."
+      },
+      "privacyNote": "🔒 Your privacy is important. Images are processed securely and are not stored permanently."
+    },
+    "steps": {
+      "documentFront": {
+        "label": "Document (Front)",
+        "description": "Capture the front of your document"
+      },
+      "documentBack": {
+        "label": "Document (Back)",
+        "description": "Capture the back of your document"
+      },
+      "livenessCheck": {
+        "label": "Liveness Check",
+        "description": "Verify real person"
+      },
+      "facialCapture": {
+        "label": "Facial Capture",
+        "description": "Take your facial photo"
+      },
+      "personalData": {
+        "label": "Personal Data",
+        "description": "Complete your information"
+      }
+    }
+  },
+  "resetBiometric": {
+    "receiptIdDoc": {
+      "title": "Identity Verification",
+      "description": "To continue with the process, please enter your identity document number",
+      "documentIdLabel": "Document Number",
+      "documentIdPlaceholder": "Enter your document number",
+      "documentIdHelper": "The document must be between {{min}} and {{max}} numeric characters",
+      "errorMinLength": "The document must have at least 7 characters",
+      "errorMaxLength": "The document cannot have more than 15 characters",
+      "validDocument": "✓ Valid document. Redirecting...",
+      "infoText": "Enter only numbers. This document will be used to verify your identity.",
+      "back": "Back",
+      "continue": "Continue",
+      "footerText": "Need help? Contact technical support."
+    },
+    "liveness": {
+      "title": "Live Face Verification",
+      "subtitle": "Please follow the instructions to complete your face verification",
+      "faceDetection": "Face Detection",
+      "awsRekognition": "Verification via AWS Rekognition",
+      "startButton": "Start Face Verification",
+      "preparing": "Preparing...",
+      "validating": "Validating session...",
+      "processingImage": "Processing session image...",
+      "uploadingImage": "Uploading image to server...",
+      "redirecting": "Redirecting...",
+      "completed": "Verification completed successfully",
+      "noIdentityId": "No identityId found",
+      "sessionNotSucceeded": "Session was not successful",
+      "noBytesFound": "No image bytes found in session",
+      "uploadError": "Error uploading image",
+      "processingError": "Error processing image",
+      "verificationError": "Verification error",
+      "startError": "Error starting Liveness Check",
+      "instruction1": "Click \"Start Face Verification\"",
+      "instruction2": "Allow camera access when requested",
+      "instruction3": "Complete the facial gestures as instructed (head movements, blinks, etc.)",
+      "instruction4": "Wait for the verification to complete automatically"
+    }
+  },
+  "facialCapture": {
+    "validatingLiveness": "Verifying live person...",
+    "validatingLivenessSubtitle": "This may take a few seconds",
+    "livenessValidated": "✓ Person verified as live",
+    "notLiveDetected": "Live person not detected",
+    "livenessValidationError": "Error validating live person",
+    "noCapturedImage": "No captured image",
+    "uploadingImage": "Uploading facial image...",
+    "uploadSuccess": "✓ Facial image uploaded successfully",
+    "uploadError": "Error uploading facial image",
+    "verifyingBiometric": "Verifying biometric identity...",
+    "biometricVerified": "✓ Identity verified successfully (Confidence: {{confidence}}%)",
+    "biometricNotMatch": "Biometric identity does not match. Confidence: {{confidence}}% (Required threshold: {{threshold}}%). Please try again with better lighting and ensure your face is clearly visible.",
+    "noBiometricValidationId": "No biometricValidationId received from server",
+    "noVerificationData": "No verification data received from server",
+    "biometricVerificationError": "Error verifying biometric identity",
+    "activatingBiometric": "Activating user biometrics...",
+    "biometricActivated": "✓ Biometrics activated successfully",
+    "biometricActivationError": "Error activating user biometrics"
+  },
+  "livenessCheck": {
+    "title": "Live Face Verification",
+    "subtitle": "Complete the facial gestures to verify your identity",
+    "loading": {
+      "preparing": "Preparing facial verification..."
+    },
+    "sessionInfo": {
+      "id": "Session ID",
+      "length": "length",
+      "created": "Created",
+      "expires": "Expires in ~10 minutes"
+    },
+    "actions": {
+      "recreateSession": "Recreate Session",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "noIdentifier": "No identityId, biometricValidationId or documentId provided",
+      "unexpectedResponse": "Unexpected response from server",
+      "sessionCreation": "Error creating session",
+      "checkConsole": "(Check console for more details)",
+      "recreateSession": "Could not recreate session",
+      "recreateSessionFailed": "Error recreating session. Please try again.",
+      "noReturnUrl": "No return URL provided",
+      "sessionExpiredRecreating": "Session expired. Creating new session automatically...",
+      "unknown": "Unknown error in facial verification",
+      "awsError": "AWS Rekognition Error",
+      "cancelled": "Verification cancelled"
+    }
+  },
+  "personalInfo": {
+    "title": "Personal Information",
+    "subtitle": "Complete your details to finish the reset",
+    "validation": {
+      "phoneMin": "Phone must be at least 10 characters (including country code)",
+      "phoneMax": "Phone cannot be more than 20 characters",
+      "phonesNotMatch": "Phone numbers do not match",
+      "passwordMin": "Password must be at least 8 characters",
+      "passwordUppercase": "Must contain at least one uppercase letter",
+      "passwordLowercase": "Must contain at least one lowercase letter",
+      "passwordNumber": "Must contain at least one number",
+      "passwordSpecial": "Must contain at least one special character",
+      "passwordsNotMatch": "Passwords do not match",
+      "confirmPasswordRequired": "Please confirm your password"
+    },
+    "fields": {
+      "phone": "Phone Number",
+      "confirmPhone": "Confirm Phone Number",
+      "password": "Password",
+      "confirmPassword": "Confirm Password"
+    },
+    "placeholders": {
+      "phone": "Enter your phone number",
+      "confirmPhone": "Confirm your phone number",
+      "password": "Enter your password",
+      "confirmPassword": "Confirm your password"
+    },
+    "helpers": {
+      "phone": "Minimum 7 digits, maximum 15 digits (numbers only)",
+      "phoneWithCode": "Select your country and enter your phone number",
+      "confirmPhone": "Must match the entered phone number",
+      "password": "Minimum 8 characters: uppercase, lowercase, numbers and symbols"
+    },
+    "buttons": {
+      "verify": "Verify",
+      "verified": "Verified",
+      "sending": "Sending...",
+      "verifying": "Verifying...",
+      "cancel": "Cancel",
+      "submit": "Complete Reset",
+      "saving": "Saving..."
+    },
+    "alerts": {
+      "verificationRequired": "You must verify your phone number before continuing"
+    },
+    "modal": {
+      "title": "Phone Verification",
+      "subtitle": "Enter the 6-digit code sent to {{phone}}",
+      "codeLabel": "Verification Code",
+      "codePlaceholder": "Enter the 6-digit code",
+      "verify": "Verify Code",
+      "resend": "Resend Code",
+      "expired": "The code has expired. Request a new one."
+    },
+    "success": {
+      "codeSent": "Verification code sent successfully",
+      "phoneVerified": "✓ Phone verified successfully",
+      "dataSaved": "✓ Data saved successfully. Reset completed."
+    },
+    "errors": {
+      "noDocumentId": "Document ID not found",
+      "invalidPhone": "Invalid phone number",
+      "phonesNotMatch": "Phone numbers do not match",
+      "invalidCode": "Invalid verification code",
+      "sendCode": "Error sending verification code",
+      "verifyCode": "Error verifying code. Please try again.",
+      "phoneNotVerified": "You must verify your phone before continuing",
+      "saveData": "Error saving data. Please try again."
+    }
+  },
+  "biometricLogin": {
+    "title": "Biometric Sign In",
+    "subtitle": "Verify your face to access your account",
+    "noDocumentId": "Identity Document Not Provided",
+    "noDocumentIdDescription": "No identity document number was provided. Please enter your document from the sign in page.",
+    "backToLogin": "Back to Sign In",
+    "preparingLivenessCheck": "Preparing Live Person Verification",
+    "redirectingToLiveness": "You will be redirected to liveness verification in a few moments...",
+    "noCapturedImage": "No captured image",
+    "authenticating": "Authenticating with biometric data...",
+    "authenticationSuccess": "Authentication successful!",
+    "authenticationError": "Error in biometric authentication",
+    "sessionSetupError": "Error setting up user session",
+    "noTokensReceived": "No authentication tokens received",
+    "captureNow": "Capture Now",
+    "cancel": "Cancel",
+    "tryAgain": "Try Again",
+    "confirmLogin": "Confirm Sign In",
+    "retakePhoto": "Retake Photo",
+    "processing": "Processing...",
+    "capturedFace": "Face Captured",
+    "faceDetected": "Face Detected",
+    "perfect": "Perfect",
+    "center": "Center your face",
+    "place": "Place your face in the oval",
+    "successTitle": "Sign In Successful!",
+    "successMessage": "Your identity has been successfully verified. You will be redirected to the dashboard shortly.",
+    "redirecting": "Redirecting to dashboard...",
+    "backToNormalLogin": "Prefer to sign in with password?",
+    "clickHere": "Click here",
+    "instructions": {
+      "step1": "Place your face inside the guide oval",
+      "step2": "Keep your face centered and well-lit",
+      "step3": "Capture will be done automatically"
+    },
+    "privacyNote": "Your facial image will be processed securely and will not be permanently stored",
+    "cameraAccess": {
+      "requesting": "Requesting camera access...",
+      "denied": "Camera access denied",
+      "notFound": "No camera found",
+      "error": "Error accessing camera"
+    },
+    "errors": {
+      "noCamera": "Could not access camera. Please check permissions.",
+      "captureError": "Error capturing facial image",
+      "uploadError": "Error sending image for authentication",
+      "invalidCredentials": "Invalid biometric credentials",
+      "userNotFound": "User not found with this identity document",
+      "serviceUnavailable": "The biometric authentication service is currently unavailable"
+    }
+  },
+  "diagrams": {
+    "actions": {
+      "zoomIn": "Zoom In",
+      "zoomOut": "Zoom Out",
+      "fitView": "Fit View",
+      "lock": "Lock Nodes",
+      "unlock": "Unlock Nodes",
+      "expandAll": "Expand All",
+      "collapseAll": "Collapse All",
+      "restart": "Restart",
+      "fitToScreen": "Fit to Screen"
+    }
+  },
+  "imageUploader": {
+    "placeholder": "Drag an image or click to select",
+    "dropHere": "Drop the image here",
+    "supportedFormats": "Supported formats",
+    "maxSize": "Maximum size",
+    "selectFile": "Select file",
+    "uploading": "Uploading",
+    "deleting": "Deleting...",
+    "imageAlt": "Uploaded image",
+    "dialog": {
+      "title": "Delete image?",
+      "message": "This action cannot be undone. The image will be permanently deleted.",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    },
+    "messages": {
+      "uploadSuccess": "Image uploaded successfully",
+      "deleteSuccess": "Image deleted successfully",
+      "deleteWarning": "The image was removed locally. Could not delete from server (it may be an external image)."
+    },
+    "errors": {
+      "invalidType": "File type not allowed. Please upload a valid image.",
+      "fileTooLarge": "File is too large. Maximum size: {{maxSize}}MB",
+      "uploadFailed": "Error uploading image. Please try again.",
+      "deleteFailed": "Error deleting image. Please try again."
+    }
+  }
+}

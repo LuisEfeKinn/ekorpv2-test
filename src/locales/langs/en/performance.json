@@ -1,0 +1,1307 @@
+{
+  "scales": {
+    "title": "Evaluation Scales",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "scales": "Scales",
+      "create": "New Scale",
+      "edit": "Edit"
+    },
+    "actions": {
+      "create": "Create Scale",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "update": "Update Scale",
+      "addLevel": "Add Level",
+      "deleteMultiple": "Delete Selected"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "type": "Type",
+        "maxValue": "Maximum Value",
+        "levels": "Levels",
+        "isDefault": "Default"
+      },
+      "toolbar": {
+        "search": "Search scales..."
+      },
+      "filters": {
+        "all": "All",
+        "status": "Status",
+        "keyword": "Keyword",
+        "type": "Type"
+      },
+      "empty": {
+        "title": "No scales found",
+        "description": "There are no scales created or they don't match the applied filters."
+      }
+    },
+    "form": {
+      "sections": {
+        "details": "Scale Details",
+        "levels": "Evaluation Levels",
+        "loading": "Loading..."
+      },
+      "fields": {
+        "name": {
+          "label": "Scale Name",
+          "helperText": "Enter a descriptive name for the scale",
+          "required": "Name is required"
+        },
+        "description": {
+          "label": "Description",
+          "helperText": "Describe the purpose and use of this scale",
+          "required": "Description is required"
+        },
+        "type": {
+          "label": "Scale Type",
+          "helperText": "Select the evaluation scale type",
+          "required": "Type is required",
+          "options": {
+            "LIKERT": "Likert",
+            "PERFORMANCE": "Performance",
+            "NINEBOX_PERFORMANCE": "9Box - Performance",
+            "NINEBOX_POTENTIAL": "9Box - Potential"
+          }
+        },
+        "maxValue": {
+          "label": "Maximum Value",
+          "helperText": "Define the maximum value of the scale",
+          "required": "Maximum value is required"
+        },
+        "levels": {
+          "noLevels": "No levels added. Click \"Add Level\" to start.",
+          "value": {
+            "label": "Value",
+            "helperText": "Numeric value of the level",
+            "required": "Value is required"
+          },
+          "label": {
+            "label": "Label",
+            "helperText": "Name of the level (e.g., Excellent, Good, etc.)",
+            "required": "Label is required"
+          },
+          "description": {
+            "label": "Description",
+            "helperText": "Describe what this level represents",
+            "required": "Description is required"
+          },
+          "actions": "Actions"
+        }
+      },
+      "validation": {
+        "minLevels": "Must add at least one level",
+        "minValue": "Value must be greater than 0"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete Scale",
+        "content": "Are you sure you want to delete this scale? This action cannot be undone.",
+        "contentMultiple": "Are you sure you want to delete {{count}} scales? This action cannot be undone."
+      },
+      "addLevel": {
+        "title": "Add Level",
+        "add": "Add",
+        "cancel": "Cancel"
+      },
+      "deleteLevel": {
+        "title": "Delete Level",
+        "content": "Are you sure you want to delete this level?"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Scale created successfully",
+        "updated": "Scale updated successfully",
+        "deleted": "Scale deleted successfully",
+        "deletedMultiple": "Scales deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading scales",
+        "loadError": "Error loading scale",
+        "saving": "Error saving scale",
+        "deleting": "Error deleting scale",
+        "deletingMultiple": "Error deleting scales"
+      }
+    }
+  },
+  "configure-evaluations": {
+    "title": "Configure Evaluations",
+    "types": {
+      "PERFORMANCE_90": "90° Evaluation",
+      "PERFORMANCE_180": "180° Evaluation",
+      "PERFORMANCE_270": "270° Evaluation",
+      "PERFORMANCE_360": "360° Evaluation",
+      "CLIMA_LABORAL": "Work Climate",
+      "OBJECTIVES": "Objectives"
+    },
+    "statuses": {
+      "DRAFT": "Draft",
+      "ACTIVE": "Active",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "relationships": {
+      "MANAGER": "Manager/Supervisor",
+      "PEER": "Peer",
+      "SUBORDINATE": "Subordinate",
+      "SELF": "Self-Assessment",
+      "OTHER": "Other"
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Configure Evaluations",
+      "participants": "Participants",
+      "create": "New Evaluation",
+      "edit": "Edit"
+    },
+    "actions": {
+      "create": "Create Evaluation",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "update": "Update Evaluation",
+      "deleteMultiple": "Delete Selected",
+      "viewParticipants": "View Participants",
+      "assingnParticipants": "Participant Assignment"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "type": "Type",
+        "period": "Period",
+        "status": "Status",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "totalCompetences": "Competencies",
+        "totalObjectives": "Objectives",
+        "totalDepartments": "Departments",
+        "totalPositions": "Positions",
+        "totalEmployees": "Employees"
+      },
+      "toolbar": {
+        "search": "Search evaluations...",
+        "filterByType": "Filter by type",
+        "filterByStatus": "Filter by status",
+        "filterByDepartment": "Filter by department",
+        "filterByPosition": "Filter by position",
+        "filterByEmployee": "Filter by employee"
+      },
+      "filters": {
+        "all": "All",
+        "status": "Status",
+        "type": "Type",
+        "keyword": "Keyword",
+        "department": "Department",
+        "position": "Position",
+        "employee": "Employee"
+      },
+      "empty": {
+        "title": "No evaluations found",
+        "description": "There are no evaluations created or they don't match the applied filters."
+      }
+    },
+    "form": {
+      "sections": {
+        "basicInfo": "Basic Information",
+        "basicInfoSubtitle": "General evaluation information",
+        "config": "Configuration",
+        "configSubtitle": "Additional configuration options",
+        "dates": "Evaluation Dates",
+        "datesSubtitle": "Define the evaluation period",
+        "competences": "Competencies",
+        "competencesSubtitle": "Select the competencies to evaluate",
+        "objectives": "Objectives",
+        "objectivesSubtitle": "Select the objectives to evaluate",
+        "scope": "Scope",
+        "scopeSubtitle": "Define who will participate in the evaluation",
+        "evaluators": "Evaluator Configuration",
+        "evaluatorsSubtitle": "Configure the designated evaluators",
+        "loading": "Loading..."
+      },
+      "fields": {
+        "name": {
+          "label": "Evaluation Name",
+          "helperText": "Enter a descriptive name for the evaluation",
+          "required": "Name is required"
+        },
+        "description": {
+          "label": "Description",
+          "helperText": "Describe the purpose of this evaluation",
+          "required": "Description is required"
+        },
+        "template": {
+          "label": "Template",
+          "helperText": "Select a template to pre-fill evaluation settings"
+        },
+        "type": {
+          "label": "Evaluation Type",
+          "helperText": "Select the evaluation type",
+          "required": "Type is required"
+        },
+        "period": {
+          "label": "Period",
+          "helperText": "Example: 2024-Q4",
+          "required": "Period is required"
+        },
+        "objectiveScale": {
+          "label": "Objective Scale",
+          "helperText": "Select the scale to evaluate objectives"
+        },
+        "autoAssign": {
+          "label": "Automatic Assignment",
+          "helperText": "Automatically assign evaluators"
+        },
+        "editableEvaluators": {
+          "label": "Editable Evaluators",
+          "helperText": "Allow editing evaluators after creation"
+        },
+        "startDate": {
+          "label": "Start Date",
+          "helperText": "Evaluation start date",
+          "required": "Start date is required"
+        },
+        "endDate": {
+          "label": "End Date",
+          "helperText": "Evaluation end date",
+          "required": "End date is required"
+        },
+        "competences": {
+          "label": "Competencies",
+          "helperText": "Select the competencies to evaluate",
+          "addButton": "Add Competency",
+          "emptyMessage": "No competencies added",
+          "weight": "Weight (%)",
+          "select": "Select competency",
+          "configureQuestions": "Questions"
+        },
+        "objectives": {
+          "label": "Objectives",
+          "helperText": "Select the objectives to evaluate",
+          "addButton": "Add Objective",
+          "emptyMessage": "No objectives added",
+          "weight": "Weight (%)",
+          "targetValue": "Target Value",
+          "customKpi": "Custom KPI",
+          "select": "Select objective"
+        },
+        "departments": {
+          "label": "Departments",
+          "helperText": "Select the departments to evaluate",
+          "placeholder": "Search departments..."
+        },
+        "positions": {
+          "label": "Positions",
+          "helperText": "Select the positions to evaluate",
+          "placeholder": "Search positions..."
+        },
+        "employees": {
+          "label": "Employees",
+          "helperText": "Select the employees to evaluate",
+          "placeholder": "Search employees..."
+        },
+        "evaluatorConfigs": {
+          "label": "Evaluator Configuration",
+          "helperText": "Configure the evaluator types",
+          "addButton": "Add Evaluator",
+          "emptyMessage": "No evaluators configured",
+          "relationship": "Relationship",
+          "weight": "Weight (%)",
+          "maxEvaluators": "Max Evaluators",
+          "enabled": "Enabled",
+          "select": "Select relationship"
+        }
+      },
+      "validation": {
+        "dateRange": "End date must be after start date",
+        "minWeight": "Weight must be greater than 0",
+        "maxWeight": "Weight cannot exceed 100",
+        "totalWeight": "Sum of weights must be 100",
+        "minEvaluators": "There must be at least 1 evaluator"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete Evaluation",
+        "content": "Are you sure you want to delete this evaluation? This action cannot be undone.",
+        "contentMultiple": "Are you sure you want to delete {{count}} evaluations? This action cannot be undone."
+      },
+      "addCompetence": {
+        "title": "Add Competency",
+        "add": "Add",
+        "cancel": "Cancel"
+      },
+      "addObjective": {
+        "title": "Add Objective",
+        "add": "Add",
+        "cancel": "Cancel"
+      },
+      "addEvaluatorConfig": {
+        "title": "Add Evaluator Configuration",
+        "add": "Add",
+        "cancel": "Cancel"
+      },
+      "deleteItem": {
+        "title": "Delete",
+        "content": "Are you sure you want to delete this item?"
+      },
+      "configureQuestions": {
+        "title": "Save and Configure Questions",
+        "content": "To configure the questions for this competency, you must first save the evaluation. This will save all the information you have entered so far.",
+        "competence": "Competency",
+        "continue": "Save and Continue",
+        "saving": "Saving...",
+        "cancel": "Cancel"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Evaluation created successfully",
+        "updated": "Evaluation updated successfully",
+        "deleted": "Evaluation deleted successfully",
+        "deletedMultiple": "Evaluations deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading evaluations",
+        "loadError": "Error loading evaluation",
+        "saving": "Error saving evaluation",
+        "deleting": "Error deleting evaluation",
+        "deletingMultiple": "Error deleting evaluations",
+        "notFound": "Evaluation not found"
+      }
+    }
+  },
+  "campaign-participants": {
+    "title": "Campaign Participants",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Configure Evaluations",
+      "edit": "Edit",
+      "participants": "Participants"
+    },
+    "statuses": {
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "actions": {
+      "syncParticipants": "Sync Participants",
+      "syncing": "Syncing...",
+      "view": "View",
+      "assignEvaluators": "Assign Evaluators",
+      "assigning": "Assigning...",
+      "viewEvaluators": "View Evaluators"
+    },
+    "table": {
+      "columns": {
+        "employeeName": "Employee Name",
+        "status": "Status",
+        "createdAt": "Registration Date"
+      },
+      "toolbar": {
+        "search": "Search participants...",
+        "filterByStatus": "Filter by status"
+      },
+      "filters": {
+        "search": "Search",
+        "status": "Status"
+      },
+      "empty": {
+        "title": "No participants found",
+        "description": "There are no participants assigned to this campaign or they don't match the applied filters."
+      }
+    },
+    "evaluatorsDialog": {
+      "title": "Participant Evaluators",
+      "empty": "No evaluators assigned to this participant",
+      "columns": {
+        "evaluatorName": "Evaluator Name",
+        "relationship": "Relationship",
+        "weight": "Weight",
+        "completed": "Completed",
+        "actions": "Actions"
+      },
+      "relationships": {
+        "MANAGER": "Manager/Supervisor",
+        "PEER": "Peer",
+        "SUBORDINATE": "Subordinate",
+        "SELF": "Self-Assessment",
+        "OTHER": "Other"
+      },
+      "completedYes": "Yes",
+      "completedNo": "No",
+      "updateForm": {
+        "buttonText": "Update Evaluator",
+        "title": "Update Evaluator",
+        "fields": {
+          "employee": "Evaluator Employee",
+          "employeePlaceholder": "Search employee...",
+          "relationship": "Relationship",
+          "relationshipPlaceholder": "Select relationship...",
+          "weight": "Weight",
+          "weightHelper": "Value between 0.0 and 1.0 (e.g., 0.5 = 50%)"
+        },
+        "validation": {
+          "required": "You must select an employee and a relationship"
+        },
+        "save": "Save",
+        "saving": "Saving...",
+        "cancel": "Cancel",
+        "success": "Evaluator updated successfully",
+        "error": "Error updating evaluator"
+      },
+      "deleteConfirm": {
+        "title": "Delete Evaluator",
+        "content": "Are you sure you want to delete the evaluator {{name}}? This action cannot be undone.",
+        "delete": "Delete",
+        "deleting": "Deleting...",
+        "success": "Evaluator deleted successfully",
+        "error": "Error deleting evaluator"
+      }
+    },
+    "messages": {
+      "success": {
+        "synced": "Participants synced successfully",
+        "assigned": "Evaluators assigned successfully"
+      },
+      "error": {
+        "loading": "Error loading participants",
+        "syncing": "Error syncing participants",
+        "assigned": "Evaluators assigned successfully",
+        "assigning": "Error assigning evaluators to participants"
+      }
+    }
+  },
+  "participants-with-evaluators": {
+    "title": "Participants with Evaluators",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Configure Evaluations",
+      "edit": "Edit",
+      "participantsWithEvaluators": "Participants with Evaluators"
+    },
+    "relationships": {
+      "MANAGER": "Manager/Supervisor",
+      "PEER": "Peer",
+      "SUBORDINATE": "Subordinate",
+      "SELF": "Self-Assessment",
+      "OTHER": "Other"
+    },
+    "completedYes": "Completed",
+    "completedNo": "Pending",
+    "noEvaluators": "No evaluators",
+    "table": {
+      "columns": {
+        "participantName": "Participant Name",
+        "evaluators": "Evaluators",
+        "evaluatorsCount": "Count"
+      },
+      "toolbar": {
+        "search": "Search participants...",
+        "filterByOrganizationalUnit": "Filter by organizational unit"
+      },
+      "filters": {
+        "search": "Search",
+        "organizationalUnit": "Organizational Unit"
+      },
+      "empty": {
+        "title": "No participants found",
+        "description": "There are no participants with assigned evaluators in this campaign or they don't match the applied filters."
+      }
+    },
+    "messages": {
+      "success": {
+        "loaded": "Data loaded successfully"
+      },
+      "error": {
+        "loading": "Error loading participants with evaluators"
+      }
+    }
+  },
+  "questions": {
+    "title": "Configure Questions",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Configure Evaluations",
+      "edit": "Edit",
+      "questions": "Questions"
+    },
+    "actions": {
+      "create": "Create Question",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "update": "Update Question",
+      "add": "Add",
+      "addAnother": "Add Another Question"
+    },
+    "table": {
+      "columns": {
+        "description": "Description",
+        "weight": "Weight (%)",
+        "isOptional": "Type",
+        "optional": "Optional",
+        "required": "Required",
+        "visibleFor": "Visible To",
+        "scale": "Evaluation Scale"
+      },
+      "toolbar": {
+        "search": "Search questions..."
+      },
+      "filters": {
+        "keyword": "Search"
+      },
+      "empty": {
+        "title": "No questions found",
+        "description": "There are no questions configured for this competency."
+      }
+    },
+    "form": {
+      "fields": {
+        "description": "Question Description",
+        "weight": "Weight (%)",
+        "scale": "Evaluation Scale",
+        "isOptional": "Optional Question",
+        "visibleFor": "Visible To"
+      },
+      "placeholders": {
+        "description": "Enter the question that will be displayed in the evaluation",
+        "scale": "Select a scale",
+        "visibleFor": "Select who can see this question"
+      },
+      "validation": {
+        "maxWeight": "Weight must be between 0 and 100"
+      },
+      "questionNumber": "Question {{number}}"
+    },
+    "dialogs": {
+      "add": {
+        "title": "Add Question"
+      },
+      "edit": {
+        "title": "Edit Question"
+      },
+      "delete": {
+        "title": "Delete Question",
+        "content": "Are you sure you want to delete this question? This action cannot be undone."
+      }
+    },
+    "editDialog": {
+      "title": "Edit Question",
+      "actions": {
+        "update": "Update Question",
+        "saving": "Saving...",
+        "cancel": "Cancel"
+      },
+      "messages": {
+        "success": {
+          "updated": "Question updated successfully"
+        },
+        "error": {
+          "updating": "Error updating question",
+          "noId": "Question ID is required"
+        }
+      }
+    },
+    "scalePopover": {
+      "levels": "Levels",
+      "type": "Type",
+      "maxValue": "Maximum Value"
+    },
+    "messages": {
+      "success": {
+        "created": "Question created successfully",
+        "updated": "Question updated successfully",
+        "deleted": "Question deleted successfully"
+      },
+      "warning": {
+        "weightSum": "The total sum of all question weights is not equal to 100%"
+      },
+      "error": {
+        "loading": "Error loading question",
+        "loadingScales": "Error loading scales",
+        "creating": "Error creating question",
+        "updating": "Error updating question",
+        "deleting": "Error deleting question",
+        "validation": "Please complete all required fields"
+      }
+    }
+  },
+  "evaluation-responses": {
+    "title": "My Evaluations",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "evaluationResponses": "My Evaluations",
+      "myEvaluations": "My Evaluations",
+      "evaluation": "Evaluation"
+    },
+    "relationships": {
+      "MANAGER": "Manager/Supervisor",
+      "PEER": "Peer",
+      "SUBORDINATE": "Subordinate",
+      "SELF": "Self-Assessment",
+      "OTHER": "Other"
+    },
+    "statuses": {
+      "PENDING": "Pending",
+      "COMPLETED": "Completed",
+      "INACTIVE": "Inactive"
+    },
+    "actions": {
+      "respond": "Respond",
+      "view": "View Evaluation",
+      "viewResults": "View My Results"
+    },
+    "myResults": {
+      "title": "My Results",
+      "subtitle": "Your performance evaluation results",
+      "overallScore": "Overall Score",
+      "competenciesTitle": "Results by Competency",
+      "expectedLevel": "Expected Level",
+      "obtainedLevel": "Obtained Level",
+      "gap": "Gap",
+      "compliance": "Compliance",
+      "progress": "Progress",
+      "breakdownByRole": "Breakdown by Evaluator Role",
+      "weight": "Weight"
+    },
+    "preview": {
+      "confidential": "(Confidential)",
+      "participantData": "Participant Data",
+      "evaluatorData": "Evaluator Data",
+      "fullName": "Full Name",
+      "relationshipWithParticipant": "Relationship with participant",
+      "campaignInfo": "Campaign Information",
+      "campaignName": "Campaign Name",
+      "campaignType": "Evaluation Type",
+      "status": "Status",
+      "participants": "Participants",
+      "participant": "Participant",
+      "evaluator": "Evaluator",
+      "relationship": "Relationship",
+      "completed": "Completed",
+      "completedYes": "Completed",
+      "completedNo": "Pending",
+      "progress": "Evaluation Progress",
+      "questions": "questions",
+      "questionsAnswered": "questions answered",
+      "competences": "Competencies",
+      "competencesIndicators": "Competency Indicators",
+      "objectives": "Objectives",
+      "objectivesIndicators": "Objective Indicators",
+      "competence": "Competency",
+      "objective": "Objective",
+      "question": "Question",
+      "rating": "Rating",
+      "weight": "Weight",
+      "targetValue": "Target Value",
+      "customKpi": "Custom KPI",
+      "optional": "Optional",
+      "answered": "Response recorded",
+      "notAnswered": "Not answered",
+      "comments": "Comments",
+      "noComments": "No comments",
+      "anonymous": "Anonymous"
+    },
+    "table": {
+      "columns": {
+        "campaign": "Campaign",
+        "participant": "Participant",
+        "relationship": "Relationship",
+        "deadline": "Deadline",
+        "progress": "Progress",
+        "updatedAt": "Status"
+      },
+      "toolbar": {
+        "search": "Search evaluations...",
+        "resetFilters": "Clear Filters"
+      },
+      "filters": {
+        "all": "All",
+        "status": "Status",
+        "keyword": "Keyword"
+      },
+      "empty": {
+        "title": "No evaluations found",
+        "description": "There are no assigned evaluations or they don't match the applied filters."
+      }
+    },
+    "messages": {
+      "success": {
+        "loaded": "Evaluations loaded successfully",
+        "answerSaved": "Response saved successfully",
+        "progressSaved": "Evaluation progress saved successfully"
+      },
+      "error": {
+        "loading": "Error loading evaluations",
+        "loadingQuestions": "Error loading questions",
+        "savingAnswer": "Error saving response"
+      },
+      "noData": "No data available"
+    },
+    "history": {
+      "title": "Respond to Evaluation",
+      "breadcrumb": "Respond",
+      "participant": "Participant",
+      "evaluator": "Evaluator",
+      "campaign": "Campaign",
+      "progress": "Progress",
+      "of": "of",
+      "questionsAnswered": "questions answered",
+      "section": "Section",
+      "sections": "Evaluation Sections",
+      "selectSectionPrompt": "Select a section to start responding to the evaluation",
+      "current": "Current",
+      "answered": "Answered",
+      "pending": "Pending",
+      "competences": "Competencies",
+      "objectives": "Objectives",
+      "weight": "Weight",
+      "backToSections": "Back to Sections",
+      "noQuestions": "No questions available",
+      "question": "Question",
+      "completed": "completed",
+      "required": "Required",
+      "requiredQuestion": "This question is required, please select an answer",
+      "questionAlreadyAnswered": "This question has already been answered and cannot be modified",
+      "comments": "Comments",
+      "optional": "Optional",
+      "commentsPlaceholder": "Add additional comments about your response (optional)...",
+      "previous": "Previous",
+      "saveAndExit": "Save and Continue Later",
+      "continue": "Continue",
+      "finish": "Finish"
+    },
+    "objectives": {
+      "title": "Respond to Objectives Evaluation",
+      "breadcrumb": "Objectives Evaluation",
+      "evaluating": "Evaluating",
+      "totalScore": "Total Score",
+      "globalPerformance": "Global Performance",
+      "objectivesEvaluated": "Objectives evaluated",
+      "objectivesDistribution": "Objectives Distribution",
+      "objectivesCount": "Objectives",
+      "viewObjectives": "View Objectives",
+      "objectivesList": "Objectives List",
+      "objective": "Objective",
+      "of": "of",
+      "weight": "Weight",
+      "targetValue": "Target",
+      "achievedValue": "Actual Value",
+      "enterValue": "95",
+      "currentValue": "Current value",
+      "compliance": "Compliance",
+      "customKpi": "Custom KPI",
+      "selectScale": "Select the scale level",
+      "comments": "Comments",
+      "commentsPlaceholder": "Add your comments here (optional)",
+      "previous": "Previous",
+      "saveAndNext": "Next",
+      "saveAndExit": "Save and Exit",
+      "finish": "Finish",
+      "next": "Next",
+      "completed": "Completed",
+      "pending": "Pending",
+      "backToList": "Back to List",
+      "backToSummary": "Back to Summary",
+      "viewSummary": "View Summary",
+      "completeFields": "Complete all fields to continue",
+      "objectiveDescription": "Objective Description",
+      "objectiveDescriptionHelper": "Define clearly and specifically what you hope to achieve",
+      "measurementIndicator": "Measurement Indicator",
+      "measurementIndicatorHelper": "Specify the metric or KPI you will use to measure",
+      "targetValueHelper": "The target value to achieve (100%)",
+      "weightHelper": "Relative importance of the objective",
+      "achievedValueHelper": "Result obtained",
+      "evaluationResult": "Evaluation Result",
+      "evaluationScale": "Evaluation Scale",
+      "evaluationResultDescription": "Target: {{target}}% | Weight: {{weight}}%",
+      "objectiveCompleted": "Objective completed satisfactorily",
+      "complianceLevel": "Compliance Level",
+      "optional": "Optional",
+      "messages": {
+        "selectScale": "You must select a scale level",
+        "enterAchievedValue": "You must enter the achieved value",
+        "answerSaved": "Answer saved successfully",
+        "noObjectives": "No objectives available to evaluate"
+      }
+    }
+  },
+  "nine-box": {
+    "title": "Nine Box",
+    "campaignSubtitle": "Talent and Performance Analysis - Campaign #{{id}}",
+    "participants": "Participants",
+    "quadrant": "Quadrant",
+    "noParticipants": "No participants",
+    "performance": "Performance",
+    "potential": "Potential",
+    "performanceAxis": "Performance",
+    "potentialAxis": "Potential",
+    "performanceLabel": "Performance",
+    "potentialLabel": "Potential",
+    "talentDistribution": "Talent Distribution",
+    "types": {
+      "PERFORMANCE_90": "90° Evaluation",
+      "PERFORMANCE_180": "180° Evaluation",
+      "PERFORMANCE_270": "270° Evaluation",
+      "PERFORMANCE_360": "360° Evaluation",
+      "CLIMA_LABORAL": "Work Climate",
+      "OBJECTIVES": "Objectives"
+    },
+    "statuses": {
+      "DRAFT": "Draft",
+      "ACTIVE": "Active",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "relationships": {
+      "MANAGER": "Manager/Supervisor",
+      "PEER": "Peer",
+      "SUBORDINATE": "Subordinate",
+      "SELF": "Self-Assessment",
+      "OTHER": "Other"
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Configure Evaluations",
+      "nineBox": "Nine Box",
+      "matrix": "Matrix",
+      "evaluate": "Evaluate",
+      "participants": "Participants",
+      "create": "New Evaluation",
+      "edit": "Edit"
+    },
+    "actions": {
+      "create": "Create Evaluation",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "update": "Update Evaluation",
+      "deleteMultiple": "Delete Selected",
+      "viewParticipants": "View Participants",
+      "assingnParticipants": "Participant Assignment",
+      "view": "View Nine Box",
+      "viewHistory": "View History",
+      "closeCampaign": "Close Campaign",
+      "closing": "Closing..."
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "type": "Type",
+        "period": "Period",
+        "status": "Status",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "totalCompetences": "Competencies",
+        "totalObjectives": "Objectives",
+        "totalDepartments": "Departments",
+        "totalPositions": "Positions",
+        "totalEmployees": "Employees"
+      },
+      "toolbar": {
+        "search": "Search evaluations...",
+        "filterByType": "Filter by type",
+        "filterByStatus": "Filter by status",
+        "filterByDepartment": "Filter by department",
+        "filterByPosition": "Filter by position",
+        "filterByEmployee": "Filter by employee"
+      },
+      "filters": {
+        "all": "All",
+        "status": "Status",
+        "type": "Type",
+        "keyword": "Keyword",
+        "department": "Department",
+        "position": "Position",
+        "employee": "Employee"
+      },
+      "empty": {
+        "title": "No evaluations found",
+        "description": "There are no evaluations created or they don't match the applied filters."
+      }
+    },
+    "form": {
+      "sections": {
+        "basicInfo": "Basic Information",
+        "basicInfoSubtitle": "General evaluation information",
+        "config": "Configuration",
+        "configSubtitle": "Additional configuration options",
+        "dates": "Evaluation Dates",
+        "datesSubtitle": "Define the evaluation period",
+        "competences": "Competencies",
+        "competencesSubtitle": "Select the competencies to evaluate",
+        "objectives": "Objectives",
+        "objectivesSubtitle": "Select the objectives to evaluate",
+        "scope": "Scope",
+        "scopeSubtitle": "Define who will participate in the evaluation",
+        "evaluators": "Evaluator Configuration",
+        "evaluatorsSubtitle": "Configure the designated evaluators",
+        "loading": "Loading..."
+      },
+      "fields": {
+        "name": {
+          "label": "Evaluation Name",
+          "helperText": "Enter a descriptive name for the evaluation",
+          "required": "Name is required"
+        },
+        "description": {
+          "label": "Description",
+          "helperText": "Describe the purpose of this evaluation",
+          "required": "Description is required"
+        },
+        "type": {
+          "label": "Evaluation Type",
+          "helperText": "Select the evaluation type",
+          "required": "Type is required"
+        },
+        "period": {
+          "label": "Period",
+          "helperText": "Example: 2024-Q4",
+          "required": "Period is required"
+        },
+        "autoAssign": {
+          "label": "Automatic Assignment",
+          "helperText": "Automatically assign evaluators"
+        },
+        "editableEvaluators": {
+          "label": "Editable Evaluators",
+          "helperText": "Allow editing evaluators after creation"
+        },
+        "startDate": {
+          "label": "Start Date",
+          "helperText": "Evaluation start date",
+          "required": "Start date is required"
+        },
+        "endDate": {
+          "label": "End Date",
+          "helperText": "Evaluation end date",
+          "required": "End date is required"
+        },
+        "competences": {
+          "label": "Competencies",
+          "helperText": "Select the competencies to evaluate",
+          "addButton": "Add Competency",
+          "emptyMessage": "No competencies added",
+          "weight": "Weight (%)",
+          "select": "Select competency",
+          "configureQuestions": "Questions"
+        },
+        "objectives": {
+          "label": "Objectives",
+          "helperText": "Select the objectives to evaluate",
+          "addButton": "Add Objective",
+          "emptyMessage": "No objectives added",
+          "weight": "Weight (%)",
+          "targetValue": "Target Value",
+          "customKpi": "Custom KPI",
+          "select": "Select objective"
+        },
+        "departments": {
+          "label": "Departments",
+          "helperText": "Select the departments to evaluate",
+          "placeholder": "Search departments..."
+        },
+        "positions": {
+          "label": "Positions",
+          "helperText": "Select the positions to evaluate",
+          "placeholder": "Search positions..."
+        },
+        "employees": {
+          "label": "Employees",
+          "helperText": "Select the employees to evaluate",
+          "placeholder": "Search employees..."
+        },
+        "evaluatorConfigs": {
+          "label": "Evaluator Configuration",
+          "helperText": "Configure the evaluator types",
+          "addButton": "Add Evaluator",
+          "emptyMessage": "No evaluators configured",
+          "relationship": "Relationship",
+          "weight": "Weight (%)",
+          "maxEvaluators": "Max Evaluators",
+          "enabled": "Enabled",
+          "select": "Select relationship"
+        }
+      },
+      "validation": {
+        "dateRange": "End date must be after start date",
+        "minWeight": "Weight must be greater than 0",
+        "maxWeight": "Weight cannot exceed 100",
+        "totalWeight": "Sum of weights must be 100",
+        "minEvaluators": "There must be at least 1 evaluator"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete Evaluation",
+        "content": "Are you sure you want to delete this evaluation? This action cannot be undone.",
+        "contentMultiple": "Are you sure you want to delete {{count}} evaluations? This action cannot be undone."
+      },
+      "addCompetence": {
+        "title": "Add Competency",
+        "add": "Add",
+        "cancel": "Cancel"
+      },
+      "addObjective": {
+        "title": "Add Objective",
+        "add": "Add",
+        "cancel": "Cancel"
+      },
+      "addEvaluatorConfig": {
+        "title": "Add Evaluator Configuration",
+        "add": "Add",
+        "cancel": "Cancel"
+      },
+      "deleteItem": {
+        "title": "Delete",
+        "content": "Are you sure you want to delete this item?"
+      },
+      "configureQuestions": {
+        "title": "Save and Configure Questions",
+        "content": "To configure the questions for this competency, you must first save the evaluation. This will save all the information you have entered so far.",
+        "competence": "Competency",
+        "continue": "Save and Continue",
+        "saving": "Saving...",
+        "cancel": "Cancel"
+      },
+      "closeCampaign": {
+        "content": "Are you sure you want to close the campaign {{name}}?",
+        "warning": "This action will save the results to history and the campaign cannot be modified afterwards."
+      }
+    },
+    "history": {
+      "title": "Nine Box History",
+      "subtitle": "Talent and Performance Analysis - Campaign #{{id}}",
+      "totalParticipants": "Total Participants"
+    },
+    "messages": {
+      "success": {
+        "created": "Evaluation created successfully",
+        "updated": "Evaluation updated successfully",
+        "deleted": "Evaluation deleted successfully",
+        "deletedMultiple": "Evaluations deleted successfully",
+        "campaignClosed": "Campaign closed and results saved to history"
+      },
+      "error": {
+        "loading": "Error loading Nine Box data",
+        "loadError": "Error loading evaluation",
+        "loadingHistory": "Error loading Nine Box history",
+        "saving": "Error saving evaluation",
+        "deleting": "Error deleting evaluation",
+        "deletingMultiple": "Error deleting evaluations",
+        "notFound": "Evaluation not found",
+        "noData": "No data found for this campaign",
+        "closingCampaign": "Error closing campaign"
+      }
+    }
+  },
+  "configure-tests": {
+    "title": "Configure Templates",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureTests": "Templates",
+      "create": "New Template",
+      "edit": "Edit"
+    },
+    "actions": {
+      "create": "Create Template",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "update": "Update Template",
+      "deleteMultiple": "Delete Selected"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "type": "Type",
+        "isActive": "Status",
+        "totalCompetences": "Competences",
+        "totalObjectives": "Objectives",
+        "createdAt": "Created At"
+      },
+      "toolbar": {
+        "search": "Search templates...",
+        "filterByType": "Filter by type"
+      },
+      "filters": {
+        "keyword": "Search",
+        "type": "Type"
+      },
+      "empty": {
+        "title": "No Templates",
+        "description": "No templates found"
+      }
+    },
+    "cards": {
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "noDescription": "No description",
+      "competences": "Competences",
+      "objectives": "Objectives",
+      "empty": {
+        "title": "No templates",
+        "subtitle": "Create your first template to get started"
+      }
+    },
+    "form": {
+      "sections": {
+        "basicInfo": "Basic Information",
+        "competences": "Competences",
+        "objectives": "Objectives",
+        "loading": "Loading..."
+      },
+      "fields": {
+        "name": "Name",
+        "description": "Description",
+        "type": "Type",
+        "isActive": "Active",
+        "coverImage": "Cover Image",
+        "objectiveScale": "Objective Scale",
+        "competences": "Competences",
+        "objectives": "Objectives",
+        "weight": "Weight",
+        "questions": "Questions",
+        "target": "Target Value",
+        "kpi": "Custom KPI",
+        "competence": "Competence"
+      },
+      "placeholders": {
+        "name": "Enter template name",
+        "description": "Enter description",
+        "type": "Select type",
+        "objectiveScale": "Select scale"
+      },
+      "validation": {
+        "nameRequired": "Name is required",
+        "typeRequired": "Type is required"
+      },
+      "messages": {
+        "noCompetences": "No competences added"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete Template",
+        "content": "Are you sure you want to delete this template? This action cannot be undone.",
+        "contentMultiple": "Are you sure you want to delete {{count}} templates? This action cannot be undone."
+      },
+      "addCompetence": {
+        "title": "Add Competence",
+        "add": "Add",
+        "cancel": "Cancel"
+      },
+      "addObjective": {
+        "title": "Add Objective",
+        "add": "Add",
+        "cancel": "Cancel",
+        "weightHelper": "Weight must be between 0 and 100",
+        "objective": "Objective",
+        "selectObjective": "Select objective",
+        "targetValue": "Target Value",
+        "kpi": "Custom KPI"
+      },
+      "deleteItem": {
+        "title": "Delete Item",
+        "content": "Are you sure you want to delete this item?"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Template created successfully",
+        "updated": "Template updated successfully",
+        "deleted": "Template deleted successfully",
+        "deletedMultiple": "Templates deleted successfully"
+      },
+      "error": {
+        "create": "Error creating template",
+        "update": "Error updating template",
+        "delete": "Error deleting template",
+        "loading": "Error loading template",
+        "notFound": "Template not found"
+      }
+    }
+  },
+  "nine-box-settings": {
+    "title": "Nine Box Settings",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "nineBox": "Nine Box",
+      "settings": "Settings"
+    },
+    "actions": {
+      "add": "Add Setting",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save",
+      "update": "Update",
+      "deleteMultiple": "Delete Selected"
+    },
+    "columns": {
+      "label": "Name",
+      "color": "Color",
+      "description": "Description",
+      "recommendedAction": "Recommended Action",
+      "minScoreX": "Min Score X",
+      "maxScoreX": "Max Score X"
+    },
+    "toolbar": {
+      "search": "Search settings..."
+    },
+    "filters": {
+      "keyword": "Search",
+      "all": "All"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Setting"
+      },
+      "edit": {
+        "title": "Edit Setting"
+      },
+      "delete": {
+        "title": "Delete Setting",
+        "content": "Are you sure you want to delete this setting?",
+        "contentMultiple": "Are you sure you want to delete {{count}} settings? This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Setting created successfully",
+        "updated": "Setting updated successfully",
+        "deleted": "Setting deleted successfully",
+        "deletedMultiple": "Settings deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading settings",
+        "creating": "Error creating setting",
+        "updating": "Error updating setting",
+        "deleting": "Error deleting setting",
+        "deletingMultiple": "Error deleting settings",
+        "validation": "Please fill in all required fields"
+      }
+    }
+  }
+}

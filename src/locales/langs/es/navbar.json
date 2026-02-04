@@ -1,0 +1,202 @@
+{
+  "dashboard": {
+    "title": "Tablero",
+    "items": {
+      "dashboardSuperAdmin": "Panel de Control - Super Admin",
+      "dashboardCollaborator": "Panel de Control",
+      "adminclarity": "Panel de Control - Clarity"
+    }
+  },
+  "employees": {
+    "title": "Empleados",
+    "items": {
+      "employeeType": "Tipos de Empleados",
+      "employeeManagement": "Gestión de Empleados",
+      "paymentPeriod": "Períodos de Pago",
+      "skills": "Habilidades",
+      "employeeAssignment": "Asignación de Empleados"
+    }
+  },
+  "organizations": {
+    "title": "Organizaciones",
+    "items": {
+      "company": "Compañía",
+      "organizationalUnit": "Unidad Organizativa",
+      "positions": "Cargos",
+      "vigency": "Vigencia"
+    }
+  },
+  "security": {
+    "title": "Seguridad",
+    "items": {
+      "users": "Usuarios",
+      "roles": "Roles"
+    }
+  },
+  "settings": {
+    "title": "Configuraciones",
+    "items": {
+      "coins": "Monedas",
+      "languages": "Idiomas",
+      "tags": "Etiquetas",
+      "integrations": "Catálogo de Plataformas",
+      "platforms": "Plataformas"
+    }
+  },
+  "learning": {
+    "title": "Universidad Corporativa",
+    "items": {
+      "learningObjects": "Módulos de Aprendizaje",
+      "learningPaths": "Rutas de Aprendizaje",
+      "learningCategories": "Categorías de Aprendizaje",
+      "tracking": "Seguimiento",
+      "report": "Reportes"
+    }
+  },
+  "assets": {
+    "title": "Inventarios",
+    "items": {
+      "list": "Lista de Activos",
+      "categories": "Categorías de Activos",
+      "record": "Registro de Activos",
+      "myAssets": "Mis Activos"
+    }
+  },
+  "performance": {
+    "title": "Desempeño",
+    "items": {
+      "scales": "Escalas",
+      "configureTests": "Configurar Pruebas",
+      "configureEvaluations": "Configurar Evaluaciones",
+      "evaluationsList": "Lista de Evaluaciones",
+      "resultsAnalysis": "Análisis de Resultados",
+      "evaluate": {
+        "title": "Nine Box",
+        "items": {
+          "nineboxConfig": "Configuración de Ninebox",
+          "nineboxMatrix": "Matriz de Ninebox"
+        }
+      },
+      "evaluationsListUser": "Mis Evaluaciones",
+      "evaluationsListUserHistory": "Historial de Mis Evaluaciones"
+    }
+  },
+  "budget": {
+    "title": "Presupuestos",
+    "items": {
+      "accounts": "Cuentas",
+      "concepts": "Conceptos",
+      "generalBudget": "Presupuesto General",
+      "budgetReport": "Reporte de Presupuesto"
+    }
+  },
+  "corporateU": {
+    "title": "Universidad Corporativa",
+    "items": {
+      "learningPath": "Mis Rutas de Aprendizaje",
+      "learningModule": "Mis Módulos de Aprendizaje",
+      "rewards": "Recompensas",
+      "planning": "Planificación",
+      "individualTraining": "Capacitación Individual",
+      "homologation": "Homologación",
+      "reports": "Reportes",
+      "course": "Programas y Cursos"
+    }
+  },
+  "rewards": {
+    "title": "Recompensas",
+    "items": {
+      "rewards": "Recompensas",
+      "categories": "Categorías",
+      "history": "Historial",
+      "historyEmployee": "Mi Historial",
+      "rules": "Reglas",
+      "rulesType": "Tipos de Reglas"
+    }
+  },
+  "business": {
+    "business": "Negocios",
+    "items":{
+      "processes": {
+        "title": "Procesos",
+        "table": "Tabla de Procesos",
+        "map": "Mapa de Procesos",
+        "flow": "Flujos"
+      },
+      "positions": {
+        "title": "Cargos",
+        "map": "Mapa de Cargos",
+        "table": "Tabla de Cargos"
+      },
+      "actions": {
+        "title": "Acciones",
+        "table": "Tabla de Acciones",
+        "map": "Mapa de Acciones"
+      },
+      "risks": {
+        "title": "Riesgos",
+        "table": "Tabla de Riesgos",
+        "map": "Mapa de Riesgos",
+        "matrix": "Matriz de Riesgos"
+      },
+      "tools": {
+        "title": "Herramientas",
+        "map": "Mapa de Herramientas",
+        "table": "Tabla de Herramientas"
+      },
+      "organizationalStructure": {
+        "title": "Estructura Organizacional",
+        "table": "Tabla de Estructura Organizacional",
+        "map": "Mapa de Estructura Organizacional"
+      },
+      "strategicObjectives": {
+        "title": "Objetivos Estratégicos",
+        "table": "Tabla de Objetivos Estratégicos",
+        "map": "Mapa de Objetivos Estratégicos"
+      }
+    }
+  },
+  "data": {
+    "title": "Datos",
+    "items": {
+      "data": "Arquitectura de Datos",
+      "dataMap": "Mapa de Datos"
+    }
+  },
+  "infrastructure": {
+    "title": "Infraestructura",
+    "items": {
+      "infrastructure": "Arquitectura de Infraestructura",
+      "infrastructureMap": "Mapa de Infraestructura"
+    }
+  },
+  "applications": {
+    "title": "Aplicaciones",
+    "items": {
+      "applications": "Arquitectura de Aplicaciones",
+      "applicationsMap": "Mapa de Aplicaciones"
+    }
+  },
+  "architecture": {
+    "title": "Arquitectura Empresarial",
+    "items": {
+      "business": "Negocios",
+      "infrastructure": "Infraestructura",
+      "applications": "Aplicaciones",
+      "data": "Datos"
+    }
+  },
+  "management": {
+    "title": "Gestión de Catálogos",
+    "items": {
+      "catalogs": "Catálogos"
+    }
+  },
+  "ai": {
+    "title": "Inteligencia Artificial",
+    "items": {
+      "aiCourseGenerator": "Generador de Cursos con IA",
+      "aiProvidersSettings": "Configuración de Proveedores de IA"
+    }
+  }
+}

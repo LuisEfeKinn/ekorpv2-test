@@ -1,0 +1,202 @@
+{
+  "dashboard": {
+    "title": "Overview",
+    "items": {
+      "dashboardSuperAdmin": "Dashboard - Super Admin",
+      "dashboardCollaborator": "Dashboard - Collaborator",
+      "adminclarity": "Dashboard - Clarity"
+    }
+  },
+  "employees": {
+    "title": "Employees",
+    "items": {
+      "employeeType": "Employee Types",
+      "employeeManagement": "Employee Management",
+      "paymentPeriod": "Payment Periods",
+      "skills": "Skills",
+      "employeeAssignment": "Employee Assignment"
+    }
+  },
+  "organizations": {
+    "title": "Organizations",
+    "items": {
+      "company": "Company",
+      "organizationalUnit": "Organizational Unit",
+      "positions": "Positions",
+      "vigency": "Vigency"
+    }
+  },
+  "security": {
+    "title": "Security",
+    "items": {
+      "users": "Users",
+      "roles": "Roles"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "items": {
+      "coins": "Coins",
+      "languages": "Languages",
+      "tags": "Tags",
+      "integrations": "Platforms Catalog",
+      "platforms": "Platforms"
+    }
+  },
+  "learning": {
+    "title": "Corporate University",
+    "items": {
+      "learningObjects": "Learning Modules",
+      "learningPaths": "Learning Paths",
+      "learningCategories": "Learning Categories",
+      "tracking": "Tracking",
+      "report": "Reports"
+    }
+  },
+  "assets": {
+    "title": "Inventories",
+    "items": {
+      "list": "Assets List",
+      "categories": "Assets Categories",
+      "record": "Asset Records",
+      "myAssets": "My Assets"
+    }
+  },
+  "performance": {
+    "title": "Performance",
+    "items": {
+      "scales": "Scales",
+      "configureTests": "Configure Tests",
+      "configureEvaluations": "Configure Evaluations",
+      "evaluationsList": "Evaluations List",
+      "resultsAnalysis": "Results Analysis",
+      "evaluate": {
+        "title": "Nine Box",
+        "items": {
+          "nineboxConfig": "Ninebox Configuration",
+          "nineboxMatrix": "Ninebox Matrix"
+        }
+      },
+      "evaluationsListUser": "My Evaluations",
+      "evaluationsListUserHistory": "My Evaluations History"
+    }
+  },
+  "budget": {
+    "title": "Budgets",
+    "items": {
+      "accounts": "Accounts",
+      "concepts": "Concepts",
+      "generalBudget": "General Budget",
+      "budgetReport": "Budget Report"
+    }
+  },
+  "corporateU": {
+    "title": "Corporate University",
+    "items": {
+      "learningPath": "My Learning Paths",
+      "learningModule": "My Learning Modules",
+      "rewards": "Rewards",
+      "planning": "Planning",
+      "individualTraining": "Individual Training",
+      "homologation": "Homologation",
+      "reports": "Reports",
+      "course": "Programs and Courses"
+    }
+  },
+  "rewards": {
+    "title": "Rewards",
+    "items": {
+      "rewards": "Rewards",
+      "categories": "Categories",
+      "history": "History",
+      "historyEmployee": "My History",
+      "rules": "Rules",
+      "rulesType": "Rules Type"
+    }
+  },
+  "business": {
+    "business": "Business",
+    "items": {
+      "processes": {
+        "title": "Processes",
+        "table": "Processes Table",
+        "map": "Processes Map",
+        "flow": "Processes Flow"
+      },
+      "positions": {
+        "title": "Positions",
+        "map": "Positions Map",
+        "table": "Positions Table"
+      },
+      "actions": {
+        "title": "Actions",
+        "table": "Actions Table",
+        "map": "Actions Map"
+      },
+      "risks": {
+        "title": "Risks",
+        "table": "Risks Table",
+        "map": "Risks Map",
+        "matrix": "Risks Matrix"
+      },
+      "tools": {
+        "title": "Tools",
+        "map": "Tools Map",
+        "table": "Tools Table"
+      },
+      "organizationalStructure": {
+        "title": "Organizational Structure",
+        "table": "Organizational Structure Table",
+        "map": "Organizational Structure Map"
+      },
+      "strategicObjectives": {
+        "title": "Strategic Objectives",
+        "table": "Strategic Objectives Table",
+        "map": "Strategic Objectives Map"
+      }
+    }
+  },
+  "data": {
+    "title": "Data",
+    "items": {
+      "data": "Data Architecture",
+      "dataMap": "Data Map"
+    }
+  },
+  "infrastructure": {
+    "title": "Infrastructure",
+    "items": {
+      "infrastructure": "Infrastructure Architecture",
+      "infrastructureMap": "Infrastructure Map"
+    }
+  },
+  "applications": {
+    "title": "Applications",
+    "items": {
+      "applications": "Applications Architecture",
+      "applicationsMap": "Applications Map"
+    }
+  },
+  "architecture": {
+    "title": "Enterprise Architecture",
+    "items": {
+      "business": "Business",
+      "infrastructure": "Infrastructure",
+      "applications": "Applications",
+      "data": "Data"
+    }
+  },
+  "management": {
+    "title": "Catalogs Management",
+    "items": {
+      "catalogs": "Catalogs"
+    }
+  },
+  "ai": {
+    "title": "Artificial Intelligence",
+    "items": {
+      "aiCourseGenerator": "AI Course Generator",
+      "aiProvidersSettings": "AI Providers Settings"
+    }
+  }
+}

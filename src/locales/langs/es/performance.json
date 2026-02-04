@@ -1,0 +1,1307 @@
+{
+  "scales": {
+    "title": "Escalas de Evaluación",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "scales": "Escalas",
+      "create": "Nueva Escala",
+      "edit": "Editar"
+    },
+    "actions": {
+      "create": "Crear Escala",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar Cambios",
+      "saving": "Guardando...",
+      "update": "Actualizar Escala",
+      "addLevel": "Agregar Nivel",
+      "deleteMultiple": "Eliminar Seleccionados"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "type": "Tipo",
+        "maxValue": "Valor Máximo",
+        "levels": "Niveles",
+        "isDefault": "Por Defecto"
+      },
+      "toolbar": {
+        "search": "Buscar escalas..."
+      },
+      "filters": {
+        "all": "Todos",
+        "status": "Estado",
+        "keyword": "Palabra clave",
+        "type": "Tipo"
+      },
+      "empty": {
+        "title": "No se encontraron escalas",
+        "description": "No hay escalas creadas o no coinciden con los filtros aplicados."
+      }
+    },
+    "form": {
+      "sections": {
+        "details": "Detalles de la Escala",
+        "levels": "Niveles de Evaluación",
+        "loading": "Cargando..."
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre de la Escala",
+          "helperText": "Ingrese un nombre descriptivo para la escala",
+          "required": "El nombre es requerido"
+        },
+        "description": {
+          "label": "Descripción",
+          "helperText": "Describa el propósito y uso de esta escala",
+          "required": "La descripción es requerida"
+        },
+        "type": {
+          "label": "Tipo de Escala",
+          "helperText": "Seleccione el tipo de escala de evaluación",
+          "required": "El tipo es requerido",
+          "options": {
+            "LIKERT": "Likert",
+            "PERFORMANCE": "Desempeño",
+            "NINEBOX_PERFORMANCE": "9Box - Desempeño",
+            "NINEBOX_POTENTIAL": "9Box - Potencial"
+          }
+        },
+        "maxValue": {
+          "label": "Valor Máximo",
+          "helperText": "Defina el valor máximo de la escala",
+          "required": "El valor máximo es requerido"
+        },
+        "levels": {
+          "noLevels": "No hay niveles agregados. Haz clic en \"Agregar Nivel\" para comenzar.",
+          "value": {
+            "label": "Valor",
+            "helperText": "Valor numérico del nivel",
+            "required": "El valor es requerido"
+          },
+          "label": {
+            "label": "Etiqueta",
+            "helperText": "Nombre del nivel (ej: Excelente, Bueno, etc.)",
+            "required": "La etiqueta es requerida"
+          },
+          "description": {
+            "label": "Descripción",
+            "helperText": "Describa qué representa este nivel",
+            "required": "La descripción es requerida"
+          },
+          "actions": "Acciones"
+        }
+      },
+      "validation": {
+        "minLevels": "Debe agregar al menos un nivel",
+        "minValue": "El valor debe ser mayor a 0"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Escala",
+        "content": "¿Está seguro que desea eliminar esta escala? Esta acción no se puede deshacer.",
+        "contentMultiple": "¿Está seguro que desea eliminar {{count}} escalas? Esta acción no se puede deshacer."
+      },
+      "addLevel": {
+        "title": "Agregar Nivel",
+        "add": "Agregar",
+        "cancel": "Cancelar"
+      },
+      "deleteLevel": {
+        "title": "Eliminar Nivel",
+        "content": "¿Está seguro que desea eliminar este nivel?"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Escala creada exitosamente",
+        "updated": "Escala actualizada exitosamente",
+        "deleted": "Escala eliminada exitosamente",
+        "deletedMultiple": "Escalas eliminadas exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar las escalas",
+        "loadError": "Error al cargar la escala",
+        "saving": "Error al guardar la escala",
+        "deleting": "Error al eliminar la escala",
+        "deletingMultiple": "Error al eliminar las escalas"
+      }
+    }
+  },
+  "configure-evaluations": {
+    "title": "Configurar Evaluaciones",
+    "types": {
+      "PERFORMANCE_90": "Evaluación 90°",
+      "PERFORMANCE_180": "Evaluación 180°",
+      "PERFORMANCE_270": "Evaluación 270°",
+      "PERFORMANCE_360": "Evaluación 360°",
+      "CLIMA_LABORAL": "Clima Laboral",
+      "OBJECTIVES": "Objetivos"
+    },
+    "statuses": {
+      "DRAFT": "Borrador",
+      "ACTIVE": "Activo",
+      "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado"
+    },
+    "relationships": {
+      "MANAGER": "Jefe/Gerente",
+      "PEER": "Compañero",
+      "SUBORDINATE": "Subordinado",
+      "SELF": "Autoevaluación",
+      "OTHER": "Otro"
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Configurar Evaluaciones",
+      "participants": "Participantes",
+      "create": "Nueva Evaluación",
+      "edit": "Editar"
+    },
+    "actions": {
+      "create": "Crear Evaluación",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar Cambios",
+      "saving": "Guardando...",
+      "update": "Actualizar Evaluación",
+      "deleteMultiple": "Eliminar Seleccionados",
+      "viewParticipants": "Ver Participantes",
+      "assingnParticipants": "Asignación de Participantes"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "type": "Tipo",
+        "period": "Período",
+        "status": "Estado",
+        "startDate": "Fecha Inicio",
+        "endDate": "Fecha Fin",
+        "totalCompetences": "Competencias",
+        "totalObjectives": "Objetivos",
+        "totalDepartments": "Departamentos",
+        "totalPositions": "Posiciones",
+        "totalEmployees": "Empleados"
+      },
+      "toolbar": {
+        "search": "Buscar evaluaciones...",
+        "filterByType": "Filtrar por tipo",
+        "filterByStatus": "Filtrar por estado",
+        "filterByDepartment": "Filtrar por departamento",
+        "filterByPosition": "Filtrar por posición",
+        "filterByEmployee": "Filtrar por empleado"
+      },
+      "filters": {
+        "all": "Todos",
+        "status": "Estado",
+        "type": "Tipo",
+        "keyword": "Palabra clave",
+        "department": "Departamento",
+        "position": "Posición",
+        "employee": "Empleado"
+      },
+      "empty": {
+        "title": "No se encontraron evaluaciones",
+        "description": "No hay evaluaciones creadas o no coinciden con los filtros aplicados."
+      }
+    },
+    "form": {
+      "sections": {
+        "basicInfo": "Información Básica",
+        "basicInfoSubtitle": "Información general de la evaluación",
+        "config": "Configuración",
+        "configSubtitle": "Opciones adicionales de configuración",
+        "dates": "Fechas de la Evaluación",
+        "datesSubtitle": "Define el período de evaluación",
+        "competences": "Competencias",
+        "competencesSubtitle": "Seleccione las competencias a evaluar",
+        "objectives": "Objetivos",
+        "objectivesSubtitle": "Seleccione los objetivos a evaluar",
+        "scope": "Alcance",
+        "scopeSubtitle": "Define quiénes participarán en la evaluación",
+        "evaluators": "Configuración de Evaluadores",
+        "evaluatorsSubtitle": "Configure a los evaluadores designados",
+        "loading": "Cargando..."
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre de la Evaluación",
+          "helperText": "Ingrese un nombre descriptivo para la evaluación",
+          "required": "El nombre es requerido"
+        },
+        "description": {
+          "label": "Descripción",
+          "helperText": "Describa el propósito de esta evaluación",
+          "required": "La descripción es requerida"
+        },
+        "template": {
+          "label": "Plantilla",
+          "helperText": "Seleccione una plantilla para prellenar la configuración de la evaluación"
+        },
+        "type": {
+          "label": "Tipo de Evaluación",
+          "helperText": "Seleccione el tipo de evaluación",
+          "required": "El tipo es requerido"
+        },
+        "period": {
+          "label": "Período",
+          "helperText": "Ejemplo: 2024-Q4",
+          "required": "El período es requerido"
+        },
+        "objectiveScale": {
+          "label": "Escala de Objetivos",
+          "helperText": "Seleccione la escala para evaluar los objetivos"
+        },
+        "autoAssign": {
+          "label": "Asignación Automática",
+          "helperText": "Asignar automáticamente evaluadores"
+        },
+        "editableEvaluators": {
+          "label": "Evaluadores Editables",
+          "helperText": "Permitir editar evaluadores después de la creación"
+        },
+        "startDate": {
+          "label": "Fecha de Inicio",
+          "helperText": "Fecha de inicio de la evaluación",
+          "required": "La fecha de inicio es requerida"
+        },
+        "endDate": {
+          "label": "Fecha de Fin",
+          "helperText": "Fecha de fin de la evaluación",
+          "required": "La fecha de fin es requerida"
+        },
+        "competences": {
+          "label": "Competencias",
+          "helperText": "Seleccione las competencias a evaluar",
+          "addButton": "Agregar Competencia",
+          "emptyMessage": "No hay competencias agregadas",
+          "weight": "Peso (%)",
+          "select": "Seleccionar competencia",
+          "configureQuestions": "Preguntas"
+        },
+        "objectives": {
+          "label": "Objetivos",
+          "helperText": "Seleccione los objetivos a evaluar",
+          "addButton": "Agregar Objetivo",
+          "emptyMessage": "No hay objetivos agregados",
+          "weight": "Peso (%)",
+          "targetValue": "Valor Objetivo",
+          "customKpi": "KPI Personalizado",
+          "select": "Seleccionar objetivo"
+        },
+        "departments": {
+          "label": "Departamentos",
+          "helperText": "Seleccione los departamentos a evaluar",
+          "placeholder": "Buscar departamentos..."
+        },
+        "positions": {
+          "label": "Posiciones",
+          "helperText": "Seleccione las posiciones a evaluar",
+          "placeholder": "Buscar posiciones..."
+        },
+        "employees": {
+          "label": "Empleados",
+          "helperText": "Seleccione los empleados a evaluar",
+          "placeholder": "Buscar empleados..."
+        },
+        "evaluatorConfigs": {
+          "label": "Configuración de Evaluadores",
+          "helperText": "Configure los tipos de evaluadores",
+          "addButton": "Agregar Evaluador",
+          "emptyMessage": "No hay evaluadores configurados",
+          "relationship": "Relación",
+          "weight": "Peso (%)",
+          "maxEvaluators": "Máx. Evaluadores",
+          "enabled": "Habilitado",
+          "select": "Seleccionar relación"
+        }
+      },
+      "validation": {
+        "dateRange": "La fecha de fin debe ser posterior a la fecha de inicio",
+        "minWeight": "El peso debe ser mayor a 0",
+        "maxWeight": "El peso no puede exceder 100",
+        "totalWeight": "La suma de los pesos debe ser 100",
+        "minEvaluators": "Debe haber al menos 1 evaluador"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Evaluación",
+        "content": "¿Está seguro que desea eliminar esta evaluación? Esta acción no se puede deshacer.",
+        "contentMultiple": "¿Está seguro que desea eliminar {{count}} evaluaciones? Esta acción no se puede deshacer."
+      },
+      "addCompetence": {
+        "title": "Agregar Competencia",
+        "add": "Agregar",
+        "cancel": "Cancelar"
+      },
+      "addObjective": {
+        "title": "Agregar Objetivo",
+        "add": "Agregar",
+        "cancel": "Cancelar"
+      },
+      "addEvaluatorConfig": {
+        "title": "Agregar Configuración de Evaluador",
+        "add": "Agregar",
+        "cancel": "Cancelar"
+      },
+      "deleteItem": {
+        "title": "Eliminar",
+        "content": "¿Está seguro que desea eliminar este elemento?"
+      },
+      "configureQuestions": {
+        "title": "Guardar y Configurar Preguntas",
+        "content": "Para configurar las preguntas de esta competencia, es necesario guardar primero la evaluación. Esto guardará toda la información que has ingresado hasta el momento.",
+        "competence": "Competencia",
+        "continue": "Guardar y Continuar",
+        "saving": "Guardando...",
+        "cancel": "Cancelar"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Evaluación creada exitosamente",
+        "updated": "Evaluación actualizada exitosamente",
+        "deleted": "Evaluación eliminada exitosamente",
+        "deletedMultiple": "Evaluaciones eliminadas exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar las evaluaciones",
+        "loadError": "Error al cargar la evaluación",
+        "saving": "Error al guardar la evaluación",
+        "deleting": "Error al eliminar la evaluación",
+        "deletingMultiple": "Error al eliminar las evaluaciones",
+        "notFound": "Evaluación no encontrada"
+      }
+    }
+  },
+  "campaign-participants": {
+    "title": "Participantes de la Campaña",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Configurar Evaluaciones",
+      "edit": "Editar",
+      "participants": "Participantes"
+    },
+    "statuses": {
+      "PENDING": "Pendiente",
+      "IN_PROGRESS": "En Progreso",
+      "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado"
+    },
+    "actions": {
+      "syncParticipants": "Sincronizar Participantes",
+      "syncing": "Sincronizando...",
+      "view": "Ver",
+      "assignEvaluators": "Asignar Evaluadores",
+      "assigning": "Asignando...",
+      "viewEvaluators": "Ver Evaluadores"
+    },
+    "table": {
+      "columns": {
+        "employeeName": "Nombre del Empleado",
+        "status": "Estado",
+        "createdAt": "Fecha de Registro"
+      },
+      "toolbar": {
+        "search": "Buscar participantes...",
+        "filterByStatus": "Filtrar por estado"
+      },
+      "filters": {
+        "search": "Búsqueda",
+        "status": "Estado"
+      },
+      "empty": {
+        "title": "No se encontraron participantes",
+        "description": "No hay participantes asignados a esta campaña o no coinciden con los filtros aplicados."
+      }
+    },
+    "evaluatorsDialog": {
+      "title": "Evaluadores del Participante",
+      "empty": "No hay evaluadores asignados a este participante",
+      "columns": {
+        "evaluatorName": "Nombre del Evaluador",
+        "relationship": "Relación",
+        "weight": "Peso",
+        "completed": "Completado",
+        "actions": "Acciones"
+      },
+      "relationships": {
+        "MANAGER": "Jefe/Gerente",
+        "PEER": "Compañero",
+        "SUBORDINATE": "Subordinado",
+        "SELF": "Autoevaluación",
+        "OTHER": "Otro"
+      },
+      "completedYes": "Sí",
+      "completedNo": "No",
+      "updateForm": {
+        "buttonText": "Actualizar Evaluador",
+        "title": "Actualizar Evaluador",
+        "fields": {
+          "employee": "Empleado Evaluador",
+          "employeePlaceholder": "Buscar empleado...",
+          "relationship": "Relación",
+          "relationshipPlaceholder": "Seleccionar relación...",
+          "weight": "Peso",
+          "weightHelper": "Valor entre 0.0 y 1.0 (ej: 0.5 = 50%)"
+        },
+        "validation": {
+          "required": "Debe seleccionar un empleado y una relación"
+        },
+        "save": "Guardar",
+        "saving": "Guardando...",
+        "cancel": "Cancelar",
+        "success": "Evaluador actualizado exitosamente",
+        "error": "Error al actualizar el evaluador"
+      },
+      "deleteConfirm": {
+        "title": "Eliminar Evaluador",
+        "content": "¿Está seguro que desea eliminar al evaluador {{name}}? Esta acción no se puede deshacer.",
+        "delete": "Eliminar",
+        "deleting": "Eliminando...",
+        "success": "Evaluador eliminado exitosamente",
+        "error": "Error al eliminar el evaluador"
+      }
+    },
+    "messages": {
+      "success": {
+        "synced": "Participantes sincronizados exitosamente",
+        "assigned": "Evaluadores asignados exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar los participantes",
+        "syncing": "Error al sincronizar los participantes",
+        "assigned": "Evaluadores asignados exitosamente",
+        "assigning": "Error al asignar evaluadores a los participantes"
+      }
+    }
+  },
+  "participants-with-evaluators": {
+    "title": "Participantes con Evaluadores",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Configurar Evaluaciones",
+      "edit": "Editar",
+      "participantsWithEvaluators": "Participantes con Evaluadores"
+    },
+    "relationships": {
+      "MANAGER": "Jefe/Gerente",
+      "PEER": "Compañero",
+      "SUBORDINATE": "Subordinado",
+      "SELF": "Autoevaluación",
+      "OTHER": "Otro"
+    },
+    "completedYes": "Completado",
+    "completedNo": "Pendiente",
+    "noEvaluators": "Sin evaluadores",
+    "table": {
+      "columns": {
+        "participantName": "Nombre del Participante",
+        "evaluators": "Evaluadores",
+        "evaluatorsCount": "Cantidad"
+      },
+      "toolbar": {
+        "search": "Buscar participantes...",
+        "filterByOrganizationalUnit": "Filtrar por unidad organizacional"
+      },
+      "filters": {
+        "search": "Búsqueda",
+        "organizationalUnit": "Unidad Organizacional"
+      },
+      "empty": {
+        "title": "No se encontraron participantes",
+        "description": "No hay participantes con evaluadores asignados a esta campaña o no coinciden con los filtros aplicados."
+      }
+    },
+    "messages": {
+      "success": {
+        "loaded": "Datos cargados exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar los participantes con evaluadores"
+      }
+    }
+  },
+  "questions": {
+    "title": "Configurar Preguntas",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Configurar Evaluaciones",
+      "edit": "Editar",
+      "questions": "Preguntas"
+    },
+    "actions": {
+      "create": "Crear Pregunta",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar Cambios",
+      "saving": "Guardando...",
+      "update": "Actualizar Pregunta",
+      "add": "Agregar",
+      "addAnother": "Agregar Otra Pregunta"
+    },
+    "table": {
+      "columns": {
+        "description": "Descripción",
+        "weight": "Peso (%)",
+        "isOptional": "Tipo",
+        "optional": "Opcional",
+        "required": "Requerida",
+        "visibleFor": "Visible Para",
+        "scale": "Escala de Evaluación"
+      },
+      "toolbar": {
+        "search": "Buscar preguntas..."
+      },
+      "filters": {
+        "keyword": "Búsqueda"
+      },
+      "empty": {
+        "title": "No se encontraron preguntas",
+        "description": "No hay preguntas configuradas para esta competencia."
+      }
+    },
+    "form": {
+      "fields": {
+        "description": "Descripción de la Pregunta",
+        "weight": "Peso (%)",
+        "scale": "Escala de Evaluación",
+        "isOptional": "Pregunta Opcional",
+        "visibleFor": "Visible Para"
+      },
+      "placeholders": {
+        "description": "Ingrese la pregunta que se mostrará en la evaluación",
+        "scale": "Seleccione una escala",
+        "visibleFor": "Seleccione quién puede ver esta pregunta"
+      },
+      "validation": {
+        "maxWeight": "El peso debe estar entre 0 y 100"
+      },
+      "questionNumber": "Pregunta {{number}}"
+    },
+    "dialogs": {
+      "add": {
+        "title": "Agregar Pregunta"
+      },
+      "edit": {
+        "title": "Editar Pregunta"
+      },
+      "delete": {
+        "title": "Eliminar Pregunta",
+        "content": "¿Está seguro que desea eliminar esta pregunta? Esta acción no se puede deshacer."
+      }
+    },
+    "editDialog": {
+      "title": "Editar Pregunta",
+      "actions": {
+        "update": "Actualizar Pregunta",
+        "saving": "Guardando...",
+        "cancel": "Cancelar"
+      },
+      "messages": {
+        "success": {
+          "updated": "Pregunta actualizada exitosamente"
+        },
+        "error": {
+          "updating": "Error al actualizar la pregunta",
+          "noId": "Se requiere el ID de la pregunta"
+        }
+      }
+    },
+    "scalePopover": {
+      "levels": "Niveles",
+      "type": "Tipo",
+      "maxValue": "Valor Máximo"
+    },
+    "messages": {
+      "success": {
+        "created": "Pregunta creada exitosamente",
+        "updated": "Pregunta actualizada exitosamente",
+        "deleted": "Pregunta eliminada exitosamente"
+      },
+      "warning": {
+        "weightSum": "La suma total del peso de todas las preguntas no es igual a 100%"
+      },
+      "error": {
+        "loading": "Error al cargar la pregunta",
+        "loadingScales": "Error al cargar las escalas",
+        "creating": "Error al crear la pregunta",
+        "updating": "Error al actualizar la pregunta",
+        "deleting": "Error al eliminar la pregunta",
+        "validation": "Por favor complete todos los campos requeridos"
+      }
+    }
+  },
+  "evaluation-responses": {
+    "title": "Mis Evaluaciones",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "evaluationResponses": "Mis Evaluaciones",
+      "myEvaluations": "Mis Evaluaciones",
+      "evaluation": "Evaluación"
+    },
+    "relationships": {
+      "MANAGER": "Jefe/Gerente",
+      "PEER": "Compañero",
+      "SUBORDINATE": "Subordinado",
+      "SELF": "Autoevaluación",
+      "OTHER": "Otro"
+    },
+    "statuses": {
+      "PENDING": "Pendiente",
+      "COMPLETED": "Completado",
+      "INACTIVE": "Inactivo"
+    },
+    "actions": {
+      "respond": "Responder",
+      "view": "Ver Evaluación",
+      "viewResults": "Ver Mis Resultados"
+    },
+    "myResults": {
+      "title": "Mis Resultados",
+      "subtitle": "Resultados de tu evaluación de desempeño",
+      "overallScore": "Puntuación General",
+      "competenciesTitle": "Resultados por Competencia",
+      "expectedLevel": "Nivel Esperado",
+      "obtainedLevel": "Nivel Obtenido",
+      "gap": "Brecha",
+      "compliance": "Cumplimiento",
+      "progress": "Progreso",
+      "breakdownByRole": "Desglose por Rol Evaluador",
+      "weight": "Peso"
+    },
+    "preview": {
+      "confidential": "(Confidencial)",
+      "participantData": "Datos del Evaluado",
+      "evaluatorData": "Datos del Evaluador",
+      "fullName": "Nombres",
+      "relationshipWithParticipant": "Relación con el evaluado",
+      "campaignInfo": "Información de la Campaña",
+      "campaignName": "Nombre de la Campaña",
+      "campaignType": "Tipo de Evaluación",
+      "status": "Estado",
+      "participants": "Participantes",
+      "participant": "Evaluado",
+      "evaluator": "Evaluador",
+      "relationship": "Relación",
+      "completed": "Completado",
+      "completedYes": "Completado",
+      "completedNo": "Pendiente",
+      "progress": "Progreso de Evaluación",
+      "questions": "preguntas",
+      "questionsAnswered": "preguntas respondidas",
+      "competences": "Competencias",
+      "competencesIndicators": "Indicadores de Competencias",
+      "objectives": "Objetivos",
+      "objectivesIndicators": "Indicadores de Objetivos",
+      "competence": "Competencia",
+      "objective": "Objetivo",
+      "question": "Pregunta",
+      "rating": "Calificación",
+      "weight": "Peso",
+      "targetValue": "Valor Objetivo",
+      "customKpi": "KPI Personalizado",
+      "optional": "Opcional",
+      "answered": "Respuesta registrada",
+      "notAnswered": "Sin responder",
+      "comments": "Comentarios",
+      "noComments": "Sin comentarios",
+      "anonymous": "Anónimo"
+    },
+    "table": {
+      "columns": {
+        "campaign": "Campaña",
+        "participant": "Participante",
+        "relationship": "Relación",
+        "deadline": "Fecha Límite",
+        "progress": "Progreso",
+        "updatedAt": "Estado"
+      },
+      "toolbar": {
+        "search": "Buscar evaluaciones...",
+        "resetFilters": "Limpiar Filtros"
+      },
+      "filters": {
+        "all": "Todos",
+        "status": "Estado",
+        "keyword": "Palabra clave"
+      },
+      "empty": {
+        "title": "No se encontraron evaluaciones",
+        "description": "No hay evaluaciones asignadas o no coinciden con los filtros aplicados."
+      }
+    },
+    "messages": {
+      "success": {
+        "loaded": "Evaluaciones cargadas exitosamente",
+        "answerSaved": "Respuesta guardada correctamente",
+        "progressSaved": "Progreso de la evaluación guardado correctamente"
+      },
+      "error": {
+        "loading": "Error al cargar las evaluaciones",
+        "loadingQuestions": "Error al cargar las preguntas",
+        "savingAnswer": "Error al guardar la respuesta"
+      },
+      "noData": "No hay datos disponibles"
+    },
+    "history": {
+      "title": "Responder Evaluación",
+      "breadcrumb": "Responder",
+      "participant": "Participante",
+      "evaluator": "Evaluador",
+      "campaign": "Campaña",
+      "progress": "Progreso",
+      "of": "de",
+      "questionsAnswered": "preguntas respondidas",
+      "section": "Sección",
+      "sections": "Secciones de Evaluación",
+      "selectSectionPrompt": "Seleccione una sección para comenzar a responder la evaluación",
+      "current": "Actual",
+      "answered": "Respondido",
+      "pending": "Pendiente",
+      "competences": "Competencias",
+      "objectives": "Objetivos",
+      "weight": "Peso",
+      "backToSections": "Volver a Secciones",
+      "noQuestions": "No hay preguntas disponibles",
+      "question": "Pregunta",
+      "completed": "completado",
+      "required": "Obligatorio",
+      "requiredQuestion": "Esta pregunta es obligatoria, por favor selecciona una respuesta",
+      "questionAlreadyAnswered": "Esta pregunta ya ha sido respondida y no puede ser modificada",
+      "comments": "Comentarios",
+      "optional": "Opcional",
+      "commentsPlaceholder": "Añade comentarios adicionales sobre tu respuesta (opcional)...",
+      "previous": "Anterior",
+      "saveAndExit": "Guardar y Continuar después",
+      "continue": "Continuar",
+      "finish": "Finalizar"
+    },
+    "objectives": {
+      "title": "Responder Evaluación de Objetivos",
+      "breadcrumb": "Evaluación de Objetivos",
+      "evaluating": "Evaluando a",
+      "totalScore": "Puntuación Total",
+      "globalPerformance": "Rendimiento Global",
+      "objectivesEvaluated": "Objetivos evaluados",
+      "objectivesDistribution": "Distribución de Objetivos",
+      "objectivesCount": "Objetivos",
+      "viewObjectives": "Ver Objetivos",
+      "objectivesList": "Lista de Objetivos",
+      "objective": "Objetivo",
+      "of": "de",
+      "weight": "Peso",
+      "targetValue": "Meta",
+      "achievedValue": "Valor Real",
+      "enterValue": "95",
+      "currentValue": "Valor actual",
+      "compliance": "Cumplimiento",
+      "customKpi": "KPI Personalizado",
+      "selectScale": "Seleccione el nivel de la escala",
+      "comments": "Comentarios",
+      "commentsPlaceholder": "Agrega tus comentarios aquí (opcional)",
+      "previous": "Anterior",
+      "saveAndNext": "Siguiente",
+      "saveAndExit": "Guardar y Salir",
+      "finish": "Finalizar",
+      "next": "Siguiente",
+      "completed": "Completado",
+      "pending": "Pendiente",
+      "backToList": "Volver al Listado",
+      "backToSummary": "Volver al Resumen",
+      "viewSummary": "Ver Resumen",
+      "completeFields": "Complete todos los campos para continuar",
+      "objectiveDescription": "Descripción del Objetivo",
+      "objectiveDescriptionHelper": "Defina de forma clara y específica lo que se espera lograr",
+      "measurementIndicator": "Indicador de Medición",
+      "measurementIndicatorHelper": "Especifique la métrica o KPI que utilizará para medir",
+      "targetValueHelper": "El valor objetivo a alcanzar (100%)",
+      "weightHelper": "Importancia relativa del objetivo",
+      "achievedValueHelper": "Resultado obtenido",
+      "evaluationResult": "Resultado de la Evaluación",
+      "evaluationScale": "Escala de Evaluación",
+      "evaluationResultDescription": "Meta: {{target}}% | Peso: {{weight}}%",
+      "objectiveCompleted": "Objetivo cumplido satisfactoriamente",
+      "complianceLevel": "Nivel de Cumplimiento",
+      "optional": "Opcional",
+      "messages": {
+        "selectScale": "Debe seleccionar un nivel de escala",
+        "enterAchievedValue": "Debe ingresar el valor alcanzado",
+        "answerSaved": "Respuesta guardada exitosamente",
+        "noObjectives": "No hay objetivos disponibles para evaluar"
+      }
+    }
+  },
+  "nine-box": {
+    "title": "Nine Box",
+    "campaignSubtitle": "Análisis de Talento y Desempeño - Campaña #{{id}}",
+    "participants": "Participantes",
+    "quadrant": "Cuadrante",
+    "noParticipants": "Sin participantes",
+    "performance": "Desempeño",
+    "potential": "Potencial",
+    "performanceAxis": "Desempeño",
+    "potentialAxis": "Potencial",
+    "performanceLabel": "Desempeño",
+    "potentialLabel": "Potencial",
+    "talentDistribution": "Distribución de Talento",
+    "types": {
+      "PERFORMANCE_90": "Evaluación 90°",
+      "PERFORMANCE_180": "Evaluación 180°",
+      "PERFORMANCE_270": "Evaluación 270°",
+      "PERFORMANCE_360": "Evaluación 360°",
+      "CLIMA_LABORAL": "Clima Laboral",
+      "OBJECTIVES": "Objetivos"
+    },
+    "statuses": {
+      "DRAFT": "Borrador",
+      "ACTIVE": "Activo",
+      "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado"
+    },
+    "relationships": {
+      "MANAGER": "Jefe/Gerente",
+      "PEER": "Compañero",
+      "SUBORDINATE": "Subordinado",
+      "SELF": "Autoevaluación",
+      "OTHER": "Otro"
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Configurar Evaluaciones",
+      "nineBox": "Nine Box",
+      "matrix": "Matrix",
+      "evaluate": "Evaluar",
+      "participants": "Participantes",
+      "create": "Nueva Evaluación",
+      "edit": "Editar"
+    },
+    "actions": {
+      "create": "Crear Evaluación",
+      "edit": "Editar",
+      "view": "Ver Nine Box",
+      "viewHistory": "Ver Historial",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar Cambios",
+      "saving": "Guardando...",
+      "update": "Actualizar Evaluación",
+      "deleteMultiple": "Eliminar Seleccionados",
+      "viewParticipants": "Ver Participantes",
+      "assingnParticipants": "Asignación de Participantes",
+      "closeCampaign": "Cerrar Campaña",
+      "closing": "Cerrando..."
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "type": "Tipo",
+        "period": "Período",
+        "status": "Estado",
+        "startDate": "Fecha Inicio",
+        "endDate": "Fecha Fin",
+        "totalCompetences": "Competencias",
+        "totalObjectives": "Objetivos",
+        "totalDepartments": "Departamentos",
+        "totalPositions": "Posiciones",
+        "totalEmployees": "Empleados"
+      },
+      "toolbar": {
+        "search": "Buscar evaluaciones...",
+        "filterByType": "Filtrar por tipo",
+        "filterByStatus": "Filtrar por estado",
+        "filterByDepartment": "Filtrar por departamento",
+        "filterByPosition": "Filtrar por posición",
+        "filterByEmployee": "Filtrar por empleado"
+      },
+      "filters": {
+        "all": "Todos",
+        "status": "Estado",
+        "type": "Tipo",
+        "keyword": "Palabra clave",
+        "department": "Departamento",
+        "position": "Posición",
+        "employee": "Empleado"
+      },
+      "empty": {
+        "title": "No se encontraron evaluaciones",
+        "description": "No hay evaluaciones creadas o no coinciden con los filtros aplicados."
+      }
+    },
+    "form": {
+      "sections": {
+        "basicInfo": "Información Básica",
+        "basicInfoSubtitle": "Información general de la evaluación",
+        "config": "Configuración",
+        "configSubtitle": "Opciones adicionales de configuración",
+        "dates": "Fechas de la Evaluación",
+        "datesSubtitle": "Define el período de evaluación",
+        "competences": "Competencias",
+        "competencesSubtitle": "Seleccione las competencias a evaluar",
+        "objectives": "Objetivos",
+        "objectivesSubtitle": "Seleccione los objetivos a evaluar",
+        "scope": "Alcance",
+        "scopeSubtitle": "Define quiénes participarán en la evaluación",
+        "evaluators": "Configuración de Evaluadores",
+        "evaluatorsSubtitle": "Configure a los evaluadores designados",
+        "loading": "Cargando..."
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre de la Evaluación",
+          "helperText": "Ingrese un nombre descriptivo para la evaluación",
+          "required": "El nombre es requerido"
+        },
+        "description": {
+          "label": "Descripción",
+          "helperText": "Describa el propósito de esta evaluación",
+          "required": "La descripción es requerida"
+        },
+        "type": {
+          "label": "Tipo de Evaluación",
+          "helperText": "Seleccione el tipo de evaluación",
+          "required": "El tipo es requerido"
+        },
+        "period": {
+          "label": "Período",
+          "helperText": "Ejemplo: 2024-Q4",
+          "required": "El período es requerido"
+        },
+        "autoAssign": {
+          "label": "Asignación Automática",
+          "helperText": "Asignar automáticamente evaluadores"
+        },
+        "editableEvaluators": {
+          "label": "Evaluadores Editables",
+          "helperText": "Permitir editar evaluadores después de la creación"
+        },
+        "startDate": {
+          "label": "Fecha de Inicio",
+          "helperText": "Fecha de inicio de la evaluación",
+          "required": "La fecha de inicio es requerida"
+        },
+        "endDate": {
+          "label": "Fecha de Fin",
+          "helperText": "Fecha de fin de la evaluación",
+          "required": "La fecha de fin es requerida"
+        },
+        "competences": {
+          "label": "Competencias",
+          "helperText": "Seleccione las competencias a evaluar",
+          "addButton": "Agregar Competencia",
+          "emptyMessage": "No hay competencias agregadas",
+          "weight": "Peso (%)",
+          "select": "Seleccionar competencia",
+          "configureQuestions": "Preguntas"
+        },
+        "objectives": {
+          "label": "Objetivos",
+          "helperText": "Seleccione los objetivos a evaluar",
+          "addButton": "Agregar Objetivo",
+          "emptyMessage": "No hay objetivos agregados",
+          "weight": "Peso (%)",
+          "targetValue": "Valor Objetivo",
+          "customKpi": "KPI Personalizado",
+          "select": "Seleccionar objetivo"
+        },
+        "departments": {
+          "label": "Departamentos",
+          "helperText": "Seleccione los departamentos a evaluar",
+          "placeholder": "Buscar departamentos..."
+        },
+        "positions": {
+          "label": "Posiciones",
+          "helperText": "Seleccione las posiciones a evaluar",
+          "placeholder": "Buscar posiciones..."
+        },
+        "employees": {
+          "label": "Empleados",
+          "helperText": "Seleccione los empleados a evaluar",
+          "placeholder": "Buscar empleados..."
+        },
+        "evaluatorConfigs": {
+          "label": "Configuración de Evaluadores",
+          "helperText": "Configure los tipos de evaluadores",
+          "addButton": "Agregar Evaluador",
+          "emptyMessage": "No hay evaluadores configurados",
+          "relationship": "Relación",
+          "weight": "Peso (%)",
+          "maxEvaluators": "Máx. Evaluadores",
+          "enabled": "Habilitado",
+          "select": "Seleccionar relación"
+        }
+      },
+      "validation": {
+        "dateRange": "La fecha de fin debe ser posterior a la fecha de inicio",
+        "minWeight": "El peso debe ser mayor a 0",
+        "maxWeight": "El peso no puede exceder 100",
+        "totalWeight": "La suma de los pesos debe ser 100",
+        "minEvaluators": "Debe haber al menos 1 evaluador"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Evaluación",
+        "content": "¿Está seguro que desea eliminar esta evaluación? Esta acción no se puede deshacer.",
+        "contentMultiple": "¿Está seguro que desea eliminar {{count}} evaluaciones? Esta acción no se puede deshacer."
+      },
+      "addCompetence": {
+        "title": "Agregar Competencia",
+        "add": "Agregar",
+        "cancel": "Cancelar"
+      },
+      "addObjective": {
+        "title": "Agregar Objetivo",
+        "add": "Agregar",
+        "cancel": "Cancelar"
+      },
+      "addEvaluatorConfig": {
+        "title": "Agregar Configuración de Evaluador",
+        "add": "Agregar",
+        "cancel": "Cancelar"
+      },
+      "deleteItem": {
+        "title": "Eliminar",
+        "content": "¿Está seguro que desea eliminar este elemento?"
+      },
+      "configureQuestions": {
+        "title": "Guardar y Configurar Preguntas",
+        "content": "Para configurar las preguntas de esta competencia, es necesario guardar primero la evaluación. Esto guardará toda la información que has ingresado hasta el momento.",
+        "competence": "Competencia",
+        "continue": "Guardar y Continuar",
+        "saving": "Guardando...",
+        "cancel": "Cancelar"
+      },
+      "closeCampaign": {
+        "content": "¿Está seguro que desea cerrar la campaña {{name}}?",
+        "warning": "Esta acción guardará los resultados en el historial y la campaña no podrá ser modificada posteriormente."
+      }
+    },
+    "history": {
+      "title": "Historial Nine Box",
+      "subtitle": "Análisis de Talento y Desempeño - Campaña #{{id}}",
+      "totalParticipants": "Participantes Totales"
+    },
+    "messages": {
+      "success": {
+        "created": "Evaluación creada exitosamente",
+        "updated": "Evaluación actualizada exitosamente",
+        "deleted": "Evaluación eliminada exitosamente",
+        "deletedMultiple": "Evaluaciones eliminadas exitosamente",
+        "campaignClosed": "Campaña cerrada y resultados guardados en el historial"
+      },
+      "error": {
+        "loading": "Error al cargar los datos del Nine Box",
+        "loadError": "Error al cargar la evaluación",
+        "loadingHistory": "Error al cargar el historial del Nine Box",
+        "saving": "Error al guardar la evaluación",
+        "deleting": "Error al eliminar la evaluación",
+        "deletingMultiple": "Error al eliminar las evaluaciones",
+        "notFound": "Evaluación no encontrada",
+        "noData": "No se encontraron datos para esta campaña",
+        "closingCampaign": "Error al cerrar la campaña"
+      }
+    }
+  },
+  "configure-tests": {
+    "title": "Configurar Plantillas",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureTests": "Plantillas",
+      "create": "Nueva Plantilla",
+      "edit": "Editar"
+    },
+    "actions": {
+      "create": "Crear Plantilla",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar Cambios",
+      "saving": "Guardando...",
+      "update": "Actualizar Plantilla",
+      "deleteMultiple": "Eliminar Seleccionados"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "type": "Tipo",
+        "isActive": "Estado",
+        "totalCompetences": "Competencias",
+        "totalObjectives": "Objetivos",
+        "createdAt": "Fecha de Creación"
+      },
+      "toolbar": {
+        "search": "Buscar plantillas...",
+        "filterByType": "Filtrar por tipo"
+      },
+      "filters": {
+        "keyword": "Búsqueda",
+        "type": "Tipo"
+      },
+      "empty": {
+        "title": "Sin Plantillas",
+        "description": "No se encontraron plantillas"
+      }
+    },
+    "cards": {
+      "status": {
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "noDescription": "Sin descripción",
+      "competences": "Competencias",
+      "objectives": "Objetivos",
+      "empty": {
+        "title": "No hay plantillas",
+        "subtitle": "Crea tu primera plantilla para comenzar"
+      }
+    },
+    "form": {
+      "sections": {
+        "basicInfo": "Información Básica",
+        "competences": "Competencias",
+        "objectives": "Objetivos",
+        "loading": "Cargando..."
+      },
+      "fields": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "type": "Tipo",
+        "isActive": "Activo",
+        "coverImage": "Imagen de Portada",
+        "objectiveScale": "Escala de Objetivos",
+        "competences": "Competencias",
+        "objectives": "Objetivos",
+        "weight": "Peso",
+        "questions": "Preguntas",
+        "target": "Meta",
+        "kpi": "KPI Personalizado",
+        "competence": "Competencia"
+      },
+      "placeholders": {
+        "name": "Ingrese el nombre de la plantilla",
+        "description": "Ingrese la descripción",
+        "type": "Seleccione el tipo",
+        "objectiveScale": "Seleccione la escala"
+      },
+      "validation": {
+        "nameRequired": "El nombre es requerido",
+        "typeRequired": "El tipo es requerido"
+      },
+      "messages": {
+        "noCompetences": "No hay competencias agregadas"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Plantilla",
+        "content": "¿Está seguro que desea eliminar esta plantilla? Esta acción no se puede deshacer.",
+        "contentMultiple": "¿Está seguro que desea eliminar {{count}} plantillas? Esta acción no se puede deshacer."
+      },
+      "addCompetence": {
+        "title": "Agregar Competencia",
+        "add": "Agregar",
+        "cancel": "Cancelar"
+      },
+      "addObjective": {
+        "title": "Agregar Objetivo",
+        "add": "Agregar",
+        "cancel": "Cancelar",
+        "weightHelper": "El peso debe estar entre 0 y 100",
+        "objective": "Objetivo",
+        "selectObjective": "Seleccionar objetivo",
+        "targetValue": "Valor Objetivo",
+        "kpi": "KPI Personalizado"
+      },
+      "deleteItem": {
+        "title": "Eliminar Elemento",
+        "content": "¿Está seguro que desea eliminar este elemento?"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Plantilla creada exitosamente",
+        "updated": "Plantilla actualizada exitosamente",
+        "deleted": "Plantilla eliminada exitosamente",
+        "deletedMultiple": "Plantillas eliminadas exitosamente"
+      },
+      "error": {
+        "create": "Error al crear la plantilla",
+        "update": "Error al actualizar la plantilla",
+        "delete": "Error al eliminar la plantilla",
+        "loading": "Error al cargar la plantilla",
+        "notFound": "Plantilla no encontrada"
+      }
+    }
+  },
+  "nine-box-settings": {
+    "title": "Configuración Nine Box",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "nineBox": "Nine Box",
+      "settings": "Configuración"
+    },
+    "actions": {
+      "add": "Agregar Configuración",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "update": "Actualizar",
+      "deleteMultiple": "Eliminar Seleccionados"
+    },
+    "columns": {
+      "label": "Nombre",
+      "color": "Color",
+      "description": "Descripción",
+      "recommendedAction": "Acción Recomendada",
+      "minScoreX": "Puntuación Mín X",
+      "maxScoreX": "Puntuación Máx X"
+    },
+    "toolbar": {
+      "search": "Buscar configuraciones..."
+    },
+    "filters": {
+      "keyword": "Búsqueda",
+      "all": "Todos"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Configuración"
+      },
+      "edit": {
+        "title": "Editar Configuración"
+      },
+      "delete": {
+        "title": "Eliminar Configuración",
+        "content": "¿Está seguro que desea eliminar esta configuración?",
+        "contentMultiple": "¿Está seguro que desea eliminar {{count}} configuraciones? Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Configuración creada exitosamente",
+        "updated": "Configuración actualizada exitosamente",
+        "deleted": "Configuración eliminada exitosamente",
+        "deletedMultiple": "Configuraciones eliminadas exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar las configuraciones",
+        "creating": "Error al crear la configuración",
+        "updating": "Error al actualizar la configuración",
+        "deleting": "Error al eliminar la configuración",
+        "deletingMultiple": "Error al eliminar las configuraciones",
+        "validation": "Por favor complete todos los campos requeridos"
+      }
+    }
+  }
+}

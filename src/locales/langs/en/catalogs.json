@@ -1,0 +1,1134 @@
+{
+  "common": {
+    "close": "Close",
+    "loading": "Loading...",
+    "noData": "No data",
+    "unnamed": "Unnamed",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "main": {
+    "catalogsManagement": "Catalogs Management",
+    "subtitle": "Manage and organize the catalogs of your enterprise architecture",
+    "viewAction": "View Catalog",
+    "items": {
+      "actionTypes": {
+        "label": "Action Types",
+        "description": "Define and manage the different types of actions within the enterprise architecture."
+      },
+      "competenciesClasses": {
+        "label": "Competency Classes",
+        "description": "Classify and organize competencies into different categories for better management."
+      },
+      "competencies": {
+        "label": "Competencies",
+        "description": "Manage the competencies required for roles and responsibilities within the organization."
+      },
+      "dataTypes": {
+        "label": "Data Types",
+        "description": "Define and manage the different types of data used in the enterprise architecture."
+      },
+      "jobTypes": {
+        "label": "Job Types",
+        "description": "Define and manage the different types of jobs within the organization."
+      },
+      "measureActionTypes": {
+        "label": "Measure Action Types",
+        "description": "Define and manage the different types of measure actions within the enterprise architecture."
+      },
+      "objectiveTypes": {
+        "label": "Objective Types",
+        "description": "Define and manage the different types of objectives within the organization."
+      },
+      "organizationalUnitTypes": {
+        "label": "Organizational Unit Types",
+        "description": "Define and manage the different types of organizational units."
+      },
+      "processTypes": {
+        "label": "Process Types",
+        "description": "Define and manage the different types of processes within the enterprise architecture."
+      },
+      "providers": {
+        "label": "Providers",
+        "description": "Manage the different providers within the enterprise architecture."
+      },
+      "riskTypes": {
+        "label": "Risk Types",
+        "description": "Define and manage the different types of risks within the organization."
+      },
+      "systemTypes": {
+        "label": "System Types",
+        "description": "Define and manage the different types of systems within the enterprise architecture."
+      },
+      "technologyTypes": {
+        "label": "Technology Types",
+        "description": "Define and manage the different types of technologies used within the organization."
+      },
+      "toolTypes": {
+        "label": "Tool Types",
+        "description": "Define and manage the different types of tools used within the enterprise architecture."
+      },
+      "topics": {
+        "label": "Topics",
+        "description": "Manage the different topics related to enterprise architecture."
+      },
+      "domains": {
+        "label": "Domains",
+        "description": "Manage the different domains within the enterprise architecture."
+      },
+      "dateControls": {
+        "label": "Date Controls",
+        "description": "Define and manage date control settings within the enterprise architecture."
+      }
+    }
+  },
+  "action-types": {
+    "title": "Action Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete",
+      "configure": "Configuration",
+      "back": "Back"
+    },
+    "toolbar": {
+      "search": "Search action types..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name",
+      "nomenclature": "Nomenclature",
+      "color": "Color"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Action Type"
+      },
+      "edit": {
+        "title": "Edit Action Type"
+      },
+      "columns": {
+        "name": "Name",
+        "color": "Color"
+      },
+      "delete": {
+        "title": "Delete Action Type",
+        "message": "Are you sure you want to delete this action type?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Action type created successfully.",
+        "updated": "Action type updated successfully.",
+        "deleted": "Action type deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching action types.",
+        "create": "Error creating action type.",
+        "update": "Error updating action type.",
+        "delete": "Error deleting action type."
+      }
+    }
+  },
+  "competencies-classes": {
+    "title": "Competency Classes",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search competency classes..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Competency Class"
+      },
+      "edit": {
+        "title": "Edit Competency Class"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Delete Competency Class",
+        "message": "Are you sure you want to delete this competency class?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Competency class created successfully.",
+        "updated": "Competency class updated successfully.",
+        "deleted": "Competency class deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching competency classes.",
+        "creating": "Error creating competency class.",
+        "updating": "Error updating competency class.",
+        "deleting": "Error deleting competency class."
+      }
+    }
+  },
+  "competencies": {
+    "title": "Competencies",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search competencies..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name",
+      "description": "Description",
+      "code": "Code",
+      "type": "Type"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Competency"
+      },
+      "edit": {
+        "title": "Edit Competency"
+      },
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "code": "Code",
+        "type": "Type"
+      },
+      "delete": {
+        "title": "Delete Competency",
+        "message": "Are you sure you want to delete this competency?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Competency created successfully.",
+        "updated": "Competency updated successfully.",
+        "deleted": "Competency deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching competencies.",
+        "creating": "Error creating competency.",
+        "updating": "Error updating competency.",
+        "deleting": "Error deleting competency."
+      }
+    }
+  },
+  "data-types": {
+    "title": "Data Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search data types..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Data Type"
+      },
+      "edit": {
+        "title": "Edit Data Type"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Delete Data Type",
+        "message": "Are you sure you want to delete this data type?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Data type created successfully.",
+        "updated": "Data type updated successfully.",
+        "deleted": "Data type deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching data types.",
+        "creating": "Error creating data type.",
+        "updating": "Error updating data type.",
+        "deleting": "Error deleting data type."
+      }
+    }
+  },
+  "job-types": {
+    "title": "Job Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search job types..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name",
+      "background": "Background",
+      "internalExternal": "Internal/External",
+      "user": "User",
+      "letter": "Letter"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Job Type"
+      },
+      "edit": {
+        "title": "Edit Job Type"
+      },
+      "columns": {
+        "name": "Name",
+        "background": "Background",
+        "internalExternal": "Internal/External",
+        "user": "User",
+        "letter": "Letter"
+      },
+      "delete": {
+        "title": "Delete Job Type",
+        "message": "Are you sure you want to delete this job type?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Job type created successfully.",
+        "updated": "Job type updated successfully.",
+        "deleted": "Job type deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching job types.",
+        "creating": "Error creating job type.",
+        "updating": "Error updating job type.",
+        "deleting": "Error deleting job type."
+      }
+    }
+  },
+  "measure-action-types": {
+    "title": "Measure Action Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search measure action types..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Measure Action Type"
+      },
+      "edit": {
+        "title": "Edit Measure Action Type"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Delete Measure Action Type",
+        "message": "Are you sure you want to delete this measure action type?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Measure action type created successfully.",
+        "updated": "Measure action type updated successfully.",
+        "deleted": "Measure action type deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching measure action types.",
+        "creating": "Error creating measure action type.",
+        "updating": "Error updating measure action type.",
+        "deleting": "Error deleting measure action type."
+      }
+    }
+  },
+  "objective-types": {
+    "title": "Objective Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search objective types..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "typeName": "Type Name",
+      "typeCode": "Type Code"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Objective Type"
+      },
+      "edit": {
+        "title": "Edit Objective Type"
+      },
+      "columns": {
+        "typeName": "Type Name",
+        "typeCode": "Type Code"
+      },
+      "delete": {
+        "title": "Delete Objective Type",
+        "message": "Are you sure you want to delete this objective type?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Objective type created successfully.",
+        "updated": "Objective type updated successfully.",
+        "deleted": "Objective type deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching objective types.",
+        "creating": "Error creating objective type.",
+        "updating": "Error updating objective type.",
+        "deleting": "Error deleting objective type."
+      }
+    }
+  },
+  "organizational-unit-types": {
+    "title": "Organizational Unit Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search organizational unit types..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name",
+      "background": "Background",
+      "internalExternal": "Internal/External",
+      "letter": "Letter"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Organizational Unit Type"
+      },
+      "edit": {
+        "title": "Edit Organizational Unit Type"
+      },
+      "columns": {
+        "name": "Name",
+        "background": "Background",
+        "internalExternal": "Internal/External",
+        "letter": "Letter"
+      },
+      "delete": {
+        "title": "Delete Organizational Unit Type",
+        "message": "Are you sure you want to delete this organizational unit type?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Organizational unit type created successfully.",
+        "updated": "Organizational unit type updated successfully.",
+        "deleted": "Organizational unit type deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching organizational unit types.",
+        "creating": "Error creating organizational unit type.",
+        "updating": "Error updating organizational unit type.",
+        "deleting": "Error deleting organizational unit type."
+      }
+    }
+  },
+  "process-types": {
+    "title": "Process Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search process types..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name",
+      "level": "Level"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Process Type"
+      },
+      "edit": {
+        "title": "Edit Process Type"
+      },
+      "columns": {
+        "name": "Name",
+        "level": "Level"
+      },
+      "delete": {
+        "title": "Delete Process Type",
+        "message": "Are you sure you want to delete this process type?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Process type created successfully.",
+        "updated": "Process type updated successfully.",
+        "deleted": "Process type deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching process types.",
+        "creating": "Error creating process type.",
+        "updating": "Error updating process type.",
+        "deleting": "Error deleting process type."
+      }
+    }
+  },
+  "providers": {
+    "title": "Providers",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search providers..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name",
+      "contact": "Contact",
+      "supportName": "Support Name",
+      "supportEmail": "Support Email",
+      "supportPhone": "Support Phone",
+      "contractualName": "Contractual Name",
+      "contractualEmail": "Contractual Email",
+      "contractualPhone": "Contractual Phone"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Provider"
+      },
+      "edit": {
+        "title": "Edit Provider"
+      },
+      "columns": {
+        "name": "Name",
+        "contact": "Contact",
+        "supportName": "Support Name",
+        "supportEmail": "Support Email",
+        "supportPhone": "Support Phone",
+        "contractualName": "Contractual Name",
+        "contractualEmail": "Contractual Email",
+        "contractualPhone": "Contractual Phone"
+      },
+      "delete": {
+        "title": "Delete Provider",
+        "message": "Are you sure you want to delete this provider?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Provider created successfully.",
+        "updated": "Provider updated successfully.",
+        "deleted": "Provider deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching providers.",
+        "creating": "Error creating provider.",
+        "updating": "Error updating provider.",
+        "deleting": "Error deleting provider."
+      }
+    }
+  },
+  "risk-types": {
+    "title": "Risk Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete",
+      "configure": "Configuration",
+      "viewMap": "View Risk Map"
+    },
+    "toolbar": {
+      "search": "Search risk types..."
+    },
+    "map": {
+      "breadcrumb": "Risk Map",
+      "view": "View Risk Map",
+      "heading": "Risks Map",
+      "columns": {
+        "riskLevel": "Risk Level",
+        "probabilityLevel": "Probability Level"
+      }
+    },
+    "tolerance": {
+      "panelTitle": "Risk Tolerance Levels",
+      "columns": {
+        "valorization": "Risk Valorization",
+        "acceptance": "Risk Acceptance"
+      },
+      "fields": {
+        "name": "Name",
+        "color": "Color",
+        "initial": "Initial",
+        "final": "Final"
+      },
+      "add": "Add level",
+      "messages": {
+        "updated": "Level updated",
+        "created": "Level created",
+        "errorUpdating": "Error updating level",
+        "errorCreating": "Error creating level"
+      },
+      "empty": "No levels available"
+    },
+    "configure": {
+      "title": "Configure risk type",
+      "probability": "Probability Levels",
+      "impact": "Impact Levels",
+      "tolerance": "Risk Tolerance Levels",
+      "deficiency": "Deficiency Levels"
+    },
+    "levels": {
+      "probability": {
+        "panelTitle": "Probability Levels",
+        "add": "Add Level",
+        "columns": {
+          "name": "Name of Level",
+          "description": "Level Description",
+          "value": "Value in the Scale",
+          "options": "Options"
+        },
+        "fields": {
+          "name": "Name of Level",
+          "description": "Level Description",
+          "value": "Value"
+        },
+        "created": "Probability level created",
+        "updated": "Probability level updated",
+        "deleted": "Probability level deleted",
+        "createError": "Error creating probability level",
+        "updateError": "Error updating probability level",
+        "deleteError": "Error deleting probability level",
+        "validation": "Name is required",
+        "valueValidation": "Value is required"
+      },
+      "impact": {
+        "panelTitle": "Impact Levels",
+        "add": "Add Level",
+        "columns": {
+          "name": "Impact Name",
+          "description": "Impact Description",
+          "value": "Value in the Scale",
+          "options": "Options"
+        },
+        "fields": {
+          "name": "Impact Name",
+          "description": "Impact Description",
+          "value": "Value"
+        },
+        "created": "Impact level created",
+        "updated": "Impact level updated",
+        "deleted": "Impact level deleted",
+        "createError": "Error creating impact level",
+        "updateError": "Error updating impact level",
+        "deleteError": "Error deleting impact level",
+        "validation": "Name is required",
+        "valueValidation": "Value is required"
+      },
+      "deficiency": {
+        "panelTitle": "Deficiency Levels",
+        "add": "Add Level",
+        "columns": {
+          "name": "Deficiency Name",
+          "description": "Description",
+          "value": "Value",
+          "options": "Options"
+        },
+        "fields": {
+          "name": "Deficiency Name",
+          "description": "Description",
+          "value": "Value"
+        },
+        "created": "Deficiency level created",
+        "updated": "Deficiency level updated",
+        "deleted": "Deficiency level deleted",
+        "createError": "Error creating deficiency level",
+        "updateError": "Error updating deficiency level",
+        "deleteError": "Error deleting deficiency level",
+        "validation": "Name is required",
+        "valueValidation": "Value is required"
+      }
+    }
+  },
+  "system-types": {
+    "title": "System Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search system types..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create System Type"
+      },
+      "edit": {
+        "title": "Edit System Type"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Delete System Type",
+        "message": "Are you sure you want to delete this system type?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "System type created successfully.",
+        "updated": "System type updated successfully.",
+        "deleted": "System type deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching system types.",
+        "creating": "Error creating system type.",
+        "updating": "Error updating system type.",
+        "deleting": "Error deleting system type."
+      }
+    }
+  },
+  "technology-types": {
+    "title": "Technology Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search technology types..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Technology Type"
+      },
+      "edit": {
+        "title": "Edit Technology Type"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Delete Technology Type",
+        "message": "Are you sure you want to delete this technology type?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Technology type created successfully.",
+        "updated": "Technology type updated successfully.",
+        "deleted": "Technology type deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching technology types.",
+        "creating": "Error creating technology type.",
+        "updating": "Error updating technology type.",
+        "deleting": "Error deleting technology type."
+      }
+    }
+  },
+  "tool-types": {
+    "title": "Tool Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search tool types..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Tool Type"
+      },
+      "edit": {
+        "title": "Edit Tool Type"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Delete Tool Type",
+        "message": "Are you sure you want to delete this tool type?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tool type created successfully.",
+        "updated": "Tool type updated successfully.",
+        "deleted": "Tool type deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching tool types.",
+        "creating": "Error creating tool type.",
+        "updating": "Error updating tool type.",
+        "deleting": "Error deleting tool type."
+      }
+    }
+  },
+  "topics": {
+    "title": "Topics",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search topics..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Topic"
+      },
+      "edit": {
+        "title": "Edit Topic"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Delete Topic",
+        "message": "Are you sure you want to delete this topic?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Topic created successfully.",
+        "updated": "Topic updated successfully.",
+        "deleted": "Topic deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching topics.",
+        "creating": "Error creating topic.",
+        "updating": "Error updating topic.",
+        "deleting": "Error deleting topic."
+      }
+    }
+  },
+  "domains": {
+    "title": "Domains",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search domains..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name",
+      "code": "Code",
+      "color": "Color",
+      "corporateScope": "Corporate Scope",
+      "owner": "Owner",
+      "admin": "Admin"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Domain"
+      },
+      "edit": {
+        "title": "Edit Domain"
+      },
+      "columns": {
+        "name": "Name",
+        "code": "Code",
+        "color": "Color",
+        "corporateScope": "Corporate Scope",
+        "owner": "Owner",
+        "admin": "Admin"
+      },
+      "delete": {
+        "title": "Delete Domain",
+        "message": "Are you sure you want to delete this domain?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Domain created successfully.",
+        "updated": "Domain updated successfully.",
+        "deleted": "Domain deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching domains.",
+        "creating": "Error creating domain.",
+        "updating": "Error updating domain.",
+        "deleting": "Error deleting domain."
+      }
+    }
+  },
+  "date-controls": {
+    "title": "Date Controls",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search date controls..."
+    },
+    "filters": {
+      "all": "All",
+      "keyword": "Keyword"
+    },
+    "columns": {
+      "name": "Name",
+      "alertDays": "Alert Days",
+      "color": "Color"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Date Control"
+      },
+      "edit": {
+        "title": "Edit Date Control"
+      },
+      "columns": {
+        "name": "Name",
+        "alertDays": "Alert Days",
+        "color": "Color"
+      },
+      "delete": {
+        "title": "Delete Date Control",
+        "message": "Are you sure you want to delete this date control?",
+        "content": "This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Date control created successfully.",
+        "updated": "Date control updated successfully.",
+        "deleted": "Date control deleted successfully."
+      },
+      "error": {
+        "fetch": "Error fetching date controls.",
+        "create": "Error creating date control.",
+        "update": "Error updating date control.",
+        "delete": "Error deleting date control."
+      }
+    }
+  }
+}

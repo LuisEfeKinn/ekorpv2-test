@@ -1,0 +1,926 @@
+{
+  "learning-objects": {
+    "title": "Módulos de Aprendizaje",
+    "user-title": "Mis Módulos de Aprendizaje",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "learningObjects": "Módulos de Aprendizaje",
+      "list": "Lista de Módulos de Aprendizaje",
+      "create": "Crear Módulo de Aprendizaje",
+      "edit": "Editar Módulo de Aprendizaje"
+    },
+    "actions": {
+      "add": "Agregar Módulo de Aprendizaje",
+      "edit": "Editar Módulo de Aprendizaje",
+      "delete": "Eliminar Módulo de Aprendizaje",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "create": "Crear Módulo de Aprendizaje",
+      "update": "Actualizar Módulo de Aprendizaje",
+      "search": "Buscar módulos de aprendizaje...",
+      "clear": "Limpiar",
+      "back": "Volver",
+      "downloadAllCertificates": "Descargar Todos los Certificados",
+      "addCourse": "Agregar Curso"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "createdAt": "Creado En",
+        "updatedAt": "Actualizado En",
+        "actions": "Acciones"
+      },
+      "toolbar": {
+        "search": "Buscar módulos de aprendizaje...",
+        "sortBy": "Ordenar por",
+        "learningPath": "Ruta de Aprendizaje"
+      },
+      "order": {
+        "nameAsc": "Nombre (A-Z)",
+        "nameDesc": "Nombre (Z-A)",
+        "orderAsc": "Orden (Ascendente)",
+        "orderDesc": "Orden (Descendente)",
+        "createdAtAsc": "Más antiguos",
+        "createdAtDesc": "Más recientes",
+        "productNameAsc": "Nombre del Curso (A-Z)",
+        "productNameDesc": "Nombre del Curso (Z-A)",
+        "learningPathNameAsc": "Ruta de Aprendizaje (A-Z)",
+        "learningPathNameDesc": "Ruta de Aprendizaje (Z-A)",
+        "progressAsc": "Progreso (Bajo a Alto)",
+        "progressDesc": "Progreso (Alto a Bajo)",
+        "enrolledAtAsc": "Fecha de Inscripción (Más antiguos)",
+        "enrolledAtDesc": "Fecha de Inscripción (Más recientes)"
+      },
+      "filters": {
+        "status": "Estado:",
+        "keyword": "Palabra clave:",
+        "all": "Todos",
+        "inProgress": "Cursos por Completar",
+        "completed": "Cursos Finalizados",
+        "certified": "Certificados",
+        "learningPath": "Ruta de Aprendizaje"
+      },
+      "emptyState": {
+        "noData": "No se encontraron módulos de aprendizaje",
+        "noResults": "No se encontraron resultados para su búsqueda"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "placeholder": "Ingrese el nombre del módulo de aprendizaje",
+          "helperText": "Ingrese el nombre del módulo de aprendizaje",
+          "required": "El nombre es obligatorio"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Ingrese una descripción detallada",
+          "helperText": "Describe el contenido y objetivos del módulo de aprendizaje",
+          "required": "La descripción es obligatoria",
+          "min": "La descripción debe tener al menos 10 caracteres"
+        },
+        "duration": {
+          "label": "Duración (Horas)",
+          "placeholder": "Ej: 1",
+          "helperText": "Tiempo estimado para completar el módulo",
+          "required": "La duración es obligatoria",
+          "min": "La duración debe ser mayor a 0"
+        },
+        "tags": {
+          "label": "Etiquetas",
+          "placeholder": "Ingrese etiquetas presionando Enter",
+          "helperText": "Palabras clave para facilitar la búsqueda"
+        },
+        "category": {
+          "label": "Categoría",
+          "placeholder": "Seleccione una categoría",
+          "helperText": "Categoría temática del módulo de aprendizaje",
+          "required": "La categoría es obligatoria"
+        },
+        "difficultyLevel": {
+          "label": "Nivel de Dificultad",
+          "placeholder": "Seleccione un nivel",
+          "helperText": "Nivel de complejidad del contenido",
+          "required": "El nivel de dificultad es obligatorio"
+        },
+        "courseLms": {
+          "label": "Curso LMS",
+          "placeholder": "Buscar y seleccionar curso...",
+          "helperText": "Curso al que pertenece este módulo",
+          "required": "El curso LMS es obligatorio",
+          "noOptions": "No se encontraron cursos"
+        },
+        "price": {
+          "label": "Precio",
+          "placeholder": "0.00",
+          "helperText": "Precio en la moneda configurada",
+          "required": "El precio es obligatorio",
+          "min": "El precio debe ser mayor o igual a 0"
+        },
+        "priceDiscount": {
+          "label": "Precio con Descuento",
+          "placeholder": "0.00",
+          "helperText": "Precio promocional (opcional)",
+          "min": "El precio con descuento debe ser mayor o igual a 0"
+        },
+        "isFree": {
+          "label": "Gratuito",
+          "helperText": "Marque si el módulo es de acceso gratuito"
+        },
+        "isActive": {
+          "label": "Activo",
+          "helperText": "Marque si el módulo está disponible para los estudiantes"
+        },
+        "order": {
+          "label": "Orden",
+          "placeholder": "1"
+        },
+        "imageUrl": {
+          "label": "Imagen del Paquete",
+          "placeholder": "Sube la imagen del paquete de aprendizaje",
+          "helperText": "Imagen principal que representará el paquete de aprendizaje",
+          "preview": "Vista previa:"
+        },
+        "selectCourse": "Seleccionar Curso",
+        "searchCourse": "Buscar curso..."
+      },
+      "sections": {
+        "details": "Detalles del Módulo de Aprendizaje",
+        "basicInfo": "Información Básica",
+        "classification": "Clasificación",
+        "pricing": "Precios",
+        "settings": "Configuración",
+        "products": "Cursos del Paquete"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar",
+        "content": "¿Está seguro de que desea eliminar este módulo de aprendizaje?",
+        "contentMultiple": "¿Está seguro de que desea eliminar {{count}} elementos?",
+        "confirm": "Eliminar"
+      },
+      "unsavedChanges": {
+        "title": "Cambios No Guardados",
+        "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+        "confirm": "Salir sin guardar"
+      }
+    },
+    "messages": {
+      "loading": "Cargando módulos de aprendizaje...",
+      "saving": "Guardando...",
+      "loadError": "Error al cargar el módulo de aprendizaje",
+      "saveError": "Error al guardar el módulo de aprendizaje. Por favor, inténtelo de nuevo.",
+      "notFound": "Módulo de aprendizaje no encontrado",
+      "createSuccess": "¡Módulo de aprendizaje creado con éxito!",
+      "updateSuccess": "¡Módulo de aprendizaje actualizado con éxito!",
+      "noProducts": "No hay cursos agregados. Haz clic en \"Agregar Curso\" para comenzar.",
+      "success": {
+        "created": "Módulo de aprendizaje creado con éxito",
+        "updated": "Módulo de aprendizaje actualizado con éxito",
+        "deleted": "Módulo de aprendizaje eliminado con éxito",
+        "deletedMultiple": "Módulos de aprendizaje eliminados con éxito"
+      },
+      "error": {
+        "loading": "Error al cargar módulos de aprendizaje",
+        "saving": "Error al guardar el módulo de aprendizaje. Por favor, inténtelo de nuevo.",
+        "deleting": "Error al eliminar el módulo de aprendizaje",
+        "deletingMultiple": "Error al eliminar módulos de aprendizaje",
+        "notFound": "Módulo de aprendizaje no encontrado",
+        "loadingCategories": "Error al cargar categorías",
+        "loadingLevels": "Error al cargar niveles",
+        "loadingCourses": "Error al cargar cursos",
+        "notFoundDescription": "El módulo de aprendizaje que buscas no existe o ha sido eliminado."
+      }
+    },
+    "status": {
+      "all": "Todos",
+      "active": "Activos",
+      "inactive": "Inactivos"
+    },
+    "tooltips": {
+      "edit": "Editar módulo de aprendizaje",
+      "delete": "Eliminar módulo de aprendizaje",
+      "quickEdit": "Edición rápida"
+    },
+    "card": {
+      "free": "Gratis",
+      "noName": "Sin nombre",
+      "noDescription": "Sin descripción",
+      "noCategory": "Sin categoría",
+      "noDifficulty": "Sin nivel",
+      "course": "CURSO",
+      "theme": "Tema:",
+      "virtual": "Virtual",
+      "rate": "¿Calificar?",
+      "goToCourse": "Ir al Curso",
+      "getCertificate": "Obtener Certificado",
+      "homologate": "Homologar",
+      "rateDialog": {
+        "title": "Calificar Curso",
+        "question": "¿Qué te pareció este módulo?",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "veryBad": "Muy Malo",
+        "bad": "Malo",
+        "regular": "Regular",
+        "good": "Buena",
+        "excellent": "Excelente"
+      }
+    },
+    "details": {
+      "noName": "Sin nombre",
+      "noDescription": "Sin descripción",
+      "noCategory": "Sin categoría",
+      "noCourse": "Sin curso",
+      "noDifficulty": "Sin nivel",
+      "noObjective": "Sin objetivo definido",
+      "noSkills": "Sin habilidades definidas",
+      "noWhatYouWillLearn": "Sin información sobre qué aprenderás",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "free": "Gratis",
+      "overview": "Descripción General",
+      "courses": "Cursos",
+      "content": "Contenido",
+      "video": "Video Introductorio",
+      "description": "Descripción",
+      "objective": "Objetivo",
+      "tags": "Etiquetas",
+      "whatYouWillLearn": "Qué Aprenderás",
+      "skillsToAcquire": "Habilidades a Adquirir",
+      "videoTitle": "Video del curso",
+      "courseInfo": "Información del Curso",
+      "category": "Categoría",
+      "difficulty": "Nivel de Dificultad",
+      "lmsCourse": "Curso LMS",
+      "lmsCourseCode": "Código del Curso",
+      "lmsCourseId": "ID LMS",
+      "enrollNow": "Inscribirse Ahora",
+      "buyCourse": "Comprar Curso",
+      "contentDuration": "de contenido",
+      "certificateOnCompletion": "Certificado al finalizar",
+      "lifetimeAccess": "Acceso de por vida",
+      "limitedSpots": "Cupos limitados",
+      "fullAccessFree": "Acceso completo sin costo",
+      "noContentAvailable": "No hay información de contenido disponible",
+      "packageContent": "Contenido del Paquete",
+      "packageDescription": "Accede a todos los cursos incluidos",
+      "coursesIncluded": "cursos incluidos",
+      "totalDuration": "duración total",
+      "packageInfo": "Información del Paquete",
+      "user-title": "Detalles de Mi Módulo de Aprendizaje",
+      "minutes": "minutos",
+      "hours": "horas",
+      "packageImage": "Imagen del Paquete",
+      "uploadImage": "Sube la imagen del paquete de aprendizaje",
+      "course": "Curso",
+      "unnamedCourse": "Curso sin nombre"
+    },
+    "selected": "{{count}} seleccionados",
+    "empty": {
+      "title": "No hay módulos de aprendizaje",
+      "description": "No se encontraron módulos de aprendizaje. Intenta ajustar los filtros o crear uno nuevo."
+    }
+  },
+  "learning-paths": {
+    "title": "Rutas de Aprendizaje",
+    "user-title": "Mis Rutas de Aprendizaje",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "user-learningPaths": "Mis Rutas de Aprendizaje",
+      "learningPaths": "Rutas de Aprendizaje",
+      "list": "Lista de Rutas de Aprendizaje",
+      "create": "Crear Ruta de Aprendizaje",
+      "edit": "Editar Ruta de Aprendizaje"
+    },
+    "actions": {
+      "add": "Agregar Ruta de Aprendizaje",
+      "edit": "Editar Ruta de Aprendizaje",
+      "delete": "Eliminar Ruta de Aprendizaje",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "create": "Crear Ruta de Aprendizaje",
+      "update": "Actualizar Ruta de Aprendizaje",
+      "search": "Buscar rutas de aprendizaje...",
+      "clear": "Limpiar",
+      "addModule": "Agregar Módulo",
+      "addLearningObject": "Agregar Objeto de Aprendizaje"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "position": "Posición",
+        "modules": "Módulos",
+        "status": "Estado",
+        "createdAt": "Creado En",
+        "updatedAt": "Actualizado En",
+        "actions": "Acciones"
+      },
+      "toolbar": {
+        "search": "Buscar rutas de aprendizaje...",
+        "sortBy": "Ordenar por",
+        "resetFilters": "Limpiar filtros"
+      },
+      "filters": {
+        "status": "Estado:",
+        "keyword": "Palabra clave:",
+        "search": "Buscar rutas de aprendizaje...",
+        "all": "Todos",
+        "positionId": "Posición"
+      },
+      "order": {
+        "nameAsc": "Nombre (A-Z)",
+        "nameDesc": "Nombre (Z-A)",
+        "positionAsc": "Posición (A-Z)",
+        "positionDesc": "Posición (Z-A)",
+        "createdAtAsc": "Más antiguos",
+        "createdAtDesc": "Más recientes"
+      },
+      "emptyState": {
+        "noData": "No se encontraron rutas de aprendizaje",
+        "noResults": "No se encontraron resultados para su búsqueda"
+      }
+    },
+    "form": {
+      "sections": {
+        "basicInfo": "Información Básica",
+        "multimedia": "Contenido Multimedia",
+        "modules": "Módulos"
+      },
+      "preview": {
+        "bannerError": "No se pudo cargar la imagen del banner. Verifica la URL.",
+        "noMedia": "Agrega un video o banner para visualizar aquí"
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "placeholder": "Ingrese el nombre de la ruta de aprendizaje",
+          "helperText": "Ingrese el nombre de la ruta de aprendizaje",
+          "required": "El nombre es obligatorio"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Ingrese la descripción de la ruta de aprendizaje",
+          "helperText": "Ingrese la descripción de la ruta de aprendizaje",
+          "required": "La descripción es obligatoria"
+        },
+        "videoUrl": {
+          "label": "URL del Video",
+          "placeholder": "https://ejemplo.com/video",
+          "helperText": "Soporta YouTube y Vimeo (se convierte automáticamente)",
+          "required": "La URL del video es obligatoria"
+        },
+        "bannerUrl": {
+          "label": "URL del Banner",
+          "placeholder": "https://ejemplo.com/imagen.jpg",
+          "helperText": "URL de la imagen de portada",
+          "required": "La URL del banner es obligatoria"
+        },
+        "position": {
+          "label": "Posición",
+          "placeholder": "Seleccione una posición",
+          "helperText": "Seleccione la posición relacionada",
+          "required": "La posición es obligatoria"
+        },
+        "module": {
+          "label": "Módulo"
+        },
+        "skill": {
+          "label": "Habilidad",
+          "placeholder": "Seleccione una habilidad",
+          "helperText": "Seleccione la habilidad relacionada con este módulo",
+          "required": "La habilidad es obligatoria"
+        },
+        "skillLevel": {
+          "label": "Nivel de Habilidad",
+          "placeholder": "Seleccione un nivel de habilidad",
+          "helperText": "Seleccione el nivel de dificultad de la habilidad",
+          "required": "El nivel de habilidad es obligatorio"
+        },
+        "moduleOrder": {
+          "label": "Orden",
+          "placeholder": "Orden del módulo",
+          "helperText": "Ingrese el orden del módulo",
+          "required": "El orden es obligatorio",
+          "min": "El orden debe ser mayor o igual a 1"
+        },
+        "learningObject": {
+          "label": "Objeto de Aprendizaje",
+          "placeholder": "Seleccione un objeto de aprendizaje",
+          "helperText": "Seleccione un objeto de aprendizaje",
+          "required": "El objeto de aprendizaje es obligatorio"
+        },
+        "learningObjectOrder": {
+          "label": "Orden",
+          "placeholder": "Orden del objeto",
+          "helperText": "Ingrese el orden del objeto de aprendizaje",
+          "required": "El orden es obligatorio",
+          "min": "El orden debe ser mayor o igual a 1"
+        },
+        "learningObjects": {
+          "label": "Objetos de Aprendizaje",
+          "min": "Debe agregar al menos un objeto de aprendizaje"
+        },
+        "isOptional": {
+          "label": "Es Opcional",
+          "helperText": "Marque si el objeto de aprendizaje es opcional"
+        },
+        "modules": {
+          "min": "Debe agregar al menos un módulo"
+        }
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Ruta de Aprendizaje",
+        "content": "¿Está seguro de que desea eliminar esta ruta de aprendizaje? Esta acción no se puede deshacer.",
+        "confirm": "Eliminar",
+        "cancel": "Cancelar"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Ruta de aprendizaje creada exitosamente",
+        "updated": "Ruta de aprendizaje actualizada exitosamente",
+        "deleted": "Ruta de aprendizaje eliminada exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar rutas de aprendizaje",
+        "saving": "Error al guardar la ruta de aprendizaje",
+        "deleting": "Error al eliminar la ruta de aprendizaje",
+        "notFound": "Ruta de aprendizaje no encontrada",
+        "loadingPositions": "Error al cargar posiciones",
+        "loadingLearningObjects": "Error al cargar objetos de aprendizaje",
+        "loadingSkills": "Error al cargar habilidades",
+        "loadingSkillLevels": "Error al cargar niveles de habilidad"
+      }
+    },
+    "preview": {
+      "video": {
+        "placeholder": "El video aparecerá aquí",
+        "urlNotRecognized": "URL no reconocida",
+        "supportedPlatforms": "Soporta: YouTube y Vimeo"
+      },
+      "banner": {
+        "placeholder": "El banner aparecerá aquí",
+        "errorLoading": "No se pudo cargar la imagen",
+        "verifyUrl": "Verifica la URL del banner"
+      }
+    },
+    "status": {
+      "all": "Todos",
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "tooltips": {
+      "edit": "Editar ruta de aprendizaje",
+      "delete": "Eliminar ruta de aprendizaje"
+    },
+    "card": {
+      "badge": "Ruta",
+      "noName": "Sin nombre",
+      "noDescription": "Sin descripción",
+      "noPosition": "Sin posición",
+      "module": "módulo",
+      "modules": "módulos",
+      "duration": "Duración",
+      "hours": "hrs",
+      "courses": "Cursos",
+      "viewDetails": "Ver detalles",
+      "progress": "Progreso",
+      "status": {
+        "completed": "Completado",
+        "inProgress": "En progreso",
+        "notStarted": "No iniciado"
+      }
+    },
+    "empty": {
+      "title": "No hay rutas de aprendizaje",
+      "description": "No se encontraron rutas de aprendizaje. Intenta ajustar los filtros o crear una nueva."
+    },
+    "details": {
+      "noCoursesDescription": "Este módulo no tiene cursos asignados",
+      "andMoreCourses": "y {{count}} curso más",
+      "coursesAvailable": "Cursos disponibles en este módulo",
+      "coursesLabel": "cursos",
+      "elementsLabel": "elementos en total",
+      "hoursLabel": "hrs de vídeo bajo demanda",
+      "hours": "hrs",
+      "viewDetailsButton": "Ver detalles",
+      "notFound": "Ruta no encontrada",
+      "notFoundDescription": "La ruta de aprendizaje que buscas no existe",
+      "title": "Detalles de Ruta de Aprendizaje",
+      "noDescription": "Sin descripción disponible",
+      "position": "Cargo",
+      "totalDuration": "Duración Total",
+      "modules": "Competencias",
+      "totalCourses": "Total Cursos",
+      "modulesTitle": "Competencias de la Ruta",
+      "noModules": "Sin competencias",
+      "noModulesDescription": "Esta ruta no tiene competencias configuradas",
+      "positionDescription": "Descripción del Cargo",
+      "positionAbbreviation": "Abreviación",
+      "moduleNumber": "Módulo {{number}}",
+      "optionalCourse": "Curso Opcional",
+      "requiredCourse": "Curso Obligatorio",
+      "courseDetails": "Detalles del Curso",
+      "objective": "Objetivo",
+      "skillsToAcquire": "Habilidades a Adquirir",
+      "whatYouWillLearn": "Qué Aprenderás",
+      "price": "Precio",
+      "priceDiscount": "Precio con Descuento",
+      "free": "Gratis",
+      "tags": "Etiquetas",
+      "category": "Categoría",
+      "difficultyLevel": "Nivel de Dificultad",
+      "studentLimit": "Límite de Estudiantes",
+      "unlimited": "Ilimitado",
+      "statistics": "Estadísticas",
+      "averageRating": "Calificación Promedio",
+      "completion": "Progreso de Finalización",
+      "playVideo": "Reproducir Video",
+      "modulesLabel": "Cursos",
+      "elementsTotal": "cursos en total",
+      "programContent": "Contenido del Programa",
+      "articlesLabel": "cursos",
+      "programSummary": "Resumen del Programa",
+      "hoursVideoDemand": "hrs de vídeo bajo demanda",
+      "enrollNow": "Continuar",
+      "courseProgress": "Progreso del Curso",
+      "viewDetails": "Ver Detalles",
+      "moduleProgress": "Progreso del Módulo",
+      "moduleSingle": "Módulo",
+      "modulePlural": "Módulos",
+      "courseSingle": "Curso",
+      "coursePlural": "Cursos",
+      "inTotal": "en total",
+      "thisIncludes": "Esto incluye:",
+      "benefit1": "Aprende a tu propio ritmo",
+      "benefit2": "Accede a materiales exclusivos",
+      "benefit3": "Certificado de Finalización",
+      "benefit4": "Actualizaciones de Contenido"
+    }
+  },
+  "learningCategories": {
+    "title": "Categorías de Aprendizaje",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "positions": "Categorías de Aprendizaje",
+      "list": "Lista de Categorías de Aprendizaje",
+      "create": "Crear Categoría de Aprendizaje",
+      "edit": "Editar Categoría de Aprendizaje"
+    },
+    "actions": {
+      "add": "Agregar Categoría de Aprendizaje",
+      "edit": "Editar Categoría de Aprendizaje",
+      "delete": "Eliminar Categoría de Aprendizaje",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "saving": "Guardando...",
+      "create": "Crear Categoría de Aprendizaje",
+      "update": "Actualizar Categoría de Aprendizaje",
+      "search": "Buscar categorías de aprendizaje...",
+      "clear": "Limpiar"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "abreviation": "Abreviatura",
+        "logo": "Logo",
+        "createdAt": "Creado En",
+        "updatedAt": "Actualizado En",
+        "actions": "Acciones"
+      },
+      "toolbar": {
+        "search": "Buscar categorías de aprendizaje..."
+      },
+      "filters": {
+        "status": "Estado:",
+        "keyword": "Palabra clave:",
+        "all": "Todos"
+      },
+      "emptyState": {
+        "noData": "No se encontraron categorías de aprendizaje",
+        "noResults": "No se encontraron resultados para su búsqueda"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "placeholder": "Ingrese el nombre de la categoría de aprendizaje",
+          "helperText": "Ingrese el nombre de la categoría de aprendizaje",
+          "required": "Se requiere nombre"
+        },
+        "abreviation": {
+          "label": "Abreviatura",
+          "placeholder": "Ingrese la abreviatura de la categoría de aprendizaje",
+          "helperText": "Ingrese la abreviatura de la categoría de aprendizaje",
+          "required": "Se requiere abreviatura"
+        },
+        "logo": {
+          "label": "Logo",
+          "placeholder": "Ingrese la URL del logo de la categoría de aprendizaje",
+          "helperText": "Ingrese la URL del logo de la categoría de aprendizaje",
+          "required": "Se requiere logo"
+        }
+      },
+      "sections": {
+        "details": "Detalles de la Categoría de Aprendizaje"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Categoría de Aprendizaje",
+        "content": "¿Está seguro de que desea eliminar esta categoría de aprendizaje?",
+        "contentMultiple": "¿Está seguro de que desea eliminar estos elementos?",
+        "confirm": "Eliminar"
+      },
+      "unsavedChanges": {
+        "title": "Cambios No Guardados",
+        "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+        "confirm": "Salir sin guardar"
+      }
+    },
+    "messages": {
+      "loading": "Cargando categorías de aprendizaje...",
+      "saving": "Guardando...",
+      "loadError": "Error al cargar la categoría de aprendizaje",
+      "saveError": "Error al guardar la categoría de aprendizaje. Por favor, inténtelo de nuevo.",
+      "notFound": "Categoría de aprendizaje no encontrada",
+      "createSuccess": "¡Categoría de aprendizaje creada con éxito!",
+      "updateSuccess": "¡Categoría de aprendizaje actualizada con éxito!",
+      "success": {
+        "created": "Categoría de aprendizaje creada con éxito",
+        "updated": "Categoría de aprendizaje actualizada con éxito",
+        "deleted": "Categoría de aprendizaje eliminada con éxito",
+        "deletedMultiple": "Categorías de aprendizaje eliminadas con éxito"
+      },
+      "error": {
+        "loading": "Error al cargar las categorías de aprendizaje",
+        "saving": "Error al guardar la categoría de aprendizaje. Por favor, inténtelo de nuevo.",
+        "deleting": "Error al eliminar la categoría de aprendizaje",
+        "deletingMultiple": "Error al eliminar las categorías de aprendizaje",
+        "notFound": "Categoría de aprendizaje no encontrada"
+      }
+    },
+    "status": {
+      "all": "Todas",
+      "active": "Activas",
+      "inactive": "Inactivas"
+    },
+    "tooltips": {
+      "edit": "Editar categoría de aprendizaje",
+      "delete": "Eliminar categoría de aprendizaje",
+      "quickEdit": "Edición rápida"
+    }
+  },
+  "learning-reports": {
+    "title": "Reportes de Aprendizaje",
+    "subtitle": "Genera reportes detallados sobre el progreso y desempeño de los empleados en sus módulos de aprendizaje.",
+    "filters": {
+      "title": "Filtros de Reporte",
+      "employeeId": "ID del Empleado",
+      "employeeIdPlaceholder": "Ingrese ID del empleado",
+      "startDate": "Fecha Inicio",
+      "endDate": "Fecha Fin",
+      "generate": "Generar Reporte",
+      "generateTooltip": "Generar reporte con los filtros seleccionados",
+      "endDateError": "La fecha de fin no puede ser anterior a la fecha de inicio",
+      "clear": "Limpiar Filtros"
+    },
+    "table": {
+      "results": "Resultados",
+      "noData": "No hay datos para mostrar. Genere un reporte usando los filtros anteriores.",
+      "download": "Descargar CSV",
+      "record": "registro",
+      "records": "registros",
+      "inProgress": "En progreso",
+      "columns": {
+        "colaborator": "Colaborador",
+        "position": "Cargo",
+        "course": "Curso",
+        "progress": "Progreso (%)",
+        "startDate": "Fecha de Inicio",
+        "endDate": "Fecha de Finalización"
+      }
+    },
+    "messages": {
+      "loading": "Generando reporte...",
+      "error": "Error al generar el reporte. Por favor, inténtelo de nuevo.",
+      "noData": "No se encontraron datos para los filtros seleccionados.",
+      "noDataDescription": "Intente ajustar los filtros y generar el reporte nuevamente."
+    }
+  },
+  "product-courses": {
+    "title": "Catálogo de Cursos",
+    "breadcrumbs": {
+      "productCourses": "Catálogo de Cursos",
+      "dashboard": "Dashboard",
+      "product-courses": "Catálogo de Cursos",
+      "create": "Crear Curso",
+      "edit": "Editar Curso"
+    },
+    "actions": {
+      "add": "Agregar Curso",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "create": "Crear Curso",
+      "update": "Actualizar Curso",
+      "viewDetails": "Ver detalles",
+      "back": "Volver"
+    },
+    "table": {
+      "filters": {
+        "all": "Todos",
+        "active": "Activos",
+        "inactive": "Inactivos",
+        "status": "Estado",
+        "keyword": "Palabra clave"
+      },
+      "toolbar": {
+        "search": "Buscar cursos..."
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Nombre del Curso",
+          "placeholder": "Ingrese el nombre del curso",
+          "required": "El nombre es requerido"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Ingrese una descripción detallada",
+          "required": "La descripción es requerida"
+        },
+        "duration": {
+          "label": "Duración",
+          "placeholder": "00:00",
+          "helperText": "Formato: HH:MM (por ejemplo, 02:30 para 2 horas y 30 minutos)",
+          "required": "La duración es requerida"
+        },
+        "category": {
+          "label": "Categoría",
+          "placeholder": "Seleccione una categoría"
+        },
+        "difficultyLevel": {
+          "label": "Nivel de Dificultad",
+          "placeholder": "Seleccione un nivel",
+          "required": "El nivel de dificultad es requerido"
+        },
+        "courseLms": {
+          "label": "Curso LMS",
+          "placeholder": "Buscar y seleccionar curso LMS",
+          "helperText": "Opcional: vincule este curso con un curso en el LMS"
+        },
+        "price": {
+          "label": "Precio",
+          "placeholder": "0.00",
+          "min": "El precio debe ser mayor o igual a 0"
+        },
+        "priceDiscount": {
+          "label": "Precio con Descuento",
+          "placeholder": "0.00",
+          "helperText": "Opcional: precio especial o con descuento",
+          "min": "El precio de descuento debe ser mayor o igual a 0"
+        },
+        "isFree": {
+          "label": "Curso Gratuito",
+          "helperText": "Marcar si el curso es completamente gratuito"
+        },
+        "isActive": {
+          "label": "Curso Activo",
+          "helperText": "Los cursos inactivos no serán visibles para los usuarios"
+        },
+        "tags": {
+          "label": "Etiquetas",
+          "placeholder": "Agregar etiquetas...",
+          "helperText": "Presione Enter o coma (,) para agregar una etiqueta",
+          "required": "Se requiere al menos una etiqueta"
+        },
+        "imageUrl": {
+          "label": "URL de Imagen",
+          "placeholder": "https://ejemplo.com/imagen.jpg",
+          "helperText": "URL de la imagen principal del curso",
+          "preview": "Vista previa:"
+        },
+        "videoUrl": {
+          "label": "URL de Video",
+          "placeholder": "https://youtube.com/watch?v=...",
+          "helperText": "URL del video introductorio (YouTube, Vimeo, etc.)"
+        },
+        "bannerUrl": {
+          "label": "URL de Banner",
+          "placeholder": "https://ejemplo.com/banner.jpg",
+          "helperText": "URL del banner para la página de detalles",
+          "preview": "Vista previa del banner:"
+        },
+        "isStudentLimited": {
+          "label": "Limitar Estudiantes",
+          "helperText": "Activar si desea establecer un límite máximo de estudiantes"
+        },
+        "studentLimit": {
+          "label": "Límite de Estudiantes",
+          "placeholder": "50",
+          "helperText": "Número máximo de estudiantes permitidos"
+        },
+        "objective": {
+          "label": "Objetivo",
+          "placeholder": "Describe el objetivo principal del curso",
+          "helperText": "Meta principal que el estudiante alcanzará"
+        },
+        "skillsToAcquire": {
+          "label": "Habilidades a Adquirir",
+          "placeholder": "Lista las habilidades específicas que se desarrollarán",
+          "helperText": "Competencias y destrezas que obtendrá el estudiante"
+        },
+        "whatYouWillLearn": {
+          "label": "Qué Aprenderás",
+          "placeholder": "Detalla los conocimientos específicos del curso",
+          "helperText": "Contenidos y temas específicos del programa"
+        }
+      },
+      "sections": {
+        "basicInfo": "Información Básica",
+        "classification": "Clasificación",
+        "pricing": "Precio",
+        "media": "Medios",
+        "content": "Contenido",
+        "limits": "Límites y Restricciones",
+        "settings": "Configuración"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Curso",
+        "content": "¿Está seguro de que desea eliminar este curso? Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "loading": "Cargando cursos...",
+      "saving": "Guardando...",
+      "notFound": "Curso no encontrado",
+      "loadError": "Error al cargar el curso",
+      "success": {
+        "created": "Curso creado con éxito",
+        "updated": "Curso actualizado con éxito",
+        "deleted": "Curso eliminado con éxito"
+      },
+      "error": {
+        "loading": "Error al cargar los cursos",
+        "saving": "Error al guardar el curso",
+        "deleting": "Error al eliminar el curso",
+        "loadingCategories": "Error al cargar las categorías",
+        "loadingLevels": "Error al cargar los niveles de dificultad",
+        "loadingCourses": "Error al cargar los cursos LMS",
+        "notFound": "No se encontró el curso solicitado",
+        "notFoundDescription": "El curso que busca no existe o ha sido eliminado."
+      }
+    },
+    "card": {
+      "free": "Gratis",
+      "viewDetails": "Ver detalles"
+    },
+    "details": {
+      "title": "Detalles del Curso",
+      "noName": "Sin nombre",
+      "noDescription": "Sin descripción",
+      "noCategory": "Sin categoría",
+      "noCourse": "Sin curso",
+      "noDifficulty": "Sin nivel",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "free": "Gratis",
+      "overview": "Descripción General",
+      "content": "Contenido",
+      "video": "Video Introductorio",
+      "description": "Descripción",
+      "objective": "Objetivo",
+      "tags": "Etiquetas",
+      "whatYouWillLearn": "Qué Aprenderás",
+      "skillsToAcquire": "Habilidades a Adquirir",
+      "videoTitle": "Video del curso",
+      "courseInfo": "Información del Curso",
+      "category": "Categoría",
+      "difficulty": "Nivel de Dificultad",
+      "lmsCourse": "Curso LMS",
+      "enrollNow": "Inscribirse Ahora",
+      "buyCourse": "Comprar Curso",
+      "contentDuration": "de contenido",
+      "certificateOnCompletion": "Certificado al finalizar",
+      "lifetimeAccess": "Acceso de por vida",
+      "limitedSpots": "Cupos limitados",
+      "fullAccessFree": "Acceso completo sin costo",
+      "noContentAvailable": "No hay información de contenido disponible"
+    },
+    "empty": {
+      "title": "No hay cursos",
+      "description": "No se encontraron cursos. Intenta ajustar los filtros o crear uno nuevo."
+    }
+  }
+}
