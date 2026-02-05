@@ -394,6 +394,10 @@ export const paths = {
       listParticipantsWithEvaluators: (id: string) => `${ROOTS.DASHBOARD}/performance/configure-evaluations/edit/${id}/participants-with-evaluators`,
       configureQuestions: (id: string, competenceId: string) => `${ROOTS.DASHBOARD}/performance/configure-evaluations/edit/${id}/questions/${competenceId}`,
 
+      // Evaluations List
+      evaluationsList: `${ROOTS.DASHBOARD}/performance/evaluations-list`,
+      evaluationByParticipant: (id: string) => `${ROOTS.DASHBOARD}/performance/evaluations-list/by-participant/${id}`,
+
       // Evaluation Responses
       evaluationResponses: `${ROOTS.DASHBOARD}/performance/evaluationlist`,
       evaluationResponsesView: (id: string) => `${ROOTS.DASHBOARD}/performance/evaluationlist/by-evaluator-assignment/${id}`,

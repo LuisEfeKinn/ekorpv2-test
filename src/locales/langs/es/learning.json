@@ -740,10 +740,19 @@
         "active": "Activos",
         "inactive": "Inactivos",
         "status": "Estado",
-        "keyword": "Palabra clave"
+        "keyword": "Palabra clave",
+        "order": "Ordenar por",
+        "includeInactive": "Incluir inactivos",
+        "includeInactiveLabel": "Mostrar inactivos"
       },
       "toolbar": {
-        "search": "Buscar cursos..."
+        "search": "Buscar cursos...",
+        "order": "Ordenar por",
+        "includeInactive": "Incluir cursos inactivos"
+      },
+      "order": {
+        "nameAsc": "Nombre (A-Z)",
+        "nameDesc": "Nombre (Z-A)"
       }
     },
     "form": {
@@ -884,7 +893,11 @@
     },
     "card": {
       "free": "Gratis",
-      "viewDetails": "Ver detalles"
+      "viewDetails": "Ver detalles",
+      "noName": "Sin nombre",
+      "noDescription": "Sin descripción",
+      "active": "Activo",
+      "inactive": "Inactivo"
     },
     "details": {
       "title": "Detalles del Curso",
@@ -920,7 +933,7 @@
     },
     "empty": {
       "title": "No hay cursos",
-      "description": "No se encontraron cursos. Intenta ajustar los filtros o crear uno nuevo."
+      "description": "No se encontraron cursos. Intenta ajustar los filtros."
     }
   }
 }

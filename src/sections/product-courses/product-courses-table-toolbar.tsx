@@ -1,18 +1,18 @@
 import type { IProductCourseTableFilters } from 'src/types/learning';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
-import CircularProgress from '@mui/material/CircularProgress';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useTranslate } from 'src/locales';
-import {
-  GetLearningObjectsSelectLevelsService,
-  GetLearningObjectsSelectCategoriesService,
-} from 'src/services/learning/learningObjects.service';
 
 import { Iconify } from 'src/components/iconify';
 
@@ -20,108 +20,32 @@ import { Iconify } from 'src/components/iconify';
 
 type Props = {
   filters: IProductCourseTableFilters;
-  onFilters: (name: string, value: string) => void;
-};
-
-type OptionType = {
-  id: string;
-  name: string;
+  onFilters: (name: string, value: string | boolean) => void;
 };
 
 export function ProductCoursesTableToolbar({ filters, onFilters }: Props) {
   const { t } = useTranslate('learning');
 
-  // Estados para categorías
-  const [categories, setCategories] = useState<OptionType[]>([]);
-  const [categoriesLoading, setCategoriesLoading] = useState(false);
-  const [categorySearch, setCategorySearch] = useState('');
-
-  // Estados para niveles de dificultad
-  const [levels, setLevels] = useState<OptionType[]>([]);
-  const [levelsLoading, setLevelsLoading] = useState(false);
-  const [levelSearch, setLevelSearch] = useState('');
-
-  // Cargar categorías
-  const loadCategories = useCallback(async (search: string = '') => {
-    setCategoriesLoading(true);
-    try {
-      const response = await GetLearningObjectsSelectCategoriesService({
-        page: 1,
-        perPage: 20,
-        search: search || undefined,
-      });
-      setCategories(response.data?.data || []);
-    } catch (error) {
-      console.error('Error loading categories:', error);
-      setCategories([]);
-    } finally {
-      setCategoriesLoading(false);
-    }
-  }, []);
-
-  // Cargar niveles de dificultad
-  const loadLevels = useCallback(async (search: string = '') => {
-    setLevelsLoading(true);
-    try {
-      const response = await GetLearningObjectsSelectLevelsService({
-        page: 1,
-        perPage: 20,
-        search: search || undefined,
-      });
-      setLevels(response?.data || []);
-    } catch (error) {
-      console.error('Error loading levels:', error);
-      setLevels([]);
-    } finally {
-      setLevelsLoading(false);
-    }
-  }, []);
-
-  // Cargar datos iniciales
-  useEffect(() => {
-    loadCategories();
-    loadLevels();
-  }, [loadCategories, loadLevels]);
-
-  // Recargar categorías cuando cambia la búsqueda
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      loadCategories(categorySearch);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [categorySearch, loadCategories]);
-
-  // Recargar niveles cuando cambia la búsqueda
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      loadLevels(levelSearch);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [levelSearch, loadLevels]);
-
-  const handleFilterName = useCallback(
+  const handleFilterSearch = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      onFilters('name', event.target.value);
+      onFilters('search', event.target.value);
     },
     [onFilters]
   );
 
-  const handleFilterCategory = useCallback(
-    (_event: any, newValue: OptionType | null) => {
-      onFilters('categoryId', newValue?.id || '');
+  const handleFilterIncludeInactive = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onFilters('includeInactive', event.target.checked);
     },
     [onFilters]
   );
 
-  const handleFilterLevel = useCallback(
-    (_event: any, newValue: OptionType | null) => {
-      onFilters('difficultyLevelId', newValue?.id || '');
+  const handleFilterOrder = useCallback(
+    (event: any) => {
+      onFilters('order', event.target.value as string);
     },
     [onFilters]
   );
-
-  const selectedCategory = categories.find((cat) => cat.id === filters.categoryId) || null;
-  const selectedLevel = levels.find((lvl) => lvl.id === filters.difficultyLevelId) || null;
 
   return (
     <Stack
@@ -139,8 +63,8 @@ export function ProductCoursesTableToolbar({ filters, onFilters }: Props) {
       >
         <TextField
           fullWidth
-          value={filters.name}
-          onChange={handleFilterName}
+          value={filters.search}
+          onChange={handleFilterSearch}
           placeholder={t('product-courses.table.toolbar.search')}
           InputProps={{
             startAdornment: (
@@ -151,74 +75,37 @@ export function ProductCoursesTableToolbar({ filters, onFilters }: Props) {
           }}
         />
 
-        <Autocomplete
-          fullWidth
-          options={categories}
-          value={selectedCategory}
-          onChange={handleFilterCategory}
-          onInputChange={(_event, newInputValue) => setCategorySearch(newInputValue)}
-          loading={categoriesLoading}
-          getOptionLabel={(option) => option.name}
-          isOptionEqualToValue={(option, value) => option.id === value.id}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              placeholder={t('product-courses.table.toolbar.category', 'Categoría')}
-              InputProps={{
-                ...params.InputProps,
-                startAdornment: (
-                  <>
-                    <InputAdornment position="start">
-                      <Iconify icon="solar:add-folder-bold" sx={{ color: 'text.disabled' }} />
-                    </InputAdornment>
-                    {params.InputProps.startAdornment}
-                  </>
-                ),
-                endAdornment: (
-                  <>
-                    {categoriesLoading ? <CircularProgress color="inherit" size={20} /> : null}
-                    {params.InputProps.endAdornment}
-                  </>
-                ),
-              }}
-            />
-          )}
-          sx={{ minWidth: { md: 240 } }}
-        />
+        <FormControl sx={{ minWidth: { md: 200 } }} fullWidth>
+          <InputLabel id="order-select-label">{t('product-courses.table.toolbar.order')}</InputLabel>
+          <Select
+            labelId="order-select-label"
+            value={filters.order}
+            onChange={handleFilterOrder}
+            label={t('product-courses.table.toolbar.order')}
+            startAdornment={
+              <InputAdornment position="start">
+                <Iconify icon="solar:list-bold" sx={{ color: 'text.disabled', ml: 1 }} />
+              </InputAdornment>
+            }
+          >
+            <MenuItem value="course.displayName:asc">
+              {t('product-courses.table.order.nameAsc')}
+            </MenuItem>
+            <MenuItem value="course.displayName:desc">
+              {t('product-courses.table.order.nameDesc')}
+            </MenuItem>
+          </Select>
+        </FormControl>
 
-        <Autocomplete
-          fullWidth
-          options={levels}
-          value={selectedLevel}
-          onChange={handleFilterLevel}
-          onInputChange={(_event, newInputValue) => setLevelSearch(newInputValue)}
-          loading={levelsLoading}
-          getOptionLabel={(option) => option.name}
-          isOptionEqualToValue={(option, value) => option.id === value.id}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              placeholder={t('product-courses.table.toolbar.difficulty', 'Nivel')}
-              InputProps={{
-                ...params.InputProps,
-                startAdornment: (
-                  <>
-                    <InputAdornment position="start">
-                      <Iconify icon="solar:star-bold" sx={{ color: 'text.disabled' }} />
-                    </InputAdornment>
-                    {params.InputProps.startAdornment}
-                  </>
-                ),
-                endAdornment: (
-                  <>
-                    {levelsLoading ? <CircularProgress color="inherit" size={20} /> : null}
-                    {params.InputProps.endAdornment}
-                  </>
-                ),
-              }}
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={filters.includeInactive}
+              onChange={handleFilterIncludeInactive}
             />
-          )}
-          sx={{ minWidth: { md: 240 } }}
+          }
+          label={t('product-courses.table.toolbar.includeInactive')}
+          sx={{ minWidth: { md: 200 } }}
         />
       </Stack>
     </Stack>

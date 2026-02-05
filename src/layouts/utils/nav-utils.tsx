@@ -88,6 +88,7 @@ const ICONS_MAP: Record<string, any> = {
   'evaluate': icon('ic-evaluate'),
   'ai-course-generator': icon('ic-ai-course-generator'),
   'nine-box': icon('ic-nine-box'),
+  'list-ul': icon('ic-list-ul'),
 
   // Iconos por defecto
   'default': icon('ic-menu-item'),

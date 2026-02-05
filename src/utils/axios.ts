@@ -257,7 +257,7 @@ export const endpoints = {
   },
   learning: {
     courses: {
-      all: '/products',
+      all: '/integration-instances/universal-courses',
       save: '/products',
       update: '/products',
       edit: '/products', // + /:id
@@ -431,6 +431,10 @@ export const endpoints = {
       nineBoxLive: '/performance-management/results/campaign', // + /:id/nine-box
       closeEvaluationCampaign: '/performance-management/results/campaign', // + /:id/close
       nineBoxHistory: '/performance-management/results/campaign' // + /:id/history
+    },
+    evaluationsList: {
+      all: '/performance-management/results/campaigns-by-organizational-units',
+      byId: '/performance-management/results/participant' // + /:id/competency-gap
     }
   },
 

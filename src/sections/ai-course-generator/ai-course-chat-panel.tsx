@@ -6,12 +6,19 @@
 // Uses dynamic provider configuration from backend
 // ----------------------------------------------------------------------
 
+import type { IAiProvider, IAiProviderModel } from 'src/types/ai-provider';
 import type { IAiChatMessage, IAiGenerationPrompt } from 'src/types/ai-course-generation';
 
 import rehypeRaw from 'rehype-raw';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
-import { useRef, useState, useEffect, useCallback } from 'react';
+import {
+  useRef,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -40,6 +47,7 @@ import { GenerateCourseImagesService } from 'src/services/ai/GenerateAiImage.ser
 
 import { Iconify } from 'src/components/iconify';
 
+import { parseCapabilities } from 'src/types/ai-provider';
 import { COURSE_GENERATION_SYSTEM_PROMPT } from 'src/types/ai-course-generation';
 
 // ----------------------------------------------------------------------
@@ -64,11 +72,13 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
   const [imageProgress, setImageProgress] = useState({ current: 0, total: 0 });
   const [videoProgress, setVideoProgress] = useState({ current: 0, total: 0 });
   const [proprietaryVideoStatus, setProprietaryVideoStatus] = useState<string>('');
-  
-  // Selected providers for media generation (by ID)
+
+  // Selected providers and models for media generation (by ID)
   const [selectedImageProviderId, setSelectedImageProviderId] = useState<string>('');
+  const [selectedImageModelId, setSelectedImageModelId] = useState<string>('');
   const [selectedVideoProviderId, setSelectedVideoProviderId] = useState<string>('');
-  
+  const [selectedVideoModelId, setSelectedVideoModelId] = useState<string>('');
+
   // Proprietary video model options
   const [proprietaryDurationScenes, setProprietaryDurationScenes] = useState<number>(4);
   const [proprietaryScenesNumber, setProprietaryScenesNumber] = useState<number>(5);
@@ -90,21 +100,71 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
     getLegacyProviderType,
   } = useAiProvidersDynamic({ capability: 'text' });
 
-  // Get selected image and video providers
-  const selectedImageProvider = imageProviders.find((p) => p.id === selectedImageProviderId) || imageProviders[0];
-  const selectedVideoProvider = videoProviders.find((p) => p.id === selectedVideoProviderId) || videoProviders[0];
+  // Helper function to get default model from a provider based on isDefault flag and capability
+  const getDefaultModel = useCallback(
+    (provider: IAiProvider | undefined, capability: 'text' | 'image' | 'video'): IAiProviderModel | undefined => {
+      if (!provider) return undefined;
 
-  // Set default image/video providers when loaded
+      // Filter models by capability
+      const modelsWithCapability = provider.models.filter((model) => {
+        const caps = parseCapabilities(model.capabilities);
+        return caps.includes(capability);
+      });
+
+      // Find the default model
+      const defaultModel = modelsWithCapability.find((m) => m.isDefault);
+      return defaultModel || modelsWithCapability[0];
+    },
+    []
+  );
+
+  // Get selected image and video providers
+  const selectedImageProvider = imageProviders.find((p) => p.id === selectedImageProviderId);
+  const selectedVideoProvider = videoProviders.find((p) => p.id === selectedVideoProviderId);
+
+  // Get available models filtered by capability
+  const availableImageModels = useMemo(() => {
+    if (!selectedImageProvider) return [];
+    return selectedImageProvider.models.filter((model) => {
+      const caps = parseCapabilities(model.capabilities);
+      return caps.includes('image');
+    });
+  }, [selectedImageProvider]);
+
+  const availableVideoModels = useMemo(() => {
+    if (!selectedVideoProvider) return [];
+    return selectedVideoProvider.models.filter((model) => {
+      const caps = parseCapabilities(model.capabilities);
+      return caps.includes('video');
+    });
+  }, [selectedVideoProvider]);
+
+  // Set default image/video providers and models when loaded
   useEffect(() => {
     if (imageProviders.length > 0 && !selectedImageProviderId) {
-      setSelectedImageProviderId(imageProviders[0].id);
+      const defaultProvider = imageProviders[0];
+      setSelectedImageProviderId(defaultProvider.id);
+
+      const defaultModel = getDefaultModel(defaultProvider, 'image');
+      if (defaultModel) {
+        setSelectedImageModelId(defaultModel.id);
+      }
     }
+  }, [imageProviders, selectedImageProviderId, getDefaultModel]);
+
+  useEffect(() => {
     if (videoProviders.length > 0 && !selectedVideoProviderId) {
       // Prefer proprietary video provider
       const proprietaryProvider = videoProviders.find((p) => p.name === 'Propietario');
-      setSelectedVideoProviderId(proprietaryProvider?.id || videoProviders[0].id);
+      const defaultProvider = proprietaryProvider || videoProviders[0];
+      setSelectedVideoProviderId(defaultProvider.id);
+
+      const defaultModel = getDefaultModel(defaultProvider, 'video');
+      if (defaultModel) {
+        setSelectedVideoModelId(defaultModel.id);
+      }
     }
-  }, [imageProviders, videoProviders, selectedImageProviderId, selectedVideoProviderId]);
+  }, [videoProviders, selectedVideoProviderId, getDefaultModel]);
 
   const {
     isStreaming,
@@ -139,15 +199,15 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
             images: section.images || [],
             videos: section.videos || [],
           }));
-          
+
           let updatedBannerUrl = courseData.bannerUrl;
 
           // Generate banner image if banner exists
-          if (courseData.banner) {
+          if (courseData.banner && selectedImageProvider) {
             setIsGeneratingBanner(true);
             try {
               const { GenerateAndUploadAiImageService } = await import('src/services/ai/GenerateAiImage.service');
-              
+
               const bannerResult = await GenerateAndUploadAiImageService({
                 prompt: courseData.banner,
                 size: '1792x1024', // 16:9 aspect ratio
@@ -167,7 +227,7 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
           // Check if image generation is requested
           // Generate for ALL sections that have an image prompt, not just those marked needsImage
           const sectionsNeedingImages = updatedSections.filter((s: any) => s.image && s.image.trim());
-          if (courseData.generateImages && sectionsNeedingImages.length > 0) {
+          if (courseData.generateImages && sectionsNeedingImages.length > 0 && selectedImageProvider) {
             setIsGeneratingImages(true);
             setImageProgress({ current: 0, total: sectionsNeedingImages.length });
 
@@ -188,20 +248,20 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
               updatedSections = updatedSections.map((section: any) => {
                 // Skip if section doesn't have an image prompt
                 if (!section.image || !section.image.trim()) return section;
-                
+
                 const sectionIndex = sectionsNeedingImages.findIndex((s: any) => s.title === section.title);
                 const imageResult = imageResults.find((result) => result.sectionIndex === sectionIndex);
-                
+
                 // Initialize arrays if they don't exist
                 const images = section.images || [];
                 const blocks = section.blocks || [];
-                
+
                 // Add new image to the array if generation was successful
                 if (imageResult?.imageUrl) {
                   images.push({
                     url: imageResult.imageUrl,
                   });
-                  
+
                   // Add image block for preview rendering
                   blocks.push({
                     id: `${section.id}-image-${Date.now()}`,
@@ -214,7 +274,7 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
                     },
                   });
                 }
-                
+
                 return {
                   ...section,
                   images,
@@ -236,7 +296,7 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
           // Check if video generation is requested
           // Generate for ALL sections that have a video prompt, not just those marked needsVideo
           const sectionsNeedingVideos = updatedSections.filter((s: any) => s.video && s.video.trim());
-          if (courseData.generateVideos && sectionsNeedingVideos.length > 0) {
+          if (courseData.generateVideos && sectionsNeedingVideos.length > 0 && selectedVideoProvider) {
             setIsGeneratingVideos(true);
             setVideoProgress({ current: 0, total: sectionsNeedingVideos.length });
 
@@ -245,14 +305,14 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
               if (selectedVideoProvider?.name === 'Propietario') {
                 // Use proprietary video generation service (N8N + JSON2Video)
                 const { GenerateProprietaryCourseVideoService } = await import('src/services/ai/ProprietaryVideoGeneration.service');
-                
+
                 const videoResults: Array<{ sectionIndex: number; videoUrl: string; videoId: string }> = [];
-                
+
                 for (let i = 0; i < sectionsNeedingVideos.length; i++) {
                   const section = sectionsNeedingVideos[i];
                   setVideoProgress({ current: i, total: sectionsNeedingVideos.length });
                   setProprietaryVideoStatus(`Generando video ${i + 1}/${sectionsNeedingVideos.length}...`);
-                  
+
                   try {
                     const result = await GenerateProprietaryCourseVideoService(
                       courseData.title,
@@ -265,7 +325,7 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
                         setProprietaryVideoStatus(progress.message);
                       }
                     );
-                    
+
                     videoResults.push({
                       sectionIndex: i,
                       videoUrl: result.videoUrl,
@@ -276,23 +336,23 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
                     // Continue with next section even if one fails
                   }
                 }
-                
+
                 // Update sections with video URLs
                 updatedSections = updatedSections.map((section: any) => {
                   if (!section.video || !section.video.trim()) return section;
-                  
+
                   const sectionIndex = sectionsNeedingVideos.findIndex((s: any) => s.title === section.title);
                   const videoResult = videoResults.find((result) => result.sectionIndex === sectionIndex);
-                  
+
                   const videos = section.videos || [];
                   const blocks = section.blocks || [];
-                  
+
                   if (videoResult?.videoUrl) {
                     videos.push({
                       url: videoResult.videoUrl,
                       videoId: videoResult.videoId,
                     });
-                    
+
                     blocks.push({
                       id: `${section.id}-video-${Date.now()}`,
                       type: 'video',
@@ -303,7 +363,7 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
                       },
                     });
                   }
-                  
+
                   return {
                     ...section,
                     videos,
@@ -311,12 +371,12 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
                     videoUrl: videoResult?.videoUrl,
                   };
                 });
-                
+
                 setProprietaryVideoStatus('');
               } else {
                 // Use standard AI video generation services
                 const { GenerateCourseVideosService } = await import('src/services/ai/GenerateAiVideo.service');
-                
+
                 const videoResults = await GenerateCourseVideosService(
                   courseData.title,
                   sectionsNeedingVideos,
@@ -333,21 +393,21 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
                 updatedSections = updatedSections.map((section: any) => {
                   // Skip if section doesn't have a video prompt
                   if (!section.video || !section.video.trim()) return section;
-                  
+
                   const sectionIndex = sectionsNeedingVideos.findIndex((s: any) => s.title === section.title);
                   const videoResult = videoResults.find((result) => result.sectionIndex === sectionIndex);
-                  
+
                   // Initialize arrays if they don't exist
                   const videos = section.videos || [];
                   const blocks = section.blocks || [];
-                  
+
                   // Add new video to the array if generation was successful
                   if (videoResult?.videoUrl) {
                     videos.push({
                       url: videoResult.videoUrl,
                       videoId: videoResult.videoId,
                     });
-                    
+
                     // Add video block for preview rendering
                     blocks.push({
                       id: `${section.id}-video-${Date.now()}`,
@@ -359,7 +419,7 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
                       },
                     });
                   }
-                  
+
                   return {
                     ...section,
                     videos,
@@ -438,7 +498,7 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
       onError?.('No provider or model selected');
       return;
     }
-    
+
     await startStream(apiMessages, {
       provider: selectedProvider,
       model: selectedModel,
@@ -494,244 +554,264 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
           justifyContent="space-between"
           sx={{ p: 2 }}
         >
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <Avatar sx={{ bgcolor: 'primary.main', width: 36, height: 36 }}>
-            <Iconify icon="tabler:robot" width={20} />
-          </Avatar>
-          <Box>
-            <Typography variant="subtitle1">{t('chat.title')}</Typography>
-            <Stack direction="row" spacing={0.5} alignItems="center" flexWrap="wrap">
-              <Chip
-                label={selectedProvider?.name || t('chat.noProvider')}
-                size="small"
-                variant="soft"
-                color="primary"
-                icon={<Iconify icon="solar:chat-round-dots-bold" width={12} />}
-              />
-              <Chip
-                label={selectedImageProvider?.name || t('chat.noProvider')}
-                size="small"
-                variant="soft"
-                color="success"
-                icon={<Iconify icon="solar:gallery-circle-outline" width={12} />}
-              />
-              <Chip
-                label={selectedVideoProvider?.name || t('chat.noProvider')}
-                size="small"
-                variant="soft"
-                color="error"
-                icon={<Iconify icon="solar:videocamera-record-bold" width={12} />}
-              />
-            </Stack>
-          </Box>
-        </Stack>
-
-        <Stack direction="row" spacing={1}>
-          <IconButton size="small" onClick={() => setShowSettings(!showSettings)}>
-            <Iconify icon="solar:settings-bold-duotone" />
-          </IconButton>
-          <IconButton size="small" onClick={handleClearChat} disabled={isStreaming}>
-            <Iconify icon="solar:trash-bin-trash-bold" />
-          </IconButton>
-        </Stack>
-      </Stack>
-
-      {/* Settings Panel */}
-      {showSettings && (
-        <Box sx={{ p: 2, bgcolor: 'grey.50' }}>
-          <Stack spacing={2}>
-            {/* Loading/Error states */}
-            {isLoadingProviders && (
-              <Alert severity="info" icon={<CircularProgress size={16} />}>
-                {t('chat.loadingProviders') || 'Cargando proveedores...'}
-              </Alert>
-            )}
-            {providersError && (
-              <Alert severity="error">
-                {t('chat.providersError') || 'Error al cargar proveedores'}: {providersError}
-              </Alert>
-            )}
-            
-            {/* Language Model Settings */}
-            <Typography variant="subtitle2" color="text.secondary">
-              {t('chat.languageModel') || 'Modelo de Lenguaje'}
-            </Typography>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <FormControl size="small" sx={{ minWidth: 150 }}>
-                <InputLabel>{t('chat.provider')}</InputLabel>
-                <Select
-                  value={selectedProvider?.id || ''}
-                  label={t('chat.provider')}
-                  onChange={(e) => selectProvider(e.target.value)}
-                  disabled={isLoadingProviders}
-                >
-                  {textProviders.map((provider) => (
-                    <MenuItem key={provider.id} value={provider.id}>
-                      {provider.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <FormControl size="small" sx={{ minWidth: 180 }}>
-                <InputLabel>{t('chat.model')}</InputLabel>
-                <Select
-                  value={selectedModel?.id || ''}
-                  label={t('chat.model')}
-                  onChange={(e) => selectModel(e.target.value)}
-                  disabled={isLoadingProviders}
-                >
-                  {availableModels.map((model) => (
-                    <MenuItem key={model.id} value={model.id}>
-                      {model.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Stack>
-
-            <Divider />
-
-            {/* Image Model Settings */}
-            <Typography variant="subtitle2" color="text.secondary">
-              {t('chat.imageModel') || 'Modelo de Imagen'}
-            </Typography>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <FormControl size="small" sx={{ minWidth: 150 }}>
-                <InputLabel>{t('chat.provider') || 'Proveedor'}</InputLabel>
-                <Select
-                  value={selectedImageProviderId}
-                  label={t('chat.provider') || 'Proveedor'}
-                  onChange={(e) => setSelectedImageProviderId(e.target.value)}
-                  disabled={isLoadingProviders}
-                >
-                  {imageProviders.map((provider) => (
-                    <MenuItem key={provider.id} value={provider.id}>
-                      {provider.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <FormControl size="small" sx={{ minWidth: 180 }}>
-                <InputLabel>{t('chat.model') || 'Modelo'}</InputLabel>
-                <Select
-                  value={selectedImageProvider?.models?.[0]?.id || ''}
-                  label={t('chat.model') || 'Modelo'}
-                  disabled={isLoadingProviders}
-                >
-                  {selectedImageProvider?.models?.map((model) => (
-                    <MenuItem key={model.id} value={model.id}>
-                      {model.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Stack>
-
-            <Divider />
-
-            {/* Video Model Settings */}
-            <Typography variant="subtitle2" color="text.secondary">
-              {t('chat.videoModel') || 'Modelo de Video'}
-            </Typography>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <FormControl size="small" sx={{ minWidth: 150 }}>
-                <InputLabel>{t('chat.provider') || 'Proveedor'}</InputLabel>
-                <Select
-                  value={selectedVideoProviderId}
-                  label={t('chat.provider') || 'Proveedor'}
-                  onChange={(e) => setSelectedVideoProviderId(e.target.value)}
-                  disabled={isLoadingProviders}
-                >
-                  {videoProviders.map((provider) => (
-                    <MenuItem key={provider.id} value={provider.id}>
-                      {provider.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <FormControl size="small" sx={{ minWidth: 180 }}>
-                <InputLabel>{t('chat.model') || 'Modelo'}</InputLabel>
-                <Select
-                  value={selectedVideoProvider?.models?.[0]?.id || ''}
-                  label={t('chat.model') || 'Modelo'}
-                  disabled={isLoadingProviders}
-                >
-                  {selectedVideoProvider?.models?.map((model) => (
-                    <MenuItem key={model.id} value={model.id}>
-                      {model.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Stack>
-
-            {/* Proprietary Video Options - Only shown when proprietary video provider is selected */}
-            {selectedVideoProvider?.name === 'Propietario' && (
-              <Box sx={{ mt: 2, p: 2, bgcolor: 'primary.lighter', borderRadius: 1 }}>
-                <Typography variant="caption" color="primary.dark" sx={{ mb: 2, display: 'block', fontWeight: 600 }}>
-                  {t('chat.proprietaryOptions')}
-                </Typography>
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                  <FormControl size="small" sx={{ minWidth: 180 }}>
-                    <InputLabel>{t('chat.sceneDuration')}</InputLabel>
-                    <Select
-                      value={proprietaryDurationScenes}
-                      label={t('chat.sceneDuration')}
-                      onChange={(e) => setProprietaryDurationScenes(Number(e.target.value))}
-                    >
-                      <MenuItem value={4}>4 {t('chat.seconds')}</MenuItem>
-                      <MenuItem value={6}>6 {t('chat.seconds')}</MenuItem>
-                      <MenuItem value={12}>12 {t('chat.seconds')}</MenuItem>
-                    </Select>
-                  </FormControl>
-
-                  <TextField
-                    size="small"
-                    type="number"
-                    label={t('chat.scenesNumber')}
-                    value={proprietaryScenesNumber}
-                    onChange={(e) => setProprietaryScenesNumber(Math.max(1, Math.min(20, Number(e.target.value))))}
-                    inputProps={{ min: 1, max: 20 }}
-                    sx={{ minWidth: 150 }}
-                    helperText={`${t('chat.totalDuration')}: ~${proprietaryDurationScenes * proprietaryScenesNumber}s`}
-                  />
-                </Stack>
-              </Box>
-            )}
-
-            <Divider />
-
-            <Box sx={{ px: 1, pb: 1 }}>
-              <Typography variant="caption" gutterBottom>
-                {t('chat.temperature')}: {temperature}
-              </Typography>
-              <Slider
-                size="small"
-                value={temperature}
-                onChange={(_, value) => setTemperature(value as number)}
-                min={0}
-                max={1}
-                step={0.1}
-                marks={[
-                  { value: 0, label: t('chat.precise') },
-                  { value: 1, label: t('chat.creative') },
-                ]}
-                sx={{
-                  mt: 2,
-                  mb: 1.5,
-                  '& .MuiSlider-markLabel': {
-                    fontSize: '0.75rem',
-                    top: 28,
-                  },
-                }}
-              />
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Avatar sx={{ bgcolor: 'primary.main', width: 36, height: 36 }}>
+              <Iconify icon="tabler:robot" width={20} />
+            </Avatar>
+            <Box>
+              <Typography variant="subtitle1">{t('chat.title')}</Typography>
+              <Stack direction="row" spacing={0.5} alignItems="center" flexWrap="wrap">
+                <Chip
+                  label={selectedProvider?.name || t('chat.noProvider')}
+                  size="small"
+                  variant="soft"
+                  color="primary"
+                  icon={<Iconify icon="solar:chat-round-dots-bold" width={12} />}
+                />
+                <Chip
+                  label={selectedImageProvider?.name || t('chat.noProvider')}
+                  size="small"
+                  variant="soft"
+                  color="success"
+                  icon={<Iconify icon="solar:gallery-circle-outline" width={12} />}
+                />
+                <Chip
+                  label={selectedVideoProvider?.name || t('chat.noProvider')}
+                  size="small"
+                  variant="soft"
+                  color="error"
+                  icon={<Iconify icon="solar:videocamera-record-bold" width={12} />}
+                />
+              </Stack>
             </Box>
           </Stack>
-        </Box>
-      )}
+
+          <Stack direction="row" spacing={1}>
+            <IconButton size="small" onClick={() => setShowSettings(!showSettings)}>
+              <Iconify icon="solar:settings-bold-duotone" />
+            </IconButton>
+            <IconButton size="small" onClick={handleClearChat} disabled={isStreaming}>
+              <Iconify icon="solar:trash-bin-trash-bold" />
+            </IconButton>
+          </Stack>
+        </Stack>
+
+        {/* Settings Panel */}
+        {showSettings && (
+          <Box sx={{ p: 2, bgcolor: 'grey.50' }}>
+            <Stack spacing={2}>
+              {/* Loading/Error states */}
+              {isLoadingProviders && (
+                <Alert severity="info" icon={<CircularProgress size={16} />}>
+                  {t('chat.loadingProviders') || 'Cargando proveedores...'}
+                </Alert>
+              )}
+              {providersError && (
+                <Alert severity="error">
+                  {t('chat.providersError') || 'Error al cargar proveedores'}: {providersError}
+                </Alert>
+              )}
+
+              {/* Language Model Settings */}
+              <Typography variant="subtitle2" color="text.secondary">
+                {t('chat.languageModel') || 'Modelo de Lenguaje'}
+              </Typography>
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                <FormControl size="small" sx={{ minWidth: 150 }}>
+                  <InputLabel>{t('chat.provider')}</InputLabel>
+                  <Select
+                    value={selectedProvider?.id || ''}
+                    label={t('chat.provider')}
+                    onChange={(e) => selectProvider(e.target.value)}
+                    disabled={isLoadingProviders}
+                  >
+                    {textProviders.map((provider) => (
+                      <MenuItem key={provider.id} value={provider.id}>
+                        {provider.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <FormControl size="small" sx={{ minWidth: 180 }}>
+                  <InputLabel>{t('chat.model')}</InputLabel>
+                  <Select
+                    value={selectedModel?.id || ''}
+                    label={t('chat.model')}
+                    onChange={(e) => selectModel(e.target.value)}
+                    disabled={isLoadingProviders}
+                  >
+                    {availableModels.map((model) => (
+                      <MenuItem key={model.id} value={model.id}>
+                        {model.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Stack>
+
+              <Divider />
+
+              {/* Image Model Settings */}
+              <Typography variant="subtitle2" color="text.secondary">
+                {t('chat.imageModel') || 'Modelo de Imagen'}
+              </Typography>
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                <FormControl size="small" sx={{ minWidth: 150 }}>
+                  <InputLabel>{t('chat.provider') || 'Proveedor'}</InputLabel>
+                  <Select
+                    value={selectedImageProviderId}
+                    label={t('chat.provider') || 'Proveedor'}
+                    onChange={(e) => {
+                      const newProviderId = e.target.value;
+                      setSelectedImageProviderId(newProviderId);
+                      // Auto-select default model for new provider
+                      const newProvider = imageProviders.find((p) => p.id === newProviderId);
+                      const defaultModel = getDefaultModel(newProvider, 'image');
+                      if (defaultModel) {
+                        setSelectedImageModelId(defaultModel.id);
+                      }
+                    }}
+                    disabled={isLoadingProviders}
+                  >
+                    {imageProviders.map((provider) => (
+                      <MenuItem key={provider.id} value={provider.id}>
+                        {provider.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <FormControl size="small" sx={{ minWidth: 180 }}>
+                  <InputLabel>{t('chat.model') || 'Modelo'}</InputLabel>
+                  <Select
+                    value={selectedImageModelId}
+                    label={t('chat.model') || 'Modelo'}
+                    onChange={(e) => setSelectedImageModelId(e.target.value)}
+                    disabled={isLoadingProviders || !selectedImageProvider}
+                  >
+                    {availableImageModels.map((model) => (
+                      <MenuItem key={model.id} value={model.id}>
+                        {model.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Stack>
+
+              <Divider />
+
+              {/* Video Model Settings */}
+              <Typography variant="subtitle2" color="text.secondary">
+                {t('chat.videoModel') || 'Modelo de Video'}
+              </Typography>
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                <FormControl size="small" sx={{ minWidth: 150 }}>
+                  <InputLabel>{t('chat.provider') || 'Proveedor'}</InputLabel>
+                  <Select
+                    value={selectedVideoProviderId}
+                    label={t('chat.provider') || 'Proveedor'}
+                    onChange={(e) => {
+                      const newProviderId = e.target.value;
+                      setSelectedVideoProviderId(newProviderId);
+                      // Auto-select default model for new provider
+                      const newProvider = videoProviders.find((p) => p.id === newProviderId);
+                      const defaultModel = getDefaultModel(newProvider, 'video');
+                      if (defaultModel) {
+                        setSelectedVideoModelId(defaultModel.id);
+                      }
+                    }}
+                    disabled={isLoadingProviders}
+                  >
+                    {videoProviders.map((provider) => (
+                      <MenuItem key={provider.id} value={provider.id}>
+                        {provider.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <FormControl size="small" sx={{ minWidth: 180 }}>
+                  <InputLabel>{t('chat.model') || 'Modelo'}</InputLabel>
+                  <Select
+                    value={selectedVideoModelId}
+                    label={t('chat.model') || 'Modelo'}
+                    onChange={(e) => setSelectedVideoModelId(e.target.value)}
+                    disabled={isLoadingProviders || !selectedVideoProvider}
+                  >
+                    {availableVideoModels.map((model) => (
+                      <MenuItem key={model.id} value={model.id}>
+                        {model.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Stack>
+
+              {/* Proprietary Video Options - Only shown when proprietary video provider is selected */}
+              {selectedVideoProvider?.name === 'Propietario' && (
+                <Box sx={{ mt: 2, p: 2, bgcolor: 'primary.lighter', borderRadius: 1 }}>
+                  <Typography variant="caption" color="primary.dark" sx={{ mb: 2, display: 'block', fontWeight: 600 }}>
+                    {t('chat.proprietaryOptions')}
+                  </Typography>
+                  <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                    <FormControl size="small" sx={{ minWidth: 180 }}>
+                      <InputLabel>{t('chat.sceneDuration')}</InputLabel>
+                      <Select
+                        value={proprietaryDurationScenes}
+                        label={t('chat.sceneDuration')}
+                        onChange={(e) => setProprietaryDurationScenes(Number(e.target.value))}
+                      >
+                        <MenuItem value={4}>4 {t('chat.seconds')}</MenuItem>
+                        <MenuItem value={6}>6 {t('chat.seconds')}</MenuItem>
+                        <MenuItem value={12}>12 {t('chat.seconds')}</MenuItem>
+                      </Select>
+                    </FormControl>
+
+                    <TextField
+                      size="small"
+                      type="number"
+                      label={t('chat.scenesNumber')}
+                      value={proprietaryScenesNumber}
+                      onChange={(e) => setProprietaryScenesNumber(Math.max(1, Math.min(20, Number(e.target.value))))}
+                      inputProps={{ min: 1, max: 20 }}
+                      sx={{ minWidth: 150 }}
+                      helperText={`${t('chat.totalDuration')}: ~${proprietaryDurationScenes * proprietaryScenesNumber}s`}
+                    />
+                  </Stack>
+                </Box>
+              )}
+
+              <Divider />
+
+              <Box sx={{ px: 1, pb: 1 }}>
+                <Typography variant="caption" gutterBottom>
+                  {t('chat.temperature')}: {temperature}
+                </Typography>
+                <Slider
+                  size="small"
+                  value={temperature}
+                  onChange={(_, value) => setTemperature(value as number)}
+                  min={0}
+                  max={1}
+                  step={0.1}
+                  marks={[
+                    { value: 0, label: t('chat.precise') },
+                    { value: 1, label: t('chat.creative') },
+                  ]}
+                  sx={{
+                    mt: 2,
+                    mb: 1.5,
+                    '& .MuiSlider-markLabel': {
+                      fontSize: '0.75rem',
+                      top: 28,
+                    },
+                  }}
+                />
+              </Box>
+            </Stack>
+          </Box>
+        )}
       </Card>
 
       {/* Messages - Flujo natural sin scroll contenedor */}
@@ -803,67 +883,67 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
           </Box>
         )}
 
-      {/* Banner generation indicator */}
-      {isGeneratingBanner && (
-        <Box sx={{ px: 2, py: 1 }}>
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <CircularProgress size={20} />
-            <Typography variant="body2" color="text.secondary">
-              {t('chat.generatingBanner') || 'Generando banner del curso...'}
-            </Typography>
-            <Box sx={{ flex: 1 }} />
-          </Stack>
-        </Box>
-      )}
-
-      {/* Image generation indicator */}
-      {isGeneratingImages && (
-        <Box sx={{ px: 2, py: 1 }}>
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <CircularProgress size={20} />
-            <Typography variant="body2" color="text.secondary">
-              {t('chat.generatingImages', {
-                current: imageProgress.current,
-                total: imageProgress.total,
-              })}
-            </Typography>
-            <LinearProgress
-              variant="determinate"
-              value={(imageProgress.current / imageProgress.total) * 100}
-              sx={{ flex: 1 }}
-            />
-          </Stack>
-        </Box>
-      )}
-
-      {/* Video generation indicator */}
-      {isGeneratingVideos && (
-        <Box sx={{ px: 2, py: 1 }}>
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <CircularProgress size={20} />
-            <Box sx={{ flex: 1 }}>
+        {/* Banner generation indicator */}
+        {isGeneratingBanner && (
+          <Box sx={{ px: 2, py: 1 }}>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <CircularProgress size={20} />
               <Typography variant="body2" color="text.secondary">
-                {selectedVideoProvider?.name === 'Propietario' && proprietaryVideoStatus
-                  ? proprietaryVideoStatus
-                  : t('chat.generatingVideos', {
+                {t('chat.generatingBanner') || 'Generando banner del curso...'}
+              </Typography>
+              <Box sx={{ flex: 1 }} />
+            </Stack>
+          </Box>
+        )}
+
+        {/* Image generation indicator */}
+        {isGeneratingImages && (
+          <Box sx={{ px: 2, py: 1 }}>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <CircularProgress size={20} />
+              <Typography variant="body2" color="text.secondary">
+                {t('chat.generatingImages', {
+                  current: imageProgress.current,
+                  total: imageProgress.total,
+                })}
+              </Typography>
+              <LinearProgress
+                variant="determinate"
+                value={(imageProgress.current / imageProgress.total) * 100}
+                sx={{ flex: 1 }}
+              />
+            </Stack>
+          </Box>
+        )}
+
+        {/* Video generation indicator */}
+        {isGeneratingVideos && (
+          <Box sx={{ px: 2, py: 1 }}>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <CircularProgress size={20} />
+              <Box sx={{ flex: 1 }}>
+                <Typography variant="body2" color="text.secondary">
+                  {selectedVideoProvider?.name === 'Propietario' && proprietaryVideoStatus
+                    ? proprietaryVideoStatus
+                    : t('chat.generatingVideos', {
                       current: videoProgress.current,
                       total: videoProgress.total,
                     })}
-              </Typography>
-              {selectedVideoProvider?.name === 'Propietario' && (
-                <Typography variant="caption" color="primary.main" sx={{ display: 'block', mt: 0.5 }}>
-                  Usando servicio Propietario (N8N + JSON2Video)
                 </Typography>
-              )}
-            </Box>
-            <LinearProgress
-              variant="determinate"
-              value={(videoProgress.current / videoProgress.total) * 100}
-              sx={{ flex: 1 }}
-            />
-          </Stack>
-        </Box>
-      )}
+                {selectedVideoProvider?.name === 'Propietario' && (
+                  <Typography variant="caption" color="primary.main" sx={{ display: 'block', mt: 0.5 }}>
+                    Usando servicio Propietario (N8N + JSON2Video)
+                  </Typography>
+                )}
+              </Box>
+              <LinearProgress
+                variant="determinate"
+                value={(videoProgress.current / videoProgress.total) * 100}
+                sx={{ flex: 1 }}
+              />
+            </Stack>
+          </Box>
+        )}
 
         {/* Error */}
         {error && (
@@ -882,37 +962,37 @@ export function AiCourseChatPanel({ onCourseGenerated, onError }: Props) {
       {/* Input - Sticky al final */}
       <Card sx={{ position: 'sticky', bottom: 16, zIndex: 10, mt: 2, boxShadow: 3 }}>
         <Stack direction="row" spacing={1} sx={{ p: 2 }}>
-        <TextField
-          fullWidth
-          multiline
-          maxRows={4}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder={t('chat.placeholder')}
-          disabled={isStreaming || isGeneratingBanner || isGeneratingImages || isGeneratingVideos}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Iconify icon="solar:chat-round-dots-bold" width={20} />
-              </InputAdornment>
-            ),
-          }}
-        />
+          <TextField
+            fullWidth
+            multiline
+            maxRows={4}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder={t('chat.placeholder')}
+            disabled={isStreaming || isGeneratingBanner || isGeneratingImages || isGeneratingVideos}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Iconify icon="solar:chat-round-dots-bold" width={20} />
+                </InputAdornment>
+              ),
+            }}
+          />
 
-        {isStreaming ? (
-          <IconButton color="error" onClick={stopStream}>
-            <Iconify icon="solar:stop-circle-bold" width={28} />
-          </IconButton>
-        ) : (
-          <IconButton
-            color="primary"
-            onClick={handleSendMessage}
-            disabled={!inputValue.trim() || isGeneratingBanner || isGeneratingImages || isGeneratingVideos}
-          >
-            <Iconify icon="solar:forward-bold" width={28} />
-          </IconButton>
-        )}
+          {isStreaming ? (
+            <IconButton color="error" onClick={stopStream}>
+              <Iconify icon="solar:stop-circle-bold" width={28} />
+            </IconButton>
+          ) : (
+            <IconButton
+              color="primary"
+              onClick={handleSendMessage}
+              disabled={!inputValue.trim() || isGeneratingBanner || isGeneratingImages || isGeneratingVideos}
+            >
+              <Iconify icon="solar:forward-bold" width={28} />
+            </IconButton>
+          )}
         </Stack>
       </Card>
     </Stack>
@@ -1021,7 +1101,7 @@ function MessageBubble({ message }: MessageBubbleProps) {
             {jsonData && !message.isStreaming && (
               <Box sx={{ mt: 3 }}>
                 <Divider sx={{ mb: 3 }} />
-                
+
                 <Stack spacing={3}>
                   {/* Course Title */}
                   <Box>
@@ -1036,26 +1116,26 @@ function MessageBubble({ message }: MessageBubbleProps) {
                   {/* Metadata */}
                   <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ gap: 1 }}>
                     {jsonData.difficulty && (
-                      <Chip 
-                        label={t(`difficulty.${jsonData.difficulty}`)} 
-                        size="small" 
+                      <Chip
+                        label={t(`difficulty.${jsonData.difficulty}`)}
+                        size="small"
                         color="primary"
                         variant="soft"
                       />
                     )}
                     {jsonData.duration && (
-                      <Chip 
+                      <Chip
                         icon={<Iconify icon="solar:clock-circle-bold" width={16} />}
-                        label={jsonData.duration} 
-                        size="small" 
+                        label={jsonData.duration}
+                        size="small"
                         variant="soft"
                       />
                     )}
                     {jsonData.language && (
-                      <Chip 
+                      <Chip
                         icon={<Iconify icon="solar:flag-bold" width={16} />}
-                        label={jsonData.language.toUpperCase()} 
-                        size="small" 
+                        label={jsonData.language.toUpperCase()}
+                        size="small"
                         variant="soft"
                       />
                     )}
@@ -1090,9 +1170,9 @@ function MessageBubble({ message }: MessageBubbleProps) {
                               <Chip label={idx + 1} size="small" />
                               <Typography variant="subtitle2">{section.title}</Typography>
                               {section.duration && (
-                                <Chip 
-                                  label={section.duration} 
-                                  size="small" 
+                                <Chip
+                                  label={section.duration}
+                                  size="small"
                                   variant="soft"
                                 />
                               )}
@@ -1156,13 +1236,13 @@ function extractCourseData(response: string): any | null {
   try {
     // Remove markdown code blocks if present
     let jsonText = response;
-    
+
     // Try to find JSON in code blocks
     const jsonCodeBlockMatch = response.match(/```json\s*([\s\S]*?)\s*```/);
     if (jsonCodeBlockMatch) {
       jsonText = jsonCodeBlockMatch[1];
     }
-    
+
     // Try to find JSON in plain code blocks
     const codeBlockMatch = response.match(/```\s*([\s\S]*?)\s*```/);
     if (codeBlockMatch && !jsonCodeBlockMatch) {
@@ -1175,7 +1255,7 @@ function extractCourseData(response: string): any | null {
     // Try to parse as JSON
     if (jsonText.startsWith('{') || jsonText.startsWith('[')) {
       const parsed = JSON.parse(jsonText);
-      
+
       // If it's the Gemini response format, extract the actual content
       if (parsed.candidates?.[0]?.content?.parts?.[0]?.text) {
         const innerText = parsed.candidates[0].content.parts[0].text;
@@ -1186,7 +1266,7 @@ function extractCourseData(response: string): any | null {
           return null;
         }
       }
-      
+
       // If it has the expected course structure
       if (parsed.title || parsed.course_metadata || parsed.sections) {
         return normalizeCourseData(parsed);

@@ -270,66 +270,20 @@ export type ILearningCategoriesTableFilterValue = string | string[];
 
 export type IProductCourse = {
   id: string;
-  name: string;
-  description?: string;
-  duration?: string;
-  price?: number;
-  isFree?: boolean;
-  isActive?: boolean;
-  bannerUrl?: string | null;
-  imageUrl?: string | null;
-  categoryName?: string;
-  difficultyLevelName?: string;
-  tags?: string;
-  createdAt?: Date | string;
-  priceDiscount?: number;
-  videoUrl?: string;
-  isStudentLimited?: boolean;
-  studentLimit?: string;
-  objective?: string;
-  skillsToAcquire?: string;
-  whatYouWillLearn?: string;
-  categoryId?: string;
-  difficultyLevelId?: string;
-  courseLmsId?: string;
-  updatedAt?: Date | string;
-  deletedAt?: Date | string | null;
-  category?: {
-    id: string;
-    name: string;
-    abreviation?: string;
-    logo?: string | null;
-    createdAt?: Date | string;
-    updatedAt?: Date | string;
-    deletedAt?: Date | string | null;
-  };
-  difficultyLevel?: {
-    id: string;
-    name: string;
-    levelOrder?: number;
-    createdAt?: Date | string;
-    updatedAt?: Date | string;
-    deletedAt?: Date | string | null;
-  };
-  courseLms?: {
-    id: string;
-    fullName: string;
-    displayName?: string;
-    codeCourse?: string;
-    description?: string | null;
-    codeLanguague?: string | null;
-    categorylmsId?: string;
-    categorylmsName?: string | null;
-    lmsCourseId?: string;
-    integrationId?: string;
-  };
+  lmsCourseId: string;
+  displayName: string;
+  codeCourse: string;
+  shortDescription: string;
+  codeLanguague: string;
+  image: string;
+  integrationName: string;
+  isActive: boolean;
 };
 
 export type IProductCourseTableFilters = {
-  name: string;
-  status: string;
-  categoryId: string;
-  difficultyLevelId: string;
+  search: string;
+  includeInactive: boolean;
+  order: string;
 };
 
 export type IProductCourseTableFilterValue = string | string[];

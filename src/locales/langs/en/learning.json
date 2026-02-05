@@ -740,10 +740,19 @@
         "active": "Active",
         "inactive": "Inactive",
         "status": "Status",
-        "keyword": "Keyword"
+        "keyword": "Keyword",
+        "order": "Sort by",
+        "includeInactive": "Include inactive",
+        "includeInactiveLabel": "Show inactive"
       },
       "toolbar": {
-        "search": "Search courses..."
+        "search": "Search courses...",
+        "order": "Sort by",
+        "includeInactive": "Include inactive courses"
+      },
+      "order": {
+        "nameAsc": "Name (A-Z)",
+        "nameDesc": "Name (Z-A)"
       }
     },
     "form": {
@@ -884,7 +893,11 @@
     },
     "card": {
       "free": "Free",
-      "viewDetails": "View details"
+      "viewDetails": "View details",
+      "noName": "No name",
+      "noDescription": "No description",
+      "active": "Active",
+      "inactive": "Inactive"
     },
     "details": {
       "title": "Course Details",
@@ -920,7 +933,7 @@
     },
     "empty": {
       "title": "No courses",
-      "description": "No courses found. Try adjusting the filters or create a new one."
+      "description": "No courses found. Try adjusting the filters."
     }
   }
 }

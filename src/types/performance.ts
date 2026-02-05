@@ -572,3 +572,73 @@ export type IConfigureTestFormInput = {
   objectives: ITestObjective[];
 };
 
+// ----------------------------------------------------------------------
+// Types for Evaluations List
+// ----------------------------------------------------------------------
+
+export type IEvaluationListParticipant = {
+  participantId: number;
+  employeeName: string;
+  jobPosition: string;
+  dueDate: string;
+};
+
+export type IEvaluationListOrganizationalUnit = {
+  id: string;
+  name: string;
+};
+
+export type IEvaluationList = {
+  id: string;
+  name: string;
+  vigencyId: string | null;
+  vigencyName: string;
+  status: string;
+  organizationalUnits: IEvaluationListOrganizationalUnit[];
+  participants: IEvaluationListParticipant[];
+};
+
+export type IEvaluationListTableFilters = {
+  name: string;
+  vigencyId: string;
+  organizationalUnitIds: string[];
+  orderDirection: 'ASC' | 'DESC' | '';
+};
+
+export type IVigency = {
+  id: string;
+  name: string;
+  startDate: string;
+  endDate: string;
+  isActive: boolean;
+};
+
+// Types for Evaluation Detail
+export type IEvaluationDetailBreakdownByRole = {
+  relationship: string;
+  score: number;
+  weight: number;
+};
+
+export type IEvaluationDetailCompetence = {
+  competenceId: number;
+  competenceName: string;
+  color: string;
+  expectedLevel: number;
+  obtainedLevel: number;
+  gap: number;
+  compliancePercentage: number;
+  totalQuestions: number;
+  answeredQuestions: number;
+  completionPercentage: number;
+  breakdownByRole: IEvaluationDetailBreakdownByRole[];
+};
+
+export type IEvaluationDetail = {
+  participantId: number;
+  employeeName: string;
+  campaignName: string;
+  overallCompetencyScore: number;
+  competencies: IEvaluationDetailCompetence[];
+};
+

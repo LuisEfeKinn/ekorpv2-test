@@ -1303,5 +1303,121 @@
         "validation": "Por favor complete todos los campos requeridos"
       }
     }
+  },
+  "evaluations-list": {
+    "title": "Lista de Evaluaciones",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "evaluationsList": "Lista de Evaluaciones"
+    },
+    "actions": {
+      "export": "Exportar",
+      "exportExcel": "Exportar a Excel",
+      "exportPdf": "Exportar a PDF",
+      "viewParticipants": "Ver Participante"
+    },
+    "statuses": {
+      "DRAFT": "Borrador",
+      "ACTIVE": "Activo",
+      "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "vigency": "Vigencia",
+        "status": "Estado",
+        "organizationalUnits": "Unidades Organizacionales",
+        "participants": "Participantes"
+      },
+      "toolbar": {
+        "search": "Buscar evaluaciones...",
+        "filterByVigency": "Filtrar por vigencia",
+        "filterByOrganizationalUnit": "Filtrar por unidad organizacional",
+        "orderDirection": "Ordenar"
+      },
+      "filters": {
+        "vigency": "Vigencia",
+        "organizationalUnit": "Unidad Organizacional",
+        "orderAsc": "Ascendente (A-Z)",
+        "orderDesc": "Descendente (Z-A)"
+      },
+      "empty": {
+        "title": "No se encontraron evaluaciones",
+        "description": "No hay evaluaciones que coincidan con los filtros seleccionados",
+        "noVigency": "Sin vigencia",
+        "noUnits": "Sin unidades"
+      }
+    },
+    "messages": {
+      "success": {
+        "exported": "Evaluaciones exportadas exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar las evaluaciones",
+        "exporting": "Error al exportar las evaluaciones"
+      }
+    }
+  },
+  "evaluation-detail": {
+    "title": "Detalle de Evaluación",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "evaluationsList": "Lista de Evaluaciones",
+      "detail": "Detalle"
+    },
+    "summary": {
+      "title": "Resumen General",
+      "participant": "Participante",
+      "campaign": "Campaña",
+      "overallScore": "Puntuación General",
+      "competenciesEvaluated": "Competencias Evaluadas",
+      "completionRate": "Tasa de Finalización"
+    },
+    "competencies": {
+      "title": "Competencias Evaluadas",
+      "name": "Competencia",
+      "expected": "Nivel Esperado",
+      "obtained": "Nivel Obtenido",
+      "gap": "Brecha",
+      "compliance": "Cumplimiento",
+      "progress": "Progreso",
+      "questions": "Preguntas",
+      "answered": "Respondidas",
+      "completion": "Completitud",
+      "breakdownByRole": "Desglose por Rol",
+      "noCompetencies": "No hay competencias evaluadas"
+    },
+    "chart": {
+      "expectedVsObtained": "Nivel Esperado vs Obtenido",
+      "complianceByCompetence": "Cumplimiento por Competencia",
+      "completionProgress": "Progreso de Completitud",
+      "roleBreakdown": "Evaluación por Rol",
+      "expected": "Esperado",
+      "obtained": "Obtenido",
+      "score": "Puntuación",
+      "weight": "Peso"
+    },
+    "relationships": {
+      "MANAGER": "Jefe/Gerente",
+      "PEER": "Compañero",
+      "SUBORDINATE": "Subordinado",
+      "SELF": "Autoevaluación",
+      "OTHER": "Otro"
+    },
+    "messages": {
+      "success": {
+        "loaded": "Evaluación cargada exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar el detalle de la evaluación",
+        "notFound": "No se encontró la evaluación solicitada",
+        "invalidData": "Los datos de la evaluación no son válidos"
+      }
+    },
+    "empty": {
+      "title": "Evaluación no encontrada",
+      "description": "No se pudo encontrar la evaluación o no tiene datos disponibles"
+    }
   }
 }
