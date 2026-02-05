@@ -1314,7 +1314,8 @@
       "export": "Export",
       "exportExcel": "Export to Excel",
       "exportPdf": "Export to PDF",
-      "viewParticipants": "View Participant"
+      "viewParticipants": "View Participant",
+      "exporting": "Exporting..."
     },
     "statuses": {
       "DRAFT": "Draft",
@@ -1366,6 +1367,12 @@
       "evaluationsList": "Evaluations List",
       "detail": "Detail"
     },
+    "actions": {
+      "export": "Export",
+      "exporting": "Exporting...",
+      "exportExcel": "Export to Excel",
+      "exportPdf": "Export to PDF"
+    },
     "summary": {
       "title": "General Summary",
       "participant": "Participant",
@@ -1407,12 +1414,14 @@
     },
     "messages": {
       "success": {
-        "loaded": "Evaluation loaded successfully"
+        "loaded": "Evaluation loaded successfully",
+        "exported": "Evaluation exported successfully"
       },
       "error": {
         "loading": "Error loading evaluation detail",
         "notFound": "Requested evaluation not found",
-        "invalidData": "Evaluation data is not valid"
+        "invalidData": "Evaluation data is not valid",
+        "exporting": "Error exporting evaluation"
       }
     },
     "empty": {

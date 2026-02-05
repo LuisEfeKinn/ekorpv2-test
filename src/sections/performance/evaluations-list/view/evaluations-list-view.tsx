@@ -3,22 +3,29 @@
 import type { TableHeadCellProps } from 'src/components/table';
 import type { IEvaluationList, IEvaluationListTableFilters } from 'src/types/performance';
 
-import { useSetState } from 'minimal-shared/hooks';
 import { useState, useEffect, useCallback } from 'react';
+import { usePopover, useSetState } from 'minimal-shared/hooks';
 
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
+import Button from '@mui/material/Button';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
 import TableBody from '@mui/material/TableBody';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
+
+import axios, { endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { GetEvaluationListPaginationService } from 'src/services/performance/evaluations-list.service';
 
 import { toast } from 'src/components/snackbar';
+import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
+import { CustomPopover } from 'src/components/custom-popover';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import {
   useTable,
@@ -41,10 +48,12 @@ export function EvaluationsListView() {
   const { t } = useTranslate('performance');
   const table = useTable();
   const router = useRouter();
+  const exportPopover = usePopover();
 
   const [tableData, setTableData] = useState<IEvaluationList[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [, setLoading] = useState(false);
+  const [exporting, setExporting] = useState(false);
 
   const filters = useSetState<IEvaluationListTableFilters>({
     name: '',
@@ -74,6 +83,70 @@ export function EvaluationsListView() {
       router.push(paths.dashboard.performance.evaluationByParticipant(id));
     },
     [router]
+  );
+
+  const handleExport = useCallback(
+    async (format: 0 | 1) => {
+      setExporting(true);
+      exportPopover.onClose();
+      try {
+        const params: any = {
+          page: table.page + 1,
+          perPage: table.rowsPerPage,
+          exportFormat: format,
+        };
+
+        if (filters.state.name) {
+          params.search = filters.state.name;
+        }
+        if (filters.state.vigencyId) {
+          params.vigencyId = filters.state.vigencyId;
+        }
+        if (filters.state.organizationalUnitIds.length > 0) {
+          params.organizationalUnitIds = filters.state.organizationalUnitIds.join(',');
+        }
+        if (filters.state.orderDirection) {
+          params.orderDirection = filters.state.orderDirection;
+        }
+
+        // Llamada directa a axios con responseType: 'blob' para manejar archivos binarios
+        const response = await axios.get(endpoints.performance.evaluationsList.all, {
+          params,
+          responseType: 'blob',
+        });
+        
+        // Crear un blob con la respuesta
+        const blob = new Blob([response.data], {
+          type: format === 0 
+            ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            : 'application/pdf',
+        });
+        
+        // Crear URL temporal y descargar
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `evaluaciones_${new Date().getTime()}.${format === 0 ? 'xlsx' : 'pdf'}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        
+        toast.success(t('evaluations-list.messages.success.exported'));
+      } catch (error) {
+        console.error('Error exporting evaluations:', error);
+        toast.error(t('evaluations-list.messages.error.exporting'));
+      } finally {
+        setExporting(false);
+      }
+    },
+    [
+      table.page,
+      table.rowsPerPage,
+      filters.state,
+      exportPopover,
+      t,
+    ]
   );
 
   // Fetch data
@@ -166,6 +239,16 @@ export function EvaluationsListView() {
             href: paths.dashboard.performance.evaluationsList,
           },
         ]}
+        action={
+          <Button
+            variant="contained"
+            startIcon={<Iconify icon="solar:download-bold" />}
+            onClick={exportPopover.onOpen}
+            disabled={exporting || tableData.length === 0}
+          >
+            {exporting ? t('evaluations-list.actions.exporting') : t('evaluations-list.actions.export')}
+          </Button>
+        }
         sx={{ mb: { xs: 3, md: 5 } }}
       />
 
@@ -219,6 +302,31 @@ export function EvaluationsListView() {
           onRowsPerPageChange={table.onChangeRowsPerPage}
         />
       </Card>
+
+      <CustomPopover
+        open={exportPopover.open}
+        anchorEl={exportPopover.anchorEl}
+        onClose={exportPopover.onClose}
+        slotProps={{ arrow: { placement: 'top-right' } }}
+      >
+        <MenuList>
+          <MenuItem
+            onClick={() => handleExport(0)}
+            disabled={exporting}
+          >
+            <Iconify icon="solar:file-text-bold" />
+            {t('evaluations-list.actions.exportExcel')}
+          </MenuItem>
+
+          <MenuItem
+            onClick={() => handleExport(1)}
+            disabled={exporting}
+          >
+            <Iconify icon="solar:file-text-bold" />
+            {t('evaluations-list.actions.exportPdf')}
+          </MenuItem>
+        </MenuList>
+      </CustomPopover>
     </DashboardContent>
   );
 }

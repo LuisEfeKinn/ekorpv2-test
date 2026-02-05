@@ -2,17 +2,22 @@
 
 import type { IEvaluationDetail } from 'src/types/performance';
 
-import { useState, useEffect } from 'react';
+import { usePopover } from 'minimal-shared/hooks';
+import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
+
+import axios, { endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
@@ -23,6 +28,7 @@ import { Iconify } from 'src/components/iconify';
 import { Chart, useChart } from 'src/components/chart';
 import { EmptyContent } from 'src/components/empty-content';
 import { LoadingScreen } from 'src/components/loading-screen';
+import { CustomPopover } from 'src/components/custom-popover';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 import { EvaluationDetailHeader } from '../evaluation-detail-header';
@@ -42,6 +48,51 @@ export function EvaluationDetailView({ id }: Props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [data, setData] = useState<IEvaluationDetail | null>(null);
+  const [exporting, setExporting] = useState(false);
+
+  const exportPopover = usePopover();
+
+  const handleExport = useCallback(
+    async (format: 0 | 1) => {
+      setExporting(true);
+      exportPopover.onClose();
+      try {
+        const exportEndpoint = `${endpoints.performance.evaluationsList.byId}/${id}/competency-gap`;
+        
+        const response = await axios.get(exportEndpoint, {
+          params: {
+            exportFormat: format,
+          },
+          responseType: 'blob',
+        });
+        
+        // Crear un blob con la respuesta
+        const blob = new Blob([response.data], {
+          type: format === 0 
+            ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            : 'application/pdf',
+        });
+        
+        // Crear URL temporal y descargar
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `evaluacion_detalle_${id}_${new Date().getTime()}.${format === 0 ? 'xlsx' : 'pdf'}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        
+        toast.success(t('evaluation-detail.messages.success.exported'));
+      } catch (err) {
+        console.error('Error exporting evaluation detail:', err);
+        toast.error(t('evaluation-detail.messages.error.exporting'));
+      } finally {
+        setExporting(false);
+      }
+    },
+    [id, exportPopover, t]
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -215,13 +266,23 @@ export function EvaluationDetailView({ id }: Props) {
           },
         ]}
         action={
-          <Button
-            variant="outlined"
-            startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
-            onClick={() => router.push(paths.dashboard.performance.evaluationsList)}
-          >
-            {t('evaluation-detail.breadcrumbs.evaluationsList')}
-          </Button>
+          <Stack direction="row" spacing={1}>
+            <Button
+              variant="contained"
+              startIcon={<Iconify icon="solar:download-bold" />}
+              onClick={exportPopover.onOpen}
+              disabled={exporting}
+            >
+              {exporting ? t('evaluation-detail.actions.exporting') : t('evaluation-detail.actions.export')}
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
+              onClick={() => router.push(paths.dashboard.performance.evaluationsList)}
+            >
+              {t('evaluation-detail.breadcrumbs.evaluationsList')}
+            </Button>
+          </Stack>
         }
         sx={{ mb: { xs: 3, md: 5 } }}
       />
@@ -305,6 +366,31 @@ export function EvaluationDetailView({ id }: Props) {
           </Card>
         )}
       </Stack>
+
+      <CustomPopover
+        open={exportPopover.open}
+        anchorEl={exportPopover.anchorEl}
+        onClose={exportPopover.onClose}
+        slotProps={{ arrow: { placement: 'top-right' } }}
+      >
+        <MenuList>
+          <MenuItem
+            onClick={() => handleExport(0)}
+            disabled={exporting}
+          >
+            <Iconify icon="solar:file-text-bold" />
+            {t('evaluation-detail.actions.exportExcel')}
+          </MenuItem>
+
+          <MenuItem
+            onClick={() => handleExport(1)}
+            disabled={exporting}
+          >
+            <Iconify icon="solar:file-text-bold" />
+            {t('evaluation-detail.actions.exportPdf')}
+          </MenuItem>
+        </MenuList>
+      </CustomPopover>
     </DashboardContent>
   );
 }
