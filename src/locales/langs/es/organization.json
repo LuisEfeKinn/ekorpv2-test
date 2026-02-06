@@ -1,0 +1,807 @@
+{
+  "organization": {
+    "title": "Organizaciones",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "organizationUnit": "Unidad Organizativa",
+      "organizations": "Organizaciones",
+      "list": "Lista de Organizaciones",
+      "create": "Crear Organización",
+      "edit": "Editar Organización"
+    },
+    "actions": {
+      "add": "Agregar Organización",
+      "edit": "Editar Organización",
+      "delete": "Eliminar Organización",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "saving": "Guardando...",
+      "create": "Crear Organización",
+      "update": "Actualizar Organización",
+      "search": "Buscar organizaciones...",
+      "clear": "Limpiar"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "code": "Código",
+        "description": "Descripción",
+        "color": "Color",
+        "createdAt": "Creado En",
+        "updatedAt": "Actualizado En",
+        "actions": "Acciones"
+      },
+      "toolbar": {
+        "search": "Buscar organizaciones..."
+      },
+      "filters": {
+        "status": "Estado:",
+        "keyword": "Palabra clave:",
+        "all": "Todo"
+      },
+      "emptyState": {
+        "noData": "No se encontraron organizaciones",
+        "noResults": "No se encontraron resultados para su búsqueda"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "placeholder": "Ingrese el nombre de la organización",
+          "helperText": "Ingrese el nombre de la organización",
+          "required": "El nombre es obligatorio"
+        },
+        "code": {
+          "label": "Código",
+          "placeholder": "Ingrese el código de la organización",
+          "helperText": "Ingrese el código de la organización",
+          "required": "El código es obligatorio"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Ingrese la descripción de la organización",
+          "helperText": "Ingrese la descripción de la organización",
+          "required": "La descripción es obligatoria"
+        },
+        "color": {
+          "label": "Color",
+          "placeholder": "Seleccione el color de la organización",
+          "helperText": "Seleccione un color para la organización",
+          "required": "El color es obligatorio"
+        }
+      },
+      "sections": {
+        "details": "Detalles de la Organización"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Organización",
+        "content": "¿Está seguro de que desea eliminar esta organización?",
+        "contentMultiple": "¿Está seguro de que desea eliminar {{count}} elementos?",
+        "confirm": "Eliminar"
+      },
+      "unsavedChanges": {
+        "title": "Cambios No Guardados",
+        "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+        "confirm": "Salir sin guardar"
+      },
+      "employees": {
+        "fallbacks": {
+          "noName": "Sin nombre",
+          "noEmail": "Sin email"
+        }
+      }
+    },
+    "messages": {
+      "loading": "Cargando organizaciones...",
+      "saving": "Guardando...",
+      "loadError": "Error al cargar la organización",
+      "saveError": "Error al guardar la organización. Por favor, inténtelo de nuevo.",
+      "notFound": "Organización no encontrada",
+      "createSuccess": "¡Organización creada con éxito!",
+      "updateSuccess": "¡Organización actualizada con éxito!",
+      "success": {
+        "created": "Organización creada con éxito",
+        "updated": "Organización actualizada con éxito",
+        "deleted": "Organización eliminada con éxito",
+        "deletedMultiple": "Organizaciones eliminadas con éxito"
+      },
+      "error": {
+        "loading": "Error al cargar organizaciones",
+        "saving": "Error al guardar la organización. Por favor, inténtelo de nuevo.",
+        "deleting": "Error al eliminar la organización",
+        "deletingMultiple": "Error al eliminar organizaciones",
+        "notFound": "Organización no encontrada"
+      }
+    },
+    "status": {
+      "all": "Todas",
+      "active": "Activas",
+      "inactive": "Inactivas"
+    },
+    "tooltips": {
+      "edit": "Editar organización",
+      "delete": "Eliminar organización",
+      "quickEdit": "Edición rápida"
+    }
+  },
+  "position": {
+    "title": "Cargos",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "positions": "Cargos",
+      "list": "Lista de Cargos",
+      "create": "Crear Cargo",
+      "edit": "Editar Cargo"
+    },
+    "actions": {
+      "add": "Agregar Cargo",
+      "edit": "Editar Cargo",
+      "delete": "Eliminar Cargo",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "saving": "Guardando...",
+      "create": "Crear Cargo",
+      "update": "Actualizar Cargo",
+      "search": "Buscar cargos...",
+      "clear": "Limpiar"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "superiorJob": "Cargo Superior",
+        "objectives": "Objetivos",
+        "expectedResults": "Resultados Esperados",
+        "requirements": "Requisitos",
+        "otherFunctions": "Otras Funciones",
+        "academic": "Nivel Académico",
+        "experience": "Experiencia",
+        "location": "Ubicación",
+        "createdAt": "Creado En",
+        "updatedAt": "Actualizado En",
+        "actions": "Acciones"
+      },
+      "noSuperior": "Sin cargo superior",
+      "toolbar": {
+        "search": "Buscar cargos..."
+      },
+      "filters": {
+        "status": "Estado:",
+        "keyword": "Palabra clave:",
+        "all": "Todo"
+      },
+      "emptyState": {
+        "noData": "No se encontraron cargos",
+        "noResults": "No se encontraron resultados para su búsqueda"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "placeholder": "Ingrese el nombre del cargo",
+          "helperText": "Ingrese el nombre del cargo",
+          "required": "El nombre es obligatorio"
+        },
+        "code": {
+          "label": "Código",
+          "placeholder": "Ingrese el código del cargo",
+          "helperText": "Ingrese el código del cargo (máx. 80 caracteres)"
+        },
+        "objectives": {
+          "label": "Objetivos",
+          "placeholder": "Ingrese los objetivos del cargo",
+          "helperText": "Ingrese los objetivos del cargo",
+          "required": "Los objetivos son obligatorios"
+        },
+        "expectedResults": {
+          "label": "Resultados Esperados",
+          "placeholder": "Ingrese los resultados esperados del cargo",
+          "helperText": "Ingrese los resultados esperados del cargo",
+          "required": "Los resultados esperados son obligatorios"
+        },
+        "requirements": {
+          "label": "Requisitos",
+          "placeholder": "Ingrese los requisitos del cargo",
+          "helperText": "Ingrese los requisitos del cargo",
+          "required": "Los requisitos son obligatorios"
+        },
+        "otherFunctions": {
+          "label": "Otras Funciones",
+          "placeholder": "Ingrese otras funciones del cargo",
+          "helperText": "Ingrese otras funciones del cargo",
+          "required": "Las otras funciones son obligatorias"
+        },
+        "minimumAcademicLevel": {
+          "label": "Nivel Académico Mínimo",
+          "placeholder": "Ingrese el nivel académico mínimo",
+          "helperText": "Ingrese el nivel académico mínimo requerido (máx. 512 caracteres)"
+        },
+        "desiredAcademicLevel": {
+          "label": "Nivel Académico Deseado",
+          "placeholder": "Ingrese el nivel académico deseado",
+          "helperText": "Ingrese el nivel académico deseado (máx. 512 caracteres)"
+        },
+        "minimumExperience": {
+          "label": "Experiencia Mínima",
+          "placeholder": "Ingrese la experiencia mínima",
+          "helperText": "Ingrese la experiencia mínima requerida (máx. 512 caracteres)"
+        },
+        "desiredExperience": {
+          "label": "Experiencia Deseada",
+          "placeholder": "Ingrese la experiencia deseada",
+          "helperText": "Ingrese la experiencia deseada (máx. 512 caracteres)"
+        },
+        "supervises": {
+          "label": "Supervisa",
+          "placeholder": "Ingrese a quién supervisa",
+          "helperText": "Ingrese los cargos que supervisa (máx. 512 caracteres)"
+        },
+        "regionalLocation": {
+          "label": "Ubicación Regional",
+          "placeholder": "Ingrese la ubicación regional",
+          "helperText": "Ingrese la ubicación regional (máx. 512 caracteres)"
+        },
+        "headquarters": {
+          "label": "Sede",
+          "placeholder": "Ingrese la sede",
+          "helperText": "Ingrese la sede (máx. 512 caracteres)"
+        },
+        "version": {
+          "label": "Versión",
+          "placeholder": "Ingrese la versión",
+          "helperText": "Ingrese la versión del cargo (máx. 64 caracteres)"
+        },
+        "superiorJob": {
+          "label": "Cargo Superior",
+          "placeholder": "Buscar y seleccionar cargo superior",
+          "helperText": "Seleccione el cargo superior al que reporta (opcional)"
+        },
+        "organizationalUnit": {
+          "label": "Unidad Organizacional",
+          "placeholder": "Buscar y seleccionar unidad organizacional",
+          "helperText": "Seleccione la unidad organizacional a la que pertenece este cargo (opcional)"
+        }
+      },
+      "sections": {
+        "details": "Detalles del Cargo"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Cargo",
+        "content": "¿Está seguro de que desea eliminar este cargo?",
+        "contentMultiple": "¿Está seguro de que desea eliminar {{count}} elementos?",
+        "confirm": "Eliminar"
+      },
+      "unsavedChanges": {
+        "title": "Cambios No Guardados",
+        "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+        "confirm": "Salir sin guardar"
+      }
+    },
+    "messages": {
+      "loading": "Cargando cargos...",
+      "saving": "Guardando...",
+      "loadError": "Error al cargar el cargo",
+      "saveError": "Error al guardar el cargo. Por favor, inténtelo de nuevo.",
+      "notFound": "Cargo no encontrado",
+      "createSuccess": "¡Cargo creado con éxito!",
+      "updateSuccess": "¡Cargo actualizado con éxito!",
+      "success": {
+        "created": "Cargo creado con éxito",
+        "updated": "Cargo actualizado con éxito",
+        "deleted": "Cargo eliminado con éxito",
+        "deletedMultiple": "Cargos eliminados con éxito"
+      },
+      "error": {
+        "loading": "Error al cargar cargos",
+        "saving": "Error al guardar el cargo. Por favor, inténtelo de nuevo.",
+        "deleting": "Error al eliminar el cargo",
+        "deletingMultiple": "Error al eliminar cargos",
+        "notFound": "Cargo no encontrado"
+      }
+    },
+    "status": {
+      "all": "Todas",
+      "active": "Activas",
+      "inactive": "Inactivas"
+    },
+    "tooltips": {
+      "edit": "Editar cargo",
+      "delete": "Eliminar cargo",
+      "quickEdit": "Edición rápida"
+    }
+  },
+  "company": {
+    "title": "Compañía",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "company": "Compañía",
+      "details": "Detalles de la Compañía",
+      "edit": "Editar Compañía"
+    },
+    "actions": {
+      "edit": "Editar Compañía",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "saving": "Guardando...",
+      "update": "Actualizar Compañía"
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "placeholder": "Ingrese el nombre de la compañía",
+          "helperText": "Ingrese el nombre de la compañía",
+          "required": "El nombre es obligatorio"
+        },
+        "oficialName": {
+          "label": "Nombre Oficial",
+          "placeholder": "Ingrese el nombre oficial de la compañía",
+          "helperText": "Ingrese el nombre oficial de la compañía",
+          "required": "El nombre oficial es obligatorio"
+        },
+        "taxId": {
+          "label": "NIT",
+          "placeholder": "Ingrese el NIT de la compañía",
+          "helperText": "Ingrese el número de identificación tributaria",
+          "required": "El NIT es obligatorio"
+        },
+        "webSite": {
+          "label": "Sitio Web",
+          "placeholder": "Ingrese el sitio web de la compañía",
+          "helperText": "Ingrese la URL del sitio web",
+          "required": "El sitio web es obligatorio"
+        },
+        "registerDate": {
+          "label": "Fecha de Registro",
+          "placeholder": "Seleccione la fecha de registro",
+          "helperText": "Seleccione la fecha de registro de la compañía",
+          "required": "La fecha de registro es obligatoria"
+        },
+        "coinId": {
+          "label": "Moneda",
+          "placeholder": "Seleccione la moneda",
+          "helperText": "Seleccione la moneda de la compañía",
+          "required": "La moneda es obligatoria"
+        },
+        "primaryAddress": {
+          "label": "Dirección Principal",
+          "placeholder": "Ingrese la dirección principal",
+          "helperText": "Ingrese la dirección principal de la compañía",
+          "required": "La dirección principal es obligatoria"
+        },
+        "secondaryAddress": {
+          "label": "Dirección Secundaria",
+          "placeholder": "Ingrese la dirección secundaria (opcional)",
+          "helperText": "Ingrese la dirección secundaria de la compañía"
+        },
+        "latitude": {
+          "label": "Latitud",
+          "placeholder": "Ingrese la latitud",
+          "helperText": "Ingrese la coordenada de latitud",
+          "required": "La latitud es obligatoria"
+        },
+        "longitude": {
+          "label": "Longitud",
+          "placeholder": "Ingrese la longitud",
+          "helperText": "Ingrese la coordenada de longitud",
+          "required": "La longitud es obligatoria"
+        }
+      },
+      "sections": {
+        "details": "Detalles de la Compañía",
+        "address": "Información de Dirección",
+        "location": "Ubicación Geográfica"
+      }
+    },
+    "messages": {
+      "loading": "Cargando información de la compañía...",
+      "saving": "Guardando...",
+      "loadError": "Error al cargar la información de la compañía",
+      "saveError": "Error al guardar la información de la compañía. Por favor, inténtelo de nuevo.",
+      "notFound": "Compañía no encontrada",
+      "updateSuccess": "¡Información de la compañía actualizada con éxito!",
+      "success": {
+        "updated": "Información de la compañía actualizada con éxito"
+      },
+      "error": {
+        "loading": "Error al cargar la información de la compañía",
+        "saving": "Error al guardar la información de la compañía. Por favor, inténtelo de nuevo."
+      }
+    }
+  },
+  "organigrama": {
+    "title": "Organigrama",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "organigrama": "Organigrama"
+    },
+    "viewTypes": {
+      "jobs": "Por Cargos",
+      "organizational": "Por Unidades"
+    },
+    "actions": {
+      "manageOrganizations": "Gestionar Organizaciones",
+      "createPosition": "Crear Cargo",
+      "add": "Agregar",
+      "retry": "Reintentar"
+    },
+    "placeholder": {
+      "title": "Organigrama en desarrollo",
+      "subtitle": "Visualiza y gestiona la estructura jerárquica de tu organización"
+    },
+    "drawer": {
+      "createPosition": {
+        "title": "Crear Nuevo Cargo",
+        "subtitle": "Define las características del puesto",
+        "close": "Cerrar"
+      },
+      "editPosition": {
+        "title": "Editar Cargo",
+        "subtitle": "Modifica los datos del cargo seleccionado"
+      },
+      "vacancies": {
+        "label": "Vacantes",
+        "available": "{{count}} vacante disponible",
+        "available_plural": "{{count}} vacantes disponibles",
+        "full": "Sin vacantes disponibles"
+      }
+    },
+    "dialogs": {
+      "employees": {
+        "title": "Empleados",
+        "subtitle": "Puedes seleccionar múltiples empleados",
+        "search": "Buscar empleado por nombre o email...",
+        "noResults": "Ningún empleado seleccionado",
+        "selected": {
+          "none": "Ningún empleado seleccionado",
+          "one": "Empleado seleccionado",
+          "multiple": "Empleados seleccionados"
+        },
+        "actions": {
+          "assign": "Asignar",
+          "assigned": "Asignado",
+          "done": "Listo"
+        }
+      },
+      "skills": {
+        "title": "Habilidades",
+        "subtitle": "Puedes seleccionar múltiples habilidades",
+        "search": "Buscar habilidad...",
+        "selected": {
+          "none": "Ninguna habilidad seleccionada",
+          "one": "Habilidad seleccionada",
+          "multiple": "Habilidades seleccionadas"
+        },
+        "actions": {
+          "add": "Agregar",
+          "added": "Agregado",
+          "done": "Listo"
+        },
+        "types": {
+          "technical": "Habilidad técnica/blanda"
+        }
+      }
+    },
+    "form": {
+      "fields": {
+        "organization": {
+          "label": "Organización",
+          "placeholder": "Seleccionar organización",
+          "create": "Crear nueva organización"
+        },
+        "level": {
+          "label": "Nivel",
+          "placeholder": "Seleccionar nivel"
+        },
+        "code": {
+          "label": "Código",
+          "placeholder": "Ej: GER-001"
+        },
+        "positionName": {
+          "label": "Nombre",
+          "placeholder": "Nombre del cargo",
+          "required": "El nombre del cargo es obligatorio"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Descripción del cargo...",
+          "helper": "Máximo 500 caracteres"
+        },
+        "skills": {
+          "label": "Habilidades requeridas",
+          "add": "Agregar habilidad",
+          "empty": "No hay habilidades asignadas"
+        },
+        "employees": {
+          "label": "Empleados",
+          "add": "Agregar empleado",
+          "empty": "No hay empleados asignados"
+        },
+        "parentPosition": {
+          "label": "Cargo Padre",
+          "placeholder": "Seleccionar cargo padre (opcional)",
+          "rootPosition": "Sin cargo padre (Cargo raíz)"
+        },
+        "location": {
+          "label": "Sede / Ubicación",
+          "placeholder": "Seleccionar sede o ubicación"
+        },
+        "hierarchicalLevel": {
+          "label": "Nivel Jerárquico",
+          "placeholder": "Seleccionar nivel jerárquico",
+          "options": {
+            "alta_direccion": "Alta Dirección",
+            "gerencial": "Gerencial",
+            "ejecutivo": "Ejecutivo",
+            "operativo": "Operativo"
+          }
+        },
+        "requiredEmployees": {
+          "label": "Empleados Requeridos",
+          "placeholder": "Número de empleados necesarios",
+          "helper": "Cantidad total de empleados que requiere este cargo"
+        }
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "create": "Guardar",
+        "update": "Actualizar Cargo",
+        "saving": "Guardando..."
+      }
+    },
+    "nodeActions": {
+      "moreOptions": "Más opciones",
+      "assignEmployees": "Asignar Empleados",
+      "editPosition": "Editar Cargo",
+      "deletePosition": "Eliminar Cargo",
+      "expandNode": "Expandir nodo",
+      "collapseNode": "Contraer nodo"
+    },
+    "nodeContent": {
+      "assignedTeam": "Equipo Asignado",
+      "noTeamAssigned": "Sin Equipo Asignado",
+      "vacancies": "Vacantes",
+      "required": "Requeridos",
+      "assignEmployees": "Asignar Empleados",
+      "keySkills": "Habilidades Clave",
+      "allRequiredSkills": "Todas las habilidades requeridas:",
+      "moreSkills": "más habilidades"
+    },
+    "chartControls": {
+      "zoomIn": "Acercar",
+      "zoomOut": "Alejar",
+      "adjustZoom": "Ajustar zoom",
+      "fitToScreen": "Ajustar a pantalla",
+      "resetZoom": "Restablecer zoom",
+      "fullscreen": "Pantalla completa",
+      "zoomLevel": "Nivel de Zoom"
+    },
+    "metrics": {
+      "totalPositions": "Cargos totales",
+      "activeEmployees": "Empleados activos",
+      "organizations": "Organizaciones",
+      "openVacancies": "Vacantes abiertas"
+    },
+    "deleteDialog": {
+      "title": "Eliminar Cargo",
+      "message": "¿Estás seguro de que deseas eliminar el cargo \"{{name}}\"? Esta acción no se puede deshacer.",
+      "warning": "Advertencia",
+      "employeesWarning": "Este cargo tiene {{count}} empleado(s) asignado(s). Serán desasignados de este cargo.",
+      "confirmButton": "Eliminar Cargo",
+      "cancelButton": "Cancelar"
+    },
+    "messages": {
+      "loading": "Cargando organigrama...",
+      "loadError": "Error al cargar el organigrama. Intenta nuevamente.",
+      "confirmDelete": "¿Estás seguro de eliminar este cargo?",
+      "deleteError": "Error al eliminar el cargo. Intenta nuevamente.",
+      "assignmentFor": "Funcionalidad de asignación para este cargo",
+      "noData": "No se encontraron datos del organigrama.",
+      "createFirstPosition": "Crear primer cargo",
+      "saveError": "Error al guardar el cargo. Intenta nuevamente."
+    }
+  },
+  "vigencies": {
+    "title": "Vigencias",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "vigencies": "Vigencias",
+      "list": "Lista de Vigencias",
+      "create": "Crear Vigencia",
+      "edit": "Editar Vigencia"
+    },
+    "actions": {
+      "add": "Agregar Vigencia",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "saving": "Guardando...",
+      "viewMore": "Ver más",
+      "viewPeriods": "Ver períodos"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "startDate": "Fecha de Inicio",
+        "endDate": "Fecha de Fin",
+        "status": "Estado",
+        "periods": "Períodos",
+        "actions": "Acciones"
+      },
+      "search": "Buscar vigencias...",
+      "toolbar": {
+        "resetFilters": "Limpiar Filtros"
+      },
+      "filters": {
+        "keyword": "Palabra clave",
+        "status": "Estado",
+        "all": "Todas",
+        "active": "Activas",
+        "inactive": "Inactivas"
+      },
+      "emptyState": {
+        "title": "No se encontraron vigencias",
+        "description": "Intenta ajustar tus filtros"
+      }
+    },
+    "form": {
+      "name": {
+        "label": "Nombre",
+        "placeholder": "Ingrese el nombre de la vigencia",
+        "required": "El nombre es requerido"
+      },
+      "startDate": {
+        "label": "Fecha de Inicio",
+        "placeholder": "Seleccione la fecha de inicio",
+        "required": "La fecha de inicio es requerida"
+      },
+      "endDate": {
+        "label": "Fecha de Fin",
+        "placeholder": "Seleccione la fecha de fin",
+        "required": "La fecha de fin es requerida"
+      },
+      "isActive": {
+        "label": "Activo",
+        "helperText": "Habilitar o deshabilitar esta vigencia"
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "save": "Guardar Vigencia",
+        "saving": "Guardando...",
+        "managePeriods": "Gestionar Períodos"
+      },
+      "confirmDialog": {
+        "title": "Guardar y Gestionar Períodos",
+        "content": "Todos los cambios se guardarán antes de gestionar los períodos. ¿Deseas continuar?",
+        "confirm": "Guardar y Continuar"
+      }
+    },
+    "periods": {
+      "title": "Períodos",
+      "name": "Nombre",
+      "abbreviation": "Abreviatura",
+      "startDate": "Fecha de Inicio",
+      "endDate": "Fecha de Fin",
+      "percentage": "Porcentaje",
+      "noPeriods": "No hay períodos disponibles"
+    },
+    "status": {
+      "active": "Activa",
+      "inactive": "Inactiva"
+    },
+    "messages": {
+      "success": {
+        "createSuccess": "Vigencia creada exitosamente",
+        "updateSuccess": "Vigencia actualizada exitosamente",
+        "deleted": "Vigencia eliminada exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar las vigencias",
+        "saveError": "Error al guardar la vigencia",
+        "deleting": "Error al eliminar la vigencia"
+      },
+      "confirmDelete": "¿Estás seguro de que deseas eliminar esta vigencia?"
+    }
+  },
+  "periods": {
+    "title": "Períodos",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "vigencies": "Vigencias",
+      "periods": "Períodos",
+      "list": "Lista de Períodos",
+      "create": "Crear Período",
+      "edit": "Editar Período"
+    },
+    "actions": {
+      "add": "Agregar Período",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "saving": "Guardando..."
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "abbreviation": "Abreviatura",
+        "startDate": "Fecha de Inicio",
+        "endDate": "Fecha de Fin",
+        "percentage": "Porcentaje",
+        "status": "Estado",
+        "actions": "Acciones"
+      },
+      "search": "Buscar períodos...",
+      "toolbar": {
+        "resetFilters": "Limpiar Filtros"
+      },
+      "filters": {
+        "keyword": "Palabra clave"
+      },
+      "emptyState": {
+        "title": "No se encontraron períodos",
+        "description": "Intenta ajustar tus filtros"
+      }
+    },
+    "form": {
+      "name": {
+        "label": "Nombre",
+        "placeholder": "Ingrese el nombre del período",
+        "required": "El nombre es requerido"
+      },
+      "abbreviation": {
+        "label": "Abreviatura",
+        "placeholder": "Ingrese la abreviatura (ej: Q1)",
+        "required": "La abreviatura es requerida"
+      },
+      "startDate": {
+        "label": "Fecha de Inicio",
+        "placeholder": "Seleccione la fecha de inicio",
+        "required": "La fecha de inicio es requerida"
+      },
+      "endDate": {
+        "label": "Fecha de Fin",
+        "placeholder": "Seleccione la fecha de fin",
+        "required": "La fecha de fin es requerida"
+      },
+      "percentage": {
+        "label": "Porcentaje",
+        "placeholder": "Ingrese el porcentaje",
+        "required": "El porcentaje es requerido",
+        "helperText": "El porcentaje debe estar entre 0 y 100"
+      },
+      "isActive": {
+        "label": "Activo",
+        "helperText": "Habilitar o deshabilitar este período"
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "save": "Guardar Período",
+        "saving": "Guardando..."
+      }
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "messages": {
+      "success": {
+        "createSuccess": "Período creado exitosamente",
+        "updateSuccess": "Período actualizado exitosamente",
+        "deleted": "Período eliminado exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar los períodos",
+        "saveError": "Error al guardar el período",
+        "deleting": "Error al eliminar el período"
+      },
+      "confirmDelete": "¿Estás seguro de que deseas eliminar este período?"
+    }
+  }
+}

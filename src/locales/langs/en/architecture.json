@@ -1,0 +1,1833 @@
+{
+  "common": {
+    "yes": "Yes",
+    "no": "No",
+    "filters": {
+      "domains": "Domains",
+      "types": "Types",
+      "providers": "Providers"
+    }
+  },
+  "risk": {
+    "table": {
+      "title": "Risk Table",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Risk Table List",
+        "create": "Add Risk Table",
+        "edit": "Edit Risk Table"
+      },
+      "actions": {
+        "add": "Add Risk Architecture",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving...",
+        "create": "Add Risk Table",
+        "update": "Update Risk Table",
+        "search": "Search risk tables...",
+        "clear": "Clear filters",
+        "map": "Risk Map",
+        "back": "Back",
+        "upload": "Upload",
+        "download": "Download",
+        "relate": "Relate"
+      },
+      "table": {
+        "columns": {
+          "name": "Name",
+          "description": "Description",
+          "code": "Code",
+          "riskType": "Risk Type",
+          "superiorRisk": "Parent Risk",
+          "actions": "Actions"
+        },
+        "toolbar": {
+          "search": "Search risk tables..."
+        },
+        "filters": {
+          "status": "Status:",
+          "keyword": "Keyword:",
+          "all": "All"
+        },
+        "emptyState": {
+          "noData": "No risk tables found",
+          "noResults": "No results found for your search"
+        }
+      },
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Enter the risk table name",
+            "helperText": "Enter the risk table name",
+            "required": "Name is required"
+          },
+          "description": {
+            "label": "Description",
+            "placeholder": "Enter the risk table description",
+            "helperText": "Enter the risk table description",
+            "required": "Description is required"
+          },
+          "code": {
+            "label": "Code",
+            "placeholder": "Enter the risk table code",
+            "helperText": "Enter the risk table code",
+            "required": "Code is required"
+          },
+          "riskType": {
+            "label": "Risk Type",
+            "placeholder": "Select the risk type",
+            "helperText": "Select the risk type",
+            "required": "Risk type is required"
+          },
+          "superiorRisk": {
+            "label": "Parent Risk",
+            "placeholder": "Select the parent risk",
+            "helperText": "Select the parent risk",
+            "required": "Parent risk is required"
+          }
+        },
+        "sections": {
+          "details": "Risk Table Details"
+        }
+      },
+      "dialogs": {
+        "edit": {
+          "title": "Edit Risk Table"
+        },
+        "create": {
+          "title": "Add Risk Table"
+        },
+        "form": {
+          "riskTypeHelper": "Select the risk type from the available options",
+          "superiorRiskHelper": "Type the parent risk from the available options"
+        },
+        "delete": {
+          "title": "Delete Risk Table",
+          "content": "Are you sure you want to delete this risk table?",
+          "contentMultiple": "Are you sure you want to delete {{count}} items?",
+          "confirm": "Delete"
+        },
+        "unsavedChanges": {
+          "title": "Unsaved Changes",
+          "content": "You have unsaved changes. Are you sure you want to leave?",
+          "confirm": "Leave without saving"
+        }
+      },
+      "messages": {
+        "loading": "Loading risk tables...",
+        "saving": "Saving...",
+        "loadError": "Error loading the risk table",
+        "saveError": "Error saving the risk table. Please try again.",
+        "notFound": "Risk table not found",
+        "createSuccess": "Risk table added successfully!",
+        "updateSuccess": "Risk table updated successfully!",
+        "success": {
+          "created": "Risk table added successfully",
+          "updated": "Risk table updated successfully",
+          "deleted": "Risk table deleted successfully",
+          "deletedMultiple": "Risk tables deleted successfully"
+        },
+        "error": {
+          "loading": "Error loading the risk table",
+          "updating": "Error updating the risk table",
+          "creating": "Error creating the risk table",
+          "deleting": "Error deleting the risk table",
+          "deletingMultiple": "Error deleting the risk tables",
+          "notFound": "Risk table not found"
+        }
+      },
+      "status": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "tooltips": {
+        "edit": "Edit risk table",
+        "delete": "Delete risk table",
+        "quickEdit": "Quick edit"
+      }
+    }
+  },
+  "riskMap": {
+    "panel": {
+      "actionsTitle": "Action Measures"
+    },
+    "form": {
+      "fields": {
+        "process": "Process",
+        "impact": "Impact",
+        "probability": "Probability",
+        "deficiency": "Deficiency Level",
+        "riskCondition": "Risk Condition",
+        "measure": "Measure",
+        "mandatoryRecommended": "Mandatory/Recommended",
+        "controlLevel": "Control Level",
+        "severity": "Severity",
+        "frequency": "Frequency",
+        "vulnerability": "Vulnerability"
+      },
+      "actions": {
+        "addProcess": "Add Process",
+        "addTools": "Add Tools Architecture",
+        "addMeasure": "Add Measure"
+      }
+    }
+  },
+  "rasciMatrix": {
+    "title": "RASCI Matrix",
+    "filters": {
+      "columns": "Filter columns",
+      "search": "Search processes"
+    },
+    "actions": {
+      "upload": "Upload Excel",
+      "download": "Download Excel"
+    },
+    "table": {
+      "processes": "Processes",
+      "processesRoles": "Processes / Roles"
+    },
+    "legend": {
+      "R": "Responsible",
+      "A": "Accountable",
+      "S": "Support",
+      "C": "Consulted",
+      "I": "Informed"
+    },
+    "messages": {
+      "downloadError": "Error downloading Excel file",
+      "uploadSuccess": "File uploaded successfully",
+      "uploadError": "Error uploading Excel file"
+    }
+  },
+  "process": {
+    "table": {
+      "title": "Process Table",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Process List",
+        "create": "Add Process",
+        "edit": "Edit Process"
+      },
+      "actions": {
+        "add": "Add Process",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving...",
+        "create": "Add Process",
+        "update": "Update Process",
+        "search": "Search processes...",
+        "clear": "Clear",
+        "map": "Map"
+      },
+      "table": {
+        "columns": {
+          "nomenclature": "Nomenclature",
+          "name": "Name",
+          "description": "Description",
+          "requiresOLA": "Requires OLA",
+          "periodicity": "Periodicity",
+          "workload": "Workload",
+          "cost": "Cost",
+          "result": "Result",
+          "context": "Context",
+          "actions": "Actions"
+        },
+        "toolbar": {
+          "search": "Search processes..."
+        },
+        "filters": {
+          "status": "Status:",
+          "keyword": "Keyword:",
+          "all": "All"
+        },
+        "emptyState": {
+          "noData": "No processes found",
+          "noResults": "No results found for your search"
+        }
+      },
+      "form": {
+        "fields": {
+          "nomenclature": {
+            "label": "Nomenclature",
+            "helperText": "Enter the process nomenclature"
+          },
+          "name": {
+            "label": "Name",
+            "helperText": "Enter the process name",
+            "required": "Name is required"
+          },
+          "description": {
+            "label": "Description",
+            "helperText": "Enter the process description",
+            "required": "Description is required"
+          },
+          "result": {
+            "label": "Result",
+            "helperText": "Enter the expected result of the process",
+            "required": "Result is required"
+          },
+          "requiresOLA": {
+            "label": "Requires OLA",
+            "helperText": "Indicate if the process requires OLA"
+          },
+          "periodicity": {
+            "label": "Periodicity (days)",
+            "helperText": "Enter periodicity in days"
+          },
+          "workload": {
+            "label": "Workload (hours)",
+            "helperText": "Enter workload in hours"
+          },
+          "cost": {
+            "label": "Cost",
+            "helperText": "Enter the process cost"
+          },
+          "context": {
+            "label": "Context",
+            "helperText": "Enter the process context"
+          }
+        },
+        "sections": {
+          "details": "Process Details"
+        }
+      },
+      "dialogs": {
+        "delete": {
+          "title": "Delete Process",
+          "content": "Are you sure you want to delete this process?",
+          "contentMultiple": "Are you sure you want to delete these items?",
+          "confirm": "Delete"
+        },
+        "unsavedChanges": {
+          "title": "Unsaved Changes",
+          "content": "You have unsaved changes. Are you sure you want to leave?",
+          "confirm": "Leave without saving"
+        }
+      },
+      "messages": {
+        "loading": "Loading processes...",
+        "saving": "Saving...",
+        "loadError": "Error loading the process",
+        "saveError": "Error saving the process. Please try again.",
+        "notFound": "Process not found",
+        "createSuccess": "Process added successfully!",
+        "updateSuccess": "Process updated successfully!",
+        "success": {
+          "created": "Process added successfully",
+          "updated": "Process updated successfully",
+          "deleted": "Process deleted successfully",
+          "deletedMultiple": "Processes deleted successfully"
+        },
+        "error": {
+          "loading": "Error loading processes",
+          "updating": "Error updating the process",
+          "creating": "Error creating the process",
+          "deleting": "Error deleting the process",
+          "deletingMultiple": "Error deleting the processes",
+          "notFound": "Process not found"
+        }
+      },
+      "status": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "tooltips": {
+        "edit": "Edit process",
+        "delete": "Delete process",
+        "quickEdit": "Quick edit"
+      }
+    },
+    "map": {
+      "title": "Process Map",
+      "breadcrumb": "Map",
+      "diagram": {
+        "loading": "Loading map...",
+        "noData": "No data available",
+        "noRelations": "No relations",
+        "connected": "Connected",
+        "zoom": "Zoom",
+        "move": "Move",
+        "systemTitle": "Main System",
+        "errorLoading": "Error loading process map"
+      },
+      "expanded": {
+        "selectedCategory": "Selected Category",
+        "loading": "Loading...",
+        "noData": "No data available",
+        "backTooltip": "Back to main map",
+        "addJob": "Add Job",
+        "addTool": "Add Tool",
+        "addDocument": "Add Document",
+        "addSystem": "Add System",
+        "addCompetency": "Add Competency",
+        "addRisk": "Add Risk",
+        "addObjective": "Add Objective",
+        "addIndicator": "Add Indicator",
+        "addLesson": "Add Lesson",
+        "addProposal": "Add Proposal",
+        "errorLoading": "Error loading node data"
+      },
+      "modals": {
+        "common": {
+          "cancel": "Cancel",
+          "link": "Link",
+          "add": "Add",
+          "save": "Save",
+          "missingData": "Missing required data",
+          "loadError": "Error loading data",
+          "saveError": "Error saving data",
+          "relationType": "Relation Type",
+          "mainProcess": "Main Process",
+          "secondaryProcess": "Secondary Process",
+          "description": "Description",
+          "observations": "Observations",
+          "actionType": "Action Type",
+          "selectScalesAndDeficiency": "Select scales and deficiency level",
+          "high": "High",
+          "medium": "Medium",
+          "low": "Low"
+        },
+        "job": {
+          "title": "Add Job",
+          "fieldLabel": "Job"
+        },
+        "tool": {
+          "title": "Add Tool",
+          "fieldLabel": "Tool"
+        },
+        "document": {
+          "title": "Add Document",
+          "fieldLabel": "Document"
+        },
+        "system": {
+          "title": "Add System",
+          "fieldLabel": "System"
+        },
+        "competency": {
+          "title": "Add Competency",
+          "fieldLabel": "Competency"
+        },
+        "risk": {
+          "title": "Add Risk",
+          "fieldLabel": "Risk"
+        },
+        "objective": {
+          "title": "Add Objective",
+          "fieldLabel": "Objective"
+        },
+        "indicator": {
+          "title": "Add Indicator",
+          "fieldLabel": "Indicator"
+        }
+      }
+    },
+    "feedbacks": {
+      "titleLesson": "Lessons Learned & Work Agreements",
+      "titleProposal": "Proposals & Work Agreements",
+      "user": "User",
+      "currentUser": "Current User",
+      "date": "Date",
+      "descriptionLesson": "Process Lessons Learned & Work Agreements",
+      "descriptionProposal": "Process Proposals & Work Agreements",
+      "placeholder": "Write here...",
+      "attachFile": "Attached File(s)",
+      "cancel": "Cancel",
+      "save": "Save",
+      "descriptionRequired": "Description is required",
+      "success": "Saved successfully",
+      "error": "Error saving"
+    }
+  },
+  "tools": {
+    "table": {
+      "title": "Tools Table",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Tools Table List",
+        "create": "Add Tools Table",
+        "edit": "Edit Tools Table"
+      },
+      "actions": {
+        "add": "Add Tools Architecture",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving...",
+        "create": "Add Tools Table",
+        "update": "Update Tools Table",
+        "search": "Search tools tables...",
+        "clear": "Clear filters"
+      },
+      "table": {
+        "columns": {
+          "name": "Name",
+          "description": "Description",
+          "code": "Code",
+          "riskType": "Tool Type",
+          "superiorRisk": "Parent Tool",
+          "actions": "Actions"
+        },
+        "toolbar": {
+          "search": "Search tools tables..."
+        },
+        "filters": {
+          "status": "Status:",
+          "keyword": "Keyword:",
+          "all": "All"
+        },
+        "emptyState": {
+          "noData": "No tools tables found",
+          "noResults": "No results found for your search"
+        }
+      },
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Enter the tools table name",
+            "helperText": "Enter the tools table name",
+            "required": "Name is required"
+          },
+          "description": {
+            "label": "Description",
+            "placeholder": "Enter the tools table description",
+            "helperText": "Enter the tools table description",
+            "required": "Description is required"
+          },
+          "code": {
+            "label": "Code",
+            "placeholder": "Enter the tools table code",
+            "helperText": "Enter the tools table code",
+            "required": "Code is required"
+          },
+          "riskType": {
+            "label": "Tool Type",
+            "placeholder": "Select the tool type",
+            "helperText": "Select the tool type",
+            "required": "Tool type is required"
+          },
+          "superiorRisk": {
+            "label": "Parent Tool",
+            "placeholder": "Select the parent tool",
+            "helperText": "Select the parent tool",
+            "required": "Parent tool is required"
+          }
+        },
+        "sections": {
+          "details": "Tools Table Details"
+        }
+      },
+      "dialogs": {
+        "edit": {
+          "title": "Edit Tools Table"
+        },
+        "create": {
+          "title": "Add Tools Table"
+        },
+        "form": {
+          "riskTypeHelper": "Select the tool type from the available options",
+          "superiorRiskHelper": "Type the parent tool from the available options"
+        },
+        "delete": {
+          "title": "Delete Tools Table",
+          "content": "Are you sure you want to delete this tools table?",
+          "contentMultiple": "Are you sure you want to delete {{count}} items?",
+          "confirm": "Delete"
+        },
+        "unsavedChanges": {
+          "title": "Unsaved Changes",
+          "content": "You have unsaved changes. Are you sure you want to leave?",
+          "confirm": "Leave without saving"
+        }
+      },
+      "messages": {
+        "loading": "Loading tools tables...",
+        "saving": "Saving...",
+        "loadError": "Error loading the tools table",
+        "saveError": "Error saving the tools table. Please try again.",
+        "notFound": "Tools table not found",
+        "createSuccess": "Tools table added successfully!",
+        "updateSuccess": "Tools table updated successfully!",
+        "success": {
+          "created": "Tools table added successfully",
+          "updated": "Tools table updated successfully",
+          "deleted": "Tools table deleted successfully",
+          "deletedMultiple": "Tools tables deleted successfully"
+        },
+        "error": {
+          "loading": "Error loading the tools table",
+          "updating": "Error updating the tools table",
+          "creating": "Error creating the tools table",
+          "deleting": "Error deleting the tools table",
+          "deletingMultiple": "Error deleting the tools tables",
+          "notFound": "Tools table not found"
+        }
+      },
+      "status": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "tooltips": {
+        "edit": "Edit tools table",
+        "delete": "Delete tools table",
+        "quickEdit": "Quick edit"
+      }
+    },
+    "map": {
+      "title": "Tool Map",
+      "actions": {
+        "back": "Back",
+        "expand": "Expand",
+        "viewMap": "View map"
+      },
+      "diagram": {
+        "systemTitle": "Tool architecture map",
+        "loadingMap": "Loading tool map...",
+        "loadingExpand": "Loading related nodes...",
+        "noData": "No data available to display.",
+        "nodeNotAvailable": "Node not available",
+        "conections": "connections",
+        "subDiagram": {
+          "noRelations": "No relations to display."
+        },
+        "messages": {
+          "error": {
+            "loadMapError": "Error loading tool map.",
+            "nodeNotFound": "The selected node was not found in the map."
+          }
+        }
+      }
+    }
+  },
+  "application": {
+    "diagram": {
+      "title": "Application Architecture",
+      "addDiagram": "Add Application",
+      "controls": {
+        "zoom": "Zoom: Mouse wheel",
+        "drag": "Drag: Click and hold"
+      },
+      "actions": {
+        "add": "Add",
+        "edit": "Edit",
+        "delete": "Delete",
+        "save": "Save",
+        "cancel": "Cancel",
+        "viewTable": "View Table",
+        "viewMap": "View Map",
+        "viewTimeline": "View Timeline"
+      },
+      "labels": {
+        "expiration": "Expiration",
+        "renew": "Renewal",
+        "corporateScope": "Corporate Scope",
+        "owner": "Owner"
+      },
+      "filters": {
+        "title": "Filters",
+        "domain": "Domain",
+        "domainPlaceholder": "Select a domain",
+        "type": "Type",
+        "typePlaceholder": "Select a type",
+        "apply": "Apply",
+        "reset": "Reset",
+        "clearAll": "Clear All",
+        "activeFilters": "Active Filters",
+        "noOptions": "No options available",
+        "errors": {
+          "loadDomains": "Error loading domains",
+          "loadTypes": "Error loading types"
+        }
+      },
+      "messages": {
+        "loading": "Loading architecture diagram...",
+        "loadingExpand": "Loading related nodes...",
+        "noChildren": "No related nodes",
+        "error": {
+          "loading": "Error loading the architecture diagram",
+          "deleting": "Error deleting the architecture",
+          "loadingCatalogs": "Error loading catalogs",
+          "validation": "Validation error in the form",
+          "creating": "Error creating the architecture"
+        },
+        "success": {
+          "deleted": "Architecture deleted successfully",
+          "created": "Architecture added successfully"
+        }
+      },
+      "dialogs": {
+        "create": {
+          "title": "Add Application"
+        },
+        "edit": {
+          "title": "Edit Application"
+        },
+        "delete": {
+          "title": "Delete Application",
+          "content": "Are you sure you want to delete this application?",
+          "confirm": "Delete"
+        },
+        "map": {
+          "title": "Relationship Map"
+        },
+        "sectionsLabels": {
+          "basicInfo": "Basic Information",
+          "settings": "Settings",
+          "identification": "Identification",
+          "dataType": "Application Type",
+          "provider": "Provider",
+          "domain": "Domain",
+          "datesAndContracts": "Dates and Contracts",
+          "slaAndImpact": "SLA and Impact"
+        },
+        "form": {
+          "name": {
+            "label": "Name",
+            "required": "Name is required"
+          },
+          "description": {
+            "label": "Description",
+            "required": "Description is required"
+          },
+          "type": {
+            "label": "Type",
+            "required": "Type is required"
+          },
+          "file": {
+            "label": "File",
+            "required": "File is required"
+          },
+          "rules": {
+            "label": "Rules",
+            "required": "Rules are required"
+          },
+          "local/external": {
+            "label": "Local/External",
+            "required": "The Local/External field is required"
+          },
+          "nomenclature": {
+            "label": "Nomenclature",
+            "required": "Nomenclature is required"
+          },
+          "code": {
+            "label": "Code",
+            "required": "Code is required"
+          },
+          "dataType": {
+            "label": "Application Type",
+            "required": "Application type is required"
+          },
+          "provider": {
+            "label": "Provider",
+            "required": "Provider is required"
+          },
+          "domain": {
+            "label": "Domain",
+            "required": "Domain is required"
+          },
+          "contractedCapacity": {
+            "label": "Contracted Capacity",
+            "required": "Contracted capacity is required"
+          },
+          "contract": {
+            "label": "Contract",
+            "required": "Contract is required"
+          },
+          "adoptionContractDate": {
+            "label": "Contract Adoption Date",
+            "required": "Contract adoption date is required"
+          },
+          "expirationDate": {
+            "label": "Expiration Date",
+            "required": "Expiration date is required"
+          },
+          "renewalDate": {
+            "label": "Renewal Date",
+            "required": "Renewal date is required"
+          },
+          "obsolescenceDate": {
+            "label": "Obsolescence Date",
+            "required": "Obsolescence date is required"
+          },
+          "requiresSla": {
+            "label": "Requires SLA",
+            "required": "Requires SLA field is required"
+          },
+          "hasSla": {
+            "label": "Has SLA",
+            "required": "Has SLA field is required"
+          },
+          "impactRatio": {
+            "label": "Impact Ratio",
+            "required": "Impact ratio is required"
+          },
+          "impactLevel": {
+            "label": "Impact Level",
+            "required": "Impact level is required"
+          }
+        }
+      },
+      "node": {
+        "singular": "Root Architecture",
+        "plural": "Root Architectures"
+      },
+      "tooltips": {
+        "expand": "Expand",
+        "collapse": "Collapse",
+        "noNodes": "No nodes to expand",
+        "expandAll": "Expand all",
+        "collapseAll": "Collapse all",
+        "initialView": "Initial view",
+        "fitView": "Fit view",
+        "restartDiagram": "Reset diagram",
+        "zoomIn": "Zoom in",
+        "zoomOut": "Zoom out",
+        "lock": "Lock position",
+        "toggleInteractivity": "Toggle interactivity",
+        "hasSla": "Has SLA",
+        "external": "External"
+      }
+    },
+    "table": {
+      "title": "Applications Architecture",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Applications List",
+        "create": "Add Application",
+        "edit": "Edit Application"
+      },
+      "actions": {
+        "viewDiagram": "View Diagram",
+        "add": "Add Application",
+        "addChild": "Add",
+        "edit": "Edit",
+        "delete": "Delete",
+        "map": "Applications Map",
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving...",
+        "create": "Add Application",
+        "update": "Update",
+        "search": "Search applications tables...",
+        "clear": "Clear filters"
+      },
+      "table": {
+        "columns": {
+          "name": "Name",
+          "description": "Description",
+          "nomenclature": "Nomenclature",
+          "type": "Type",
+          "localExternal": "Local/External",
+          "code": "Code",
+          "expirationDate": "Expiration Date",
+          "renewalDate": "Renewal Date",
+          "requiresSla": "Requires SLA",
+          "hasSla": "Has SLA",
+          "sla": "SLA",
+          "file": "File",
+          "rules": "Rules",
+          "actions": "Actions"
+        },
+        "toolbar": {
+          "search": "Search applications tables..."
+        },
+        "filters": {
+          "status": "Status:",
+          "keyword": "Keyword:",
+          "all": "All"
+        },
+        "emptyState": {
+          "noData": "No applications tables found",
+          "noResults": "No results found for your search"
+        }
+      },
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Name",
+            "required": "Name is required"
+          },
+          "description": {
+            "label": "Description",
+            "required": "Description is required"
+          },
+          "type": {
+            "label": "Type",
+            "required": "Type is required"
+          },
+          "localExternal": {
+            "label": "Local/External",
+            "required": "Local/External is required"
+          },
+          "file": {
+            "label": "File",
+            "required": "File is required"
+          },
+          "rules": {
+            "label": "Rules",
+            "required": "Rules are required"
+          },
+          "nomenclature": {
+            "label": "Nomenclature",
+            "required": "Nomenclature is required"
+          },
+          "code": {
+            "label": "Code",
+            "required": "Code is required"
+          },
+          "sla": {
+            "label": "SLA",
+            "required": "SLA is required"
+          }
+        },
+        "sections": {
+          "details": "Applications Details"
+        }
+      },
+      "dialogs": {
+        "edit": {
+          "title": "Edit Application"
+        },
+        "create": {
+          "title": "Add Application"
+        },
+        "form": {
+          "aplicationTypeHelper": "Select the data type from the available options",
+          "superiorAplicationHelper": "Enter the parent application from the available options"
+        },
+        "delete": {
+          "title": "Delete Application",
+          "content": "Are you sure you want to delete this application?",
+          "contentMultiple": "Are you sure you want to delete {{count}} items?",
+          "confirm": "Delete"
+        },
+        "unsavedChanges": {
+          "title": "Unsaved Changes",
+          "content": "You have unsaved changes. Are you sure you want to leave?",
+          "confirm": "Leave without saving"
+        }
+      },
+      "messages": {
+        "loading": "Loading applications tables...",
+        "saving": "Saving...",
+        "loadError": "Error loading the applications table",
+        "saveError": "Error saving the applications table. Please try again.",
+        "notFound": "Applications table not found",
+        "createSuccess": "Applications table added successfully!",
+        "updateSuccess": "Applications table updated successfully!",
+        "success": {
+          "created": "Applications table added successfully",
+          "updated": "Applications table updated successfully",
+          "deleted": "Applications table deleted successfully",
+          "deletedMultiple": "Applications tables deleted successfully"
+        },
+        "error": {
+          "loading": "Error loading the applications table",
+          "updating": "Error updating the applications table",
+          "creating": "Error creating the applications table",
+          "deleting": "Error deleting the applications table",
+          "deletingMultiple": "Error deleting the applications tables",
+          "notFound": "Applications table not found"
+        }
+      },
+      "status": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "tooltips": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "quickEdit": "Quick edit"
+      }
+    },
+    "map": {
+      "title": "Applications Map",
+      "diagram": {
+        "systemTitle": "Main System",
+        "loadingMap": "Loading applications map...",
+        "noData": "No data found for the applications map",
+        "conectedModules": "Connected Modules",
+        "subDiagram": {
+          "buttonBack": "Back to main diagram",
+          "0Modules": "No related modules",
+          "noRelations": "No relations found for this module",
+          "home": "Home"
+        },
+        "controls": {
+          "zoom": "Zoom: Mouse wheel",
+          "move": "Move: Click and drag"
+        }
+      },
+      "messages": {
+        "error": {
+          "expandError": "Error expanding the module",
+          "homeError": "Error returning to the main diagram",
+          "backError": "Error returning to the main diagram",
+          "loadMapError": "Error loading the relationship map"
+        }
+      }
+    },
+    "timeline": {
+      "title": "Application Timeline",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Timeline"
+      },
+      "filters": {
+        "status": "Status",
+        "field": "Field",
+        "active": "Active",
+        "inactive": "Inactive",
+        "renewal": "Renewal",
+        "expired": "Expired",
+        "obsolescence": "Obsolescence",
+        "clear": "Clear filters"
+      },
+      "toolbar": {
+        "search": "Search timeline..."
+      },
+      "emptyState": {
+        "title": "No timeline data",
+        "description": "No data found for the selected filters"
+      },
+      "labels": {
+        "adoptionDate": "Adoption Date",
+        "expirationDate": "Expiration Date",
+        "renewalDate": "Renewal Date",
+        "obsolescenceDate": "Obsolescence Date",
+        "allDates": "All Dates",
+        "dependencies": "Dependencies of",
+        "dependenciesSingular": "dependency",
+        "dependenciesPlural": "dependencies",
+        "type": "Type",
+        "noDependencies": "No associated dependencies"
+      },
+      "messages": {
+        "loading": "Loading timeline data...",
+        "loadError": "Error loading timeline data",
+        "noData": "No data available for the selected filters",
+        "success": {
+          "dataLoaded": "Timeline data loaded successfully"
+        },
+        "error": {
+          "fetchError": "Error fetching timeline data. Please try again.",
+          "invalidField": "Invalid field parameter"
+        }
+      }
+    }
+  },
+  "data": {
+    "diagram": {
+      "title": "Data Architecture",
+      "addDiagram": "Add Data Asset",
+      "controls": {
+        "zoom": "Zoom: Mouse wheel",
+        "drag": "Drag: Click and hold"
+      },
+      "actions": {
+        "add": "Add",
+        "edit": "Edit",
+        "delete": "Delete",
+        "save": "Save",
+        "cancel": "Cancel",
+        "viewTable": "View Table",
+        "viewMap": "View Map",
+        "viewTimeline": "View Timeline"
+      },
+      "labels": {
+        "expiration": "Expiration",
+        "renew": "Renewal",
+        "corporateScope": "Corporate Scope",
+        "owner": "Owner"
+      },
+      "messages": {
+        "loading": "Loading architecture diagram...",
+        "loadingExpand": "Loading related nodes...",
+        "noChildren": "No related nodes",
+        "error": {
+          "loading": "Error loading the architecture diagram",
+          "deleting": "Error deleting the architecture",
+          "loadingCatalogs": "Error loading catalogs",
+          "validation": "Validation error in the form",
+          "creating": "Error creating the architecture"
+        },
+        "success": {
+          "deleted": "Architecture deleted successfully",
+          "created": "Architecture added successfully"
+        }
+      },
+      "dialogs": {
+        "create": {
+          "title": "Add Data Asset"
+        },
+        "edit": {
+          "title": "Edit Data Asset"
+        },
+        "delete": {
+          "title": "Delete Data Asset",
+          "content": "Are you sure you want to delete this data asset?",
+          "confirm": "Delete"
+        },
+        "map": {
+          "title": "Relationship Map"
+        },
+        "sectionsLabels": {
+          "basicInfo": "Basic Information",
+          "settings": "Settings",
+          "identification": "Identification",
+          "dataType": "Data Type",
+          "provider": "Provider",
+          "domain": "Domain",
+          "datesAndContracts": "Dates and Contracts",
+          "slaAndImpact": "SLA and Impact"
+        },
+        "form": {
+          "name": {
+            "label": "Name",
+            "required": "Name is required"
+          },
+          "description": {
+            "label": "Description",
+            "required": "Description is required"
+          },
+          "type": {
+            "label": "Type",
+            "required": "Type is required"
+          },
+          "file": {
+            "label": "File",
+            "required": "File is required"
+          },
+          "rules": {
+            "label": "Rules",
+            "required": "Rules are required"
+          },
+          "local/external": {
+            "label": "Local/External",
+            "required": "The Local/External field is required"
+          },
+          "nomenclature": {
+            "label": "Nomenclature",
+            "required": "Nomenclature is required"
+          },
+          "code": {
+            "label": "Code",
+            "required": "Code is required"
+          },
+          "dataType": {
+            "label": "Data Type",
+            "required": "Data type is required"
+          },
+          "provider": {
+            "label": "Provider",
+            "required": "Provider is required"
+          },
+          "domain": {
+            "label": "Domain",
+            "required": "Domain is required"
+          },
+          "contractedCapacity": {
+            "label": "Contracted Capacity",
+            "required": "Contracted capacity is required"
+          },
+          "contract": {
+            "label": "Contract",
+            "required": "Contract is required"
+          },
+          "adoptionContractDate": {
+            "label": "Contract Adoption Date",
+            "required": "Contract adoption date is required"
+          },
+          "expirationDate": {
+            "label": "Expiration Date",
+            "required": "Expiration date is required"
+          },
+          "renewalDate": {
+            "label": "Renewal Date",
+            "required": "Renewal date is required"
+          },
+          "obsolescenceDate": {
+            "label": "Obsolescence Date",
+            "required": "Obsolescence date is required"
+          },
+          "requiresSla": {
+            "label": "Requires SLA",
+            "required": "Requires SLA field is required"
+          },
+          "hasSla": {
+            "label": "Has SLA",
+            "required": "Has SLA field is required"
+          },
+          "impactRatio": {
+            "label": "Impact Ratio",
+            "required": "Impact ratio is required"
+          },
+          "impactLevel": {
+            "label": "Impact Level",
+            "required": "Impact level is required"
+          }
+        }
+      },
+      "node": {
+        "singular": "Root Architecture",
+        "plural": "Root Architectures"
+      },
+      "tooltips": {
+        "expand": "Expand",
+        "collapse": "Collapse",
+        "noNodes": "No nodes to expand",
+        "expandAll": "Expand all",
+        "collapseAll": "Collapse all",
+        "initialView": "Initial view",
+        "fitView": "Fit view",
+        "restartDiagram": "Reset diagram",
+        "zoomIn": "Zoom in",
+        "zoomOut": "Zoom out",
+        "lock": "Lock position",
+        "toggleInteractivity": "Toggle interactivity",
+        "hasSla": "Has SLA",
+        "external": "External"
+      }
+    },
+    "table": {
+      "title": "Data Asset",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Data Asset List",
+        "create": "Add Data Asset",
+        "edit": "Edit Data Asset"
+      },
+      "actions": {
+        "viewDiagram": "View Diagram",
+        "add": "Add Data Asset",
+        "addChild": "Add",
+        "edit": "Edit",
+        "delete": "Delete",
+        "map": "Data Map",
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving...",
+        "create": "Add Data Asset",
+        "update": "Update",
+        "search": "Search Data Assets...",
+        "clear": "Clear filters"
+      },
+      "table": {
+        "columns": {
+          "name": "Name",
+          "description": "Description",
+          "nomenclature": "Nomenclature",
+          "type": "Type",
+          "localExternal": "Local/External",
+          "code": "Code",
+          "expirationDate": "Expiration Date",
+          "renewalDate": "Renewal Date",
+          "requiresSla": "Requires SLA",
+          "hasSla": "Has SLA",
+          "sla": "SLA",
+          "file": "File",
+          "rules": "Rules",
+          "actions": "Actions"
+        },
+        "toolbar": {
+          "search": "Search Data Assets..."
+        },
+        "filters": {
+          "status": "Status:",
+          "keyword": "Keyword:",
+          "all": "All"
+        },
+        "emptyState": {
+          "noData": "No Data Assets found",
+          "noResults": "No results found for your search"
+        }
+      },
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Name",
+            "required": "Name is required"
+          },
+          "description": {
+            "label": "Description",
+            "required": "Description is required"
+          },
+          "type": {
+            "label": "Type",
+            "required": "Type is required"
+          },
+          "localExternal": {
+            "label": "Local/External",
+            "required": "Local/External is required"
+          },
+          "file": {
+            "label": "File",
+            "required": "File is required"
+          },
+          "rules": {
+            "label": "Rules",
+            "required": "Rules are required"
+          },
+          "nomenclature": {
+            "label": "Nomenclature",
+            "required": "Nomenclature is required"
+          },
+          "code": {
+            "label": "Code",
+            "required": "Code is required"
+          },
+          "sla": {
+            "label": "SLA",
+            "required": "SLA is required"
+          }
+        },
+        "sections": {
+          "details": "Data Asset Details"
+        }
+      },
+      "dialogs": {
+        "edit": {
+          "title": "Edit Data Asset"
+        },
+        "create": {
+          "title": "Add Data Asset"
+        },
+        "form": {
+          "aplicationTypeHelper": "Select the data type from the available options",
+          "superiorAplicationHelper": "Enter the parent data from the available options"
+        },
+        "delete": {
+          "title": "Delete Data Asset",
+          "content": "Are you sure you want to delete this Data Asset?",
+          "contentMultiple": "Are you sure you want to delete {{count}} items?",
+          "confirm": "Delete"
+        },
+        "unsavedChanges": {
+          "title": "Unsaved Changes",
+          "content": "You have unsaved changes. Are you sure you want to leave?",
+          "confirm": "Leave without saving"
+        }
+      },
+      "messages": {
+        "loading": "Loading Data Assets...",
+        "saving": "Saving...",
+        "loadError": "Error loading the Data Asset",
+        "saveError": "Error saving the Data Asset. Please try again.",
+        "notFound": "Data Asset not found",
+        "createSuccess": "Data Asset added successfully!",
+        "updateSuccess": "Data Asset updated successfully!",
+        "success": {
+          "created": "Data Asset added successfully",
+          "updated": "Data Asset updated successfully",
+          "deleted": "Data Asset deleted successfully",
+          "deletedMultiple": "Data Assets deleted successfully"
+        },
+        "error": {
+          "loading": "Error loading the Data Asset",
+          "updating": "Error updating the Data Asset",
+          "creating": "Error creating the Data Asset",
+          "deleting": "Error deleting the Data Asset",
+          "deletingMultiple": "Error deleting the Data Assets",
+          "notFound": "Data Asset not found"
+        }
+      },
+      "status": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "tooltips": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "quickEdit": "Quick edit"
+      }
+    },
+    "map": {
+      "title": "Data Map",
+      "diagram": {
+        "systemTitle": "Main System",
+        "loadingMap": "Loading data map...",
+        "noData": "No data found for the data map",
+        "conectedModules": "Connected Modules",
+        "subDiagram": {
+          "buttonBack": "Back to main diagram",
+          "0Modules": "No related modules",
+          "noRelations": "No relations found for this module",
+          "home": "Home"
+        },
+        "controls": {
+          "zoom": "Zoom: Mouse wheel",
+          "move": "Move: Click and drag"
+        }
+      },
+      "messages": {
+        "error": {
+          "expandError": "Error expanding the module",
+          "homeError": "Error returning to the main diagram",
+          "backError": "Error returning to the main diagram",
+          "loadMapError": "Error loading the relationship map"
+        }
+      }
+    },
+    "timeline": {
+      "title": "Data Timeline",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Timeline"
+      },
+      "filters": {
+        "status": "Status",
+        "field": "Field",
+        "active": "Active",
+        "inactive": "Inactive",
+        "renewal": "Renewal",
+        "expired": "Expired",
+        "obsolescence": "Obsolescence",
+        "clear": "Clear filters"
+      },
+      "toolbar": {
+        "search": "Search timeline..."
+      },
+      "emptyState": {
+        "title": "No timeline data",
+        "description": "No data found for the selected filters"
+      },
+      "labels": {
+        "adoptionDate": "Adoption Date",
+        "expirationDate": "Expiration Date",
+        "renewalDate": "Renewal Date",
+        "obsolescenceDate": "Obsolescence Date",
+        "allDates": "All Dates",
+        "dependencies": "Dependencies of",
+        "dependenciesSingular": "dependency",
+        "dependenciesPlural": "dependencies",
+        "type": "Type",
+        "noDependencies": "No associated dependencies"
+      },
+      "messages": {
+        "loading": "Loading timeline data...",
+        "loadError": "Error loading timeline data",
+        "noData": "No data available for the selected filters",
+        "success": {
+          "dataLoaded": "Timeline data loaded successfully"
+        },
+        "error": {
+          "fetchError": "Error fetching timeline data. Please try again.",
+          "invalidField": "Invalid field parameter"
+        }
+      }
+    }
+  },
+  "infrastructure": {
+    "diagram": {
+      "title": "Infrastructure Architecture",
+      "addDiagram": "Add Infrastructure",
+      "controls": {
+        "zoom": "Zoom: Mouse wheel",
+        "drag": "Drag: Click and hold"
+      },
+      "actions": {
+        "add": "Add",
+        "edit": "Edit",
+        "delete": "Delete",
+        "save": "Save",
+        "cancel": "Cancel",
+        "viewTable": "View Table",
+        "viewMap": "View Map",
+        "viewTimeline": "View Timeline"
+      },
+      "labels": {
+        "expiration": "Expiration",
+        "renew": "Renewal",
+        "corporateScope": "Corporate Scope",
+        "owner": "Owner"
+      },
+      "messages": {
+        "loading": "Loading architecture diagram...",
+        "loadingExpand": "Loading related nodes...",
+        "noChildren": "No related nodes",
+        "error": {
+          "loading": "Error loading the infrastructure diagram",
+          "deleting": "Error deleting the infrastructure",
+          "loadingCatalogs": "Error loading catalogs",
+          "validation": "Validation error in the form",
+          "creating": "Error creating the infrastructure"
+        },
+        "success": {
+          "deleted": "Infrastructure deleted successfully",
+          "created": "Infrastructure added successfully"
+        }
+      },
+      "dialogs": {
+        "create": {
+          "title": "Add Infrastructure"
+        },
+        "edit": {
+          "title": "Edit Infrastructure"
+        },
+        "delete": {
+          "title": "Delete Infrastructure",
+          "content": "Are you sure you want to delete this infrastructure?",
+          "confirm": "Delete"
+        },
+        "map": {
+          "title": "Relationship Map"
+        },
+        "sectionsLabels": {
+          "basicInfo": "Basic Information",
+          "settings": "Settings",
+          "identification": "Identification",
+          "dataType": "Infrastructure Type",
+          "provider": "Provider",
+          "domain": "Domain",
+          "datesAndContracts": "Dates and Contracts",
+          "slaAndImpact": "SLA and Impact"
+        },
+        "form": {
+          "name": {
+            "label": "Name",
+            "required": "Name is required"
+          },
+          "description": {
+            "label": "Description",
+            "required": "Description is required"
+          },
+          "type": {
+            "label": "Type",
+            "required": "Type is required"
+          },
+          "file": {
+            "label": "File",
+            "required": "File is required"
+          },
+          "rules": {
+            "label": "Rules",
+            "required": "Rules are required"
+          },
+          "local/external": {
+            "label": "Local/External",
+            "required": "The Local/External field is required"
+          },
+          "nomenclature": {
+            "label": "Nomenclature",
+            "required": "Nomenclature is required"
+          },
+          "code": {
+            "label": "Code",
+            "required": "Code is required"
+          },
+          "dataType": {
+            "label": "Infrastructure Type",
+            "required": "Infrastructure type is required"
+          },
+          "provider": {
+            "label": "Provider",
+            "required": "Provider is required"
+          },
+          "domain": {
+            "label": "Domain",
+            "required": "Domain is required"
+          },
+          "contractedCapacity": {
+            "label": "Contracted Capacity",
+            "required": "Contracted capacity is required"
+          },
+          "contract": {
+            "label": "Contract",
+            "required": "Contract is required"
+          },
+          "adoptionContractDate": {
+            "label": "Contract Adoption Date",
+            "required": "Contract adoption date is required"
+          },
+          "expirationDate": {
+            "label": "Expiration Date",
+            "required": "Expiration date is required"
+          },
+          "renewalDate": {
+            "label": "Renewal Date",
+            "required": "Renewal date is required"
+          },
+          "obsolescenceDate": {
+            "label": "Obsolescence Date",
+            "required": "Obsolescence date is required"
+          },
+          "requiresSla": {
+            "label": "Requires SLA",
+            "required": "Requires SLA field is required"
+          },
+          "hasSla": {
+            "label": "Has SLA",
+            "required": "Has SLA field is required"
+          },
+          "impactRatio": {
+            "label": "Impact Ratio",
+            "required": "Impact ratio is required"
+          },
+          "impactLevel": {
+            "label": "Impact Level",
+            "required": "Impact level is required"
+          }
+        }
+      },
+      "node": {
+        "singular": "Root Architecture",
+        "plural": "Root Architectures"
+      },
+      "tooltips": {
+        "expand": "Expand",
+        "collapse": "Collapse",
+        "noNodes": "No nodes to expand",
+        "expandAll": "Expand all",
+        "collapseAll": "Collapse all",
+        "initialView": "Initial view",
+        "fitView": "Fit view",
+        "restartDiagram": "Reset diagram",
+        "zoomIn": "Zoom in",
+        "zoomOut": "Zoom out",
+        "lock": "Lock position",
+        "toggleInteractivity": "Toggle interactivity",
+        "hasSla": "Has SLA",
+        "external": "External"
+      }
+    },
+    "table": {
+      "title": "Infrastructure",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Infrastructure List",
+        "create": "Add Infrastructure",
+        "edit": "Edit Infrastructure"
+      },
+      "actions": {
+        "viewDiagram": "View Diagram",
+        "add": "Add Infrastructure Architecture",
+        "addChild": "Add",
+        "edit": "Edit",
+        "delete": "Delete",
+        "map": "Infrastructure Map",
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving...",
+        "create": "Add Infrastructure",
+        "update": "Update",
+        "search": "Search infrastructure...",
+        "clear": "Clear filters"
+      },
+      "table": {
+        "columns": {
+          "name": "Name",
+          "description": "Description",
+          "nomenclature": "Nomenclature",
+          "type": "Type",
+          "localExternal": "Local/External",
+          "code": "Code",
+          "expirationDate": "Expiration Date",
+          "renewalDate": "Renewal Date",
+          "requiresSla": "Requires SLA",
+          "hasSla": "Has SLA",
+          "sla": "SLA",
+          "file": "File",
+          "rules": "Rules",
+          "actions": "Actions"
+        },
+        "toolbar": {
+          "search": "Search infrastructure..."
+        },
+        "filters": {
+          "status": "Status:",
+          "keyword": "Keyword:",
+          "all": "All"
+        },
+        "emptyState": {
+          "noData": "No infrastructure found",
+          "noResults": "No results found for your search"
+        }
+      },
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Name",
+            "required": "Name is required"
+          },
+          "description": {
+            "label": "Description",
+            "required": "Description is required"
+          },
+          "type": {
+            "label": "Type",
+            "required": "Type is required"
+          },
+          "localExternal": {
+            "label": "Local/External",
+            "required": "Local/External is required"
+          },
+          "file": {
+            "label": "File",
+            "required": "File is required"
+          },
+          "rules": {
+            "label": "Rules",
+            "required": "Rules are required"
+          },
+          "nomenclature": {
+            "label": "Nomenclature",
+            "required": "Nomenclature is required"
+          },
+          "code": {
+            "label": "Code",
+            "required": "Code is required"
+          },
+          "sla": {
+            "label": "SLA",
+            "required": "SLA is required"
+          }
+        },
+        "sections": {
+          "details": "Infrastructure Details"
+        }
+      },
+      "dialogs": {
+        "edit": {
+          "title": "Edit Infrastructure"
+        },
+        "create": {
+          "title": "Add Infrastructure"
+        },
+        "form": {
+          "aplicationTypeHelper": "Select the data type from the available options",
+          "superiorAplicationHelper": "Enter the parent data from the available options"
+        },
+        "delete": {
+          "title": "Delete Infrastructure",
+          "content": "Are you sure you want to delete this infrastructure?",
+          "contentMultiple": "Are you sure you want to delete {{count}} items?",
+          "confirm": "Delete"
+        },
+        "unsavedChanges": {
+          "title": "Unsaved Changes",
+          "content": "You have unsaved changes. Are you sure you want to leave?",
+          "confirm": "Leave without saving"
+        }
+      },
+      "messages": {
+        "loading": "Loading infrastructure...",
+        "saving": "Saving...",
+        "loadError": "Error loading the infrastructure",
+        "saveError": "Error saving the infrastructure. Please try again.",
+        "notFound": "Infrastructure not found",
+        "createSuccess": "Infrastructure added successfully!",
+        "updateSuccess": "Infrastructure updated successfully!",
+        "success": {
+          "created": "Infrastructure added successfully",
+          "updated": "Infrastructure updated successfully",
+          "deleted": "Infrastructure deleted successfully",
+          "deletedMultiple": "Infrastructure deleted successfully"
+        },
+        "error": {
+          "loading": "Error loading the infrastructure",
+          "updating": "Error updating the infrastructure",
+          "creating": "Error creating the infrastructure",
+          "deleting": "Error deleting the infrastructure",
+          "deletingMultiple": "Error deleting the infrastructure",
+          "notFound": "Infrastructure not found"
+        }
+      },
+      "status": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "tooltips": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "quickEdit": "Quick edit"
+      }
+    },
+    "map": {
+      "title": "Infrastructure Map",
+      "diagram": {
+        "systemTitle": "Main System",
+        "loadingMap": "Loading infrastructure map...",
+        "noData": "No data found for the infrastructure map",
+        "conectedModules": "Connected Modules",
+        "subDiagram": {
+          "buttonBack": "Back to main diagram",
+          "0Modules": "No related modules",
+          "noRelations": "No relations found for this module",
+          "home": "Home"
+        },
+        "controls": {
+          "zoom": "Zoom: Ctrl (Win) or Command (Mac) + Wheel",
+          "move": "Move: Middle click (Wheel)"
+        }
+      },
+      "messages": {
+        "error": {
+          "expandError": "Error expanding the module",
+          "homeError": "Error returning to the main diagram",
+          "backError": "Error returning to the main diagram",
+          "loadMapError": "Error loading the relationship map"
+        }
+      }
+    },
+    "timeline": {
+      "title": "Infrastructure Timeline",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Timeline"
+      },
+      "filters": {
+        "status": "Status",
+        "field": "Field",
+        "active": "Active",
+        "inactive": "Inactive",
+        "renewal": "Renewal",
+        "expired": "Expired",
+        "obsolescence": "Obsolescence",
+        "clear": "Clear filters"
+      },
+      "toolbar": {
+        "search": "Search timeline..."
+      },
+      "emptyState": {
+        "title": "No timeline data",
+        "description": "No data found for the selected filters"
+      },
+      "labels": {
+        "adoptionDate": "Adoption Date",
+        "expirationDate": "Expiration Date",
+        "renewalDate": "Renewal Date",
+        "obsolescenceDate": "Obsolescence Date",
+        "allDates": "All Dates",
+        "dependencies": "Dependencies of",
+        "dependenciesSingular": "dependency",
+        "dependenciesPlural": "dependencies",
+        "type": "Type",
+        "noDependencies": "No associated dependencies"
+      },
+      "messages": {
+        "loading": "Loading timeline data...",
+        "loadError": "Error loading timeline data",
+        "noData": "No data available for the selected filters",
+        "success": {
+          "dataLoaded": "Timeline data loaded successfully"
+        },
+        "error": {
+          "fetchError": "Error fetching timeline data. Please try again.",
+          "invalidField": "Invalid field parameter"
+        }
+      }
+    }
+  }
+}

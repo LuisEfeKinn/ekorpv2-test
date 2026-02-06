@@ -1,0 +1,1133 @@
+{
+  "common": {
+    "close": "Cerrar",
+    "loading": "Cargando...",
+    "noData": "Sin datos",
+    "unnamed": "Sin nombre",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  },
+  "main": {
+    "catalogsManagement": "Gestión de Catálogos",
+    "subtitle": "Administra y organiza los catálogos de tu arquitectura empresarial",
+    "viewAction": "Ver Catálogo",
+    "items": {
+      "actionTypes": {
+        "label": "Tipos de Acción",
+        "description": "Define y gestiona los diferentes tipos de acciones dentro de la arquitectura empresarial."
+      },
+      "competenciesClasses": {
+        "label": "Clases de Competencia",
+        "description": "Clasifica y organiza las competencias en diferentes categorías para una mejor gestión."
+      },
+      "competencies": {
+        "label": "Competencias",
+        "description": "Administra las competencias necesarias para los roles y responsabilidades dentro de la organización."
+      },
+      "dataTypes": {
+        "label": "Tipos de Datos",
+        "description": "Define y gestiona los diferentes tipos de datos utilizados en la arquitectura empresarial."
+      },
+      "jobTypes": {
+        "label": "Tipos de Cargo",
+        "description": "Define y gestiona los diferentes tipos de cargos dentro de la organización."
+      },
+      "measureActionTypes": {
+        "label": "Tipos de Acción de Medida",
+        "description": "Define y gestiona los diferentes tipos de acciones de medida en la arquitectura empresarial."
+      },
+      "objectiveTypes": {
+        "label": "Tipos de Objetivo",
+        "description": "Define y gestiona los diferentes tipos de objetivos dentro de la organización."
+      },
+      "organizationalUnitTypes": {
+        "label": "Tipos de Unidad Organizacional",
+        "description": "Define y gestiona los diferentes tipos de unidades organizacionales."
+      },
+      "processTypes": {
+        "label": "Tipos de Proceso",
+        "description": "Define y gestiona los diferentes tipos de procesos dentro de la arquitectura empresarial."
+      },
+      "providers": {
+        "label": "Proveedores",
+        "description": "Gestiona los diferentes proveedores dentro de la arquitectura empresarial."
+      },
+      "riskTypes": {
+        "label": "Tipos de Riesgo",
+        "description": "Define y gestiona los diferentes tipos de riesgos en la organización."
+      },
+      "systemTypes": {
+        "label": "Tipos de Sistema",
+        "description": "Define y gestiona los diferentes tipos de sistemas dentro de la arquitectura empresarial."
+      },
+      "technologyTypes": {
+        "label": "Tipos de Tecnología",
+        "description": "Define y gestiona los diferentes tipos de tecnologías utilizadas en la organización."
+      },
+      "toolTypes": {
+        "label": "Tipos de Herramienta",
+        "description": "Define y gestiona los diferentes tipos de herramientas utilizadas en la arquitectura empresarial."
+      },
+      "topics": {
+        "label": "Temas",
+        "description": "Gestiona los diferentes temas relacionados con la arquitectura empresarial."
+      },
+      "domains": {
+        "label": "Dominios",
+        "description": "Gestiona los diferentes dominios dentro de la arquitectura empresarial."
+      },
+      "dateControls": {
+        "label": "Controles de Fecha",
+        "description": "Define y gestiona los controles de fecha dentro de la arquitectura empresarial."
+      }
+    }
+  },
+  "action-types": {
+    "title": "Tipos de Acción",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar tipos de acción..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre",
+      "nomenclature": "Nomenclatura",
+      "color": "Color"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Tipo de Acción"
+      },
+      "edit": {
+        "title": "Editar Tipo de Acción"
+      },
+      "columns": {
+        "name": "Nombre",
+        "color": "Color"
+      },
+      "delete": {
+        "title": "Eliminar Tipo de Acción",
+        "message": "¿Estás seguro de que deseas eliminar este tipo de acción?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tipo de acción creado exitosamente.",
+        "updated": "Tipo de acción actualizado exitosamente.",
+        "deleted": "Tipo de acción eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los tipos de acción.",
+        "create": "Error al crear el tipo de acción.",
+        "update": "Error al actualizar el tipo de acción.",
+        "delete": "Error al eliminar el tipo de acción."
+      }
+    }
+  },
+  "competencies-classes": {
+    "title": "Clases de Competencia",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar clases de competencia..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Clase de Competencia"
+      },
+      "edit": {
+        "title": "Editar Clase de Competencia"
+      },
+      "columns": {
+        "name": "Nombre"
+      },
+      "delete": {
+        "title": "Eliminar Clase de Competencia",
+        "message": "¿Estás seguro de que deseas eliminar esta clase de competencia?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Clase de competencia creada exitosamente.",
+        "updated": "Clase de competencia actualizada exitosamente.",
+        "deleted": "Clase de competencia eliminada exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener las clases de competencia.",
+        "creating": "Error al crear la clase de competencia.",
+        "updating": "Error al actualizar la clase de competencia.",
+        "deleting": "Error al eliminar la clase de competencia."
+      }
+    }
+  },
+  "competencies": {
+    "title": "Competencias",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar competencias..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre",
+      "description": "Descripción",
+      "code": "Código",
+      "type": "Tipo"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Competencia"
+      },
+      "edit": {
+        "title": "Editar Competencia"
+      },
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "code": "Código",
+        "type": "Tipo"
+      },
+      "delete": {
+        "title": "Eliminar Competencia",
+        "message": "¿Estás seguro de que deseas eliminar esta competencia?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Competencia creada exitosamente.",
+        "updated": "Competencia actualizada exitosamente.",
+        "deleted": "Competencia eliminada exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener la competencia.",
+        "creating": "Error al crear la competencia.",
+        "updating": "Error al actualizar la competencia.",
+        "deleting": "Error al eliminar la competencia."
+      }
+    }
+  },
+  "data-types": {
+    "title": "Tipos de Datos",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar tipos de datos..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Tipo de Dato"
+      },
+      "edit": {
+        "title": "Editar Tipo de Dato"
+      },
+      "columns": {
+        "name": "Nombre"
+      },
+      "delete": {
+        "title": "Eliminar Tipo de Dato",
+        "message": "¿Estás seguro de que deseas eliminar este tipo de dato?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tipo de dato creado exitosamente.",
+        "updated": "Tipo de dato actualizado exitosamente.",
+        "deleted": "Tipo de dato eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los tipos de datos.",
+        "creating": "Error al crear el tipo de dato.",
+        "updating": "Error al actualizar el tipo de dato.",
+        "deleting": "Error al eliminar el tipo de dato."
+      }
+    }
+  },
+  "job-types": {
+    "title": "Tipos de Cargo",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar tipos de cargo..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre",
+      "background": "Fondo",
+      "internalExternal": "Interno/Externo",
+      "user": "Usuario",
+      "letter": "Letra"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Tipo de cargo"
+      },
+      "edit": {
+        "title": "Editar Tipo de cargo"
+      },
+      "columns": {
+        "name": "Nombre",
+        "background": "Fondo",
+        "internalExternal": "Interno/Externo",
+        "user": "Usuario",
+        "letter": "Letra"
+      },
+      "delete": {
+        "title": "Eliminar Tipo de cargo",
+        "message": "¿Estás seguro de que deseas eliminar este tipo de cargo?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tipo de cargo creado exitosamente.",
+        "updated": "Tipo de cargo actualizado exitosamente.",
+        "deleted": "Tipo de cargo eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los tipos de cargos.",
+        "creating": "Error al crear el tipo de cargo.",
+        "updating": "Error al actualizar el tipo de cargo.",
+        "deleting": "Error al eliminar el tipo de cargo."
+      }
+    }
+  },
+  "measure-action-types": {
+    "title": "Tipos de Acción de Medida",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar tipos de acción de medida..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Tipo de Acción de Medida"
+      },
+      "edit": {
+        "title": "Editar Tipo de Acción de Medida"
+      },
+      "columns": {
+        "name": "Nombre"
+      },
+      "delete": {
+        "title": "Eliminar Tipo de Acción de Medida",
+        "message": "¿Estás seguro de que deseas eliminar este tipo de acción de medida?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tipo de acción de medida creado exitosamente.",
+        "updated": "Tipo de acción de medida actualizado exitosamente.",
+        "deleted": "Tipo de acción de medida eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los tipos de acción de medida.",
+        "creating": "Error al crear el tipo de acción de medida.",
+        "updating": "Error al actualizar el tipo de acción de medida.",
+        "deleting": "Error al eliminar el tipo de acción de medida."
+      }
+    }
+  },
+  "objective-types": {
+    "title": "Tipos de Objetivo",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar tipos de objetivo..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "typeName": "Tipo de Nombre",
+      "typeCode": "Tipo de Código"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Tipo de Objetivo"
+      },
+      "edit": {
+        "title": "Editar Tipo de Objetivo"
+      },
+      "columns": {
+        "typeName": "Tipo de Nombre",
+        "typeCode": "Tipo de Código"
+      },
+      "delete": {
+        "title": "Eliminar Tipo de Objetivo",
+        "message": "¿Estás seguro de que deseas eliminar este tipo de objetivo?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tipo de objetivo creado exitosamente.",
+        "updated": "Tipo de objetivo actualizado exitosamente.",
+        "deleted": "Tipo de objetivo eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los tipos de objetivos.",
+        "creating": "Error al crear el tipo de objetivo.",
+        "updating": "Error al actualizar el tipo de objetivo.",
+        "deleting": "Error al eliminar el tipo de objetivo."
+      }
+    }
+  },
+  "organizational-unit-types": {
+    "title": "Tipos de Unidad Organizacional",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar tipos de unidad organizacional..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre",
+      "background": "Fondo",
+      "internalExternal": "Interno/Externo",
+      "letter": "Letra"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Tipo de unidad organizacional"
+      },
+      "edit": {
+        "title": "Editar Tipo de unidad organizacional"
+      },
+      "columns": {
+        "name": "Nombre",
+        "background": "Fondo",
+        "internalExternal": "Interno/Externo",
+        "letter": "Letra"
+      },
+      "delete": {
+        "title": "Eliminar Tipo de unidad organizacional",
+        "message": "¿Estás seguro de que deseas eliminar este tipo de unidad organizacional?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tipo de unidad organizacional creado exitosamente.",
+        "updated": "Tipo de unidad organizacional actualizado exitosamente.",
+        "deleted": "Tipo de unidad organizacional eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los tipos de unidad organizacional.",
+        "creating": "Error al crear el tipo de unidad organizacional.",
+        "updating": "Error al actualizar el tipo de unidad organizacional.",
+        "deleting": "Error al eliminar el tipo de unidad organizacional."
+      }
+    }
+  },
+  "process-types": {
+    "title": "Tipos de Proceso",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar tipos de proceso..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre",
+      "level": "Nivel"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Tipo de Proceso"
+      },
+      "edit": {
+        "title": "Editar Tipo de Proceso"
+      },
+      "columns": {
+        "name": "Nombre",
+        "level": "Nivel"
+      },
+      "delete": {
+        "title": "Eliminar Tipo de Proceso",
+        "message": "¿Estás seguro de que deseas eliminar este tipo de proceso?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tipo de proceso creado exitosamente.",
+        "updated": "Tipo de proceso actualizado exitosamente.",
+        "deleted": "Tipo de proceso eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los tipos de procesos.",
+        "creating": "Error al crear el tipo de proceso.",
+        "updating": "Error al actualizar el tipo de proceso.",
+        "deleting": "Error al eliminar el tipo de proceso."
+      }
+    }
+  },
+  "providers": {
+    "title": "Proveedores",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar proveedores..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre",
+      "contact": "Contacto",
+      "supportName": "Nombre de Soporte",
+      "supportEmail": "Email de Soporte",
+      "supportPhone": "Teléfono de Soporte",
+      "contractualName": "Nombre Contractual",
+      "contractualEmail": "Email Contractual",
+      "contractualPhone": "Teléfono Contractual"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Proveedor"
+      },
+      "edit": {
+        "title": "Editar Proveedor"
+      },
+      "columns": {
+        "name": "Nombre",
+        "contact": "Contacto",
+        "supportName": "Nombre de Soporte",
+        "supportEmail": "Email de Soporte",
+        "supportPhone": "Teléfono de Soporte",
+        "contractualName": "Nombre Contractual",
+        "contractualEmail": "Email Contractual",
+        "contractualPhone": "Teléfono Contractual"
+      },
+      "delete": {
+        "title": "Eliminar Proveedor",
+        "message": "¿Estás seguro de que deseas eliminar este proveedor?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Proveedor creado exitosamente.",
+        "updated": "Proveedor actualizado exitosamente.",
+        "deleted": "Proveedor eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los proveedores.",
+        "creating": "Error al crear el proveedor.",
+        "updating": "Error al actualizar el proveedor.",
+        "deleting": "Error al eliminar el proveedor."
+      }
+    }
+  },
+  "risk-types": {
+    "title": "Tipos de Riesgo",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "configure": "Configuración",
+      "back": "Atrás",
+      "viewMap": "Ver mapa de riesgos"
+    },
+    "toolbar": {
+      "search": "Buscar tipos de riesgo..."
+    },
+    "map": {
+      "breadcrumb": "Mapa de Riesgos",
+      "view": "Ver mapa de riesgos",
+      "heading": "Mapa de Riesgos",
+      "columns": {
+        "riskLevel": "Nivel de Riesgo",
+        "probabilityLevel": "Nivel de Probabilidad"
+      }
+    },
+    "tolerance": {
+      "panelTitle": "Niveles de tolerancia al riesgo",
+      "columns": {
+        "valorization": "Valorización del Riesgo",
+        "acceptance": "Aceptación del Riesgo"
+      },
+      "fields": {
+        "name": "Nombre",
+        "color": "Color",
+        "initial": "Inicial",
+        "final": "Final"
+      },
+      "add": "Añadir nivel",
+      "messages": {
+        "updated": "Nivel actualizado",
+        "created": "Nivel creado",
+        "errorUpdating": "Error al actualizar nivel",
+        "errorCreating": "Error al crear nivel"
+      },
+      "empty": "No hay niveles"
+    },
+    "configure": {
+      "title": "Configurar tipo de riesgo",
+      "probability": "Niveles de probabilidad",
+      "impact": "Niveles de impacto",
+      "tolerance": "Niveles de tolerancia",
+      "deficiency": "Niveles de deficiencia"
+    },
+    "levels": {
+      "probability": {
+        "panelTitle": "Niveles de Probabilidad",
+        "add": "Añadir nivel",
+        "columns": {
+          "name": "Nombre del nivel",
+          "description": "Descripción del nivel",
+          "value": "Valor en la escala",
+          "options": "Opciones"
+        },
+        "fields": {
+          "name": "Nombre del nivel",
+          "description": "Descripción del nivel",
+          "value": "Valor"
+        },
+        "created": "Nivel de probabilidad creado",
+        "updated": "Nivel de probabilidad actualizado",
+        "deleted": "Nivel de probabilidad eliminado",
+        "createError": "Error al crear el nivel de probabilidad",
+        "updateError": "Error al actualizar el nivel de probabilidad",
+        "deleteError": "Error al eliminar el nivel de probabilidad",
+        "validation": "El nombre es requerido",
+        "valueValidation": "El valor es requerido"
+      },
+      "impact": {
+        "panelTitle": "Niveles de Impacto",
+        "add": "Añadir nivel",
+        "columns": {
+          "name": "Nombre del impacto",
+          "description": "Descripción del impacto",
+          "value": "Valor en la escala",
+          "options": "Opciones"
+        },
+        "fields": {
+          "name": "Nombre del impacto",
+          "description": "Descripción del impacto",
+          "value": "Valor"
+        },
+        "created": "Nivel de impacto creado",
+        "updated": "Nivel de impacto actualizado",
+        "deleted": "Nivel de impacto eliminado",
+        "createError": "Error al crear el nivel de impacto",
+        "updateError": "Error al actualizar el nivel de impacto",
+        "deleteError": "Error al eliminar el nivel de impacto",
+        "validation": "El nombre es requerido",
+        "valueValidation": "El valor es requerido"
+      },
+      "deficiency": {
+        "panelTitle": "Niveles de Deficiencia",
+        "add": "Añadir nivel",
+        "columns": {
+          "name": "Nombre de deficiencia",
+          "description": "Descripción",
+          "value": "Valor",
+          "options": "Opciones"
+        },
+        "fields": {
+          "name": "Nombre de deficiencia",
+          "description": "Descripción",
+          "value": "Valor"
+        },
+        "created": "Nivel de deficiencia creado",
+        "updated": "Nivel de deficiencia actualizado",
+        "deleted": "Nivel de deficiencia eliminado",
+        "createError": "Error al crear el nivel de deficiencia",
+        "updateError": "Error al actualizar el nivel de deficiencia",
+        "deleteError": "Error al eliminar el nivel de deficiencia",
+        "validation": "El nombre es requerido",
+        "valueValidation": "El valor es requerido"
+      }
+    }
+  },
+  "system-types": {
+    "title": "Tipos de Sistema",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar tipos de sistema..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Tipo de Sistema"
+      },
+      "edit": {
+        "title": "Editar Tipo de Sistema"
+      },
+      "columns": {
+        "name": "Nombre"
+      },
+      "delete": {
+        "title": "Eliminar Tipo de Sistema",
+        "message": "¿Estás seguro de que deseas eliminar este tipo de sistema?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tipo de sistema creado exitosamente.",
+        "updated": "Tipo de sistema actualizado exitosamente.",
+        "deleted": "Tipo de sistema eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los tipos de sistemas.",
+        "creating": "Error al crear el tipo de sistema.",
+        "updating": "Error al actualizar el tipo de sistema.",
+        "deleting": "Error al eliminar el tipo de sistema."
+      }
+    }
+  },
+  "technology-types": {
+    "title": "Tipos de Tecnología",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar tipos de tecnología..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Tipo de Tecnología"
+      },
+      "edit": {
+        "title": "Editar Tipo de Tecnología"
+      },
+      "columns": {
+        "name": "Nombre"
+      },
+      "delete": {
+        "title": "Eliminar Tipo de Tecnología",
+        "message": "¿Estás seguro de que deseas eliminar este tipo de tecnología?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tipo de tecnología creado exitosamente.",
+        "updated": "Tipo de tecnología actualizado exitosamente.",
+        "deleted": "Tipo de tecnología eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los tipos de tecnologías.",
+        "creating": "Error al crear el tipo de tecnología.",
+        "updating": "Error al actualizar el tipo de tecnología.",
+        "deleting": "Error al eliminar el tipo de tecnología."
+      }
+    }
+  },
+  "tool-types": {
+    "title": "Tipos de Herramienta",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar tipos de herramienta..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Tipo de Herramienta"
+      },
+      "edit": {
+        "title": "Editar Tipo de Herramienta"
+      },
+      "columns": {
+        "name": "Nombre"
+      },
+      "delete": {
+        "title": "Eliminar Tipo de Herramienta",
+        "message": "¿Estás seguro de que deseas eliminar este tipo de herramienta?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tipo de herramienta creado exitosamente.",
+        "updated": "Tipo de herramienta actualizado exitosamente.",
+        "deleted": "Tipo de herramienta eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los tipos de herramientas.",
+        "creating": "Error al crear el tipo de herramienta.",
+        "updating": "Error al actualizar el tipo de herramienta.",
+        "deleting": "Error al eliminar el tipo de herramienta."
+      }
+    }
+  },
+  "topics": {
+    "title": "Temas",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar temas..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Tema"
+      },
+      "edit": {
+        "title": "Editar Tema"
+      },
+      "columns": {
+        "name": "Nombre"
+      },
+      "delete": {
+        "title": "Eliminar Tema",
+        "message": "¿Estás seguro de que deseas eliminar este tema?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tema creado exitosamente.",
+        "updated": "Tema actualizado exitosamente.",
+        "deleted": "Tema eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los temas.",
+        "creating": "Error al crear el tema.",
+        "updating": "Error al actualizar el tema.",
+        "deleting": "Error al eliminar el tema."
+      }
+    }
+  },
+  "domains": {
+    "title": "Dominios",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar dominios..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre",
+      "code": "Código",
+      "color": "Color",
+      "corporateScope": "Alcance Corporativo",
+      "owner": "Propietario",
+      "admin": "Administrador"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Dominio"
+      },
+      "edit": {
+        "title": "Editar Dominio"
+      },
+      "columns": {
+        "name": "Nombre",
+        "code": "Código",
+        "color": "Color",
+        "corporateScope": "Alcance Corporativo",
+        "owner": "Propietario",
+        "admin": "Administrador"
+      },
+      "delete": {
+        "title": "Eliminar Dominio",
+        "message": "¿Estás seguro de que deseas eliminar este dominio?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Dominio creado exitosamente.",
+        "updated": "Dominio actualizado exitosamente.",
+        "deleted": "Dominio eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los dominios.",
+        "creating": "Error al crear el dominio.",
+        "updating": "Error al actualizar el dominio.",
+        "deleting": "Error al eliminar el dominio."
+      }
+    }
+  },
+  "date-controls": {
+    "title": "Controles de Fecha",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar controles de fecha..."
+    },
+    "filters": {
+      "all": "Todos",
+      "keyword": "Palabra clave"
+    },
+    "columns": {
+      "name": "Nombre",
+      "alertDays": "Días de Alerta",
+      "color": "Color"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Control de Fecha"
+      },
+      "edit": {
+        "title": "Editar Control de Fecha"
+      },
+      "columns": {
+        "name": "Nombre",
+        "alertDays": "Días de Alerta",
+        "color": "Color"
+      },
+      "delete": {
+        "title": "Eliminar Control de Fecha",
+        "message": "¿Estás seguro de que deseas eliminar este control de fecha?",
+        "content": "Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Control de fecha creado exitosamente.",
+        "updated": "Control de fecha actualizado exitosamente.",
+        "deleted": "Control de fecha eliminado exitosamente."
+      },
+      "error": {
+        "fetch": "Error al obtener los controles de fecha.",
+        "create": "Error al crear el control de fecha.",
+        "update": "Error al actualizar el control de fecha.",
+        "delete": "Error al eliminar el control de fecha."
+      }
+    }
+  }
+}
