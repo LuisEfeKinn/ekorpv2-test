@@ -1,0 +1,408 @@
+{
+  "inventory": {
+    "title": "Inventario",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "inventory": "Inventario",
+      "edit": "Editar Activo",
+      "create": "Crear Activo"
+    },
+    "actions": {
+      "add": "Agregar Activo",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "view": "Ver",
+      "history": "Historial",
+      "back": "Volver atrás"
+    },
+    "table": {
+      "columns": {
+        "internalId": "ID Interno",
+        "name": "Nombre del Activo",
+        "serial": "Serial",
+        "category": "Categoría",
+        "purchaseDate": "Fecha de Compra",
+        "purchaseValue": "Valor de Compra",
+        "warrantyExpiration": "Vencimiento Garantía",
+        "stock": "Stock",
+        "state": "Estado",
+        "assignedTo": "Asignado a"
+      },
+      "filters": {
+        "all": "Todos",
+        "available": "Disponible",
+        "assigned": "Asignado",
+        "maintenance": "Mantenimiento",
+        "category": "Categoría",
+        "state": "Estado",
+        "status": "Estado",
+        "employee": "Empleado",
+        "serial": "Serial",
+        "internalId": "ID Interno",
+        "hasActiveAssignment": "Con asignación activa"
+      },
+      "search": "Buscar activos...",
+      "filterByCategory": "Filtrar por categoría",
+      "filterByState": "Filtrar por estado",
+      "filterByEmployee": "Filtrar por empleado",
+      "filterBySerial": "Filtrar por serial",
+      "filterByInternalId": "Filtrar por ID interno",
+      "includeInactive": "Incluir inactivos",
+      "hasActiveAssignment": "Con asignación activa",
+      "withActiveAssignment": "Con asignación activa",
+      "noAssigned": "Sin asignar",
+      "multipleAssigned": "{{count}} empleados asignados",
+      "warrantyExpired": "Garantía vencida",
+      "warrantyExpiringSoon": "Vence pronto",
+      "warrantyActive": "Garantía vigente"
+    },
+    "assignments": {
+      "title": "Asignar o Desasignar Empleados",
+      "addAssignment": "Asignar o Desasignar Empleado",
+      "currentAssignments": "Asignaciones Actuales",
+      "noAssignments": "No hay asignaciones registradas",
+      "assignmentNumber": "Asignación #{{number}}",
+      "addAnother": "Agregar Otra Asignación",
+      "save": "Guardar Asignaciones",
+      "actions": {
+        "ASSIGN": "Asignar",
+        "UNASSIGN": "Desasignar",
+        "TRANSFER": "Transferir",
+        "RETURN": "Devolver"
+      },
+      "form": {
+        "employee": {
+          "label": "Empleado",
+          "placeholder": "Buscar empleado...",
+          "required": "El empleado es obligatorio"
+        },
+        "action": {
+          "label": "Acción",
+          "required": "La acción es obligatoria",
+          "helperText": "Seleccione 'Asignar' para asignar el activo a un empleado o 'Desasignar' para liberar el activo."
+        },
+        "expectedReturnDate": {
+          "label": "Fecha Esperada de Retorno",
+          "helperText": "Fecha en que se espera devolver el activo"
+        },
+        "notes": {
+          "label": "Notas",
+          "placeholder": "Ingrese notas adicionales..."
+        },
+        "minimumOne": "Debe agregar al menos una asignación"
+      },
+      "table": {
+        "employee": "Empleado",
+        "assignedAt": "Fecha de Asignación",
+        "notes": "Notas"
+      },
+      "messages": {
+        "success": "Asignaciones guardadas exitosamente",
+        "error": "Error al guardar las asignaciones"
+      },
+      "confirmSave": {
+        "title": "Guardar Antes de Asignar",
+        "content": "Para poder asignar empleados, primero debe guardar el activo. ¿Desea guardar ahora?",
+        "confirm": "Sí, Guardar y Asignar"
+      }
+    },
+    "history": {
+      "title": "Historial del Activo",
+      "asset": "Activo",
+      "type": "Tipo",
+      "description": "Descripción",
+      "date": "Fecha",
+      "performedBy": "Realizado por",
+      "targetEmployee": "Empleado objetivo",
+      "changes": "Cambios",
+      "changesDetail": "Detalle de cambios",
+      "oldValue": "Valor anterior",
+      "newValue": "Valor nuevo",
+      "noHistory": "No hay historial disponible",
+      "types": {
+        "CREATE": "Creación",
+        "UPDATE": "Actualización",
+        "DELETE": "Eliminación",
+        "ASSIGN": "Asignación",
+        "UNASSIGN": "Desasignación"
+      }
+    },
+    "form": {
+      "name": {
+        "required": "El nombre es obligatorio"
+      },
+      "internalId": {
+        "required": "El ID interno es obligatorio"
+      },
+      "serial": {
+        "required": "El serial es obligatorio"
+      },
+      "purchaseDate": {
+        "required": "La fecha de compra es obligatoria"
+      },
+      "depreciationDate": {
+        "required": "La fecha de depreciación es obligatoria"
+      },
+      "warrantyExpiration": {
+        "required": "El vencimiento de garantía es obligatorio"
+      },
+      "category": {
+        "required": "La categoría es obligatoria"
+      },
+      "state": {
+        "required": "El estado es obligatorio"
+      },
+      "sections": {
+        "details": "Detalles"
+      },
+      "fields": {
+        "internalId": {
+          "label": "ID Interno",
+          "helperText": "Código único del activo"
+        },
+        "name": {
+          "label": "Nombre",
+          "helperText": "Ingrese el nombre del activo"
+        },
+        "isActive": {
+          "label": "Activo"
+        },
+        "serial": {
+          "label": "Serial",
+          "helperText": "Número de serie del activo"
+        },
+        "note": {
+          "label": "Nota",
+          "helperText": "Ingrese una nota opcional"
+        },
+        "category": {
+          "label": "Categoría"
+        },
+        "state": {
+          "label": "Estado"
+        },
+        "purchaseDate": {
+          "label": "Fecha de Compra",
+          "helperText": "Fecha en que se adquirió el activo"
+        },
+        "purchaseValue": {
+          "label": "Valor de Compra",
+          "helperText": "Precio de adquisición"
+        },
+        "depreciationDate": {
+          "label": "Fecha de Depreciación",
+          "helperText": "Fecha estimada de depreciación"
+        },
+        "warrantyExpiration": {
+          "label": "Vencimiento de Garantía",
+          "helperText": "Fecha de expiración de la garantía"
+        }
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "saving": "Guardando...",
+        "update": "Actualizar",
+        "create": "Crear"
+      },
+      "messages": {
+        "updateSuccess": "Activo actualizado exitosamente",
+        "createSuccess": "Activo creado exitosamente",
+        "saveError": "Error al guardar el activo"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Error al cargar el activo",
+        "deleting": "Error al eliminar el activo",
+        "saveError": "Error al guardar el activo"
+      },
+      "success": {
+        "deleted": "Activo eliminado exitosamente",
+        "updateSuccess": "Activo actualizado exitosamente",
+        "createSuccess": "Activo creado exitosamente"
+      },
+      "confirmDelete": "¿Estás seguro de que deseas eliminar este activo?"
+    }
+  },
+  "categories": {
+    "title": "Categorías",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "categories": "Categorías",
+      "edit": "Editar Categoría",
+      "create": "Crear Categoría"
+    },
+    "actions": {
+      "add": "Agregar Categoría",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "view": "Ver"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "assetCount": "Cantidad de Activos",
+        "status": "Estado"
+      },
+      "toolbar": {
+        "sortBy": "Ordenar por",
+        "resetFilters": "Limpiar filtros"
+      },
+      "filters": {
+        "all": "Todos",
+        "keyword": "Palabra clave"
+      },
+      "order": {
+        "idAsc": "ID (Ascendente)",
+        "idDesc": "ID (Descendente)",
+        "nameAsc": "Nombre (A-Z)",
+        "nameDesc": "Nombre (Z-A)",
+        "pointsAsc": "Puntos (Menor a Mayor)",
+        "pointsDesc": "Puntos (Mayor a Menor)",
+        "stockAsc": "Stock (Menor a Mayor)",
+        "stockDesc": "Stock (Mayor a Menor)",
+        "createdAtAsc": "Más antiguos",
+        "createdAtDesc": "Más recientes",
+        "categoryAsc": "Categoría (A-Z)",
+        "categoryDesc": "Categoría (Z-A)"
+      },
+      "search": "Buscar categorías..."
+    },
+    "form": {
+      "name": {
+        "required": "El nombre es obligatorio"
+      },
+      "category": {
+        "required": "La categoría es obligatoria"
+      },
+      "stock": {
+        "required": "El stock es obligatorio"
+      },
+      "isActive": {
+        "required": "El estado es obligatorio"
+      },
+      "pointsRequired": {
+        "required": "Los puntos son obligatorios"
+      },
+      "imageUrl": {
+        "required": "La URL de la imagen es obligatoria"
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "helperText": "Ingrese el nombre de la categoría"
+        },
+        "isActive": {
+          "label": "Estado"
+        }
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "saving": "Guardando...",
+        "update": "Actualizar",
+        "create": "Crear"
+      },
+      "messages": {
+        "updateSuccess": "Categoría actualizada exitosamente",
+        "createSuccess": "Categoría creada exitosamente",
+        "saveError": "Error al guardar la categoría"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Error al cargar la categoría",
+        "deleting": "Error al eliminar la categoría",
+        "saveError": "Error al guardar la categoría"
+      },
+      "success": {
+        "deleted": "Categoría eliminada exitosamente",
+        "updateSuccess": "Categoría actualizada exitosamente",
+        "createSuccess": "Categoría creada exitosamente"
+      },
+      "confirmDelete": "¿Estás seguro de que deseas eliminar esta categoría?"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    }
+  },
+  "record": {
+    "title": "Registro de Activos",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "record": "Registro de Activos"
+    },
+    "actions": {
+      "view": "Ver Detalle",
+      "export": "Exportar"
+    },
+    "table": {
+      "columns": {
+        "type": "Tipo",
+        "asset": "Activo",
+        "description": "Descripción",
+        "date": "Fecha",
+        "performedBy": "Realizado por",
+        "targetEmployee": "Empleado Objetivo",
+        "category": "Categoría"
+      },
+      "search": "Buscar en historial...",
+      "filterByAsset": "Filtrar por activo",
+      "filterByType": "Filtrar por tipo",
+      "filterByCategory": "Filtrar por categoría",
+      "filterByPerformedBy": "Filtrar por quien realizó",
+      "filterByTargetEmployee": "Filtrar por empleado objetivo",
+      "filterByFromDate": "Desde",
+      "filterByToDate": "Hasta",
+      "noRecords": "No se encontraron registros"
+    },
+    "types": {
+      "ASSIGN": "Asignación",
+      "UNASSIGN": "Desasignación",
+      "STATE_CHANGE": "Cambio de Estado",
+      "CREATE": "Creación",
+      "UPDATE": "Actualización"
+    },
+    "filters": {
+      "all": "Todos",
+      "assign": "Asignaciones",
+      "unassign": "Desasignaciones",
+      "stateChange": "Cambios de Estado",
+      "create": "Creaciones",
+      "update": "Actualizaciones"
+    },
+    "messages": {
+      "error": {
+        "loading": "Error al cargar el historial"
+      }
+    }
+  },
+  "myAssets": {
+    "title": "Mis Activos",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "myAssets": "Mis Activos"
+    },
+    "table": {
+      "columns": {
+        "asset": "Activo",
+        "internalId": "ID Interno",
+        "category": "Categoría",
+        "serial": "Serial",
+        "state": "Estado",
+        "assignedAt": "Fecha de Asignación",
+        "notes": "Notas"
+      },
+      "toolbar": {
+        "search": "Buscar activos..."
+      },
+      "noAssets": "No tienes activos asignados",
+      "results": "resultados encontrados"
+    },
+    "messages": {
+      "error": {
+        "loading": "Error al cargar mis activos"
+      }
+    }
+  }
+}

@@ -1,0 +1,408 @@
+{
+  "inventory": {
+    "title": "Inventory",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "inventory": "Inventory",
+      "edit": "Edit Asset",
+      "create": "Create Asset"
+    },
+    "actions": {
+      "add": "Add Asset",
+      "edit": "Edit",
+      "delete": "Delete",
+      "view": "View",
+      "history": "History",
+      "back": "Go Back"
+    },
+    "table": {
+      "columns": {
+        "internalId": "Internal ID",
+        "name": "Asset Name",
+        "serial": "Serial",
+        "category": "Category",
+        "purchaseDate": "Purchase Date",
+        "purchaseValue": "Purchase Value",
+        "warrantyExpiration": "Warranty Expiration",
+        "stock": "Stock",
+        "state": "State",
+        "assignedTo": "Assigned to"
+      },
+      "filters": {
+        "all": "All",
+        "available": "Available",
+        "assigned": "Assigned",
+        "maintenance": "Maintenance",
+        "category": "Category",
+        "state": "State",
+        "status": "Status",
+        "employee": "Employee",
+        "serial": "Serial",
+        "internalId": "Internal ID",
+        "hasActiveAssignment": "With active assignment"
+      },
+      "search": "Search assets...",
+      "filterByCategory": "Filter by category",
+      "filterByState": "Filter by state",
+      "filterByEmployee": "Filter by employee",
+      "filterBySerial": "Filter by serial",
+      "filterByInternalId": "Filter by internal ID",
+      "includeInactive": "Include inactive",
+      "hasActiveAssignment": "With active assignment",
+      "withActiveAssignment": "With active assignment",
+      "noAssigned": "Unassigned",
+      "multipleAssigned": "{{count}} assigned employees",
+      "warrantyExpired": "Warranty expired",
+      "warrantyExpiringSoon": "Expiring soon",
+      "warrantyActive": "Warranty active"
+    },
+    "assignments": {
+      "title": "Assign or Unassign Employees",
+      "addAssignment": "Add And Unassign Employee",
+      "currentAssignments": "Current Assignments",
+      "noAssignments": "No assignments registered",
+      "assignmentNumber": "Assignment #{{number}}",
+      "addAnother": "Add Another Assignment",
+      "save": "Save Assignments",
+      "actions": {
+        "ASSIGN": "Assign",
+        "UNASSIGN": "Unassign",
+        "TRANSFER": "Transfer",
+        "RETURN": "Return"
+      },
+      "form": {
+        "employee": {
+          "label": "Employee",
+          "placeholder": "Search employee...",
+          "required": "Employee is required"
+        },
+        "action": {
+          "label": "Action",
+          "required": "Action is required",
+          "helperText": "Select 'Assign' to assign the asset to an employee or 'Unassign' to release the asset."
+        },
+        "expectedReturnDate": {
+          "label": "Expected Return Date",
+          "helperText": "Date when the asset is expected to be returned"
+        },
+        "notes": {
+          "label": "Notes",
+          "placeholder": "Enter additional notes..."
+        },
+        "minimumOne": "You must add at least one assignment"
+      },
+      "table": {
+        "employee": "Employee",
+        "assignedAt": "Assigned At",
+        "notes": "Notes"
+      },
+      "messages": {
+        "success": "Assignments saved successfully",
+        "error": "Error saving assignments"
+      },
+      "confirmSave": {
+        "title": "Save Before Assigning",
+        "content": "To assign employees, you must first save the asset. Do you want to save now?",
+        "confirm": "Yes, Save and Assign"
+      }
+    },
+    "history": {
+      "title": "Asset History",
+      "asset": "Asset",
+      "type": "Type",
+      "description": "Description",
+      "date": "Date",
+      "performedBy": "Performed by",
+      "targetEmployee": "Target Employee",
+      "changes": "Changes",
+      "changesDetail": "Changes Detail",
+      "oldValue": "Old value",
+      "newValue": "New value",
+      "noHistory": "No history available",
+      "types": {
+        "CREATE": "Creation",
+        "UPDATE": "Update",
+        "DELETE": "Deletion",
+        "ASSIGN": "Assignment",
+        "UNASSIGN": "Unassignment"
+      }
+    },
+    "form": {
+      "name": {
+        "required": "Name is required"
+      },
+      "internalId": {
+        "required": "Internal ID is required"
+      },
+      "serial": {
+        "required": "Serial is required"
+      },
+      "purchaseDate": {
+        "required": "Purchase date is required"
+      },
+      "depreciationDate": {
+        "required": "Depreciation date is required"
+      },
+      "warrantyExpiration": {
+        "required": "Warranty expiration is required"
+      },
+      "category": {
+        "required": "Category is required"
+      },
+      "state": {
+        "required": "State is required"
+      },
+      "sections": {
+        "details": "Details"
+      },
+      "fields": {
+        "internalId": {
+          "label": "Internal ID",
+          "helperText": "Unique asset code"
+        },
+        "name": {
+          "label": "Name",
+          "helperText": "Enter the asset name"
+        },
+        "isActive": {
+          "label": "Active"
+        },
+        "serial": {
+          "label": "Serial",
+          "helperText": "Asset serial number"
+        },
+        "note": {
+          "label": "Note",
+          "helperText": "Enter an optional note"
+        },
+        "category": {
+          "label": "Category"
+        },
+        "state": {
+          "label": "State"
+        },
+        "purchaseDate": {
+          "label": "Purchase Date",
+          "helperText": "Date when the asset was acquired"
+        },
+        "purchaseValue": {
+          "label": "Purchase Value",
+          "helperText": "Acquisition price"
+        },
+        "depreciationDate": {
+          "label": "Depreciation Date",
+          "helperText": "Estimated depreciation date"
+        },
+        "warrantyExpiration": {
+          "label": "Warranty Expiration",
+          "helperText": "Warranty expiration date"
+        }
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "saving": "Saving...",
+        "update": "Update",
+        "create": "Create"
+      },
+      "messages": {
+        "updateSuccess": "Asset updated successfully",
+        "createSuccess": "Asset created successfully",
+        "saveError": "Error saving the asset"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Error loading assets",
+        "deleting": "Error deleting asset",
+        "saveError": "Error saving the asset"
+      },
+      "success": {
+        "deleted": "Asset deleted successfully",
+        "updateSuccess": "Asset updated successfully",
+        "createSuccess": "Asset created successfully"
+      },
+      "confirmDelete": "Are you sure you want to delete this asset?"
+    }
+  },
+  "categories": {
+    "title": "Categories",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "categories": "Categories",
+      "edit": "Edit Category",
+      "create": "Create Category"
+    },
+    "actions": {
+      "add": "Add Category",
+      "edit": "Edit",
+      "delete": "Delete",
+      "view": "View"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "assetCount": "Asset Count",
+        "status": "Status"
+      },
+      "toolbar": {
+        "sortBy": "Sort by",
+        "resetFilters": "Reset filters"
+      },
+      "filters": {
+        "all": "All",
+        "keyword": "Keyword"
+      },
+      "order": {
+        "idAsc": "ID (Ascending)",
+        "idDesc": "ID (Descending)",
+        "nameAsc": "Name (A-Z)",
+        "nameDesc": "Name (Z-A)",
+        "pointsAsc": "Points (Low to High)",
+        "pointsDesc": "Points (High to Low)",
+        "stockAsc": "Stock (Low to High)",
+        "stockDesc": "Stock (High to Low)",
+        "createdAtAsc": "Oldest first",
+        "createdAtDesc": "Newest first",
+        "categoryAsc": "Category (A-Z)",
+        "categoryDesc": "Category (Z-A)"
+      },
+      "search": "Search categories..."
+    },
+    "form": {
+      "name": {
+        "required": "Name is required"
+      },
+      "category": {
+        "required": "Category is required"
+      },
+      "stock": {
+        "required": "Stock is required"
+      },
+      "isActive": {
+        "required": "Status is required"
+      },
+      "pointsRequired": {
+        "required": "Points are required"
+      },
+      "imageUrl": {
+        "required": "Image URL is required"
+      },
+      "fields": {
+        "name": {
+          "label": "Name",
+          "helperText": "Enter the category name"
+        },
+        "isActive": {
+          "label": "Status"
+        }
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "saving": "Saving...",
+        "update": "Update",
+        "create": "Create"
+      },
+      "messages": {
+        "updateSuccess": "Category updated successfully",
+        "createSuccess": "Category created successfully",
+        "saveError": "Error saving the category"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Error loading category",
+        "deleting": "Error deleting category",
+        "saveError": "Error saving the category"
+      },
+      "success": {
+        "deleted": "Category deleted successfully",
+        "updateSuccess": "Category updated successfully",
+        "createSuccess": "Category created successfully"
+      },
+      "confirmDelete": "Are you sure you want to delete this category?"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    }
+  },
+  "record": {
+    "title": "Asset Records",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "record": "Asset Records"
+    },
+    "actions": {
+      "view": "View Detail",
+      "export": "Export"
+    },
+    "table": {
+      "columns": {
+        "type": "Type",
+        "asset": "Asset",
+        "description": "Description",
+        "date": "Date",
+        "performedBy": "Performed By",
+        "targetEmployee": "Target Employee",
+        "category": "Category"
+      },
+      "search": "Search in history...",
+      "filterByAsset": "Filter by asset",
+      "filterByType": "Filter by type",
+      "filterByCategory": "Filter by category",
+      "filterByPerformedBy": "Filter by performed by",
+      "filterByTargetEmployee": "Filter by target employee",
+      "filterByFromDate": "From",
+      "filterByToDate": "To",
+      "noRecords": "No records found"
+    },
+    "types": {
+      "ASSIGN": "Assignment",
+      "UNASSIGN": "Unassignment",
+      "STATE_CHANGE": "State Change",
+      "CREATE": "Creation",
+      "UPDATE": "Update"
+    },
+    "filters": {
+      "all": "All",
+      "assign": "Assignments",
+      "unassign": "Unassignments",
+      "stateChange": "State Changes",
+      "create": "Creations",
+      "update": "Updates"
+    },
+    "messages": {
+      "error": {
+        "loading": "Error loading history"
+      }
+    }
+  },
+  "myAssets": {
+    "title": "My Assets",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "myAssets": "My Assets"
+    },
+    "table": {
+      "columns": {
+        "asset": "Asset",
+        "internalId": "Internal ID",
+        "category": "Category",
+        "serial": "Serial",
+        "state": "State",
+        "assignedAt": "Assigned At",
+        "notes": "Notes"
+      },
+      "toolbar": {
+        "search": "Search assets..."
+      },
+      "noAssets": "You have no assigned assets",
+      "results": "results found"
+    },
+    "messages": {
+      "error": {
+        "loading": "Error loading my assets"
+      }
+    }
+  }
+}
