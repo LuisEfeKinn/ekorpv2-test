@@ -1,0 +1,478 @@
+{
+  "employment-type": {
+    "title": "Tipos de Empleo",
+    "breadcrumbs": {
+      "dashboard": "Panel de Control",
+      "employmentTypes": "Tipos de Empleo",
+      "list": "Lista de Tipos de Empleo",
+      "create": "Crear Tipo de Empleo",
+      "edit": "Editar Tipo de Empleo"
+    },
+    "actions": {
+      "add": "Agregar Tipo de Empleo",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "create": "Crear Tipo de Empleo",
+      "update": "Actualizar Tipo de Empleo",
+      "search": "Buscar tipos de empleo...",
+      "clear": "Limpiar",
+      "select": "Seleccionar",
+      "saving": "Guardando..."
+    },
+    "table": {
+      "title": "Tipo de Empleo",
+      "columns": {
+        "name": "Nombre",
+        "createdAt": "Fecha de Creación",
+        "updatedAt": "Fecha de Actualización",
+        "actions": "Acciones"
+      },
+      "toolbar": {
+        "search": "Buscar tipos de empleo..."
+      },
+      "filters": {
+        "status": "Estado:",
+        "keyword": "Palabra clave:",
+        "all": "Todos"
+      },
+      "emptyState": {
+        "noData": "No se encontraron tipos de empleo",
+        "noResults": "No se encontraron resultados para tu búsqueda"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "placeholder": "Ingrese el nombre del tipo de empleo",
+          "helperText": "Ingrese el nombre del tipo de empleo",
+          "required": "El nombre es requerido"
+        }
+      },
+      "sections": {
+        "details": "Detalles del Tipo de Empleo"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar",
+        "content": "¿Está seguro de que desea eliminar este tipo de empleo?",
+        "contentMultiple": "¿Está seguro de que desea eliminar {{count}} elementos?",
+        "confirm": "Eliminar"
+      },
+      "unsavedChanges": {
+        "title": "Cambios No Guardados",
+        "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+        "confirm": "Salir sin guardar"
+      }
+    },
+    "messages": {
+      "loading": "Cargando tipos de empleo...",
+      "saving": "Guardando...",
+      "loadError": "Error al cargar el tipo de empleo",
+      "saveError": "Error al guardar el tipo de empleo. Por favor, inténtelo de nuevo.",
+      "notFound": "Tipo de empleo no encontrado",
+      "createSuccess": "¡Tipo de empleo creado exitosamente!",
+      "updateSuccess": "¡Tipo de empleo actualizado exitosamente!",
+      "success": {
+        "created": "Tipo de empleo creado exitosamente",
+        "updated": "Tipo de empleo actualizado exitosamente",
+        "deleted": "Tipo de empleo eliminado exitosamente",
+        "deletedMultiple": "Tipos de empleo eliminados exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar tipos de empleo",
+        "saving": "Error al guardar el tipo de empleo. Por favor, inténtelo de nuevo.",
+        "deleting": "Error al eliminar el tipo de empleo",
+        "deletingMultiple": "Error al eliminar tipos de empleo",
+        "notFound": "Tipo de empleo no encontrado"
+      }
+    },
+    "status": {
+      "all": "Todos",
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "tooltips": {
+      "edit": "Editar tipo de empleo",
+      "delete": "Eliminar tipo de empleo",
+      "quickEdit": "Edición rápida"
+    }
+  },
+  "user-management": {
+    "title": "Gestión de Usuarios",
+    "breadcrumbs": {
+      "dashboard": "Panel de Control",
+      "userManagement": "Gestión de Usuarios",
+      "list": "Lista de Usuarios",
+      "create": "Crear Usuario",
+      "edit": "Editar Usuario"
+    },
+    "actions": {
+      "add": "Agregar Usuario",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "create": "Crear Usuario",
+      "update": "Actualizar Usuario",
+      "search": "Buscar usuarios...",
+      "clear": "Limpiar"
+    },
+    "table": {
+      "columns": {
+        "fullName": "Nombre Completo",
+        "email": "Correo Electrónico",
+        "position": "Posición y Empleo",
+        "skill": "Habilidad",
+        "location": "Ubicación",
+        "billingRate": "Tarifa de Facturación",
+        "weeklyHours": "Horas Semanales",
+        "startedWorkOn": "Fecha Inicio",
+        "employmentType": "Tipo de Empleo",
+        "minimumBillingRate": "Tarifa Mín. Facturación",
+        "weeklyLimit": "Límite Semanal",
+        "actions": "Acciones",
+        "perHour": "por hora",
+        "perWeek": "por semana"
+      },
+      "toolbar": {
+        "search": "Buscar usuarios..."
+      },
+      "filters": {
+        "status": "Estado:",
+        "keyword": "Palabra clave:",
+        "position": "Posición",
+        "skill": "Habilidad",
+        "organizationalUnit": "Unidad Organizacional",
+        "country": "País",
+        "region": "Región",
+        "employmentType": "Tipo de Empleo:",
+        "all": "Todos"
+      },
+      "emptyState": {
+        "noData": "No se encontraron usuarios",
+        "noResults": "No se encontraron resultados para tu búsqueda"
+      }
+    },
+    "form": {
+      "fields": {
+        "firstName": {
+          "label": "Primer Nombre",
+          "placeholder": "Ingrese el primer nombre",
+          "helperText": "Ingrese el primer nombre del usuario",
+          "required": "El primer nombre es requerido"
+        },
+        "secondName": {
+          "label": "Segundo Nombre",
+          "placeholder": "Ingrese el segundo nombre (opcional)",
+          "helperText": "Ingrese el segundo nombre del usuario",
+          "required": "El segundo nombre es requerido"
+        },
+        "firstLastName": {
+          "label": "Primer Apellido",
+          "placeholder": "Ingrese el primer apellido",
+          "helperText": "Ingrese el primer apellido del usuario",
+          "required": "El primer apellido es requerido"
+        },
+        "secondLastName": {
+          "label": "Segundo Apellido",
+          "placeholder": "Ingrese el segundo apellido (opcional)",
+          "helperText": "Ingrese el segundo apellido del usuario",
+          "required": "El segundo apellido es requerido"
+        },
+        "address": {
+          "label": "Dirección",
+          "placeholder": "Ingrese la dirección",
+          "helperText": "Ingrese la dirección completa del usuario",
+          "required": "La dirección es requerida"
+        },
+        "municipalityId": {
+          "label": "Municipio",
+          "placeholder": "Ingrese el municipio",
+          "helperText": "Ingrese el municipio",
+          "required": "El municipio es requerido"
+        },
+        "postalCode": {
+          "label": "Código Postal",
+          "placeholder": "Ingrese el código postal",
+          "helperText": "Ingrese el código postal",
+          "required": "El código postal es requerido"
+        },
+        "startedWorkOn": {
+          "label": "Fecha de Inicio de Trabajo",
+          "placeholder": "Seleccione la fecha de inicio",
+          "helperText": "Seleccione cuándo el usuario comenzó a trabajar",
+          "required": "La fecha de inicio es requerida"
+        },
+        "paymentPeriodId": {
+          "label": "Período de Pago",
+          "placeholder": "Ingrese el período de pago",
+          "helperText": "Ingrese el período de pago",
+          "required": "El período de pago es requerido"
+        },
+        "coindId": {
+          "label": "Moneda",
+          "placeholder": "Ingrese la moneda",
+          "helperText": "Ingrese la moneda",
+          "required": "La moneda es requerida"
+        },
+        "billingRatePerHour": {
+          "label": "Tarifa de Facturación por Hora",
+          "placeholder": "Ingrese la tarifa de facturación",
+          "helperText": "Ingrese la tarifa de facturación por hora",
+          "required": "La tarifa de facturación es requerida"
+        },
+        "minimunBllingRatePerHour": {
+          "label": "Tarifa Mínima de Facturación por Hora",
+          "placeholder": "Ingrese la tarifa mínima de facturación",
+          "helperText": "Ingrese la tarifa mínima de facturación por hora",
+          "required": "La tarifa mínima de facturación es requerida"
+        },
+        "recurringWeeklyLimitHours": {
+          "label": "Límite Semanal de Horas",
+          "placeholder": "Ingrese el límite de horas semanales",
+          "helperText": "Ingrese el límite recurrente de horas semanales",
+          "required": "El límite semanal es requerido"
+        },
+        "organizationalUnitId": {
+          "label": "Unidad Organizacional",
+          "placeholder": "Ingrese la unidad organizacional",
+          "helperText": "Ingrese la unidad organizacional",
+          "required": "La unidad organizacional es requerida"
+        },
+        "employmentTypeId": {
+          "label": "Tipo de Empleo",
+          "placeholder": "Ingrese el tipo de empleo",
+          "helperText": "Ingrese el tipo de empleo",
+          "required": "El tipo de empleo es requerido"
+        },
+        "skillId": {
+          "label": "Habilidad",
+          "placeholder": "Ingrese la habilidad",
+          "helperText": "Ingrese la habilidad",
+          "required": "La habilidad es requerida"
+        },
+        "positionId": {
+          "label": "Posición",
+          "placeholder": "Ingrese la posición",
+          "helperText": "Ingrese la posición",
+          "required": "La posición es requerida"
+        },
+        "userId": {
+          "label": "ID de Usuario",
+          "placeholder": "Ingrese el usuario",
+          "helperText": "Ingrese el usuario",
+          "required": "El usuario es requerido"
+        }
+      },
+      "sections": {
+        "personalInfo": "Información Personal",
+        "workDetails": "Detalles del Trabajo",
+        "locationInfo": "Información de Ubicación",
+        "paymentInfo": "Información de Pago"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Usuario",
+        "content": "¿Está seguro de que desea eliminar este usuario?",
+        "contentMultiple": "¿Está seguro de que desea eliminar {{count}} usuarios?",
+        "confirm": "Eliminar"
+      },
+      "unsavedChanges": {
+        "title": "Cambios No Guardados",
+        "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+        "confirm": "Salir sin guardar"
+      }
+    },
+    "messages": {
+      "loading": "Cargando usuarios...",
+      "saving": "Guardando...",
+      "loadError": "Error al cargar usuario",
+      "saveError": "Error al guardar usuario. Por favor, inténtelo de nuevo.",
+      "notFound": "Usuario no encontrado",
+      "createSuccess": "¡Usuario creado exitosamente!",
+      "updateSuccess": "¡Usuario actualizado exitosamente!",
+      "success": {
+        "created": "Usuario creado exitosamente",
+        "updated": "Usuario actualizado exitosamente",
+        "deleted": "Usuario eliminado exitosamente",
+        "deletedMultiple": "Usuarios eliminados exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar usuarios",
+        "saving": "Error al guardar usuario. Por favor, inténtelo de nuevo.",
+        "deleting": "Error al eliminar usuario",
+        "deletingMultiple": "Error al eliminar usuarios",
+        "notFound": "Usuario no encontrado"
+      }
+    },
+    "status": {
+      "all": "Todos",
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "tooltips": {
+      "edit": "Editar usuario",
+      "delete": "Eliminar usuario",
+      "quickEdit": "Edición rápida"
+    },
+    "learning-paths": {
+      "title": "Gestión de Rutas de Aprendizaje",
+      "manageButton": "Gestionar Rutas",
+      "actions": {
+        "assign": "Asignar Ruta de Aprendizaje"
+      },
+      "fields": {
+        "learningPath": {
+          "label": "Ruta de Aprendizaje",
+          "placeholder": "Buscar ruta de aprendizaje..."
+        },
+        "progress": {
+          "label": "Progreso"
+        },
+        "assignedAt": {
+          "label": "Asignado el"
+        }
+      },
+      "status": {
+        "notStarted": "No Iniciado",
+        "inProgress": "En Progreso",
+        "completed": "Completado"
+      },
+      "emptyState": {
+        "noAssignments": "Este usuario no tiene rutas de aprendizaje asignadas"
+      },
+      "success": {
+        "assigned": "Ruta de aprendizaje asignada exitosamente",
+        "removed": "Ruta de aprendizaje eliminada exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar las rutas de aprendizaje asignadas",
+        "loadingOptions": "Error al cargar las rutas de aprendizaje disponibles",
+        "assigning": "Error al asignar la ruta de aprendizaje",
+        "removing": "Error al eliminar la ruta de aprendizaje"
+      },
+      "dialogs": {
+        "deleteConfirmation": {
+          "title": "Eliminar Ruta de Aprendizaje",
+          "message": "¿Está seguro de que desea eliminar la ruta de aprendizaje \"{{name}}\"?",
+          "description": "Esta acción no se puede deshacer y se eliminará permanentemente la asignación de esta ruta.",
+          "confirm": "Eliminar",
+          "cancel": "Cancelar"
+        }
+      }
+    }
+  },
+  "skills": {
+    "title": "Habilidades",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "skills": "Habilidades",
+      "list": "Lista de Habilidades",
+      "create": "Crear Habilidad",
+      "edit": "Editar Habilidad"
+    },
+    "actions": {
+      "add": "Agregar Habilidad",
+      "edit": "Editar Habilidad",
+      "delete": "Eliminar Habilidad",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "saving": "Guardando...",
+      "create": "Crear Habilidad",
+      "update": "Actualizar Habilidad",
+      "search": "Buscar habilidades...",
+      "clear": "Limpiar"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "color": "Color",
+        "createdAt": "Creado En",
+        "updatedAt": "Actualizado En",
+        "actions": "Acciones"
+      },
+      "toolbar": {
+        "search": "Buscar habilidades..."
+      },
+      "filters": {
+        "status": "Estado:",
+        "keyword": "Palabra clave:",
+        "all": "Todo"
+      },
+      "emptyState": {
+        "noData": "No se encontraron habilidades",
+        "noResults": "No se encontraron resultados para su búsqueda"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "placeholder": "Ingrese el nombre de la habilidad",
+          "helperText": "Ingrese el nombre de la habilidad",
+          "required": "El nombre es requerido"
+        },
+        "color": {
+          "label": "Color",
+          "placeholder": "Seleccione el color de la habilidad",
+          "helperText": "Seleccione el color de la habilidad",
+          "required": "El color es requerido",
+          "preview": "Vista previa del color"
+        }
+      },
+      "sections": {
+        "details": "Detalles de la Habilidad"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Habilidad",
+        "content": "¿Está seguro de que desea eliminar esta habilidad?",
+        "contentMultiple": "¿Está seguro de que desea eliminar {{count}} habilidades?",
+        "confirm": "Eliminar"
+      },
+      "unsavedChanges": {
+        "title": "Cambios No Guardados",
+        "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+        "confirm": "Salir sin guardar"
+      }
+    },
+    "messages": {
+      "loading": "Cargando habilidades...",
+      "saving": "Guardando...",
+      "loadError": "Error al cargar la habilidad",
+      "saveError": "Error al guardar la habilidad. Por favor, inténtelo de nuevo.",
+      "notFound": "Habilidad no encontrada",
+      "createSuccess": "¡Habilidad creada exitosamente!",
+      "updateSuccess": "¡Habilidad actualizada exitosamente!",
+      "success": {
+        "created": "Habilidad creada exitosamente",
+        "updated": "Habilidad actualizada exitosamente",
+        "deleted": "Habilidad eliminada exitosamente",
+        "deletedMultiple": "Habilidades eliminadas exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar habilidades",
+        "saving": "Error al guardar la habilidad. Por favor, inténtelo de nuevo.",
+        "deleting": "Error al eliminar la habilidad",
+        "deletingMultiple": "Error al eliminar habilidades",
+        "notFound": "Habilidad no encontrada"
+      }
+    },
+    "status": {
+      "all": "Todos",
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "tooltips": {
+      "edit": "Editar habilidad",
+      "delete": "Eliminar habilidad",
+      "quickEdit": "Edición rápida"
+    }
+  }
+}

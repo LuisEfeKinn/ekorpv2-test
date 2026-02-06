@@ -1,0 +1,188 @@
+{
+  "title": "Listado de Cursos con IA",
+  "breadcrumbs": {
+    "dashboard": "Panel",
+    "aiCourses": "Cursos IA"
+  },
+  "filters": {
+    "all": "Todos"
+  },
+  "status": {
+    "draft": "Borrador",
+    "generating": "Generando",
+    "completed": "Completado",
+    "published": "Publicado",
+    "archived": "Archivado"
+  },
+  "difficulty": {
+    "beginner": "Principiante",
+    "intermediate": "Intermedio",
+    "advanced": "Avanzado"
+  },
+  "provider": {
+    "openai": "OpenAI",
+    "gemini": "Google Gemini",
+    "deepseek": "DeepSeek",
+    "minimax": "Minimax"
+  },
+  "languages": {
+    "es": "Español",
+    "en": "Inglés",
+    "pt": "Portugués",
+    "fr": "Francés"
+  },
+  "sections": "secciones",
+  "actions": {
+    "view": "Ver",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "duplicate": "Duplicar",
+    "cancel": "Cancelar",
+    "create": "Crear",
+    "update": "Actualizar",
+    "back": "Atrás",
+    "continue": "Continuar",
+    "editMore": "Editar más",
+    "saveCourse": "Guardar Curso",
+    "generateWithAi": "Generar con IA",
+    "clearFilters": "Limpiar Filtros",
+    "publish": "Publicar",
+    "archive": "Archivar"
+  },
+  "search": {
+    "placeholder": "Buscar cursos..."
+  },
+  "noResults": "No se encontraron resultados",
+  "noResultsHint": "Intenta ajustar tu búsqueda o filtros para encontrar lo que buscas.",
+  "noData": "Aún no hay cursos",
+  "noDataHint": "Crea tu primer curso generado con IA para comenzar.",
+  "create": {
+    "title": "Crear Curso con IA"
+  },
+  "edit": {
+    "title": "Editar Curso",
+    "tabs": {
+      "form": "Formulario",
+      "preview": "Vista Previa",
+      "ai": "Asistente IA"
+    }
+  },
+  "preview": {
+    "title": "Vista Previa del Curso",
+    "objectives": "Objetivos de Aprendizaje",
+    "content": "Contenido del Curso",
+    "noContent": "No hay contenido disponible",
+    "noBlocks": "No hay bloques de contenido en esta sección",
+    "quiz": "Quiz",
+    "unknownBlock": "Tipo de bloque desconocido"
+  },
+  "steps": {
+    "generate": "Generar con IA",
+    "edit": "Editar Detalles",
+    "preview": "Vista Previa",
+    "skipToManual": "Saltar a manual"
+  },
+  "form": {
+    "courseContent": "Contenido del Curso",
+    "basicInfo": "Información Básica",
+    "title": "Título del Curso",
+    "titlePlaceholder": "Ingresa el título del curso",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Ingresa la descripción del curso",
+    "difficulty": "Nivel de Dificultad",
+    "language": "Idioma",
+    "duration": "Duración",
+    "durationPlaceholder": "ej., 4 horas",
+    "targetAudience": "Audiencia Objetivo",
+    "targetAudiencePlaceholder": "¿Para quién es este curso?",
+    "objectives": "Objetivos de Aprendizaje",
+    "objective": "Objetivo",
+    "addObjective": "Agregar Objetivo",
+    "tags": "Etiquetas",
+    "tagsLabel": "Etiquetas del Curso",
+    "tagsPlaceholder": "Agregar etiquetas...",
+    "media": "Multimedia",
+    "bannerUrl": "URL de Banner",
+    "sectionsReadOnly": "Para editar el contenido de las secciones, utiliza la pestaña de Vista Previa o IA",
+    "imagesInSection": "Imágenes en la Sección",
+    "videosInSection": "Videos en la Sección"
+  },
+  "validation": {
+    "titleRequired": "El título es obligatorio",
+    "descriptionRequired": "La descripción es obligatoria",
+    "objectivesRequired": "Se requiere al menos un objetivo",
+    "targetAudienceRequired": "La audiencia objetivo es obligatoria",
+    "durationRequired": "La duración es obligatoria",
+    "languageRequired": "El idioma es obligatorio"
+  },
+  "chat": {
+    "title": "Generador de Cursos IA",
+    "languageModel": "Modelo de Lenguaje",
+    "imageModel": "Modelo de Imagen",
+    "videoModel": "Modelo de Video",
+    "provider": "Proveedor",
+    "model": "Modelo",
+    "noProvider": "Sin proveedor",
+    "providersError": "Error al cargar proveedores",
+    "loadingProviders": "Cargando proveedores...",
+    "proprietaryOptions": "Opciones Propietarias",
+    "seconds": "segundos",
+    "sceneDuration": "Duración por Escena",
+    "scenesNumber": "Número de Escenas",
+    "totalDuration": "Duración Total",
+    "temperature": "Temperatura",
+    "precise": "Preciso",
+    "creative": "Creativo",
+    "welcome": "Crea Tu Curso con IA",
+    "welcomeMessage": "Describe el curso que deseas crear y te ayudaré a generar una estructura completa con objetivos, secciones y contenido.",
+    "quickStart": "Ideas para Comenzar:",
+    "placeholder": "Describe el curso que quieres crear...",
+    "generateCourseFor": "Genera un curso completo sobre",
+    "difficultyLevel": "Nivel de dificultad",
+    "quickPrompts": {
+      "webDev": "Fundamentos de Desarrollo Web",
+      "webDevDesc": "Cubre los básicos de HTML, CSS y JavaScript para principiantes.",
+      "machineLearning": "Introducción a Machine Learning",
+      "machineLearningDesc": "Explora los fundamentos de algoritmos de ML y aplicaciones.",
+      "leadership": "Habilidades de Liderazgo para Gerentes",
+      "leadershipDesc": "Técnicas esenciales de liderazgo y gestión de equipos."
+    },
+    "courseStructureGenerated": "Estructura del curso generada",
+    "generatingImages": "Generando imágenes {{current}} de {{total}}...",
+    "generatingVideos": "Generando videos {{current}} de {{total}}... (esto puede tomar varios minutos)",
+    "generatingBanner": "Generando imagen de banner..."
+  },
+  "media": {
+    "download": "Descargar",
+    "audioNotSupported": "Tu navegador no soporta el elemento de audio.",
+    "clickToPlay": "Haz clic para reproducir",
+    "clickToExpand": "Haz clic para expandir"
+  },
+  "dialogs": {
+    "delete": {
+      "title": "Eliminar Curso",
+      "content": "¿Estás seguro de que deseas eliminar este curso? Esta acción no se puede deshacer."
+    }
+  },
+  "messages": {
+    "success": {
+      "deleted": "Curso eliminado exitosamente",
+      "duplicated": "Curso duplicado exitosamente",
+      "generated": "Estructura del curso generada exitosamente",
+      "saved": "Curso guardado exitosamente",
+      "updated": "Curso actualizado exitosamente",
+      "regenerated": "Contenido del curso regenerado exitosamente",
+      "published": "Curso publicado exitosamente",
+      "archived": "Curso archivado exitosamente"
+    },
+    "error": {
+      "loading": "Error al cargar cursos",
+      "deleting": "Error al eliminar curso",
+      "duplicating": "Error al duplicar curso",
+      "saving": "Error al guardar curso",
+      "updating": "Error al actualizar curso",
+      "publishing": "Error al publicar curso",
+      "archiving": "Error al archivar curso"
+    }
+  }
+}

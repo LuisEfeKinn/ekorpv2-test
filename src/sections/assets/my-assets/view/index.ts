@@ -1,0 +1,1 @@
+export * from './my-assets-view';

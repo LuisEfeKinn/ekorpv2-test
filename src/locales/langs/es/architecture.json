@@ -1,0 +1,1831 @@
+{
+  "common": {
+    "filters": {
+      "domains": "Dominios",
+      "types": "Tipos",
+      "providers": "Proveedores"
+    }
+  },
+  "risk": {
+    "table": {
+      "title": "Tabla de Riesgos",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Lista de Riesgos",
+        "create": "Agregar Riesgo",
+        "edit": "Editar Riesgo"
+      },
+      "actions": {
+        "add": "Agregar Riesgo",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "saving": "Guardando...",
+        "create": "Agregar Tabla de Riesgos",
+        "update": "Actualizar Tabla de Riesgos",
+        "search": "Buscar tablas de riesgos...",
+        "clear": "Limpiar filtros",
+        "map": "Mapa de Riesgos",
+        "back": "Atrás",
+        "upload": "Cargar",
+        "download": "Descargar",
+        "relate": "Relacionar"
+      },
+      "table": {
+        "columns": {
+          "name": "Nombre",
+          "description": "Descripción",
+          "code": "Código",
+          "riskType": "Tipo de Riesgo",
+          "superiorRisk": "Riesgo Superior",
+          "actions": "Acciones"
+        },
+        "toolbar": {
+          "search": "Buscar tablas de riesgos..."
+        },
+        "filters": {
+          "status": "Estado:",
+          "keyword": "Palabra clave:",
+          "all": "Todas"
+        },
+        "emptyState": {
+          "noData": "No se encontraron tablas de riesgos",
+          "noResults": "No se encontraron resultados para su búsqueda"
+        }
+      },
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Nombre",
+            "placeholder": "Ingrese el nombre de la tabla de riesgos",
+            "helperText": "Ingrese el nombre de la tabla de riesgos",
+            "required": "El nombre es obligatorio"
+          },
+          "description": {
+            "label": "Descripción",
+            "placeholder": "Ingrese la descripción de la tabla de riesgos",
+            "helperText": "Ingrese la descripción de la tabla de riesgos",
+            "required": "La descripción es obligatoria"
+          },
+          "code": {
+            "label": "Código",
+            "placeholder": "Ingrese el código de la tabla de riesgos",
+            "helperText": "Ingrese el código de la tabla de riesgos",
+            "required": "El código es obligatorio"
+          },
+          "riskType": {
+            "label": "Tipo de Riesgo",
+            "placeholder": "Seleccione el tipo de riesgo",
+            "helperText": "Seleccione el tipo de riesgo",
+            "required": "El tipo de riesgo es obligatorio"
+          },
+          "superiorRisk": {
+            "label": "Riesgo Superior",
+            "placeholder": "Seleccione el riesgo superior",
+            "helperText": "Seleccione el riesgo superior",
+            "required": "El riesgo superior es obligatorio"
+          }
+        },
+        "sections": {
+          "details": "Detalles del Riesgo"
+        }
+      },
+      "dialogs": {
+        "edit": {
+          "title": "Editar Riesgo"
+        },
+        "create": {
+          "title": "Agregar Riesgo"
+        },
+        "form": {
+          "riskTypeHelper": "Seleccione el tipo de riesgo de las opciones disponibles",
+          "superiorRiskHelper": "Escriba el riesgo superior de las opciones disponibles"
+        },
+        "delete": {
+          "title": "Eliminar Tabla de Riesgos",
+          "content": "¿Está seguro de que desea eliminar esta tabla de riesgos?",
+          "contentMultiple": "¿Está seguro de que desea eliminar {{count}} elementos?",
+          "confirm": "Eliminar"
+        },
+        "unsavedChanges": {
+          "title": "Cambios no guardados",
+          "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+          "confirm": "Salir sin guardar"
+        }
+      },
+      "messages": {
+        "loading": "Cargando tablas de riesgos...",
+        "saving": "Guardando...",
+        "loadError": "Error al cargar la tabla de riesgos",
+        "saveError": "Error al guardar la tabla de riesgos. Por favor, inténtelo de nuevo.",
+        "notFound": "Tabla de riesgos no encontrada",
+        "createSuccess": "¡Tabla de riesgos creada con éxito!",
+        "updateSuccess": "¡Tabla de riesgos actualizada con éxito!",
+        "success": {
+          "created": "Tabla de riesgos creada con éxito",
+          "updated": "¡Tabla de riesgos actualizada con éxito!",
+          "deleted": "¡Tabla de riesgos eliminada con éxito!",
+          "deletedMultiple": "¡Tablas de riesgos eliminadas con éxito!"
+        },
+        "error": {
+          "loading": "Error al cargar la tabla de riesgos",
+          "updating": "Error al actualizar la tabla de riesgos",
+          "creating": "Error al agregar la tabla de riesgos",
+          "deleting": "Error al eliminar la tabla de riesgos",
+          "deletingMultiple": "Error al eliminar las tablas de riesgos",
+          "notFound": "Tabla de riesgos no encontrada"
+        }
+      },
+      "status": {
+        "all": "Todos",
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "tooltips": {
+        "edit": "Editar riesgo",
+        "delete": "Eliminar riesgo",
+        "quickEdit": "Edición rápida"
+      }
+    }
+  },
+  "riskMap": {
+    "panel": {
+      "actionsTitle": "Acciones y Medidas"
+    },
+    "form": {
+      "fields": {
+        "process": "Proceso",
+        "impact": "Impacto",
+        "probability": "Probabilidad",
+        "deficiency": "Nivel de Deficiencia",
+        "riskCondition": "Condición del riesgo",
+        "measure": "Medida",
+        "mandatoryRecommended": "Obligatoria/Recomendada",
+        "controlLevel": "Nivel de Control",
+        "severity": "Severidad",
+        "frequency": "Frecuencia",
+        "vulnerability": "Vulnerabilidad"
+      },
+      "actions": {
+        "addProcess": "Agregar Proceso",
+        "addTools": "Agregar Arquitectura de Herramientas",
+        "addMeasure": "Añadir medida"
+      }
+    }
+  },
+  "rasciMatrix": {
+    "title": "Matriz RASCI",
+    "filters": {
+      "columns": "Filtrar columnas",
+      "search": "Buscar procesos"
+    },
+    "actions": {
+      "upload": "Cargar Excel",
+      "download": "Descargar Excel"
+    },
+    "table": {
+      "processes": "Procesos",
+      "processesRoles": "Procesos / Cargos"
+    },
+    "legend": {
+      "R": "Responsable",
+      "A": "Aprobador",
+      "S": "Soporte",
+      "C": "Consultado",
+      "I": "Informado"
+    },
+    "messages": {
+      "downloadError": "Error al descargar el archivo Excel",
+      "uploadSuccess": "Archivo cargado exitosamente",
+      "uploadError": "Error al cargar el archivo Excel"
+    }
+  },
+  "process": {
+    "table": {
+      "title": "Tabla de Procesos",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Lista de Procesos",
+        "create": "Agregar Proceso",
+        "edit": "Editar Proceso"
+      },
+      "actions": {
+        "add": "Agregar Proceso",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "saving": "Guardando...",
+        "create": "Agregar Proceso",
+        "update": "Actualizar Proceso",
+        "search": "Buscar procesos...",
+        "clear": "Limpiar",
+        "map": "Mapa"
+      },
+      "table": {
+        "columns": {
+          "nomenclature": "Nomenclatura",
+          "name": "Nombre",
+          "description": "Descripción",
+          "requiresOLA": "Requiere OLA",
+          "periodicity": "Periodicidad",
+          "workload": "Carga de Trabajo",
+          "cost": "Costo",
+          "result": "Resultado",
+          "context": "Contexto",
+          "actions": "Acciones"
+        },
+        "toolbar": {
+          "search": "Buscar procesos..."
+        },
+        "filters": {
+          "status": "Estado:",
+          "keyword": "Palabra clave:",
+          "all": "Todos"
+        },
+        "emptyState": {
+          "noData": "No se encontraron procesos",
+          "noResults": "No se encontraron resultados para su búsqueda"
+        }
+      },
+      "form": {
+        "fields": {
+          "nomenclature": {
+            "label": "Nomenclatura",
+            "helperText": "Ingrese la nomenclatura del proceso"
+          },
+          "name": {
+            "label": "Nombre",
+            "helperText": "Ingrese el nombre del proceso",
+            "required": "El nombre es obligatorio"
+          },
+          "description": {
+            "label": "Descripción",
+            "helperText": "Ingrese la descripción del proceso",
+            "required": "La descripción es obligatoria"
+          },
+          "result": {
+            "label": "Resultado",
+            "helperText": "Ingrese el resultado esperado del proceso",
+            "required": "El resultado es obligatorio"
+          },
+          "requiresOLA": {
+            "label": "Requiere OLA",
+            "helperText": "Indique si el proceso requiere OLA"
+          },
+          "periodicity": {
+            "label": "Periodicidad (días)",
+            "helperText": "Ingrese la periodicidad en días"
+          },
+          "workload": {
+            "label": "Carga de Trabajo (horas)",
+            "helperText": "Ingrese la carga de trabajo en horas"
+          },
+          "cost": {
+            "label": "Costo",
+            "helperText": "Ingrese el costo del proceso"
+          },
+          "context": {
+            "label": "Contexto",
+            "helperText": "Ingrese el contexto del proceso"
+          }
+        },
+        "sections": {
+          "details": "Detalles del Proceso"
+        }
+      },
+      "dialogs": {
+        "delete": {
+          "title": "Eliminar Proceso",
+          "content": "¿Está seguro de que desea eliminar este proceso?",
+          "contentMultiple": "¿Está seguro de que desea eliminar estos elementos?",
+          "confirm": "Eliminar"
+        },
+        "unsavedChanges": {
+          "title": "Cambios no guardados",
+          "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+          "confirm": "Salir sin guardar"
+        }
+      },
+      "messages": {
+        "loading": "Cargando procesos...",
+        "saving": "Guardando...",
+        "loadError": "Error al cargar el proceso",
+        "saveError": "Error al guardar el proceso. Por favor, inténtelo de nuevo.",
+        "notFound": "Proceso no encontrado",
+        "createSuccess": "¡Proceso creado con éxito!",
+        "updateSuccess": "¡Proceso actualizado con éxito!",
+        "success": {
+          "created": "Proceso creado con éxito",
+          "updated": "Proceso actualizado con éxito",
+          "deleted": "Proceso eliminado con éxito",
+          "deletedMultiple": "Procesos eliminados con éxito"
+        },
+        "error": {
+          "loading": "Error al cargar los procesos",
+          "updating": "Error al actualizar el proceso",
+          "creating": "Error al agregar el proceso",
+          "deleting": "Error al eliminar el proceso",
+          "deletingMultiple": "Error al eliminar los procesos",
+          "notFound": "Proceso no encontrado"
+        }
+      },
+      "status": {
+        "all": "Todos",
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "tooltips": {
+        "edit": "Editar proceso",
+        "delete": "Eliminar proceso",
+        "quickEdit": "Edición rápida"
+      }
+    },
+    "map": {
+      "title": "Mapa de Procesos",
+      "breadcrumb": "Mapa",
+      "diagram": {
+        "loading": "Cargando mapa...",
+        "noData": "No hay datos disponibles",
+        "noRelations": "No hay relaciones",
+        "connected": "Conectados",
+        "zoom": "Zoom",
+        "move": "Mover",
+        "systemTitle": "Sistema Principal",
+        "errorLoading": "Error al cargar el mapa de procesos"
+      },
+      "expanded": {
+        "selectedCategory": "Categoría Seleccionada",
+        "loading": "Cargando...",
+        "noData": "No hay datos disponibles",
+        "backTooltip": "Volver al mapa principal",
+        "addJob": "Añadir Puesto",
+        "addTool": "Añadir Herramienta",
+        "addDocument": "Añadir Documento",
+        "addSystem": "Añadir Sistema",
+        "addCompetency": "Añadir Competencia",
+        "addRisk": "Añadir Riesgo",
+        "addObjective": "Añadir Objetivo",
+        "addIndicator": "Añadir Indicador",
+        "addLesson": "Añadir Lección",
+        "addProposal": "Añadir Propuesta",
+        "errorLoading": "Error al cargar datos del nodo"
+      },
+      "modals": {
+        "common": {
+          "cancel": "Cancelar",
+          "link": "Vincular",
+          "add": "Agregar",
+          "save": "Guardar",
+          "missingData": "Faltan datos obligatorios",
+          "loadError": "Error al cargar datos",
+          "saveError": "Error al guardar datos",
+          "relationType": "Tipo de relación",
+          "mainProcess": "Proceso principal",
+          "secondaryProcess": "Proceso secundario",
+          "description": "Descripción",
+          "observations": "Observaciones",
+          "actionType": "Tipo de Acción",
+          "selectScalesAndDeficiency": "Selecciona escalas y nivel de deficiencia",
+          "high": "Alto",
+          "medium": "Medio",
+          "low": "Bajo"
+        },
+        "job": {
+          "title": "Añadir Puesto",
+          "fieldLabel": "Puesto"
+        },
+        "tool": {
+          "title": "Añadir Herramienta",
+          "fieldLabel": "Herramienta"
+        },
+        "document": {
+          "title": "Añadir Documento",
+          "fieldLabel": "Documento"
+        },
+        "system": {
+          "title": "Añadir Sistema",
+          "fieldLabel": "Sistema"
+        },
+        "competency": {
+          "title": "Añadir Competencia",
+          "fieldLabel": "Competencia"
+        },
+        "risk": {
+          "title": "Añadir Riesgo",
+          "fieldLabel": "Riesgo"
+        },
+        "objective": {
+          "title": "Añadir Objetivo",
+          "fieldLabel": "Objetivo"
+        },
+        "indicator": {
+          "title": "Añadir Indicador",
+          "fieldLabel": "Indicador"
+        }
+      }
+    },
+    "feedbacks": {
+      "titleLesson": "Lecciones Aprendidas y Acuerdos de Trabajo",
+      "titleProposal": "Propuestas y Acuerdos de Trabajo",
+      "user": "Usuario",
+      "currentUser": "Usuario Actual",
+      "date": "Fecha",
+      "descriptionLesson": "Lecciones Aprendidas del Proceso",
+      "descriptionProposal": "Propuestas del Proceso",
+      "placeholder": "Escribe aquí...",
+      "attachFile": "Adjuntar Archivo(s)",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "descriptionRequired": "Descripción es requerida",
+      "success": "Guardado correctamente",
+      "error": "Error al guardar"
+    }
+  },
+  "tools": {
+    "table": {
+      "title": "Tabla de Herramientas",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Lista de Herramientas",
+        "create": "Agregar Herramienta",
+        "edit": "Editar Herramienta"
+      },
+      "actions": {
+        "add": "Agregar Herramienta",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "saving": "Guardando...",
+        "create": "Agregar Tabla de Herramientas",
+        "update": "Actualizar Tabla de Herramientas",
+        "search": "Buscar tablas de herramientas...",
+        "clear": "Limpiar filtros"
+      },
+      "table": {
+        "columns": {
+          "name": "Nombre",
+          "description": "Descripción",
+          "code": "Código",
+          "riskType": "Tipo de Riesgo",
+          "superiorRisk": "Riesgo Superior",
+          "actions": "Acciones"
+        },
+        "toolbar": {
+          "search": "Buscar tablas de herramientas..."
+        },
+        "filters": {
+          "status": "Estado:",
+          "keyword": "Palabra clave:",
+          "all": "Todas"
+        },
+        "emptyState": {
+          "noData": "No se encontraron tablas de herramientas",
+          "noResults": "No se encontraron resultados para su búsqueda"
+        }
+      },
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Nombre",
+            "placeholder": "Ingrese el nombre de la tabla de herramientas",
+            "helperText": "Ingrese el nombre de la tabla de herramientas",
+            "required": "El nombre es obligatorio"
+          },
+          "description": {
+            "label": "Descripción",
+            "placeholder": "Ingrese la descripción de la tabla de herramientas",
+            "helperText": "Ingrese la descripción de la tabla de herramientas",
+            "required": "La descripción es obligatoria"
+          },
+          "code": {
+            "label": "Código",
+            "placeholder": "Ingrese el código de la tabla de herramientas",
+            "helperText": "Ingrese el código de la tabla de herramientas",
+            "required": "El código es obligatorio"
+          },
+          "riskType": {
+            "label": "Tipo de Herramienta",
+            "placeholder": "Seleccione el tipo de herramientas",
+            "helperText": "Seleccione el tipo de herramienta",
+            "required": "El tipo de herramienta es obligatorio"
+          },
+          "superiorRisk": {
+            "label": "Herramienta Superior",
+            "placeholder": "Seleccione la herramienta superior",
+            "helperText": "Seleccione la herramienta superior",
+            "required": "La herramienta superior es obligatoria"
+          }
+        },
+        "sections": {
+          "details": "Detalles de la Herramienta"
+        }
+      },
+      "dialogs": {
+        "edit": {
+          "title": "Editar Herramienta"
+        },
+        "create": {
+          "title": "Agregar Herramienta"
+        },
+        "form": {
+          "riskTypeHelper": "Seleccione el tipo de herramienta de las opciones disponibles",
+          "superiorRiskHelper": "Escriba la herramienta superior de las opciones disponibles"
+        },
+        "delete": {
+          "title": "Eliminar Tabla de Herramientas",
+          "content": "¿Está seguro de que desea eliminar esta tabla de herramientas?",
+          "contentMultiple": "¿Está seguro de que desea eliminar {{count}} elementos?",
+          "confirm": "Eliminar"
+        },
+        "unsavedChanges": {
+          "title": "Cambios no guardados",
+          "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+          "confirm": "Salir sin guardar"
+        }
+      },
+      "messages": {
+        "loading": "Cargando tablas de herramientas...",
+        "saving": "Guardando...",
+        "loadError": "Error al cargar la tabla de herramientas",
+        "saveError": "Error al guardar la tabla de herramientas. Por favor, inténtelo de nuevo.",
+        "notFound": "Tabla de herramientas no encontrada",
+        "createSuccess": "¡Tabla de herramientas creada con éxito!",
+        "updateSuccess": "¡Tabla de herramientas actualizada con éxito!",
+        "success": {
+          "created": "Tabla de herramientas creada con éxito",
+          "updated": "¡Tabla de herramientas actualizada con éxito!",
+          "deleted": "¡Tabla de herramientas eliminada con éxito!",
+          "deletedMultiple": "¡Tablas de herramientas eliminadas con éxito!"
+        },
+        "error": {
+          "loading": "Error al cargar la tabla de herramientas",
+          "updating": "Error al actualizar la tabla de herramientas",
+          "creating": "Error al agregar la tabla de herramientas",
+          "deleting": "Error al eliminar la tabla de herramientas",
+          "deletingMultiple": "Error al eliminar las tablas de herramientas",
+          "notFound": "Tabla de herramientas no encontrada"
+        }
+      },
+      "status": {
+        "all": "Todos",
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "tooltips": {
+        "edit": "Editar herramienta",
+        "delete": "Eliminar herramienta",
+        "quickEdit": "Edición rápida"
+      }
+    },
+    "map": {
+      "title": "Mapa de Herramienta",
+      "actions": {
+        "back": "Volver",
+        "expand": "Expandir",
+        "viewMap": "Ver mapa"
+      },
+      "diagram": {
+        "systemTitle": "Mapa de arquitectura de herramienta",
+        "loadingMap": "Cargando mapa de herramienta...",
+        "loadingExpand": "Cargando nodos relacionados...",
+        "noData": "No hay datos para mostrar.",
+        "nodeNotAvailable": "Nodo no disponible",
+        "conections": "conexiones",
+        "subDiagram": {
+          "noRelations": "No hay relaciones para mostrar."
+        },
+        "messages": {
+          "error": {
+            "loadMapError": "Error al cargar el mapa de herramienta.",
+            "nodeNotFound": "El nodo seleccionado no se encontró en el mapa."
+          }
+        }
+      }
+    }
+  },
+  "application": {
+    "diagram": {
+      "title": "Arquitectura de Aplicaciones",
+      "addDiagram": "Agregar Aplicación",
+      "controls": {
+        "zoom": "Zoom: Rueda del ratón",
+        "drag": "Arrastrar: Click y mantener"
+      },
+      "actions": {
+        "add": "Agregar",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "viewTable": "Ver Tabla",
+        "viewMap": "Ver Mapa",
+        "viewTimeline": "Ver Línea de Tiempo"
+      },
+      "labels": {
+        "expiration": "Vencimiento",
+        "renew": "Renovación",
+        "corporateScope": "Alcance Corporativo",
+        "owner": "Propietario"
+      },
+      "filters": {
+        "title": "Filtros",
+        "domain": "Dominio",
+        "domainPlaceholder": "Seleccione un dominio",
+        "type": "Tipo",
+        "typePlaceholder": "Seleccione un tipo",
+        "apply": "Aplicar",
+        "reset": "Restablecer",
+        "clearAll": "Limpiar Todo",
+        "activeFilters": "Filtros Activos",
+        "noOptions": "No hay opciones disponibles",
+        "errors": {
+          "loadDomains": "Error al cargar dominios",
+          "loadTypes": "Error al cargar tipos"
+        }
+      },
+      "messages": {
+        "loading": "Cargando diagrama de arquitectura...",
+        "loadingExpand": "Cargando nodos relacionados...",
+        "noChildren": "Sin nodos relacionados",
+        "error": {
+          "loading": "Error al cargar el diagrama de arquitectura",
+          "deleting": "Error al eliminar la arquitectura",
+          "loadingCatalogs": "Error al cargar los catálogos",
+          "validation": "Error de validación en el formulario",
+          "creating": "Error al agregar la arquitectura"
+        },
+        "success": {
+          "deleted": "Aplicación eliminada con éxito",
+          "created": "Aplicación creada con éxito"
+        }
+      },
+      "dialogs": {
+        "create": {
+          "title": "Agregar Aplicación"
+        },
+        "edit": {
+          "title": "Editar Aplicación"
+        },
+        "delete": {
+          "title": "Eliminar Aplicación",
+          "content": "¿Está seguro de que desea eliminar esta aplicación?",
+          "confirm": "Eliminar"
+        },
+        "map": {
+          "title": "Mapa de Relaciones"
+        },
+        "sectionsLabels": {
+          "basicInfo": "Información Básica",
+          "settings": "Configuraciones",
+          "identification": "Identificación",
+          "dataType": "Tipo de Aplicación",
+          "provider": "Proveedor",
+          "domain": "Dominio",
+          "datesAndContracts": "Fechas y Contratos",
+          "slaAndImpact": "SLA e Impacto"
+        },
+        "form": {
+          "name": {
+            "label": "Nombre",
+            "required": "El nombre es obligatorio"
+          },
+          "description": {
+            "label": "Descripción",
+            "required": "La descripción es obligatoria"
+          },
+          "type": {
+            "label": "Tipo",
+            "required": "El tipo es obligatorio"
+          },
+          "file": {
+            "label": "Archivo",
+            "required": "El archivo es obligatorio"
+          },
+          "rules": {
+            "label": "Reglas",
+            "required": "Las reglas son obligatorias"
+          },
+          "local/external": {
+            "label": "Local/Externo",
+            "required": "El campo Local/Externo es obligatorio"
+          },
+          "nomenclature": {
+            "label": "Nomenclatura",
+            "required": "La nomenclatura es obligatoria"
+          },
+          "code": {
+            "label": "Código",
+            "required": "El código es obligatorio"
+          },
+          "dataType": {
+            "label": "Tipo de Aplicación",
+            "required": "El tipo de aplicación es obligatorio"
+          },
+          "provider": {
+            "label": "Proveedor",
+            "required": "El proveedor es obligatorio"
+          },
+          "domain": {
+            "label": "Dominio",
+            "required": "El dominio es obligatorio"
+          },
+          "contractedCapacity": {
+            "label": "Capacidad Contratada",
+            "required": "La capacidad contratada es obligatoria"
+          },
+          "contract": {
+            "label": "Contrato",
+            "required": "El contrato es obligatorio"
+          },
+          "adoptionContractDate": {
+            "label": "Fecha de Adopción de Contrato",
+            "required": "La fecha de adopción de contrato es obligatoria"
+          },
+          "expirationDate": {
+            "label": "Fecha de Vencimiento",
+            "required": "La fecha de vencimiento es obligatoria"
+          },
+          "renewalDate": {
+            "label": "Fecha de Renovación",
+            "required": "La fecha de renovación es obligatoria"
+          },
+          "obsolescenceDate": {
+            "label": "Fecha de Obsolescencia",
+            "required": "La fecha de obsolescencia es obligatoria"
+          },
+          "requiresSla": {
+            "label": "Requiere SLA",
+            "required": "El campo Requiere SLA es obligatorio"
+          },
+          "hasSla": {
+            "label": "Tiene SLA",
+            "required": "El campo Tiene SLA es obligatorio"
+          },
+          "impactRatio": {
+            "label": "Ratio de Impacto",
+            "required": "El ratio de impacto es obligatorio"
+          },
+          "impactLevel": {
+            "label": "Nivel de Impacto",
+            "required": "El nivel de impacto es obligatorio"
+          }
+        }
+      },
+      "node": {
+        "singular": "Arquitectura raíz",
+        "plural": "Arquitecturas raíz"
+      },
+      "tooltips": {
+        "expand": "Expandir",
+        "collapse": "Colapsar",
+        "noNodes": "No hay nodos para expandir",
+        "expandAll": "Expandir todo",
+        "collapseAll": "Colapsar todo",
+        "initialView": "Vista inicial",
+        "fitView": "Ajustar vista",
+        "restartDiagram": "Restablecer diagrama",
+        "zoomIn": "Acercar",
+        "zoomOut": "Alejar",
+        "lock": "Bloquear posición",
+        "toggleInteractivity": "Alternar interactividad",
+        "hasSla": "Tiene SLA",
+        "external": "Externo"
+      }
+    },
+    "table": {
+      "title": "Tabla de Aplicaciones",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Lista de Aplicaciones",
+        "create": "Agregar Aplicación",
+        "edit": "Editar Aplicación"
+      },
+      "actions": {
+        "viewDiagram": "Ver Diagrama",
+        "add": "Agregar Aplicación",
+        "addChild": "Agregar",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "map": "Mapa de Aplicaciones",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "saving": "Guardando...",
+        "create": "Agregar Tabla de Aplicaciones",
+        "update": "Actualizar",
+        "search": "Buscar tablas de aplicaciones...",
+        "clear": "Limpiar filtros"
+      },
+      "table": {
+        "columns": {
+          "name": "Nombre",
+          "description": "Descripción",
+          "nomenclature": "Nomenclatura",
+          "type": "Tipo",
+          "localExternal": "Local/Externo",
+          "code": "Código",
+          "expirationDate": "Fecha de Vencimiento",
+          "renewalDate": "Fecha de Renovación",
+          "requiresSla": "Requiere SLA",
+          "hasSla": "Tiene SLA",
+          "sla": "SLA",
+          "file": "Archivo",
+          "rules": "Reglas",
+          "actions": "Acciones"
+        },
+        "toolbar": {
+          "search": "Buscar tablas de aplicaciones..."
+        },
+        "filters": {
+          "status": "Estado:",
+          "keyword": "Palabra clave:",
+          "all": "Todos"
+        },
+        "emptyState": {
+          "noData": "No se encontraron tablas de aplicaciones",
+          "noResults": "No se encontraron resultados para su búsqueda"
+        }
+      },
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Nombre",
+            "required": "Nombre es obligatorio"
+          },
+          "description": {
+            "label": "Descripción",
+            "required": "Descripción es obligatoria"
+          },
+          "type": {
+            "label": "Tipo",
+            "required": "Tipo es obligatorio"
+          },
+          "localExternal": {
+            "label": "Local/Externo",
+            "required": "Local/Externo es obligatorio"
+          },
+          "file": {
+            "label": "Archivo",
+            "required": "Archivo es obligatorio"
+          },
+          "rules": {
+            "label": "Reglas",
+            "required": "Reglas es obligatorio"
+          },
+          "nomenclature": {
+            "label": "Nomenclatura",
+            "required": "Nomenclatura es obligatoria"
+          },
+          "code": {
+            "label": "Código",
+            "required": "Código es obligatorio"
+          },
+          "sla": {
+            "label": "SLA",
+            "required": "SLA es obligatorio"
+          }
+        },
+        "sections": {
+          "details": "Detalles de la Tabla de Aplicaciones"
+        }
+      },
+      "dialogs": {
+        "edit": {
+          "title": "Editar Aplicación"
+        },
+        "create": {
+          "title": "Agregar Aplicación"
+        },
+        "form": {
+          "aplicationTypeHelper": "Seleccione el tipo de datos de las opciones disponibles",
+          "superiorAplicationHelper": "Ingrese los datos superiores de las opciones disponibles"
+        },
+        "delete": {
+          "title": "Eliminar Tabla de Aplicaciones",
+          "content": "¿Está seguro de que desea eliminar esta tabla de aplicaciones?",
+          "contentMultiple": "¿Está seguro de que desea eliminar {{count}} elementos?",
+          "confirm": "Eliminar"
+        },
+        "unsavedChanges": {
+          "title": "Cambios no guardados",
+          "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+          "confirm": "Salir sin guardar"
+        }
+      },
+      "messages": {
+        "loading": "Cargando tablas de aplicaciones...",
+        "saving": "Guardando...",
+        "loadError": "Error al cargar la tabla de aplicaciones",
+        "saveError": "Error al guardar la tabla de aplicaciones. Por favor, inténtelo de nuevo.",
+        "notFound": "Tabla de aplicaciones no encontrada",
+        "createSuccess": "¡Tabla de aplicaciones creada con éxito!",
+        "updateSuccess": "¡Tabla de aplicaciones actualizada con éxito!",
+        "success": {
+          "created": "Tabla de aplicaciones creada con éxito",
+          "updated": "¡Tabla de aplicaciones actualizada con éxito!",
+          "deleted": "¡Tabla de aplicaciones eliminada con éxito!",
+          "deletedMultiple": "¡Tablas de aplicaciones eliminadas con éxito!"
+        },
+        "error": {
+          "loading": "Error al cargar la tabla de aplicaciones",
+          "updating": "Error al actualizar la tabla de aplicaciones",
+          "creating": "Error al agregar la tabla de aplicaciones",
+          "deleting": "Error al eliminar la tabla de aplicaciones",
+          "deletingMultiple": "Error al eliminar las tablas de aplicaciones",
+          "notFound": "Tabla de aplicaciones no encontrada"
+        }
+      },
+      "status": {
+        "all": "Todos",
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "tooltips": {
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "quickEdit": "Edición rápida"
+      }
+    },
+    "map": {
+      "title": "Mapa de Aplicaciones",
+      "diagram": {
+        "systemTitle": "Sistema Principal",
+        "loadingMap": "Cargando mapa de aplicaciones...",
+        "noData": "No se encontraron datos para el mapa de aplicaciones",
+        "conectedModules": "Módulos Conectados",
+        "subDiagram": {
+          "buttonBack": "Volver al diagrama principal",
+          "0Modules": "Sin módulos relacionados",
+          "noRelations": "No se encontraron relaciones para este módulo",
+          "home": "Inicio"
+        },
+        "controls": {
+          "zoom": "Zoom: Rueda del ratón",
+          "move": "Mover: Click sostenido y arrastrar"
+        }
+      },
+      "messages": {
+        "error": {
+          "expandError": "Error al expandir el módulo",
+          "homeError": "Error al volver al diagrama principal",
+          "backError": "Error al volver al diagrama principal",
+          "loadMapError": "Error al cargar el mapa de relaciones"
+        }
+      }
+    },
+    "timeline": {
+      "title": "Línea de Tiempo de Aplicaciones",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Línea de Tiempo"
+      },
+      "filters": {
+        "status": "Estado",
+        "field": "Campo",
+        "active": "Activo",
+        "inactive": "Inactivo",
+        "renewal": "Renovación",
+        "expired": "Vencido",
+        "obsolescence": "Obsolescencia",
+        "clear": "Limpiar filtros"
+      },
+      "toolbar": {
+        "search": "Buscar en la línea de tiempo..."
+      },
+      "emptyState": {
+        "title": "Sin datos en la línea de tiempo",
+        "description": "No se encontraron datos para los filtros seleccionados"
+      },
+      "labels": {
+        "adoptionDate": "Fecha de Adopción",
+        "expirationDate": "Fecha de Expiración",
+        "renewalDate": "Fecha de Renovación",
+        "obsolescenceDate": "Fecha de Obsolescencia",
+        "allDates": "Todas las Fechas",
+        "dependencies": "Dependencias de",
+        "dependenciesSingular": "dependencia",
+        "dependenciesPlural": "dependencias",
+        "type": "Tipo",
+        "noDependencies": "No tiene dependencias asociadas"
+      },
+      "messages": {
+        "loading": "Cargando datos de la línea de tiempo...",
+        "loadError": "Error al cargar los datos de la línea de tiempo",
+        "noData": "No hay datos disponibles para los filtros seleccionados",
+        "success": {
+          "dataLoaded": "Datos de la línea de tiempo cargados exitosamente"
+        },
+        "error": {
+          "fetchError": "Error al obtener los datos de la línea de tiempo. Por favor, inténtelo de nuevo.",
+          "invalidField": "Parámetro de campo inválido"
+        }
+      }
+    }
+  },
+  "data": {
+    "diagram": {
+      "title": "Arquitectura de Datos",
+      "addDiagram": "Agregar Activo de Datos",
+      "controls": {
+        "zoom": "Zoom: Rueda del ratón",
+        "drag": "Arrastrar: Click y mantener"
+      },
+      "actions": {
+        "add": "Agregar",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "viewTable": "Ver Tabla",
+        "viewMap": "Ver Mapa",
+        "viewTimeline": "Ver Línea de Tiempo"
+      },
+      "labels": {
+        "expiration": "Vencimiento",
+        "renew": "Renovación",
+        "corporateScope": "Alcance Corporativo",
+        "owner": "Propietario"
+      },
+      "messages": {
+        "loading": "Cargando diagrama de arquitectura...",
+        "loadingExpand": "Cargando nodos relacionados...",
+        "noChildren": "Sin nodos relacionados",
+        "error": {
+          "loading": "Error al cargar el diagrama de arquitectura",
+          "deleting": "Error al eliminar la arquitectura",
+          "loadingCatalogs": "Error al cargar los catálogos",
+          "validation": "Error de validación en el formulario",
+          "creating": "Error al agregar la arquitectura"
+        },
+        "success": {
+          "deleted": "Activo de datos eliminado con éxito",
+          "created": "Activo de datos agregado con éxito"
+        }
+      },
+      "dialogs": {
+        "create": {
+          "title": "Agregar Activo de Datos"
+        },
+        "edit": {
+          "title": "Editar Activo de Datos"
+        },
+        "delete": {
+          "title": "Eliminar Activo de Datos",
+          "content": "¿Está seguro de que desea eliminar este activo de datos?",
+          "confirm": "Eliminar"
+        },
+        "map": {
+          "title": "Mapa de Relaciones"
+        },
+        "sectionsLabels": {
+          "basicInfo": "Información Básica",
+          "settings": "Configuraciones",
+          "identification": "Identificación",
+          "dataType": "Tipo de Datos",
+          "provider": "Proveedor",
+          "domain": "Dominio",
+          "datesAndContracts": "Fechas y Contratos",
+          "slaAndImpact": "SLA e Impacto"
+        },
+        "form": {
+          "name": {
+            "label": "Nombre",
+            "required": "El nombre es obligatorio"
+          },
+          "description": {
+            "label": "Descripción",
+            "required": "La descripción es obligatoria"
+          },
+          "type": {
+            "label": "Tipo",
+            "required": "El tipo es obligatorio"
+          },
+          "file": {
+            "label": "Archivo",
+            "required": "El archivo es obligatorio"
+          },
+          "rules": {
+            "label": "Reglas",
+            "required": "Las reglas son obligatorias"
+          },
+          "local/external": {
+            "label": "Local/Externo",
+            "required": "El campo Local/Externo es obligatorio"
+          },
+          "nomenclature": {
+            "label": "Nomenclatura",
+            "required": "La nomenclatura es obligatoria"
+          },
+          "code": {
+            "label": "Código",
+            "required": "El código es obligatorio"
+          },
+          "dataType": {
+            "label": "Tipo de Datos",
+            "required": "El tipo de datos es obligatorio"
+          },
+          "provider": {
+            "label": "Proveedor",
+            "required": "El proveedor es obligatorio"
+          },
+          "domain": {
+            "label": "Dominio",
+            "required": "El dominio es obligatorio"
+          },
+          "contractedCapacity": {
+            "label": "Capacidad Contratada",
+            "required": "La capacidad contratada es obligatoria"
+          },
+          "contract": {
+            "label": "Contrato",
+            "required": "El contrato es obligatorio"
+          },
+          "adoptionContractDate": {
+            "label": "Fecha de Adopción de Contrato",
+            "required": "La fecha de adopción de contrato es obligatoria"
+          },
+          "expirationDate": {
+            "label": "Fecha de Vencimiento",
+            "required": "La fecha de vencimiento es obligatoria"
+          },
+          "renewalDate": {
+            "label": "Fecha de Renovación",
+            "required": "La fecha de renovación es obligatoria"
+          },
+          "obsolescenceDate": {
+            "label": "Fecha de Obsolescencia",
+            "required": "La fecha de obsolescencia es obligatoria"
+          },
+          "requiresSla": {
+            "label": "Requiere SLA",
+            "required": "El campo Requiere SLA es obligatorio"
+          },
+          "hasSla": {
+            "label": "Tiene SLA",
+            "required": "El campo Tiene SLA es obligatorio"
+          },
+          "impactRatio": {
+            "label": "Ratio de Impacto",
+            "required": "El ratio de impacto es obligatorio"
+          },
+          "impactLevel": {
+            "label": "Nivel de Impacto",
+            "required": "El nivel de impacto es obligatorio"
+          }
+        }
+      },
+      "node": {
+        "singular": "Arquitectura raíz",
+        "plural": "Arquitecturas raíz"
+      },
+      "tooltips": {
+        "expand": "Expandir",
+        "collapse": "Colapsar",
+        "noNodes": "No hay nodos para expandir",
+        "expandAll": "Expandir todo",
+        "collapseAll": "Colapsar todo",
+        "initialView": "Vista inicial",
+        "fitView": "Ajustar vista",
+        "restartDiagram": "Restablecer diagrama",
+        "zoomIn": "Acercar",
+        "zoomOut": "Alejar",
+        "lock": "Bloquear posición",
+        "toggleInteractivity": "Alternar interactividad",
+        "hasSla": "Tiene SLA",
+        "external": "Externo"
+      }
+    },
+    "table": {
+      "title": "Tabla de Datos",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Lista de Activos de Datos",
+        "create": "Agregar Activo de Datos",
+        "edit": "Editar Activo de Datos"
+      },
+      "actions": {
+        "viewDiagram": "Ver Diagrama",
+        "add": "Agregar Activo de Datos",
+        "addChild": "Agregar",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "map": "Mapa de Datos",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "saving": "Guardando...",
+        "create": "Agregar Tabla de Datos",
+        "update": "Actualizar",
+        "search": "Buscar tablas de datos...",
+        "clear": "Limpiar filtros"
+      },
+      "table": {
+        "columns": {
+          "name": "Nombre",
+          "description": "Descripción",
+          "nomenclature": "Nomenclatura",
+          "type": "Tipo",
+          "localExternal": "Local/Externo",
+          "code": "Código",
+          "expirationDate": "Fecha de Vencimiento",
+          "renewalDate": "Fecha de Renovación",
+          "requiresSla": "Requiere SLA",
+          "hasSla": "Tiene SLA",
+          "sla": "SLA",
+          "file": "Archivo",
+          "rules": "Reglas",
+          "actions": "Acciones"
+        },
+        "toolbar": {
+          "search": "Buscar tablas de datos..."
+        },
+        "filters": {
+          "status": "Estado:",
+          "keyword": "Palabra clave:",
+          "all": "Todos"
+        },
+        "emptyState": {
+          "noData": "No se encontraron tablas de datos",
+          "noResults": "No se encontraron resultados para su búsqueda"
+        }
+      },
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Nombre",
+            "required": "Nombre es obligatorio"
+          },
+          "description": {
+            "label": "Descripción",
+            "required": "Descripción es obligatoria"
+          },
+          "type": {
+            "label": "Tipo",
+            "required": "Tipo es obligatorio"
+          },
+          "localExternal": {
+            "label": "Local/Externo",
+            "required": "Local/Externo es obligatorio"
+          },
+          "file": {
+            "label": "Archivo",
+            "required": "Archivo es obligatorio"
+          },
+          "rules": {
+            "label": "Reglas",
+            "required": "Reglas es obligatorio"
+          },
+          "nomenclature": {
+            "label": "Nomenclatura",
+            "required": "Nomenclatura es obligatoria"
+          },
+          "code": {
+            "label": "Código",
+            "required": "Código es obligatorio"
+          },
+          "sla": {
+            "label": "SLA",
+            "required": "SLA es obligatorio"
+          }
+        },
+        "sections": {
+          "details": "Detalles de la Tabla de Datos"
+        }
+      },
+      "dialogs": {
+        "edit": {
+          "title": "Editar Activo de Datos"
+        },
+        "create": {
+          "title": "Agregar Activo de Datos"
+        },
+        "form": {
+          "aplicationTypeHelper": "Seleccione el tipo de datos de las opciones disponibles",
+          "superiorAplicationHelper": "Ingrese los datos superiores de las opciones disponibles"
+        },
+        "delete": {
+          "title": "Eliminar Activo de Datos",
+          "content": "¿Está seguro de que desea eliminar este activo de datos?",
+          "contentMultiple": "¿Está seguro de que desea eliminar {{count}} elementos?",
+          "confirm": "Eliminar"
+        },
+        "unsavedChanges": {
+          "title": "Cambios no guardados",
+          "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+          "confirm": "Salir sin guardar"
+        }
+      },
+      "messages": {
+        "loading": "Cargando tablas de datos...",
+        "saving": "Guardando...",
+        "loadError": "Error al cargar la tabla de datos",
+        "saveError": "Error al guardar la tabla de datos. Por favor, inténtelo de nuevo.",
+        "notFound": "Tabla de datos no encontrada",
+        "createSuccess": "¡Tabla de datos creada con éxito!",
+        "updateSuccess": "¡Tabla de datos actualizada con éxito!",
+        "success": {
+          "created": "Tabla de datos creada con éxito",
+          "updated": "¡Tabla de datos actualizada con éxito!",
+          "deleted": "¡Tabla de datos eliminada con éxito!",
+          "deletedMultiple": "¡Tablas de datos eliminadas con éxito!"
+        },
+        "error": {
+          "loading": "Error al cargar la tabla de datos",
+          "updating": "Error al actualizar la tabla de datos",
+          "creating": "Error al agregar la tabla de datos",
+          "deleting": "Error al eliminar la tabla de datos",
+          "deletingMultiple": "Error al eliminar las tablas de datos",
+          "notFound": "Tabla de datos no encontrada"
+        }
+      },
+      "status": {
+        "all": "Todos",
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "tooltips": {
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "quickEdit": "Edición rápida"
+      }
+    },
+    "map": {
+      "title": "Mapa de Datos",
+      "diagram": {
+        "systemTitle": "Sistema Principal",
+        "loadingMap": "Cargando mapa de datos...",
+        "noData": "No se encontraron datos para el mapa de datos",
+        "conectedModules": "Módulos Conectados",
+        "subDiagram": {
+          "buttonBack": "Volver al diagrama principal",
+          "0Modules": "Sin módulos relacionados",
+          "noRelations": "No se encontraron relaciones para este módulo",
+          "home": "Inicio"
+        },
+        "controls": {
+          "zoom": "Zoom: Rueda del ratón",
+          "move": "Mover: Click sostenido y arrastrar"
+        }
+      },
+      "messages": {
+        "error": {
+          "expandError": "Error al expandir el módulo",
+          "homeError": "Error al volver al diagrama principal",
+          "backError": "Error al volver al diagrama principal",
+          "loadMapError": "Error al cargar el mapa de relaciones"
+        }
+      }
+    },
+    "timeline": {
+      "title": "Línea de Tiempo de Datos",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Línea de Tiempo"
+      },
+      "filters": {
+        "status": "Estado",
+        "field": "Campo",
+        "active": "Activo",
+        "inactive": "Inactivo",
+        "renewal": "Renovación",
+        "expired": "Vencido",
+        "obsolescence": "Obsolescencia",
+        "clear": "Limpiar filtros"
+      },
+      "toolbar": {
+        "search": "Buscar en la línea de tiempo..."
+      },
+      "emptyState": {
+        "title": "Sin datos en la línea de tiempo",
+        "description": "No se encontraron datos para los filtros seleccionados"
+      },
+      "labels": {
+        "adoptionDate": "Fecha de Adopción",
+        "expirationDate": "Fecha de Expiración",
+        "renewalDate": "Fecha de Renovación",
+        "obsolescenceDate": "Fecha de Obsolescencia",
+        "allDates": "Todas las Fechas",
+        "dependencies": "Dependencias de",
+        "dependenciesSingular": "dependencia",
+        "dependenciesPlural": "dependencias",
+        "type": "Tipo",
+        "noDependencies": "No tiene dependencias asociadas"
+      },
+      "messages": {
+        "loading": "Cargando datos de la línea de tiempo...",
+        "loadError": "Error al cargar los datos de la línea de tiempo",
+        "noData": "No hay datos disponibles para los filtros seleccionados",
+        "success": {
+          "dataLoaded": "Datos de la línea de tiempo cargados exitosamente"
+        },
+        "error": {
+          "fetchError": "Error al obtener los datos de la línea de tiempo. Por favor, inténtelo de nuevo.",
+          "invalidField": "Parámetro de campo inválido"
+        }
+      }
+    }
+  },
+  "infrastructure": {
+    "diagram": {
+      "title": "Arquitectura de Infraestructura",
+      "addDiagram": "Agregar Infraestructura",
+      "controls": {
+        "zoom": "Zoom: Rueda del ratón",
+        "drag": "Arrastrar: Click y mantener"
+      },
+      "actions": {
+        "add": "Agregar",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "viewTable": "Ver Tabla",
+        "viewMap": "Ver Mapa",
+        "viewTimeline": "Ver Línea de Tiempo"
+      },
+      "labels": {
+        "expiration": "Vencimiento",
+        "renew": "Renovación",
+        "corporateScope": "Alcance Corporativo",
+        "owner": "Propietario"
+      },
+      "messages": {
+        "loading": "Cargando diagrama de infraestructura...",
+        "loadingExpand": "Cargando nodos relacionados...",
+        "noChildren": "Sin nodos relacionados",
+        "error": {
+          "loading": "Error al cargar el diagrama de infraestructura",
+          "deleting": "Error al eliminar la infraestructura",
+          "loadingCatalogs": "Error al cargar los catálogos",
+          "validation": "Error de validación en el formulario",
+          "creating": "Error al agregar la infraestructura"
+        },
+        "success": {
+          "deleted": "Arquitectura eliminada con éxito",
+          "created": "Arquitectura agregada con éxito"
+        }
+      },
+      "dialogs": {
+        "create": {
+          "title": "Agregar Infraestructura"
+        },
+        "edit": {
+          "title": "Editar Infraestructura"
+        },
+        "delete": {
+          "title": "Eliminar Infraestructura",
+          "content": "¿Está seguro de que desea eliminar esta infraestructura?",
+          "confirm": "Eliminar"
+        },
+        "map": {
+          "title": "Mapa de Relaciones"
+        },
+        "sectionsLabels": {
+          "basicInfo": "Información Básica",
+          "settings": "Configuraciones",
+          "identification": "Identificación",
+          "dataType": "Tipo de Infraestructura",
+          "provider": "Proveedor",
+          "domain": "Dominio",
+          "datesAndContracts": "Fechas y Contratos",
+          "slaAndImpact": "SLA e Impacto"
+        },
+        "form": {
+          "name": {
+            "label": "Nombre",
+            "required": "El nombre es obligatorio"
+          },
+          "description": {
+            "label": "Descripción",
+            "required": "La descripción es obligatoria"
+          },
+          "type": {
+            "label": "Tipo",
+            "required": "El tipo es obligatorio"
+          },
+          "file": {
+            "label": "Archivo",
+            "required": "El archivo es obligatorio"
+          },
+          "rules": {
+            "label": "Reglas",
+            "required": "Las reglas son obligatorias"
+          },
+          "local/external": {
+            "label": "Local/Externo",
+            "required": "El campo Local/Externo es obligatorio"
+          },
+          "nomenclature": {
+            "label": "Nomenclatura",
+            "required": "La nomenclatura es obligatoria"
+          },
+          "code": {
+            "label": "Código",
+            "required": "El código es obligatorio"
+          },
+          "dataType": {
+            "label": "Tipo de Infraestructura",
+            "required": "El tipo de infraestructura es obligatorio"
+          },
+          "provider": {
+            "label": "Proveedor",
+            "required": "El proveedor es obligatorio"
+          },
+          "domain": {
+            "label": "Dominio",
+            "required": "El dominio es obligatorio"
+          },
+          "contractedCapacity": {
+            "label": "Capacidad Contratada",
+            "required": "La capacidad contratada es obligatoria"
+          },
+          "contract": {
+            "label": "Contrato",
+            "required": "El contrato es obligatorio"
+          },
+          "adoptionContractDate": {
+            "label": "Fecha de Adopción de Contrato",
+            "required": "La fecha de adopción de contrato es obligatoria"
+          },
+          "expirationDate": {
+            "label": "Fecha de Vencimiento",
+            "required": "La fecha de vencimiento es obligatoria"
+          },
+          "renewalDate": {
+            "label": "Fecha de Renovación",
+            "required": "La fecha de renovación es obligatoria"
+          },
+          "obsolescenceDate": {
+            "label": "Fecha de Obsolescencia",
+            "required": "La fecha de obsolescencia es obligatoria"
+          },
+          "requiresSla": {
+            "label": "Requiere SLA",
+            "required": "El campo Requiere SLA es obligatorio"
+          },
+          "hasSla": {
+            "label": "Tiene SLA",
+            "required": "El campo Tiene SLA es obligatorio"
+          },
+          "impactRatio": {
+            "label": "Ratio de Impacto",
+            "required": "El ratio de impacto es obligatorio"
+          },
+          "impactLevel": {
+            "label": "Nivel de Impacto",
+            "required": "El nivel de impacto es obligatorio"
+          }
+        }
+      },
+      "node": {
+        "singular": "Arquitectura raíz",
+        "plural": "Arquitecturas raíz"
+      },
+      "tooltips": {
+        "expand": "Expandir",
+        "collapse": "Colapsar",
+        "noNodes": "No hay nodos para expandir",
+        "expandAll": "Expandir todo",
+        "collapseAll": "Colapsar todo",
+        "initialView": "Vista inicial",
+        "fitView": "Ajustar vista",
+        "restartDiagram": "Restablecer diagrama",
+        "zoomIn": "Acercar",
+        "zoomOut": "Alejar",
+        "lock": "Bloquear posición",
+        "toggleInteractivity": "Alternar interactividad",
+        "hasSla": "Tiene SLA",
+        "external": "Externo"
+      }
+    },
+    "table": {
+      "title": "Tabla de Infraestructura",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Lista de Infraestructuras",
+        "create": "Agregar Infraestructura",
+        "edit": "Editar Infraestructura"
+      },
+      "actions": {
+        "viewDiagram": "Ver Diagrama",
+        "add": "Agregar Infraestructura",
+        "addChild": "Agregar",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "map": "Mapa de Infraestructura",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "saving": "Guardando...",
+        "create": "Agregar Tabla de Infraestructura",
+        "update": "Actualizar",
+        "search": "Buscar tablas de infraestructura...",
+        "clear": "Limpiar filtros"
+      },
+      "table": {
+        "columns": {
+          "name": "Nombre",
+          "description": "Descripción",
+          "nomenclature": "Nomenclatura",
+          "type": "Tipo",
+          "localExternal": "Local/Externo",
+          "code": "Código",
+          "expirationDate": "Fecha de Vencimiento",
+          "renewalDate": "Fecha de Renovación",
+          "requiresSla": "Requiere SLA",
+          "hasSla": "Tiene SLA",
+          "sla": "SLA",
+          "file": "Archivo",
+          "rules": "Reglas",
+          "actions": "Acciones"
+        },
+        "toolbar": {
+          "search": "Buscar tablas de infraestructura..."
+        },
+        "filters": {
+          "status": "Estado:",
+          "keyword": "Palabra clave:",
+          "all": "Todos"
+        },
+        "emptyState": {
+          "noData": "No se encontraron tablas de infraestructura",
+          "noResults": "No se encontraron resultados para su búsqueda"
+        }
+      },
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Nombre",
+            "required": "Nombre es obligatorio"
+          },
+          "description": {
+            "label": "Descripción",
+            "required": "Descripción es obligatoria"
+          },
+          "type": {
+            "label": "Tipo",
+            "required": "Tipo es obligatorio"
+          },
+          "localExternal": {
+            "label": "Local/Externo",
+            "required": "Local/Externo es obligatorio"
+          },
+          "file": {
+            "label": "Archivo",
+            "required": "Archivo es obligatorio"
+          },
+          "rules": {
+            "label": "Reglas",
+            "required": "Reglas es obligatorio"
+          },
+          "nomenclature": {
+            "label": "Nomenclatura",
+            "required": "Nomenclatura es obligatoria"
+          },
+          "code": {
+            "label": "Código",
+            "required": "Código es obligatorio"
+          },
+          "sla": {
+            "label": "SLA",
+            "required": "SLA es obligatorio"
+          }
+        },
+        "sections": {
+          "details": "Detalles de la Infraestructura"
+        }
+      },
+      "dialogs": {
+        "edit": {
+          "title": "Editar Infraestructura"
+        },
+        "create": {
+          "title": "Agregar Infraestructura"
+        },
+        "form": {
+          "aplicationTypeHelper": "Seleccione el tipo de datos de las opciones disponibles",
+          "superiorAplicationHelper": "Ingrese los datos superiores de las opciones disponibles"
+        },
+        "delete": {
+          "title": "Eliminar Tabla de Infraestructura",
+          "content": "¿Está seguro de que desea eliminar esta tabla de infraestructura?",
+          "contentMultiple": "¿Está seguro de que desea eliminar {{count}} elementos?",
+          "confirm": "Eliminar"
+        },
+        "unsavedChanges": {
+          "title": "Cambios no guardados",
+          "content": "Tiene cambios no guardados. ¿Está seguro de que desea salir?",
+          "confirm": "Salir sin guardar"
+        }
+      },
+      "messages": {
+        "loading": "Cargando tablas de infraestructura...",
+        "saving": "Guardando...",
+        "loadError": "Error al cargar la tabla de infraestructura",
+        "saveError": "Error al guardar la tabla de infraestructura. Por favor, inténtelo de nuevo.",
+        "notFound": "Tabla de infraestructura no encontrada",
+        "createSuccess": "¡Tabla de infraestructura creada con éxito!",
+        "updateSuccess": "¡Tabla de infraestructura actualizada con éxito!",
+        "success": {
+          "created": "Tabla de infraestructura creada con éxito",
+          "updated": "¡Tabla de infraestructura actualizada con éxito!",
+          "deleted": "¡Tabla de infraestructura eliminada con éxito!",
+          "deletedMultiple": "¡Tablas de infraestructura eliminadas con éxito!"
+        },
+        "error": {
+          "loading": "Error al cargar la tabla de infraestructura",
+          "updating": "Error al actualizar la tabla de infraestructura",
+          "creating": "Error al agregar la tabla de infraestructura",
+          "deleting": "Error al eliminar la tabla de infraestructura",
+          "deletingMultiple": "Error al eliminar las tablas de infraestructura",
+          "notFound": "Tabla de infraestructura no encontrada"
+        }
+      },
+      "status": {
+        "all": "Todos",
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "tooltips": {
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "quickEdit": "Edición rápida"
+      }
+    },
+    "map": {
+      "title": "Mapa de Infraestructura",
+      "diagram": {
+        "systemTitle": "Sistema Principal",
+        "loadingMap": "Cargando mapa de infraestructura...",
+        "noData": "No se encontraron datos para el mapa de infraestructura",
+        "conectedModules": "Módulos Conectados",
+        "subDiagram": {
+          "buttonBack": "Volver al diagrama principal",
+          "0Modules": "Sin módulos relacionados",
+          "noRelations": "No se encontraron relaciones para este módulo",
+          "home": "Inicio"
+        },
+        "controls": {
+          "zoom": "Zoom: Rueda del ratón",
+          "move": "Mover: Click sostenido y arrastrar"
+        }
+      },
+      "messages": {
+        "error": {
+          "expandError": "Error al expandir el módulo",
+          "homeError": "Error al volver al diagrama principal",
+          "backError": "Error al volver al diagrama principal",
+          "loadMapError": "Error al cargar el mapa de relaciones"
+        }
+      }
+    },
+    "timeline": {
+      "title": "Línea de Tiempo de Infraestructura",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Línea de Tiempo"
+      },
+      "filters": {
+        "status": "Estado",
+        "field": "Campo",
+        "active": "Activo",
+        "inactive": "Inactivo",
+        "renewal": "Renovación",
+        "expired": "Vencido",
+        "obsolescence": "Obsolescencia",
+        "clear": "Limpiar filtros"
+      },
+      "toolbar": {
+        "search": "Buscar en la línea de tiempo..."
+      },
+      "emptyState": {
+        "title": "Sin datos en la línea de tiempo",
+        "description": "No se encontraron datos para los filtros seleccionados"
+      },
+      "labels": {
+        "adoptionDate": "Fecha de Adopción",
+        "expirationDate": "Fecha de Expiración",
+        "renewalDate": "Fecha de Renovación",
+        "obsolescenceDate": "Fecha de Obsolescencia",
+        "allDates": "Todas las Fechas",
+        "dependencies": "Dependencias de",
+        "dependenciesSingular": "dependencia",
+        "dependenciesPlural": "dependencias",
+        "type": "Tipo",
+        "noDependencies": "No tiene dependencias asociadas"
+      },
+      "messages": {
+        "loading": "Cargando datos de la línea de tiempo...",
+        "loadError": "Error al cargar los datos de la línea de tiempo",
+        "noData": "No hay datos disponibles para los filtros seleccionados",
+        "success": {
+          "dataLoaded": "Datos de la línea de tiempo cargados exitosamente"
+        },
+        "error": {
+          "fetchError": "Error al obtener los datos de la línea de tiempo. Por favor, inténtelo de nuevo.",
+          "invalidField": "Parámetro de campo inválido"
+        }
+      }
+    }
+  }
+}
