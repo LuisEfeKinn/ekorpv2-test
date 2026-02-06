@@ -1,0 +1,807 @@
+{
+  "organization": {
+    "title": "Organizations",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "organizationUnit": "Organization Unit",
+      "Organizations": "Organizations",
+      "list": "Organizations List",
+      "create": "Create Organization",
+      "edit": "Edit Organization"
+    },
+    "actions": {
+      "add": "Add Organization",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving...",
+      "create": "Create Organization",
+      "update": "Update Organization",
+      "search": "Search organizations...",
+      "clear": "Clear"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "code": "Code",
+        "description": "Description",
+        "color": "Color",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "actions": "Actions"
+      },
+      "toolbar": {
+        "search": "Search organizations..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Keyword:",
+        "all": "All"
+      },
+      "emptyState": {
+        "noData": "No organizations found",
+        "noResults": "No results found for your search"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter organization name",
+          "helperText": "Enter the organization name",
+          "required": "Name is required"
+        },
+        "code": {
+          "label": "Code",
+          "placeholder": "Enter organization code",
+          "helperText": "Enter the organization code",
+          "required": "Code is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter organization description",
+          "helperText": "Enter the organization description",
+          "required": "Description is required"
+        },
+        "color": {
+          "label": "Color",
+          "placeholder": "Select organization color",
+          "helperText": "Select a color for the organization",
+          "required": "Color is required"
+        }
+      },
+      "sections": {
+        "details": "Organization Details"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete",
+        "content": "Are you sure want to delete this organization?",
+        "contentMultiple": "Are you sure want to delete these items?",
+        "confirm": "Delete"
+      },
+      "unsavedChanges": {
+        "title": "Unsaved Changes",
+        "content": "You have unsaved changes. Are you sure you want to leave?",
+        "confirm": "Leave without saving"
+      },
+      "employees": {
+        "fallbacks": {
+          "noName": "No name",
+          "noEmail": "No email"
+        }
+      }
+    },
+    "messages": {
+      "loading": "Loading organizations...",
+      "saving": "Saving...",
+      "loadError": "Error loading organization",
+      "saveError": "Error saving organization. Please try again.",
+      "notFound": "Organization not found",
+      "createSuccess": "Organization created successfully!",
+      "updateSuccess": "Organization updated successfully!",
+      "success": {
+        "created": "Organization created successfully",
+        "updated": "Organization updated successfully",
+        "deleted": "Organization deleted successfully",
+        "deletedMultiple": "Organizations deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading organizations",
+        "saving": "Error saving organization. Please try again.",
+        "deleting": "Error deleting organization",
+        "deletingMultiple": "Error deleting organizations",
+        "notFound": "Organization not found"
+      }
+    },
+    "status": {
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "tooltips": {
+      "edit": "Edit organization",
+      "delete": "Delete organization",
+      "quickEdit": "Quick edit"
+    }
+  },
+  "position": {
+    "title": "Positions",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "positions": "Positions",
+      "list": "List of Positions",
+      "create": "Create Position",
+      "edit": "Edit Position"
+    },
+    "actions": {
+      "add": "Add Position",
+      "edit": "Edit Position",
+      "delete": "Delete Position",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving...",
+      "create": "Create Position",
+      "update": "Update Position",
+      "search": "Search positions...",
+      "clear": "Clear"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "superiorJob": "Superior Position",
+        "objectives": "Objectives",
+        "expectedResults": "Expected Results",
+        "requirements": "Requirements",
+        "otherFunctions": "Other Functions",
+        "academic": "Academic Level",
+        "experience": "Experience",
+        "location": "Location",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "actions": "Actions"
+      },
+      "noSuperior": "No superior position",
+      "toolbar": {
+        "search": "Search positions..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Keyword:",
+        "all": "All"
+      },
+      "emptyState": {
+        "noData": "No positions found",
+        "noResults": "No results found for your search"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter the position name",
+          "helperText": "Enter the position name",
+          "required": "Name is required"
+        },
+        "code": {
+          "label": "Code",
+          "placeholder": "Enter the position code",
+          "helperText": "Enter the position code (max. 80 characters)"
+        },
+        "objectives": {
+          "label": "Objectives",
+          "placeholder": "Enter the position objectives",
+          "helperText": "Enter the position objectives",
+          "required": "Objectives are required"
+        },
+        "expectedResults": {
+          "label": "Expected Results",
+          "placeholder": "Enter the expected results",
+          "helperText": "Enter the expected results",
+          "required": "Expected results are required"
+        },
+        "requirements": {
+          "label": "Requirements",
+          "placeholder": "Enter the position requirements",
+          "helperText": "Enter the position requirements",
+          "required": "Requirements are required"
+        },
+        "otherFunctions": {
+          "label": "Other Functions",
+          "placeholder": "Enter other functions",
+          "helperText": "Enter other functions",
+          "required": "Other functions are required"
+        },
+        "minimumAcademicLevel": {
+          "label": "Minimum Academic Level",
+          "placeholder": "Enter the minimum academic level",
+          "helperText": "Enter the minimum required academic level (max. 512 characters)"
+        },
+        "desiredAcademicLevel": {
+          "label": "Desired Academic Level",
+          "placeholder": "Enter the desired academic level",
+          "helperText": "Enter the desired academic level (max. 512 characters)"
+        },
+        "minimumExperience": {
+          "label": "Minimum Experience",
+          "placeholder": "Enter the minimum experience",
+          "helperText": "Enter the minimum required experience (max. 512 characters)"
+        },
+        "desiredExperience": {
+          "label": "Desired Experience",
+          "placeholder": "Enter the desired experience",
+          "helperText": "Enter the desired experience (max. 512 characters)"
+        },
+        "supervises": {
+          "label": "Supervises",
+          "placeholder": "Enter who supervises",
+          "helperText": "Enter the positions supervised (max. 512 characters)"
+        },
+        "regionalLocation": {
+          "label": "Regional Location",
+          "placeholder": "Enter the regional location",
+          "helperText": "Enter the regional location (max. 512 characters)"
+        },
+        "headquarters": {
+          "label": "Headquarters",
+          "placeholder": "Enter the headquarters",
+          "helperText": "Enter the headquarters (max. 512 characters)"
+        },
+        "version": {
+          "label": "Version",
+          "placeholder": "Enter the version",
+          "helperText": "Enter the position version (max. 64 characters)"
+        },
+        "superiorJob": {
+          "label": "Superior Position",
+          "placeholder": "Search and select superior position",
+          "helperText": "Select the superior position to report to (optional)"
+        },
+        "organizationalUnit": {
+          "label": "Organizational Unit",
+          "placeholder": "Search and select organizational unit",
+          "helperText": "Select the organizational unit this position belongs to (optional)"
+        }
+      },
+      "sections": {
+        "details": "Position Details"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete Position",
+        "content": "Are you sure you want to delete this position?",
+        "contentMultiple": "Are you sure you want to delete these items?",
+        "confirm": "Delete"
+      },
+      "unsavedChanges": {
+        "title": "Unsaved Changes",
+        "content": "You have unsaved changes. Are you sure you want to leave?",
+        "confirm": "Leave without saving"
+      }
+    },
+    "messages": {
+      "loading": "Loading positions...",
+      "saving": "Saving...",
+      "loadError": "Error loading position",
+      "saveError": "Error saving position. Please try again.",
+      "notFound": "Position not found",
+      "createSuccess": "Position created successfully!",
+      "updateSuccess": "Position updated successfully!",
+      "success": {
+        "created": "Position created successfully",
+        "updated": "Position updated successfully",
+        "deleted": "Position deleted successfully",
+        "deletedMultiple": "Positions deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading positions",
+        "saving": "Error saving position. Please try again.",
+        "deleting": "Error deleting position",
+        "deletingMultiple": "Error deleting positions",
+        "notFound": "Position not found"
+      }
+    },
+    "status": {
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "tooltips": {
+      "edit": "Edit position",
+      "delete": "Delete position",
+      "quickEdit": "Quick edit"
+    }
+  },
+  "company": {
+    "title": "Company",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "company": "Company",
+      "details": "Company Details",
+      "edit": "Edit Company"
+    },
+    "actions": {
+      "edit": "Edit Company",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving...",
+      "update": "Update Company"
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter company name",
+          "helperText": "Enter the company name",
+          "required": "Name is required"
+        },
+        "oficialName": {
+          "label": "Official Name",
+          "placeholder": "Enter official company name",
+          "helperText": "Enter the official company name",
+          "required": "Official name is required"
+        },
+        "taxId": {
+          "label": "Tax ID",
+          "placeholder": "Enter company tax ID",
+          "helperText": "Enter the tax identification number",
+          "required": "Tax ID is required"
+        },
+        "webSite": {
+          "label": "Website",
+          "placeholder": "Enter company website",
+          "helperText": "Enter the website URL",
+          "required": "Website is required"
+        },
+        "registerDate": {
+          "label": "Registration Date",
+          "placeholder": "Select registration date",
+          "helperText": "Select the company registration date",
+          "required": "Registration date is required"
+        },
+        "coinId": {
+          "label": "Currency",
+          "placeholder": "Select currency",
+          "helperText": "Select the company currency",
+          "required": "Currency is required"
+        },
+        "primaryAddress": {
+          "label": "Primary Address",
+          "placeholder": "Enter primary address",
+          "helperText": "Enter the company primary address",
+          "required": "Primary address is required"
+        },
+        "secondaryAddress": {
+          "label": "Secondary Address",
+          "placeholder": "Enter secondary address (optional)",
+          "helperText": "Enter the company secondary address"
+        },
+        "latitude": {
+          "label": "Latitude",
+          "placeholder": "Enter latitude",
+          "helperText": "Enter the latitude coordinate",
+          "required": "Latitude is required"
+        },
+        "longitude": {
+          "label": "Longitude",
+          "placeholder": "Enter longitude",
+          "helperText": "Enter the longitude coordinate",
+          "required": "Longitude is required"
+        }
+      },
+      "sections": {
+        "details": "Company Details",
+        "address": "Address Information",
+        "location": "Geographic Location"
+      }
+    },
+    "messages": {
+      "loading": "Loading company information...",
+      "saving": "Saving...",
+      "loadError": "Error loading company information",
+      "saveError": "Error saving company information. Please try again.",
+      "notFound": "Company not found",
+      "updateSuccess": "Company information updated successfully!",
+      "success": {
+        "updated": "Company information updated successfully"
+      },
+      "error": {
+        "loading": "Error loading company information",
+        "saving": "Error saving company information. Please try again."
+      }
+    }
+  },
+  "organigrama": {
+    "title": "Organizational Chart",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "organigrama": "Organizational Chart"
+    },
+    "viewTypes": {
+      "jobs": "By Positions",
+      "organizational": "By Units"
+    },
+    "actions": {
+      "manageOrganizations": "Manage Organizations",
+      "createPosition": "Create Position",
+      "add": "Add",
+      "retry": "Retry"
+    },
+    "placeholder": {
+      "title": "Organizational chart in development",
+      "subtitle": "Visualize and manage your organization's hierarchical structure"
+    },
+    "drawer": {
+      "createPosition": {
+        "title": "Create New Position",
+        "subtitle": "Define the characteristics of the position",
+        "close": "Close"
+      },
+      "editPosition": {
+        "title": "Edit Position",
+        "subtitle": "Modify data for the selected position"
+      },
+      "vacancies": {
+        "label": "Vacancies",
+        "available": "{{count}} vacancy available",
+        "available_plural": "{{count}} vacancies available",
+        "full": "No vacancies available"
+      }
+    },
+    "dialogs": {
+      "employees": {
+        "title": "Employees",
+        "subtitle": "You can select multiple employees",
+        "search": "Search employee by name or email...",
+        "noResults": "No employees selected",
+        "selected": {
+          "none": "No employees selected",
+          "one": "Employee selected",
+          "multiple": "Employees selected"
+        },
+        "actions": {
+          "assign": "Assign",
+          "assigned": "Assigned",
+          "done": "Done"
+        }
+      },
+      "skills": {
+        "title": "Skills",
+        "subtitle": "You can select multiple skills",
+        "search": "Search skill...",
+        "selected": {
+          "none": "No skills selected",
+          "one": "Skill selected",
+          "multiple": "Skills selected"
+        },
+        "actions": {
+          "add": "Add",
+          "added": "Added",
+          "done": "Done"
+        },
+        "types": {
+          "technical": "Technical/soft skill"
+        }
+      }
+    },
+    "form": {
+      "fields": {
+        "organization": {
+          "label": "Organization",
+          "placeholder": "Select organization",
+          "create": "Create new organization"
+        },
+        "level": {
+          "label": "Level",
+          "placeholder": "Select level"
+        },
+        "code": {
+          "label": "Code",
+          "placeholder": "Ex: MGR-001"
+        },
+        "positionName": {
+          "label": "Name",
+          "placeholder": "Position name",
+          "required": "Position name is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Position description...",
+          "helper": "Maximum 500 characters"
+        },
+        "skills": {
+          "label": "Required skills",
+          "add": "Add skill",
+          "empty": "No skills assigned"
+        },
+        "employees": {
+          "label": "Employees",
+          "add": "Add employee",
+          "empty": "No employees assigned"
+        },
+        "parentPosition": {
+          "label": "Parent Position",
+          "placeholder": "Select parent position (optional)",
+          "rootPosition": "No parent position (Root position)"
+        },
+        "location": {
+          "label": "Location / Branch",
+          "placeholder": "Select location or branch"
+        },
+        "hierarchicalLevel": {
+          "label": "Hierarchical Level",
+          "placeholder": "Select hierarchical level",
+          "options": {
+            "alta_direccion": "Senior Management",
+            "gerencial": "Management",
+            "ejecutivo": "Executive",
+            "operativo": "Operational"
+          }
+        },
+        "requiredEmployees": {
+          "label": "Required Employees",
+          "placeholder": "Number of required employees",
+          "helper": "Total number of employees required for this position"
+        }
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "create": "Save",
+        "update": "Update Position",
+        "saving": "Saving..."
+      }
+    },
+    "nodeActions": {
+      "moreOptions": "More options",
+      "assignEmployees": "Assign Employees",
+      "editPosition": "Edit Position",
+      "deletePosition": "Delete Position",
+      "expandNode": "Expand node",
+      "collapseNode": "Collapse node"
+    },
+    "nodeContent": {
+      "assignedTeam": "Assigned Team",
+      "noTeamAssigned": "No Team Assigned",
+      "vacancies": "Vacancies",
+      "required": "Required",
+      "assignEmployees": "Assign Employees",
+      "keySkills": "Key Skills",
+      "allRequiredSkills": "All required skills:",
+      "moreSkills": "more skills"
+    },
+    "chartControls": {
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "adjustZoom": "Adjust zoom",
+      "fitToScreen": "Fit to screen",
+      "resetZoom": "Reset zoom",
+      "fullscreen": "Fullscreen",
+      "zoomLevel": "Zoom Level"
+    },
+    "metrics": {
+      "totalPositions": "Total positions",
+      "activeEmployees": "Active employees",
+      "organizations": "Organizations",
+      "openVacancies": "Open vacancies"
+    },
+    "deleteDialog": {
+      "title": "Delete Position",
+      "message": "Are you sure you want to delete the position \"{{name}}\"? This action cannot be undone.",
+      "warning": "Warning",
+      "employeesWarning": "This position has {{count}} assigned employee(s). They will be unassigned from this position.",
+      "confirmButton": "Delete Position",
+      "cancelButton": "Cancel"
+    },
+    "messages": {
+      "loading": "Loading organizational chart...",
+      "loadError": "Error loading organizational chart. Please try again.",
+      "confirmDelete": "Are you sure you want to delete this position?",
+      "deleteError": "Error deleting position. Please try again.",
+      "assignmentFor": "Assignment functionality for this position",
+      "noData": "No organizational chart data found.",
+      "createFirstPosition": "Create first position",
+      "saveError": "Error saving position. Please try again."
+    }
+  },
+  "vigencies": {
+    "title": "Vigencies",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "vigencies": "Vigencies",
+      "list": "Vigencies List",
+      "create": "Create Vigency",
+      "edit": "Edit Vigency"
+    },
+    "actions": {
+      "add": "Add Vigency",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving...",
+      "viewMore": "View more",
+      "viewPeriods": "View periods"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "status": "Status",
+        "periods": "Periods",
+        "actions": "Actions"
+      },
+      "search": "Search vigencies...",
+      "toolbar": {
+        "resetFilters": "Reset Filters"
+      },
+      "filters": {
+        "keyword": "Keyword",
+        "status": "Status",
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "emptyState": {
+        "title": "No vigencies found",
+        "description": "Try adjusting your filters"
+      }
+    },
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter vigency name",
+        "required": "Name is required"
+      },
+      "startDate": {
+        "label": "Start Date",
+        "placeholder": "Select start date",
+        "required": "Start date is required"
+      },
+      "endDate": {
+        "label": "End Date",
+        "placeholder": "Select end date",
+        "required": "End date is required"
+      },
+      "isActive": {
+        "label": "Active",
+        "helperText": "Enable or disable this vigency"
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save Vigency",
+        "saving": "Saving...",
+        "managePeriods": "Manage Periods"
+      },
+      "confirmDialog": {
+        "title": "Save and Manage Periods",
+        "content": "All changes will be saved before managing periods. Do you want to continue?",
+        "confirm": "Save and Continue"
+      }
+    },
+    "periods": {
+      "title": "Periods",
+      "name": "Name",
+      "abbreviation": "Abbreviation",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "percentage": "Percentage",
+      "noPeriods": "No periods available"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "messages": {
+      "success": {
+        "createSuccess": "Vigency created successfully",
+        "updateSuccess": "Vigency updated successfully",
+        "deleted": "Vigency deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading vigencies",
+        "saveError": "Error saving vigency",
+        "deleting": "Error deleting vigency"
+      },
+      "confirmDelete": "Are you sure you want to delete this vigency?"
+    }
+  },
+  "periods": {
+    "title": "Periods",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "vigencies": "Vigencies",
+      "periods": "Periods",
+      "list": "Periods List",
+      "create": "Create Period",
+      "edit": "Edit Period"
+    },
+    "actions": {
+      "add": "Add Period",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "abbreviation": "Abbreviation",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "percentage": "Percentage",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "search": "Search periods...",
+      "toolbar": {
+        "resetFilters": "Reset Filters"
+      },
+      "filters": {
+        "keyword": "Keyword"
+      },
+      "emptyState": {
+        "title": "No periods found",
+        "description": "Try adjusting your filters"
+      }
+    },
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter period name",
+        "required": "Name is required"
+      },
+      "abbreviation": {
+        "label": "Abbreviation",
+        "placeholder": "Enter abbreviation (e.g., Q1)",
+        "required": "Abbreviation is required"
+      },
+      "startDate": {
+        "label": "Start Date",
+        "placeholder": "Select start date",
+        "required": "Start date is required"
+      },
+      "endDate": {
+        "label": "End Date",
+        "placeholder": "Select end date",
+        "required": "End date is required"
+      },
+      "percentage": {
+        "label": "Percentage",
+        "placeholder": "Enter percentage",
+        "required": "Percentage is required",
+        "helperText": "Percentage must be between 0 and 100"
+      },
+      "isActive": {
+        "label": "Active",
+        "helperText": "Enable or disable this period"
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save Period",
+        "saving": "Saving..."
+      }
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "messages": {
+      "success": {
+        "createSuccess": "Period created successfully",
+        "updateSuccess": "Period updated successfully",
+        "deleted": "Period deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading periods",
+        "saveError": "Error saving period",
+        "deleting": "Error deleting period"
+      },
+      "confirmDelete": "Are you sure you want to delete this period?"
+    }
+  }
+}

@@ -1,0 +1,364 @@
+{
+  "roles": {
+    "title": "Roles",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "security": "Security",
+      "roles": "Roles"
+    },
+    "actions": {
+      "add": "Add New Role",
+      "edit": "Edit",
+      "delete": "Delete",
+      "create": "Create Role",
+      "update": "Update Role",
+      "cancel": "Cancel",
+      "save": "Save",
+      "permissions": "Permissions"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "permissions": "Permissions",
+        "status": "Status",
+        "createdAt": "Created Date",
+        "updatedAt": "Last Updated"
+      },
+      "filters": {
+        "all": "All",
+        "search": "Search roles...",
+        "keyword": "Keyword"
+      }
+    },
+    "form": {
+      "sections": {
+        "details": "Role Details"
+      },
+      "fields": {
+        "name": {
+          "label": "Role Name",
+          "helperText": "Enter a descriptive name for the role"
+        },
+        "description": {
+          "label": "Description",
+          "helperText": "Brief description of the role's functions"
+        },
+        "permissions": {
+          "label": "Permissions",
+          "helperText": "Select the permissions this role will have"
+        },
+        "status": {
+          "label": "Status",
+          "active": "Active",
+          "inactive": "Inactive"
+        }
+      },
+      "validation": {
+        "nameRequired": "Role name is required",
+        "nameMinLength": "Name must be at least 2 characters",
+        "nameMaxLength": "Name cannot exceed 50 characters",
+        "descriptionRequired": "Description is required",
+        "descriptionMaxLength": "Description cannot exceed 200 characters",
+        "permissionsRequired": "At least one permission must be selected"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete Role",
+        "description": "Are you sure you want to delete this role? This action cannot be undone.",
+        "confirmButton": "Delete",
+        "cancelButton": "Cancel"
+      },
+      "deleteMultiple": {
+        "title": "Delete Roles",
+        "description": "Are you sure you want to delete {count} roles? This action cannot be undone.",
+        "confirmButton": "Delete All",
+        "cancelButton": "Cancel"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Role created successfully",
+        "updated": "Role updated successfully",
+        "deleted": "Role deleted successfully",
+        "deletedMultiple": "Roles deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading roles",
+        "creating": "Error creating role",
+        "updating": "Error updating role",
+        "deleting": "Error deleting role",
+        "deletingMultiple": "Error deleting roles",
+        "notFound": "Role not found",
+        "duplicateName": "A role with this name already exists"
+      },
+      "info": {
+        "noResults": "No roles found",
+        "emptyState": "No roles created yet"
+      }
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    }
+  },
+  "users": {
+    "title": "Users",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "security": "Security",
+      "users": "Users"
+    },
+    "tabs": {
+      "general": "General",
+      "security": "Security"
+    },
+    "actions": {
+      "add": "Add New User",
+      "edit": "Edit",
+      "delete": "Delete",
+      "create": "Create User",
+      "update": "Update User",
+      "cancel": "Cancel",
+      "save": "Save",
+      "changePassword": "Change Password"
+    },
+    "table": {
+      "columns": {
+        "names": "Names",
+        "lastnames": "Last Names",
+        "email": "Email",
+        "roles": "Roles",
+        "status": "Status",
+        "createdAt": "Created Date",
+        "updatedAt": "Last Updated"
+      },
+      "filters": {
+        "all": "All",
+        "search": "Search users...",
+        "keyword": "Keyword"
+      }
+    },
+    "form": {
+      "sections": {
+        "details": "User Details"
+      },
+      "fields": {
+        "names": {
+          "label": "Names",
+          "helperText": "Enter the user's names"
+        },
+        "lastnames": {
+          "label": "Last Names",
+          "helperText": "Enter the user's last names"
+        },
+        "email": {
+          "label": "Email",
+          "helperText": "Enter the user's email"
+        },
+        "password": {
+          "label": "Password",
+          "helperText": "Enter a secure password"
+        },
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "helperText": "Repeat the password"
+        },
+        "oldPassword": {
+          "label": "Current Password",
+          "helperText": "Enter your current password"
+        },
+        "newPassword": {
+          "label": "New Password",
+          "helperText": "Enter the new password"
+        },
+        "confirmNewPassword": {
+          "label": "Confirm New Password",
+          "helperText": "Repeat the new password"
+        },
+        "roles": {
+          "label": "Roles",
+          "helperText": "Select the user's roles"
+        },
+        "status": {
+          "label": "User Status",
+          "helperText": "Activate or deactivate the user"
+        },
+        "avatar": {
+          "helperText": "Allowed formats: *.jpeg, *.jpg, *.png, *.gif. Max size 3MB"
+        },
+        "tel": {
+          "label": "Phone",
+          "helperText": "Enter the user's phone number"
+        },
+        "documentId": {
+          "label": "Document ID",
+          "helperText": "Enter the user's document ID"
+        },
+        "biometricIsActive": {
+          "label": "Biometric Registration",
+          "helperText": "Enable or disable biometric registration"
+        }
+      },
+      "validation": {
+        "namesRequired": "Names are required",
+        "lastnamesRequired": "Last names are required",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Email is not valid",
+        "passwordRequired": "Password is required",
+        "passwordMinLength": "Password must be at least 6 characters",
+        "confirmPasswordRequired": "Confirm password is required",
+        "confirmPasswordMatch": "Passwords must match",
+        "oldPasswordRequired": "Current password is required",
+        "newPasswordRequired": "New password is required",
+        "rolesRequired": "At least one role must be selected",
+        "telRequired": "Phone number is required",
+        "documentIdRequired": "Document ID is required"
+      }
+    },
+    "security": {
+      "changePassword": "Change Password",
+      "title": "Account Security",
+      "description": "Manage user account security"
+    },
+    "messages": {
+      "success": {
+        "created": "User created successfully",
+        "updated": "User updated successfully",
+        "deleted": "User deleted successfully",
+        "passwordChanged": "Password changed successfully"
+      },
+      "error": {
+        "loading": "Error loading users",
+        "creating": "Error creating user",
+        "updating": "Error updating user",
+        "deleting": "Error deleting user",
+        "changingPassword": "Error changing password",
+        "notFound": "User not found"
+      },
+      "info": {
+        "noResults": "No users found",
+        "emptyState": "No users created yet"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete User",
+        "description": "Are you sure you want to delete this user? This action cannot be undone.",
+        "confirmButton": "Delete",
+        "cancelButton": "Cancel"
+      },
+      "deleteMultiple": {
+        "title": "Delete Users",
+        "description": "Are you sure you want to delete {count} users? This action cannot be undone.",
+        "confirmButton": "Delete All",
+        "cancelButton": "Cancel"
+      }
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    }
+  },
+  "permissions": {
+    "title": "Permissions",
+    "breadcrumbs": {
+      "dashboard": "Dashboard", 
+      "security": "Security",
+      "roles": "Roles",
+      "permissions": "Permissions"
+    },
+    "actions": {
+      "view": "View",
+      "create": "Create",
+      "edit": "Edit", 
+      "delete": "Delete",
+      "assign": "Assign",
+      "revoke": "Revoke",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "table": {
+      "title": "Permissions Management",
+      "subtitle": "Configure permissions for this role by module",
+      "selectModule": "Select Module",
+      "item": "Item",
+      "itemsCount": "items",
+      "noData": "No data available"
+    },
+    "modules": {
+      "dashboard": "Dashboard",
+      "users": "Users", 
+      "roles": "Roles",
+      "employees": "Employees",
+      "organization": "Organization",
+      "settings": "Settings",
+      "reports": "Reports",
+      "security": "Security",
+      "company": "Company",
+      "locations": "Locations"
+    },
+    "items": {
+      "users.list": "Users List",
+      "users.create": "Create User",
+      "users.edit": "Edit User", 
+      "users.delete": "Delete User",
+      "roles.list": "Roles List",
+      "roles.create": "Create Role",
+      "roles.edit": "Edit Role",
+      "roles.delete": "Delete Role",
+      "employees.list": "Employees List",
+      "employees.create": "Create Employee",
+      "employees.edit": "Edit Employee",
+      "employees.delete": "Delete Employee",
+      "reports.analytics": "Analytics Reports",
+      "reports.generate": "Generate Reports",
+      "settings.general": "General Settings",
+      "settings.security": "Security Settings"
+    },
+    "empty": {
+      "title": "No modules available",
+      "description": "No modules are configured for this role",
+      "noItems": "No items",
+      "noItemsDescription": "No items available in this module",
+      "noPermissionsAvailable": "No permissions available"
+    },
+    "messages": {
+      "success": {
+        "updated": "Permission updated successfully",
+        "assigned": "Permission assigned successfully", 
+        "revoked": "Permission revoked successfully",
+        "saved": "Permissions saved successfully"
+      },
+      "error": {
+        "loading": "Error loading permissions",
+        "loadingModules": "Error loading modules",
+        "updating": "Error updating permission",
+        "assigning": "Error assigning permission",
+        "revoking": "Error revoking permission", 
+        "saving": "Error saving permissions",
+        "notFound": "Permission not found",
+        "unauthorized": "You don't have permissions to perform this action"
+      },
+      "info": {
+        "noModules": "No modules available",
+        "noPermissions": "No permissions configured",
+        "selectModule": "Select a module to view its permissions"
+      }
+    },
+    "tooltips": {
+      "view": "Allows viewing information",
+      "create": "Allows creating new records",
+      "edit": "Allows modifying existing records",
+      "delete": "Allows deleting records", 
+      "assign": "Assign this permission",
+      "revoke": "Revoke this permission"
+    },
+    "status": {
+      "granted": "Granted",
+      "denied": "Denied", 
+      "inherited": "Inherited"
+    }
+  }
+}
