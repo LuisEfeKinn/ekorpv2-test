@@ -1,0 +1,489 @@
+{
+  "demo": {
+    "lang": "Español",
+    "description": "El punto de partida para tu próximo proyecto está basado en MUI. La personalización fácil te ayuda a construir aplicaciones más rápido y mejor."
+  },
+  "nav": {
+    "viewProfile": "Ver Perfil",
+    "viewDashboard": "Ver Dashboard",
+    "welcome": "¡Bienvenido!",
+    "businessSystem": "Sistema Empresarial",
+    "user": "Usuario",
+    "noEmail": "Sin email"
+  },
+  "accountMenu": {
+    "dashboard": "Dashboard",
+    "profile": "Mi Perfil",
+    "biometricActivation": "Activación Biométrica"
+  },
+  "auth": {
+    "login": {
+      "title": "Iniciar sesión en tu cuenta",
+      "subtitle": "¿No tienes una cuenta?",
+      "getStarted": "Comenzar",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "signInLoader": "Cargando...",
+      "faceIdSignIn": "Inicio de Sesión Biométrico",
+      "faceIdReset": "Restablecer Usuario Biométrico",
+      "submit": "Iniciar sesión"
+    },
+    "logout": {
+      "title": "Cerrar sesión",
+      "unable": "¡No se pudo cerrar sesión!"
+    },
+    "greeting": "Hola, ¡Bienvenido!",
+    "slogan": "Decisiones rápidas, resultados claros",
+    "signInTitle": "Iniciar sesión en tu cuenta",
+    "dontHaveAccount": "¿No tienes una cuenta?",
+    "getStarted": "Comenzar",
+    "emailAddress": "Dirección de correo electrónico",
+    "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "signIn": "Iniciar sesión",
+    "signingIn": "Iniciando sesión...",
+    "recaptchaRequired": "Por favor complete la verificación reCAPTCHA",
+    "recaptchaExpired": "reCAPTCHA expirado. Por favor inténtelo de nuevo.",
+    "recaptchaError": "Error en reCAPTCHA. Por favor inténtelo de nuevo.",
+    "biometricDivider": "INICIO",
+    "securityBadge": "Conexión protegida con encriptación SSL de 256-bit"
+  },
+  "authSection": {
+    "features": {
+      "security": {
+        "title": "Seguridad Avanzada",
+        "description": "Protección de datos con encriptación de última generación"
+      },
+      "analytics": {
+        "title": "Analytics en Tiempo Real",
+        "description": "Monitorea tu negocio con dashboards interactivos"
+      },
+      "teamManagement": {
+        "title": "Gestión de Equipos",
+        "description": "Colabora eficientemente con tu equipo de trabajo"
+      }
+    },
+    "trustedPlatform": "Plataforma empresarial de confianza"
+  },
+  "dashboard": {
+    "welcome": "¡Bienvenido!",
+    "welcomeDescription": "Un tablero inteligente para tomar decisiones que impulsan tus resultados",
+    "goNow": "Ir ahora"
+  },
+  "filters": {
+    "search": "Buscar...",
+    "resultsFound": "Resultados encontrados",
+    "clear": "Borrar",
+    "noResults": "No se encontraron resultados"
+  },
+  "table": {
+    "dense": "Densidad"
+  },
+  "breadcrumbs": {
+    "dashboard": "Dashboard"
+  },
+  "actions": {
+    "create": "Crear",
+    "update": "Actualizar",
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "saving": "Guardando...",
+    "edit": "Editar",
+    "close": "Cerrar"
+  },
+  "tableSettings": {
+    "compactDensity": "Densidad Compacta",
+    "standardDensity": "Densidad Estándar",
+    "comfortableDensity": "Densidad Cómoda",
+    "showColumnsBorders": "Mostrar Bordes de Columnas",
+    "showCellsBorders": "Mostrar Bordes de Celdas"
+  },
+  "register": {
+    "title": "Registro de Usuario",
+    "subtitle": "Completa el proceso de verificación para crear tu cuenta",
+    "successTitle": "¡Registro Exitoso!",
+    "successMessage": "Tu cuenta ha sido creada exitosamente. Serás redirigido al inicio de sesión en unos momentos...",
+    "successAlertTitle": "¿Qué sigue?",
+    "successAlertMessage": "Inicia sesión con tus credenciales para acceder a la plataforma",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "signInHere": "Inicia sesión aquí",
+    "documentCapture": {
+      "title": "Captura del Documento",
+      "front": "Frente",
+      "back": "Reverso",
+      "complete": "Documento Completo",
+      "detected": "DETECTADO",
+      "searching": "BUSCANDO",
+      "ready": "¡LISTO!",
+      "almost": "CASI...",
+      "continue": "SIGUE",
+      "documentDetected": "¡Documento detectado! Capturando...",
+      "placeDocument": "Coloca tu documento dentro del marco",
+      "keepPosition": "Mantén la posición por favor",
+      "useButton": "Usa el botón \"Capturar Ahora\" cuando esté listo",
+      "processing": "Procesando documento...",
+      "startCamera": "Iniciar Cámara",
+      "startingCamera": "Iniciando cámara...",
+      "captureNow": "Capturar Ahora",
+      "cancel": "Cancelar",
+      "goBack": "Volver",
+      "confirmPhoto": "Confirmar Foto",
+      "retakePhoto": "Tomar Otra Foto",
+      "tryAgain": "Intentar Nuevamente",
+      "pressStartCamera": "Presiona \"Iniciar Cámara\" para comenzar",
+      "documentIdLabel": "Número de Documento",
+      "documentIdPlaceholder": "Ingresa tu número de documento de identidad",
+      "documentIdHelper": "Debes ingresar tu documento antes de capturar la foto",
+      "documentIdRequired": "Por favor ingresa tu número de documento antes de validar.",
+      "validate": "Validar",
+      "capturingIn": "Capturando en",
+      "preparing": "Preparando...",
+      "validationError": "Error al validar el documento. Por favor, intenta nuevamente.",
+      "instructions": {
+        "title": "Instrucciones paso a paso:",
+        "step1": "Coloca el documento dentro de las líneas guía.",
+        "step1Bold": "dentro de las líneas guía",
+        "step2": "Asegúrate de que esté bien iluminado (sin reflejos o sombras).",
+        "step2Bold": "bien iluminado",
+        "step3": "Evita que tu mano cubra alguna parte del documento.",
+        "step3Bold": "cubra alguna parte",
+        "step4": "Mantén el documento centrado y completamente visible.",
+        "step4Bold": "centrado y completamente visible",
+        "step5": "La imagen debe estar enfocada y legible.",
+        "step5Bold": "enfocada y legible"
+      },
+      "successMessage": "Documento validado correctamente",
+      "creatingLivenessSession": "Creando sesión de validación biométrica...",
+      "sessionCreated": "Sesión creada exitosamente",
+      "sessionError": "Error al crear la sesión de validación",
+      "validatingLiveness": "Validando prueba de vida...",
+      "livenessSuccess": "✓ Prueba de vida exitosa",
+      "livenessFailure": "× Prueba de vida fallida. Por favor, intenta nuevamente.",
+      "manualUpload": {
+        "switchToCamera": "Capturar con Cámara",
+        "switchToManual": "Cargar Documento",
+        "cameraDescription": "📸 Captura el frente y reverso de tu documento con la cámara",
+        "manualDescription": "📄 Sube una imagen con ambos lados de tu documento (frente y reverso)",
+        "dropZoneTitle": "Arrastra y suelta tu documento",
+        "dropZoneTitleActive": "¡Suelta aquí tu documento!",
+        "dropZoneSubtitle": "o haz click para seleccionar desde tu dispositivo",
+        "dropZoneFormat": "Formato: JPG, PNG • Máximo: 10MB",
+        "invalidFileType": "Por favor, selecciona un archivo de imagen válido",
+        "fileTooLarge": "El archivo es demasiado grande. Máximo 10MB",
+        "uploadSuccess": "Documento cargado exitosamente",
+        "uploadError": "Error al subir el documento",
+        "processing": "Procesando documento..."
+      }
+    },
+    "livenessDetection": {
+      "title": "Verificación de Identidad Facial",
+      "subtitle": "Sigue las instrucciones en pantalla para completar la verificación de tu identidad",
+      "faceDetected": "¡LISTO! Iniciando captura...",
+      "perfect": "¡Perfecto! Mantente así...",
+      "center": "CASI... Centra tu rostro",
+      "place": "Coloca tu rostro dentro del óvalo",
+      "captureNow": "Capturar Ahora",
+      "cancel": "Cancelar",
+      "processing": "Procesando...",
+      "confirmPhoto": "Confirmar Foto",
+      "retakePhoto": "Tomar Otra Foto",
+      "tryAgain": "Intentar Nuevamente",
+      "capturedFace": "Rostro capturado",
+      "positionFace": "Posiciona tu rostro en el óvalo",
+      "holdStill": "¡NO TE MUEVAS! Mantente quieto/a...",
+      "perfectHoldPosition": "¡Perfecto! Mantén esa posición...",
+      "movementDetected": "Movimiento detectado. Por favor mantente quieto/a.",
+      "uploadingFace": "Subiendo foto facial...",
+      "uploadSuccess": "Foto facial cargada exitosamente",
+      "creatingSession": "Creando sesión de verificación...",
+      "sessionCreated": "Sesión creada exitosamente",
+      "validatingLiveness": "Validando vivacidad...",
+      "livenessSuccess": "¡Verificación exitosa! Eres una persona real.",
+      "livenessFailure": "No se pudo verificar vivacidad. Por favor intenta nuevamente.",
+      "sessionError": "Error al crear sesión de verificación",
+      "validationError": "Error en la validación. Por favor intenta nuevamente.",
+      "instructions": {
+        "step1": "Coloca tu rostro dentro del óvalo guía. La cámara se iniciará automáticamente.",
+        "step2": "Mantén tu rostro centrado hasta que el sistema lo detecte. El borde del óvalo se volverá verde.",
+        "step3": "Cuando se detecte tu rostro Y estés quieto/a, comenzará un conteo de 5 segundos. NO TE MUEVAS.",
+        "step4": "La foto se capturará automáticamente. Si lo necesitas, usa el botón \"Capturar Ahora\"."
+      },
+      "privacyNote": "🔒 Tu privacidad es importante. Las imágenes se procesan de forma segura y no se almacenan permanentemente."
+    },
+    "steps": {
+      "documentFront": {
+        "label": "Documento (Frente)",
+        "description": "Captura el frente de tu documento"
+      },
+      "documentBack": {
+        "label": "Documento (Reverso)",
+        "description": "Captura el reverso de tu documento"
+      },
+      "livenessCheck": {
+        "label": "Verificación en Vivo",
+        "description": "Verificación de persona real"
+      },
+      "facialCapture": {
+        "label": "Captura Facial",
+        "description": "Toma tu fotografía facial"
+      },
+      "personalData": {
+        "label": "Datos Personales",
+        "description": "Completa tu información"
+      }
+    }
+  },
+  "resetBiometric": {
+    "receiptIdDoc": {
+      "title": "Verificación de Identidad",
+      "description": "Para continuar con el proceso, por favor ingresa tu número de documento de identidad",
+      "documentIdLabel": "Número de Documento",
+      "documentIdPlaceholder": "Ingresa tu número de documento",
+      "documentIdHelper": "El documento debe tener entre {{min}} y {{max}} caracteres numéricos",
+      "errorMinLength": "El documento debe tener al menos 7 caracteres",
+      "errorMaxLength": "El documento no puede tener más de 15 caracteres",
+      "validDocument": "✓ Documento válido. Redirigiendo...",
+      "infoText": "Ingresa únicamente números. Este documento será utilizado para verificar tu identidad.",
+      "back": "Volver",
+      "continue": "Continuar",
+      "footerText": "¿Necesitas ayuda? Contacta con soporte técnico."
+    },
+    "liveness": {
+      "title": "Verificación Facial en Vivo",
+      "subtitle": "Por favor, sigue las instrucciones para completar la verificación de tu rostro",
+      "faceDetection": "Detección Facial",
+      "awsRekognition": "Verificación mediante AWS Rekognition",
+      "startButton": "Iniciar Verificación Facial",
+      "preparing": "Preparando...",
+      "validating": "Validando sesión...",
+      "processingImage": "Procesando imagen de la sesión...",
+      "uploadingImage": "Subiendo imagen al servidor...",
+      "redirecting": "Redirigiendo...",
+      "completed": "Verificación completada exitosamente",
+      "noIdentityId": "No se encontró identityId",
+      "sessionNotSucceeded": "La sesión no fue exitosa",
+      "noBytesFound": "No se encontraron bytes de imagen en la sesión",
+      "uploadError": "Error al subir la imagen",
+      "processingError": "Error al procesar la imagen",
+      "verificationError": "Error en la verificación",
+      "startError": "Error al iniciar Liveness Check",
+      "instruction1": "Haz clic en \"Iniciar Verificación Facial\"",
+      "instruction2": "Permite el acceso a tu cámara cuando se solicite",
+      "instruction3": "Completa los gestos faciales que se te indiquen (movimientos de cabeza, parpadeos, etc.)",
+      "instruction4": "Espera a que la verificación se complete automáticamente"
+    }
+  },
+  "facialCapture": {
+    "validatingLiveness": "Verificando persona viva...",
+    "validatingLivenessSubtitle": "Esto puede tomar unos segundos",
+    "livenessValidated": "✓ Persona verificada como viva",
+    "notLiveDetected": "No se detectó una persona viva",
+    "livenessValidationError": "Error al validar persona viva",
+    "noCapturedImage": "No hay imagen capturada",
+    "uploadingImage": "Subiendo imagen facial...",
+    "uploadSuccess": "✓ Imagen facial subida exitosamente",
+    "uploadError": "Error al subir imagen facial",
+    "verifyingBiometric": "Verificando identidad biométrica...",
+    "biometricVerified": "✓ Identidad verificada exitosamente (Confianza: {{confidence}}%)",
+    "biometricNotMatch": "La identidad biométrica no coincide. Confianza: {{confidence}}% (Umbral requerido: {{threshold}}%). Por favor, intenta nuevamente con mejor iluminación y asegúrate de que tu rostro esté claramente visible.",
+    "noBiometricValidationId": "No se recibió biometricValidationId del servidor",
+    "noVerificationData": "No se recibieron datos de verificación del servidor",
+    "biometricVerificationError": "Error al verificar identidad biométrica",
+    "activatingBiometric": "Activando biometría del usuario...",
+    "biometricActivated": "✓ Biometría activada exitosamente",
+    "biometricActivationError": "Error al activar biometría del usuario"
+  },
+  "livenessCheck": {
+    "title": "Verificación de Rostro en Vivo",
+    "subtitle": "Completa los gestos faciales para verificar tu identidad",
+    "loading": {
+      "preparing": "Preparando verificación facial..."
+    },
+    "sessionInfo": {
+      "id": "ID de Sesión",
+      "length": "longitud",
+      "created": "Creada",
+      "expires": "Expira en ~10 minutos"
+    },
+    "actions": {
+      "recreateSession": "Recrear Sesión",
+      "cancel": "Cancelar"
+    },
+    "errors": {
+      "noIdentifier": "No se proporcionó identityId, biometricValidationId ni documentId",
+      "unexpectedResponse": "Respuesta inesperada del servidor",
+      "sessionCreation": "Error al crear sesión",
+      "checkConsole": "(Ver consola para más detalles)",
+      "recreateSession": "No se pudo recrear la sesión",
+      "recreateSessionFailed": "Error al recrear sesión. Por favor, vuelve a intentar.",
+      "noReturnUrl": "No se proporcionó URL de retorno",
+      "sessionExpiredRecreating": "La sesión expiró. Creando nueva sesión automáticamente...",
+      "unknown": "Error desconocido en verificación facial",
+      "awsError": "AWS Rekognition Error",
+      "cancelled": "Verificación cancelada"
+    }
+  },
+  "personalInfo": {
+    "title": "Información Personal",
+    "subtitle": "Completa tus datos para finalizar el restablecimiento",
+    "validation": {
+      "phoneMin": "El teléfono debe tener al menos 10 caracteres (incluyendo código de país)",
+      "phoneMax": "El teléfono no puede tener más de 20 caracteres",
+      "phonesNotMatch": "Los números de teléfono no coinciden",
+      "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+      "passwordUppercase": "Debe contener al menos una mayúscula",
+      "passwordLowercase": "Debe contener al menos una minúscula",
+      "passwordNumber": "Debe contener al menos un número",
+      "passwordSpecial": "Debe contener al menos un carácter especial",
+      "passwordsNotMatch": "Las contraseñas no coinciden",
+      "confirmPasswordRequired": "Confirma tu contraseña"
+    },
+    "fields": {
+      "phone": "Número de Teléfono",
+      "confirmPhone": "Confirmar Número de Teléfono",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar Contraseña"
+    },
+    "placeholders": {
+      "phone": "Ingresa tu número de teléfono",
+      "confirmPhone": "Confirma tu número de teléfono",
+      "password": "Ingresa tu contraseña",
+      "confirmPassword": "Confirma tu contraseña"
+    },
+    "helpers": {
+      "phone": "Mínimo 7 dígitos, máximo 15 dígitos (solo números)",
+      "phoneWithCode": "Selecciona tu país e ingresa tu número de teléfono",
+      "confirmPhone": "Debe coincidir con el teléfono ingresado",
+      "password": "Mínimo 8 caracteres: mayúsculas, minúsculas, números y símbolos"
+    },
+    "buttons": {
+      "verify": "Verificar",
+      "verified": "Verificado",
+      "sending": "Enviando...",
+      "verifying": "Verificando...",
+      "cancel": "Cancelar",
+      "submit": "Completar Restablecimiento",
+      "saving": "Guardando..."
+    },
+    "alerts": {
+      "verificationRequired": "Debes verificar tu número de teléfono antes de continuar"
+    },
+    "modal": {
+      "title": "Verificación de Teléfono",
+      "subtitle": "Ingresa el código de 6 dígitos enviado a {{phone}}",
+      "codeLabel": "Código de Verificación",
+      "codePlaceholder": "Ingresa el código de 6 dígitos",
+      "verify": "Verificar Código",
+      "resend": "Reenviar Código",
+      "expired": "El código ha expirado. Solicita uno nuevo."
+    },
+    "success": {
+      "codeSent": "Código de verificación enviado exitosamente",
+      "phoneVerified": "✓ Teléfono verificado correctamente",
+      "dataSaved": "✓ Datos guardados exitosamente. Restablecimiento completado."
+    },
+    "errors": {
+      "noDocumentId": "No se encontró el ID del documento",
+      "invalidPhone": "Número de teléfono inválido",
+      "phonesNotMatch": "Los números de teléfono no coinciden",
+      "invalidCode": "Código de verificación inválido",
+      "sendCode": "Error al enviar código de verificación",
+      "verifyCode": "Error al verificar código. Por favor intenta nuevamente.",
+      "phoneNotVerified": "Debes verificar tu teléfono antes de continuar",
+      "saveData": "Error al guardar los datos. Por favor intenta nuevamente."
+    }
+  },
+  "biometricLogin": {
+    "title": "Inicio de Sesión Biométrico",
+    "subtitle": "Verifica tu rostro para acceder a tu cuenta",
+    "noDocumentId": "Documento de Identidad no Proporcionado",
+    "noDocumentIdDescription": "No se proporcionó el número de documento de identidad. Por favor, ingresa tu documento desde la página de inicio de sesión.",
+    "backToLogin": "Volver al Inicio de Sesión",
+    "preparingLivenessCheck": "Preparando Verificación de Persona Viva",
+    "redirectingToLiveness": "Serás redirigido a la verificación de liveness en unos momentos...",
+    "noCapturedImage": "No hay imagen capturada",
+    "authenticating": "Autenticando con datos biométricos...",
+    "authenticationSuccess": "¡Autenticación exitosa!",
+    "authenticationError": "Error en la autenticación biométrica",
+    "sessionSetupError": "Error al configurar la sesión de usuario",
+    "noTokensReceived": "No se recibieron tokens de autenticación",
+    "captureNow": "Capturar Ahora",
+    "cancel": "Cancelar",
+    "tryAgain": "Intentar de Nuevo",
+    "confirmLogin": "Confirmar Inicio de Sesión",
+    "retakePhoto": "Tomar Foto de Nuevo",
+    "processing": "Procesando...",
+    "capturedFace": "Rostro Capturado",
+    "faceDetected": "Rostro Detectado",
+    "perfect": "Perfecto",
+    "center": "Centra tu rostro",
+    "place": "Coloca tu rostro en el óvalo",
+    "successTitle": "¡Inicio de Sesión Exitoso!",
+    "successMessage": "Tu identidad ha sido verificada correctamente. Serás redirigido al dashboard en unos momentos.",
+    "redirecting": "Redirigiendo al dashboard...",
+    "backToNormalLogin": "¿Prefieres iniciar sesión con contraseña?",
+    "clickHere": "Haz clic aquí",
+    "instructions": {
+      "step1": "Coloca tu rostro dentro del óvalo guía",
+      "step2": "Mantén tu rostro centrado y bien iluminado",
+      "step3": "La captura se realizará automáticamente"
+    },
+    "privacyNote": "Tu imagen facial será procesada de forma segura y no será almacenada permanentemente",
+    "cameraAccess": {
+      "requesting": "Solicitando acceso a la cámara...",
+      "denied": "Acceso a la cámara denegado",
+      "notFound": "No se encontró ninguna cámara",
+      "error": "Error al acceder a la cámara"
+    },
+    "errors": {
+      "noCamera": "No se pudo acceder a la cámara. Por favor, verifica los permisos.",
+      "captureError": "Error al capturar la imagen facial",
+      "uploadError": "Error al enviar la imagen para autenticación",
+      "invalidCredentials": "Credenciales biométricas inválidas",
+      "userNotFound": "Usuario no encontrado con este documento de identidad",
+      "serviceUnavailable": "El servicio de autenticación biométrica no está disponible en este momento"
+    }
+  },
+  "diagrams": {
+    "actions": {
+      "zoomIn": "Acercar",
+      "zoomOut": "Alejar",
+      "fitView": "Ajustar Vista",
+      "lock": "Bloquear Nodos",
+      "unlock": "Desbloquear Nodos",
+      "expandAll": "Expandir Todo",
+      "collapseAll": "Contraer Todo",
+      "restart": "Reiniciar",
+      "fitToScreen": "Ajustar a la Pantalla"
+    }
+  },
+  "imageUploader": {
+    "placeholder": "Arrastra una imagen o haz clic para seleccionar",
+    "dropHere": "Suelta la imagen aquí",
+    "supportedFormats": "Formatos soportados",
+    "maxSize": "Tamaño máximo",
+    "selectFile": "Seleccionar archivo",
+    "uploading": "Cargando",
+    "deleting": "Eliminando...",
+    "imageAlt": "Imagen cargada",
+    "dialog": {
+      "title": "¿Eliminar imagen?",
+      "message": "Esta acción no se puede deshacer. La imagen será eliminada definitivamente.",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar"
+    },
+    "messages": {
+      "uploadSuccess": "Imagen cargada exitosamente",
+      "deleteSuccess": "Imagen eliminada exitosamente",
+      "deleteWarning": "La imagen fue removida localmente. No se pudo eliminar del servidor (puede ser una imagen externa)."
+    },
+    "errors": {
+      "invalidType": "Tipo de archivo no permitido. Por favor, sube una imagen válida.",
+      "fileTooLarge": "El archivo es demasiado grande. Tamaño máximo: {{maxSize}}MB",
+      "uploadFailed": "Error al cargar la imagen. Por favor, intenta nuevamente.",
+      "deleteFailed": "Error al eliminar la imagen. Por favor, intenta nuevamente."
+    }
+  }
+}
