@@ -1,1 +1,0 @@
-export { AssetRecordView } from './asset-record-view';
