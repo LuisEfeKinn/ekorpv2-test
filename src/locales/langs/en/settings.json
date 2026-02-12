@@ -1,0 +1,179 @@
+{
+  "integrations": {
+    "title": "Integrations",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "settings": "Settings"
+    },
+    "actions": {
+      "loading": "Loading...",
+      "add": "Add Integration",
+      "edit": "Edit",
+      "delete": "Delete",
+      "view": "View",
+      "sync": "Sync",
+      "viewCategories": "View Categories",
+      "viewCourses": "View Courses"
+    },
+    "filters": {
+      "searchPlaceholder": "Search integrations...",
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "type": "Type",
+        "status": "Status",
+        "image": "Image",
+        "createdAt": "Created At"
+      },
+      "filters": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive",
+        "search": "Search integrations..."
+      }
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete Integration",
+        "content": "Are you sure you want to delete this integration?",
+        "contentMultiple": "Are you sure you want to delete {{count}} integrations?"
+      }
+    },
+    "messages": {
+      "success": {
+        "deleted": "Integration deleted successfully",
+        "deletedMultiple": "Integrations deleted successfully",
+        "updated": "Integration updated successfully",
+        "created": "Integration created successfully"
+      },
+      "error": {
+        "loading": "Error loading integrations",
+        "deleting": "Error deleting integration",
+        "deletingMultiple": "Error deleting integrations",
+        "notFound": "Integration not found",
+        "updating": "Error updating integration",
+        "creating": "Error creating integration",
+        "loadingDetails": "Error loading integration details"
+      }
+    },
+    "form": {
+      "title": {
+        "edit": "Edit Integration",
+        "create": "Create Integration"
+      },
+      "subtitle": "Configure the integration details",
+      "fields": {
+        "integration": {
+          "label": "Integration Type",
+          "placeholder": "Select integration type"
+        },
+        "instanceName": {
+          "label": "Instance Name",
+          "placeholder": "Enter instance name"
+        },
+        "name": {
+          "label": "Integration Name",
+          "placeholder": "Enter integration name"
+        },
+        "status": {
+          "label": "Status",
+          "active": "Active",
+          "inactive": "Inactive",
+          "helperPositiveText": "Activate to enable the integration",
+          "helperNegativeText": "Deactivate to disable the integration"
+        },
+        "parameters": {
+          "title": "Parameters",
+          "subtitle": "Configure the integration parameters",
+          "noParameters": "No parameters available for this integration",
+          "code": "Code",
+          "selectIntegration": "Select an integration to view its parameters"
+        }
+      },
+      "buttons": {
+        "save": "Save Changes",
+        "cancel": "Cancel",
+        "create": "Create Integration"
+      },
+      "validation": {
+        "nameRequired": "Integration name is required",
+        "nameMinLength": "Name must be at least 2 characters"
+      }
+    }
+  },
+  "categories": {
+    "title": "Categories",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "integrations": "Integrations"
+    },
+    "table": {
+      "columns": {
+        "name": "Category Name",
+        "description": "Description",
+        "status": "Status",
+        "createdAt": "Created At"
+      },
+      "toolbar": {
+        "search": "Search by name or type...",
+        "includeInactive": "Include Inactive"
+      },
+      "filters": {
+        "keyword": "Keyword",
+        "includeInactive": "Include Inactive",
+        "showingInactive": "Showing Inactive"
+      },
+      "actions": {
+        "viewCourses": "View Courses"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Error loading categories"
+      }
+    }
+  },
+  "courses": {
+    "title": "Courses",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "integrations": "Integrations",
+      "categories": "Categories"
+    },
+    "table": {
+      "columns": {
+        "fullName": "Full Name",
+        "displayName": "Display Name",
+        "description": "Description",
+        "status": "Status",
+        "noDescription": "No description available"
+      },
+      "toolbar": {
+        "selectIntegration": "Select Integration",
+        "searchIntegration": "Search integration...",
+        "search": "Search by name or code...",
+        "includeInactive": "Include Inactive"
+      },
+      "filters": {
+        "keyword": "Keyword",
+        "integration": "Integration",
+        "selected": "Selected",
+        "includeInactive": "Include Inactive",
+        "showingInactive": "Showing Inactive"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Error loading courses"
+      }
+    }
+  }
+}

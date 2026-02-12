@@ -1,0 +1,317 @@
+{
+  "positions": {
+    "title": "Cargos",
+    "mapDetail": "Detalle del nodo",
+    "mapHeading": "Mapa del cargo",
+    "back": "Atrás",
+    "viewMap": "Ver Mapa",
+    "modules": {
+      "information": "Información",
+      "processes": "Procesos",
+      "relations": "Relaciones",
+      "documents": "Documentos",
+      "lessonsLearned": "Lecciones Aprendidas",
+      "proposalsForImprovement": "Propuestas de Mejora",
+      "data": "Datos",
+      "systems": "Sistemas",
+      "technologies": "Tecnologías",
+      "nextPositions": "Siguientes Cargos",
+      "indicators": "Indicadores",
+      "exams": "Exámenes"
+    },
+    "relations": {
+      "process": {
+        "title": "Relacionar Proceso",
+        "buttonLabel": "Relacionar Proceso",
+        "select": "Seleccione un proceso",
+        "isMain": "Es proceso principal",
+        "actionType": "Tipo de acción",
+        "description": "Descripción",
+        "success": "Proceso relacionado exitosamente",
+        "error": "Error al relacionar el proceso"
+      },
+      "document": {
+        "title": "Relacionar Documento",
+        "buttonLabel": "Relacionar Documento",
+        "select": "Seleccione un documento",
+        "observations": "Observaciones",
+        "success": "Documento relacionado exitosamente",
+        "error": "Error al relacionar el documento"
+      },
+      "system": {
+        "title": "Relacionar Sistema",
+        "buttonLabel": "Relacionar Sistema",
+        "select": "Seleccione un sistema",
+        "observations": "Observaciones",
+        "success": "Sistema relacionado exitosamente",
+        "error": "Error al relacionar el sistema"
+      },
+      "indicator": {
+        "title": "Relacionar Indicador",
+        "buttonLabel": "Relacionar Indicador",
+        "select": "Seleccione un indicador",
+        "observations": "Observaciones",
+        "creationDate": "Fecha de creación",
+        "creationDateHelper": "Se usará la fecha de hoy automáticamente",
+        "success": "Indicador relacionado exitosamente",
+        "error": "Error al relacionar el indicador"
+      },
+      "lessonLearned": {
+        "title": "Relacionar Lección Aprendida",
+        "buttonLabel": "Relacionar Lección Aprendida",
+        "saveButton": "Guardar Lección",
+        "success": "Lección aprendida guardada exitosamente",
+        "error": "Error al guardar la lección aprendida"
+      },
+      "proposal": {
+        "title": "Relacionar Propuesta de Mejora",
+        "buttonLabel": "Relacionar Propuesta de Mejora",
+        "saveButton": "Guardar Propuesta",
+        "success": "Propuesta de mejora guardada exitosamente",
+        "error": "Error al guardar la propuesta de mejora"
+      },
+      "common": {
+        "select": "Seleccione",
+        "cancel": "Cancelar",
+        "relate": "Relacionar",
+        "selectElement": "Seleccione un elemento para relacionar",
+        "saveError": "Error al guardar la relación",
+        "saveSuccess": "Relación guardada"
+      },
+      "data": {
+        "title": "Relacionar Datos",
+        "buttonLabel": "Relacionar Datos",
+        "select": "Seleccione datos",
+        "observations": "Observaciones",
+        "success": "Datos relacionados exitosamente",
+        "error": "Error al relacionar los datos"
+      },
+      "technology": {
+        "title": "Relacionar Tecnología",
+        "buttonLabel": "Relacionar Tecnología",
+        "select": "Seleccione una tecnología",
+        "observations": "Observaciones",
+        "success": "Tecnología relacionada exitosamente",
+        "error": "Error al relacionar la tecnología"
+      },
+      "relation": {
+        "title": "Relacionar Cargo",
+        "editTitle": "Editar Relación",
+        "buttonLabel": "Relacionar Cargo",
+        "select": "Cargo Relacionado",
+        "name": "Relación",
+        "reverseName": "Relación Inversa",
+        "success": "Cargo relacionado exitosamente",
+        "error": "Error al relacionar el cargo"
+      },
+      "nextJob": {
+        "title": "Siguientes Cargos",
+        "editTitle": "Editar Siguiente Cargo",
+        "buttonLabel": "Agregar Siguiente Cargo",
+        "select": "Siguiente Cargo",
+        "success": "Siguiente cargo guardado exitosamente",
+        "error": "Error al guardar siguiente cargo"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "Crear Cargo",
+        "edit": "Editar Cargo"
+      },
+      "sections": {
+        "details": "Detalles del Cargo",
+        "requirements": "Requisitos y Experiencia",
+        "relationships": "Relaciones y Competencias"
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre del Cargo",
+          "required": "El nombre es requerido"
+        },
+        "code": {
+          "label": "Nomenclatura"
+        },
+        "jobType": {
+          "label": "Tipo de Cargo",
+          "placeholder": "Seleccione un tipo",
+          "required": "El tipo es requerido"
+        },
+        "superiorJob": {
+          "label": "Jefe Inmediato"
+        },
+        "objectives": {
+          "label": "Objetivos del Cargo"
+        },
+        "expectedResults": {
+          "label": "Resultados Esperados"
+        },
+        "requirements": {
+          "label": "Requisitos Específicos"
+        },
+        "otherFunctions": {
+          "label": "Otras Funciones"
+        },
+        "minimumAcademicLevel": {
+          "label": "Nivel Académico Mínimo"
+        },
+        "desiredAcademicLevel": {
+          "label": "Nivel Académico Deseado"
+        },
+        "minimumExperience": {
+          "label": "Experiencia Mínima"
+        },
+        "desiredExperience": {
+          "label": "Experiencia Deseada"
+        },
+        "supervises": {
+          "label": "Cargos que Supervisa"
+        },
+        "regionalLocation": {
+          "label": "Ubicación Regional"
+        },
+        "headquarters": {
+          "label": "Sede"
+        },
+        "numberOfPositions": {
+          "label": "Número de Vacantes"
+        },
+        "numberOfHoursPerPosition": {
+          "label": "Horas por Cargo"
+        },
+        "academicProfile": {
+          "label": "Perfil Académico"
+        },
+        "psychologicalProfile": {
+          "label": "Perfil Psicológico"
+        },
+        "internalRelationship": {
+          "label": "Relaciones Internas"
+        },
+        "externalRelationship": {
+          "label": "Relaciones Externas"
+        },
+        "competencies": {
+          "label": "Competencias Requeridas"
+        }
+      },
+      "messages": {
+        "createSuccess": "Cargo creado correctamente",
+        "createError": "No se pudo crear el cargo",
+        "updateSuccess": "Cargo actualizado correctamente",
+        "updateError": "No se pudo actualizar el cargo"
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "create": "Crear",
+        "saveChanges": "Guardar Cambios"
+      },
+      "common": {
+        "none": "Ninguno"
+      },
+      "description": "Descripción",
+      "descriptionPlaceholder": "Ingrese la descripción",
+      "descriptionRequired": "La descripción es requerida",
+      "problem": "Problema",
+      "problemPlaceholder": "Describa el problema identificado",
+      "rootCause": "Causa raíz",
+      "rootCausePlaceholder": "Describa la causa raíz del problema",
+      "proposedStrategy": "Estrategia propuesta",
+      "proposedStrategyPlaceholder": "Describa la estrategia propuesta",
+      "estimatedResourceCosts": "Costos estimados de recursos",
+      "estimatedResourceCostsPlaceholder": "Ej: $1,000,000 COP",
+      "expectedResults": "Resultados esperados",
+      "expectedResultsPlaceholder": "Describa los resultados esperados",
+      "effectivenessIndicators": "Indicadores de efectividad",
+      "effectivenessIndicatorsPlaceholder": "Describa los indicadores de efectividad",
+      "proposedWorkTeam": "Equipo de trabajo propuesto",
+      "proposedWorkTeamPlaceholder": "Describa el equipo de trabajo propuesto",
+      "link": "Enlace (opcional)",
+      "linkPlaceholder": "https://ejemplo.com",
+      "linkValidation": "Debe ser una URL válida"
+    },
+    "map": {
+      "loading": "Cargando mapa...",
+      "loadingDetail": "Cargando...",
+      "noData": "No hay datos para mostrar.",
+      "noRelations": "No hay relaciones para mostrar.",
+      "modulesConnected": "Módulos Conectados",
+      "back": "Volver",
+      "controls": {
+        "zoom": "Zoom: Rueda del ratón",
+        "move": "Mover: Click sostenido y arrastrar"
+      }
+    },
+    "errors": {
+      "loadMap": "Error al cargar el mapa del cargo",
+      "loadDetail": "Error al cargar el detalle del nodo",
+      "loadData": "No se pudieron cargar los datos",
+      "invalidJobId": "ID de cargo no válido"
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "positions": "Cargos",
+      "map": "Mapa",
+      "architecture": "Arquitectura"
+    },
+    "table": {
+      "title": "Tabla de Cargos",
+      "all": "Todas",
+      "code": "Nomenclatura",
+      "name": "Nombre",
+      "jobType": "Tipo de cargo",
+      "actions": {
+        "viewMap": "Ver mapa",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "upload": "Subir",
+        "new": "Nuevo",
+        "downloadTemplate": "Descargar Plantilla"
+      },
+      "messages": {
+        "deleteConfirm": "¿Estás seguro de que quieres eliminar este elemento?",
+        "deleteSuccess": "Cargo eliminado",
+        "deleteError": "Error eliminando cargo",
+        "loadError": "Error cargando cargos",
+        "editPending": "Edición pendiente",
+        "uploadSuccess": "Archivo subido exitosamente",
+        "uploadError": "Error al subir el archivo",
+        "downloadError": "Error al descargar la plantilla"
+      }
+    }
+  },
+  "organizationalStructure": {
+    "relations": {
+      "title": "Crear Relación",
+      "buttonLabel": "Agregar Relación",
+      "name": "Nombre",
+      "reverseName": "Nombre reverso",
+      "unit1": "Unidad organizacional 1",
+      "unit2": "Unidad organizacional 2",
+      "select": "Seleccione",
+      "loading": "Cargando...",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "requiredName": "El nombre es obligatorio",
+      "requiredReverseName": "El nombre reverso es obligatorio",
+      "requiredUnit1": "La unidad organizacional es obligatoria",
+      "requiredUnit2": "La unidad relacionada es obligatoria",
+      "success": "Relación creada con éxito",
+      "error": "Error al crear la relación"
+    },
+    "documents": {
+      "title": "Relacionar Documento",
+      "buttonLabel": "Agregar Documento",
+      "select": "Documento",
+      "selectPlaceholder": "Seleccione",
+      "observations": "Observaciones",
+      "loading": "Cargando...",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "requiredDocument": "El documento es obligatorio",
+      "requiredObservations": "Las observaciones son obligatorias",
+      "success": "Documento relacionado con éxito",
+      "error": "Error al relacionar el documento"
+    }
+  }
+}
