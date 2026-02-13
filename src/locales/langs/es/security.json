@@ -1,0 +1,364 @@
+{
+  "roles": {
+    "title": "Roles",
+    "breadcrumbs": {
+      "dashboard": "Panel de Control",
+      "security": "Seguridad",
+      "roles": "Roles"
+    },
+    "actions": {
+      "add": "Agregar Nuevo Rol",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "create": "Crear Rol",
+      "update": "Actualizar Rol",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "permissions": "Permisos"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "permissions": "Permisos",
+        "status": "Estado",
+        "createdAt": "Fecha de Creación",
+        "updatedAt": "Última Actualización"
+      },
+      "filters": {
+        "all": "Todos",
+        "search": "Buscar roles...",
+        "keyword": "Palabra clave"
+      }
+    },
+    "form": {
+      "sections": {
+        "details": "Detalles del Rol"
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre del Rol",
+          "helperText": "Ingrese un nombre descriptivo para el rol"
+        },
+        "description": {
+          "label": "Descripción",
+          "helperText": "Breve descripción de las funciones del rol"
+        },
+        "permissions": {
+          "label": "Permisos",
+          "helperText": "Seleccione los permisos que tendrá este rol"
+        },
+        "status": {
+          "label": "Estado",
+          "active": "Activo",
+          "inactive": "Inactivo"
+        }
+      },
+      "validation": {
+        "nameRequired": "El nombre del rol es obligatorio",
+        "nameMinLength": "El nombre debe tener al menos 2 caracteres",
+        "nameMaxLength": "El nombre no puede exceder 50 caracteres",
+        "descriptionRequired": "La descripción es obligatoria",
+        "descriptionMaxLength": "La descripción no puede exceder 200 caracteres",
+        "permissionsRequired": "Debe seleccionar al menos un permiso"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Rol",
+        "description": "¿Estás seguro de que deseas eliminar este rol? Esta acción no se puede deshacer.",
+        "confirmButton": "Eliminar",
+        "cancelButton": "Cancelar"
+      },
+      "deleteMultiple": {
+        "title": "Eliminar Roles",
+        "description": "¿Estás seguro de que deseas eliminar {count} roles? Esta acción no se puede deshacer.",
+        "confirmButton": "Eliminar Todo",
+        "cancelButton": "Cancelar"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Rol creado exitosamente",
+        "updated": "Rol actualizado exitosamente",
+        "deleted": "Rol eliminado exitosamente",
+        "deletedMultiple": "Roles eliminados exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar los roles",
+        "creating": "Error al crear el rol",
+        "updating": "Error al actualizar el rol",
+        "deleting": "Error al eliminar el rol",
+        "deletingMultiple": "Error al eliminar los roles",
+        "notFound": "Rol no encontrado",
+        "duplicateName": "Ya existe un rol con este nombre"
+      },
+      "info": {
+        "noResults": "No se encontraron roles",
+        "emptyState": "No hay roles creados aún"
+      }
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    }
+  },
+  "users": {
+    "title": "Usuarios",
+    "breadcrumbs": {
+      "dashboard": "Panel de Control",
+      "security": "Seguridad",
+      "users": "Usuarios"
+    },
+    "tabs": {
+      "general": "General",
+      "security": "Seguridad"
+    },
+    "actions": {
+      "add": "Agregar Nuevo Usuario",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "create": "Crear Usuario",
+      "update": "Actualizar Usuario",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "changePassword": "Cambiar Contraseña"
+    },
+    "table": {
+      "columns": {
+        "names": "Nombres",
+        "lastnames": "Apellidos",
+        "email": "Correo electrónico",
+        "roles": "Roles",
+        "status": "Estado",
+        "createdAt": "Fecha de Creación",
+        "updatedAt": "Última Actualización"
+      },
+      "filters": {
+        "all": "Todos",
+        "search": "Buscar usuarios...",
+        "keyword": "Palabra clave"
+      }
+    },
+    "form": {
+      "sections": {
+        "details": "Detalles del Usuario"
+      },
+      "fields": {
+        "names": {
+          "label": "Nombres",
+          "helperText": "Ingrese los nombres del usuario"
+        },
+        "lastnames": {
+          "label": "Apellidos",
+          "helperText": "Ingrese los apellidos del usuario"
+        },
+        "email": {
+          "label": "Correo electrónico",
+          "helperText": "Ingrese el correo electrónico"
+        },
+        "password": {
+          "label": "Contraseña",
+          "helperText": "Ingrese una contraseña segura"
+        },
+        "confirmPassword": {
+          "label": "Confirmar Contraseña",
+          "helperText": "Repita la contraseña"
+        },
+        "oldPassword": {
+          "label": "Contraseña Actual",
+          "helperText": "Ingrese su contraseña actual"
+        },
+        "newPassword": {
+          "label": "Nueva Contraseña",
+          "helperText": "Ingrese la nueva contraseña"
+        },
+        "confirmNewPassword": {
+          "label": "Confirmar Nueva Contraseña",
+          "helperText": "Repita la nueva contraseña"
+        },
+        "roles": {
+          "label": "Roles",
+          "helperText": "Seleccione los roles del usuario"
+        },
+        "status": {
+          "label": "Estado del usuario",
+          "helperText": "Activa o desactiva el usuario"
+        },
+        "avatar": {
+          "helperText": "Formatos permitidos: *.jpeg, *.jpg, *.png, *.gif. Tamaño máximo 3MB"
+        },
+        "tel": {
+          "label": "Teléfono",
+          "helperText": "Ingrese el número de teléfono del usuario"
+        },
+        "documentId": {
+          "label": "ID de Documento",
+          "helperText": "Ingrese el ID de documento del usuario"
+        },
+        "biometricIsActive": {
+          "label": "Registro Biométrico",
+          "helperText": "Habilitar o deshabilitar el registro biométrico"
+        }
+      },
+      "validation": {
+        "namesRequired": "El nombre es obligatorio",
+        "lastnamesRequired": "El apellido es obligatorio",
+        "emailRequired": "El correo es obligatorio",
+        "emailInvalid": "El correo no es válido",
+        "passwordRequired": "La contraseña es obligatoria",
+        "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+        "confirmPasswordRequired": "La confirmación es obligatoria",
+        "confirmPasswordMatch": "Las contraseñas deben coincidir",
+        "oldPasswordRequired": "La contraseña actual es obligatoria",
+        "newPasswordRequired": "La nueva contraseña es obligatoria",
+        "rolesRequired": "Debe seleccionar al menos un rol",
+        "telRequired": "El número de teléfono es obligatorio",
+        "documentIdRequired": "El ID de documento es obligatorio"
+      }
+    },
+    "security": {
+      "changePassword": "Cambiar Contraseña",
+      "title": "Seguridad de la Cuenta",
+      "description": "Gestiona la seguridad de la cuenta del usuario"
+    },
+    "messages": {
+      "success": {
+        "created": "Usuario creado exitosamente",
+        "updated": "Usuario actualizado exitosamente",
+        "deleted": "Usuario eliminado exitosamente",
+        "passwordChanged": "Contraseña cambiada exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar los usuarios",
+        "creating": "Error al crear el usuario",
+        "updating": "Error al actualizar el usuario",
+        "deleting": "Error al eliminar el usuario",
+        "changingPassword": "Error al cambiar la contraseña",
+        "notFound": "Usuario no encontrado"
+      },
+      "info": {
+        "noResults": "No se encontraron usuarios",
+        "emptyState": "No hay usuarios creados aún"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Usuario",
+        "description": "¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer.",
+        "confirmButton": "Eliminar",
+        "cancelButton": "Cancelar"
+      },
+      "deleteMultiple": {
+        "title": "Eliminar Usuarios",
+        "description": "¿Estás seguro de que deseas eliminar {count} usuarios? Esta acción no se puede deshacer.",
+        "confirmButton": "Eliminar Todos",
+        "cancelButton": "Cancelar"
+      }
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    }
+  },
+  "permissions": {
+    "title": "Permisos",
+    "breadcrumbs": {
+      "dashboard": "Panel de Control",
+      "security": "Seguridad",
+      "roles": "Roles",
+      "permissions": "Permisos"
+    },
+    "actions": {
+      "view": "Ver",
+      "create": "Crear",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "assign": "Asignar",
+      "revoke": "Revocar",
+      "save": "Guardar",
+      "cancel": "Cancelar"
+    },
+    "table": {
+      "title": "Gestión de Permisos",
+      "subtitle": "Configura los permisos para este rol por módulo",
+      "selectModule": "Seleccionar Módulo",
+      "item": "Elemento",
+      "itemsCount": "elementos",
+      "noData": "No hay datos disponibles"
+    },
+    "modules": {
+      "dashboard": "Panel de Control",
+      "users": "Usuarios",
+      "roles": "Roles",
+      "employees": "Empleados",
+      "organization": "Organización",
+      "settings": "Configuración",
+      "reports": "Reportes",
+      "security": "Seguridad",
+      "company": "Empresa",
+      "locations": "Ubicaciones"
+    },
+    "items": {
+      "users.list": "Lista de Usuarios",
+      "users.create": "Crear Usuario", 
+      "users.edit": "Editar Usuario",
+      "users.delete": "Eliminar Usuario",
+      "roles.list": "Lista de Roles",
+      "roles.create": "Crear Rol",
+      "roles.edit": "Editar Rol",
+      "roles.delete": "Eliminar Rol",
+      "employees.list": "Lista de Empleados",
+      "employees.create": "Crear Empleado",
+      "employees.edit": "Editar Empleado",
+      "employees.delete": "Eliminar Empleado",
+      "reports.analytics": "Reportes Analíticos",
+      "reports.generate": "Generar Reportes",
+      "settings.general": "Configuración General",
+      "settings.security": "Configuración de Seguridad"
+    },
+    "empty": {
+      "title": "Sin módulos disponibles",
+      "description": "No hay módulos configurados para este rol",
+      "noItems": "Sin elementos",
+      "noItemsDescription": "No hay elementos disponibles en este módulo",
+      "noPermissionsAvailable": "Sin permisos disponibles"
+    },
+    "messages": {
+      "success": {
+        "updated": "Permiso actualizado correctamente",
+        "assigned": "Permiso asignado correctamente",
+        "revoked": "Permiso revocado correctamente",
+        "saved": "Permisos guardados correctamente"
+      },
+      "error": {
+        "loading": "Error al cargar los permisos",
+        "loadingModules": "Error al cargar los módulos",
+        "updating": "Error al actualizar el permiso",
+        "assigning": "Error al asignar el permiso",
+        "revoking": "Error al revocar el permiso",
+        "saving": "Error al guardar los permisos",
+        "notFound": "Permiso no encontrado",
+        "unauthorized": "No tienes permisos para realizar esta acción"
+      },
+      "info": {
+        "noModules": "No hay módulos disponibles",
+        "noPermissions": "No hay permisos configurados",
+        "selectModule": "Selecciona un módulo para ver sus permisos"
+      }
+    },
+    "tooltips": {
+      "view": "Permite ver la información",
+      "create": "Permite crear nuevos registros",
+      "edit": "Permite modificar registros existentes", 
+      "delete": "Permite eliminar registros",
+      "assign": "Asignar este permiso",
+      "revoke": "Revocar este permiso"
+    },
+    "status": {
+      "granted": "Concedido",
+      "denied": "Denegado",
+      "inherited": "Heredado"
+    }
+  }
+}

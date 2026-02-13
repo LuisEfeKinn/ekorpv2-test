@@ -1,0 +1,255 @@
+{
+  "welcome": "Welcome back",
+  "description": "Manage and analyze your organization's talent from one place",
+  "actions": {
+    "viewReports": "View Reports"
+  },
+  "widgets": {
+    "activeRoutes": "Active Routes",
+    "licensesExpiring": "Licenses Expiring",
+    "pendingEvaluations": "Pending Evaluations",
+    "newHires": "New Hires (Month)",
+    "developmentPlans": "Development Plans"
+  },
+  "kpis": {
+    "totalEmployees": "Total Employees",
+    "avgCompetency": "Average Competency",
+    "trainings": "Trainings",
+    "assignedTeams": "Assigned Teams"
+  },
+  "talent": {
+    "competencyRadar": {
+      "title": "Organizational Competency Assessment",
+      "subtitle": "Comparison with established goals (80 points)",
+      "currentScore": "Current Score",
+      "target": "Target",
+      "categories": {
+        "liderazgo": "Leadership",
+        "trabajoEnEquipo": "Teamwork",
+        "comunicacion": "Communication",
+        "innovacion": "Innovation",
+        "resolucionDeProblemas": "Problem Solving",
+        "adaptabilidad": "Adaptability",
+        "gestionDeProyectos": "Project Management",
+        "analisisDeDatos": "Data Analysis",
+        "atencionAlCliente": "Customer Service",
+        "pensamientoCritico": "Critical Thinking",
+        "trabajoColaborativo": "Collaborative Work",
+        "gestionDelCambio": "Change Management",
+        "creatividad": "Creativity",
+        "inteligenciaEmocional": "Emotional Intelligence",
+        "negociacion": "Negotiation",
+        "gestionDelTiempo": "Time Management",
+        "comunicacionEfectiva": "Effective Communication"
+      },
+      "levels": {
+        "alto": "High",
+        "medio": "Medium",
+        "bajo": "Low"
+      }
+    },
+    "competencyMap": {
+      "title": "Competency Distribution",
+      "subtitle": "Levels by category"
+    },
+    "learningPaths": {
+      "title": "Learning Paths Progress",
+      "subtitle": "Current status of all paths",
+      "paths": "paths",
+      "totalPaths": "Total Paths",
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "notStarted": "Not Started",
+      "statuses": {
+        "completed": "Completed",
+        "inProgress": "In Progress",
+        "notStarted": "Not Started"
+      }
+    },
+    "resourceStatus": {
+      "title": "Licenses and Equipment Status",
+      "subtitle": "Current resource inventory",
+      "quantity": "units",
+      "labels": {
+        "activeLicenses": "Active Licenses",
+        "expiringLicenses": "Expiring Licenses",
+        "assignedEquipment": "Assigned Equipment",
+        "availableEquipment": "Available Equipment"
+      }
+    },
+    "recentTrainings": {
+      "title": "Recent Trainings",
+      "subtitle": "trainings completed this month",
+      "employee": "Employee",
+      "course": "Course",
+      "date": "Date",
+      "status": "Status",
+      "score": "Score",
+      "statuses": {
+        "completed": "Completed",
+        "inProgress": "In Progress",
+        "pending": "Pending"
+      }
+    },
+    "performanceReviews": {
+      "title": "Performance Management",
+      "subtitle": "Evaluations of outstanding employees",
+      "employee": "Employee",
+      "position": "Position",
+      "department": "Department",
+      "overallScore": "Overall Score",
+      "productivity": "Productivity",
+      "quality": "Quality",
+      "collaboration": "Collaboration",
+      "lastReview": "Last Review",
+      "status": "Status",
+      "statuses": {
+        "excellent": "Excellent",
+        "good": "Good",
+        "regular": "Regular",
+        "needsImprovement": "Needs Improvement"
+      }
+    },
+    "nineBox": {
+      "title": "Nine Box - Talent and Performance Matrix",
+      "subtitle": "Evaluation of potential vs performance of key collaborators",
+      "performance": "Performance",
+      "potential": "Potential",
+      "employee": "employee",
+      "employees": "employees",
+      "noEmployees": "No employees",
+      "categories": {
+        "star": "Star",
+        "highPotential": "High Potential",
+        "keyProfessional": "Key Professional",
+        "effectiveCollaborator": "Effective Collaborator",
+        "technicalExpert": "Technical Expert",
+        "needsDevelopment": "Needs Development",
+        "emergingTalent": "Emerging Talent",
+        "inconsistent": "Inconsistent",
+        "lowPerformance": "Low Performance"
+      },
+      "levels": {
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      }
+    }
+  },
+  "performance": {
+    "evaluate": {
+      "heading": "Performance Evaluation",
+      "links": {
+        "dashboard": "Dashboard",
+        "performanceEvaluation": "Manage Evaluations"
+      },
+      "nineBox": {
+        "title": "Nine Box - Talent and Performance Matrix",
+        "subheader": "Evaluation of potential vs performance of key collaborators"
+      },
+      "performanceReviews": {
+        "title": "Performance Management",
+        "subheader": "Evaluations of outstanding employees"
+      }
+    }
+  },
+  "months": {
+    "jan": "Jan",
+    "feb": "Feb",
+    "mar": "Mar",
+    "apr": "Apr",
+    "may": "May",
+    "jun": "Jun",
+    "jul": "Jul",
+    "aug": "Aug",
+    "sep": "Sep",
+    "oct": "Oct",
+    "nov": "Nov",
+    "dec": "Dec"
+  },
+  "personal": {
+    "welcome": "Welcome back",
+    "description": "Here you can see your personal progress, goals, and pending tasks.",
+    "actions": {
+      "viewProgress": "View My Progress"
+    },
+    "widgets": {
+      "pendingTasks": "My Pending Tasks",
+      "assignedTrainings": "Assigned Trainings",
+      "coursesEnrolled": "Enrolled Courses",
+      "coursesPending": "Pending Courses",
+      "coursesCompleted": "Completed Courses",
+      "coursesInProgress": "Courses in Progress",
+      "totalPointsEarned": "Total Points Earned",
+      "totalPointsSpent": "Total Points Spent",
+      "availableBalance": "Available Points",
+      "monthlyProgress": "My Monthly Progress",
+      "pendingEvaluations": "Pending Evaluations",
+      "activeLearningPaths": "Active Learning Paths",
+      "expiringLicenses": "Expiring Licenses"
+    },
+    "kpis": {
+      "tasksCompleted": "Tasks Completed",
+      "myScore": "My Score",
+      "learningHours": "Learning Hours",
+      "achievedGoals": "Achieved Goals",
+      "averageScore": "Average Score",
+      "totalHours": "Total Hours"
+    },
+    "competency": {
+      "radar": {
+        "title": "My Competency Assessment",
+        "subtitle": "Comparison with personal goals",
+        "currentScore": "My Score",
+        "target": "Personal Goal"
+      },
+      "distribution": {
+        "title": "My Competencies",
+        "subtitle": "Distribution by levels"
+      }
+    },
+    "learningPaths": {
+      "title": "My Learning Paths",
+      "subtitle": "Progress of my 3 active paths",
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "notStarted": "Not Started"
+    },
+    "resources": {
+      "title": "My Licenses and Equipment",
+      "subtitle": "Status of my assigned resources",
+      "activeLicenses": "Active Licenses",
+      "expiringLicenses": "Expiring Licenses",
+      "assignedEquipment": "Assigned Equipment",
+      "availableEquipment": "Available Equipment"
+    },
+    "courses": {
+      "title": "My Courses",
+      "subtitle": "Status of all my courses",
+      "course": "Course",
+      "learningPath": "Learning Path",
+      "status": "Status",
+      "startDate": "Start Date",
+      "score": "Score",
+      "duration": "Duration",
+      "progress": "Progress",
+      "totalCourses": "Courses",
+      "headers": {
+        "learningPath": "Learning Path",
+        "progress": "Progress",
+        "courses": "Courses",
+        "status": "Status",
+        "course": "Course",
+        "startDate": "Start Date",
+        "score": "Score",
+        "duration": "Duration"
+      },
+      "statuses": {
+        "completed": "Completed",
+        "inProgress": "In Progress",
+        "pending": "Pending",
+        "notStarted": "Not Started"
+      }
+    }
+  }
+}
