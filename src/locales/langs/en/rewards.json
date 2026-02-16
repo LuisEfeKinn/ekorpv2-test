@@ -1,0 +1,561 @@
+{
+  "rewards": {
+    "title": "Rewards",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "rewards": "Rewards",
+      "edit": "Edit Reward",
+      "create": "Create Reward"
+    },
+    "actions": {
+      "add": "Add Reward",
+      "edit": "Edit",
+      "delete": "Delete",
+      "view": "View"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "category": "Category",
+        "points": "Points",
+        "stock": "Stock",
+        "status": "Status"
+      },
+      "toolbar": {
+        "sortBy": "Sort by",
+        "resetFilters": "Reset filters"
+      },
+      "filters": {
+        "all": "All",
+        "keyword": "Keyword",
+        "categoryRewardId": "Categories"
+      },
+      "order": {
+        "idAsc": "ID (Ascending)",
+        "idDesc": "ID (Descending)",
+        "nameAsc": "Name (A-Z)",
+        "nameDesc": "Name (Z-A)",
+        "pointsAsc": "Points (Low to High)",
+        "pointsDesc": "Points (High to Low)",
+        "stockAsc": "Stock (Low to High)",
+        "stockDesc": "Stock (High to Low)",
+        "createdAtAsc": "Oldest first",
+        "createdAtDesc": "Newest first",
+        "categoryAsc": "Category (A-Z)",
+        "categoryDesc": "Category (Z-A)"
+      },
+      "search": "Search rewards..."
+    },
+    "form": {
+      "name": {
+        "required": "Name is required"
+      },
+      "category": {
+        "required": "Category is required"
+      },
+      "stock": {
+        "required": "Stock is required"
+      },
+      "isActive": {
+        "required": "Status is required"
+      },
+      "pointsRequired": {
+        "required": "Points are required"
+      },
+      "imageUrl": {
+        "required": "Image URL is required"
+      },
+      "fields": {
+        "name": {
+          "label": "Name",
+          "helperText": "Enter the name of the reward"
+        },
+        "description": {
+          "label": "Description",
+          "helperText": "Enter the description of the reward"
+        },
+        "category": {
+          "label": "Category"
+        },
+        "pointsRequired": {
+          "label": "Points",
+          "helperText": "Enter the points required to redeem"
+        },
+        "stockTotal": {
+          "label": "Stock",
+          "helperText": "Enter the stock quantity"
+        },
+        "startDate": {
+          "label": "Start Date"
+        },
+        "endDate": {
+          "label": "End Date"
+        },
+        "imageUrl": {
+          "label": "Image URL",
+          "helperText": "Enter the image URL of the reward"
+        },
+        "isActive": {
+          "label": "Status"
+        }
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "saving": "Saving...",
+        "update": "Update",
+        "create": "Create"
+      },
+      "messages": {
+        "updateSuccess": "Reward updated successfully",
+        "createSuccess": "Reward created successfully",
+        "saveError": "Error saving reward"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Error loading reward",
+        "deleting": "Error deleting reward",
+        "saveError": "Error saving reward"
+      },
+      "success": {
+        "deleted": "Reward deleted successfully",
+        "updateSuccess": "Reward updated successfully",
+        "createSuccess": "Reward created successfully"
+      },
+      "confirmDelete": "Are you sure you want to delete this reward?"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    }
+  },
+  "rewards-categories": {
+    "title": "Rewards Categories",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "rewards": "Rewards",
+      "rewards-categories": "Rewards Categories",
+      "list": "List of Rewards Categories",
+      "create": "Create Rewards Category",
+      "edit": "Edit Rewards Category"
+    },
+    "actions": {
+      "add": "Add Rewards Category",
+      "edit": "Edit Rewards Category",
+      "delete": "Delete Rewards Category",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving...",
+      "create": "Create Rewards Category",
+      "update": "Update Rewards Category",
+      "search": "Search rewards categories...",
+      "clear": "Clear"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "abreviation": "Abreviation",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "actions": "Actions"
+      },
+      "toolbar": {
+        "search": "Search rewards categories..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Keyword:",
+        "all": "All"
+      },
+      "emptyState": {
+        "noData": "No rewards categories found",
+        "noResults": "No results found for your search"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter the rewards category name",
+          "helperText": "Enter the rewards category name",
+          "required": "Name is required"
+        },
+        "abreviation": {
+          "label": "abreviation",
+          "placeholder": "Enter the rewards category abreviation",
+          "helperText": "Enter the rewards category abreviation",
+          "required": "abreviation is required"
+        }
+      },
+      "sections": {
+        "details": "Rewards Category Details"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete Rewards Category",
+        "content": "Are you sure you want to delete this rewards category?",
+        "contentMultiple": "Are you sure you want to delete these rewards categories?",
+        "confirm": "Delete"
+      },
+      "unsavedChanges": {
+        "title": "Unsaved Changes",
+        "content": "You have unsaved changes. Are you sure you want to leave?",
+        "confirm": "Leave without saving"
+      }
+    },
+    "messages": {
+      "loading": "Loading rewards categories...",
+      "saving": "Saving...",
+      "loadError": "Error loading rewards category",
+      "saveError": "Error saving rewards category. Please try again.",
+      "notFound": "Rewards category not found",
+      "createSuccess": "Rewards category created successfully!",
+      "updateSuccess": "Rewards category updated successfully!",
+      "success": {
+        "created": "Rewards category created successfully",
+        "updated": "Rewards category updated successfully",
+        "deleted": "Rewards category deleted successfully",
+        "deletedMultiple": "Rewards categories deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading rewards categories",
+        "saving": "Error saving rewards category. Please try again.",
+        "deleting": "Error deleting rewards category",
+        "deletingMultiple": "Error deleting rewards categories",
+        "notFound": "Rewards category not found"
+      }
+    },
+    "status": {
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "tooltips": {
+      "edit": "Edit rewards category",
+      "delete": "Delete rewards category",
+      "quickEdit": "Quick edit"
+    }
+  },
+  "userReward": {
+    "header": {
+      "title": "Rewards Store",
+      "subtitle": "Redeem your points for amazing rewards. Keep learning and earning more points!",
+      "pointsAvailable": "Available Points",
+      "nextLevel": "Next level",
+      "level": "No level",
+      "pointsShort": "pts"
+    },
+    "filters": {
+      "title": "Filters",
+      "category": "Category",
+      "all": "All",
+      "rewardRange": "Reward Range",
+      "rangeMin": "Minimum",
+      "rangeMax": "Maximum",
+      "min": "min",
+      "max": "max",
+      "customize": "Customize",
+      "clearFilters": "Clear filters",
+      "searchPlaceholder": "Search..."
+    },
+    "products": {
+      "productsFound": "{{count}} Products Found",
+      "noProductsFound": "No products found",
+      "noProductsDescription": "Try adjusting your filters or search another term",
+      "loading": "Loading rewards...",
+      "stockAvailable": "Stock available:",
+      "claim": "Claim",
+      "outOfStock": "Out of stock"
+    },
+    "actions": {
+      "resetFilters": "Reset filters",
+      "personalize": "Customize",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close",
+      "viewDetails": "View Details"
+    },
+    "messages": {
+      "claimSuccess": "Reward claimed successfully!",
+      "claimError": "Error claiming the reward. Please try again.",
+      "notEnoughPoints": "Not enough points to claim this reward"
+    },
+    "history": {
+      "title": "Rewards History",
+      "subtitle": "View your redeemed rewards and rate your experience",
+      "rewardsRedeemed": "Rewards Redeemed",
+      "rewardsCount": "items",
+      "loading": "Loading history...",
+      "itemsFound": "{{count}} rewards found",
+      "noItemsFound": "No rewards redeemed yet",
+      "noItemsDescription": "Start redeeming rewards from our store to see your history here"
+    },
+    "rating": {
+      "current": "Rating",
+      "notRated": "Not rated",
+      "rate": "Rate",
+      "edit": "Edit Rating",
+      "title": "Rate this reward",
+      "instruction": "How would you rate this reward?",
+      "comment": "Comment (optional)",
+      "commentPlaceholder": "Tell us about your experience...",
+      "success": "Rating saved successfully!",
+      "error": "Error saving rating",
+      "tapToRate": "Tap to rate",
+      "veryBad": "Very Bad",
+      "bad": "Bad",
+      "regular": "Regular",
+      "good": "Good",
+      "veryGood": "Very Good"
+    },
+    "details": {
+      "title": "Reward Details",
+      "points": "Points Used",
+      "redeemedAt": "Redeemed On"
+    }
+  },
+  "rewards-rule-types": {
+    "title": "Rewards Rule Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "rewards": "Rewards",
+      "rewards-rule-types": "Rewards Rule Types",
+      "list": "List of Rewards Rule Types",
+      "create": "Create Rewards Rule Type",
+      "edit": "Edit Rewards Rule Type"
+    },
+    "actions": {
+      "add": "Add Rewards Rule Type",
+      "edit": "Edit Rewards Rule Type",
+      "delete": "Delete Rewards Rule Type",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving...",
+      "create": "Create Rewards Rule Type",
+      "update": "Update Rewards Rule Type",
+      "search": "Search rewards rule types...",
+      "clear": "Clear"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "actions": "Actions"
+      },
+      "toolbar": {
+        "search": "Search rewards rule types..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Keyword:",
+        "all": "All"
+      },
+      "emptyState": {
+        "noData": "No rewards rule types found",
+        "noResults": "No results found for your search"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter the rewards rule type name",
+          "helperText": "Enter the rewards rule type name",
+          "required": "Name is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter the rewards rule type description",
+          "helperText": "Enter the rewards rule type description",
+          "required": "Description is required"
+        }
+      },
+      "sections": {
+        "details": "Rewards Rule Type Details"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete Rewards Rule Type",
+        "content": "Are you sure you want to delete this rewards rule type?",
+        "contentMultiple": "Are you sure you want to delete these rewards rule types?",
+        "confirm": "Delete"
+      },
+      "unsavedChanges": {
+        "title": "Unsaved Changes",
+        "content": "You have unsaved changes. Are you sure you want to leave?",
+        "confirm": "Leave without saving"
+      }
+    },
+    "messages": {
+      "loading": "Loading rewards rule type...",
+      "saving": "Saving...",
+      "loadError": "Error loading rewards rule type",
+      "saveError": "Error saving rewards rule type. Please try again.",
+      "notFound": "Rewards rule type not found",
+      "createSuccess": "Rewards rule type created successfully!",
+      "updateSuccess": "Rewards rule type updated successfully!",
+      "success": {
+        "created": "Rewards rule type created successfully",
+        "updated": "Rewards rule type updated successfully",
+        "deleted": "Rewards rule type deleted successfully",
+        "deletedMultiple": "Rewards rule types deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading rewards rule types",
+        "saving": "Error saving rewards rule type. Please try again.",
+        "deleting": "Error deleting rewards rule type",
+        "deletingMultiple": "Error deleting rewards rule types",
+        "notFound": "Rewards rule type not found"
+      }
+    },
+    "status": {
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "tooltips": {
+      "edit": "Edit rewards rule type",
+      "delete": "Delete rewards rule type",
+      "quickEdit": "Quick edit"
+    }
+  },
+  "reward-rules": {
+    "title": "Reward Rules",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "reward-rules": "Reward Rules",
+      "edit": "Edit Reward Rules",
+      "create": "Create Reward Rules"
+    },
+    "actions": {
+      "add": "Add Reward Rules",
+      "edit": "Edit",
+      "delete": "Delete",
+      "view": "View"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "typeRule": "Rule Type",
+        "points": "Points",
+        "status": "Status"
+      },
+      "toolbar": {
+        "resetFilters": "Reset filters"
+      },
+      "filters": {
+        "all": "All",
+        "keyword": "Keyword",
+        "typeRuleId": "Rule Type"
+      },
+      "search": "Search reward rules..."
+    },
+    "form": {
+      "name": {
+        "required": "Name is required"
+      },
+      "typeRule": {
+        "required": "Rule Type is required"
+      },
+      "isActive": {
+        "required": "Status is required"
+      },
+      "points": {
+        "required": "Points are required"
+      },
+      "fields": {
+        "name": {
+          "label": "Name",
+          "helperText": "Enter the name of the reward"
+        },
+        "description": {
+          "label": "Description",
+          "helperText": "Enter the description of the reward"
+        },
+        "typeRule": {
+          "label": "Rule Type"
+        },
+        "points": {
+          "label": "Points",
+          "helperText": "Enter the points required to redeem"
+        },
+        "isActive": {
+          "label": "Status"
+        }
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "saving": "Saving...",
+        "update": "Update",
+        "create": "Create"
+      },
+      "messages": {
+        "updateSuccess": "Reward rule updated successfully",
+        "createSuccess": "Reward rule created successfully",
+        "saveError": "Error saving reward rule"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Error loading reward rule",
+        "deleting": "Error deleting reward rule",
+        "saveError": "Error saving reward rule"
+      },
+      "success": {
+        "deleted": "Reward rule deleted successfully",
+        "updateSuccess": "Reward rule updated successfully",
+        "createSuccess": "Reward rule created successfully"
+      },
+      "confirmDelete": "Are you sure you want to delete this reward rule?"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    }
+  },
+  "rewards-history": {
+    "title": "Redeemed Rewards History",
+    "subtitle": "Generate reports of rewards redeemed by employees",
+    "filters": {
+      "title": "Filters",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "generate": "Generate Report",
+      "generateTooltip": "Generate report with selected filters",
+      "endDateError": "End date cannot be earlier than start date",
+      "clear": "Clear Filters"
+    },
+    "table": {
+      "results": "Report Results",
+      "noData": "No redeemed rewards found",
+      "download": "Download CSV",
+      "record": "record",
+      "records": "records",
+      "columns": {
+        "userEmail": "User Email",
+        "rewardName": "Reward",
+        "pointsRequired": "Points Used",
+        "redeemedAt": "Redeemed Date"
+      }
+    },
+    "messages": {
+      "loading": "Generating report...",
+      "error": "Error generating report. Please try again.",
+      "noData": "No redeemed rewards found",
+      "noDataDescription": "Adjust the filters and generate a new report"
+    },
+    "pagination": {
+      "page": "Page",
+      "of": "of",
+      "rowsPerPage": "Rows per page:",
+      "previous": "Previous",
+      "next": "Next"
+    }
+  }
+}
