@@ -1,0 +1,561 @@
+{
+  "rewards": {
+    "title": "Recompensas",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "rewards": "Recompensas",
+      "edit": "Editar Recompensa",
+      "create": "Crear Recompensa"
+    },
+    "actions": {
+      "add": "Agregar Recompensa",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "view": "Ver"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "category": "Categoría",
+        "points": "Puntos",
+        "stock": "Stock",
+        "status": "Estado"
+      },
+      "toolbar": {
+        "sortBy": "Ordenar por",
+        "resetFilters": "Limpiar filtros"
+      },
+      "filters": {
+        "all": "Todos",
+        "keyword": "Palabra clave",
+        "categoryRewardId": "Categorías"
+      },
+      "order": {
+        "idAsc": "ID (Ascendente)",
+        "idDesc": "ID (Descendente)",
+        "nameAsc": "Nombre (A-Z)",
+        "nameDesc": "Nombre (Z-A)",
+        "pointsAsc": "Puntos (Menor a Mayor)",
+        "pointsDesc": "Puntos (Mayor a Menor)",
+        "stockAsc": "Stock (Menor a Mayor)",
+        "stockDesc": "Stock (Mayor a Menor)",
+        "createdAtAsc": "Más antiguos",
+        "createdAtDesc": "Más recientes",
+        "categoryAsc": "Categoría (A-Z)",
+        "categoryDesc": "Categoría (Z-A)"
+      },
+      "search": "Buscar recompensas..."
+    },
+    "form": {
+      "name": {
+        "required": "El nombre es obligatorio"
+      },
+      "category": {
+        "required": "La categoría es obligatoria"
+      },
+      "stock": {
+        "required": "El stock es obligatorio"
+      },
+      "isActive": {
+        "required": "El estado es obligatorio"
+      },
+      "pointsRequired": {
+        "required": "Los puntos son obligatorios"
+      },
+      "imageUrl": {
+        "required": "La URL de la imagen es obligatoria"
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "helperText": "Ingrese el nombre de la recompensa"
+        },
+        "description": {
+          "label": "Descripción",
+          "helperText": "Ingrese la descripción de la recompensa"
+        },
+        "category": {
+          "label": "Categoría"
+        },
+        "pointsRequired": {
+          "label": "Puntos",
+          "helperText": "Ingrese los puntos necesarios para canjear"
+        },
+        "stockTotal": {
+          "label": "Stock",
+          "helperText": "Ingrese la cantidad en stock"
+        },
+        "startDate": {
+          "label": "Fecha de inicio"
+        },
+        "endDate": {
+          "label": "Fecha de finalización"
+        },
+        "imageUrl": {
+          "label": "URL de la imagen",
+          "helperText": "Ingrese la URL de la imagen de la recompensa"
+        },
+        "isActive": {
+          "label": "Estado"
+        }
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "saving": "Guardando...",
+        "update": "Actualizar",
+        "create": "Crear"
+      },
+      "messages": {
+        "updateSuccess": "Recompensa actualizada exitosamente",
+        "createSuccess": "Recompensa creada exitosamente",
+        "saveError": "Error al guardar la recompensa"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Error al cargar la recompensa",
+        "deleting": "Error al eliminar la recompensa",
+        "saveError": "Error al guardar la recompensa"
+      },
+      "success": {
+        "deleted": "Recompensa eliminada exitosamente",
+        "updateSuccess": "Recompensa actualizada exitosamente",
+        "createSuccess": "Recompensa creada exitosamente"
+      },
+      "confirmDelete": "¿Estás seguro de que deseas eliminar esta recompensa?"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    }
+  },
+  "rewards-categories": {
+    "title": "Categorías de Recompensas",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "rewards": "Recompensas",
+      "rewards-categories": "Categorías de Recompensas",
+      "list": "Lista de Categorías de Recompensas",
+      "create": "Crear Categoría de Recompensas",
+      "edit": "Editar Categoría de Recompensas"
+    },
+    "actions": {
+      "add": "Agregar Categoría de Recompensas",
+      "edit": "Editar Categoría de Recompensas",
+      "delete": "Eliminar Categoría de Recompensas",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "saving": "Guardando...",
+      "create": "Crear Categoría de Recompensas",
+      "update": "Actualizar Categoría de Recompensas",
+      "search": "Buscar categorías de recompensas...",
+      "clear": "Limpiar"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "abreviation": "Abreviatura",
+        "createdAt": "Fecha de Creación",
+        "updatedAt": "Fecha de Actualización",
+        "actions": "Acciones"
+      },
+      "toolbar": {
+        "search": "Buscar categorías de recompensas..."
+      },
+      "filters": {
+        "status": "Estado:",
+        "keyword": "Palabra clave:",
+        "all": "Todas"
+      },
+      "emptyState": {
+        "noData": "No se encontraron categorías de recompensas",
+        "noResults": "No se encontraron resultados para tu búsqueda"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "placeholder": "Ingrese el nombre de la categoría de recompensas",
+          "helperText": "Ingrese el nombre de la categoría de recompensas",
+          "required": "El nombre es obligatorio"
+        },
+        "abreviation": {
+          "label": "Abreviatura",
+          "placeholder": "Ingrese la abreviatura de la categoría de recompensas",
+          "helperText": "Ingrese la abreviatura de la categoría de recompensas",
+          "required": "La abreviatura es obligatoria"
+        }
+      },
+      "sections": {
+        "details": "Detalles de la Categoría de Recompensas"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Categoría de Recompensas",
+        "content": "¿Estás seguro de que deseas eliminar esta categoría de recompensas?",
+        "contentMultiple": "¿Estás seguro de que deseas eliminar estas categorías de recompensas?",
+        "confirm": "Eliminar"
+      },
+      "unsavedChanges": {
+        "title": "Cambios No Guardados",
+        "content": "Tienes cambios no guardados. ¿Estás seguro de que deseas salir?",
+        "confirm": "Salir sin guardar"
+      }
+    },
+    "messages": {
+      "loading": "Cargando categorías de recompensas...",
+      "saving": "Guardando...",
+      "loadError": "Error al cargar la categoría de recompensas",
+      "saveError": "Error al guardar la categoría de recompensas. Por favor, inténtalo de nuevo.",
+      "notFound": "Categoría de recompensas no encontrada",
+      "createSuccess": "¡Categoría de recompensas creada con éxito!",
+      "updateSuccess": "¡Categoría de recompensas actualizada con éxito!",
+      "success": {
+        "created": "Categoría de recompensas creada con éxito",
+        "updated": "Categoría de recompensas actualizada con éxito",
+        "deleted": "Categoría de recompensas eliminada con éxito",
+        "deletedMultiple": "Categorías de recompensas eliminadas con éxito"
+      },
+      "error": {
+        "loading": "Error al cargar las categorías de recompensas",
+        "saving": "Error al guardar la categoría de recompensas. Por favor, inténtalo de nuevo.",
+        "deleting": "Error al eliminar la categoría de recompensas",
+        "deletingMultiple": "Error al eliminar las categorías de recompensas",
+        "notFound": "Categoría de recompensas no encontrada"
+      }
+    },
+    "status": {
+      "all": "Todas",
+      "active": "Activas",
+      "inactive": "Inactivas"
+    },
+    "tooltips": {
+      "edit": "Editar categoría de recompensas",
+      "delete": "Eliminar categoría de recompensas",
+      "quickEdit": "Edición rápida"
+    }
+  },
+  "userReward": {
+    "header": {
+      "title": "Tienda de Recompensas",
+      "subtitle": "Canjea tus puntos por increíbles recompensas. ¡Sigue aprendiendo y ganando más puntos!",
+      "pointsAvailable": "Puntos Disponibles",
+      "nextLevel": "Próximo nivel",
+      "level": "Sin nivel",
+      "pointsShort": "pts"
+    },
+    "filters": {
+      "title": "Filtros",
+      "category": "Categoría",
+      "all": "Todas",
+      "rewardRange": "Rango de Recompensas",
+      "rangeMin": "Mínimo",
+      "rangeMax": "Máximo",
+      "min": "min",
+      "max": "max",
+      "customize": "Personalizar",
+      "clearFilters": "Limpiar filtros",
+      "searchPlaceholder": "Buscar..."
+    },
+    "products": {
+      "productsFound": "{{count}} Productos Encontrados",
+      "noProductsFound": "No se encontraron productos",
+      "noProductsDescription": "Intenta ajustar tus filtros o busca otro término",
+      "loading": "Cargando recompensas...",
+      "stockAvailable": "Stock disponible:",
+      "claim": "Reclamar",
+      "outOfStock": "Agotado"
+    },
+    "actions": {
+      "resetFilters": "Restablecer filtros",
+      "personalize": "Personalizar",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "close": "Cerrar",
+      "viewDetails": "Ver Detalles"
+    },
+    "messages": {
+      "claimSuccess": "¡Recompensa reclamada con éxito!",
+      "claimError": "Error al reclamar la recompensa. Por favor, inténtalo de nuevo.",
+      "notEnoughPoints": "No tienes suficientes puntos para reclamar esta recompensa"
+    },
+    "history": {
+      "title": "Historial de Recompensas",
+      "subtitle": "Ve tus recompensas canjeadas y califica tu experiencia",
+      "rewardsRedeemed": "Recompensas Canjeadas",
+      "rewardsCount": "elementos",
+      "loading": "Cargando historial...",
+      "itemsFound": "{{count}} recompensas encontradas",
+      "noItemsFound": "No has canjeado recompensas aún",
+      "noItemsDescription": "Comienza canjeando recompensas de nuestra tienda para ver tu historial aquí"
+    },
+    "rating": {
+      "current": "Calificación",
+      "notRated": "Sin calificar",
+      "rate": "Calificar",
+      "edit": "Editar Calificación",
+      "title": "Califica esta recompensa",
+      "instruction": "¿Cómo calificarías esta recompensa?",
+      "comment": "Comentario (opcional)",
+      "commentPlaceholder": "Cuéntanos sobre tu experiencia...",
+      "success": "¡Calificación guardada exitosamente!",
+      "error": "Error al guardar calificación",
+      "tapToRate": "Toca para calificar",
+      "veryBad": "Muy Mala",
+      "bad": "Mala",
+      "regular": "Regular",
+      "good": "Buena",
+      "veryGood": "Muy Buena"
+    },
+    "details": {
+      "title": "Detalles de la Recompensa",
+      "points": "Puntos Utilizados",
+      "redeemedAt": "Canjeada el"
+    }
+  },
+  "rewards-rule-types": {
+    "title": "Tipos de Reglas de Recompensas",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "rewards": "Recompensas",
+      "rewards-rule-types": "Tipos de Reglas de Recompensas",
+      "list": "Lista de Tipos de Reglas de Recompensas",
+      "create": "Crear Tipo de Regla de Recompensas",
+      "edit": "Editar Tipo de Regla de Recompensas"
+    },
+    "actions": {
+      "add": "Agregar Tipo de Regla de Recompensas",
+      "edit": "Editar Tipo de Regla de Recompensas",
+      "delete": "Eliminar Tipo de Regla de Recompensas",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "saving": "Guardando...",
+      "create": "Crear Tipo de Regla de Recompensas",
+      "update": "Actualizar Tipo de Regla de Recompensas",
+      "search": "Buscar tipos de reglas de recompensas...",
+      "clear": "Limpiar"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "createdAt": "Creado En",
+        "updatedAt": "Actualizado En",
+        "actions": "Acciones"
+      },
+      "toolbar": {
+        "search": "Buscar tipos de reglas de recompensas..."
+      },
+      "filters": {
+        "status": "Estado:",
+        "keyword": "Palabra clave:",
+        "all": "Todo"
+      },
+      "emptyState": {
+        "noData": "No se encontraron tipos de reglas de recompensas",
+        "noResults": "No se encontraron resultados para tu búsqueda"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "placeholder": "Ingresa el nombre del tipo de regla de recompensas",
+          "helperText": "Ingresa el nombre del tipo de regla de recompensas",
+          "required": "El nombre es obligatorio"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Ingresa la descripción del tipo de regla de recompensas",
+          "helperText": "Ingresa la descripción del tipo de regla de recompensas",
+          "required": "La descripción es obligatoria"
+        }
+      },
+      "sections": {
+        "details": "Detalles del Tipo de Regla de Recompensas"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Tipo de Regla de Recompensas",
+        "content": "¿Estás seguro de que deseas eliminar este tipo de regla de recompensas?",
+        "contentMultiple": "¿Estás seguro de que deseas eliminar estos tipos de reglas de recompensas?",
+        "confirm": "Eliminar"
+      },
+      "unsavedChanges": {
+        "title": "Cambios No Guardados",
+        "content": "Tienes cambios no guardados. ¿Estás seguro de que deseas salir?",
+        "confirm": "Salir sin guardar"
+      }
+    },
+    "messages": {
+      "loading": "Cargando tipo de regla de recompensas...",
+      "saving": "Guardando...",
+      "loadError": "Error cargando tipo de regla de recompensas",
+      "saveError": "Error guardando tipo de regla de recompensas. Por favor, inténtalo de nuevo.",
+      "notFound": "Tipo de regla de recompensas no encontrado",
+      "createSuccess": "Tipo de regla de recompensas creado con éxito!",
+      "updateSuccess": "Tipo de regla de recompensas actualizado con éxito!",
+      "success": {
+        "created": "Tipo de regla de recompensas creado con éxito",
+        "updated": "Tipo de regla de recompensas actualizado con éxito",
+        "deleted": "Tipo de regla de recompensas eliminado con éxito",
+        "deletedMultiple": "Tipos de regla de recompensas eliminados con éxito"
+      },
+      "error": {
+        "loading": "Error cargando tipos de regla de recompensas",
+        "saving": "Error guardando tipo de regla de recompensas. Por favor, inténtalo de nuevo.",
+        "deleting": "Error eliminando tipo de regla de recompensas",
+        "deletingMultiple": "Error eliminando tipos de regla de recompensas",
+        "notFound": "Tipo de regla de recompensas no encontrado"
+      }
+    },
+    "status": {
+      "all": "Todo",
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "tooltips": {
+      "edit": "Editar tipo de regla de recompensas",
+      "delete": "Eliminar tipo de regla de recompensas",
+      "quickEdit": "Edición rápida"
+    }
+  },
+  "reward-rules": {
+    "title": "Reglas de Recompensas",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "reward-rules": "Reglas de Recompensas",
+      "edit": "Editar Reglas de Recompensas",
+      "create": "Crear Reglas de Recompensas"
+    },
+    "actions": {
+      "add": "Agregar Reglas de Recompensas",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "view": "Ver"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "typeRule": "Tipo de Regla",
+        "points": "Puntos",
+        "status": "Estado"
+      },
+      "toolbar": {
+        "resetFilters": "Limpiar filtros"
+      },
+      "filters": {
+        "all": "Todo",
+        "keyword": "Palabra clave",
+        "typeRuleId": "Tipo de Regla"
+      },
+      "search": "Buscar reglas de recompensas..."
+    },
+    "form": {
+      "name": {
+        "required": "El nombre es obligatorio"
+      },
+      "typeRule": {
+        "required": "El tipo de regla es obligatorio"
+      },
+      "isActive": {
+        "required": "El estado es obligatorio"
+      },
+      "points": {
+        "required": "Los puntos son obligatorios"
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre",
+          "helperText": "Ingresa el nombre de la recompensa"
+        },
+        "description": {
+          "label": "Descripción",
+          "helperText": "Ingresa la descripción de la recompensa"
+        },
+        "typeRule": {
+          "label": "Tipo de Regla"
+        },
+        "points": {
+          "label": "Puntos",
+          "helperText": "Ingresa los puntos requeridos para canjear"
+        },
+        "isActive": {
+          "label": "Estado"
+        }
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "saving": "Guardando...",
+        "update": "Actualizar",
+        "create": "Crear"
+      },
+      "messages": {
+        "updateSuccess": "Regla de recompensa actualizada con éxito",
+        "createSuccess": "Regla de recompensa creada con éxito",
+        "saveError": "Error guardando la regla de recompensa"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Error cargando la regla de recompensa",
+        "deleting": "Error eliminando la regla de recompensa",
+        "saveError": "Error guardando la regla de recompensa"
+      },
+      "success": {
+        "deleted": "Regla de recompensa eliminada con éxito",
+        "updateSuccess": "Regla de recompensa actualizada con éxito",
+        "createSuccess": "Regla de recompensa creada con éxito"
+      },
+      "confirmDelete": "¿Estás seguro de que deseas eliminar esta regla de recompensa?"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    }
+  },
+  "rewards-history": {
+    "title": "Historial de Recompensas Redimidas",
+    "subtitle": "Genera reportes del historial de recompensas canjeadas por los empleados",
+    "filters": {
+      "title": "Filtros",
+      "startDate": "Fecha Inicio",
+      "endDate": "Fecha Fin",
+      "generate": "Generar Reporte",
+      "generateTooltip": "Generar reporte con los filtros seleccionados",
+      "endDateError": "La fecha de fin no puede ser anterior a la fecha de inicio",
+      "clear": "Limpiar Filtros"
+    },
+    "table": {
+      "results": "Resultados del Reporte",
+      "noData": "No se encontraron recompensas redimidas",
+      "download": "Descargar CSV",
+      "record": "registro",
+      "records": "registros",
+      "columns": {
+        "userEmail": "Email del Usuario",
+        "rewardName": "Recompensa",
+        "pointsRequired": "Puntos Utilizados",
+        "redeemedAt": "Fecha de Redención"
+      }
+    },
+    "messages": {
+      "loading": "Generando reporte...",
+      "error": "Error al generar el reporte. Por favor, inténtelo de nuevo.",
+      "noData": "No se encontraron recompensas redimidas",
+      "noDataDescription": "Ajusta los filtros y genera un nuevo reporte"
+    },
+    "pagination": {
+      "page": "Página",
+      "of": "de",
+      "rowsPerPage": "Filas por página:",
+      "previous": "Anterior",
+      "next": "Siguiente"
+    }
+  }
+}
