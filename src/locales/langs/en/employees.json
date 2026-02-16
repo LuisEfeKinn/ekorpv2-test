@@ -1,0 +1,475 @@
+{
+  "employment-type": {
+    "title": "Employment Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "employmentTypes": "Employment Types",
+      "list": "Employment Types List",
+      "create": "Create Employment Type",
+      "edit": "Edit Employment Type"
+    },
+    "actions": {
+      "add": "Add Employment Type",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save",
+      "create": "Create Employment Type",
+      "update": "Update Employment Type",
+      "search": "Search employment types...",
+      "clear": "Clear"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "actions": "Actions"
+      },
+      "toolbar": {
+        "search": "Search employment types..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Keyword:",
+        "all": "All"
+      },
+      "emptyState": {
+        "noData": "No employment types found",
+        "noResults": "No results found for your search"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter employment type name",
+          "helperText": "Enter the employment type name",
+          "required": "Name is required"
+        }
+      },
+      "sections": {
+        "details": "Employment Type Details"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete",
+        "content": "Are you sure want to delete this employment type?",
+        "contentMultiple": "Are you sure want to delete {{count}} items?",
+        "confirm": "Delete"
+      },
+      "unsavedChanges": {
+        "title": "Unsaved Changes",
+        "content": "You have unsaved changes. Are you sure you want to leave?",
+        "confirm": "Leave without saving"
+      }
+    },
+    "messages": {
+      "loading": "Loading employment types...",
+      "saving": "Saving...",
+      "loadError": "Error loading employment type",
+      "saveError": "Error saving employment type. Please try again.",
+      "notFound": "Employment type not found",
+      "createSuccess": "Employment type created successfully!",
+      "updateSuccess": "Employment type updated successfully!",
+      "success": {
+        "created": "Employment type created successfully",
+        "updated": "Employment type updated successfully",
+        "deleted": "Employment type deleted successfully",
+        "deletedMultiple": "Employment types deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading employment types",
+        "saving": "Error saving employment type. Please try again.",
+        "deleting": "Error deleting employment type",
+        "deletingMultiple": "Error deleting employment types",
+        "notFound": "Employment type not found"
+      }
+    },
+    "status": {
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "tooltips": {
+      "edit": "Edit employment type",
+      "delete": "Delete employment type",
+      "quickEdit": "Quick edit"
+    }
+  },
+  "user-management": {
+    "title": "User Management",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "userManagement": "User Management",
+      "list": "User Management List",
+      "create": "Create User",
+      "edit": "Edit User"
+    },
+    "actions": {
+      "add": "Add User",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save",
+      "create": "Create User",
+      "update": "Update User",
+      "search": "Search users...",
+      "clear": "Clear"
+    },
+    "table": {
+      "columns": {
+        "fullName": "Full Name",
+        "email": "Email",
+        "position": "Position & Employment",
+        "skill": "Skill",
+        "location": "Location",
+        "billingRate": "Billing Rate",
+        "weeklyHours": "Weekly Hours",
+        "startedWorkOn": "Started",
+        "employmentType": "Employment Type",
+        "minimumBillingRate": "Min. Billing Rate",
+        "weeklyLimit": "Weekly Limit",
+        "actions": "Actions",
+        "perHour": "per hour",
+        "perWeek": "per week"
+      },
+      "toolbar": {
+        "search": "Search users..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Keyword:",
+        "position": "Position",
+        "skill": "Skill",
+        "organizationalUnit": "Organizational Unit",
+        "country": "Country",
+        "region": "Region",
+        "employmentType": "Employment Type:",
+        "all": "All"
+      },
+      "emptyState": {
+        "noData": "No users found",
+        "noResults": "No results found for your search"
+      }
+    },
+    "form": {
+      "fields": {
+        "firstName": {
+          "label": "First Name",
+          "placeholder": "Enter first name",
+          "helperText": "Enter the user's first name",
+          "required": "First name is required"
+        },
+        "secondName": {
+          "label": "Second Name",
+          "placeholder": "Enter second name (optional)",
+          "helperText": "Enter the user's second name",
+          "required": "Second name is required"
+        },
+        "firstLastName": {
+          "label": "First Last Name",
+          "placeholder": "Enter first last name",
+          "helperText": "Enter the user's first last name",
+          "required": "First last name is required"
+        },
+        "secondLastName": {
+          "label": "Second Last Name",
+          "placeholder": "Enter second last name (optional)",
+          "helperText": "Enter the user's second last name",
+          "required": "Second last name is required"
+        },
+        "address": {
+          "label": "Address",
+          "placeholder": "Enter address",
+          "helperText": "Enter the user's complete address",
+          "required": "Address is required"
+        },
+        "municipalityId": {
+          "label": "Municipality",
+          "placeholder": "Enter municipality",
+          "helperText": "Enter the municipality",
+          "required": "Municipality is required"
+        },
+        "postalCode": {
+          "label": "Postal Code",
+          "placeholder": "Enter postal code",
+          "helperText": "Enter the postal code",
+          "required": "Postal code is required"
+        },
+        "startedWorkOn": {
+          "label": "Started Work On",
+          "placeholder": "Select start date",
+          "helperText": "Select when the user started working",
+          "required": "Start date is required"
+        },
+        "paymentPeriodId": {
+          "label": "Payment Period",
+          "placeholder": "Enter payment period",
+          "helperText": "Enter the payment period",
+          "required": "Payment period is required"
+        },
+        "coindId": {
+          "label": "Coin",
+          "placeholder": "Enter coin",
+          "helperText": "Enter the coin",
+          "required": "Coin is required"
+        },
+        "billingRatePerHour": {
+          "label": "Billing Rate Per Hour",
+          "placeholder": "Enter billing rate",
+          "helperText": "Enter billing rate per hour",
+          "required": "Billing rate is required"
+        },
+        "minimunBllingRatePerHour": {
+          "label": "Minimum Billing Rate Per Hour",
+          "placeholder": "Enter minimum billing rate",
+          "helperText": "Enter minimum billing rate per hour",
+          "required": "Minimum billing rate is required"
+        },
+        "recurringWeeklyLimitHours": {
+          "label": "Weekly Limit Hours",
+          "placeholder": "Enter weekly hours limit",
+          "helperText": "Enter recurring weekly limit hours",
+          "required": "Weekly limit is required"
+        },
+        "organizationalUnitId": {
+          "label": "Organizational Unit",
+          "placeholder": "Enter organizational unit",
+          "helperText": "Enter the organizational unit",
+          "required": "Organizational unit is required"
+        },
+        "employmentTypeId": {
+          "label": "Employment Type",
+          "placeholder": "Enter employment type",
+          "helperText": "Enter the employment type",
+          "required": "Employment type is required"
+        },
+        "skillId": {
+          "label": "Skill",
+          "placeholder": "Enter skill",
+          "helperText": "Enter the skill",
+          "required": "Skill is required"
+        },
+        "positionId": {
+          "label": "Position",
+          "placeholder": "Enter position",
+          "helperText": "Enter the position",
+          "required": "Position is required"
+        },
+        "userId": {
+          "label": "User",
+          "placeholder": "Enter user",
+          "helperText": "Enter the user",
+          "required": "User is required"
+        }
+      },
+      "sections": {
+        "personalInfo": "Personal Information",
+        "workDetails": "Work Details",
+        "locationInfo": "Location Information",
+        "paymentInfo": "Payment Information"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete User",
+        "content": "Are you sure you want to delete this user?",
+        "contentMultiple": "Are you sure you want to delete {{count}} users?",
+        "confirm": "Delete"
+      },
+      "unsavedChanges": {
+        "title": "Unsaved Changes",
+        "content": "You have unsaved changes. Are you sure you want to leave?",
+        "confirm": "Leave without saving"
+      }
+    },
+    "messages": {
+      "loading": "Loading users...",
+      "saving": "Saving...",
+      "loadError": "Error loading user",
+      "saveError": "Error saving user. Please try again.",
+      "notFound": "User not found",
+      "createSuccess": "User created successfully!",
+      "updateSuccess": "User updated successfully!",
+      "success": {
+        "created": "User created successfully",
+        "updated": "User updated successfully",
+        "deleted": "User deleted successfully",
+        "deletedMultiple": "Users deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading users",
+        "saving": "Error saving user. Please try again.",
+        "deleting": "Error deleting user",
+        "deletingMultiple": "Error deleting users",
+        "notFound": "User not found"
+      }
+    },
+    "status": {
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "tooltips": {
+      "edit": "Edit user",
+      "delete": "Delete user",
+      "quickEdit": "Quick edit"
+    },
+    "learning-paths": {
+      "title": "Learning Paths Management",
+      "manageButton": "Manage Paths",
+      "actions": {
+        "assign": "Assign Learning Path"
+      },
+      "fields": {
+        "learningPath": {
+          "label": "Learning Path",
+          "placeholder": "Search learning path..."
+        },
+        "progress": {
+          "label": "Progress"
+        },
+        "assignedAt": {
+          "label": "Assigned on"
+        }
+      },
+      "status": {
+        "notStarted": "Not Started",
+        "inProgress": "In Progress",
+        "completed": "Completed"
+      },
+      "emptyState": {
+        "noAssignments": "This user has no assigned learning paths"
+      },
+      "success": {
+        "assigned": "Learning path assigned successfully",
+        "removed": "Learning path removed successfully"
+      },
+      "error": {
+        "loading": "Error loading assigned learning paths",
+        "loadingOptions": "Error loading available learning paths",
+        "assigning": "Error assigning learning path",
+        "removing": "Error removing learning path"
+      },
+      "dialogs": {
+        "deleteConfirmation": {
+          "title": "Remove Learning Path",
+          "message": "Are you sure you want to remove the learning path \"{{name}}\"?",
+          "description": "This action cannot be undone and will permanently remove the assignment of this path.",
+          "confirm": "Remove",
+          "cancel": "Cancel"
+        }
+      }
+    }
+  },
+  "skills": {
+    "title": "Skills",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "skills": "Skills",
+      "list": "Skills List",
+      "create": "Create Skill",
+      "edit": "Edit Skill"
+    },
+    "actions": {
+      "add": "Add Skill",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving...",
+      "create": "Create Skill",
+      "update": "Update Skill",
+      "search": "Search skills...",
+      "clear": "Clear"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "color": "Color",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "actions": "Actions"
+      },
+      "toolbar": {
+        "search": "Search skills..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Keyword:",
+        "all": "All"
+      },
+      "emptyState": {
+        "noData": "No skills found",
+        "noResults": "No results found for your search"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter skill name",
+          "helperText": "Enter the skill name",
+          "required": "Name is required"
+        },
+        "color": {
+          "label": "Color",
+          "placeholder": "Select skill color",
+          "helperText": "Select the skill color",
+          "required": "Color is required",
+          "preview": "Color preview"
+        }
+      },
+      "sections": {
+        "details": "Skill Details"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete",
+        "content": "Are you sure want to delete this skill?",
+        "contentMultiple": "Are you sure want to delete {{count}} items?",
+        "confirm": "Delete"
+      },
+      "unsavedChanges": {
+        "title": "Unsaved Changes",
+        "content": "You have unsaved changes. Are you sure you want to leave?",
+        "confirm": "Leave without saving"
+      }
+    },
+    "messages": {
+      "loading": "Loading skills...",
+      "saving": "Saving...",
+      "loadError": "Error loading skill",
+      "saveError": "Error saving skill. Please try again.",
+      "notFound": "Skill not found",
+      "createSuccess": "Skill created successfully!",
+      "updateSuccess": "Skill updated successfully!",
+      "success": {
+        "created": "Skill created successfully",
+        "updated": "Skill updated successfully",
+        "deleted": "Skill deleted successfully",
+        "deletedMultiple": "Skills deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading skills",
+        "saving": "Error saving skill. Please try again.",
+        "deleting": "Error deleting skill",
+        "deletingMultiple": "Error deleting skills",
+        "notFound": "Skill not found"
+      }
+    },
+    "status": {
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "tooltips": {
+      "edit": "Edit skill",
+      "delete": "Delete skill",
+      "quickEdit": "Quick edit"
+    }
+  }
+}
