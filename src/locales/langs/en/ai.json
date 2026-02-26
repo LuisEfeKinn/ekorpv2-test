@@ -1,0 +1,210 @@
+{
+  "settings": {
+    "title": "AI Providers",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "ai": "Artificial Intelligence",
+      "create": "New",
+      "edit": "Edit"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "available": "Available",
+      "unavailable": "Unavailable"
+    },
+    "actions": {
+      "add": "New provider",
+      "create": "Create",
+      "edit": "Edit",
+      "update": "Update",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "view": "View details",
+      "clear": "Clear",
+      "addParameter": "Add parameter",
+      "models": "Models"
+    },
+    "table": {
+      "filters": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive",
+        "keyword": "Search",
+        "order": "Order"
+      },
+      "toolbar": {
+        "search": "Search provider...",
+        "sortBy": "Sort by"
+      },
+      "order": {
+        "asc": "Ascending (A-Z)",
+        "desc": "Descending (Z-A)"
+      }
+    },
+    "card": {
+      "requiresApiKey": "Requires API Key",
+      "supportsStreaming": "Supports Streaming",
+      "parameters": "Parameters",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "empty": {
+      "title": "No providers",
+      "description": "There are no AI providers configured. Create a new one to get started."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete provider",
+        "content": "Are you sure you want to delete this provider? This action cannot be undone."
+      }
+    },
+    "form": {
+      "sections": {
+        "basic": "Basic information",
+        "status": "Status",
+        "parameters": "Configuration parameters"
+      },
+      "fields": {
+        "name": {
+          "label": "Provider name",
+          "placeholder": "Ex: OpenAI",
+          "required": "Name is required"
+        },
+        "logo": {
+          "label": "Logo URL",
+          "placeholder": "https://example.com/logo.svg"
+        },
+        "requiresApiKey": {
+          "label": "Requires API Key"
+        },
+        "supportsStreaming": {
+          "label": "Supports streaming"
+        },
+        "parameterLabel": {
+          "label": "Parameter name",
+          "placeholder": "Ex: API_KEY",
+          "required": "Parameter name is required"
+        },
+        "parameterValue": {
+          "label": "Value",
+          "placeholder": "Enter the value...",
+          "required": "Value is required"
+        }
+      },
+      "noParameters": "No parameters configured. Use the 'Add parameter' button to add one."
+    },
+    "messages": {
+      "success": {
+        "created": "Provider created successfully",
+        "updated": "Provider updated successfully",
+        "deleted": "Provider deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading providers",
+        "saving": "Error saving provider",
+        "deleting": "Error deleting provider",
+        "notFound": "Provider not found",
+        "loadError": "Error loading provider",
+        "general": "Error"
+      }
+    }
+  },
+  "models": {
+    "title": "AI Models",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "ai": "Artificial Intelligence",
+      "providers": "Providers",
+      "provider": "Provider",
+      "create": "New",
+      "edit": "Edit"
+    },
+    "actions": {
+      "add": "New model",
+      "create": "Create",
+      "edit": "Edit",
+      "update": "Update",
+      "delete": "Delete",
+      "cancel": "Cancel"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "maxTokens": "Max Tokens",
+        "contextWindow": "Context Window",
+        "capabilities": "Capabilities",
+        "default": "Default"
+      },
+      "toolbar": {
+        "search": "Search model..."
+      },
+      "default": "Default",
+      "noModels": "No models configured for this provider."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete model",
+        "content": "Are you sure you want to delete this model? This action cannot be undone."
+      }
+    },
+    "form": {
+      "sections": {
+        "basic": "Model information",
+        "settings": "Settings"
+      },
+      "fields": {
+        "modelKey": {
+          "label": "Model Key",
+          "placeholder": "Ex: gpt-4o",
+          "required": "Model key is required"
+        },
+        "name": {
+          "label": "Model name",
+          "placeholder": "Ex: GPT-4o",
+          "required": "Name is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Model description..."
+        },
+        "endpoint": {
+          "label": "Endpoint",
+          "placeholder": "https://api.example.com/v1/chat/completions",
+          "required": "Endpoint is required"
+        },
+        "maxTokens": {
+          "label": "Max Tokens",
+          "placeholder": "Ex: 16384"
+        },
+        "contextWindow": {
+          "label": "Context Window",
+          "placeholder": "Ex: 128000"
+        },
+        "capabilities": {
+          "label": "Capabilities",
+          "placeholder": "Select capabilities..."
+        },
+        "isDefault": {
+          "label": "Default model"
+        }
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Model created successfully",
+        "updated": "Model updated successfully",
+        "deleted": "Model deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading models",
+        "saving": "Error saving model",
+        "deleting": "Error deleting model",
+        "notFound": "Model not found",
+        "loadError": "Error loading model",
+        "general": "Error"
+      }
+    }
+  }
+}
