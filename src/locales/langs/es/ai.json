@@ -1,0 +1,210 @@
+{
+  "settings": {
+    "title": "Proveedores de IA",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "ai": "Inteligencia Artificial",
+      "create": "Nuevo",
+      "edit": "Editar"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "available": "Disponible",
+      "unavailable": "No disponible"
+    },
+    "actions": {
+      "add": "Nuevo proveedor",
+      "create": "Crear",
+      "edit": "Editar",
+      "update": "Actualizar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "view": "Ver detalles",
+      "clear": "Limpiar",
+      "addParameter": "Agregar parámetro",
+      "models": "Modelos"
+    },
+    "table": {
+      "filters": {
+        "all": "Todos",
+        "active": "Activos",
+        "inactive": "Inactivos",
+        "keyword": "Búsqueda",
+        "order": "Orden"
+      },
+      "toolbar": {
+        "search": "Buscar proveedor...",
+        "sortBy": "Ordenar"
+      },
+      "order": {
+        "asc": "Ascendente (A-Z)",
+        "desc": "Descendente (Z-A)"
+      }
+    },
+    "card": {
+      "requiresApiKey": "Requiere API Key",
+      "supportsStreaming": "Soporta Streaming",
+      "parameters": "Parámetros",
+      "yes": "Sí",
+      "no": "No"
+    },
+    "empty": {
+      "title": "Sin proveedores",
+      "description": "No hay proveedores de IA configurados. Cree uno nuevo para comenzar."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar proveedor",
+        "content": "¿Está seguro de que desea eliminar este proveedor? Esta acción no se puede deshacer."
+      }
+    },
+    "form": {
+      "sections": {
+        "basic": "Información básica",
+        "status": "Estado",
+        "parameters": "Parámetros de configuración"
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre del proveedor",
+          "placeholder": "Ej: OpenAI",
+          "required": "El nombre es requerido"
+        },
+        "logo": {
+          "label": "URL del logo",
+          "placeholder": "https://ejemplo.com/logo.svg"
+        },
+        "requiresApiKey": {
+          "label": "Requiere API Key"
+        },
+        "supportsStreaming": {
+          "label": "Soporta streaming"
+        },
+        "parameterLabel": {
+          "label": "Nombre del parámetro",
+          "placeholder": "Ej: API_KEY",
+          "required": "El nombre del parámetro es requerido"
+        },
+        "parameterValue": {
+          "label": "Valor",
+          "placeholder": "Ingrese el valor...",
+          "required": "El valor es requerido"
+        }
+      },
+      "noParameters": "No hay parámetros configurados. Use el botón 'Agregar parámetro' para añadir uno."
+    },
+    "messages": {
+      "success": {
+        "created": "Proveedor creado correctamente",
+        "updated": "Proveedor actualizado correctamente",
+        "deleted": "Proveedor eliminado correctamente"
+      },
+      "error": {
+        "loading": "Error al cargar los proveedores",
+        "saving": "Error al guardar el proveedor",
+        "deleting": "Error al eliminar el proveedor",
+        "notFound": "Proveedor no encontrado",
+        "loadError": "Error al cargar el proveedor",
+        "general": "Error"
+      }
+    }
+  },
+  "models": {
+    "title": "Modelos de IA",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "ai": "Inteligencia Artificial",
+      "providers": "Proveedores",
+      "provider": "Proveedor",
+      "create": "Nuevo",
+      "edit": "Editar"
+    },
+    "actions": {
+      "add": "Nuevo modelo",
+      "create": "Crear",
+      "edit": "Editar",
+      "update": "Actualizar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "maxTokens": "Max Tokens",
+        "contextWindow": "Context Window",
+        "capabilities": "Capacidades",
+        "default": "Por defecto"
+      },
+      "toolbar": {
+        "search": "Buscar modelo..."
+      },
+      "default": "Por defecto",
+      "noModels": "No hay modelos configurados para este proveedor."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar modelo",
+        "content": "¿Está seguro de que desea eliminar este modelo? Esta acción no se puede deshacer."
+      }
+    },
+    "form": {
+      "sections": {
+        "basic": "Información del modelo",
+        "settings": "Configuración"
+      },
+      "fields": {
+        "modelKey": {
+          "label": "Model Key",
+          "placeholder": "Ej: gpt-4o",
+          "required": "El model key es requerido"
+        },
+        "name": {
+          "label": "Nombre del modelo",
+          "placeholder": "Ej: GPT-4o",
+          "required": "El nombre es requerido"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Descripción del modelo..."
+        },
+        "endpoint": {
+          "label": "Endpoint",
+          "placeholder": "https://api.example.com/v1/chat/completions",
+          "required": "El endpoint es requerido"
+        },
+        "maxTokens": {
+          "label": "Max Tokens",
+          "placeholder": "Ej: 16384"
+        },
+        "contextWindow": {
+          "label": "Context Window",
+          "placeholder": "Ej: 128000"
+        },
+        "capabilities": {
+          "label": "Capacidades",
+          "placeholder": "Seleccionar capacidades..."
+        },
+        "isDefault": {
+          "label": "Modelo por defecto"
+        }
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Modelo creado correctamente",
+        "updated": "Modelo actualizado correctamente",
+        "deleted": "Modelo eliminado correctamente"
+      },
+      "error": {
+        "loading": "Error al cargar los modelos",
+        "saving": "Error al guardar el modelo",
+        "deleting": "Error al eliminar el modelo",
+        "notFound": "Modelo no encontrado",
+        "loadError": "Error al cargar el modelo",
+        "general": "Error"
+      }
+    }
+  }
+}
