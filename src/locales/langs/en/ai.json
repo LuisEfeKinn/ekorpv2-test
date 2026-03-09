@@ -1,0 +1,672 @@
+{
+  "ai-course-generation": {
+    "title": "AI Course List",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "aiCourses": "AI Courses"
+    },
+    "filters": {
+      "all": "All"
+    },
+    "status": {
+      "draft": "Draft",
+      "generating": "Generating",
+      "completed": "Completed",
+      "published": "Published",
+      "archived": "Archived"
+    },
+    "difficulty": {
+      "beginner": "Beginner",
+      "principiante": "Beginner",
+      "intermediate": "Intermediate",
+      "intermedio": "Intermediate",
+      "advanced": "Advanced",
+      "avanzado": "Advanced"
+    },
+    "provider": {
+      "openai": "OpenAI",
+      "gemini": "Google Gemini",
+      "deepseek": "DeepSeek",
+      "minimax": "Minimax"
+    },
+    "languages": {
+      "es": "Spanish",
+      "en": "English",
+      "pt": "Portuguese",
+      "fr": "French"
+    },
+    "sections": "sections",
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "duplicate": "Duplicate",
+      "cancel": "Cancel",
+      "create": "Create",
+      "update": "Update",
+      "back": "Back",
+      "continue": "Continue",
+      "editMore": "Edit more",
+      "saveCourse": "Save Course",
+      "generateWithAi": "Generate with AI",
+      "clearFilters": "Clear Filters",
+      "publish": "Publish",
+      "archive": "Archive"
+    },
+    "search": {
+      "placeholder": "Search courses..."
+    },
+    "noResults": "No results found",
+    "noResultsHint": "Try adjusting your search or filters to find what you're looking for.",
+    "noData": "No courses yet",
+    "noDataHint": "Create your first AI-generated course to get started.",
+    "create": {
+      "title": "Create AI Course"
+    },
+    "edit": {
+      "title": "Edit Course",
+      "tabs": {
+        "form": "Form",
+        "preview": "Preview",
+        "ai": "AI Assistant"
+      }
+    },
+    "preview": {
+      "title": "Course Preview",
+      "objectives": "Learning Objectives",
+      "content": "Course Content",
+      "noContent": "No content available",
+      "noBlocks": "No content blocks in this section",
+      "quiz": "Quiz",
+      "unknownBlock": "Unknown block type"
+    },
+    "steps": {
+      "generate": "Generate with AI",
+      "edit": "Edit Details",
+      "preview": "Preview",
+      "skipToManual": "Skip to manual"
+    },
+    "form": {
+      "courseContent": "Course Content",
+      "basicInfo": "Basic Information",
+      "title": "Course Title",
+      "titlePlaceholder": "Enter the course title",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter the course description",
+      "difficulty": "Difficulty Level",
+      "language": "Language",
+      "duration": "Duration",
+      "durationPlaceholder": "e.g., 4 hours",
+      "targetAudience": "Target Audience",
+      "targetAudiencePlaceholder": "Who is this course for?",
+      "objectives": "Learning Objectives",
+      "objective": "Objective",
+      "addObjective": "Add Objective",
+      "tags": "Tags",
+      "tagsLabel": "Course Tags",
+      "tagsPlaceholder": "Add tags...",
+      "media": "Media",
+      "bannerUrl": "Banner URL",
+      "sectionsReadOnly": "To edit section content, use the Preview or AI tab",
+      "imagesInSection": "Images in Section",
+      "videosInSection": "Videos in Section",
+      "image": "Image",
+      "video": "Video",
+      "block": "Content Block",
+      "sections": "Sections"
+    },
+    "validation": {
+      "titleRequired": "Title is required",
+      "descriptionRequired": "Description is required",
+      "objectivesRequired": "At least one objective is required",
+      "targetAudienceRequired": "Target audience is required",
+      "durationRequired": "Duration is required",
+      "languageRequired": "Language is required"
+    },
+    "chat": {
+      "title": "AI Course Generator",
+      "languageModel": "Language Model",
+      "imageModel": "Image Model",
+      "videoModel": "Video Model",
+      "provider": "Provider",
+      "model": "Model",
+      "noProvider": "No provider",
+      "providersError": "Error loading providers",
+      "loadingProviders": "Loading providers...",
+      "proprietaryOptions": "Proprietary Options",
+      "seconds": "seconds",
+      "sceneDuration": "Scene Duration",
+      "scenesNumber": "Number of Scenes",
+      "totalDuration": "Total Duration",
+      "temperature": "Temperature",
+      "precise": "Precise",
+      "creative": "Creative",
+      "welcome": "Create Your Course with AI",
+      "welcomeMessage": "Describe the course you want to create and I'll help you generate a complete structure with objectives, sections, and content.",
+      "quickStart": "Ideas to Get Started:",
+      "placeholder": "Describe the course you want to create...",
+      "generateCourseFor": "Generate a complete course about",
+      "difficultyLevel": "Difficulty level",
+      "quickPrompts": {
+        "webDev": "Web Development Fundamentals",
+        "webDevDesc": "Covers the basics of HTML, CSS, and JavaScript for beginners.",
+        "machineLearning": "Introduction to Machine Learning",
+        "machineLearningDesc": "Explore the fundamentals of ML algorithms and applications.",
+        "leadership": "Leadership Skills for Managers",
+        "leadershipDesc": "Essential leadership techniques and team management."
+      },
+      "courseStructureGenerated": "Course structure generated",
+      "videoCreditsInfo": "Generated videos: {{consumed}} seconds consumed | {{remaining}} seconds remaining in your plan",
+      "generatingImages": "Generating images {{current}} of {{total}}...",
+      "generatingVideos": "Generating videos {{current}} of {{total}}... (this may take several minutes)",
+      "generatingBanner": "Generating banner image...",
+      "proprietaryVideoDisclaimer": "Using proprietary video service, times may vary depending on demand and video complexity."
+    },
+    "media": {
+      "download": "Download",
+      "audioNotSupported": "Your browser does not support the audio element.",
+      "clickToPlay": "Click to play",
+      "clickToExpand": "Click to expand"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete Course",
+        "content": "Are you sure you want to delete this course? This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "deleted": "Course deleted successfully",
+        "duplicated": "Course duplicated successfully",
+        "generated": "Course structure generated successfully",
+        "saved": "Course saved successfully",
+        "updated": "Course updated successfully",
+        "regenerated": "Course content regenerated successfully",
+        "published": "Course published successfully",
+        "archived": "Course archived successfully"
+      },
+      "error": {
+        "loading": "Error loading courses",
+        "deleting": "Error deleting course",
+        "duplicating": "Error duplicating course",
+        "saving": "Error saving course",
+        "updating": "Error updating course",
+        "publishing": "Error publishing course",
+        "archiving": "Error archiving course"
+      }
+    }
+  },
+  "ai-program-generation": {
+    "title": "AI Learning Programs",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "programs": "Programs",
+      "create": "Create AI Program",
+      "edit": "Edit",
+      "preview": "Preview"
+    },
+    "filters": {
+      "all": "All"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "search": {
+      "placeholder": "Search programs..."
+    },
+    "noResults": "No programs found",
+    "coursesCount": "{{count}} courses",
+    "coursesIncluded": "Courses included ({{count}})",
+    "create": {
+      "title": "Create AI Program"
+    },
+    "edit": {
+      "title": "Edit Program"
+    },
+    "steps": {
+      "generate": "Generate with AI",
+      "edit": "Edit Information",
+      "preview": "Preview"
+    },
+    "form": {
+      "basicInfo": "Basic Information",
+      "name": "Program Name",
+      "namePlaceholder": "E.g.: Advanced Web Development Program",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe the learning program...",
+      "duration": "Duration",
+      "durationPlaceholder": "E.g.: 40 hours",
+      "objective": "Objective",
+      "objectivePlaceholder": "What is the main objective of the program?",
+      "skillsToAcquire": "Skills to Acquire",
+      "skillsToAcquirePlaceholder": "What skills will the participant acquire?",
+      "whatYouWillLearn": "What You Will Learn",
+      "whatYouWillLearnPlaceholder": "What will the participant learn in this program?",
+      "tags": "Tags",
+      "tagsPlaceholder": "E.g.: web development, javascript, react",
+      "tagsHelper": "Comma separated"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "descriptionRequired": "Description is required"
+    },
+    "preview": {
+      "title": "Program Preview",
+      "objective": "Objective",
+      "skillsToAcquire": "Skills to Acquire",
+      "whatYouWillLearn": "What You Will Learn",
+      "video": "Presentation Video"
+    },
+    "actions": {
+      "generateWithAi": "Generate with AI",
+      "cancel": "Cancel",
+      "back": "Back",
+      "continue": "Continue",
+      "editMore": "Edit more",
+      "saveProgram": "Save Program",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete Program",
+        "content": "Are you sure you want to delete this program? This action cannot be undone."
+      }
+    },
+    "chat": {
+      "title": "AI Program Generator",
+      "noProvider": "No provider",
+      "loadingProviders": "Loading AI providers...",
+      "providersError": "Error loading providers",
+      "integrationInstance": "Integration Instance",
+      "instance": "Instance",
+      "searchInstance": "Search instance...",
+      "loadingPrograms": "Loading course catalog...",
+      "coursesAvailable": "{{count}} courses available in catalog",
+      "noCoursesFound": "No courses found. Select another instance.",
+      "languageModel": "Language Model",
+      "imageModel": "Image Model",
+      "videoModel": "Video Model",
+      "provider": "Provider",
+      "model": "Model",
+      "placeholder": "Describe the program you need...",
+      "welcomeTitle": "Learning Program Generator",
+      "welcomeMessage": "Describe what type of program you need and the AI will select the most relevant courses from your catalog to create a complete program.",
+      "quickStart": "Quick Start",
+      "createProgramAbout": "Create a learning program about",
+      "proprietaryOptions": "Proprietary Options",
+      "sceneDuration": "Scene Duration",
+      "scenesNumber": "Number of Scenes",
+      "seconds": "seconds",
+      "totalDuration": "Total Duration",
+      "quickPrompts": {
+        "webDev": "Full Stack Web Development",
+        "webDevDesc": "Includes frontend and backend courses.",
+        "ai": "Artificial Intelligence and Machine Learning",
+        "aiDesc": "From basic concepts to advanced models.",
+        "leadership": "Leadership and Team Management",
+        "leadershipDesc": "Leadership skills for managers."
+      },
+      "generatingBanner": "Generating banner image...",
+      "generatingCover": "Generating cover image...",
+      "generatingVideo": "Generating presentation video...",
+      "programGeneratedSuccess": "The program has been generated successfully. You can continue to the next step to review and edit the information."
+    },
+    "messages": {
+      "success": {
+        "generated": "Program generated successfully",
+        "saved": "Program saved successfully",
+        "updated": "Program updated successfully",
+        "deleted": "Program deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading programs",
+        "loadingSingle": "Error loading program",
+        "saving": "Error saving program",
+        "updating": "Error updating program",
+        "deleting": "Error deleting program"
+      }
+    }
+  },
+  "ai-route-generation": {
+    "title": "AI Learning Paths",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "learningPaths": "Learning Paths",
+      "create": "Add AI Learning Path",
+      "edit": "Edit",
+      "preview": "Preview"
+    },
+    "filters": {
+      "all": "All"
+    },
+    "status": {
+      "draft": "Draft",
+      "generating": "Generating",
+      "completed": "Completed",
+      "published": "Published",
+      "archived": "Archived"
+    },
+    "difficulty": {},
+    "languages": {},
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "back": "Back",
+      "continue": "Continue",
+      "editMore": "Edit more",
+      "saveRoute": "Save Path",
+      "generateWithAi": "Generate with AI",
+      "add": "Add"
+    },
+    "search": {
+      "placeholder": "Search paths..."
+    },
+    "noResults": "No paths found",
+    "programsCount": "{{count}} programs",
+    "programsIncluded": "Programs included ({{count}})",
+    "modulesCount": "{{count}} modules",
+    "modulesIncluded": "Modules included ({{count}})",
+    "module": "Module",
+    "optional": "Optional",
+    "create": {
+      "title": "Add AI Learning Path"
+    },
+    "edit": {
+      "title": "Edit path"
+    },
+    "preview": {
+      "title": "Preview",
+      "programsIncluded": "Programs included ({{count}})"
+    },
+    "steps": {
+      "generate": "Generate",
+      "edit": "Edit",
+      "preview": "Preview"
+    },
+    "form": {
+      "basicInfo": "Basic information",
+      "title": "Title",
+      "titlePlaceholder": "Learning path title",
+      "description": "Description",
+      "descriptionPlaceholder": "Path description",
+      "tags": "Tags"
+    },
+    "validation": {
+      "titleRequired": "Title is required",
+      "descriptionRequired": "Description is required"
+    },
+    "chat": {
+      "title": "AI Path Generator",
+      "welcomeTitle": "Learning Path Generator",
+      "welcomeMessage": "Describe what kind of learning path you need and AI will search for the best available courses to create your path.",
+      "quickStart": "Quick start",
+      "placeholder": "Describe the learning path you need...",
+      "languageModel": "Language Model",
+      "imageModel": "Image Model",
+      "videoModel": "Video Model",
+      "provider": "Provider",
+      "model": "Model",
+      "noProvider": "No provider",
+      "loadingProviders": "Loading providers...",
+      "providersError": "Error loading providers",
+      "integrationInstance": "Integration Instance (course source)",
+      "instance": "Instance",
+      "searchInstance": "Search instance...",
+      "loadingPrograms": "Loading program catalog...",
+      "programsAvailable": "{{count}} programs available in the catalog",
+      "noProgramsFound": "No programs found",
+      "generatingBanner": "Generating path banner...",
+      "generatingVideo": "Generating path video...",
+      "noProviderSelected": "No provider or model selected",
+      "createRouteAbout": "Create a learning path about \"{{topic}}\". {{description}}",
+      "routeGeneratedSuccess": "Learning path generated successfully",
+      "extractError": "Error extracting path data",
+      "catalogLoaded": "{{name}}: {{count}} available",
+      "positions": "Positions",
+      "competencies": "Competencies",
+      "skillLevels": "Skill levels",
+      "quickPrompts": {
+        "webDev": "Web Development Path",
+        "webDevDesc": "Create a learning path for web development from scratch",
+        "ai": "Artificial Intelligence Path",
+        "aiDesc": "Create a learning path about AI and Machine Learning",
+        "leadership": "Leadership Path",
+        "leadershipDesc": "Create a learning path about leadership skills"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete path",
+        "content": "Are you sure you want to delete this path? This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "generated": "Learning path generated successfully",
+        "saved": "Path saved successfully",
+        "updated": "Path updated successfully",
+        "deleted": "Path deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading learning paths",
+        "loadingSingle": "Error loading the path",
+        "saving": "Error saving the path",
+        "updating": "Error updating the path",
+        "deleting": "Error deleting the path"
+      }
+    }
+  },
+  "settings": {
+    "title": "AI Providers",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "ai": "Artificial Intelligence",
+      "create": "New",
+      "edit": "Edit"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "available": "Available",
+      "unavailable": "Unavailable"
+    },
+    "actions": {
+      "add": "New provider",
+      "create": "Create",
+      "edit": "Edit",
+      "update": "Update",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "view": "View details",
+      "clear": "Clear",
+      "addParameter": "Add parameter",
+      "models": "Models"
+    },
+    "table": {
+      "filters": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive",
+        "keyword": "Search",
+        "order": "Order"
+      },
+      "toolbar": {
+        "search": "Search provider...",
+        "sortBy": "Sort by"
+      },
+      "order": {
+        "asc": "Ascending (A-Z)",
+        "desc": "Descending (Z-A)"
+      }
+    },
+    "card": {
+      "requiresApiKey": "Requires API Key",
+      "supportsStreaming": "Supports Streaming",
+      "parameters": "Parameters",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "empty": {
+      "title": "No providers",
+      "description": "No AI providers configured. Create a new one to get started."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete provider",
+        "content": "Are you sure you want to delete this provider? This action cannot be undone."
+      }
+    },
+    "form": {
+      "sections": {
+        "basic": "Basic information",
+        "status": "Status",
+        "parameters": "Configuration parameters"
+      },
+      "fields": {
+        "name": {
+          "label": "Provider name",
+          "placeholder": "E.g.: OpenAI",
+          "required": "Name is required"
+        },
+        "logo": {
+          "label": "Logo URL",
+          "placeholder": "https://example.com/logo.svg"
+        },
+        "requiresApiKey": {
+          "label": "Requires API Key"
+        },
+        "supportsStreaming": {
+          "label": "Supports streaming"
+        },
+        "parameterLabel": {
+          "label": "Parameter name",
+          "placeholder": "E.g.: API_KEY",
+          "required": "Parameter name is required"
+        },
+        "parameterValue": {
+          "label": "Value",
+          "placeholder": "Enter the value...",
+          "required": "Value is required"
+        }
+      },
+      "noParameters": "No parameters configured. Use the 'Add parameter' button to add one."
+    },
+    "messages": {
+      "success": {
+        "created": "Provider created successfully",
+        "updated": "Provider updated successfully",
+        "deleted": "Provider deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading providers",
+        "saving": "Error saving provider",
+        "deleting": "Error deleting provider",
+        "notFound": "Provider not found",
+        "loadError": "Error loading provider",
+        "general": "Error"
+      }
+    }
+  },
+  "models": {
+    "title": "AI Models",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "ai": "Artificial Intelligence",
+      "providers": "Providers",
+      "provider": "Provider",
+      "create": "New",
+      "edit": "Edit"
+    },
+    "actions": {
+      "add": "New model",
+      "create": "Create",
+      "edit": "Edit",
+      "update": "Update",
+      "delete": "Delete",
+      "cancel": "Cancel"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "maxTokens": "Max Tokens",
+        "contextWindow": "Context Window",
+        "capabilities": "Capabilities",
+        "default": "Default"
+      },
+      "toolbar": {
+        "search": "Search model..."
+      },
+      "default": "Default",
+      "noModels": "No models configured for this provider."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete model",
+        "content": "Are you sure you want to delete this model? This action cannot be undone."
+      }
+    },
+    "form": {
+      "sections": {
+        "basic": "Model information",
+        "settings": "Settings"
+      },
+      "fields": {
+        "modelKey": {
+          "label": "Model Key",
+          "placeholder": "E.g.: gpt-4o",
+          "required": "Model key is required"
+        },
+        "name": {
+          "label": "Model name",
+          "placeholder": "E.g.: GPT-4o",
+          "required": "Name is required"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Model description..."
+        },
+        "endpoint": {
+          "label": "Endpoint",
+          "placeholder": "https://api.example.com/v1/chat/completions",
+          "required": "Endpoint is required"
+        },
+        "maxTokens": {
+          "label": "Max Tokens",
+          "placeholder": "E.g.: 16384"
+        },
+        "contextWindow": {
+          "label": "Context Window",
+          "placeholder": "E.g.: 128000"
+        },
+        "capabilities": {
+          "label": "Capabilities",
+          "placeholder": "Select capabilities..."
+        },
+        "isDefault": {
+          "label": "Default model"
+        }
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Model created successfully",
+        "updated": "Model updated successfully",
+        "deleted": "Model deleted successfully"
+      },
+      "error": {
+        "loading": "Error loading models",
+        "saving": "Error saving model",
+        "deleting": "Error deleting model",
+        "notFound": "Model not found",
+        "loadError": "Error loading model",
+        "general": "Error"
+      }
+    }
+  }
+}
