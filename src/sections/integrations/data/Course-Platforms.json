@@ -1,0 +1,351 @@
+{
+  "Blackboard": [
+    {
+      "Plataforma": "Blackboard",
+      "Nombre curso": "Liderazgo y Motivación de Equipos",
+      "Descripción": "Desarrolla competencias para inspirar, dirigir y fortalecer equipos de trabajo.",
+      "Duración": "28 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 5,
+      "Imágen": "https://image.jimcdn.com/app/cms/image/transf/none/path/s90676eea4f80b236/image/i5bf0b2c69d981845/version/1686819991/image.jpg"
+    },
+    {
+      "Plataforma": "Blackboard",
+      "Nombre curso": "Ética y Responsabilidad Corporativa",
+      "Descripción": "Reflexiona sobre la importancia de la ética en la gestión empresarial moderna.",
+      "Duración": "18 horas",
+      "Nivel": "Básico",
+      "Raiting": 3,
+      "Imágen": "https://sbc-ecuador.com/wp-content/uploads/2021/07/imagenes-cursos-2025-2.png"
+    },
+    {
+      "Plataforma": "Blackboard",
+      "Nombre curso": "Gestión del Desempeño",
+      "Descripción": "Aprende a establecer KPIs y evaluar la productividad individual y grupal.",
+      "Duración": "30 horas",
+      "Nivel": "Avanzado",
+      "Raiting": 4,
+      "Imágen": "https://www.inagep.com/uploads/1/3/6/0/136077634/curso-taller-evaluacion-de-desempe-o_orig.jpg"
+    },
+    {
+      "Plataforma": "Blackboard",
+      "Nombre curso": "Innovación y Emprendimiento Corporativo",
+      "Descripción": "Fomenta la cultura emprendedora dentro de tu organización.",
+      "Duración": "34 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 4,
+      "Imágen": "https://kzi.mx/wp-content/uploads/2023/07/Innovacion.png"
+    },
+    {
+      "Plataforma": "Blackboard",
+      "Nombre curso": "Estrategias de Ventas y Atención al Cliente",
+      "Descripción": "Mejora tus habilidades comerciales y la experiencia del cliente.",
+      "Duración": "24 horas",
+      "Nivel": "Básico",
+      "Raiting": 2,
+      "Imágen": "https://virtuallcorp.com/wp-content/uploads/2022/05/ARTES-WEB-CURSOS-1-min-1.png"
+    }
+  ],
+  "Cursera": [
+    {
+      "Plataforma": "Cursera",
+      "Nombre curso": "Liderazgo y Gestión de Equipos",
+      "Descripción": "Aprende las bases del liderazgo moderno y el trabajo colaborativo.",
+      "Duración": "30 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 5,
+      "Imágen": "https://image.jimcdn.com/app/cms/image/transf/none/path/s90676eea4f80b236/image/i5bf0b2c69d981845/version/1686819991/image.jpg"
+    },
+    {
+      "Plataforma": "Cursera",
+      "Nombre curso": "Data Analytics para Negocios",
+      "Descripción": "Usa datos para tomar decisiones empresariales más inteligentes.",
+      "Duración": "42 horas",
+      "Nivel": "Avanzado",
+      "Raiting": 5,
+      "Imágen": "https://www.ceupe.com/images/easyblog_articles/1558/b2ap3_amp_simbolo-business-analytics.jpg"
+    },
+    {
+      "Plataforma": "Cursera",
+      "Nombre curso": "Estrategia Empresarial Global",
+      "Descripción": "Explora modelos de negocio y expansión en mercados internacionales.",
+      "Duración": "38 horas",
+      "Nivel": "Avanzado",
+      "Raiting": 5,
+      "Imágen": "https://www.pactomundial.org/wp-content/uploads/2023/07/FB_copia_22.png"
+    },
+    {
+      "Plataforma": "Cursera",
+      "Nombre curso": "Habilidades Blandas para el Éxito Profesional",
+      "Descripción": "Fortalece tus competencias comunicativas, emocionales y sociales.",
+      "Duración": "18 horas",
+      "Nivel": "Básico",
+      "Raiting": 4,
+      "Imágen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgKX6viWKC6Kb0uWtnArSo_R1P_5tUZE1_KQ&s"
+    },
+    {
+      "Plataforma": "Cursera",
+      "Nombre curso": "Gestión del Tiempo y Productividad",
+      "Descripción": "Domina técnicas para optimizar tu rendimiento personal y laboral.",
+      "Duración": "15 horas",
+      "Nivel": "Básico",
+      "Raiting": 3,
+      "Imágen": "https://www.g-talent.net/cdn/shop/files/Curso_Manejo_del_Tiempo_y_Productividad_T_cnicas_para_Alcanzar_tus_Objetivos_grande.png?v=1747146420"
+    }
+  ],
+  "Mais A": [
+    {
+      "Plataforma": "Mais A",
+      "Nombre curso": "Innovación Empresarial Sostenible",
+      "Descripción": "Aprende a integrar sostenibilidad e innovación en modelos de negocio competitivos.",
+      "Duración": "30 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 5,
+      "Imágen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5SjUHGreiz_-GUugpHEygBqafe5SYGLvNGQ&s"
+    },
+    {
+      "Plataforma": "Mais A",
+      "Nombre curso": "Comunicación Corporativa Estratégica",
+      "Descripción": "Mejora la imagen institucional mediante estrategias de comunicación interna y externa.",
+      "Duración": "22 horas",
+      "Nivel": "Avanzado",
+      "Raiting": 5,
+      "Imágen": "https://static.platzi.com/media/courses/comunicacion-estrategica-empresas-og.jpg"
+    },
+    {
+      "Plataforma": "Mais A",
+      "Nombre curso": "Análisis de Datos para la Toma de Decisiones",
+      "Descripción": "Utiliza herramientas de análisis para generar reportes e insights empresariales.",
+      "Duración": "36 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 4,
+      "Imágen": "https://static.platzi.com/media/courses/Curso_toma_decisiones_Pensamiento_Critico_OG_1.png"
+    },
+    {
+      "Plataforma": "Mais A",
+      "Nombre curso": "Liderazgo Transformacional",
+      "Descripción": "Desarrolla habilidades de liderazgo inspirador y gestión del cambio.",
+      "Duración": "28 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 3,
+      "Imágen": "https://ccea.ec/wp-content/uploads/2020/05/Curso-JLS-01.jpeg"
+    },
+    {
+      "Plataforma": "Mais A",
+      "Nombre curso": "Estrategias Comerciales y de Ventas",
+      "Descripción": "Aprende técnicas modernas para aumentar la conversión y fidelizar clientes.",
+      "Duración": "25 horas",
+      "Nivel": "Básico",
+      "Raiting": 5,
+      "Imágen": "https://mentesalacarta.s3.us-east-1.amazonaws.com/conferencias/hernan-leon-bahamon-navia-curso-curso-basico-en-ventas-para-emprendedores-6315.jpg?1582905692"
+    }
+  ],
+  "Mia": [
+    {
+      "Plataforma": "Mia",
+      "Nombre curso": "Liderazgo Estratégico",
+      "Descripción": "Desarrolla habilidades para guiar equipos de alto desempeño y tomar decisiones estratégicas en entornos empresariales cambiantes.",
+      "Duración": "30 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 4,
+      "Imágen": "https://pascualbravo.edu.co/wp-content/uploads/2021/12/curso-liderazgo-estrategico-1024x1024.jpg"
+    },
+    {
+      "Plataforma": "Mia",
+      "Nombre curso": "Comunicación Efectiva en el Trabajo",
+      "Descripción": "Aprende técnicas de comunicación asertiva y persuasiva aplicadas a contextos laborales.",
+      "Duración": "20 horas",
+      "Nivel": "Básico",
+      "Raiting": 5,
+      "Imágen": "https://hagamoscomunicacion.com/wp-content/uploads/2024/10/Mesa-de-trabajo-1.jpg"
+    },
+    {
+      "Plataforma": "Mia",
+      "Nombre curso": "Gestión del Cambio Organizacional",
+      "Descripción": "Comprende cómo liderar procesos de transformación y adaptación cultural en empresas modernas.",
+      "Duración": "25 horas",
+      "Nivel": "Avanzado",
+      "Raiting": 5,
+      "Imágen": "https://df835d438c.clvaw-cdnwnd.com/e662c1e378ce6affb3b82ae15466afe3/200001248-b1252b1253/1-17.jpeg?ph=df835d438c"
+    },
+    {
+      "Plataforma": "Mia",
+      "Nombre curso": "Finanzas para No Financieros",
+      "Descripción": "Introducción práctica a los conceptos financieros esenciales para la toma de decisiones empresariales.",
+      "Duración": "40 horas",
+      "Nivel": "Básico",
+      "Raiting": 4,
+      "Imágen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS70zkFD2wF0X2D5MCxoskFoGNX0Uy9dTzNXg&s"
+    },
+    {
+      "Plataforma": "Mia",
+      "Nombre curso": "Innovación y Creatividad Corporativa",
+      "Descripción": "Potencia la generación de ideas innovadoras y su aplicación en proyectos empresariales.",
+      "Duración": "30 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 4,
+      "Imágen": "https://cursosgratuitos.grupoeuroformac.com/1829-large_default/adgd059po-creatividad-innovacion-empresarial-profesional-ocupados-murcia.jpg"
+    }
+  ],
+  "Moodle": [
+    {
+      "Plataforma": "Moodle",
+      "Nombre curso": "Gestión del Talento Humano",
+      "Descripción": "Aprende estrategias de reclutamiento, motivación y retención del talento en las organizaciones.",
+      "Duración": "25 horas",
+      "Nivel": "Avanzado",
+      "Raiting": 4,
+      "Imágen": "https://i.ibb.co/B3Kjp6m/gestion-talento-humano2.png"
+    },
+    {
+      "Plataforma": "Moodle",
+      "Nombre curso": "Planeación Estratégica Empresarial",
+      "Descripción": "Crea planes estratégicos alineados con la misión y visión corporativa.",
+      "Duración": "35 horas",
+      "Nivel": "Avanzado",
+      "Raiting": 5,
+      "Imágen": "https://virtuallcorp.com/wp-content/uploads/2022/12/planeacion-estrategica.png"
+    },
+    {
+      "Plataforma": "Moodle",
+      "Nombre curso": "Inteligencia Emocional Laboral",
+      "Descripción": "Mejora tus relaciones interpersonales y tu desempeño profesional.",
+      "Duración": "18 horas",
+      "Nivel": "Básico",
+      "Raiting": 5,
+      "Imágen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiWoAQQ4w3JlQgL9zf-Sf-IdQ7sPUND24wOA&s"
+    },
+    {
+      "Plataforma": "Moodle",
+      "Nombre curso": "Marketing Digital para Empresas",
+      "Descripción": "Domina herramientas digitales para posicionar marcas en el entorno online.",
+      "Duración": "28 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 5,
+      "Imágen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmKnxn-dSFX7ZX5xM0zjI7RKpSK3Ck2Njoiw&s"
+    },
+    {
+      "Plataforma": "Moodle",
+      "Nombre curso": "Negociación y Resolución de Conflictos",
+      "Descripción": "Aprende a negociar de forma efectiva y resolver conflictos internos con éxito.",
+      "Duración": "22 horas",
+      "Nivel": "Avanzado",
+      "Raiting": 5,
+      "Imágen": "https://cursosgratuitos.grupoeuroformac.com/3815-large_default/adgd236po-negociacion-y-resolucion-de-conflictos-madrid.jpg"
+    }
+  ],
+  "Open": [
+    {
+      "Plataforma": "Open",
+      "Nombre curso": "Emprendimiento y Modelo de Negocio",
+      "Descripción": "Descubre cómo transformar ideas en proyectos empresariales sostenibles.",
+      "Duración": "26 horas",
+      "Nivel": "Básico",
+      "Raiting": 5,
+      "Imágen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwHn3GacgbdONib00cWL16T5FeSFI5OBRhnA&s"
+    },
+    {
+      "Plataforma": "Open",
+      "Nombre curso": "Dirección de Proyectos Empresariales",
+      "Descripción": "Aplica metodologías ágiles y tradicionales para la gestión efectiva de proyectos.",
+      "Duración": "40 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 4,
+      "Imágen": "https://intecos.edu.co/wp-content/uploads/2024/05/curso-especializado-gerencia-proyectos.jpg"
+    },
+    {
+      "Plataforma": "Open",
+      "Nombre curso": "Finanzas Corporativas",
+      "Descripción": "Domina conceptos de flujo de caja, presupuestos y análisis financiero.",
+      "Duración": "35 horas",
+      "Nivel": "Avanzado",
+      "Raiting": 5,
+      "Imágen": "https://www.camaradirecta.com/imagenes/vdo_eventos/even_b4b81b4fb3b54a12940d9fdf894c84ca1425e8ea.jpg"
+    },
+    {
+      "Plataforma": "Open",
+      "Nombre curso": "Cultura Organizacional y Clima Laboral",
+      "Descripción": "Analiza el impacto de la cultura interna en la productividad empresarial.",
+      "Duración": "20 horas",
+      "Nivel": "Básico",
+      "Raiting": 3,
+      "Imágen": "https://creatalentope.com/wp-content/uploads/2021/10/Clima-laboral1-300x300.png"
+    },
+    {
+      "Plataforma": "Open",
+      "Nombre curso": "Transformación Digital Empresarial",
+      "Descripción": "Aprende sobre herramientas tecnológicas y estrategias digitales para la competitividad.",
+      "Duración": "32 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 5,
+      "Imágen": "https://creatalentope.com/wp-content/uploads/2021/10/Clima-laboral1-300x300.png"
+    }
+  ],
+  "Rosseta Stone": [
+    {
+      "Plataforma": "Rosseta Stone",
+      "Nombre curso": "Inglés(US)",
+      "Descripción": "Niveles del idioma de acuerdo con el MCRE (Marco Común Europeo de Referencia): Desde A1 hasta C1",
+      "Duración": "80 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 5,
+      "Imágen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkpLY4idYWStoBHmOlwezVsTxc9Kr_ThURjA&s"
+    },
+    {
+      "Plataforma": "Rosseta Stone",
+      "Nombre curso": "Francés Coorporativo",
+      "Descripción": "Niveles del idioma de acuerdo con el MCRE (Marco Común Europeo de Referencia): Desde A1 hasta C1",
+      "Duración": "80 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 5,
+      "Imágen": "https://m.smart.edu.co/wp-content/uploads/2021/12/WhatsApp-Image-2022-01-07-at-5.19.38-PM.jpeg"
+    }
+  ],
+  "Udemy": [
+    {
+      "Plataforma": "Udemy",
+      "Nombre curso": "Liderazgo Moderno y Gestión de Equipos",
+      "Descripción": "Aprende a liderar equipos diversos con metodologías ágiles y comunicación efectiva.",
+      "Duración": "26 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 3,
+      "Imágen": "https://image.jimcdn.com/app/cms/image/transf/none/path/s90676eea4f80b236/image/i5bf0b2c69d981845/version/1686819991/image.jpg"
+    },
+    {
+      "Plataforma": "Udemy",
+      "Nombre curso": "Finanzas Empresariales desde Cero",
+      "Descripción": "Comprende los fundamentos financieros clave para la toma de decisiones en empresas.",
+      "Duración": "32 horas",
+      "Nivel": "Básico",
+      "Raiting": 3,
+      "Imágen": "https://centroeducativoonline.com/wp-content/uploads/2025/01/PORTADAS-CURSOS-CEO-MOD_FINANZAS-EMPRESARIALES.webp"
+    },
+    {
+      "Plataforma": "Udemy",
+      "Nombre curso": "Estrategias de Marketing Digital",
+      "Descripción": "Diseña campañas efectivas y domina herramientas como Google Ads y Meta Business.",
+      "Duración": "28 horas",
+      "Nivel": "Intermedio",
+      "Raiting": 4,
+      "Imágen": "https://aula10formacion.com/wp-content/uploads/2018/05/Curso-Online-de-Estrategias-de-Marketing-Digital-1-470x470.png"
+    },
+    {
+      "Plataforma": "Udemy",
+      "Nombre curso": "Productividad y Gestión del Tiempo",
+      "Descripción": "Aplica técnicas para organizar tareas, priorizar metas y mejorar tu rendimiento diario.",
+      "Duración": "18 horas",
+      "Nivel": "Básico",
+      "Raiting": 5,
+      "Imágen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyXcKJci9kiUEhkKa5KVlOQzgUOFF1MBtrPw&s"
+    },
+    {
+      "Plataforma": "Udemy",
+      "Nombre curso": "Gestión del Talento y Cultura Organizacional",
+      "Descripción": "Desarrolla políticas efectivas de recursos humanos y promueve una cultura positiva.",
+      "Duración": "24 horas",
+      "Nivel": "Avanzado",
+      "Raiting": 5,
+      "Imágen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyXcKJci9kiUEhkKa5KVlOQzgUOFF1MBtrPw&s"
+    }
+  ]
+}
