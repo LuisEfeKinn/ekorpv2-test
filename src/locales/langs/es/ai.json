@@ -1,0 +1,816 @@
+{
+  "ai-course-generation": {
+    "title": "Listado de Cursos con IA",
+    "breadcrumbs": {
+      "dashboard": "Panel",
+      "aiCourses": "Cursos IA"
+    },
+    "filters": {
+      "all": "Todos"
+    },
+    "status": {
+      "draft": "Borrador",
+      "generating": "Generando",
+      "completed": "Completado",
+      "published": "Publicado",
+      "archived": "Archivado"
+    },
+    "difficulty": {
+      "beginner": "Principiante",
+      "principiante": "Principiante",
+      "intermediate": "Intermedio",
+      "intermedio": "Intermedio",
+      "advanced": "Avanzado",
+      "avanzado": "Avanzado"
+    },
+    "provider": {
+      "openai": "OpenAI",
+      "gemini": "Google Gemini",
+      "deepseek": "DeepSeek",
+      "minimax": "Minimax"
+    },
+    "languages": {
+      "es": "Español",
+      "en": "Inglés",
+      "pt": "Portugués",
+      "fr": "Francés"
+    },
+    "sections": "secciones",
+    "actions": {
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "duplicate": "Duplicar",
+      "cancel": "Cancelar",
+      "create": "Crear",
+      "update": "Actualizar",
+      "back": "Atrás",
+      "continue": "Continuar",
+      "editMore": "Editar más",
+      "saveCourse": "Guardar Curso",
+      "generateWithAi": "Generar con IA",
+      "clearFilters": "Limpiar Filtros",
+      "publish": "Publicar",
+      "archive": "Archivar"
+    },
+    "search": {
+      "placeholder": "Buscar cursos..."
+    },
+    "noResults": "No se encontraron resultados",
+    "noResultsHint": "Intenta ajustar tu búsqueda o filtros para encontrar lo que buscas.",
+    "noData": "Aún no hay cursos",
+    "noDataHint": "Crea tu primer curso generado con IA para comenzar.",
+    "create": {
+      "title": "Crear Curso con IA"
+    },
+    "edit": {
+      "title": "Editar Curso",
+      "tabs": {
+        "form": "Formulario",
+        "preview": "Vista Previa",
+        "ai": "Asistente IA"
+      }
+    },
+    "preview": {
+      "title": "Vista Previa del Curso",
+      "objectives": "Objetivos de Aprendizaje",
+      "content": "Contenido del Curso",
+      "noContent": "No hay contenido disponible",
+      "noBlocks": "No hay bloques de contenido en esta sección",
+      "quiz": "Quiz",
+      "unknownBlock": "Tipo de bloque desconocido"
+    },
+    "steps": {
+      "generate": "Generar con IA",
+      "edit": "Editar Detalles",
+      "preview": "Vista Previa",
+      "skipToManual": "Saltar a manual"
+    },
+    "form": {
+      "courseContent": "Contenido del Curso",
+      "basicInfo": "Información Básica",
+      "title": "Título del Curso",
+      "titlePlaceholder": "Ingresa el título del curso",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Ingresa la descripción del curso",
+      "difficulty": "Nivel de Dificultad",
+      "language": "Idioma",
+      "duration": "Duración",
+      "durationPlaceholder": "ej., 4 horas",
+      "targetAudience": "Audiencia Objetivo",
+      "targetAudiencePlaceholder": "¿Para quién es este curso?",
+      "objectives": "Objetivos de Aprendizaje",
+      "objective": "Objetivo",
+      "addObjective": "Agregar Objetivo",
+      "tags": "Etiquetas",
+      "tagsLabel": "Etiquetas del Curso",
+      "tagsPlaceholder": "Agregar etiquetas...",
+      "media": "Multimedia",
+      "bannerUrl": "URL de Banner",
+      "sectionsReadOnly": "Para editar el contenido de las secciones, utiliza la pestaña de Vista Previa o IA",
+      "imagesInSection": "Imágenes en la Sección",
+      "videosInSection": "Videos en la Sección",
+      "image": "Imagen",
+      "video": "Video",
+      "block": "Bloque de Contenido",
+      "sections": "Secciones"
+    },
+    "validation": {
+      "titleRequired": "El título es obligatorio",
+      "descriptionRequired": "La descripción es obligatoria",
+      "objectivesRequired": "Se requiere al menos un objetivo",
+      "targetAudienceRequired": "La audiencia objetivo es obligatoria",
+      "durationRequired": "La duración es obligatoria",
+      "languageRequired": "El idioma es obligatorio"
+    },
+    "chat": {
+      "title": "Generador de Cursos IA",
+      "languageModel": "Modelo de Lenguaje",
+      "imageModel": "Modelo de Imagen",
+      "videoModel": "Modelo de Video",
+      "provider": "Proveedor",
+      "model": "Modelo",
+      "noProvider": "Sin proveedor",
+      "providersError": "Error al cargar proveedores",
+      "loadingProviders": "Cargando proveedores...",
+      "proprietaryOptions": "Opciones Propietarias",
+      "seconds": "segundos",
+      "sceneDuration": "Duración por Escena",
+      "scenesNumber": "Número de Escenas",
+      "totalDuration": "Duración Total",
+      "temperature": "Temperatura",
+      "precise": "Preciso",
+      "creative": "Creativo",
+      "welcome": "Crea Tu Curso con IA",
+      "welcomeMessage": "Describe el curso que deseas crear y te ayudaré a generar una estructura completa con objetivos, secciones y contenido.",
+      "quickStart": "Ideas para Comenzar:",
+      "placeholder": "Describe el curso que quieres crear...",
+      "generateCourseFor": "Genera un curso completo sobre",
+      "difficultyLevel": "Nivel de dificultad",
+      "quickPrompts": {
+        "webDev": "Fundamentos de Desarrollo Web",
+        "webDevDesc": "Cubre los básicos de HTML, CSS y JavaScript para principiantes.",
+        "machineLearning": "Introducción a Machine Learning",
+        "machineLearningDesc": "Explora los fundamentos de algoritmos de ML y aplicaciones.",
+        "leadership": "Habilidades de Liderazgo para Gerentes",
+        "leadershipDesc": "Técnicas esenciales de liderazgo y gestión de equipos."
+      },
+      "courseStructureGenerated": "Estructura del curso generada",
+      "videoCreditsInfo": "Videos generados: {{consumed}} segundos consumidos | {{remaining}} segundos restantes en tu plan",
+      "generatingImages": "Generando imágenes {{current}} de {{total}}...",
+      "generatingVideos": "Generando videos {{current}} de {{total}}... (esto puede tomar varios minutos)",
+      "generatingBanner": "Generando imagen de banner...",
+      "proprietaryVideoDisclaimer": "Usando servicio de video propietario, los tiempos pueden variar según la demanda y la complejidad del video."
+    },
+    "media": {
+      "download": "Descargar",
+      "audioNotSupported": "Tu navegador no soporta el elemento de audio.",
+      "clickToPlay": "Haz clic para reproducir",
+      "clickToExpand": "Haz clic para expandir"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Curso",
+        "content": "¿Estás seguro de que deseas eliminar este curso? Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "deleted": "Curso eliminado exitosamente",
+        "duplicated": "Curso duplicado exitosamente",
+        "generated": "Estructura del curso generada exitosamente",
+        "saved": "Curso guardado exitosamente",
+        "updated": "Curso actualizado exitosamente",
+        "regenerated": "Contenido del curso regenerado exitosamente",
+        "published": "Curso publicado exitosamente",
+        "archived": "Curso archivado exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar cursos",
+        "deleting": "Error al eliminar curso",
+        "duplicating": "Error al duplicar curso",
+        "saving": "Error al guardar curso",
+        "updating": "Error al actualizar curso",
+        "publishing": "Error al publicar curso",
+        "archiving": "Error al archivar curso"
+      }
+    }
+  },
+  "ai-program-generation": {
+    "title": "Programas de Aprendizaje IA",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "programs": "Programas",
+      "create": "Crear Programa con IA",
+      "edit": "Editar",
+      "preview": "Vista previa"
+    },
+    "filters": {
+      "all": "Todos"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "search": {
+      "placeholder": "Buscar programas..."
+    },
+    "noResults": "No se encontraron programas",
+    "coursesCount": "{{count}} cursos",
+    "coursesIncluded": "Cursos incluidos ({{count}})",
+    "create": {
+      "title": "Crear Programa con IA"
+    },
+    "edit": {
+      "title": "Editar Programa"
+    },
+    "steps": {
+      "generate": "Generar con IA",
+      "edit": "Editar Información",
+      "preview": "Vista Previa"
+    },
+    "form": {
+      "basicInfo": "Información Básica",
+      "name": "Nombre del Programa",
+      "namePlaceholder": "Ej: Programa de Desarrollo Web Avanzado",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Describe el programa de aprendizaje...",
+      "duration": "Duración",
+      "durationPlaceholder": "Ej: 40 horas",
+      "objective": "Objetivo",
+      "objectivePlaceholder": "¿Cuál es el objetivo principal del programa?",
+      "skillsToAcquire": "Habilidades a Adquirir",
+      "skillsToAcquirePlaceholder": "¿Qué habilidades adquirirá el participante?",
+      "whatYouWillLearn": "Lo que Aprenderás",
+      "whatYouWillLearnPlaceholder": "¿Qué aprenderá el participante en este programa?",
+      "tags": "Etiquetas",
+      "tagsPlaceholder": "Ej: desarrollo web, javascript, react",
+      "tagsHelper": "Separadas por comas"
+    },
+    "validation": {
+      "nameRequired": "El nombre es obligatorio",
+      "descriptionRequired": "La descripción es obligatoria"
+    },
+    "preview": {
+      "title": "Vista Previa del Programa",
+      "objective": "Objetivo",
+      "skillsToAcquire": "Habilidades a Adquirir",
+      "whatYouWillLearn": "Lo que Aprenderás",
+      "video": "Video de Presentación"
+    },
+    "actions": {
+      "generateWithAi": "Generar con IA",
+      "cancel": "Cancelar",
+      "back": "Atrás",
+      "continue": "Continuar",
+      "editMore": "Editar más",
+      "saveProgram": "Guardar Programa",
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar Programa",
+        "content": "¿Estás seguro de que deseas eliminar este programa? Esta acción no se puede deshacer."
+      }
+    },
+    "chat": {
+      "title": "Generador de Programas IA",
+      "noProvider": "Sin proveedor",
+      "loadingProviders": "Cargando proveedores de IA...",
+      "providersError": "Error cargando proveedores",
+      "integrationInstance": "Instancia de Integración",
+      "instance": "Instancia",
+      "searchInstance": "Buscar instancia...",
+      "loadingPrograms": "Cargando catálogo de cursos...",
+      "coursesAvailable": "{{count}} cursos disponibles en el catálogo",
+      "noCoursesFound": "No se encontraron cursos. Selecciona otra instancia.",
+      "languageModel": "Modelo de Lenguaje",
+      "imageModel": "Modelo de Imagen",
+      "videoModel": "Modelo de Video",
+      "provider": "Proveedor",
+      "model": "Modelo",
+      "placeholder": "Describe el programa que necesitas...",
+      "welcomeTitle": "Generador de Programas de Aprendizaje",
+      "welcomeMessage": "Describe qué tipo de programa necesitas y la IA seleccionará los cursos más relevantes de tu catálogo para crear un programa completo.",
+      "quickStart": "Inicio Rápido",
+      "createProgramAbout": "Crea un programa de aprendizaje sobre",
+      "proprietaryOptions": "Opciones Propietarias",
+      "sceneDuration": "Duración por Escena",
+      "scenesNumber": "Número de Escenas",
+      "seconds": "segundos",
+      "totalDuration": "Duración Total",
+      "quickPrompts": {
+        "webDev": "Desarrollo Web Full Stack",
+        "webDevDesc": "Incluye cursos de frontend y backend.",
+        "ai": "Inteligencia Artificial y Machine Learning",
+        "aiDesc": "Desde conceptos básicos hasta modelos avanzados.",
+        "leadership": "Liderazgo y Gestión de Equipos",
+        "leadershipDesc": "Habilidades de liderazgo para managers."
+      },
+      "generatingBanner": "Generando imagen de banner...",
+      "generatingCover": "Generando imagen de portada...",
+      "generatingVideo": "Generando video de presentación...",
+      "programGeneratedSuccess": "El programa ha sido generado correctamente. Puedes continuar al siguiente paso para revisar y editar la información."
+    },
+    "messages": {
+      "success": {
+        "generated": "Programa generado correctamente",
+        "saved": "Programa guardado correctamente",
+        "updated": "Programa actualizado correctamente",
+        "deleted": "Programa eliminado correctamente"
+      },
+      "error": {
+        "loading": "Error al cargar los programas",
+        "loadingSingle": "Error al cargar el programa",
+        "saving": "Error al guardar el programa",
+        "updating": "Error al actualizar el programa",
+        "deleting": "Error al eliminar el programa"
+      }
+    }
+  },
+  "ai-route-generation": {
+    "title": "Rutas de Aprendizaje IA",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "learningPaths": "Rutas de Aprendizaje",
+      "create": "Agregar Ruta de Aprendizaje con IA",
+      "edit": "Editar",
+      "preview": "Vista previa"
+    },
+    "filters": {
+      "all": "Todos"
+    },
+    "status": {
+      "draft": "Borrador",
+      "generating": "Generando",
+      "completed": "Completado",
+      "published": "Publicado",
+      "archived": "Archivado"
+    },
+    "difficulty": {},
+    "languages": {},
+    "actions": {
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "back": "Atrás",
+      "continue": "Continuar",
+      "editMore": "Editar más",
+      "saveRoute": "Guardar Ruta",
+      "generateWithAi": "Generar con IA",
+      "add": "Agregar"
+    },
+    "search": {
+      "placeholder": "Buscar rutas..."
+    },
+    "noResults": "No se encontraron rutas",
+    "programsCount": "{{count}} programas",
+    "programsIncluded": "Programas incluidos ({{count}})",
+    "modulesCount": "{{count}} módulos",
+    "modulesIncluded": "Módulos incluidos ({{count}})",
+    "module": "Módulo",
+    "optional": "Opcional",
+    "create": {
+      "title": "Agregar Ruta de Aprendizaje con IA"
+    },
+    "edit": {
+      "title": "Editar ruta"
+    },
+    "preview": {
+      "title": "Vista previa",
+      "programsIncluded": "Programas incluidos ({{count}})"
+    },
+    "steps": {
+      "generate": "Generar",
+      "edit": "Editar",
+      "preview": "Vista previa"
+    },
+    "form": {
+      "basicInfo": "Información básica",
+      "title": "Título",
+      "titlePlaceholder": "Título de la ruta de aprendizaje",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Descripción de la ruta",
+      "tags": "Etiquetas"
+    },
+    "validation": {
+      "titleRequired": "El título es requerido",
+      "descriptionRequired": "La descripción es requerida"
+    },
+    "chat": {
+      "title": "Generador de Rutas IA",
+      "welcomeTitle": "Generador de Rutas de Aprendizaje",
+      "welcomeMessage": "Describe qué tipo de ruta de aprendizaje necesitas y la IA buscará los mejores cursos disponibles para crear tu ruta.",
+      "quickStart": "Inicio rápido",
+      "placeholder": "Describe la ruta de aprendizaje que necesitas...",
+      "languageModel": "Modelo de Lenguaje",
+      "imageModel": "Modelo de Imagen",
+      "videoModel": "Modelo de Video",
+      "provider": "Proveedor",
+      "model": "Modelo",
+      "noProvider": "Sin proveedor",
+      "loadingProviders": "Cargando proveedores...",
+      "providersError": "Error al cargar proveedores",
+      "integrationInstance": "Instancia de Integración (origen de cursos)",
+      "instance": "Instancia",
+      "searchInstance": "Buscar instancia...",
+      "loadingPrograms": "Cargando catálogo de programas...",
+      "programsAvailable": "{{count}} programas disponibles en el catálogo",
+      "noProgramsFound": "No se encontraron programas",
+      "generatingBanner": "Generando banner de la ruta...",
+      "generatingVideo": "Generando video de la ruta...",
+      "noProviderSelected": "No hay proveedor o modelo seleccionado",
+      "createRouteAbout": "Crea una ruta de aprendizaje sobre \"{{topic}}\". {{description}}",
+      "routeGeneratedSuccess": "Ruta de aprendizaje generada exitosamente",
+      "extractError": "Error al extraer datos de la ruta",
+      "catalogLoaded": "{{name}}: {{count}} disponibles",
+      "positions": "Cargos",
+      "competencies": "Competencias",
+      "skillLevels": "Niveles de habilidad",
+      "quickPrompts": {
+        "webDev": "Ruta de Desarrollo Web",
+        "webDevDesc": "Crea una ruta de aprendizaje para desarrollo web desde cero",
+        "ai": "Ruta de Inteligencia Artificial",
+        "aiDesc": "Crea una ruta de aprendizaje sobre IA y Machine Learning",
+        "leadership": "Ruta de Liderazgo",
+        "leadershipDesc": "Crea una ruta de aprendizaje sobre habilidades de liderazgo"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar ruta",
+        "content": "¿Estás seguro de eliminar esta ruta? Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "generated": "Ruta de aprendizaje generada exitosamente",
+        "saved": "Ruta guardada exitosamente",
+        "updated": "Ruta actualizada exitosamente",
+        "deleted": "Ruta eliminada exitosamente"
+      },
+      "error": {
+        "loading": "Error al cargar rutas de aprendizaje",
+        "loadingSingle": "Error al cargar la ruta",
+        "saving": "Error al guardar la ruta",
+        "updating": "Error al actualizar la ruta",
+        "deleting": "Error al eliminar la ruta"
+      }
+    }
+  },
+  "ai-learning-path": {
+    "heading": "Crear Ruta de Aprendizaje con IA",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "learningPath": "Rutas de Aprendizaje",
+      "create": "Crear"
+    },
+    "toolbar": {
+      "title": "Configuración de IA",
+      "noProvider": "Sin proveedor",
+      "loadingProviders": "Cargando proveedores...",
+      "providersError": "Error al cargar proveedores",
+      "languageModel": "Modelo de Lenguaje",
+      "imageModel": "Modelo de Imagen",
+      "videoModel": "Modelo de Video",
+      "provider": "Proveedor",
+      "model": "Modelo",
+      "proprietaryOptions": "Opciones Propietarias",
+      "sceneDuration": "Duración por Escena",
+      "scenesNumber": "Número de Escenas",
+      "seconds": "segundos",
+      "totalDuration": "Duración Total: {{duration}} segundos",
+      "imageModelLabel": "Modelo de Imagen",
+      "temperature": "Temperatura",
+      "precise": "Preciso",
+      "creative": "Creativo"
+    },
+    "steps": {
+      "defineRoute": "Definir Ruta",
+      "generateCourses": "Generar Cursos",
+      "generatePrograms": "Generar Programas",
+      "createRoute": "Crear Ruta"
+    },
+    "actions": {
+      "back": "Atrás",
+      "next": "Siguiente",
+      "stop": "Detener",
+      "retryGeneration": "Reintentar Generación"
+    },
+    "errors": {
+      "unknown": "Error desconocido",
+      "selectProviderModel": "Selecciona un proveedor y modelo para continuar",
+      "noProviderModelSelected": "No hay proveedor o modelo seleccionado",
+      "noCompletedPrograms": "No hay programas completados para generar la ruta",
+      "routeGenerationUnknown": "No se pudo generar la ruta de aprendizaje"
+    },
+    "messages": {
+      "success": {
+        "structureGenerated": "Estructura de ruta generada correctamente",
+        "coursesGeneratedSaved": "Se generaron y guardaron {{count}} cursos",
+        "programsGeneratedSaved": "Se generaron y guardaron {{count}} programas",
+        "routeSaved": "Ruta de aprendizaje guardada correctamente"
+      },
+      "warning": {
+        "coursesGeneratedWithErrors": "Se completaron {{completed}} cursos, {{errors}} con error",
+        "programsGeneratedWithErrors": "Se completaron {{completed}} programas, {{errors}} con error"
+      },
+      "error": {
+        "routeSaveError": "Error al guardar la ruta de aprendizaje"
+      }
+    },
+    "chat": {
+      "title": "Definir Ruta con IA",
+      "welcomeTitle": "Crea Tu Ruta de Aprendizaje",
+      "welcomeMessage": "Describe la ruta de aprendizaje que deseas crear y te ayudaré a estructurar programas y cursos.",
+      "inputPlaceholder": "Describe la ruta de aprendizaje que quieres crear...",
+      "generatingStructure": "Generando estructura de ruta...",
+      "quickPromptTemplate": "Crea una ruta de aprendizaje sobre \"{{topic}}\". {{description}}",
+      "errors": {
+        "extractStructure": "No se pudo extraer la estructura de la respuesta",
+        "processResponse": "Error procesando la respuesta"
+      },
+      "quickPrompts": {
+        "webDev": {
+          "title": "Desarrollo Web Full Stack",
+          "description": "Ruta desde fundamentos frontend hasta backend y despliegue."
+        },
+        "dataAi": {
+          "title": "Datos e Inteligencia Artificial",
+          "description": "Ruta de análisis de datos, ML y fundamentos de IA aplicada."
+        },
+        "leadership": {
+          "title": "Liderazgo y Gestión",
+          "description": "Ruta para desarrollar liderazgo, comunicación y gestión de equipos."
+        }
+      },
+      "preview": {
+        "title": "Vista previa de la estructura",
+        "programsCount": "{{count}} programas",
+        "coursesCount": "{{count}} cursos",
+        "readyMessage": "Estructura lista para continuar al siguiente paso"
+      }
+    },
+    "courseStep": {
+      "title": "Generación de Cursos",
+      "generatingCount": "Generando {{count}} cursos",
+      "generatingCourse": "Generando curso...",
+      "progress": "Progreso: {{completed}}/{{total}} cursos",
+      "allCoursesSuccess": "Todos los cursos se generaron correctamente",
+      "coursesWithErrors": "{{count}} cursos tuvieron errores",
+      "generateCoursesCta": "Generar {{count}} cursos"
+    },
+    "programStep": {
+      "title": "Generación de Programas",
+      "generatingCount": "Generando {{count}} programas",
+      "loadingCatalogs": "Cargando catálogos...",
+      "catalogsLoaded": "Catálogos cargados: {{categories}} categorías, {{levels}} niveles",
+      "progress": "Progreso: {{completed}}/{{total}} programas",
+      "allProgramsSuccess": "Todos los programas se generaron correctamente",
+      "programsWithErrors": "{{count}} programas tuvieron errores",
+      "generateProgramsCta": "Generar {{count}} programas"
+    },
+    "routeStep": {
+      "title": "Generación de Ruta",
+      "organizingCount": "Organizando {{count}} programas en una ruta",
+      "loadingCatalogs": "Cargando catálogos de ruta...",
+      "catalogsLoaded": "Catálogos cargados: {{positions}} cargos, {{competencies}} competencias, {{levels}} niveles",
+      "availablePrograms": "Programas disponibles para la ruta",
+      "generatingStructure": "Generando estructura de la ruta...",
+      "previewTitle": "Vista Previa de la Ruta",
+      "fields": {
+        "title": "Título",
+        "description": "Descripción",
+        "tags": "Etiquetas",
+        "position": "Posición",
+        "banner": "Banner"
+      },
+      "modules": "Módulos ({{count}})",
+      "programIdFallback": "Programa ID {{id}}",
+      "optional": "Opcional",
+      "generateCta": "Generar Ruta de Aprendizaje",
+      "saveCta": "Guardar Ruta de Aprendizaje"
+    },
+    "summary": {
+      "coursesTitle": "Resumen de Cursos Generados",
+      "coursesDescription": "Estos cursos se generaron y guardaron correctamente.",
+      "programCourse": "Programa {{program}} · Curso {{course}}"
+    },
+    "common": {
+      "idLabel": "ID: {{id}}",
+      "rowIdLabel": "rowId: {{id}}",
+      "withErrorsInline": "({{count}} con error)"
+    }
+  },
+  "settings": {
+    "title": "Proveedores de IA",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "ai": "Inteligencia Artificial",
+      "create": "Nuevo",
+      "edit": "Editar"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "available": "Disponible",
+      "unavailable": "No disponible"
+    },
+    "actions": {
+      "add": "Nuevo proveedor",
+      "create": "Crear",
+      "edit": "Editar",
+      "update": "Actualizar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "view": "Ver detalles",
+      "clear": "Limpiar",
+      "addParameter": "Agregar parámetro",
+      "models": "Modelos"
+    },
+    "table": {
+      "filters": {
+        "all": "Todos",
+        "active": "Activos",
+        "inactive": "Inactivos",
+        "keyword": "Búsqueda",
+        "order": "Orden"
+      },
+      "toolbar": {
+        "search": "Buscar proveedor...",
+        "sortBy": "Ordenar"
+      },
+      "order": {
+        "asc": "Ascendente (A-Z)",
+        "desc": "Descendente (Z-A)"
+      }
+    },
+    "card": {
+      "requiresApiKey": "Requiere API Key",
+      "supportsStreaming": "Soporta Streaming",
+      "parameters": "Parámetros",
+      "yes": "Sí",
+      "no": "No"
+    },
+    "empty": {
+      "title": "Sin proveedores",
+      "description": "No hay proveedores de IA configurados. Cree uno nuevo para comenzar."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar proveedor",
+        "content": "¿Está seguro de que desea eliminar este proveedor? Esta acción no se puede deshacer."
+      }
+    },
+    "form": {
+      "sections": {
+        "basic": "Información básica",
+        "status": "Estado",
+        "parameters": "Parámetros de configuración"
+      },
+      "fields": {
+        "name": {
+          "label": "Nombre del proveedor",
+          "placeholder": "Ej: OpenAI",
+          "required": "El nombre es requerido"
+        },
+        "logo": {
+          "label": "URL del logo",
+          "placeholder": "https://ejemplo.com/logo.svg"
+        },
+        "requiresApiKey": {
+          "label": "Requiere API Key"
+        },
+        "supportsStreaming": {
+          "label": "Soporta streaming"
+        },
+        "parameterLabel": {
+          "label": "Nombre del parámetro",
+          "placeholder": "Ej: API_KEY",
+          "required": "El nombre del parámetro es requerido"
+        },
+        "parameterValue": {
+          "label": "Valor",
+          "placeholder": "Ingrese el valor...",
+          "required": "El valor es requerido"
+        }
+      },
+      "noParameters": "No hay parámetros configurados. Use el botón 'Agregar parámetro' para añadir uno."
+    },
+    "messages": {
+      "success": {
+        "created": "Proveedor creado correctamente",
+        "updated": "Proveedor actualizado correctamente",
+        "deleted": "Proveedor eliminado correctamente"
+      },
+      "error": {
+        "loading": "Error al cargar los proveedores",
+        "saving": "Error al guardar el proveedor",
+        "deleting": "Error al eliminar el proveedor",
+        "notFound": "Proveedor no encontrado",
+        "loadError": "Error al cargar el proveedor",
+        "general": "Error"
+      }
+    }
+  },
+  "models": {
+    "title": "Modelos de IA",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "ai": "Inteligencia Artificial",
+      "providers": "Proveedores",
+      "provider": "Proveedor",
+      "create": "Nuevo",
+      "edit": "Editar"
+    },
+    "actions": {
+      "add": "Nuevo modelo",
+      "create": "Crear",
+      "edit": "Editar",
+      "update": "Actualizar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "maxTokens": "Max Tokens",
+        "contextWindow": "Context Window",
+        "capabilities": "Capacidades",
+        "default": "Por defecto"
+      },
+      "toolbar": {
+        "search": "Buscar modelo..."
+      },
+      "default": "Por defecto",
+      "noModels": "No hay modelos configurados para este proveedor."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar modelo",
+        "content": "¿Está seguro de que desea eliminar este modelo? Esta acción no se puede deshacer."
+      }
+    },
+    "form": {
+      "sections": {
+        "basic": "Información del modelo",
+        "settings": "Configuración"
+      },
+      "fields": {
+        "modelKey": {
+          "label": "Model Key",
+          "placeholder": "Ej: gpt-4o",
+          "required": "El model key es requerido"
+        },
+        "name": {
+          "label": "Nombre del modelo",
+          "placeholder": "Ej: GPT-4o",
+          "required": "El nombre es requerido"
+        },
+        "description": {
+          "label": "Descripción",
+          "placeholder": "Descripción del modelo..."
+        },
+        "endpoint": {
+          "label": "Endpoint",
+          "placeholder": "https://api.example.com/v1/chat/completions",
+          "required": "El endpoint es requerido"
+        },
+        "maxTokens": {
+          "label": "Max Tokens",
+          "placeholder": "Ej: 16384"
+        },
+        "contextWindow": {
+          "label": "Context Window",
+          "placeholder": "Ej: 128000"
+        },
+        "capabilities": {
+          "label": "Capacidades",
+          "placeholder": "Seleccionar capacidades..."
+        },
+        "isDefault": {
+          "label": "Modelo por defecto"
+        }
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Modelo creado correctamente",
+        "updated": "Modelo actualizado correctamente",
+        "deleted": "Modelo eliminado correctamente"
+      },
+      "error": {
+        "loading": "Error al cargar los modelos",
+        "saving": "Error al guardar el modelo",
+        "deleting": "Error al eliminar el modelo",
+        "notFound": "Modelo no encontrado",
+        "loadError": "Error al cargar el modelo",
+        "general": "Error"
+      }
+    }
+  }
+}
