@@ -1,0 +1,1 @@
+export { RewardHistoryView } from './reward-history-view';
