@@ -65,10 +65,10 @@ export function SkillsView() {
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(() => [
     { id: '', width: 88 },
-    { id: 'name', label: t('skills.table.columns.name') },
+    { id: 'name', label: t('skills.table.columns.name'), sortField: 'competency.name' },
     { id: 'code', label: t('skills.table.columns.code'), width: 120 },
     { id: 'type', label: t('skills.table.columns.type'), width: 160 },
-    { id: 'expectedLevel', label: t('skills.table.columns.expectedLevel'), width: 140 },
+    { id: 'expectedLevel', label: t('skills.table.columns.expectedLevel'), width: 140, sortField: 'competency.expectedLevel' },
   ], [t]);
 
   const filters = useSetState<ISkillsTableFilters>({
@@ -78,6 +78,15 @@ export function SkillsView() {
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
+
 
   // Función para cargar datos
   const loadData = useCallback(async () => {
@@ -86,6 +95,7 @@ export function SkillsView() {
         page: table.page + 1,
         perPage: table.rowsPerPage,
         search: currentFilters.name,
+        order: serverOrderBy ? `${serverOrderBy}:${serverOrder}` : undefined,
       };
 
       const response = await GetSkillsPaginationService(params);
@@ -100,7 +110,7 @@ export function SkillsView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, currentFilters.name, t]);
+  }, [table.page, table.rowsPerPage, currentFilters.name, serverOrderBy, serverOrder, t]);
 
   // Cargar datos cuando cambian los parámetros
   useEffect(() => {
@@ -282,12 +292,12 @@ export function SkillsView() {
             <Scrollbar>
               <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
                 <TableHeadCustom
-                  order={table.order}
-                  orderBy={table.orderBy}
                   headCells={TABLE_HEAD}
                   rowCount={dataFiltered.length}
                   numSelected={table.selected.length}
-                  onSort={table.onSort}
+                  serverOrderBy={serverOrderBy}
+                  serverOrder={serverOrder}
+                  onServerSort={handleServerSort}
                 // onSelectAllRows={(checked) =>
                 //   table.onSelectAllRows(
                 //     checked,

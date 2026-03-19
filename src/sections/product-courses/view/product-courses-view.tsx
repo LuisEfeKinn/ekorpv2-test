@@ -44,7 +44,7 @@ export function ProductCoursesView() {
   const [totalItems, setTotalItems] = useState(0);
 
   const TABLE_HEAD = [
-    { id: 'name', label: t('product-courses.table.columns.name'), width: 380 },
+    { id: 'name', label: t('product-courses.table.columns.name'), width: 380, sortField: 'course.displayName' },
     { id: 'code', label: t('product-courses.table.columns.code'), width: 110 },
     { id: 'integration', label: t('product-courses.table.columns.integration'), width: 140 },
     { id: 'language', label: t('product-courses.table.columns.language'), width: 100 },
@@ -60,6 +60,15 @@ export function ProductCoursesView() {
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
+
 
   // Función para cargar datos
   const loadData = useCallback(async () => {
@@ -71,7 +80,7 @@ export function ProductCoursesView() {
         perPage: table.rowsPerPage,
         search: currentFilters.search || undefined,
         includeInactive: currentFilters.includeInactive,
-        order: currentFilters.order || 'course.displayName:asc',
+        order: serverOrderBy ? `${serverOrderBy}:${serverOrder}` : undefined,
         instanceId: currentFilters.instanceId || undefined,
       };
 
@@ -99,7 +108,7 @@ export function ProductCoursesView() {
       setProductCourses([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, currentFilters.search, currentFilters.includeInactive, currentFilters.order, currentFilters.instanceId, t]);
+  }, [table.page, table.rowsPerPage, currentFilters.search, currentFilters.includeInactive, serverOrderBy, serverOrder, currentFilters.instanceId, t]);
 
   // Cargar datos cuando cambian los parámetros
   useEffect(() => {
@@ -150,14 +159,19 @@ export function ProductCoursesView() {
         <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
           <Scrollbar>
             <Table size="medium" sx={{ minWidth: 960 }}>
-              <TableHeadCustom headCells={TABLE_HEAD} />
+              <TableHeadCustom
+                headCells={TABLE_HEAD}
+                serverOrderBy={serverOrderBy}
+                serverOrder={serverOrder}
+                onServerSort={handleServerSort}
+              />
 
               <TableBody>
                 {tableData.map((row) => (
                   <ProductCoursesTableRow
                     key={row.id}
                     row={row}
-                    onViewRow={() => {}}
+                    onViewRow={() => { }}
                   />
                 ))}
 

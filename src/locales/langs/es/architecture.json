@@ -47,7 +47,7 @@
         },
         "filters": {
           "status": "Estado:",
-          "keyword": "Palabra clave:",
+          "keyword": "Palabra clave",
           "all": "Todas"
         },
         "emptyState": {
@@ -252,7 +252,7 @@
         },
         "filters": {
           "status": "Estado:",
-          "keyword": "Palabra clave:",
+          "keyword": "Palabra clave",
           "all": "Todos"
         },
         "emptyState": {
@@ -530,7 +530,7 @@
         },
         "filters": {
           "status": "Estado:",
-          "keyword": "Palabra clave:",
+          "keyword": "Palabra clave",
           "all": "Todas"
         },
         "emptyState": {
@@ -979,7 +979,7 @@
         },
         "filters": {
           "status": "Estado:",
-          "keyword": "Palabra clave:",
+          "keyword": "Palabra clave",
           "all": "Todos"
         },
         "emptyState": {
@@ -1381,7 +1381,7 @@
         },
         "filters": {
           "status": "Estado:",
-          "keyword": "Palabra clave:",
+          "keyword": "Palabra clave",
           "all": "Todos"
         },
         "emptyState": {
@@ -1783,7 +1783,7 @@
         },
         "filters": {
           "status": "Estado:",
-          "keyword": "Palabra clave:",
+          "keyword": "Palabra clave",
           "all": "Todos"
         },
         "emptyState": {

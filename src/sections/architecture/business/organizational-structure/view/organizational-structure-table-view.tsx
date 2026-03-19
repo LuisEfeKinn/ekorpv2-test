@@ -431,7 +431,7 @@ export function OrganizationalStructureTableView() {
     if (expandedRows.size === 0) return;
     if (dataFiltered.length <= table.rowsPerPage) return;
     table.setRowsPerPage(25);
-  }, [dataFiltered.length, expandedRows.size, table.rowsPerPage, table.setRowsPerPage]);
+  }, [dataFiltered.length, expandedRows.size, table, table.rowsPerPage, table.setRowsPerPage]);
 
   useEffect(() => {
     setTotalItems(dataFiltered.length);

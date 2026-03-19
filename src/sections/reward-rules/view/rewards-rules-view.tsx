@@ -48,9 +48,9 @@ export function RewardRulesView() {
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(() => [
     { id: 'actions', label: '', width: 88 },
-    { id: 'name', label: t('reward-rules.table.columns.name') },
+    { id: 'name', label: t('reward-rules.table.columns.name'), sortField: 'rule.name' },
     { id: 'description', label: t('reward-rules.table.columns.description') },
-    { id: 'typeRule', label: t('reward-rules.table.columns.typeRule'), width: 150 },
+    { id: 'typeRule', label: t('reward-rules.table.columns.typeRule'), width: 150, sortField: 'ruleType.name' },
     { id: 'points', label: t('reward-rules.table.columns.points'), width: 120 },
     { id: 'status', label: t('reward-rules.table.columns.status'), width: 120 },
   ], [t]);
@@ -61,28 +61,37 @@ export function RewardRulesView() {
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
+
   const debouncedSearch = useDebounce(currentFilters.name, 300);
 
   const loadData = useCallback(async () => {
     try {
       // Construir el parámetro order basado en table.orderBy y table.order
       let orderParam: string | undefined;
-      
-      if (table.orderBy) {
-        const direction = table.order === 'asc' ? 'asc' : 'desc';
-        
+
+      if (serverOrderBy) {
+        const direction = serverOrder === 'asc' ? 'asc' : 'desc';
+
         // Mapear los IDs de las columnas a los campos del backend
         const fieldMapping: { [key: string]: string } = {
-          name: 'rule.name',
-          typeRule: 'typeRule.name',
-          points: 'rule.points',
+          name: 'category.name',
+          abreviation: 'category.abreviation',
         };
-        
-        const backendField = fieldMapping[table.orderBy];
+
+        const backendField = fieldMapping[serverOrderBy];
         if (backendField) {
           orderParam = `${backendField}:${direction}`;
         }
       }
+
 
       const params = {
         page: table.page + 1,
@@ -103,7 +112,7 @@ export function RewardRulesView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, table.order, table.orderBy, debouncedSearch, currentFilters.typeRuleId, t]);
+  }, [table.page, table.rowsPerPage, serverOrderBy, serverOrder, debouncedSearch, currentFilters.typeRuleId, t]);
 
   useEffect(() => {
     loadData();
@@ -113,17 +122,6 @@ export function RewardRulesView() {
 
   const canReset = !!currentFilters.name || !!currentFilters.typeRuleId;
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
-
-  const handleSort = useCallback(
-    (id: string) => {
-      // Solo permitir ordenamiento para las columnas mapeadas
-      const sortableColumns = ['name', 'typeRule', 'points'];
-      if (sortableColumns.includes(id)) {
-        table.onSort(id);
-      }
-    },
-    [table]
-  );
 
   const handleDeleteRow = useCallback(
     async (id: string) => {
@@ -197,10 +195,10 @@ export function RewardRulesView() {
           <Scrollbar>
             <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
               <TableHeadCustom
-                order={table.order}
-                orderBy={table.orderBy}
                 headCells={TABLE_HEAD}
-                onSort={handleSort}
+                serverOrderBy={serverOrderBy}
+                serverOrder={serverOrder}
+                onServerSort={handleServerSort}
               />
 
               <TableBody>

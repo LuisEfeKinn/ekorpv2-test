@@ -48,11 +48,11 @@ export function RewardsView() {
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(() => [
     { id: 'actions', label: '', width: 88 },
-    { id: 'name', label: t('rewards.table.columns.name') },
+    { id: 'name', label: t('rewards.table.columns.name'), sortField: 'reward.name' },
     { id: 'description', label: t('rewards.table.columns.description') },
-    { id: 'category', label: t('rewards.table.columns.category'), width: 150 },
-    { id: 'points', label: t('rewards.table.columns.points'), width: 120 },
-    { id: 'stock', label: t('rewards.table.columns.stock'), width: 100 },
+    { id: 'category', label: t('rewards.table.columns.category'), width: 150, sortField: 'category.name' },
+    { id: 'points', label: t('rewards.table.columns.points'), width: 120, sortField: 'reward.pointsRequired' },
+    { id: 'stock', label: t('rewards.table.columns.stock'), width: 100, sortField: 'reward.stockAvailable' },
     { id: 'status', label: t('rewards.table.columns.status'), width: 120 },
   ], [t]);
 
@@ -62,16 +62,25 @@ export function RewardsView() {
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
+
   const debouncedSearch = useDebounce(currentFilters.name, 300);
 
   const loadData = useCallback(async () => {
     try {
       // Construir el parámetro order basado en table.orderBy y table.order
       let orderParam: string | undefined;
-      
-      if (table.orderBy) {
-        const direction = table.order === 'asc' ? 'asc' : 'desc';
-        
+
+      if (serverOrderBy) {
+        const direction = serverOrder === 'asc' ? 'asc' : 'desc';
+
         // Mapear los IDs de las columnas a los campos del backend
         const fieldMapping: { [key: string]: string } = {
           name: 'reward.name',
@@ -79,8 +88,8 @@ export function RewardsView() {
           points: 'reward.pointsRequired',
           stock: 'reward.stockAvailable',
         };
-        
-        const backendField = fieldMapping[table.orderBy];
+
+        const backendField = fieldMapping[serverOrderBy];
         if (backendField) {
           orderParam = `${backendField}:${direction}`;
         }
@@ -105,7 +114,7 @@ export function RewardsView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, table.order, table.orderBy, debouncedSearch, currentFilters.categoryRewardId, t]);
+  }, [table.page, table.rowsPerPage, debouncedSearch, currentFilters.categoryRewardId, serverOrderBy, serverOrder, t]);
 
   useEffect(() => {
     loadData();
@@ -115,17 +124,6 @@ export function RewardsView() {
 
   const canReset = !!currentFilters.name || !!currentFilters.categoryRewardId;
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
-
-  const handleSort = useCallback(
-    (id: string) => {
-      // Solo permitir ordenamiento para las columnas mapeadas
-      const sortableColumns = ['name', 'category', 'points', 'stock'];
-      if (sortableColumns.includes(id)) {
-        table.onSort(id);
-      }
-    },
-    [table]
-  );
 
   const handleDeleteRow = useCallback(
     async (id: string) => {
@@ -199,10 +197,10 @@ export function RewardsView() {
           <Scrollbar>
             <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
               <TableHeadCustom
-                order={table.order}
-                orderBy={table.orderBy}
                 headCells={TABLE_HEAD}
-                onSort={handleSort}
+                serverOrderBy={serverOrderBy}
+                serverOrder={serverOrder}
+                onServerSort={handleServerSort}
               />
 
               <TableBody>

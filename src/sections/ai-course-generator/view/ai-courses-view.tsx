@@ -15,8 +15,13 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { paths } from 'src/routes/paths';
@@ -56,30 +61,39 @@ export function AiCoursesView() {
 		name: '',
 		status: 'all',
 		difficulty: 'all',
+		order: '',
 	});
 	const { state: currentFilters, setState: updateFilters } = filters;
 
-	// Status counts
-	const statusCounts = useMemo(() => {
-		const draft = courses.filter((c) => c.status === 'draft').length;
-		const generating = courses.filter((c) => c.status === 'generating').length;
-		const completed = courses.filter((c) => c.status === 'completed').length;
-		const published = courses.filter((c) => c.status === 'published').length;
-		const archived = courses.filter((c) => c.status === 'archived').length;
-
-		return { all: courses.length, draft, generating, completed, published, archived };
-	}, [courses]);
-
 	const STATUS_OPTIONS = useMemo(
 		() => [
-			{ value: 'all', label: t('ai-course-generation.filters.all'), count: statusCounts.all },
-			{ value: 'draft', label: t('ai-course-generation.status.draft'), count: statusCounts.draft },
-			{ value: 'generating', label: t('ai-course-generation.status.generating'), count: statusCounts.generating },
-			{ value: 'completed', label: t('ai-course-generation.status.completed'), count: statusCounts.completed },
-			{ value: 'published', label: t('ai-course-generation.status.published'), count: statusCounts.published },
-			{ value: 'archived', label: t('ai-course-generation.status.archived'), count: statusCounts.archived },
+			{ value: 'all', label: t('ai-course-generation.filters.all'), showCount: true },
+			{ value: 'draft', label: t('ai-course-generation.status.draft'), showCount: false },
+			{ value: 'published', label: t('ai-course-generation.status.published'), showCount: false },
 		],
-		[t, statusCounts]
+		[t]
+	);
+
+	const DIFFICULTY_OPTIONS = useMemo(
+		() => [
+			{ value: 'all', label: t('ai-course-generation.filters.allDifficulties') },
+			{ value: 'beginner', label: t('ai-course-generation.difficulty.beginner') },
+			{ value: 'intermediate', label: t('ai-course-generation.difficulty.intermediate') },
+		],
+		[t]
+	);
+
+	const ORDER_OPTIONS = useMemo(
+		() => [
+			{ value: '', label: t('ai-course-generation.filters.orderDefault') },
+			{ value: 'unit.title:asc', label: t('ai-course-generation.order.titleAsc') },
+			{ value: 'unit.title:desc', label: t('ai-course-generation.order.titleDesc') },
+			{ value: 'unit.difficulty:asc', label: t('ai-course-generation.order.difficultyAsc') },
+			{ value: 'unit.difficulty:desc', label: t('ai-course-generation.order.difficultyDesc') },
+			{ value: 'unit.status:asc', label: t('ai-course-generation.order.statusAsc') },
+			{ value: 'unit.status:desc', label: t('ai-course-generation.order.statusDesc') },
+		],
+		[t]
 	);
 
 	// Load data
@@ -91,6 +105,7 @@ export function AiCoursesView() {
 				search: currentFilters.name || undefined,
 				status: currentFilters.status !== 'all' ? currentFilters.status : undefined,
 				difficulty: currentFilters.difficulty !== 'all' ? currentFilters.difficulty : undefined,
+				order: currentFilters.order || undefined,
 			};
 
 			const response = await GetAiCoursesPaginationService(params as any);
@@ -109,7 +124,7 @@ export function AiCoursesView() {
 		loadData();
 	}, [loadData]);
 
-	const canReset = !!currentFilters.name || currentFilters.status !== 'all' || currentFilters.difficulty !== 'all';
+	const canReset = !!currentFilters.name || currentFilters.status !== 'all' || currentFilters.difficulty !== 'all' || !!currentFilters.order;
 	const notFound = !courses.length;
 
 	// Handlers
@@ -164,7 +179,7 @@ export function AiCoursesView() {
 
 	const handleResetFilters = useCallback(() => {
 		table.onResetPage();
-		updateFilters({ name: '', status: 'all', difficulty: 'all' });
+		updateFilters({ name: '', status: 'all', difficulty: 'all', order: '' });
 	}, [updateFilters, table]);
 
 	return (
@@ -208,57 +223,82 @@ export function AiCoursesView() {
 								value={tab.value}
 								label={tab.label}
 								icon={
-									<Label
-										variant={
-											(tab.value === 'all' || tab.value === currentFilters.status) ? 'filled' : 'soft'
-										}
-										color={
-											tab.value === 'published'
-												? 'success'
-												: tab.value === 'generating'
-													? 'info'
-													: tab.value === 'completed'
-														? 'primary'
-														: 'default'
-										}
-									>
-										{tab.count}
-									</Label>
+									tab.showCount ? (
+										<Label
+											variant={
+												(tab.value === 'all' || tab.value === currentFilters.status) ? 'filled' : 'soft'
+											}
+											color="default"
+										>
+											{totalItems}
+										</Label>
+									) : undefined
 								}
 							/>
 						))}
 					</Tabs>
 
 					{/* Search & Filters */}
-					<Box sx={{ p: 2.5 }}>
-						<TextField
-							fullWidth
-							value={currentFilters.name}
+					<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ p: 2.5 }}>
+					<TextField
+						fullWidth
+						value={currentFilters.name}
+						onChange={(e) => {
+							table.onResetPage();
+							updateFilters({ name: e.target.value });
+						}}
+						placeholder={t('ai-course-generation.search.placeholder')}
+						InputProps={{
+							startAdornment: (
+								<InputAdornment position="start">
+									<Iconify icon="solar:eye-scan-bold" width={20} sx={{ color: 'text.disabled' }} />
+								</InputAdornment>
+							),
+							endAdornment: currentFilters.name && (
+								<InputAdornment position="end">
+									<Iconify
+										icon="solar:close-circle-bold"
+										width={20}
+										sx={{ cursor: 'pointer', color: 'text.disabled' }}
+										onClick={() => updateFilters({ name: '' })}
+									/>
+								</InputAdornment>
+							),
+						}}
+					/>
+
+					<FormControl sx={{ minWidth: 160 }}>
+						<InputLabel>{t('ai-course-generation.filters.difficulty')}</InputLabel>
+						<Select
+							value={currentFilters.difficulty}
+							label={t('ai-course-generation.filters.difficulty')}
 							onChange={(e) => {
 								table.onResetPage();
-								updateFilters({ name: e.target.value });
+								updateFilters({ difficulty: e.target.value });
 							}}
-							placeholder={t('ai-course-generation.search.placeholder')}
-							InputProps={{
-								startAdornment: (
-									<InputAdornment position="start">
-										<Iconify icon="solar:eye-scan-bold" width={20} sx={{ color: 'text.disabled' }} />
-									</InputAdornment>
-								),
-								endAdornment: currentFilters.name && (
-									<InputAdornment position="end">
-										<Iconify
-											icon="solar:close-circle-bold"
-											width={20}
-											sx={{ cursor: 'pointer', color: 'text.disabled' }}
-											onClick={() => updateFilters({ name: '' })}
-										/>
-									</InputAdornment>
-								),
-							}}
-						/>
-					</Box>
+						>
+							{DIFFICULTY_OPTIONS.map((opt) => (
+								<MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
+							))}
+						</Select>
+					</FormControl>
 
+					<FormControl sx={{ minWidth: 190 }}>
+						<InputLabel>{t('ai-course-generation.filters.orderBy')}</InputLabel>
+						<Select
+							value={currentFilters.order}
+							label={t('ai-course-generation.filters.orderBy')}
+							onChange={(e) => {
+								table.onResetPage();
+								updateFilters({ order: e.target.value });
+							}}
+						>
+							{ORDER_OPTIONS.map((opt) => (
+								<MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
+							))}
+						</Select>
+					</FormControl>
+				</Stack>
 					{/* Content */}
 					<Box sx={{ p: 2.5, pt: 0 }}>
 						{notFound ? (

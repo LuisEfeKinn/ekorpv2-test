@@ -48,7 +48,7 @@ export function CategoriesInventoryView() {
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(() => [
     { id: 'actions', label: '', width: 88 },
-    { id: 'name', label: t('categories.table.columns.name') },
+    { id: 'name', label: t('categories.table.columns.name'), sortField: 'category.name' },
     { id: 'assetCount', label: t('categories.table.columns.assetCount') },
     { id: 'status', label: t('categories.table.columns.status'), width: 300 },
   ], [t]);
@@ -57,6 +57,15 @@ export function CategoriesInventoryView() {
     name: '',
   });
   const { state: currentFilters, setState: updateFilters } = filters;
+
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
 
   const debouncedSearch = useDebounce(currentFilters.name, 300);
 
@@ -83,7 +92,7 @@ export function CategoriesInventoryView() {
         page: table.page + 1,
         perPage: table.rowsPerPage,
         search: debouncedSearch,
-        // order: orderParam,
+        order: serverOrderBy ? `${serverOrderBy}:${serverOrder}` : undefined,
       };
 
       const response = await GetCategoriesPaginationService(params);
@@ -97,7 +106,7 @@ export function CategoriesInventoryView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, debouncedSearch, t]);
+  }, [table.page, table.rowsPerPage, debouncedSearch, serverOrderBy, serverOrder, t]);
 
   useEffect(() => {
     loadData();
@@ -107,17 +116,6 @@ export function CategoriesInventoryView() {
 
   const canReset = !!currentFilters.name;
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
-
-  const handleSort = useCallback(
-    (id: string) => {
-      // Solo permitir ordenamiento para las columnas mapeadas
-      const sortableColumns = ['name', 'category', 'points', 'stock'];
-      if (sortableColumns.includes(id)) {
-        table.onSort(id);
-      }
-    },
-    [table]
-  );
 
   const handleDeleteRow = useCallback(
     async (id: string) => {
@@ -190,10 +188,10 @@ export function CategoriesInventoryView() {
           <Scrollbar>
             <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
               <TableHeadCustom
-                order={table.order}
-                orderBy={table.orderBy}
                 headCells={TABLE_HEAD}
-                onSort={handleSort}
+                serverOrderBy={serverOrderBy}
+                serverOrder={serverOrder}
+                onServerSort={handleServerSort}
               />
 
               <TableBody>

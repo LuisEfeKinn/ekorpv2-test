@@ -48,12 +48,12 @@ export function AssetRecordView() {
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(
     () => [
-      { id: 'type', label: t('record.table.columns.type'), width: 120 },
-      { id: 'asset', label: t('record.table.columns.asset'), width: 200 },
+      { id: 'type', label: t('record.table.columns.type'), width: 120, sortField: 'history.type' },
+      { id: 'asset', label: t('record.table.columns.asset'), width: 200, sortField: 'asset.name' },
       { id: 'description', label: t('record.table.columns.description') },
       { id: 'date', label: t('record.table.columns.date'), width: 150 },
-      { id: 'performedBy', label: t('record.table.columns.performedBy'), width: 150 },
-      { id: 'targetEmployee', label: t('record.table.columns.targetEmployee'), width: 150 },
+      { id: 'performedBy', label: t('record.table.columns.performedBy'), width: 150, sortField: 'performedBy.firstName' },
+      { id: 'targetEmployee', label: t('record.table.columns.targetEmployee'), width: 150, sortField: 'targetEmployee.firstName' },
       { id: 'category', label: t('record.table.columns.category'), width: 120 },
     ],
     [t]
@@ -71,6 +71,15 @@ export function AssetRecordView() {
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
+
   const debouncedSearch = useDebounce(currentFilters.name, 300);
 
   const loadData = useCallback(async () => {
@@ -79,7 +88,7 @@ export function AssetRecordView() {
         page: table.page + 1,
         perPage: table.rowsPerPage,
         search: debouncedSearch,
-        order: 'history.createdAt:desc',
+        order: serverOrderBy ? `${serverOrderBy}:${serverOrder}` : undefined,
       };
 
       // Filtros opcionales
@@ -116,7 +125,7 @@ export function AssetRecordView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, debouncedSearch, currentFilters, t]);
+  }, [table.page, table.rowsPerPage, debouncedSearch, currentFilters, serverOrderBy, serverOrder, t]);
 
   // Función para cargar activos con búsqueda (20 por página)
   const loadAssets = useCallback(async (search: string = '') => {
@@ -264,12 +273,12 @@ export function AssetRecordView() {
           <Scrollbar sx={{ minHeight: 444 }}>
             <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
               <TableHeadCustom
-                order={table.order}
-                orderBy={table.orderBy}
                 headCells={TABLE_HEAD}
                 rowCount={dataFiltered.length}
                 numSelected={table.selected.length}
-                onSort={table.onSort}
+                serverOrderBy={serverOrderBy}
+                serverOrder={serverOrder}
+                onServerSort={handleServerSort}
               />
 
               <TableBody>

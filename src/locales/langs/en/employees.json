@@ -34,7 +34,7 @@
       },
       "filters": {
         "status": "Status:",
-        "keyword": "Keyword:",
+        "keyword": "Keyword",
         "all": "All"
       },
       "emptyState": {
@@ -143,7 +143,7 @@
       },
       "filters": {
         "status": "Status:",
-        "keyword": "Keyword:",
+        "keyword": "Keyword",
         "position": "Position",
         "skill": "Skill",
         "organizationalUnit": "Organizational Unit",
@@ -435,7 +435,7 @@
       },
       "filters": {
         "status": "Status:",
-        "keyword": "Keyword:",
+        "keyword": "Keyword",
         "all": "All"
       },
       "emptyState": {

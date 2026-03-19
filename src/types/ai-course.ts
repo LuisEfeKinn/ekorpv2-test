@@ -65,6 +65,7 @@ export interface IAiCourseTableFilters {
   name: string;
   status: string;
   difficulty: string;
+  order: string;
 }
 
 export interface IAiCourseFormData {

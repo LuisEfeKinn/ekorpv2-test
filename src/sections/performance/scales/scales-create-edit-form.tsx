@@ -50,6 +50,7 @@ export function ScalesCreateEditForm({ currentScale }: Props) {
   const addLevelDialog = useBoolean();
   const confirmDialog = useBoolean();
   const [selectedLevelIndex, setSelectedLevelIndex] = useState<number | null>(null);
+  const [editLevelIndex, setEditLevelIndex] = useState<number | null>(null);
   const [scaleTypes, setScaleTypes] = useState<IScaleTypeOption[]>([]);
   const [loadingTypes, setLoadingTypes] = useState(true);
 
@@ -160,10 +161,19 @@ export function ScalesCreateEditForm({ currentScale }: Props) {
       description: levelFormData.description,
     };
 
-    setLevels([...levels, newLevel]);
+    if (editLevelIndex !== null) {
+      const updated = [...levels];
+      updated[editLevelIndex] = newLevel;
+      setLevels(updated);
+      toast.success('Nivel actualizado exitosamente');
+    } else {
+      setLevels([...levels, newLevel]);
+      toast.success('Nivel agregado exitosamente');
+    }
+
     setLevelFormData({ value: '', label: '', description: '' });
+    setEditLevelIndex(null);
     addLevelDialog.onFalse();
-    toast.success('Nivel agregado exitosamente');
   };
 
   const handleDeleteLevel = (index: number) => {
@@ -177,6 +187,17 @@ export function ScalesCreateEditForm({ currentScale }: Props) {
   const handleOpenDeleteDialog = (index: number) => {
     setSelectedLevelIndex(index);
     confirmDialog.onTrue();
+  };
+
+  const handleOpenEditDialog = (index: number) => {
+    const level = levels[index];
+    setLevelFormData({
+      value: String(level.value),
+      label: level.label,
+      description: level.description,
+    });
+    setEditLevelIndex(index);
+    addLevelDialog.onTrue();
   };
 
   const renderDetails = () => (
@@ -272,6 +293,12 @@ export function ScalesCreateEditForm({ currentScale }: Props) {
                     <TableCell>{level.description}</TableCell>
                     <TableCell align="right">
                       <IconButton
+                        color="primary"
+                        onClick={() => handleOpenEditDialog(index)}
+                      >
+                        <Iconify icon="solar:pen-bold" />
+                      </IconButton>
+                      <IconButton
                         color="error"
                         onClick={() => handleOpenDeleteDialog(index)}
                       >
@@ -303,11 +330,19 @@ export function ScalesCreateEditForm({ currentScale }: Props) {
   const renderAddLevelDialog = () => (
     <Dialog
       open={addLevelDialog.value}
-      onClose={addLevelDialog.onFalse}
+      onClose={() => {
+        addLevelDialog.onFalse();
+        setLevelFormData({ value: '', label: '', description: '' });
+        setEditLevelIndex(null);
+      }}
       maxWidth="sm"
       fullWidth
     >
-      <DialogTitle>{t('scales.dialogs.addLevel.title')}</DialogTitle>
+      <DialogTitle>
+        {editLevelIndex !== null
+          ? t('scales.dialogs.editLevel.title')
+          : t('scales.dialogs.addLevel.title')}
+      </DialogTitle>
       <DialogContent>
         <Stack spacing={3} sx={{ pt: 2 }}>
           <TextField
@@ -344,11 +379,21 @@ export function ScalesCreateEditForm({ currentScale }: Props) {
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" color="inherit" onClick={addLevelDialog.onFalse}>
+        <Button
+          variant="outlined"
+          color="inherit"
+          onClick={() => {
+            addLevelDialog.onFalse();
+            setLevelFormData({ value: '', label: '', description: '' });
+            setEditLevelIndex(null);
+          }}
+        >
           {t('scales.dialogs.addLevel.cancel')}
         </Button>
         <Button variant="contained" onClick={handleAddLevel}>
-          {t('scales.dialogs.addLevel.add')}
+          {editLevelIndex !== null
+            ? t('scales.dialogs.editLevel.save')
+            : t('scales.dialogs.addLevel.add')}
         </Button>
       </DialogActions>
     </Dialog>

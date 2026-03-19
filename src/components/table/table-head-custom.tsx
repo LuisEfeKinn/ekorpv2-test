@@ -29,6 +29,8 @@ export type TableHeadCellProps = {
   width?: CSSObject['width'];
   align?: 'left' | 'center' | 'right';
   sx?: SxProps<Theme>;
+  /** Campo del backend usado para ordenar desde el servidor (ej: 'employee.firstName') */
+  sortField?: string;
 };
 
 export type TableHeadCustomProps = {
@@ -40,6 +42,12 @@ export type TableHeadCustomProps = {
   headCells: TableHeadCellProps[];
   onSort?: (id: string) => void;
   onSelectAllRows?: (checked: boolean) => void;
+  /** Campo del backend actualmente ordenado (ej: 'employee.firstName') */
+  serverOrderBy?: string;
+  /** Dirección del orden del servidor */
+  serverOrder?: 'asc' | 'desc';
+  /** Callback cuando el usuario hace clic en una columna con sortField */
+  onServerSort?: (sortField: string, direction: 'asc' | 'desc') => void;
 };
 
 export function TableHeadCustom({
@@ -51,6 +59,9 @@ export function TableHeadCustom({
   rowCount = 0,
   numSelected = 0,
   onSelectAllRows,
+  serverOrderBy,
+  serverOrder,
+  onServerSort,
 }: TableHeadCustomProps) {
   return (
     <TableHead sx={sx}>
@@ -73,36 +84,64 @@ export function TableHeadCustom({
           </TableCell>
         )}
 
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.align || 'left'}
-            sortDirection={orderBy === headCell.id ? order : false}
-            sx={[
-              { width: headCell.width },
-              ...(Array.isArray(headCell.sx) ? headCell.sx : [headCell.sx]),
-            ]}
-          >
-            {onSort ? (
-              <TableSortLabel
-                hideSortIcon
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : 'asc'}
-                onClick={() => onSort(headCell.id)}
-              >
-                {headCell.label}
+        {headCells.map((headCell) => {
+          const isServerSortable = !!headCell.sortField && !!onServerSort;
+          const isServerActive = isServerSortable && serverOrderBy === headCell.sortField;
 
-                {orderBy === headCell.id ? (
-                  <Box component="span" sx={visuallyHidden}>
-                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                  </Box>
-                ) : null}
-              </TableSortLabel>
-            ) : (
-              headCell.label
-            )}
-          </TableCell>
-        ))}
+          return (
+            <TableCell
+              key={headCell.id}
+              align={headCell.align || 'left'}
+              sortDirection={
+                isServerActive
+                  ? serverOrder
+                  : orderBy === headCell.id
+                    ? order
+                    : false
+              }
+              sx={[
+                { width: headCell.width },
+                ...(Array.isArray(headCell.sx) ? headCell.sx : [headCell.sx]),
+              ]}
+            >
+              {isServerSortable ? (
+                <TableSortLabel
+                  hideSortIcon
+                  active={isServerActive}
+                  direction={isServerActive ? serverOrder : 'asc'}
+                  onClick={() => {
+                    const nextDir =
+                      isServerActive && serverOrder === 'asc' ? 'desc' : 'asc';
+                    onServerSort!(headCell.sortField!, nextDir);
+                  }}
+                >
+                  {headCell.label}
+                  {isServerActive ? (
+                    <Box component="span" sx={visuallyHidden}>
+                      {serverOrder === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                    </Box>
+                  ) : null}
+                </TableSortLabel>
+              ) : onSort ? (
+                <TableSortLabel
+                  hideSortIcon
+                  active={orderBy === headCell.id}
+                  direction={orderBy === headCell.id ? order : 'asc'}
+                  onClick={() => onSort(headCell.id)}
+                >
+                  {headCell.label}
+                  {orderBy === headCell.id ? (
+                    <Box component="span" sx={visuallyHidden}>
+                      {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                    </Box>
+                  ) : null}
+                </TableSortLabel>
+              ) : (
+                headCell.label
+              )}
+            </TableCell>
+          );
+        })}
       </TableRow>
     </TableHead>
   );

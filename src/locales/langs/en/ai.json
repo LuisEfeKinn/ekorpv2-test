@@ -6,7 +6,11 @@
       "aiCourses": "AI Courses"
     },
     "filters": {
-      "all": "All"
+      "all": "All",
+      "allDifficulties": "All",
+      "orderDefault": "No order",
+      "difficulty": "Difficulty",
+      "orderBy": "Sort by"
     },
     "status": {
       "draft": "Draft",
@@ -14,6 +18,14 @@
       "completed": "Completed",
       "published": "Published",
       "archived": "Archived"
+    },
+    "order": {
+      "titleAsc": "Title: A → Z",
+      "titleDesc": "Title: Z → A",
+      "difficultyAsc": "Difficulty: ↑",
+      "difficultyDesc": "Difficulty: ↓",
+      "statusAsc": "Status: A → Z",
+      "statusDesc": "Status: Z → A"
     },
     "difficulty": {
       "beginner": "Beginner",

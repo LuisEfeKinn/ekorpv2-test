@@ -82,7 +82,7 @@
       },
       "filters": {
         "status": "Estado:",
-        "keyword": "Palabra clave:",
+        "keyword": "Palabra clave",
         "all": "Todo"
       },
       "emptyState": {
@@ -334,7 +334,7 @@
       },
       "filters": {
         "status": "Estado:",
-        "keyword": "Palabra clave:",
+        "keyword": "Palabra clave",
         "all": "Todo"
       },
       "emptyState": {

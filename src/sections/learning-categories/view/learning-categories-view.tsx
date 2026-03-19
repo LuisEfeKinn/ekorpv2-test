@@ -65,7 +65,7 @@ export function LearningCategoriesView() {
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(() => [
     { id: '', width: 88 },
-    { id: 'name', label: t('learningCategories.table.columns.name') },
+    { id: 'name', label: t('learningCategories.table.columns.name'), sortField: 'category.name' },
     { id: 'abreviation', label: t('learningCategories.table.columns.abreviation') },
     { id: 'logo', label: t('learningCategories.table.columns.logo'), align: 'center' }
   ], [t]);
@@ -77,14 +77,23 @@ export function LearningCategoriesView() {
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
+
 
   // Función para cargar datos
   const loadData = useCallback(async () => {
     try {
       // Construir el order basado en el estado de ordenamiento de la tabla
       let orderParam = 'category.name:asc';
-      if (table.orderBy === 'name') {
-        orderParam = table.order === 'asc' ? 'category.name:asc' : 'category.name:desc';
+      if (serverOrderBy) {
+        orderParam = `${serverOrderBy}:${serverOrder}`;
       }
 
       const params = {
@@ -99,7 +108,7 @@ export function LearningCategoriesView() {
       if (response.status === 200) {
         // Verificar la estructura de la respuesta
         const data = response.data?.data || response.data || [];
-        
+
         setTableData(Array.isArray(data) ? data : []);
         setTotalItems(data.length || 0);
       }
@@ -109,7 +118,7 @@ export function LearningCategoriesView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, table.order, table.orderBy, currentFilters.name, t]);
+  }, [table.page, table.rowsPerPage, currentFilters.name, serverOrderBy, serverOrder, t]);
 
   // Cargar datos cuando cambian los parámetros
   useEffect(() => {
@@ -170,16 +179,6 @@ export function LearningCategoriesView() {
     table.onResetPage();
     updateFilters({ name: '', status: 'all' });
   }, [updateFilters, table]);
-
-  const handleSort = useCallback(
-    (id: string) => {
-      // Solo permitir ordenar por la columna 'name'
-      if (id === 'name') {
-        table.onSort(id);
-      }
-    },
-    [table]
-  );
 
   const renderConfirmDialog = () => (
     <ConfirmDialog
@@ -301,12 +300,12 @@ export function LearningCategoriesView() {
             <Scrollbar>
               <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
                 <TableHeadCustom
-                  order={table.order}
-                  orderBy={table.orderBy}
                   headCells={TABLE_HEAD}
                   rowCount={dataFiltered.length}
                   numSelected={table.selected.length}
-                  onSort={handleSort}
+                  serverOrderBy={serverOrderBy}
+                  serverOrder={serverOrder}
+                  onServerSort={handleServerSort}
                 // onSelectAllRows={(checked) =>
                 //   table.onSelectAllRows(
                 //     checked,

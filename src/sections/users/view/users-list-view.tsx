@@ -63,9 +63,9 @@ export function UsersListView() {
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(() => [
     { id: 'actions', width: 88 },
-    { id: 'fullName', label: t('users.table.columns.names') },
-    { id: 'roles', label: t('users.table.columns.roles') },
-    { id: 'status', label: t('users.table.columns.status'), width: 100 },
+    { id: 'fullName', label: t('users.table.columns.names'), sortField: 'user.names' },
+    { id: 'roles', label: t('users.table.columns.roles'), sortField: 'role.name' },
+    { id: 'status', label: t('users.table.columns.status'), width: 100, sortField: 'user.isActive' },
   ], [t]);
 
   const filters = useSetState<IUserTableFilters>({
@@ -75,16 +75,25 @@ export function UsersListView() {
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
+
   const debouncedSearch = useDebounce(currentFilters.name, 300);
 
   const loadData = useCallback(async () => {
-    try { 
+    try {
       const params = {
         page: table.page + 1,
         perPage: table.rowsPerPage,
         search: debouncedSearch,
         roleId: currentFilters.role.join(','),
-        order: 'user.lastnames:asc'
+        order: serverOrderBy ? `${serverOrderBy}:${serverOrder}` : undefined,
         //status: currentFilters.status !== 'all' ? currentFilters.status : undefined,
       };
 
@@ -99,7 +108,7 @@ export function UsersListView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, debouncedSearch, currentFilters, t]);
+  }, [table.page, table.rowsPerPage, debouncedSearch, currentFilters, serverOrderBy, serverOrder, t]);
 
   // Cargar roles disponibles al montar
   useEffect(() => {
@@ -248,21 +257,21 @@ export function UsersListView() {
           <Scrollbar>
             <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
               <TableHeadCustom
-                order={table.order}
-                orderBy={table.orderBy}
                 headCells={TABLE_HEAD}
-                onSort={table.onSort}
+                serverOrderBy={serverOrderBy}
+                serverOrder={serverOrder}
+                onServerSort={handleServerSort}
               />
 
               <TableBody>
-                  {dataFiltered.map((row) => (
-                    <UsersTableRow
-                      key={row.id}
-                      row={row}
-                      onDeleteRow={() => handleDeleteRow(row.id)}
-                      editHref={`${paths.dashboard.security.usersEdit(row.id)}`}
-                    />
-                  ))}
+                {dataFiltered.map((row) => (
+                  <UsersTableRow
+                    key={row.id}
+                    row={row}
+                    onDeleteRow={() => handleDeleteRow(row.id)}
+                    editHref={`${paths.dashboard.security.usersEdit(row.id)}`}
+                  />
+                ))}
 
                 <TableNoData notFound={notFound} />
               </TableBody>

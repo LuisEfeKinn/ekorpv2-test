@@ -110,6 +110,10 @@
         "add": "Add",
         "cancel": "Cancel"
       },
+      "editLevel": {
+        "title": "Edit Level",
+        "save": "Save"
+      },
       "deleteLevel": {
         "title": "Delete Level",
         "content": "Are you sure you want to delete this level?"

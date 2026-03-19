@@ -58,14 +58,14 @@ export function InventoryView() {
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(() => [
     { id: 'actions', label: '', width: 88 },
-    { id: 'internalId', label: t('inventory.table.columns.internalId'), width: 120 },
-    { id: 'name', label: t('inventory.table.columns.name') },
-    { id: 'serial', label: t('inventory.table.columns.serial'), width: 150 },
-    { id: 'category', label: t('inventory.table.columns.category'), width: 120 },
-    { id: 'purchaseDate', label: t('inventory.table.columns.purchaseDate'), width: 130 },
+    { id: 'internalId', label: t('inventory.table.columns.internalId'), width: 120, sortField: 'asset.internalId' },
+    { id: 'name', label: t('inventory.table.columns.name'), sortField: 'asset.name' },
+    { id: 'serial', label: t('inventory.table.columns.serial'), width: 150, sortField: 'asset.serial' },
+    { id: 'category', label: t('inventory.table.columns.category'), width: 120, sortField: 'category.name' },
+    { id: 'purchaseDate', label: t('inventory.table.columns.purchaseDate'), width: 130, sortField: 'asset.purchaseDate' },
     { id: 'purchaseValue', label: t('inventory.table.columns.purchaseValue'), width: 130 },
     { id: 'warrantyExpiration', label: t('inventory.table.columns.warrantyExpiration'), width: 150 },
-    { id: 'state', label: t('inventory.table.columns.state'), width: 120 },
+    { id: 'state', label: t('inventory.table.columns.state'), width: 120, sortField: 'state.name' },
     { id: 'assignedTo', label: t('inventory.table.columns.assignedTo') },
   ], [t]);
 
@@ -81,16 +81,25 @@ export function InventoryView() {
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
+
   const debouncedSearch = useDebounce(currentFilters.name, 300);
 
   const loadData = useCallback(async () => {
-    try { 
+    try {
       const params: any = {
         page: table.page + 1,
         perPage: table.rowsPerPage,
         search: debouncedSearch,
         includeInactive: currentFilters.includeInactive,
-        order: 'asset.name:asc'
+        order: serverOrderBy ? `${serverOrderBy}:${serverOrder}` : undefined,
       };
 
       // Filtros opcionales
@@ -124,7 +133,7 @@ export function InventoryView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, debouncedSearch, currentFilters, t]);
+  }, [table.page, table.rowsPerPage, debouncedSearch, currentFilters, serverOrderBy, serverOrder, t]);
 
   // Función para cargar categorías con búsqueda (15 por página)
   const loadCategories = useCallback(async (search: string = '') => {
@@ -134,7 +143,7 @@ export function InventoryView() {
         perPage: 15,
         search,
       };
-      
+
       const response = await GetCategoriesPaginationService(params);
       if (response.data) {
         setCategoryOptions(response.data.data || []);
@@ -152,7 +161,7 @@ export function InventoryView() {
         perPage: 20,
         search,
       };
-      
+
       const response = await GetInventoryStatesService(params);
       if (response.data) {
         setStateOptions(response.data.data || []);
@@ -170,7 +179,7 @@ export function InventoryView() {
         perPage: 20,
         search,
       };
-      
+
       const response = await GetUserManagmentPaginationService(params);
       if (response.data) {
         // Mapear IUserManagement a IEmployee
@@ -202,10 +211,10 @@ export function InventoryView() {
 
   const dataFiltered = tableData;
 
-  const canReset = !!currentFilters.name || currentFilters.category.length > 0 || 
-                   currentFilters.state.length > 0 || currentFilters.employee.length > 0 || 
-                   !!currentFilters.serial || !!currentFilters.internalId || 
-                   currentFilters.hasActiveAssignment !== undefined;
+  const canReset = !!currentFilters.name || currentFilters.category.length > 0 ||
+    currentFilters.state.length > 0 || currentFilters.employee.length > 0 ||
+    !!currentFilters.serial || !!currentFilters.internalId ||
+    currentFilters.hasActiveAssignment !== undefined;
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
 
   const handleDeleteRow = useCallback(
@@ -227,9 +236,9 @@ export function InventoryView() {
 
   const handleResetFilters = useCallback(() => {
     table.onResetPage();
-    updateFilters({ 
-      name: '', 
-      category: [], 
+    updateFilters({
+      name: '',
+      category: [],
       state: [],
       employee: [],
       serial: '',
@@ -319,21 +328,21 @@ export function InventoryView() {
           <Scrollbar>
             <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
               <TableHeadCustom
-                order={table.order}
-                orderBy={table.orderBy}
                 headCells={TABLE_HEAD}
-                onSort={table.onSort}
+                serverOrderBy={serverOrderBy}
+                serverOrder={serverOrder}
+                onServerSort={handleServerSort}
               />
 
               <TableBody>
-                  {dataFiltered.map((row) => (
-                    <InventoryTableRow
-                      key={row.id}
-                      row={row}
-                      onDeleteRow={() => handleDeleteRow(row.id)}
-                      editHref={`${paths.dashboard.assets.inventoryEdit(row.id)}`}
-                    />
-                  ))}
+                {dataFiltered.map((row) => (
+                  <InventoryTableRow
+                    key={row.id}
+                    row={row}
+                    onDeleteRow={() => handleDeleteRow(row.id)}
+                    editHref={`${paths.dashboard.assets.inventoryEdit(row.id)}`}
+                  />
+                ))}
 
                 <TableNoData notFound={notFound} />
               </TableBody>

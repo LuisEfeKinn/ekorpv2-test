@@ -61,9 +61,18 @@ export function EvaluationsListView() {
     orderDirection: '',
   });
 
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
+
   const dataFiltered = applyFilter({
     inputData: tableData,
-    comparator: getComparator(table.order, table.orderBy),
+    comparator: getComparator(serverOrder, serverOrderBy),
     filters: filters.state,
   });
 
@@ -113,14 +122,14 @@ export function EvaluationsListView() {
           params,
           responseType: 'blob',
         });
-        
+
         // Crear un blob con la respuesta
         const blob = new Blob([response.data], {
-          type: format === 0 
+          type: format === 0
             ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             : 'application/pdf',
         });
-        
+
         // Crear URL temporal y descargar
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -130,7 +139,7 @@ export function EvaluationsListView() {
         link.click();
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
-        
+
         toast.success(t('evaluations-list.messages.success.exported'));
       } catch (error) {
         console.error('Error exporting evaluations:', error);
@@ -157,6 +166,7 @@ export function EvaluationsListView() {
         const params: any = {
           page: table.page + 1,
           perPage: table.rowsPerPage,
+          order: serverOrderBy ? `${serverOrderBy}:${serverOrder}` : undefined,
         };
 
         if (filters.state.name) {
@@ -206,6 +216,8 @@ export function EvaluationsListView() {
     filters.state.vigencyId,
     filters.state.organizationalUnitIds,
     filters.state.orderDirection,
+    serverOrderBy,
+    serverOrder,
   ]);
 
   const TABLE_HEAD: TableHeadCellProps[] = [
@@ -264,10 +276,10 @@ export function EvaluationsListView() {
         <Scrollbar>
           <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
             <TableHeadCustom
-              order={table.order}
-              orderBy={table.orderBy}
               headCells={TABLE_HEAD}
-              onSort={table.onSort}
+              serverOrderBy={serverOrderBy}
+              serverOrder={serverOrder}
+              onServerSort={handleServerSort}
             />
 
             <TableBody>

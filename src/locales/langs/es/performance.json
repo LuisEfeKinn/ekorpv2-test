@@ -110,6 +110,10 @@
         "add": "Agregar",
         "cancel": "Cancelar"
       },
+      "editLevel": {
+        "title": "Editar Nivel",
+        "save": "Guardar"
+      },
       "deleteLevel": {
         "title": "Eliminar Nivel",
         "content": "¿Está seguro que desea eliminar este nivel?"

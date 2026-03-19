@@ -65,8 +65,8 @@ export function RewardsCategoriesView() {
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(() => [
     { id: '', width: 88 },
-    { id: 'name', label: t('rewards-categories.table.columns.name') },
-    { id: 'abreviation', label: t('rewards-categories.table.columns.abreviation'), align: 'center' }
+    { id: 'name', label: t('rewards-categories.table.columns.name'), sortField: 'category.name' },
+    { id: 'abreviation', label: t('rewards-categories.table.columns.abreviation'), align: 'center', sortField: 'category.abreviation' }
   ], [t]);
 
   const filters = useSetState<IRewardsCategoriesTableFilters>({
@@ -76,23 +76,32 @@ export function RewardsCategoriesView() {
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
+
 
   // Función para cargar datos
   const loadData = useCallback(async () => {
     try {
       // Construir el parámetro order basado en table.orderBy y table.order
       let orderParam: string | undefined;
-      
-      if (table.orderBy) {
-        const direction = table.order === 'asc' ? 'asc' : 'desc';
-        
+
+      if (serverOrderBy) {
+        const direction = serverOrder === 'asc' ? 'asc' : 'desc';
+
         // Mapear los IDs de las columnas a los campos del backend
         const fieldMapping: { [key: string]: string } = {
           name: 'category.name',
           abreviation: 'category.abreviation',
         };
-        
-        const backendField = fieldMapping[table.orderBy];
+
+        const backendField = fieldMapping[serverOrderBy];
         if (backendField) {
           orderParam = `${backendField}:${direction}`;
         }
@@ -120,7 +129,7 @@ export function RewardsCategoriesView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, table.order, table.orderBy, currentFilters.name, t]);
+  }, [table.page, table.rowsPerPage, serverOrderBy, serverOrder, currentFilters.name, t]);
 
   // Cargar datos cuando cambian los parámetros
   useEffect(() => {
@@ -181,17 +190,6 @@ export function RewardsCategoriesView() {
     table.onResetPage();
     updateFilters({ name: '', status: 'all' });
   }, [updateFilters, table]);
-
-  const handleSort = useCallback(
-    (id: string) => {
-      // Solo permitir ordenamiento para las columnas mapeadas
-      const sortableColumns = ['name', 'abreviation'];
-      if (sortableColumns.includes(id)) {
-        table.onSort(id);
-      }
-    },
-    [table]
-  );
 
   const renderConfirmDialog = () => (
     <ConfirmDialog
@@ -313,12 +311,12 @@ export function RewardsCategoriesView() {
             <Scrollbar>
               <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
                 <TableHeadCustom
-                  order={table.order}
-                  orderBy={table.orderBy}
                   headCells={TABLE_HEAD}
                   rowCount={dataFiltered.length}
                   numSelected={table.selected.length}
-                  onSort={handleSort}
+                  serverOrderBy={serverOrderBy}
+                  serverOrder={serverOrder}
+                  onServerSort={handleServerSort}
                 // onSelectAllRows={(checked) =>
                 //   table.onSelectAllRows(
                 //     checked,

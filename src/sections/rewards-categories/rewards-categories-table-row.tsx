@@ -112,7 +112,7 @@ export function RewardsCategoriesTableRow({ row, selected, editHref, onSelectRow
         </TableCell>
 
         <TableCell>
-          <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
+          <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'center' }}>
             <Box component="span" sx={{ color: 'text.primary', fontWeight: 'fontWeightMedium' }}>
               {row?.abreviation || ''}
             </Box>

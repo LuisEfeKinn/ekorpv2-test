@@ -59,7 +59,7 @@
       },
       "filters": {
         "status": "Status:",
-        "keyword": "Keyword:",
+        "keyword": "Keyword",
         "all": "All",
         "inProgress": "Courses in Progress",
         "completed": "Completed Courses",
@@ -371,7 +371,7 @@
       },
       "filters": {
         "status": "Status:",
-        "keyword": "Keyword:",
+        "keyword": "Keyword",
         "search": "Search learning paths...",
         "all": "All",
         "positionId": "Position",
@@ -656,7 +656,7 @@
       },
       "filters": {
         "status": "Status:",
-        "keyword": "Keyword:",
+        "keyword": "Keyword",
         "all": "All"
       },
       "emptyState": {

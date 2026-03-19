@@ -183,7 +183,7 @@
       },
       "filters": {
         "status": "Status:",
-        "keyword": "Keyword:",
+        "keyword": "Keyword",
         "all": "All"
       },
       "emptyState": {
@@ -334,7 +334,7 @@
       },
       "filters": {
         "status": "Status:",
-        "keyword": "Keyword:",
+        "keyword": "Keyword",
         "all": "All"
       },
       "emptyState": {

@@ -48,9 +48,9 @@ export function VigenciesView() {
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(() => [
     { id: 'actions', label: '', width: 88 },
-    { id: 'name', label: t('vigencies.table.columns.name') },
-    { id: 'startDate', label: t('vigencies.table.columns.startDate'), width: 150 },
-    { id: 'endDate', label: t('vigencies.table.columns.endDate'), width: 150 },
+    { id: 'name', label: t('vigencies.table.columns.name'), sortField: 'vigency.name' },
+    { id: 'startDate', label: t('vigencies.table.columns.startDate'), width: 150, sortField: 'vigency.startDate' },
+    { id: 'endDate', label: t('vigencies.table.columns.endDate'), width: 150, sortField: 'vigency.endDate' },
     { id: 'periods', label: t('vigencies.table.columns.periods'), width: 200 },
     { id: 'status', label: t('vigencies.table.columns.status'), width: 120 },
   ], [t]);
@@ -61,31 +61,24 @@ export function VigenciesView() {
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
+
   const debouncedSearch = useDebounce(currentFilters.name, 300);
 
   const loadData = useCallback(async () => {
     try {
-      // let orderParam: string | undefined;
-
-      // if (table.orderBy) {
-      //   const direction = table.order === 'asc' ? 'asc' : 'desc';
-      //   const fieldMapping: { [key: string]: string } = {
-      //     name: 'name',
-      //     startDate: 'startDate',
-      //     endDate: 'endDate',
-      //   };
-
-      //   const backendField = fieldMapping[table.orderBy];
-      //   if (backendField) {
-      //     orderParam = `${backendField}:${direction}`;
-      //   }
-      // }
-
       const params = {
         page: table.page + 1,
         perPage: table.rowsPerPage,
         search: debouncedSearch,
-        // order: orderParam,
+        order: serverOrderBy ? `${serverOrderBy}:${serverOrder}` : undefined,
         isActive: currentFilters.isActive ? currentFilters.isActive === 'true' : undefined,
       };
 
@@ -100,7 +93,7 @@ export function VigenciesView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, debouncedSearch, currentFilters.isActive, t]);
+  }, [table.page, table.rowsPerPage, debouncedSearch, currentFilters.isActive, serverOrderBy, serverOrder, t]);
 
   useEffect(() => {
     loadData();
@@ -110,16 +103,6 @@ export function VigenciesView() {
 
   const canReset = !!currentFilters.name || !!currentFilters.isActive;
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
-
-  const handleSort = useCallback(
-    (id: string) => {
-      const sortableColumns = ['name', 'startDate', 'endDate'];
-      if (sortableColumns.includes(id)) {
-        table.onSort(id);
-      }
-    },
-    [table]
-  );
 
   const handleDeleteRow = useCallback(
     async (id: string) => {
@@ -193,10 +176,10 @@ export function VigenciesView() {
           <Scrollbar>
             <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
               <TableHeadCustom
-                order={table.order}
-                orderBy={table.orderBy}
                 headCells={TABLE_HEAD}
-                onSort={handleSort}
+                serverOrderBy={serverOrderBy}
+                serverOrder={serverOrder}
+                onServerSort={handleServerSort}
               />
 
               <TableBody>

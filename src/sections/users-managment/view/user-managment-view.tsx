@@ -67,13 +67,13 @@ export function UserManagmentView() {
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(() => [
     { id: '', width: 88 },
-    { id: 'fullName', label: tUsers('user-management.table.columns.fullName') },
+    { id: 'fullName', label: tUsers('user-management.table.columns.fullName'), sortField: 'employee.firstName' },
     { id: 'position', label: tUsers('user-management.table.columns.position'), width: 180 },
     { id: 'skill', label: tUsers('user-management.table.columns.skill'), width: 150 },
-    { id: 'location', label: tUsers('user-management.table.columns.location'), width: 180 },
+    { id: 'location', label: tUsers('user-management.table.columns.location'), width: 180, sortField: 'country.name' },
     { id: 'billingRate', label: tUsers('user-management.table.columns.billingRate'), width: 150 },
     { id: 'weeklyHours', label: tUsers('user-management.table.columns.weeklyHours'), width: 120 },
-    { id: 'startedWorkOn', label: tUsers('user-management.table.columns.startedWorkOn'), width: 120 },
+    { id: 'startedWorkOn', label: tUsers('user-management.table.columns.startedWorkOn'), width: 120, sortField: 'employee.startedWorkOn' },
   ], [tUsers]);
 
   const filters = useSetState<IUserManagementTableFilters>({
@@ -86,6 +86,15 @@ export function UserManagmentView() {
     regionId: ''
   });
   const { state: currentFilters, setState: updateFilters } = filters;
+
+  const [serverOrderBy, setServerOrderBy] = useState<string>('');
+  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
+    table.onResetPage();
+    setServerOrderBy(sortField);
+    setServerOrder(direction);
+  }, [table]);
 
 
   // Función para cargar datos
@@ -100,6 +109,7 @@ export function UserManagmentView() {
         organizationalUnitId: currentFilters.organizationalUnitId || undefined,
         countryId: currentFilters.countryId || undefined,
         regionId: currentFilters.regionId || undefined,
+        order: serverOrderBy ? `${serverOrderBy}:${serverOrder}` : undefined,
       };
 
       const response = await GetUserManagmentPaginationService(params);
@@ -113,7 +123,7 @@ export function UserManagmentView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, currentFilters.name, currentFilters.positionId, currentFilters.skillId, currentFilters.organizationalUnitId, currentFilters.countryId, currentFilters.regionId, tUsers]);
+  }, [table.page, table.rowsPerPage, currentFilters.name, currentFilters.positionId, currentFilters.skillId, currentFilters.organizationalUnitId, currentFilters.countryId, currentFilters.regionId, serverOrderBy, serverOrder, tUsers]);
 
   // Cargar datos cuando cambian los parámetros
   useEffect(() => {
@@ -295,12 +305,12 @@ export function UserManagmentView() {
             <Scrollbar>
               <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
                 <TableHeadCustom
-                  order={table.order}
-                  orderBy={table.orderBy}
                   headCells={TABLE_HEAD}
                   rowCount={dataFiltered.length}
                   numSelected={table.selected.length}
-                  onSort={table.onSort}
+                  serverOrderBy={serverOrderBy}
+                  serverOrder={serverOrder}
+                  onServerSort={handleServerSort}
                 // onSelectAllRows={(checked) =>
                 //   table.onSelectAllRows(
                 //     checked,

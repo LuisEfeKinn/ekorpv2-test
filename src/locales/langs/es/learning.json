@@ -59,7 +59,7 @@
       },
       "filters": {
         "status": "Estado:",
-        "keyword": "Palabra clave:",
+        "keyword": "Palabra clave",
         "all": "Todos",
         "inProgress": "Cursos por Completar",
         "completed": "Cursos Finalizados",
@@ -373,7 +373,7 @@
       },
       "filters": {
         "status": "Estado:",
-        "keyword": "Palabra clave:",
+        "keyword": "Palabra clave",
         "search": "Buscar rutas de aprendizaje...",
         "all": "Todos",
         "positionId": "Posición",
@@ -658,7 +658,7 @@
       },
       "filters": {
         "status": "Estado:",
-        "keyword": "Palabra clave:",
+        "keyword": "Palabra clave",
         "all": "Todos"
       },
       "emptyState": {
