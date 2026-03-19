@@ -737,39 +737,83 @@
   },
   "learning-reports": {
     "title": "Learning Reports",
-    "subtitle": "Generate detailed reports on employee progress and performance in their Programs.",
+    "subtitle": "Generate detailed reports on employee progress and performance in their learning paths and programs.",
+    "reportTypes": {
+      "learningPaths": "Learning Paths",
+      "programs": "Programs",
+      "courses": "Courses"
+    },
     "filters": {
       "title": "Report Filters",
-      "employeeId": "Employee ID",
-      "employeeIdPlaceholder": "Enter employee ID",
-      "startDate": "Start date",
-      "endDate": "End date",
+      "search": "Search",
+      "searchPlaceholder": "Search...",
+      "order": "Sort by",
+      "noOrder": "No order",
+      "format": "Output format",
       "generate": "Generate Report",
-      "generateTooltip": "Generate report with the selected filters",
-      "endDateError": "End date must be after start date"
+      "generateTooltip": "Generate report with selected filters",
+      "clear": "Clear Filters",
+      "employee": "Employee",
+      "employeePlaceholder": "Search employee...",
+      "route": "Learning Path",
+      "routePlaceholder": "Search learning path...",
+      "includeInactive": "Include inactive",
+      "perPage": "Per page",
+      "searching": "Searching...",
+      "noOptions": "No options",
+      "formatOptions": {
+        "json": "List",
+        "excel": "Excel",
+        "pdf": "PDF",
+        "csv": "CSV"
+      },
+      "orderOptions": {
+        "learningPathNameAsc": "Learning Path (A-Z)",
+        "learningPathNameDesc": "Learning Path (Z-A)",
+        "employeeFirstNameAsc": "First Name (A-Z)",
+        "employeeFirstNameDesc": "First Name (Z-A)",
+        "employeeLastNameAsc": "Last Name (A-Z)",
+        "employeeLastNameDesc": "Last Name (Z-A)",
+        "jobNameAsc": "Position (A-Z)",
+        "jobNameDesc": "Position (Z-A)",
+        "orgUnitNameAsc": "Org. Unit (A-Z)",
+        "orgUnitNameDesc": "Org. Unit (Z-A)",
+        "statusAsc": "Status (A-Z)",
+        "statusDesc": "Status (Z-A)",
+        "progressAsc": "Progress (Lowest)",
+        "progressDesc": "Progress (Highest)",
+        "createdAtAsc": "Created Date (Oldest)",
+        "createdAtDesc": "Created Date (Newest)"
+      }
     },
     "table": {
       "results": "Results",
-      "noData": "No data to display. Generate a report using the filters above.",
-      "download": "Download CSV",
-      "record": "record",
-      "records": "records",
+      "totalRecords": "total records",
       "inProgress": "In Progress",
+      "completed": "Completed",
+      "employees": "employees",
       "columns": {
-        "colaborator": "Colaborator",
-        "position": "Position",
-        "course": "Course",
-        "progress": "Progress (%)",
-        "startDate": "Start Date",
-        "endDate": "End Date",
-        "clear": "Clear Filters"
+        "employee": "Employee",
+        "cargo": "Position",
+        "organizationalUnit": "Organizational Unit",
+        "status": "Status",
+        "progress": "Progress",
+        "completedAt": "Completion Date",
+        "programName": "Program",
+        "totalCourses": "Total Courses",
+        "completedCourses": "Completed",
+        "completionPercentage": "% Complete",
+        "courseName": "Course",
+        "isCompleted": "Status"
       }
     },
     "messages": {
-      "loading": "Loading report...",
-      "error": "Error loading report. Please try again.",
-      "noData": "No data found for the selected filters",
-      "noDataDescription": "Try adjusting the filters and generating the report again."
+      "loading": "Generating report...",
+      "error": "Error generating report. Please try again.",
+      "noData": "No data found for the selected filters.",
+      "noDataDescription": "Adjust the filters and generate a new report.",
+      "downloadSuccess": "File downloaded successfully.",
+      "downloadError": "Error downloading the file."
     }
   },
   "product-courses": {

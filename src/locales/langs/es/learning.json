@@ -739,39 +739,83 @@
   },
   "learning-reports": {
     "title": "Reportes de Aprendizaje",
-    "subtitle": "Genera reportes detallados sobre el progreso y desempeño de los empleados en sus Programas.",
+    "subtitle": "Genera reportes detallados sobre el progreso y desempeño de los empleados en sus rutas y programas.",
+    "reportTypes": {
+      "learningPaths": "Rutas de Aprendizaje",
+      "programs": "Programas",
+      "courses": "Cursos"
+    },
     "filters": {
       "title": "Filtros de Reporte",
-      "employeeId": "ID del Empleado",
-      "employeeIdPlaceholder": "Ingrese ID del empleado",
-      "startDate": "Fecha Inicio",
-      "endDate": "Fecha Fin",
+      "search": "Buscar",
+      "searchPlaceholder": "Buscar...",
+      "order": "Ordenar por",
+      "noOrder": "Sin orden",
+      "format": "Formato de salida",
       "generate": "Generar Reporte",
       "generateTooltip": "Generar reporte con los filtros seleccionados",
-      "endDateError": "La fecha de fin no puede ser anterior a la fecha de inicio",
-      "clear": "Limpiar Filtros"
+      "clear": "Limpiar Filtros",
+      "employee": "Empleado",
+      "employeePlaceholder": "Buscar empleado...",
+      "route": "Ruta de Aprendizaje",
+      "routePlaceholder": "Buscar ruta...",
+      "includeInactive": "Incluir inactivos",
+      "perPage": "Por página",
+      "searching": "Buscando...",
+      "noOptions": "Sin opciones",
+      "formatOptions": {
+        "json": "Lista",
+        "excel": "Excel",
+        "pdf": "PDF",
+        "csv": "CSV"
+      },
+      "orderOptions": {
+        "learningPathNameAsc": "Ruta (A-Z)",
+        "learningPathNameDesc": "Ruta (Z-A)",
+        "employeeFirstNameAsc": "Nombre (A-Z)",
+        "employeeFirstNameDesc": "Nombre (Z-A)",
+        "employeeLastNameAsc": "Apellido (A-Z)",
+        "employeeLastNameDesc": "Apellido (Z-A)",
+        "jobNameAsc": "Cargo (A-Z)",
+        "jobNameDesc": "Cargo (Z-A)",
+        "orgUnitNameAsc": "Unidad Org. (A-Z)",
+        "orgUnitNameDesc": "Unidad Org. (Z-A)",
+        "statusAsc": "Estado (A-Z)",
+        "statusDesc": "Estado (Z-A)",
+        "progressAsc": "Progreso (Menor)",
+        "progressDesc": "Progreso (Mayor)",
+        "createdAtAsc": "Fecha creación (Antiguo)",
+        "createdAtDesc": "Fecha creación (Reciente)"
+      }
     },
     "table": {
       "results": "Resultados",
-      "noData": "No hay datos para mostrar. Genere un reporte usando los filtros anteriores.",
-      "download": "Descargar CSV",
-      "record": "registro",
-      "records": "registros",
+      "totalRecords": "registros en total",
       "inProgress": "En progreso",
+      "completed": "Completado",
+      "employees": "empleados",
       "columns": {
-        "colaborator": "Colaborador",
-        "position": "Cargo",
-        "course": "Curso",
-        "progress": "Progreso (%)",
-        "startDate": "Fecha de Inicio",
-        "endDate": "Fecha de Finalización"
+        "employee": "Empleado",
+        "cargo": "Cargo",
+        "organizationalUnit": "Unidad Organizacional",
+        "status": "Estado",
+        "progress": "Progreso",
+        "completedAt": "Fecha de Finalización",
+        "programName": "Programa",
+        "totalCourses": "Total Cursos",
+        "completedCourses": "Completados",
+        "completionPercentage": "% Completado",
+        "courseName": "Curso",
+        "isCompleted": "Estado"
       }
     },
     "messages": {
       "loading": "Generando reporte...",
       "error": "Error al generar el reporte. Por favor, inténtelo de nuevo.",
       "noData": "No se encontraron datos para los filtros seleccionados.",
-      "noDataDescription": "Intente ajustar los filtros y generar el reporte nuevamente."
+      "noDataDescription": "Ajuste los filtros y genere un nuevo reporte.",
+      "downloadSuccess": "Archivo descargado correctamente.",
+      "downloadError": "Error al descargar el archivo."
     }
   },
   "product-courses": {

@@ -3,65 +3,70 @@ import axios, { endpoints } from 'src/utils/axios';
 
 // ----------------------------------------------------------------------
 
-/**
- * Obtener reporte de learning.
- * Todos los parámetros son opcionales. Solo se enviarán en la query los que vengan definidos.
- * - employeeId: string | number (id del empleado)
- * - startDate, endDate: Date | string (si es Date, se convertirá a ISO string yyyy-mm-dd)
- */
-export const GetReportService = async (
-  employeeId?: string | number | null,
-  startDate?: Date | string | null,
-  endDate?: Date | string | null
-) => {
-  // Construir query params sólo con valores definidos (no null/undefined/empty)
-  const params = new URLSearchParams();
+export type ReportFormat = 'json' | 'excel' | 'pdf' | 'csv' | '';
 
-  const pushIfValid = (key: string, value: any) => {
-    if (value === undefined || value === null) return;
-    // if it's an empty string, don't include
-    if (typeof value === 'string' && value.trim() === '') return;
-    params.append(key, String(value));
-  };
+export type OrderOption =
+  | 'learningPath.name:asc'
+  | 'learningPath.name:desc'
+  | 'employee.firstName:asc'
+  | 'employee.firstName:desc'
+  | 'employee.lastName:asc'
+  | 'employee.lastName:desc'
+  | 'job.name:asc'
+  | 'job.name:desc'
+  | 'organizationalUnit.name:asc'
+  | 'organizationalUnit.name:desc'
+  | 'elp.status:asc'
+  | 'elp.status:desc'
+  | 'elp.completionPercentage:asc'
+  | 'elp.completionPercentage:desc'
+  | 'elp.createdAt:asc'
+  | 'elp.createdAt:desc';
 
-  // Formatear fechas a YYYY-MM-DD si vienen como Date
-  const formatDate = (d?: Date | string | null): string | undefined => {
-    if (!d) return undefined;
-    if (d instanceof Date) {
-      // yyyy-mm-dd
-      const yyyy = d.getFullYear();
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const dd = String(d.getDate()).padStart(2, '0');
-      return `${yyyy}-${mm}-${dd}`;
-    }
-    // si es string, asumimos que ya está en un formato aceptable por el backend
-    return d;
-  };
+export interface IReportParams {
+  order?: OrderOption | string;
+  page?: number;
+  perPage?: number;
+  search?: string;
+  includeInactive?: boolean;
+  employeeId?: number | string;
+  routeId?: number | string;
+  format?: ReportFormat;
+}
 
-  pushIfValid('employeeId', employeeId ?? undefined);
-  pushIfValid('startDate', formatDate(startDate ?? undefined));
-  pushIfValid('endDate', formatDate(endDate ?? undefined));
-
-  const url = `${endpoints.learning.reports.getReport}${params.toString() ? `?${params.toString()}` : ''}`;
-
-  const response = await axios.get<any>(url);
-  return response;
+// Builds clean params object (excludes undefined, null and empty strings)
+const buildCleanParams = (params: IReportParams): Record<string, any> => {
+  const clean: Record<string, any> = {};
+  (Object.entries(params) as [string, any][]).forEach(([key, value]) => {
+    if (value === undefined || value === null || value === '') return;
+    clean[key] = value;
+  });
+  return clean;
 };
 
-/*
-Example usage:
+export const GetLearningPathsReportService = async (params: IReportParams = {}) => {
+  const cleanParams = buildCleanParams(params);
+  const isBlob = cleanParams.format && cleanParams.format !== 'json';
+  return axios.get(endpoints.learning.reports.learningPaths, {
+    params: cleanParams,
+    ...(isBlob ? { responseType: 'blob' } : {}),
+  });
+};
 
-// 1) Sin filtros
-// GetReportService();
+export const GetProgramsReportService = async (params: IReportParams = {}) => {
+  const cleanParams = buildCleanParams(params);
+  const isBlob = cleanParams.format && cleanParams.format !== 'json';
+  return axios.get(endpoints.learning.reports.programs, {
+    params: cleanParams,
+    ...(isBlob ? { responseType: 'blob' } : {}),
+  });
+};
 
-// 2) Solo empleado
-// GetReportService(123);
-
-// 3) Fechas como Date
-// GetReportService(null, new Date('2025-01-01'), new Date('2025-01-31'));
-
-// Notas / suposiciones:
-// - Query params enviados: employeeId, startDate, endDate
-// - startDate/endDate se envían en formato YYYY-MM-DD si se pasan como Date
-// - Si el backend espera otro nombre para los params, ajusta las claves en pushIfValid
-*/
+export const GetCoursesReportService = async (params: IReportParams = {}) => {
+  const cleanParams = buildCleanParams(params);
+  const isBlob = cleanParams.format && cleanParams.format !== 'json';
+  return axios.get(endpoints.learning.reports.courses, {
+    params: cleanParams,
+    ...(isBlob ? { responseType: 'blob' } : {}),
+  });
+};

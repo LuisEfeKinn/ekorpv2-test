@@ -320,7 +320,9 @@ export const endpoints = {
       delete: '/competency-km', // + /:id
     },
     reports: {
-      getReport: '/reports/enrollments-by-employee'
+      learningPaths: '/reports/learning-paths',
+      programs: '/reports/learning-paths/programs',
+      courses: '/reports/learning-paths/courses'
     }
   },
   assets: {
