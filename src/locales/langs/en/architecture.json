@@ -490,7 +490,12 @@
       "save": "Save",
       "descriptionRequired": "Description is required",
       "success": "Saved successfully",
-      "error": "Error saving"
+      "error": "Error saving",
+      "invalidId": "Invalid ID",
+      "fileNotAllowedEdit": "File upload not available in edit mode",
+      "maxLength": "Maximum {{count}} characters",
+      "noFiles": "No related files",
+      "downloadError": "Error downloading files"
     }
   },
   "tools": {
@@ -1953,6 +1958,14 @@
         "uploadSuccess": "File uploaded successfully",
         "uploadError": "Error uploading the file",
         "downloadError": "Error downloading the file"
+      }
+    }
+  },
+  "organizationalStructure": {
+    "feedbacks": {
+      "files": {
+        "none": "No related files found",
+        "required": "Attach a file to save"
       }
     }
   },

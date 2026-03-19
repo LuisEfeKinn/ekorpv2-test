@@ -62,6 +62,7 @@ export function OrganizationalUnitLessonsProposalsDrawer({
   feedbackId,
 }: Props) {
   const { t } = useTranslate('organization');
+  const { t: tArchitecture } = useTranslate('architecture');
   const [loading, setLoading] = useState(false);
   const [prefillFeedback, setPrefillFeedback] = useState<Feedback | null>(null);
 
@@ -172,26 +173,6 @@ export function OrganizationalUnitLessonsProposalsDrawer({
     }
 
     try {
-      const payload = {
-        date: new Date().toISOString(),
-        improvementLesson: true,
-        description,
-        problem: '',
-        rootCause: '',
-        proposedStrategy: '',
-        estimatedResourceCosts: '',
-        expectedResults: '',
-        effectivenessIndicators: '',
-        proposedWorkTeam: '',
-        statusDate: new Date().toISOString(),
-        link: '',
-        file: '',
-        type: '',
-        originalFile: '',
-        rejectionReason: '',
-        reportReceiver: 0,
-      };
-
       if (editMode && feedbackId) {
         await UpdateOrganizationalUnitFeedbackService(feedbackId, {
           description,
@@ -200,8 +181,12 @@ export function OrganizationalUnitLessonsProposalsDrawer({
         });
         toast.success(t('organization.feedbacks.lessonUpdated', { defaultValue: 'Lección aprendida actualizada' }));
       } else {
-        await SaveOrganizationalUnitFeedbackService(orgUnitId, payload);
-        toast.success(t('organization.feedbacks.lessonSaved'));
+        toast.error(
+          tArchitecture('organizationalStructure.feedbacks.files.required', {
+            defaultValue: 'Adjunta un archivo para guardar',
+          })
+        );
+        return;
       }
 
       onSuccess();

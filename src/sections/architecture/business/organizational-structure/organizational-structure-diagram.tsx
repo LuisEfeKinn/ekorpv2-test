@@ -318,13 +318,13 @@ export function OrganizationalStructureDiagram({ organizationalUnitId, sx }: Pro
         minZoom={0.1}
         maxZoom={1.5}
         nodesDraggable={false}
-        zoomOnScroll
-        panOnScroll={false}
+        zoomOnScroll={false}
+        panOnScroll
         panOnDrag
         selectionOnDrag={false}
         zoomOnPinch
         zoomOnDoubleClick
-        preventScrolling
+        preventScrolling={false}
         defaultEdgeOptions={{ type: 'straight', animated: true }}
         proOptions={{ hideAttribution: true }}
       >

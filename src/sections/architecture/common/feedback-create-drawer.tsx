@@ -1,5 +1,5 @@
 import { useDropzone } from 'react-dropzone';
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -12,7 +12,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
-import { CreateFileService } from 'src/services/file/CreateFile.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
@@ -65,6 +64,11 @@ export function SharedFeedbackCreateDrawer({
   const [showUploader, setShowUploader] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [downloadingFiles, setDownloadingFiles] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const resolvedEntity = fileEntity ?? (objectiveId ? 'objective' : null);
+  const resolvedEntityId = fileEntityId ?? objectiveId ?? null;
+  const requiresFileOnCreate = false;
   
   // Format current date as DD/MM/YYYY for display
   const today = new Date();
@@ -78,84 +82,82 @@ export function SharedFeedbackCreateDrawer({
 
   const handleSubmit = async () => {
     if (!description.trim()) {
-      toast.error(t('process.feedbacks.descriptionRequired') || 'La descripción es obligatoria');
+      toast.error(t('process.feedbacks.descriptionRequired'));
       return;
     }
 
     if (description.length > MAX_VARCHAR_LENGTH) {
-      toast.error(`Máximo ${MAX_VARCHAR_LENGTH} caracteres`);
+      toast.error(t('process.feedbacks.maxLength', { count: MAX_VARCHAR_LENGTH }));
       return;
     }
 
     try {
       setLoading(true);
       const trimmed = description.slice(0, MAX_VARCHAR_LENGTH);
-      const resolvedEntity = fileEntity ?? (objectiveId ? 'objective' : null);
-      const resolvedEntityId = fileEntityId ?? objectiveId ?? null;
+
+      if (resolvedEntity === 'organizational-unit' && !editMode) {
+        if (!resolvedEntityId) {
+          toast.error(t('process.feedbacks.invalidId'));
+          setLoading(false);
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('improvementLesson', String(!!isLessonLearned));
+        formData.append('description', trimmed);
+        formData.append('problem', '');
+        formData.append('rootCause', '');
+        formData.append('reportReceiver', '0');
+        if (selectedFile) {
+          formData.append('file', selectedFile);
+        }
+
+        const url = `/api/feedbacks/organizational-unit/${encodeURIComponent(String(resolvedEntityId))}/with-file`;
+
+        setUploading(true);
+        await axios.post(url, formData);
+        setUploading(false);
+        toast.success(t('process.feedbacks.success'));
+        setSelectedFile(null);
+        setUploadedName(null);
+        setShowUploader(false);
+
+        onSuccess();
+        onClose();
+        return;
+      }
 
       if (selectedFile) {
         if (!resolvedEntity || !resolvedEntityId) {
-          toast.error('ID inválido');
+          toast.error(t('process.feedbacks.invalidId'));
           setLoading(false);
           return;
         }
         if (editMode) {
-          toast.error('Adjuntar archivo no está disponible en edición');
+          toast.error(t('process.feedbacks.fileNotAllowedEdit'));
           setLoading(false);
           return;
         }
 
-        if (resolvedEntity === 'organizational-unit') {
-          setUploading(true);
-          const uploaded = await CreateFileService(selectedFile);
-          const payload = {
-            date: new Date().toISOString(),
-            improvementLesson: !!isLessonLearned,
-            description: trimmed,
-            problem: '',
-            rootCause: '',
-            proposedStrategy: '',
-            estimatedResourceCosts: '',
-            expectedResults: '',
-            effectivenessIndicators: '',
-            proposedWorkTeam: '',
-            statusDate: new Date().toISOString(),
-            link: '',
-            file: uploaded.url,
-            type: uploaded.type,
-            originalFile: uploaded.name,
-            rejectionReason: '',
-            reportReceiver: 0,
-          };
-          const url = `/api/feedbacks/${encodeURIComponent(resolvedEntity)}/${encodeURIComponent(String(resolvedEntityId))}`;
-          await axios.post(url, payload);
-          setUploading(false);
-          toast.success(t('process.feedbacks.fileUploaded') || 'Archivo adjuntado correctamente');
-          setSelectedFile(null);
-          setUploadedName(null);
-          setShowUploader(false);
-        } else {
-          const formData = new FormData();
-          formData.append('improvementLesson', String(!!isLessonLearned));
-          formData.append('description', trimmed);
-          formData.append('problem', '');
-          formData.append('rootCause', '');
-          formData.append('reportReceiver', '0');
-          formData.append('file', selectedFile);
+        const formData = new FormData();
+        formData.append('improvementLesson', String(!!isLessonLearned));
+        formData.append('description', trimmed);
+        formData.append('problem', '');
+        formData.append('rootCause', '');
+        formData.append('reportReceiver', '0');
+        formData.append('file', selectedFile);
 
-          const url = `/api/feedbacks/${encodeURIComponent(resolvedEntity)}/${encodeURIComponent(String(resolvedEntityId))}/with-file`;
+        const url = `/api/feedbacks/${encodeURIComponent(resolvedEntity)}/${encodeURIComponent(String(resolvedEntityId))}/with-file`;
 
-          setUploading(true);
-          await axios.post(url, formData, {
-            headers: { 'Content-Type': 'multipart/form-data' },
-          });
-          setUploading(false);
-          toast.success(t('process.feedbacks.fileUploaded') || 'Archivo adjuntado correctamente');
-          setSelectedFile(null);
-          setUploadedName(null);
-        }
+        setUploading(true);
+        await axios.post(url, formData);
+        setUploading(false);
+        toast.success(t('process.feedbacks.success'));
+        setSelectedFile(null);
+        setUploadedName(null);
+        setShowUploader(false);
       } else {
-        if (objectiveId && !editMode) {
+        if (resolvedEntity && resolvedEntityId && !editMode) {
           const payload = {
             improvementLesson: !!isLessonLearned,
             description: trimmed,
@@ -164,7 +166,7 @@ export function SharedFeedbackCreateDrawer({
             reportReceiver: 0,
           };
 
-          const url = `/api/feedbacks/objective/${encodeURIComponent(String(objectiveId))}`;
+          const url = `/api/feedbacks/${encodeURIComponent(resolvedEntity)}/${encodeURIComponent(String(resolvedEntityId))}`;
           await axios.post(url, payload);
         } else {
           await onSubmit(trimmed);
@@ -181,19 +183,20 @@ export function SharedFeedbackCreateDrawer({
         error?.message ||
         'Error';
       console.error('UploadFeedbackWithFile error', error?.response?.status, error?.response?.data || msg);
-      toast.error(msg || (t('process.feedbacks.fileUploadError') || 'Error al adjuntar el archivo'));
+      toast.error(typeof msg === 'string' && msg.trim().length ? msg : t('process.feedbacks.error'));
     } finally {
       setLoading(false);
     }
   };
 
   const handleAttachClick = useCallback(() => {
-    setShowUploader((prev) => !prev);
+    setShowUploader(true);
+    fileInputRef.current?.click();
   }, []);
 
   const handleDownloadFiles = useCallback(async () => {
     if (!feedbackId) {
-      toast.error('ID inválido');
+      toast.error(t('process.feedbacks.invalidId'));
       return;
     }
 
@@ -221,11 +224,7 @@ export function SharedFeedbackCreateDrawer({
       window.URL.revokeObjectURL(objectUrl);
     } catch (error: any) {
       if (error?.response?.status === 404) {
-        toast.info(
-          t('strategicObjectives.feedbacks.files.none', {
-            defaultValue: 'No hay archivos relacionados',
-          })
-        );
+        toast.info(t('process.feedbacks.noFiles'));
         return;
       }
 
@@ -236,7 +235,7 @@ export function SharedFeedbackCreateDrawer({
         error?.message ||
         'Error';
       console.error('DownloadObjectiveFeedbackFiles error', error?.response?.status, error?.response?.data || msg);
-      toast.error(msg || 'Error al descargar archivos');
+      toast.error(typeof msg === 'string' && msg.trim().length ? msg : t('process.feedbacks.downloadError'));
     } finally {
       setDownloadingFiles(false);
     }
@@ -252,6 +251,20 @@ export function SharedFeedbackCreateDrawer({
     },
     []
   );
+
+  const handleFilePick = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    e.target.value = '';
+    if (!file) return;
+    setSelectedFile(file);
+    setUploadedName(file.name);
+    setShowUploader(true);
+  }, []);
+
+  const handleClearFile = useCallback(() => {
+    setSelectedFile(null);
+    setUploadedName(null);
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -334,6 +347,7 @@ export function SharedFeedbackCreateDrawer({
                 >
                   {t('process.feedbacks.attachFile') || 'Añadir archivo'}
                 </Button>
+                <input ref={fileInputRef} type="file" hidden onChange={handleFilePick} />
               </Box>
 
               {showUploader && (
@@ -356,9 +370,14 @@ export function SharedFeedbackCreateDrawer({
                       {dropLabel}
                     </Typography>
                     {uploadedName && (
-                      <Typography variant="caption" color="text.primary">
-                        {uploadedName}
-                      </Typography>
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        <Typography variant="caption" color="text.primary">
+                          {uploadedName}
+                        </Typography>
+                        <Button size="small" color="inherit" variant="text" onClick={handleClearFile} disabled={uploading}>
+                          Quitar
+                        </Button>
+                      </Stack>
                     )}
                     {uploading && <CircularProgress size={18} />}
                   </Stack>
@@ -367,7 +386,7 @@ export function SharedFeedbackCreateDrawer({
             </>
           )}
 
-          {editMode && !!feedbackId && (
+          {editMode && !!resolvedEntity && !!resolvedEntityId && (
             <Box>
               <Button
                 variant="outlined"
@@ -390,7 +409,7 @@ export function SharedFeedbackCreateDrawer({
               onClick={handleSubmit} 
               variant="contained" 
               color="primary"
-              disabled={loading}
+              disabled={loading || (requiresFileOnCreate && !selectedFile)}
               startIcon={loading && <CircularProgress size={18} color="inherit" />}
             >
               {t('process.feedbacks.save') || 'Guardar'}

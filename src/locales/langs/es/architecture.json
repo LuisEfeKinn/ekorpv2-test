@@ -484,7 +484,12 @@
       "save": "Guardar",
       "descriptionRequired": "Descripción es requerida",
       "success": "Guardado correctamente",
-      "error": "Error al guardar"
+      "error": "Error al guardar",
+      "invalidId": "ID inválido",
+      "fileNotAllowedEdit": "No se puede adjuntar archivo en edición",
+      "maxLength": "Máximo {{count}} caracteres",
+      "noFiles": "No hay archivos relacionados",
+      "downloadError": "Error al descargar archivos"
     }
   },
   "tools": {
@@ -729,6 +734,14 @@
         "uploadSuccess": "Archivo cargado exitosamente",
         "uploadError": "Error al cargar el archivo",
         "uploadNoChanges": "No hubo cambios en los objetivos"
+      }
+    }
+  },
+  "organizationalStructure": {
+    "feedbacks": {
+      "files": {
+        "none": "No hay archivos relacionados",
+        "required": "Adjunta un archivo para guardar"
       }
     }
   },

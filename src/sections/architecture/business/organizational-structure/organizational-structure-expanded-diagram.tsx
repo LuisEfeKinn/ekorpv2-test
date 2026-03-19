@@ -684,13 +684,13 @@ export function OrganizationalStructureExpandedDiagram({ organizationalUnitId, n
           minZoom={0.1}
           maxZoom={1.5}
           nodesDraggable={false}
-          panOnScroll={false}
+          panOnScroll
           panOnDrag
           selectionOnDrag={false}
-          zoomOnScroll
+          zoomOnScroll={false}
           zoomOnPinch
           zoomOnDoubleClick
-          preventScrolling
+          preventScrolling={false}
           defaultEdgeOptions={{ type: 'straight', animated: true }}
           proOptions={{ hideAttribution: true }}
         >
