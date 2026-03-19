@@ -240,7 +240,6 @@ export function SharedFeedbackCreateDrawer({
       setDownloadingFiles(false);
     }
   }, [feedbackId, t]);
-  }, [t, objectiveId]);
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
