@@ -225,9 +225,12 @@ export const DeleteOrganizationalUnitDocumentService = async (id: number | strin
   return response;
 };
 
-export const DownloadOrganizationalUnitTemplateService = async () => {
+export type OrganizationalUnitTemplateLang = 'en' | 'es';
+
+export const DownloadOrganizationalUnitTemplateService = async (lang: OrganizationalUnitTemplateLang) => {
   const response = await axios.get('/api/organizational-unit/download/template', {
     responseType: 'blob',
+    params: { lang },
   });
   return response;
 };

@@ -51,6 +51,7 @@ export function OrganizationalUnitChartNode({
           maxWidth: 340,
           borderRadius: 2,
           cursor: 'pointer',
+          userSelect: 'none',
           border: '1px solid',
           borderColor: 'divider',
           bgcolor: 'background.paper',

@@ -1,5 +1,5 @@
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
@@ -24,6 +24,11 @@ export function ZoomPanWrapper({ children, fitOnInit = false }: Props) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+  const dragStateRef = useRef<{ isPointerDown: boolean; pointerId: number | null }>({
+    isPointerDown: false,
+    pointerId: null,
+  });
+  const previousBodyUserSelectRef = useRef<string | null>(null);
 
   const handleZoomIn = () => setScale((prev) => Math.min(prev + 0.1, 3));
   const handleZoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.3));
@@ -56,46 +61,107 @@ export function ZoomPanWrapper({ children, fitOnInit = false }: Props) {
     setPosition({ x: 0, y: 0 });
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    setStartPos({
-      x: e.clientX - position.x,
-      y: e.clientY - position.y,
-    });
-  };
+  const restoreBodyUserSelect = useCallback(() => {
+    if (previousBodyUserSelectRef.current === null) return;
+    document.body.style.userSelect = previousBodyUserSelectRef.current;
+    previousBodyUserSelectRef.current = null;
+  }, []);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    setPosition({
-      x: e.clientX - startPos.x,
-      y: e.clientY - startPos.y,
-    });
-  };
+  const disableBodyUserSelect = useCallback(() => {
+    if (previousBodyUserSelectRef.current === null) {
+      previousBodyUserSelectRef.current = document.body.style.userSelect;
+    }
+    document.body.style.userSelect = 'none';
+  }, []);
 
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
+  const endDrag = useCallback(() => {
+    dragStateRef.current.isPointerDown = false;
+    dragStateRef.current.pointerId = null;
+    setIsDragging(false);
+    restoreBodyUserSelect();
+  }, [restoreBodyUserSelect]);
 
-    if (e.ctrlKey || e.metaKey) {
-      const delta = e.deltaY > 0 ? -0.08 : 0.08;
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (e.button !== 0) return;
+
+      if (
+        e.target instanceof HTMLElement &&
+        e.target.closest('button, a, input, textarea, select, [role="button"]')
+      ) {
+        return;
+      }
+
+      dragStateRef.current.isPointerDown = true;
+      dragStateRef.current.pointerId = e.pointerId;
+
+      disableBodyUserSelect();
+      e.currentTarget.setPointerCapture(e.pointerId);
+      setStartPos({
+        x: e.clientX - position.x,
+        y: e.clientY - position.y,
+      });
+    },
+    [disableBodyUserSelect, position.x, position.y]
+  );
+
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!dragStateRef.current.isPointerDown) return;
+
+      if (!isDragging) {
+        setIsDragging(true);
+      }
+
+      setPosition({
+        x: e.clientX - startPos.x,
+        y: e.clientY - startPos.y,
+      });
+    },
+    [isDragging, startPos.x, startPos.y]
+  );
+
+  const handlePointerUp = useCallback(
+    (_e: React.PointerEvent<HTMLDivElement>) => {
+      endDrag();
+    },
+    [endDrag]
+  );
+
+  useEffect(() => {
+    const handleGlobalPointerUp = () => endDrag();
+    window.addEventListener('pointerup', handleGlobalPointerUp);
+    window.addEventListener('pointercancel', handleGlobalPointerUp);
+    return () => {
+      window.removeEventListener('pointerup', handleGlobalPointerUp);
+      window.removeEventListener('pointercancel', handleGlobalPointerUp);
+    };
+  }, [endDrag]);
+
+  const handleNativeWheel = useCallback((event: WheelEvent) => {
+    event.preventDefault();
+
+    if (event.ctrlKey || event.metaKey) {
+      const delta = event.deltaY > 0 ? -0.08 : 0.08;
       setScale((prev) => Math.min(Math.max(prev + delta, 0.3), 3));
       return;
     }
 
     setPosition((prev) => ({
-      x: prev.x - e.deltaX,
-      y: prev.y - e.deltaY,
+      x: prev.x - event.deltaX,
+      y: prev.y - event.deltaY,
     }));
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
+  }, []);
 
   useEffect(() => {
-    const handleGlobalMouseUp = () => setIsDragging(false);
-    window.addEventListener('mouseup', handleGlobalMouseUp);
-    return () => window.removeEventListener('mouseup', handleGlobalMouseUp);
-  }, []);
+    const el = containerRef.current;
+    if (!el) return undefined;
+
+    el.addEventListener('wheel', handleNativeWheel, { passive: false });
+    return () => {
+      el.removeEventListener('wheel', handleNativeWheel);
+    };
+  }, [handleNativeWheel]);
 
   useEffect(() => {
     if (fitOnInit) {
@@ -155,11 +221,10 @@ export function ZoomPanWrapper({ children, fitOnInit = false }: Props) {
       {/* Draggable Area */}
       <Box
         ref={containerRef}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        onWheel={handleWheel}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerUp}
         sx={{
           width: '100%',
           height: '100%',
@@ -168,6 +233,8 @@ export function ZoomPanWrapper({ children, fitOnInit = false }: Props) {
           justifyContent: 'center',
           alignItems: 'center',
           overflow: 'hidden',
+          userSelect: 'none',
+          touchAction: 'none',
         }}
       >
         {/* Transformable Content */}
@@ -179,6 +246,7 @@ export function ZoomPanWrapper({ children, fitOnInit = false }: Props) {
             transition: isDragging ? 'none' : 'transform 0.1s ease-out',
             display: 'flex',
             justifyContent: 'center',
+            userSelect: 'none',
           }}
         >
           {children}

@@ -481,7 +481,7 @@ export function OrganizationalStructureTableView() {
   const handleDownloadTemplate = useCallback(
     async () => {
       try {
-        const response = await DownloadOrganizationalUnitTemplateService();
+        const response = await DownloadOrganizationalUnitTemplateService(currentLang.value);
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
@@ -494,7 +494,7 @@ export function OrganizationalStructureTableView() {
         toast.error(t('organization.actions.downloadError'));
       }
     },
-    [t]
+    [currentLang.value, t]
   );
 
   const handleDownloadExcel = useCallback(async () => {

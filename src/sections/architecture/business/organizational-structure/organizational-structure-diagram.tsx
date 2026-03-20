@@ -324,7 +324,7 @@ export function OrganizationalStructureDiagram({ organizationalUnitId, sx }: Pro
         selectionOnDrag={false}
         zoomOnPinch
         zoomOnDoubleClick
-        preventScrolling={false}
+        preventScrolling
         defaultEdgeOptions={{ type: 'straight', animated: true }}
         proOptions={{ hideAttribution: true }}
       >

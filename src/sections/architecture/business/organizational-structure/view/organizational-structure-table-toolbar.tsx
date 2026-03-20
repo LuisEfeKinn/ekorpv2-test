@@ -168,6 +168,19 @@ export function OrganizationalStructureTableToolbar({
                   value={flowFilters.type ? String(flowFilters.type) : '0'}
                   label={tCommon('filters.type')}
                   onChange={handleTypeChange}
+                  MenuProps={{
+                    anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
+                    transformOrigin: { vertical: 'top', horizontal: 'left' },
+                    slotProps: {
+                      paper: {
+                        sx: {
+                          mt: 0.5,
+                          maxHeight: 240,
+                          maxWidth: 360,
+                        },
+                      },
+                    },
+                  }}
                 >
                   <MenuItem value="0">{tCommon('filters.all')}</MenuItem>
                   {orgUnitTypeOptions.map((opt) => (

@@ -690,7 +690,7 @@ export function OrganizationalStructureExpandedDiagram({ organizationalUnitId, n
           zoomOnScroll={false}
           zoomOnPinch
           zoomOnDoubleClick
-          preventScrolling={false}
+          preventScrolling
           defaultEdgeOptions={{ type: 'straight', animated: true }}
           proOptions={{ hideAttribution: true }}
         >
