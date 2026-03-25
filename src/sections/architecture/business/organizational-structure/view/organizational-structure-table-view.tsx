@@ -431,6 +431,7 @@ export function OrganizationalStructureTableView() {
     if (expandedRows.size === 0) return;
     if (dataFiltered.length <= table.rowsPerPage) return;
     table.setRowsPerPage(25);
+  }, [dataFiltered.length, expandedRows.size, table]);
   }, [dataFiltered.length, expandedRows.size, table, table.rowsPerPage, table.setRowsPerPage]);
 
   useEffect(() => {
@@ -918,16 +919,7 @@ function OrganizationalStructureUploadTemplateDrawer({
               <Typography variant="body2" color="text.secondary">
                 {t('organization.uploadDrawer.instructions.step1', {
                   defaultValue: 'Descarga la plantilla Excel con el formato requerido.',
-                })}{' '}
-                <Button
-                  size="small"
-                  variant="text"
-                  onClick={onDownloadTemplate}
-                  disabled={uploading}
-                  sx={{ p: 0, minWidth: 'unset', textTransform: 'none', verticalAlign: 'baseline' }}
-                >
-                  {t('organization.uploadDrawer.instructions.downloadLink', { defaultValue: 'Descargar plantilla' })}
-                </Button>
+                })}
               </Typography>
             </li>
             <li>
@@ -1036,6 +1028,16 @@ function OrganizationalStructureUploadTemplateDrawer({
               )}
             </Stack>
           </Box>
+
+          <Button
+            variant="outlined"
+            startIcon={<Iconify icon="eva:cloud-download-fill" />}
+            onClick={onDownloadTemplate}
+            disabled={uploading}
+            sx={{ mt: 1.5, width: 1 }}
+          >
+            {t('organization.actions.downloadTemplate', { defaultValue: 'Descargar Plantilla' })}
+          </Button>
         </Box>
       </Box>
 

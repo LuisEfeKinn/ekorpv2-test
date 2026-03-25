@@ -34,8 +34,8 @@ export const DeleteToolsTableService = async (id: any) => {
 
 // ----------------------------------------------------------------------
 
-export const GetToolsFlowService = async () => {
-  const response = await axios.get<any>('/api/tool/flow');
+export const GetToolsFlowService = async (params?: Record<string, string | number | boolean | undefined>) => {
+  const response = await axios.get<any>('/api/tool/flow', { params });
   return response;
 };
 
@@ -46,7 +46,9 @@ export const DownloadToolsTemplateService = async () => {
   return response;
 };
 
-export const DownloadToolsExcelService = async (params?: { columns?: string }) => {
+export const DownloadToolsExcelService = async (
+  params?: Record<string, string | number | boolean | undefined> & { columns?: string }
+) => {
   const response = await axios.get('/api/tools/download/excel', {
     responseType: 'blob',
     params,

@@ -11,6 +11,10 @@
     "catalogsManagement": "Catalogs Management",
     "subtitle": "Manage and organize the catalogs of your enterprise architecture",
     "viewAction": "View Catalog",
+    "actions": {
+      "reorderHint": "Drag to reorder",
+      "resetOrder": "Reset order"
+    },
     "items": {
       "actionTypes": {
         "label": "Action Types",

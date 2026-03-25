@@ -11,6 +11,10 @@
     "catalogsManagement": "Gestión de Catálogos",
     "subtitle": "Administra y organiza los catálogos de tu arquitectura empresarial",
     "viewAction": "Ver Catálogo",
+    "actions": {
+      "reorderHint": "Arrastra para reordenar",
+      "resetOrder": "Restablecer orden"
+    },
     "items": {
       "actionTypes": {
         "label": "Tipos de Acción",

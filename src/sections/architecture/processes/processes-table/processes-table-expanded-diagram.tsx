@@ -244,13 +244,14 @@ function ChildNode({ data }: any) {
                 variant="caption"
                 sx={{
                   color: 'text.secondary',
+                  fontSize: '0.75rem',
                   textAlign: 'center',
-                  fontSize: '0.7rem',
-                  display: 'block',
-                  maxWidth: '100%',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
                   overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
+                  mt: 0.5,
+                  width: '100%',
                 }}
               >
                 {description}
@@ -606,9 +607,21 @@ export function ProcessTableExpandedDiagram({ processId, nodeId, nodeLabel, pare
         };
 
         const actionTypeNomenclature =
-          typeof (child as any).actionTypeNomenclature === 'string' ? String((child as any).actionTypeNomenclature) : '';
+          typeof (child as any).actionTypeNomenclature === 'string'
+            ? String((child as any).actionTypeNomenclature)
+            : typeof (relationData as any)?.actionTypeNomenclature === 'string'
+              ? String((relationData as any).actionTypeNomenclature)
+              : typeof (relationData as any)?.actionType?.nomenclature === 'string'
+                ? String((relationData as any).actionType.nomenclature)
+                : '';
         const relationDescription =
-          typeof (child as any).description === 'string' ? String((child as any).description) : '';
+          typeof (child as any).description === 'string'
+            ? String((child as any).description)
+            : typeof (relationData as any)?.description === 'string'
+              ? String((relationData as any).description)
+              : typeof (relationData as any)?.actionType?.name === 'string'
+                ? String((relationData as any).actionType.name)
+                : '';
 
         return {
           id: String(child.id),

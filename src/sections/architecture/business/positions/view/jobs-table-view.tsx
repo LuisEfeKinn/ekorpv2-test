@@ -286,22 +286,21 @@ export function JobsTableView() {
       setDownloading(true);
       const currentLang = i18n.language || 'es';
       const params: Record<string, string | number | boolean> = {
-        ...currentFilters,
         columns: visibleColumns.join(','),
         lang: currentLang,
       };
 
-      const name = currentFilters.name?.trim();
+      const name = currentFilters.name.trim();
       if (name) params.name = name;
 
-      const headquarters = flowFilters.headquarters?.trim();
+      const headquarters = flowFilters.headquarters.trim();
       if (headquarters) params.headquarters = headquarters;
 
-      const supervises = flowFilters.supervises?.trim();
+      const supervises = flowFilters.supervises.trim();
       if (supervises) params.supervises = supervises;
 
-      if (flowFilters.jobTypeId) params.jobTypeId = flowFilters.jobTypeId;
-      if (flowFilters.actorStatus) params.actorStatus = flowFilters.actorStatus;
+      if (flowFilters.jobTypeId !== null) params.jobTypeId = flowFilters.jobTypeId;
+      if (flowFilters.actorStatus !== null) params.actorStatus = flowFilters.actorStatus;
 
       const response = await DownloadJobsExcelService(params);
       const blob = new Blob([response?.data], {
@@ -402,6 +401,14 @@ export function JobsTableView() {
               >
                 {t('positions.table.actions.upload', { defaultValue: 'Cargar Plantilla' })}
               </LoadingButton>
+
+              <Button
+                variant="outlined"
+                startIcon={<Iconify icon="eva:cloud-download-fill" />}
+                onClick={handleDownloadTemplate}
+              >
+                {t('positions.table.actions.downloadTemplate', { defaultValue: 'Descargar Plantilla' })}
+              </Button>
 
               <LoadingButton
                 variant="outlined"
@@ -696,16 +703,7 @@ function JobsUploadTemplateDrawer({
               <Typography variant="body2" color="text.secondary">
                 {t('positions.table.uploadDrawer.instructions.step1', {
                   defaultValue: 'Descarga la plantilla Excel con el formato requerido.',
-                })}{' '}
-                <Button
-                  size="small"
-                  variant="text"
-                  onClick={onDownloadTemplate}
-                  disabled={uploading}
-                  sx={{ p: 0, minWidth: 'unset', textTransform: 'none', verticalAlign: 'baseline' }}
-                >
-                  {t('positions.table.uploadDrawer.instructions.downloadLink', { defaultValue: 'Descargar plantilla' })}
-                </Button>
+                })}
               </Typography>
             </li>
             <li>
@@ -809,6 +807,16 @@ function JobsUploadTemplateDrawer({
               {error}
             </Typography>
           )}
+
+          <Button
+            variant="outlined"
+            startIcon={<Iconify icon="eva:cloud-download-fill" />}
+            onClick={onDownloadTemplate}
+            disabled={uploading}
+            sx={{ mt: 1.5, width: 1 }}
+          >
+            {t('positions.table.actions.downloadTemplate', { defaultValue: 'Descargar Plantilla' })}
+          </Button>
         </Box>
       </Box>
 

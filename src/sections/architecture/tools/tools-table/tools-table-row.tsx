@@ -62,6 +62,8 @@ export function ToolsTableRow({ row, selected, onEditRow, onSelectRow, onDeleteR
             {row?.name || ''}
           </Box>
         );
+      case 'toolType':
+        return row?.toolType?.name || '';
       default:
         return (row as any)[columnId];
     }

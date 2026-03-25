@@ -30,9 +30,39 @@
         "clear": "Clear filters",
         "map": "Risk Map",
         "back": "Back",
-        "upload": "Upload",
+        "upload": "Upload Template",
+        "downloadTemplate": "Download Template",
         "download": "Download",
         "relate": "Relate"
+      },
+      "uploadDrawer": {
+        "title": "Bulk upload risks",
+        "instructions": {
+          "title": "Instructions",
+          "description": "",
+          "step1": "Create an Excel file with the following column headers: NOMENCLATURA_RIESGO, NOMBRE_RIESGO, NOMENCLATURA_RIESGO_PADRE, TIPO_RIESGO (see risk type ids).",
+          "step2": "Enter the list of risks to upload, and save the file with a name that does not contain spaces or special characters.",
+          "step3": "You can drag and drop the saved file into the box below, or select it using the 'Select file' button.",
+          "step4": "Click the 'Upload' button to start the upload process."
+        },
+        "drop": {
+          "title": "Select Excel file",
+          "subtitle": "or click to select from your device",
+          "formats": "Allowed formats: .xlsx, .xls • 1 file",
+          "selectedTitle": "Selected file"
+        },
+        "actions": {
+          "close": "Close",
+          "cancel": "Cancel",
+          "upload": "Upload",
+          "remove": "Remove"
+        },
+        "errors": {
+          "noFile": "Select a file.",
+          "tooManyFiles": "Only 1 file is allowed.",
+          "invalidType": "Invalid format. Use .xlsx or .xls.",
+          "generic": "The file could not be uploaded. Please try again."
+        }
       },
       "table": {
         "columns": {
@@ -234,7 +264,39 @@
         "search": "Search processes...",
         "clear": "Clear",
         "map": "Map",
-        "back": "Back"
+        "back": "Back",
+        "upload": "Upload Template",
+        "download": "Export Excel",
+        "downloadTemplate": "Download Template"
+      },
+      "uploadDrawer": {
+        "title": "Bulk upload processes",
+        "instructions": {
+          "title": "Instructions",
+          "description": "Follow these instructions to upload the processes template:",
+          "step1": "Download the Excel template with the required format.",
+          "step2": "Fill out the file and save it with a name that does not contain spaces or special characters.",
+          "step3": "You can drag and drop the saved file into the box below, or select it using the 'Select file' button.",
+          "step4": "Click the 'Upload' button to start the upload process."
+        },
+        "drop": {
+          "title": "Select Excel file",
+          "subtitle": "or click to select from your device",
+          "formats": "Allowed formats: .xlsx, .xls • 1 file",
+          "selectedTitle": "Selected file"
+        },
+        "actions": {
+          "close": "Close",
+          "cancel": "Cancel",
+          "upload": "Upload",
+          "remove": "Remove"
+        },
+        "errors": {
+          "noFile": "Select a file.",
+          "tooManyFiles": "Only 1 file is allowed.",
+          "invalidType": "Invalid format. Use .xlsx or .xls.",
+          "generic": "The file could not be uploaded. Please try again."
+        }
       },
       "status": {
         "active": "Active",
@@ -517,7 +579,39 @@
         "create": "Add Tools Table",
         "update": "Update Tools Table",
         "search": "Search tools tables...",
-        "clear": "Clear filters"
+        "clear": "Clear filters",
+        "upload": "Upload Template",
+        "download": "Export Excel",
+        "downloadTemplate": "Download Template"
+      },
+      "uploadDrawer": {
+        "title": "Bulk upload tools",
+        "instructions": {
+          "title": "Instructions",
+          "description": "Follow these instructions to upload the tools template:",
+          "step1": "Create an Excel file with the following column headers: CODIGO_HERRAMIENTA, NOMBRE_HERRAMIENTA, CODIGO_HERRAMIENTA_PADRE.",
+          "step2": "Enter the list of tools to upload, and save the file with a name that does not contain spaces or special characters.",
+          "step3": "You can drag and drop the saved file into the box below, or select it using the 'Select file' button.",
+          "step4": "Click the 'Upload' button to start the upload process."
+        },
+        "drop": {
+          "title": "Select Excel file",
+          "subtitle": "or click to select from your device",
+          "formats": "Allowed formats: .xlsx, .xls • 1 file",
+          "selectedTitle": "Selected file"
+        },
+        "actions": {
+          "close": "Close",
+          "cancel": "Cancel",
+          "upload": "Upload",
+          "remove": "Remove"
+        },
+        "errors": {
+          "noFile": "Select a file.",
+          "tooManyFiles": "Only 1 file is allowed.",
+          "invalidType": "Invalid format. Use .xlsx or .xls.",
+          "generic": "The file could not be uploaded. Please try again."
+        }
       },
       "table": {
         "columns": {

@@ -1,10 +1,11 @@
-import { useCallback } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
+import Collapse from '@mui/material/Collapse';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
@@ -21,13 +22,16 @@ import { ALL_COLUMNS } from './risk-table-config';
 
 // ----------------------------------------------------------------------
 
+export type RiskTypeOption = { value: number; label: string };
+
 type Props = {
-  filters: any;
+  filters: { name: string };
   onFilters: (name: string, value: string) => void;
   visibleColumns: string[];
   onChangeColumns: (columnId: string) => void;
-  searchColumn: string;
-  onSearchColumnChange: (columnId: string) => void;
+  type: number | null;
+  onTypeChange: (nextType: number | null) => void;
+  riskTypeOptions: RiskTypeOption[];
 };
 
 export function RiskTableToolbar({
@@ -35,11 +39,13 @@ export function RiskTableToolbar({
   onFilters,
   visibleColumns,
   onChangeColumns,
-  searchColumn,
-  onSearchColumnChange,
+  type,
+  onTypeChange,
+  riskTypeOptions,
 }: Props) {
-  const { t } = useTranslate('architecture');
+  const { t: tCommon } = useTranslate('common');
   const popover = usePopover();
+  const [filtersOpen, setFiltersOpen] = useState(false);
   
   const handleFilterName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,11 +54,28 @@ export function RiskTableToolbar({
     [onFilters]
   );
 
-  const handleChangeSearchColumn = useCallback(
+  const hasAnyFlowFilter = useMemo(() => type !== null, [type]);
+
+  const handleToggleFilters = useCallback(() => {
+    setFiltersOpen((prev) => !prev);
+  }, []);
+
+  const handleClearFilters = useCallback(() => {
+    onTypeChange(null);
+  }, [onTypeChange]);
+
+  const handleTypeChange = useCallback(
     (event: SelectChangeEvent) => {
-      onSearchColumnChange(event.target.value);
+      const raw = event.target.value;
+      if (raw === 'all') {
+        onTypeChange(null);
+        return;
+      }
+
+      const value = Number(raw);
+      onTypeChange(Number.isFinite(value) && value > 0 ? value : null);
     },
-    [onSearchColumnChange]
+    [onTypeChange]
   );
 
   return (
@@ -64,27 +87,11 @@ export function RiskTableToolbar({
         sx={{ p: 2.5 }}
       >
         <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
-          <FormControl sx={{ minWidth: 150 }}>
-            <InputLabel id="search-column-label">Columna</InputLabel>
-            <Select
-              labelId="search-column-label"
-              value={searchColumn}
-              label="Columna"
-              onChange={handleChangeSearchColumn}
-            >
-              {ALL_COLUMNS.map((column) => (
-                <MenuItem key={column.id} value={column.id}>
-                  {column.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
           <TextField
             fullWidth
             value={filters.name}
             onChange={handleFilterName}
-            placeholder={t('common.search', { defaultValue: `Buscar ${ALL_COLUMNS.find((col) => col.id === searchColumn)?.label || ''}...` })}
+            placeholder={tCommon('filters.search')}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -96,15 +103,78 @@ export function RiskTableToolbar({
 
           <Button
             color="inherit"
+            variant={hasAnyFlowFilter ? 'contained' : 'outlined'}
+            startIcon={<Iconify icon="solar:filter-broken" />}
+            onClick={handleToggleFilters}
+            sx={{ textTransform: 'capitalize' }}
+          >
+            {tCommon('filters.button')}
+          </Button>
+
+          <Button
+            color="inherit"
             variant="outlined"
             startIcon={<Iconify icon="solar:settings-bold" />}
             onClick={popover.onOpen}
             sx={{ textTransform: 'capitalize' }}
           >
-            Columnas
+            {tCommon('table.columns', { defaultValue: 'Columnas' })}
           </Button>
         </Stack>
       </Stack>
+
+      <Collapse in={filtersOpen} timeout="auto" unmountOnExit>
+        <Box sx={{ px: 2.5, pb: 2.5 }}>
+          <Box
+            sx={[
+              (theme) => ({
+                p: 2,
+                borderRadius: 1.5,
+                border: `dashed 1px ${theme.vars.palette.divider}`,
+                backgroundColor: theme.vars.palette.background.neutral,
+              }),
+            ]}
+          >
+            <Box
+              sx={{
+                display: 'grid',
+                gap: 2,
+                gridTemplateColumns: { xs: '1fr', md: 'repeat(4, 1fr)' },
+              }}
+            >
+              <FormControl fullWidth>
+                <InputLabel id="risk-flow-type-filter-label">{tCommon('filters.type')}</InputLabel>
+                <Select
+                  labelId="risk-flow-type-filter-label"
+                  value={type !== null ? String(type) : 'all'}
+                  label={tCommon('filters.type')}
+                  onChange={handleTypeChange}
+                >
+                  <MenuItem value="all">{tCommon('filters.all')}</MenuItem>
+                  {riskTypeOptions.map((opt) => (
+                    <MenuItem key={opt.value} value={String(opt.value)}>
+                      {opt.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+
+            <Stack direction="row" spacing={1} justifyContent="flex-end" sx={{ mt: 2 }}>
+              <Button
+                color="inherit"
+                variant="outlined"
+                startIcon={<Iconify icon="solar:restart-bold" />}
+                onClick={handleClearFilters}
+                disabled={!hasAnyFlowFilter}
+                sx={{ textTransform: 'capitalize' }}
+              >
+                {tCommon('filters.clear')}
+              </Button>
+            </Stack>
+          </Box>
+        </Box>
+      </Collapse>
 
       <CustomPopover
         open={popover.open}

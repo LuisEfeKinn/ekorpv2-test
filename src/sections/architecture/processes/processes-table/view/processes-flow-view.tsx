@@ -1,32 +1,30 @@
 'use client';
 
-import type { Dayjs } from 'dayjs';
+import type { FileRejection } from 'react-dropzone';
 import type { Theme, SxProps } from '@mui/material/styles';
 
-import dayjs from 'dayjs';
-import { useBoolean, useDebounce } from 'minimal-shared/hooks';
+import { useDropzone } from 'react-dropzone';
+import { varAlpha } from 'minimal-shared/utils';
+import { useBoolean } from 'minimal-shared/hooks';
 import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
+import { LoadingButton } from '@mui/lab';
 import Button from '@mui/material/Button';
-import Collapse from '@mui/material/Collapse';
-import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
+import Drawer from '@mui/material/Drawer';
 import Container from '@mui/material/Container';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import InputAdornment from '@mui/material/InputAdornment';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Select, { type SelectChangeEvent } from '@mui/material/Select';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
 
 import { useTranslate } from 'src/locales';
-import { GetTimeUnitsPaginationService } from 'src/services/architecture/catalogs/timeUnits.service';
-import { GetProcessTypesPaginationService } from 'src/services/architecture/catalogs/processTypes.service';
-import { GetProcessFlowService, type ProcessFlowParams } from 'src/services/architecture/process/processTable.service';
+import {
+  UploadProcessService,
+  GetProcessFlowService,
+  DownloadProcessTemplateService,
+} from 'src/services/architecture/process/processTable.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
@@ -43,49 +41,22 @@ type ProcessesFlowViewProps = {
   sx?: SxProps<Theme>;
 };
 
-type SelectOption = { value: number; label: string };
-
-type ProcessFlowFilters = {
-  name: string;
-  type: number | null;
-  requiresOLA: boolean | null;
-  status: number | null;
-  startDate: Dayjs | null;
-  endDate: Dayjs | null;
-  timeUnitId: number | null;
-};
-
 // ----------------------------------------------------------------------
 
 export function ProcessesFlowView({ sx }: ProcessesFlowViewProps) {
   const { t } = useTranslate('architecture');
-  const { t: tCommon } = useTranslate('common');
   const createEditDrawer = useBoolean();
+  const uploadDrawer = useBoolean();
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<ProcessFlowNode[]>([]);
   const [editingId, setEditingId] = useState<number | undefined>(undefined);
   const [reloadKey, setReloadKey] = useState(0);
+  const [uploading, setUploading] = useState(false);
 
   const [history, setHistory] = useState<ProcessFlowNode[]>([]);
 
   const requestIdRef = useRef(0);
-
-  const [filtersOpen, setFiltersOpen] = useState(false);
-  const [processTypeOptions, setProcessTypeOptions] = useState<SelectOption[]>([]);
-  const [timeUnitOptions, setTimeUnitOptions] = useState<SelectOption[]>([]);
-
-  const [flowFilters, setFlowFilters] = useState<ProcessFlowFilters>({
-    name: '',
-    type: null,
-    requiresOLA: null,
-    status: null,
-    startDate: null,
-    endDate: null,
-    timeUnitId: null,
-  });
-
-  const debouncedName = useDebounce(flowFilters.name, 300);
 
   const openCreate = useCallback(() => {
     setEditingId(undefined);
@@ -101,105 +72,11 @@ export function ProcessesFlowView({ sx }: ProcessesFlowViewProps) {
     setReloadKey((k) => k + 1);
   }, []);
 
-  const extractList = useCallback((raw: unknown): unknown[] => {
-    if (Array.isArray(raw)) {
-      if (raw.length > 0 && Array.isArray(raw[0])) return raw[0] as unknown[];
-      return raw;
-    }
-    if (raw && typeof raw === 'object') {
-      const record = raw as Record<string, unknown>;
-      if (Array.isArray(record.data)) return record.data;
-    }
-    return [];
-  }, []);
-
-  const mapOptions = useCallback((items: unknown[]): SelectOption[] => {
-    const isRecord = (value: unknown): value is Record<string, unknown> =>
-      !!value && typeof value === 'object';
-
-    return items
-      .map((item) => {
-        if (!isRecord(item)) return null;
-        const id = Number(item.id);
-        if (!Number.isFinite(id) || id <= 0) return null;
-
-        const labelCandidate = item.name ?? item.typeName ?? item.code ?? item.description;
-        const label = String(labelCandidate ?? `#${id}`);
-        return { value: id, label };
-      })
-      .filter((opt): opt is SelectOption => !!opt);
-  }, []);
-
-  const loadFilterOptions = useCallback(async () => {
-    try {
-      const [typesRes, timeUnitsRes] = await Promise.all([
-        GetProcessTypesPaginationService({ page: 1, perPage: 200 }),
-        GetTimeUnitsPaginationService({ page: 1, perPage: 200 }),
-      ]);
-
-      const types = mapOptions(extractList(typesRes?.data));
-      const timeUnits = mapOptions(extractList(timeUnitsRes?.data));
-
-      setProcessTypeOptions(types);
-      setTimeUnitOptions(timeUnits);
-    } catch {
-      setProcessTypeOptions([]);
-      setTimeUnitOptions([]);
-    }
-  }, [extractList, mapOptions]);
-
-  useEffect(() => {
-    loadFilterOptions();
-  }, [loadFilterOptions]);
-
-  const handleFlowFilters = useCallback(
-    (next: Partial<ProcessFlowFilters>) => {
-      setFlowFilters((prev) => {
-        const merged: ProcessFlowFilters = { ...prev, ...next };
-
-        if (merged.startDate && merged.endDate && merged.endDate.isBefore(merged.startDate, 'day')) {
-          toast.error(
-            tCommon('filters.dateRangeError', {
-              defaultValue: 'End date cannot be before start date',
-            })
-          );
-          return { ...merged, endDate: null };
-        }
-
-        return merged;
-      });
-    },
-    [tCommon]
-  );
-
-  const flowParams = useMemo(() => {
-    const params: ProcessFlowParams = {};
-
-    const name = debouncedName.trim();
-    if (name) params.name = name;
-    if (flowFilters.type !== null) params.type = flowFilters.type;
-    if (flowFilters.requiresOLA !== null) params.requiresOLA = flowFilters.requiresOLA;
-    if (flowFilters.status !== null) params.status = flowFilters.status;
-    if (flowFilters.timeUnitId !== null) params.timeUnitId = flowFilters.timeUnitId;
-    if (flowFilters.startDate) params.startDate = dayjs(flowFilters.startDate).format('YYYY-MM-DD');
-    if (flowFilters.endDate) params.endDate = dayjs(flowFilters.endDate).format('YYYY-MM-DD');
-
-    return Object.keys(params).length ? params : undefined;
-  }, [
-    debouncedName,
-    flowFilters.endDate,
-    flowFilters.requiresOLA,
-    flowFilters.startDate,
-    flowFilters.status,
-    flowFilters.timeUnitId,
-    flowFilters.type,
-  ]);
-
   const loadData = useCallback(async () => {
     const requestId = (requestIdRef.current += 1);
     try {
       setLoading(true);
-      const response = await GetProcessFlowService(flowParams);
+      const response = await GetProcessFlowService();
       if (requestId !== requestIdRef.current) return;
 
       const nextData = Array.isArray(response?.data) ? response.data : [];
@@ -211,15 +88,11 @@ export function ProcessesFlowView({ sx }: ProcessesFlowViewProps) {
     } finally {
       if (requestId === requestIdRef.current) setLoading(false);
     }
-  }, [flowParams]);
+  }, []);
 
   useEffect(() => {
     loadData();
   }, [loadData, reloadKey]);
-
-  useEffect(() => {
-    setHistory([]);
-  }, [flowParams]);
 
   const handleNodeDoubleClick = useCallback((node: ProcessFlowNode) => {
     setHistory((prev) => [...prev, node]);
@@ -232,6 +105,43 @@ export function ProcessesFlowView({ sx }: ProcessesFlowViewProps) {
   const handleResetView = useCallback(() => {
     setHistory([]);
   }, []);
+
+  const handleDownloadTemplate = useCallback(async () => {
+    try {
+      const response = await DownloadProcessTemplateService();
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'Process_Template.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      toast.success(
+        t('process.table.messages.success.downloaded', { defaultValue: 'Template downloaded successfully' })
+      );
+    } catch (error) {
+      console.error('Error downloading template:', error);
+      toast.error(t('process.table.messages.error.downloading', { defaultValue: 'Error downloading template' }));
+    }
+  }, [t]);
+
+  const handleUploadExcel = useCallback(
+    async (file: File) => {
+      try {
+        setUploading(true);
+        await UploadProcessService(file);
+        toast.success(t('process.table.messages.success.uploaded', { defaultValue: 'Uploaded successfully' }));
+        setReloadKey((k) => k + 1);
+      } catch (error) {
+        console.error('Error uploading processes file:', error);
+        toast.error(t('process.table.messages.error.uploading', { defaultValue: 'Error uploading file' }));
+        throw error;
+      } finally {
+        setUploading(false);
+      }
+    },
+    [t]
+  );
 
   const focusedNode = history.length > 0 ? history[history.length - 1] : null;
 
@@ -248,263 +158,62 @@ export function ProcessesFlowView({ sx }: ProcessesFlowViewProps) {
     return <LoadingScreen />;
   }
 
-  const hasAnyFilter = !!flowFilters.name.trim()
-    || flowFilters.type !== null
-    || flowFilters.requiresOLA !== null
-    || flowFilters.status !== null
-    || flowFilters.timeUnitId !== null
-    || !!flowFilters.startDate
-    || !!flowFilters.endDate;
-
-  const handleToggleFilters = () => setFiltersOpen((prev) => !prev);
-
-  const handleClearFilters = () => {
-    setFlowFilters({
-      name: '',
-      type: null,
-      requiresOLA: null,
-      status: null,
-      startDate: null,
-      endDate: null,
-      timeUnitId: null,
-    });
-  };
-
-  const parseNullableNumber = (raw: string): number | null => {
-    if (raw === 'all') return null;
-    const parsed = Number(raw);
-    return Number.isFinite(parsed) ? parsed : null;
-  };
-
-  const handleTypeChange = (event: SelectChangeEvent) =>
-    handleFlowFilters({ type: parseNullableNumber(event.target.value) });
-
-  const handleStatusChange = (event: SelectChangeEvent) =>
-    handleFlowFilters({ status: parseNullableNumber(event.target.value) });
-
-  const handleTimeUnitChange = (event: SelectChangeEvent) =>
-    handleFlowFilters({ timeUnitId: parseNullableNumber(event.target.value) });
-
-  const handleRequiresOlaChange = (event: SelectChangeEvent) => {
-    const raw = event.target.value;
-    if (raw === 'all') {
-      handleFlowFilters({ requiresOLA: null });
-      return;
-    }
-    if (raw === 'true') {
-      handleFlowFilters({ requiresOLA: true });
-      return;
-    }
-    if (raw === 'false') {
-      handleFlowFilters({ requiresOLA: false });
-      return;
-    }
-    handleFlowFilters({ requiresOLA: null });
-  };
-
   return (
-    <Container maxWidth="xl">
-      <Stack spacing={3}>
-        <CustomBreadcrumbs
-          heading={t('process.table.title')}
-          links={[
-            {
-              name: t('process.table.breadcrumbs.dashboard'),
-              href: paths.dashboard.root,
-            },
-            {
-              name: t('process.table.title'),
-              href: paths.dashboard.architecture.processesTable,
-            },
-            {
-              name: t('process.map.title'),
-              onClick: history.length > 0 ? handleResetView : undefined,
-            },
-            ...history.map((node, index) => ({
-              name: node.data.name || node.label,
-              onClick:
-                index < history.length - 1
-                  ? () => setHistory((prev) => prev.slice(0, index + 1))
-                  : undefined,
-            })),
-          ]}
-          action={
-            <Stack direction="row" spacing={1}>
-              <Button
-                href={paths.dashboard.architecture.processesTable}
-                variant="outlined"
-                startIcon={<Iconify icon="solar:list-bold" />}
-              >
-                {t('process.table.title')}
-              </Button>
-              <Button
-                onClick={openCreate}
-                variant="contained"
-                startIcon={<Iconify icon="mingcute:add-line" />}
-              >
-                {t('process.table.actions.add')}
-              </Button>
-            </Stack>
-          }
-          sx={{
-            mb: { xs: 2, md: 3 },
-          }}
-        />
-
-        <Card>
-          <Stack
-            spacing={2}
-            alignItems={{ xs: 'flex-end', md: 'center' }}
-            direction={{ xs: 'column', md: 'row' }}
-            sx={{ p: 2.5 }}
-          >
-            <Stack direction="row" alignItems="center" spacing={2} sx={{ flexGrow: 1, width: 1 }}>
-              <TextField
-                fullWidth
-                value={flowFilters.name}
-                onChange={(event) => handleFlowFilters({ name: event.target.value })}
-                placeholder={tCommon('filters.search')}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-
-              <Button
-                color="inherit"
-                variant={hasAnyFilter ? 'contained' : 'outlined'}
-                startIcon={<Iconify icon="solar:filter-broken" />}
-                onClick={handleToggleFilters}
-                sx={{ textTransform: 'capitalize' }}
-              >
-                {tCommon('filters.button')}
-              </Button>
-            </Stack>
-          </Stack>
-
-          <Collapse in={filtersOpen} timeout="auto" unmountOnExit>
-            <Box sx={{ px: 2.5, pb: 2.5 }}>
-              <Box
-                sx={[
-                  (theme) => ({
-                    p: 2,
-                    borderRadius: 1.5,
-                    border: `dashed 1px ${theme.vars.palette.divider}`,
-                    backgroundColor: theme.vars.palette.background.neutral,
-                  }),
-                ]}
-              >
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gap: 2,
-                    gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
-                  }}
+    <>
+      <Container maxWidth="xl">
+        <Stack spacing={3}>
+          <CustomBreadcrumbs
+            heading={t('process.table.title')}
+            links={[
+              {
+                name: t('process.table.breadcrumbs.dashboard'),
+                href: paths.dashboard.root,
+              },
+              {
+                name: t('process.table.title'),
+                href: paths.dashboard.architecture.processesTable,
+              },
+              {
+                name: t('process.map.title'),
+                onClick: history.length > 0 ? handleResetView : undefined,
+              },
+              ...history.map((node, index) => ({
+                name: node.data.name || node.label,
+                onClick:
+                  index < history.length - 1
+                    ? () => setHistory((prev) => prev.slice(0, index + 1))
+                    : undefined,
+              })),
+            ]}
+            action={
+              <Stack direction="row" spacing={1}>
+                <Button
+                  href={paths.dashboard.architecture.processesTable}
+                  variant="outlined"
+                  startIcon={<Iconify icon="solar:list-bold" />}
                 >
-                  <FormControl fullWidth>
-                    <InputLabel id="process-flow-type-filter-label">{tCommon('filters.type')}</InputLabel>
-                    <Select
-                      labelId="process-flow-type-filter-label"
-                      value={flowFilters.type !== null ? String(flowFilters.type) : 'all'}
-                      label={tCommon('filters.type')}
-                      onChange={handleTypeChange}
-                    >
-                      <MenuItem value="all">{tCommon('filters.all')}</MenuItem>
-                      {processTypeOptions.map((opt) => (
-                        <MenuItem key={opt.value} value={String(opt.value)}>
-                          {opt.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-
-                  <FormControl fullWidth>
-                    <InputLabel id="process-flow-status-filter-label">{tCommon('filters.status')}</InputLabel>
-                    <Select
-                      labelId="process-flow-status-filter-label"
-                      value={flowFilters.status !== null ? String(flowFilters.status) : 'all'}
-                      label={tCommon('filters.status')}
-                      onChange={handleStatusChange}
-                    >
-                      <MenuItem value="all">{tCommon('filters.all')}</MenuItem>
-                      <MenuItem value="1">{t('process.table.status.active')}</MenuItem>
-                      <MenuItem value="0">{t('process.table.status.inactive')}</MenuItem>
-                    </Select>
-                  </FormControl>
-
-                  <FormControl fullWidth>
-                    <InputLabel id="process-flow-requires-ola-filter-label">
-                      {tCommon('filters.requiresOLA')}
-                    </InputLabel>
-                    <Select
-                      labelId="process-flow-requires-ola-filter-label"
-                      value={
-                        flowFilters.requiresOLA === null
-                          ? 'all'
-                          : flowFilters.requiresOLA
-                            ? 'true'
-                            : 'false'
-                      }
-                      label={tCommon('filters.requiresOLA')}
-                      onChange={handleRequiresOlaChange}
-                    >
-                      <MenuItem value="all">{tCommon('filters.all')}</MenuItem>
-                      <MenuItem value="true">{t('process.table.form.options.yes')}</MenuItem>
-                      <MenuItem value="false">{t('process.table.form.options.no')}</MenuItem>
-                    </Select>
-                  </FormControl>
-
-                  <FormControl fullWidth>
-                    <InputLabel id="process-flow-time-unit-filter-label">{tCommon('filters.timeUnit')}</InputLabel>
-                    <Select
-                      labelId="process-flow-time-unit-filter-label"
-                      value={flowFilters.timeUnitId !== null ? String(flowFilters.timeUnitId) : 'all'}
-                      label={tCommon('filters.timeUnit')}
-                      onChange={handleTimeUnitChange}
-                    >
-                      <MenuItem value="all">{tCommon('filters.all')}</MenuItem>
-                      {timeUnitOptions.map((opt) => (
-                        <MenuItem key={opt.value} value={String(opt.value)}>
-                          {opt.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-
-                  <DatePicker
-                    label={tCommon('filters.startDate')}
-                    value={flowFilters.startDate}
-                    onChange={(newValue) => handleFlowFilters({ startDate: newValue ?? null })}
-                    slotProps={{ textField: { fullWidth: true } }}
-                  />
-
-                  <DatePicker
-                    label={tCommon('filters.endDate')}
-                    value={flowFilters.endDate}
-                    onChange={(newValue) => handleFlowFilters({ endDate: newValue ?? null })}
-                    slotProps={{ textField: { fullWidth: true } }}
-                  />
-                </Box>
-
-                <Stack direction="row" spacing={1} justifyContent="flex-end" sx={{ mt: 2 }}>
-                  <Button
-                    color="inherit"
-                    variant="outlined"
-                    startIcon={<Iconify icon="solar:restart-bold" />}
-                    onClick={handleClearFilters}
-                    disabled={!hasAnyFilter}
-                    sx={{ textTransform: 'capitalize' }}
-                  >
-                    {tCommon('filters.clear')}
-                  </Button>
-                </Stack>
-              </Box>
-            </Box>
-          </Collapse>
-        </Card>
+                  {t('process.table.title')}
+                </Button>
+                <Button
+                  variant="outlined"
+                  startIcon={<Iconify icon="eva:cloud-upload-fill" />}
+                  onClick={uploadDrawer.onTrue}
+                >
+                  {t('process.table.actions.upload') || 'Cargar'}
+                </Button>
+                <Button
+                  onClick={openCreate}
+                  variant="contained"
+                  startIcon={<Iconify icon="mingcute:add-line" />}
+                >
+                  {t('process.table.actions.add')}
+                </Button>
+              </Stack>
+            }
+            sx={{
+              mb: { xs: 2, md: 3 },
+            }}
+          />
 
         {visibleData.length > 0 ? (
             <ProcessesFlow
@@ -519,14 +228,321 @@ export function ProcessesFlowView({ sx }: ProcessesFlowViewProps) {
         ) : (
              <EmptyContent title={t('process.table.table.emptyState.noData')} />
         )}
-      </Stack>
+        </Stack>
 
-      <ProcessCreateEditDrawer
-        open={createEditDrawer.value}
-        onClose={createEditDrawer.onFalse}
-        processId={editingId}
-        onSaved={handleSaved}
+        <ProcessCreateEditDrawer
+          open={createEditDrawer.value}
+          onClose={createEditDrawer.onFalse}
+          processId={editingId}
+          onSaved={handleSaved}
+        />
+      </Container>
+
+      <ProcessUploadTemplateDrawer
+        open={uploadDrawer.value}
+        uploading={uploading}
+        onClose={uploadDrawer.onFalse}
+        onDownloadTemplate={handleDownloadTemplate}
+        onUpload={handleUploadExcel}
       />
-    </Container>
+    </>
+  );
+}
+
+type ProcessUploadTemplateDrawerProps = {
+  open: boolean;
+  uploading: boolean;
+  onClose: () => void;
+  onDownloadTemplate: () => void;
+  onUpload: (file: File) => Promise<void>;
+};
+
+function ProcessUploadTemplateDrawer({
+  open,
+  uploading,
+  onClose,
+  onDownloadTemplate,
+  onUpload,
+}: ProcessUploadTemplateDrawerProps) {
+  const { t } = useTranslate('architecture');
+  const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!open) {
+      setFile(null);
+      setError(null);
+    }
+  }, [open]);
+
+  const accept = useMemo(
+    () => ({
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
+      'application/vnd.ms-excel': ['.xls'],
+    }),
+    []
+  );
+
+  const handleDropRejected = useCallback(
+    (rejections: FileRejection[]) => {
+      const first = rejections[0];
+      const firstError = first?.errors?.[0];
+      const code = firstError?.code;
+
+      if (code === 'too-many-files') {
+        const msg = t('process.table.uploadDrawer.errors.tooManyFiles', { defaultValue: 'Solo se permite 1 archivo.' });
+        setError(msg);
+        toast.error(msg);
+        return;
+      }
+
+      if (code === 'file-invalid-type') {
+        const msg = t('process.table.uploadDrawer.errors.invalidType', {
+          defaultValue: 'Formato no permitido. Usa .xlsx o .xls.',
+        });
+        setError(msg);
+        toast.error(msg);
+        return;
+      }
+
+      const msg = t('process.table.uploadDrawer.errors.generic', {
+        defaultValue: 'No se pudo cargar el archivo. Intenta nuevamente.',
+      });
+      setError(msg);
+      toast.error(msg);
+    },
+    [t]
+  );
+
+  const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
+    multiple: false,
+    maxFiles: 1,
+    accept,
+    disabled: uploading,
+    onDropAccepted: (files) => {
+      setFile(files[0] ?? null);
+      setError(null);
+    },
+    onDropRejected: handleDropRejected,
+  });
+
+  const handleClose = useCallback(() => {
+    if (!uploading) onClose();
+  }, [onClose, uploading]);
+
+  const handleConfirmUpload = useCallback(async () => {
+    if (!file) {
+      const msg = t('process.table.uploadDrawer.errors.noFile', { defaultValue: 'Selecciona un archivo.' });
+      setError(msg);
+      toast.error(msg);
+      return;
+    }
+
+    try {
+      await onUpload(file);
+      onClose();
+    } catch {
+      const msg = t('process.table.uploadDrawer.errors.generic', {
+        defaultValue: 'No se pudo cargar el archivo. Intenta nuevamente.',
+      });
+      setError(msg);
+      toast.error(msg);
+    }
+  }, [file, onClose, onUpload, t]);
+
+  return (
+    <Drawer
+      open={open}
+      anchor="right"
+      onClose={handleClose}
+      PaperProps={{ sx: { width: { xs: 1, sm: 520, md: 620 }, display: 'flex', flexDirection: 'column' } }}
+    >
+      <Box sx={{ px: 3, py: 2, position: 'relative', borderBottom: (theme) => `1px solid ${theme.vars.palette.divider}` }}>
+        <Typography variant="h6">
+          {t('process.table.uploadDrawer.title', { defaultValue: 'Cargar procesos por Lote' })}
+        </Typography>
+        <IconButton
+          aria-label={t('process.table.uploadDrawer.actions.close', { defaultValue: 'Cerrar' })}
+          onClick={handleClose}
+          disabled={uploading}
+          sx={{ position: 'absolute', right: 12, top: 12 }}
+        >
+          <Iconify icon="mingcute:close-line" />
+        </IconButton>
+      </Box>
+
+      <Box sx={{ px: 3, py: 2.5, overflow: 'auto', flex: '1 1 auto' }}>
+        <Box
+          sx={[
+            (theme) => ({
+              display: 'grid',
+              gap: 1,
+              p: 2,
+              borderRadius: 1.5,
+              border: `1px solid ${varAlpha(theme.vars.palette.info.mainChannel, 0.28)}`,
+              backgroundColor: varAlpha(theme.vars.palette.info.mainChannel, 0.1),
+              color: theme.vars.palette.info.darker,
+            }),
+          ]}
+        >
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Iconify icon="solar:info-circle-bold" />
+            <Typography variant="subtitle2">
+              {t('process.table.uploadDrawer.instructions.title', { defaultValue: 'Instrucciones' })}
+            </Typography>
+          </Stack>
+
+          <Box
+            component="div"
+            sx={{
+              m: 0,
+              display: 'grid',
+              gap: 0.5,
+              typography: 'body2',
+              color: 'text.secondary',
+            }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              {t('process.table.uploadDrawer.instructions.description', {
+                defaultValue: 'Siga las siguientes instrucciones para cargar la plantilla de procesos:',
+              })}
+            </Typography>
+            <Box component="ol" sx={{ m: 0, pl: 2, display: 'grid', gap: 0.5 }}>
+              <li>
+                <Typography variant="body2" color="text.secondary">
+                  {t('process.table.uploadDrawer.instructions.step1', {
+                    defaultValue: 'Descarga la plantilla Excel con el formato requerido.',
+                  })}
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="body2" color="text.secondary">
+                  {t('process.table.uploadDrawer.instructions.step2', {
+                    defaultValue: 'Completa el archivo y guárdalo sin espacios ni caracteres especiales en el nombre.',
+                  })}
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="body2" color="text.secondary">
+                  {t('process.table.uploadDrawer.instructions.step3', {
+                    defaultValue:
+                      "Puede arrastrar y soltar el archivo guardado en el cuadro a continuación, o seleccionarlo mediante el botón 'Seleccionar archivo'.",
+                  })}
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="body2" color="text.secondary">
+                  {t('process.table.uploadDrawer.instructions.step4', {
+                    defaultValue: "Haga clic en el botón 'Cargar' para iniciar el proceso de cargue.",
+                  })}
+                </Typography>
+              </li>
+            </Box>
+          </Box>
+        </Box>
+
+        <Box sx={{ mt: 2 }}>
+          <Box
+            {...getRootProps()}
+            sx={[
+              (theme) => ({
+                p: 4,
+                borderRadius: 2,
+                textAlign: 'center',
+                outline: 'none',
+                cursor: uploading ? 'default' : 'pointer',
+                border: `dashed 1px ${theme.vars.palette.divider}`,
+                backgroundColor: theme.vars.palette.background.neutral,
+                transition: theme.transitions.create(['border-color', 'background-color'], {
+                  duration: theme.transitions.duration.shorter,
+                }),
+                ...(isDragActive && {
+                  borderColor: theme.vars.palette.primary.main,
+                  backgroundColor: varAlpha(theme.vars.palette.primary.mainChannel, 0.08),
+                }),
+                ...((isDragReject || !!error) && {
+                  borderColor: theme.vars.palette.error.main,
+                  backgroundColor: varAlpha(theme.vars.palette.error.mainChannel, 0.08),
+                }),
+              }),
+            ]}
+          >
+            <input {...getInputProps()} />
+
+            <Stack spacing={1.25} alignItems="center">
+              <Iconify icon="eva:cloud-upload-fill" width={28} />
+
+              <Typography variant="subtitle1">
+                {file
+                  ? t('process.table.uploadDrawer.drop.selectedTitle', { defaultValue: 'Archivo seleccionado' })
+                  : t('process.table.uploadDrawer.drop.title', { defaultValue: 'Seleccionar archivo Excel' })}
+              </Typography>
+
+              {file ? (
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    {file.name}
+                  </Typography>
+                  <Button
+                    size="small"
+                    variant="text"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setFile(null);
+                      setError(null);
+                    }}
+                    disabled={uploading}
+                    sx={{ textTransform: 'none' }}
+                  >
+                    {t('process.table.uploadDrawer.actions.remove', { defaultValue: 'Quitar' })}
+                  </Button>
+                </Stack>
+              ) : (
+                <Typography variant="body2" color="text.secondary">
+                  {t('process.table.uploadDrawer.drop.subtitle', {
+                    defaultValue: 'o haz clic para seleccionar desde tu dispositivo',
+                  })}
+                </Typography>
+              )}
+
+              <Typography variant="caption" color="text.disabled">
+                {t('process.table.uploadDrawer.drop.formats', {
+                  defaultValue: 'Formatos permitidos: .xlsx, .xls • 1 archivo',
+                })}
+              </Typography>
+
+              {!!error && (
+                <Typography
+                  variant="caption"
+                  color="error.main"
+                  sx={{ whiteSpace: 'pre-line', alignSelf: 'stretch', textAlign: 'left' }}
+                >
+                  {error}
+                </Typography>
+              )}
+            </Stack>
+          </Box>
+
+          <Button
+            variant="outlined"
+            startIcon={<Iconify icon="eva:cloud-download-fill" />}
+            onClick={onDownloadTemplate}
+            disabled={uploading}
+            sx={{ mt: 1.5, width: 1 }}
+          >
+            {t('process.table.actions.downloadTemplate', { defaultValue: 'Descargar Plantilla' })}
+          </Button>
+        </Box>
+      </Box>
+
+      <Box sx={{ px: 3, py: 2, borderTop: (theme) => `1px solid ${theme.vars.palette.divider}`, display: 'flex', justifyContent: 'flex-end', gap: 1.25 }}>
+        <Button onClick={handleClose} disabled={uploading} color="inherit" variant="outlined">
+          {t('process.table.uploadDrawer.actions.cancel', { defaultValue: 'Cancelar' })}
+        </Button>
+        <LoadingButton variant="contained" loading={uploading} onClick={handleConfirmUpload} disabled={!file}>
+          {t('process.table.uploadDrawer.actions.upload', { defaultValue: 'Cargar' })}
+        </LoadingButton>
+      </Box>
+    </Drawer>
   );
 }

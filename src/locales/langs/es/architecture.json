@@ -33,6 +33,35 @@
         "downloadTemplate": "Descargar Plantilla",
         "relate": "Relacionar"
       },
+      "uploadDrawer": {
+        "title": "Cargar riesgos por Lote",
+        "instructions": {
+          "title": "Instrucciones",
+          "description": "",
+          "step1": "Debe crear un archivo Excel con las siguientes columnas como encabezado: NOMENCLATURA_RIESGO, NOMBRE_RIESGO, NOMENCLATURA_RIESGO_PADRE, TIPO_RIESGO (ver ids tipo riesgo).",
+          "step2": "Ingrese el listado de riesgos a cargar, guarde el archivo con un nombre que no contenga espacios ni caracteres especiales.",
+          "step3": "Puede arrastrar y soltar el archivo guardado en el cuadro a continuación, o seleccionarlo mediante el botón 'Seleccionar archivo'.",
+          "step4": "Haga clic en el botón 'Cargar' para iniciar el proceso de cargue."
+        },
+        "drop": {
+          "title": "Seleccionar archivo Excel",
+          "subtitle": "o haz clic para seleccionar desde tu dispositivo",
+          "formats": "Formatos permitidos: .xlsx, .xls • 1 archivo",
+          "selectedTitle": "Archivo seleccionado"
+        },
+        "actions": {
+          "close": "Cerrar",
+          "cancel": "Cancelar",
+          "upload": "Cargar",
+          "remove": "Quitar"
+        },
+        "errors": {
+          "noFile": "Selecciona un archivo.",
+          "tooManyFiles": "Solo se permite 1 archivo.",
+          "invalidType": "Formato no permitido. Usa .xlsx o .xls.",
+          "generic": "No se pudo cargar el archivo. Intenta nuevamente."
+        }
+      },
       "table": {
         "columns": {
           "name": "Nombre",
@@ -233,6 +262,35 @@
           "upload": "Cargar Plantilla",
           "download": "Exportar Excel",
           "downloadTemplate": "Descargar Plantilla"
+        },
+        "uploadDrawer": {
+          "title": "Cargar procesos por Lote",
+          "instructions": {
+            "title": "Instrucciones",
+            "description": "Siga las siguientes instrucciones para cargar la plantilla de procesos:",
+            "step1": "Descarga la plantilla Excel con el formato requerido.",
+            "step2": "Completa el archivo y guárdalo con un nombre que no contenga espacios ni caracteres especiales.",
+            "step3": "Puede arrastrar y soltar el archivo guardado en el cuadro a continuación, o seleccionarlo mediante el botón 'Seleccionar archivo'.",
+            "step4": "Haga clic en el botón 'Cargar' para iniciar el proceso de cargue."
+          },
+          "drop": {
+            "title": "Seleccionar archivo Excel",
+            "subtitle": "o haz clic para seleccionar desde tu dispositivo",
+            "formats": "Formatos permitidos: .xlsx, .xls • 1 archivo",
+            "selectedTitle": "Archivo seleccionado"
+          },
+          "actions": {
+            "close": "Cerrar",
+            "cancel": "Cancelar",
+            "upload": "Cargar",
+            "remove": "Quitar"
+          },
+          "errors": {
+            "noFile": "Selecciona un archivo.",
+            "tooManyFiles": "Solo se permite 1 archivo.",
+            "invalidType": "Formato no permitido. Usa .xlsx o .xls.",
+            "generic": "No se pudo cargar el archivo. Intenta nuevamente."
+          }
         },
         "table": {
         "columns": {
@@ -515,6 +573,35 @@
         "upload": "Cargar Plantilla",
         "download": "Exportar Excel",
         "downloadTemplate": "Descargar Plantilla"
+      },
+      "uploadDrawer": {
+        "title": "Cargar herramientas por Lote",
+        "instructions": {
+          "title": "Instrucciones",
+          "description": "Siga las siguientes instrucciones para cargar la plantilla de herramientas:",
+          "step1": "Debe crear un archivo Excel con las siguientes columnas como encabezado: CODIGO_HERRAMIENTA, NOMBRE_HERRAMIENTA, CODIGO_HERRAMIENTA_PADRE.",
+          "step2": "Ingrese el listado de herramientas a cargar, guarde el archivo con un nombre que no contenga espacios ni caracteres especiales.",
+          "step3": "Puede arrastrar y soltar el archivo guardado en el cuadro a continuación, o seleccionarlo mediante el botón 'Seleccionar archivo'.",
+          "step4": "Haga clic en el botón 'Cargar' para iniciar el proceso de cargue."
+        },
+        "drop": {
+          "title": "Seleccionar archivo Excel",
+          "subtitle": "o haz clic para seleccionar desde tu dispositivo",
+          "formats": "Formatos permitidos: .xlsx, .xls • 1 archivo",
+          "selectedTitle": "Archivo seleccionado"
+        },
+        "actions": {
+          "close": "Cerrar",
+          "cancel": "Cancelar",
+          "upload": "Cargar",
+          "remove": "Quitar"
+        },
+        "errors": {
+          "noFile": "Selecciona un archivo.",
+          "tooManyFiles": "Solo se permite 1 archivo.",
+          "invalidType": "Formato no permitido. Usa .xlsx o .xls.",
+          "generic": "No se pudo cargar el archivo. Intenta nuevamente."
+        }
       },
       "table": {
         "columns": {

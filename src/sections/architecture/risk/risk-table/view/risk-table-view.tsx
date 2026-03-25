@@ -2,21 +2,28 @@
 
 
 import { varAlpha } from 'minimal-shared/utils';
-import { useBoolean, useSetState } from 'minimal-shared/hooks';
-import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
+import { useDropzone, type FileRejection } from 'react-dropzone';
+import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useBoolean, useDebounce, useSetState } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
+import Stack from '@mui/material/Stack';
 import { LoadingButton } from '@mui/lab';
 import Button from '@mui/material/Button';
+import Drawer from '@mui/material/Drawer';
 import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
+import { useRouter } from 'src/routes/hooks/use-router';
+import { usePathname } from 'src/routes/hooks/use-pathname';
+import { useSearchParams } from 'src/routes/hooks/use-search-params';
 
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
@@ -25,6 +32,7 @@ import {
 } from 'src/services/architecture/risk/riskFlow.service';
 import {
   UploadRisksService,
+  GetRiskTypesService,
   DeleteRiskTableService,
   DownloadRisksExcelService,
   DownloadRisksTemplateService,
@@ -40,7 +48,6 @@ import {
   useTable,
   emptyRows,
   TableNoData,
-  getComparator,
   TableEmptyRows,
   TableHeadCustom,
   TableSelectedAction,
@@ -49,10 +56,10 @@ import {
 
 import { RiskTableRow } from '../risk-table-row';
 import { RiskTableModal } from '../risk-table-modal';
-import { RiskTableToolbar } from '../risk-table-toolbar';
 import { RiskFiltersResult } from '../risk-table-filters-result';
 import { RiskJobsRelationModal } from '../risk-jobs-relation-modal';
 import { ALL_COLUMNS, DEFAULT_COLUMNS } from '../risk-table-config';
+import { RiskTableToolbar, type RiskTypeOption } from '../risk-table-toolbar';
 
 // ----------------------------------------------------------------------
 
@@ -60,12 +67,15 @@ import { ALL_COLUMNS, DEFAULT_COLUMNS } from '../risk-table-config';
 
 export function RiskTableView() {
   const { t } = useTranslate('architecture');
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const table = useTable();
   const confirmDialog = useBoolean();
   const modalDialog = useBoolean();
+  const uploadDrawer = useBoolean();
   const [downloading, setDownloading] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [tableData, setTableData] = useState<any[]>([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -74,7 +84,7 @@ export function RiskTableView() {
   const [relationRiskId, setRelationRiskId] = useState<number | null>(null);
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
   const [visibleColumns, setVisibleColumns] = useState<string[]>(DEFAULT_COLUMNS);
-  const [searchColumn, setSearchColumn] = useState<string>('name');
+  const [riskTypeOptions, setRiskTypeOptions] = useState<RiskTypeOption[]>([]);
 
   const handleToggleColumn = useCallback((columnId: string) => {
     setVisibleColumns((prev) => {
@@ -97,13 +107,109 @@ export function RiskTableView() {
     ];
   }, [visibleColumns]);
 
-  const filters = useSetState<any>({
+  type RiskTableFilters = {
+    name: string;
+    status: string;
+  };
+
+  const filters = useSetState<RiskTableFilters>({
     name: '',
-    description: '',
-    abbreviation: '',
-    status: 'all'
+    status: 'all',
   });
   const { state: currentFilters, setState: updateFilters } = filters;
+
+  const nameFromQuery = useMemo(() => searchParams.get('name') ?? '', [searchParams]);
+
+  const typeFromQuery = useMemo(() => {
+    const raw = searchParams.get('type');
+    if (!raw) return null;
+    const parsed = Number(raw);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+  }, [searchParams]);
+
+  const setQueryParams = useCallback(
+    (next: { name?: string; type?: number | null }) => {
+      const url = new URLSearchParams(searchParams.toString());
+
+      if ('name' in next) {
+        const value = (next.name ?? '').trim();
+        if (value) url.set('name', value);
+        else url.delete('name');
+      }
+
+      if ('type' in next) {
+        const value = next.type;
+        if (value === null || value === undefined) url.delete('type');
+        else url.set('type', String(value));
+      }
+
+      const query = url.toString();
+      router.replace(query ? `${pathname}?${query}` : pathname);
+    },
+    [pathname, router, searchParams]
+  );
+
+  const debouncedName = useDebounce(currentFilters.name, 300);
+
+  useEffect(() => {
+    if (nameFromQuery !== currentFilters.name) {
+      table.onResetPage();
+      updateFilters({ name: nameFromQuery });
+    }
+  }, [currentFilters.name, nameFromQuery, table, updateFilters]);
+
+  useEffect(() => {
+    const q = debouncedName.trim();
+    const currentQ = nameFromQuery.trim();
+    if (q === currentQ) return;
+    setQueryParams({ name: q });
+  }, [debouncedName, nameFromQuery, setQueryParams]);
+
+  const handleTypeChange = useCallback(
+    (nextType: number | null) => {
+      table.onResetPage();
+      setQueryParams({ type: nextType });
+    },
+    [setQueryParams, table]
+  );
+
+  const extractList = useCallback((raw: unknown): unknown[] => {
+    if (Array.isArray(raw)) {
+      if (raw.length > 0 && Array.isArray(raw[0])) return raw[0] as unknown[];
+      return raw;
+    }
+    if (raw && typeof raw === 'object') {
+      const record = raw as Record<string, unknown>;
+      if (Array.isArray(record.data)) return record.data;
+    }
+    return [];
+  }, []);
+
+  const mapOptions = useCallback(
+    (items: unknown[]): RiskTypeOption[] =>
+      items
+        .map((item) => {
+          if (!item || typeof item !== 'object') return null;
+          const record = item as Record<string, unknown>;
+          const id = Number(record.id);
+          if (!Number.isFinite(id) || id <= 0) return null;
+          const labelCandidate = record.name ?? record.typeName ?? record.code ?? record.description;
+          const label = String(labelCandidate ?? `#${id}`);
+          return { value: id, label };
+        })
+        .filter((opt): opt is RiskTypeOption => !!opt),
+    []
+  );
+
+  const loadRiskTypeOptions = useCallback(async () => {
+    try {
+      const res = await GetRiskTypesService();
+      const list = extractList(res?.data);
+      setRiskTypeOptions(mapOptions(list));
+    } catch {
+      setRiskTypeOptions([]);
+    }
+  }, [extractList, mapOptions]);
 
   // Aplanar jerarquía para mostrar niveles y expansión
   const flattenDataWithHierarchy = useCallback((data: any[], level = 0, parentId?: number): any[] => {
@@ -135,7 +241,12 @@ export function RiskTableView() {
   // Función para cargar datos desde /api/risk/flow
   const loadData = useCallback(async () => {
     try {
-      const response = await GetRiskFlowService();
+      const params: Record<string, string | number | boolean | undefined> = {};
+      const q = nameFromQuery.trim();
+      if (q) params.name = q;
+      if (typeFromQuery !== null) params.type = typeFromQuery;
+
+      const response = await GetRiskFlowService(Object.keys(params).length ? params : undefined);
       const data = response?.data || [];
       const flattened = flattenDataWithHierarchy(data);
       setTableData(flattened);
@@ -146,22 +257,24 @@ export function RiskTableView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [flattenDataWithHierarchy, t]);
+  }, [flattenDataWithHierarchy, nameFromQuery, t, typeFromQuery]);
 
   // Cargar datos cuando cambian los parámetros
   useEffect(() => {
     loadData();
   }, [loadData]);
 
+  useEffect(() => {
+    loadRiskTypeOptions();
+  }, [loadRiskTypeOptions]);
+
   // Aplicar filtros
   const dataFiltered = applyFilter({
     inputData: Array.isArray(tableData) ? tableData : [],
-    comparator: getComparator(table.order, table.orderBy),
     filters: currentFilters,
-    searchColumn,
   });
 
-  const canReset = !!currentFilters.name || currentFilters.status !== 'all';
+  const canReset = !!currentFilters.name || currentFilters.status !== 'all' || typeFromQuery !== null;
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
 
   const handleDeleteRow = useCallback(
@@ -184,10 +297,10 @@ export function RiskTableView() {
   const handleDownloadExcel = useCallback(async () => {
     try {
       setDownloading(true);
-      const params = {
-        ...currentFilters,
-        columns: visibleColumns.join(','),
-      };
+      const params: Record<string, string | number> = { columns: visibleColumns.join(',') };
+      const q = nameFromQuery.trim();
+      if (q) params.name = q;
+      if (typeFromQuery !== null) params.type = typeFromQuery;
       const response = await DownloadRisksExcelService(params);
       const blob = new Blob([response?.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       const url = window.URL.createObjectURL(blob);
@@ -204,7 +317,7 @@ export function RiskTableView() {
     } finally {
       setDownloading(false);
     }
-  }, [t, currentFilters, visibleColumns]);
+  }, [nameFromQuery, t, typeFromQuery, visibleColumns]);
 
   const handleDownloadTemplate = useCallback(async () => {
     try {
@@ -222,14 +335,7 @@ export function RiskTableView() {
     }
   }, [t]);
 
-  const handleUploadClick = useCallback(() => {
-    fileInputRef.current?.click();
-  }, []);
-
-  const handleUploadFileChange = useCallback(async (e: any) => {
-    const file = e?.target?.files?.[0];
-    if (e?.target) e.target.value = '';
-    if (!file) return;
+  const handleUploadExcel = useCallback(async (file: File) => {
     try {
       setUploading(true);
       const form = new FormData();
@@ -240,6 +346,7 @@ export function RiskTableView() {
     } catch (error) {
       console.error('Error uploading risks file:', error);
       toast.error(t('risk.table.messages.error.uploading'));
+      throw error;
     } finally {
       setUploading(false);
     }
@@ -271,7 +378,8 @@ export function RiskTableView() {
   const handleResetFilters = useCallback(() => {
     table.onResetPage();
     updateFilters({ name: '', status: 'all' });
-  }, [updateFilters, table]);
+    setQueryParams({ name: '', type: null });
+  }, [setQueryParams, table, updateFilters]);
 
   const handleOpenModal = useCallback((riskId?: string) => {
     setSelectedRiskId(riskId);
@@ -343,8 +451,6 @@ export function RiskTableView() {
           ]}
           action={
             <Box sx={{ display: 'flex', gap: 1 }}>
-              <input ref={fileInputRef} type="file" accept=".xlsx,.csv" style={{ display: 'none' }} onChange={handleUploadFileChange} />
-              
               <Button
                 component={RouterLink}
                 href={paths.dashboard.architecture.riskMatrix}
@@ -357,7 +463,7 @@ export function RiskTableView() {
               <Button onClick={handleDownloadTemplate} variant="outlined" startIcon={<Iconify icon="eva:cloud-download-fill" />}>
                 {t('risk.table.actions.downloadTemplate') || 'Descargar Plantilla'}
               </Button>
-              <LoadingButton onClick={handleUploadClick} loading={uploading} variant="outlined" startIcon={<Iconify icon="eva:cloud-upload-fill" />}>
+              <LoadingButton onClick={uploadDrawer.onTrue} loading={uploading} variant="outlined" startIcon={<Iconify icon="eva:cloud-upload-fill" />}>
                 {t('risk.table.actions.upload') || 'Cargar'}
               </LoadingButton>
               <LoadingButton onClick={handleDownloadExcel} loading={downloading} variant="outlined" startIcon={<Iconify icon="solar:download-bold" />}>
@@ -411,8 +517,9 @@ export function RiskTableView() {
             }}
             visibleColumns={visibleColumns}
             onChangeColumns={handleToggleColumn}
-            searchColumn={searchColumn}
-            onSearchColumnChange={setSearchColumn}
+            type={typeFromQuery}
+            onTypeChange={handleTypeChange}
+            riskTypeOptions={riskTypeOptions}
           />
 
           {canReset && (
@@ -507,6 +614,14 @@ export function RiskTableView() {
 
       {renderConfirmDialog()}
 
+      <RiskUploadTemplateDrawer
+        open={uploadDrawer.value}
+        uploading={uploading}
+        onClose={uploadDrawer.onFalse}
+        onDownloadTemplate={handleDownloadTemplate}
+        onUpload={handleUploadExcel}
+      />
+
       <RiskTableModal
         open={modalDialog.value}
         onClose={handleCloseModal}
@@ -528,16 +643,299 @@ export function RiskTableView() {
   );
 }
 
+type RiskUploadTemplateDrawerProps = {
+  open: boolean;
+  uploading: boolean;
+  onClose: () => void;
+  onDownloadTemplate: () => void;
+  onUpload: (file: File) => Promise<void>;
+};
+
+function RiskUploadTemplateDrawer({
+  open,
+  uploading,
+  onClose,
+  onDownloadTemplate,
+  onUpload,
+}: RiskUploadTemplateDrawerProps) {
+  const { t } = useTranslate('architecture');
+  const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!open) {
+      setFile(null);
+      setError(null);
+    }
+  }, [open]);
+
+  const accept = useMemo(
+    () => ({
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
+      'application/vnd.ms-excel': ['.xls'],
+    }),
+    []
+  );
+
+  const handleDropRejected = useCallback(
+    (rejections: FileRejection[]) => {
+      const first = rejections[0];
+      const firstError = first?.errors?.[0];
+      const code = firstError?.code;
+
+      if (code === 'too-many-files') {
+        const msg = t('risk.table.uploadDrawer.errors.tooManyFiles', { defaultValue: 'Solo se permite 1 archivo.' });
+        setError(msg);
+        toast.error(msg);
+        return;
+      }
+
+      if (code === 'file-invalid-type') {
+        const msg = t('risk.table.uploadDrawer.errors.invalidType', {
+          defaultValue: 'Formato no permitido. Usa .xlsx o .xls.',
+        });
+        setError(msg);
+        toast.error(msg);
+        return;
+      }
+
+      const msg = t('risk.table.uploadDrawer.errors.generic', {
+        defaultValue: 'No se pudo cargar el archivo. Intenta nuevamente.',
+      });
+      setError(msg);
+      toast.error(msg);
+    },
+    [t]
+  );
+
+  const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
+    multiple: false,
+    maxFiles: 1,
+    accept,
+    disabled: uploading,
+    onDropAccepted: (files) => {
+      setFile(files[0] ?? null);
+      setError(null);
+    },
+    onDropRejected: handleDropRejected,
+  });
+
+  const handleClose = useCallback(() => {
+    if (!uploading) onClose();
+  }, [onClose, uploading]);
+
+  const handleConfirmUpload = useCallback(async () => {
+    if (!file) {
+      const msg = t('risk.table.uploadDrawer.errors.noFile', { defaultValue: 'Selecciona un archivo.' });
+      setError(msg);
+      toast.error(msg);
+      return;
+    }
+
+    try {
+      await onUpload(file);
+      onClose();
+    } catch {
+      const msg = t('risk.table.uploadDrawer.errors.generic', {
+        defaultValue: 'No se pudo cargar el archivo. Intenta nuevamente.',
+      });
+      setError(msg);
+      toast.error(msg);
+    }
+  }, [file, onClose, onUpload, t]);
+
+  return (
+    <Drawer
+      open={open}
+      anchor="right"
+      onClose={handleClose}
+      PaperProps={{ sx: { width: { xs: 1, sm: 520, md: 620 }, display: 'flex', flexDirection: 'column' } }}
+    >
+      <Box sx={{ px: 3, py: 2, position: 'relative', borderBottom: (theme) => `1px solid ${theme.vars.palette.divider}` }}>
+        <Typography variant="h6">
+          {t('risk.table.uploadDrawer.title', { defaultValue: 'Cargar riesgos por Lote' })}
+        </Typography>
+        <IconButton
+          aria-label={t('risk.table.uploadDrawer.actions.close', { defaultValue: 'Cerrar' })}
+          onClick={handleClose}
+          disabled={uploading}
+          sx={{ position: 'absolute', right: 12, top: 12 }}
+        >
+          <Iconify icon="mingcute:close-line" />
+        </IconButton>
+      </Box>
+
+      <Box sx={{ px: 3, py: 2.5, overflow: 'auto', flex: '1 1 auto' }}>
+        <Box
+          sx={[
+            (theme) => ({
+              display: 'grid',
+              gap: 1,
+              p: 2,
+              borderRadius: 1.5,
+              border: `1px solid ${varAlpha(theme.vars.palette.info.mainChannel, 0.28)}`,
+              backgroundColor: varAlpha(theme.vars.palette.info.mainChannel, 0.1),
+              color: theme.vars.palette.info.darker,
+            }),
+          ]}
+        >
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Iconify icon="solar:info-circle-bold" />
+            <Typography variant="subtitle2">
+              {t('risk.table.uploadDrawer.instructions.title', { defaultValue: 'Instrucciones' })}
+            </Typography>
+          </Stack>
+
+          <Box
+            component="div"
+            sx={{
+              m: 0,
+              display: 'grid',
+              gap: 0.5,
+              typography: 'body2',
+              color: 'text.secondary',
+            }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              {t('risk.table.uploadDrawer.instructions.step1', {
+                defaultValue:
+                  'Debe crear un archivo Excel con las siguientes columnas como encabezado: NOMENCLATURA_RIESGO, NOMBRE_RIESGO, NOMENCLATURA_RIESGO_PADRE, TIPO_RIESGO (ver ids tipo riesgo).',
+              })}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {t('risk.table.uploadDrawer.instructions.step2', {
+                defaultValue:
+                  'Ingrese el listado de riesgos a cargar, guarde el archivo con un nombre que no contenga espacios ni caracteres especiales.',
+              })}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {t('risk.table.uploadDrawer.instructions.step3', {
+                defaultValue:
+                  "Puede arrastrar y soltar el archivo guardado en el cuadro a continuación, o seleccionarlo mediante el botón 'Seleccionar archivo'.",
+              })}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {t('risk.table.uploadDrawer.instructions.step4', {
+                defaultValue: "Haga clic en el botón 'Cargar' para iniciar el proceso de cargue.",
+              })}
+            </Typography>
+          </Box>
+        </Box>
+
+        <Box sx={{ mt: 2 }}>
+          <Box
+            {...getRootProps()}
+            sx={[
+              (theme) => ({
+                p: 4,
+                borderRadius: 2,
+                textAlign: 'center',
+                outline: 'none',
+                cursor: uploading ? 'default' : 'pointer',
+                border: `dashed 1px ${theme.vars.palette.divider}`,
+                backgroundColor: theme.vars.palette.background.neutral,
+                transition: theme.transitions.create(['border-color', 'background-color'], {
+                  duration: theme.transitions.duration.shorter,
+                }),
+                ...(isDragActive && {
+                  borderColor: theme.vars.palette.primary.main,
+                  backgroundColor: varAlpha(theme.vars.palette.primary.mainChannel, 0.08),
+                }),
+                ...((isDragReject || !!error) && {
+                  borderColor: theme.vars.palette.error.main,
+                  backgroundColor: varAlpha(theme.vars.palette.error.mainChannel, 0.08),
+                }),
+              }),
+            ]}
+          >
+            <input {...getInputProps()} />
+
+            <Stack spacing={1.25} alignItems="center">
+              <Iconify icon="eva:cloud-upload-fill" width={28} />
+
+              <Typography variant="subtitle1">
+                {file
+                  ? t('risk.table.uploadDrawer.drop.selectedTitle', { defaultValue: 'Archivo seleccionado' })
+                  : t('risk.table.uploadDrawer.drop.title', { defaultValue: 'Seleccionar archivo Excel' })}
+              </Typography>
+
+              {file ? (
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    {file.name}
+                  </Typography>
+                  <Button
+                    size="small"
+                    variant="text"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setFile(null);
+                      setError(null);
+                    }}
+                    disabled={uploading}
+                    sx={{ textTransform: 'none' }}
+                  >
+                    {t('risk.table.uploadDrawer.actions.remove', { defaultValue: 'Quitar' })}
+                  </Button>
+                </Stack>
+              ) : (
+                <Typography variant="body2" color="text.secondary">
+                  {t('risk.table.uploadDrawer.drop.subtitle', {
+                    defaultValue: 'o haz clic para seleccionar desde tu dispositivo',
+                  })}
+                </Typography>
+              )}
+
+              <Typography variant="caption" color="text.disabled">
+                {t('risk.table.uploadDrawer.drop.formats', {
+                  defaultValue: 'Formatos permitidos: .xlsx, .xls • 1 archivo',
+                })}
+              </Typography>
+
+              {!!error && (
+                <Typography
+                  variant="caption"
+                  color="error.main"
+                  sx={{ whiteSpace: 'pre-line', alignSelf: 'stretch', textAlign: 'left' }}
+                >
+                  {error}
+                </Typography>
+              )}
+            </Stack>
+          </Box>
+
+          <Button
+            variant="outlined"
+            startIcon={<Iconify icon="eva:cloud-download-fill" />}
+            onClick={onDownloadTemplate}
+            disabled={uploading}
+            sx={{ mt: 1.5, width: 1 }}
+          >
+            {t('risk.table.actions.downloadTemplate', { defaultValue: 'Descargar Plantilla' })}
+          </Button>
+        </Box>
+      </Box>
+
+      <Box sx={{ px: 3, py: 2, borderTop: (theme) => `1px solid ${theme.vars.palette.divider}`, display: 'flex', justifyContent: 'flex-end', gap: 1.25 }}>
+        <Button onClick={handleClose} disabled={uploading} color="inherit" variant="outlined">
+          {t('risk.table.uploadDrawer.actions.cancel', { defaultValue: 'Cancelar' })}
+        </Button>
+        <LoadingButton variant="contained" loading={uploading} onClick={handleConfirmUpload} disabled={!file}>
+          {t('risk.table.uploadDrawer.actions.upload', { defaultValue: 'Cargar' })}
+        </LoadingButton>
+      </Box>
+    </Drawer>
+  );
+}
+
 // ----------------------------------------------------------------------
 
 type ApplyFilterProps = {
   inputData: any[];
-  filters: any;
-  comparator: (a: any, b: any) => number;
-  searchColumn: string;
+  filters: { name: string; status: string };
 };
 
-function applyFilter({ inputData, comparator, filters, searchColumn }: ApplyFilterProps) {
+function applyFilter({ inputData, filters }: ApplyFilterProps) {
   // Asegurar que inputData es un array válido
   if (!Array.isArray(inputData)) {
     console.warn('applyFilter: inputData is not an array, returning empty array');
@@ -551,10 +949,27 @@ function applyFilter({ inputData, comparator, filters, searchColumn }: ApplyFilt
   // No aplicar sort aquí.
 
   if (name) {
-    inputData = inputData.filter((item) => {
-      const value = item[searchColumn as keyof typeof item];
-      return String(value || '').toLowerCase().indexOf(name.toLowerCase()) !== -1;
-    });
+    const query = name.trim().toLowerCase();
+    if (query) {
+      inputData = inputData.filter((item) => {
+        const record = item as Record<string, unknown>;
+
+        const directValues = [record.name, record.code, record.description, record.label];
+        if (directValues.some((value) => String(value ?? '').toLowerCase().includes(query))) return true;
+
+        return ALL_COLUMNS.some(({ id }) => {
+          const value = record[id];
+          if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+            return String(value).toLowerCase().includes(query);
+          }
+          if (value && typeof value === 'object' && 'name' in value) {
+            const nestedName = (value as { name?: unknown }).name;
+            return String(nestedName ?? '').toLowerCase().includes(query);
+          }
+          return false;
+        });
+      });
+    }
   }
 
   if (status !== 'all') {
