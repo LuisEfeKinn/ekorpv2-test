@@ -335,6 +335,7 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
       const businessTitle = t('business.business');
       const risksTitle = t('business.items.risks.title');
       const matrixTitle = t('business.items.risks.matrix');
+      const matrixProcessTitle = t('business.items.risks.matrixProcess');
       const mapTitle = t('business.items.risks.map');
       const section = dynamicNavData[archIdx];
       let bizItem = section.items.find((it) => it.title === businessTitle);
@@ -366,6 +367,17 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
         risksItem.children.push({
           title: matrixTitle,
           path: paths.dashboard.architecture.riskMatrix,
+          icon: getNavIcon('matrix'),
+        });
+      }
+
+      const alreadyProcess = risksItem.children.some(
+        (it) => it.path === paths.dashboard.architecture.riskMatrixProcess || it.title === matrixProcessTitle
+      );
+      if (!alreadyProcess) {
+        risksItem.children.push({
+          title: matrixProcessTitle,
+          path: paths.dashboard.architecture.riskMatrixProcess,
           icon: getNavIcon('matrix'),
         });
       }

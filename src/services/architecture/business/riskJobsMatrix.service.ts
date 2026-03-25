@@ -1,7 +1,7 @@
 import axios, { endpoints } from 'src/utils/axios';
 
-export const GetRiskJobsMatrixService = async () => {
-  const url = (endpoints as any)?.architecture?.risk?.processRisksMatrix ?? '/api/process-risks/matrix';
-  const response = await axios.get(url);
-  return response;
-};
+export const GetRiskJobsMatrixService = async () =>
+  axios.get<unknown>(endpoints.architecture.risk.processRisksMatrix);
+
+export const GetRiskProcessMatrixService = async () =>
+  axios.get<unknown>(endpoints.architecture.risk.processRisksMatrixProcess);

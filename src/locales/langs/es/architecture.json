@@ -182,6 +182,25 @@
   "riskMatrix": {
     "title": "Matriz de Riesgos"
   },
+  "riskMatrixProcess": {
+    "title": "Matriz de Riesgos por Proceso",
+    "filters": {
+      "process": "Filtrar procesos",
+      "risk": "Buscar riesgos"
+    },
+    "actions": {
+      "reload": "Recargar",
+      "export": "Exportar"
+    },
+    "table": {
+      "risks": "Riesgos"
+    },
+    "tooltip": {
+      "process": "Proceso",
+      "probability": "Probabilidad",
+      "impact": "Impacto"
+    }
+  },
   "riskMap": {
     "title": "Matriz de Riesgos",
     "panel": {
@@ -216,7 +235,10 @@
     },
     "actions": {
       "upload": "Cargar Excel",
-      "download": "Descargar Excel"
+      "download": "Descargar Excel",
+      "csv": "CSV",
+      "excel": "Excel",
+      "relateJob": "Relacionar cargo"
     },
     "table": {
       "processes": "Procesos",

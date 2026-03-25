@@ -144,7 +144,8 @@
         "title": "Riesgos",
         "table": "Tabla de Riesgos",
         "map": "Mapa de Riesgos",
-        "matrix": "Matriz de Riesgos"
+        "matrix": "Matriz de Riesgos",
+        "matrixProcess": "Matriz de Riesgos por Proceso"
       },
       "tools": {
         "title": "Maquinaria y equipos",

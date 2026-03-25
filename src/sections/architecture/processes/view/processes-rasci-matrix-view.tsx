@@ -41,6 +41,8 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { CustomPopover } from 'src/components/custom-popover';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
+import { ProcessJobLinkModal } from '../processes-table/process-job-link-modal';
+
 export function ProcessesRasciMatrixView() {
   const { t } = useTranslate('architecture');
   const theme = useTheme();
@@ -54,6 +56,7 @@ export function ProcessesRasciMatrixView() {
 
   const popover = usePopover();
   const [selectedProcessId, setSelectedProcessId] = useState<number | null>(null);
+  const [openRelateJob, setOpenRelateJob] = useState(false);
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLElement>, processId: number) => {
     popover.onOpen(event);
@@ -63,6 +66,11 @@ export function ProcessesRasciMatrixView() {
   const handleClosePopover = useCallback(() => {
     popover.onClose();
     setSelectedProcessId(null);
+  }, [popover]);
+
+  const handleOpenRelateJob = useCallback(() => {
+    setOpenRelateJob(true);
+    popover.onClose();
   }, [popover]);
 
   const loadMatrix = useCallback(async () => {
@@ -115,6 +123,18 @@ export function ProcessesRasciMatrixView() {
     const cols = (matrix as any)?.columns;
     return Array.isArray(cols) ? cols.map((c: any) => ({ id: Number(c?.id), name: String(c?.name ?? '') })) : [];
   }, [matrix]);
+
+  const existingJobIdsForSelectedProcess = useMemo(() => {
+    if (!selectedProcessId) return undefined;
+    const rs = (matrix as any)?.rows;
+    if (!Array.isArray(rs)) return undefined;
+    const row = rs.find((r: any) => Number(r?.processId) === Number(selectedProcessId));
+    const cells = Array.isArray(row?.cells) ? row.cells : [];
+    return cells
+      .filter((c: any) => Boolean(c?.actionTypeNomenclature))
+      .map((c: any) => Number(c?.jobId))
+      .filter((id: number) => Number.isFinite(id));
+  }, [matrix, selectedProcessId]);
 
   const handleDownloadExcel = async () => {
     try {
@@ -196,7 +216,7 @@ export function ProcessesRasciMatrixView() {
       <CustomBreadcrumbs
         heading={t('rasciMatrix.title')}
         links={[
-          { name: 'Dashboard', href: paths.dashboard.root },
+          { name: t('process.table.breadcrumbs.dashboard'), href: paths.dashboard.root },
           { name: t('process.table.title'), href: paths.dashboard.architecture.processesTable },
           { name: t('rasciMatrix.title') },
         ]}
@@ -208,7 +228,7 @@ export function ProcessesRasciMatrixView() {
               startIcon={<Iconify icon="eva:cloud-download-fill" />}
               onClick={exportCsv}
             >
-              CSV
+              {t('rasciMatrix.actions.csv')}
             </Button>
             <Button
               variant="soft"
@@ -216,7 +236,7 @@ export function ProcessesRasciMatrixView() {
               startIcon={<Iconify icon="eva:cloud-download-fill" />}
               onClick={handleDownloadExcel}
             >
-              Excel
+              {t('rasciMatrix.actions.excel')}
             </Button>
           </Stack>
         }
@@ -472,6 +492,13 @@ export function ProcessesRasciMatrixView() {
       >
         <MenuList>
           <MenuItem
+            onClick={handleOpenRelateJob}
+            disabled={selectedProcessId == null}
+          >
+            <Iconify icon="solar:users-group-rounded-bold" />
+            {t('rasciMatrix.actions.relateJob')}
+          </MenuItem>
+          <MenuItem
             component={RouterLink}
             href={selectedProcessId ? paths.dashboard.architecture.processesTableMap(String(selectedProcessId)) : '#'}
             onClick={handleClosePopover}
@@ -481,6 +508,19 @@ export function ProcessesRasciMatrixView() {
           </MenuItem>
         </MenuList>
       </CustomPopover>
+
+      <ProcessJobLinkModal
+        open={openRelateJob}
+        onClose={() => {
+          setOpenRelateJob(false);
+        }}
+        onSuccess={() => {
+          setOpenRelateJob(false);
+          loadMatrix();
+        }}
+        processId={selectedProcessId}
+        existingItemIds={existingJobIdsForSelectedProcess}
+      />
     </DashboardContent>
   );
 }

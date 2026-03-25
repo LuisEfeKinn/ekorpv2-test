@@ -144,7 +144,8 @@
         "title": "Risks",
         "table": "Risks Table",
         "map": "Risks Map",
-        "matrix": "Risks Matrix"
+        "matrix": "Risks Matrix",
+        "matrixProcess": "Risk Matrix by Process"
       },
       "tools": {
         "title": "Machinery and Equipment",

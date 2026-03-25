@@ -1,9 +1,15 @@
 import axios, { endpoints } from 'src/utils/axios';
 
-export const SaveJobProcessRelationService = async (payload: any) => {
-  const response = await axios.post<any>(endpoints.architecture.business.jobProcesses, payload);
-  return response;
+export type SaveJobProcessRelationPayload = {
+  isMain: boolean;
+  description?: string;
+  job: { id: number };
+  process: { id: number };
+  actionType?: { id: number };
 };
+
+export const SaveJobProcessRelationService = async (payload: SaveJobProcessRelationPayload) =>
+  axios.post<unknown>(endpoints.architecture.business.jobProcesses, payload);
 
 export const DownloadJobProcessTemplateService = async () => {
   const response = await axios.get(`${endpoints.architecture.business.jobProcesses}/download/template/job`, {
@@ -13,24 +19,24 @@ export const DownloadJobProcessTemplateService = async () => {
 };
 
 export const GetJobProcessRelationByIdService = async (id: number | string) => {
-  const response = await axios.get<any>(`${endpoints.architecture.business.jobProcesses}/${id}`);
+  const response = await axios.get<{ data?: unknown }>(`${endpoints.architecture.business.jobProcesses}/${id}`);
   return response;
 };
 
-export const UpdateJobProcessRelationService = async (id: number | string, payload: any) => {
-  const response = await axios.patch<any>(`${endpoints.architecture.business.jobProcesses}/${id}`, payload);
-  return response;
-};
+export type UpdateJobProcessRelationPayload = SaveJobProcessRelationPayload;
+
+export const UpdateJobProcessRelationService = async (id: number | string, payload: UpdateJobProcessRelationPayload) =>
+  axios.patch<unknown>(`${endpoints.architecture.business.jobProcesses}/${id}`, payload);
 
 export const DeleteJobProcessRelationService = async (id: number | string) => {
-  const response = await axios.delete<any>(`${endpoints.architecture.business.jobProcesses}/${id}`);
+  const response = await axios.delete<unknown>(`${endpoints.architecture.business.jobProcesses}/${id}`);
   return response;
 };
 
 export const UploadJobProcessExcelService = async (jobId: number | string, file: File) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await axios.post<any>(
+  const response = await axios.post<unknown>(
     `${endpoints.architecture.business.jobProcesses}/upload/excel/job/${jobId}`,
     formData,
     {
@@ -52,7 +58,7 @@ export const DownloadJobProcessTemplateByProcessService = async () => {
 export const UploadJobProcessExcelByProcessService = async (processId: number | string, file: File) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await axios.post<any>(
+  const response = await axios.post<unknown>(
     `${endpoints.architecture.business.jobProcesses}/upload/excel/process/${processId}`,
     formData,
     {

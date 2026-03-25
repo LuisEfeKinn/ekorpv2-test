@@ -457,7 +457,16 @@ export function RiskTableView() {
                 variant="outlined"
                 startIcon={<Iconify icon="solar:list-bold" />}
               >
-                {t('riskMatrix.title') || 'Matriz'}
+                {t('riskMatrix.title')}
+              </Button>
+
+              <Button
+                component={RouterLink}
+                href={paths.dashboard.architecture.riskMatrixProcess}
+                variant="outlined"
+                startIcon={<Iconify icon="solar:graph-up-bold-duotone" />}
+              >
+                {t('riskMatrixProcess.title')}
               </Button>
 
               <Button onClick={handleDownloadTemplate} variant="outlined" startIcon={<Iconify icon="eva:cloud-download-fill" />}>

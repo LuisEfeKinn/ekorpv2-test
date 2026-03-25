@@ -546,6 +546,8 @@ export const endpoints = {
       ,
       processRisksMatrix: '/api/process-risks/matrix'
       ,
+      processRisksMatrixProcess: '/api/process-risks/matrix-process'
+      ,
       toolRisks: '/api/tool-risks'
       ,
       riskActionMeasures: '/api/risk-action-measures'

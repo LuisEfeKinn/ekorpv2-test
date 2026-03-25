@@ -473,6 +473,7 @@ export const paths = {
       risksTable: `${ROOTS.DASHBOARD}/architecture/business/risks/table`,
       // Matrix
       riskMatrix: `${ROOTS.DASHBOARD}/architecture/business/risks/matrix`,
+      riskMatrixProcess: `${ROOTS.DASHBOARD}/architecture/business/risks/matrix-process`,
 
       // Processes
 

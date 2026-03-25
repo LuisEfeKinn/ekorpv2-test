@@ -70,6 +70,18 @@ type Props = {
   existingItemIds?: number[];
 };
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function unwrapApiData(value: unknown): unknown {
+  if (!isRecord(value)) return value;
+  const inner = value.data;
+  if (isRecord(inner) && 'data' in inner) return (inner as Record<string, unknown>).data;
+  if ('data' in value) return value.data;
+  return value;
+}
+
 function normalizeList(raw: any): any[] {
   if (Array.isArray(raw)) {
     if (Array.isArray(raw[0])) return raw[0];
@@ -228,7 +240,7 @@ export function JobsRelationsDrawer({ open, onClose, onSuccess, jobId, kind, ini
         // or just to be safe and always get fresh data for editing
         if (kind === 'process') {
            const res = await GetJobProcessRelationByIdService(relationId);
-           data = res.data?.data ?? res.data ?? data;
+           data = unwrapApiData(res.data) ?? data;
         } else if (kind === 'document') {
            const res = await GetJobDocumentRelationByIdService(relationId);
            data = res.data?.data ?? res.data ?? data;

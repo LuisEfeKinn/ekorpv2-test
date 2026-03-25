@@ -6,6 +6,7 @@ import { Box, Stack, Drawer, Button, TextField, Typography, Autocomplete, Circul
 
 import { useTranslate } from 'src/locales';
 import { GetJobsListService } from 'src/services/architecture/risk/riskJobs.service';
+import { GetJobsPaginationService } from 'src/services/architecture/business/jobs.service';
 import { GetActionTypesPaginationService } from 'src/services/architecture/catalogs/actionTypes.service';
 import { SaveJobProcessRelationService, UpdateJobProcessRelationService } from 'src/services/architecture/business/jobProcesses.service';
 
@@ -47,20 +48,34 @@ export function ProcessJobLinkModal({ open, onClose, onSuccess, processId, exist
         const excludedIds = new Set<number>(Array.isArray(existingItemIds) ? existingItemIds : []);
         if (currentSelectedId != null) excludedIds.delete(Number(currentSelectedId));
 
-        const [jobsRes, actionTypesRes] = await Promise.all([
-          GetJobsListService(),
-          GetActionTypesPaginationService({ perPage: 1000 })
-        ]);
+        const actionTypesRes = await GetActionTypesPaginationService({ perPage: 1000 });
 
         // Process Jobs
+        const jobsRes = await GetJobsPaginationService({ page: 1, perPage: 1000 });
         const rawJobs = jobsRes?.data;
-        const jobsList: any[] = Array.isArray(rawJobs?.data)
-          ? rawJobs.data
-          : Array.isArray(rawJobs)
-            ? rawJobs
-            : Array.isArray((rawJobs as any)?.data?.data)
-              ? (rawJobs as any).data.data
-              : [];
+        let jobsList: any[] = [];
+        if (Array.isArray(rawJobs)) {
+          jobsList = rawJobs;
+        } else if (Array.isArray((rawJobs as any)?.data?.data)) {
+          jobsList = (rawJobs as any).data.data;
+        } else if (Array.isArray((rawJobs as any)?.data)) {
+          jobsList = (rawJobs as any).data;
+        } else if (Array.isArray((rawJobs as any)?.[0])) {
+          jobsList = (rawJobs as any)[0];
+        }
+
+        if (jobsList.length === 0) {
+          const fallbackRes = await GetJobsListService();
+          const rawFallback = fallbackRes?.data;
+          if (Array.isArray(rawFallback)) {
+            jobsList = rawFallback;
+          } else if (Array.isArray((rawFallback as any)?.data)) {
+            jobsList = (rawFallback as any).data;
+          } else if (Array.isArray((rawFallback as any)?.data?.data)) {
+            jobsList = (rawFallback as any).data.data;
+          }
+        }
+
         const normalizedJobs = Array.isArray(jobsList) ? jobsList : [];
         const filteredJobs = excludedIds.size
           ? normalizedJobs.filter((it: any) => !excludedIds.has(Number(it?.id)))
@@ -88,7 +103,7 @@ export function ProcessJobLinkModal({ open, onClose, onSuccess, processId, exist
 
       } catch (e) {
         console.error('Error loading data:', e);
-        toast.error('Error al cargar datos');
+        toast.error(t('process.map.modals.common.loadError'));
       }
     };
     if (open) {
@@ -108,7 +123,7 @@ export function ProcessJobLinkModal({ open, onClose, onSuccess, processId, exist
       });
       load();
     }
-  }, [open, initialData, existingItemIds]);
+  }, [open, initialData, existingItemIds, t]);
 
   const jobOptions = useMemo(() => jobs.map((j: any) => ({ label: j?.name || j?.label || `#${j?.id}`, id: j?.id })), [jobs]);
   
@@ -160,6 +175,7 @@ export function ProcessJobLinkModal({ open, onClose, onSuccess, processId, exist
             options={jobOptions}
             value={jobOptions.find((o) => o.id === form.jobId) || null}
             onChange={(_: any, v: any) => setForm((f) => ({ ...f, jobId: v?.id || null }))}
+            isOptionEqualToValue={(opt, val) => Number(opt.id) === Number(val.id)}
             renderInput={(params: any) => (
               <TextField
                 {...params}
