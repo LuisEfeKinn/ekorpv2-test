@@ -1,5 +1,14 @@
 import axios, { endpoints } from 'src/utils/axios';
 
+export type JobProcessRelation = {
+  id: number;
+  isMain?: boolean | null;
+  description?: string | null;
+  job?: { id: number; name?: string; code?: string | null } | null;
+  process?: { id: number; name?: string } | null;
+  actionType?: { id: number; name?: string; nomenclature?: string } | null;
+};
+
 export type SaveJobProcessRelationPayload = {
   isMain: boolean;
   description?: string;
@@ -20,6 +29,11 @@ export const DownloadJobProcessTemplateService = async () => {
 
 export const GetJobProcessRelationByIdService = async (id: number | string) => {
   const response = await axios.get<{ data?: unknown }>(`${endpoints.architecture.business.jobProcesses}/${id}`);
+  return response;
+};
+
+export const GetJobProcessesListService = async (params?: Record<string, string | number | boolean | undefined>) => {
+  const response = await axios.get<JobProcessRelation[] | { data?: unknown }>(endpoints.architecture.business.jobProcesses, { params });
   return response;
 };
 

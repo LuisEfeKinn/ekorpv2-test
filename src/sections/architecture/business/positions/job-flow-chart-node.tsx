@@ -48,6 +48,7 @@ export function JobFlowChartNode({
     >
       <Card
         onDoubleClick={onDoubleClick}
+        role="button"
         sx={{
           p: 2,
           minWidth: 280,

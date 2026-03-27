@@ -587,14 +587,6 @@ export function StrategicObjectivesTableView() {
         ]}
         action={
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-            <Button
-              onClick={handleDownloadTemplate}
-              variant="outlined"
-              startIcon={<Iconify icon="eva:cloud-download-fill" />}
-            >
-              {t('strategicObjectives.table.actions.downloadTemplate', { defaultValue: 'Descargar Plantilla' })}
-            </Button>
-
             <LoadingButton
               onClick={uploadDialog.onTrue}
               disabled={uploading}

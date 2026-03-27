@@ -469,9 +469,6 @@ export function RiskTableView() {
                 {t('riskMatrixProcess.title')}
               </Button>
 
-              <Button onClick={handleDownloadTemplate} variant="outlined" startIcon={<Iconify icon="eva:cloud-download-fill" />}>
-                {t('risk.table.actions.downloadTemplate') || 'Descargar Plantilla'}
-              </Button>
               <LoadingButton onClick={uploadDrawer.onTrue} loading={uploading} variant="outlined" startIcon={<Iconify icon="eva:cloud-upload-fill" />}>
                 {t('risk.table.actions.upload') || 'Cargar'}
               </LoadingButton>

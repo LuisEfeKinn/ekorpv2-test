@@ -1,5 +1,15 @@
 import axios, { endpoints } from 'src/utils/axios';
 
+export type ProcessIndicatorRelation = {
+  id: number;
+  creationDate?: string;
+  observations?: string | null;
+  process?: { id: number; name?: string };
+  indicator?: { id: number; name?: string };
+  processId?: number;
+  indicatorId?: number;
+};
+
 export const SaveProcessToolService = async (data: any) => {
   const response = await axios.post(endpoints.architecture.process.tools, data);
   return response;
@@ -107,6 +117,16 @@ export const UpdateProcessIndicatorService = async (id: number | string, data: a
 
 export const DeleteProcessIndicatorService = async (id: number | string) => {
   const response = await axios.delete(`${endpoints.architecture.process.indicators}/${id}`);
+  return response;
+};
+
+export const GetProcessIndicatorsListService = async (params?: Record<string, string | number | boolean | undefined>) => {
+  const response = await axios.get<ProcessIndicatorRelation[]>(endpoints.architecture.process.indicators, { params });
+  return response;
+};
+
+export const GetProcessIndicatorByIdService = async (id: number | string) => {
+  const response = await axios.get<ProcessIndicatorRelation>(`${endpoints.architecture.process.indicators}/${id}`);
   return response;
 };
 

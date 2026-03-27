@@ -249,11 +249,6 @@ export function OrganizationalStructureTableView() {
   const [uploading, setUploading] = useState(false);
   const [downloading, setDownloading] = useState(false);
 
-  const downloadTemplateLabel =
-    currentLang.value === 'en'
-      ? t('organization.actions.downloadTemplate', { defaultValue: 'Download template' })
-      : t('organization.actions.downloadTemplate', { defaultValue: 'Descargar plantilla' });
-
   const uploadTemplateLabel =
     currentLang.value === 'en'
       ? t('organization.actions.uploadTemplate', { defaultValue: 'Upload template' })
@@ -581,14 +576,6 @@ export function OrganizationalStructureTableView() {
                 startIcon={<Iconify icon="solar:map-point-bold" />}
               >
                 {t('organization.view.organigram')}
-              </Button>
-
-              <Button
-                variant="outlined"
-                startIcon={<Iconify icon="eva:cloud-download-fill" />}
-                onClick={handleDownloadTemplate}
-              >
-                {downloadTemplateLabel}
               </Button>
 
               <LoadingButton

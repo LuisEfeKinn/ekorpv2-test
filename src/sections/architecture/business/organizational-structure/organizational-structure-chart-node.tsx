@@ -45,6 +45,7 @@ export function OrganizationalUnitChartNode({
     <Box sx={{ position: 'relative', display: 'inline-block', margin: '10px' }}>
       <Card
         onDoubleClick={onDoubleClick}
+        role="button"
         sx={{
           p: 2,
           minWidth: 280,

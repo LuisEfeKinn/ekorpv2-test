@@ -46,6 +46,7 @@ export function OrganizationalChart<T>({ data, nodeItem, ...other }: OrgChartPro
 
 function TreeList<T>({ data, depth, nodeItem }: OrgChartListProps<T>) {
   const childs = (data as any).children;
+  const hasChildren = Array.isArray(childs) && childs.length > 0;
 
   const cloneNode = (props: T) => cloneElement(nodeItem(props));
 
@@ -55,7 +56,7 @@ function TreeList<T>({ data, depth, nodeItem }: OrgChartListProps<T>) {
 
   return (
     <TreeNode label={label}>
-      {childs && <TreeSubList data={childs} depth={depth} nodeItem={nodeItem} />}
+      {hasChildren ? <TreeSubList data={childs} depth={depth} nodeItem={nodeItem} /> : null}
     </TreeNode>
   );
 }

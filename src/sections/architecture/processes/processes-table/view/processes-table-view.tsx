@@ -423,13 +423,6 @@ export function ProcessTableView() {
                 {t('rasciMatrix.title')}
               </Button>
 
-              <Button
-                onClick={handleDownloadTemplate}
-                variant="outlined"
-                startIcon={<Iconify icon="eva:cloud-download-fill" />}
-              >
-                {t('process.table.actions.downloadTemplate') || 'Descargar Plantilla'}
-              </Button>
               <LoadingButton
                 onClick={uploadDrawer.onTrue}
                 loading={uploading}

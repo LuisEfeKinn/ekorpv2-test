@@ -439,13 +439,6 @@ export function ToolsTableView() {
           ]}
           action={
             <Box sx={{ display: 'flex', gap: 1 }}>
-              <Button
-                onClick={handleDownloadTemplate}
-                variant="outlined"
-                startIcon={<Iconify icon="eva:cloud-download-fill" />}
-              >
-                {t('tools.table.actions.downloadTemplate') || 'Descargar Plantilla'}
-              </Button>
               <LoadingButton
                 onClick={uploadDrawer.onTrue}
                 loading={uploading}

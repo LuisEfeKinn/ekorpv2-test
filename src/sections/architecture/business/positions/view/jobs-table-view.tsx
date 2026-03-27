@@ -402,14 +402,6 @@ export function JobsTableView() {
                 {t('positions.table.actions.upload', { defaultValue: 'Cargar Plantilla' })}
               </LoadingButton>
 
-              <Button
-                variant="outlined"
-                startIcon={<Iconify icon="eva:cloud-download-fill" />}
-                onClick={handleDownloadTemplate}
-              >
-                {t('positions.table.actions.downloadTemplate', { defaultValue: 'Descargar Plantilla' })}
-              </Button>
-
               <LoadingButton
                 variant="outlined"
                 loading={downloading}

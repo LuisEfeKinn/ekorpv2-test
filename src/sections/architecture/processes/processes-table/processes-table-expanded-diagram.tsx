@@ -344,10 +344,22 @@ export function ProcessTableExpandedDiagram({ processId, nodeId, nodeLabel, pare
       return Number.isFinite(parsed) ? parsed : null;
     };
 
+    const pickFromPath = (value: unknown, path: string[]): number | null => {
+      let current: unknown = value;
+      for (const key of path) {
+        if (!current || typeof current !== 'object') return null;
+        current = (current as Record<string, unknown>)[key];
+      }
+      return pickNumber(current);
+    };
+
     const children = Array.isArray(mapData?.children) ? mapData!.children : [];
 
     children.forEach((child) => {
-      const raw = child?.data && typeof child.data === 'object' ? child.data : child;
+      const raw =
+        child?.data && typeof child.data === 'object'
+          ? { ...(child as Record<string, unknown>), ...(child.data as Record<string, unknown>) }
+          : child;
       if (!raw || typeof raw !== 'object') return;
       const rec = raw as Record<string, unknown>;
 
@@ -358,7 +370,10 @@ export function ProcessTableExpandedDiagram({ processId, nodeId, nodeLabel, pare
       };
 
       const id = isJobNode
-        ? pickNumber(rec.jobId ?? rec.job_id ?? rec.idJob ?? rec.id_job) ?? pickFromNested('job')
+        ? pickNumber(rec.jobId ?? rec.job_id ?? rec.idJob ?? rec.id_job) ??
+          pickFromNested('job') ??
+          pickFromPath(rec, ['data', 'job', 'id']) ??
+          pickFromPath(rec, ['relationData', 'job', 'id'])
         : isToolNode
           ? pickNumber(rec.toolId ?? rec.tool_id ?? rec.idTool ?? rec.id_tool) ?? pickFromNested('tool')
           : isDocNode
