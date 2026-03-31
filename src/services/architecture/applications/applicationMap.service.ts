@@ -48,7 +48,7 @@ export const SaveApplicationFlowService = async (flowData: any, id?: any) => {
     const updateEndpoint = `${endpoints.architecture.aplications.flow.save}/${id}/children`;
     response = await axios.post(updateEndpoint, flowData);
   } else {
-    response = await axios.post(endpoints.architecture.aplications.table.save, flowData);
+    response = await axios.post(endpoints.architecture.aplications.flow.save, flowData); 
   }
   return response;
 };

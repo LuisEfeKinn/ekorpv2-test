@@ -1558,6 +1558,20 @@
       "people": "People",
       "responses": "Responses"
     },
+    "actions": {
+      "export": "Export",
+      "exporting": "Exporting...",
+      "exportExcel": "Export to Excel",
+      "exportPdf": "Export to PDF"
+    },
+    "messages": {
+      "success": {
+        "exported": "Analysis exported successfully"
+      },
+      "error": {
+        "exporting": "Error exporting analysis"
+      }
+    },
     "table": {
       "title": "Participants",
       "subheader": "List of employees with their results",
@@ -1606,24 +1620,36 @@
       "answered": "Answered",
       "completion": "Completion",
       "breakdownByRole": "Breakdown by Role",
-      "noCompetencies": "No competencies evaluated"
+      "noCompetencies": "No competencies evaluated",
+      "expectedLevel": "Expected Level",
+      "totalContribution": "Total Contribution",
+      "compliancePercentage": "Compliance Percentage"
     },
     "chart": {
       "expectedVsObtained": "Expected vs Obtained Level",
       "complianceByCompetence": "Compliance by Competency",
-      "completionProgress": "Completion Progress",
+      "completionProgress": "Contribution Distribution by Evaluator",
       "roleBreakdown": "Evaluation by Role",
       "expected": "Expected",
       "obtained": "Obtained",
       "score": "Score",
-      "weight": "Weight"
+      "weight": "Weight",
+      "noData": "No data available to display",
+      "noEvaluators": "No evaluators assigned"
     },
     "relationships": {
       "MANAGER": "Immediate Boss/Supervisor",
       "PEER": "Peer",
       "SUBORDINATE": "Collaborator",
       "SELF": "Self-Assessment",
+      "SUPERVISOR": "Supervisor",
       "OTHER": "Other"
+    },
+    "spider": {
+      "title": "Analysis by Evaluator",
+      "description": "Comparison of expected level vs. each evaluator's score per competency",
+      "expectedLevel": "Expected Level",
+      "noData": "No data available for spider chart"
     },
     "messages": {
       "success": {
@@ -1634,7 +1660,8 @@
         "loading": "Error loading evaluation detail",
         "notFound": "Requested evaluation not found",
         "invalidData": "Evaluation data is not valid",
-        "exporting": "Error exporting evaluation"
+        "exporting": "Error exporting evaluation",
+        "loadingSpider": "Error loading data for spider chart"
       }
     },
     "empty": {

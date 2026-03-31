@@ -25,13 +25,15 @@ import { GetEvaluationListByIdService } from 'src/services/performance/evaluatio
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
-import { Chart, useChart } from 'src/components/chart';
 import { EmptyContent } from 'src/components/empty-content';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { CustomPopover } from 'src/components/custom-popover';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
+import { SpiderEvaluatorChart } from '../spider-evaluator-chart';
 import { EvaluationDetailHeader } from '../evaluation-detail-header';
+import { CompletionProgressChart } from '../completion-progress-chart';
+import { ComplianceByCompetencyChart } from '../compliance-by-competency-chart';
 import { EvaluationDetailCompetenceCard } from '../evaluation-detail-competence-card';
 
 // ----------------------------------------------------------------------
@@ -120,89 +122,6 @@ export function EvaluationDetailView({ id }: Props) {
       fetchData();
     }
   }, [id, t]);
-
-  // Gráfico general de cumplimiento
-  const complianceChartOptions = useChart({
-    chart: {
-      type: 'bar',
-      toolbar: { show: true },
-    },
-    plotOptions: {
-      bar: {
-        horizontal: true,
-        borderRadius: 4,
-        dataLabels: {
-          position: 'top',
-        },
-      },
-    },
-    dataLabels: {
-      enabled: true,
-      formatter: (val: number) => `${val.toFixed(0)}%`,
-      offsetX: 0,
-      style: {
-        fontSize: '12px',
-        colors: ['#fff'],
-      },
-    },
-    xaxis: {
-      categories: data?.competencies.map((comp) => comp.competenceName) || [],
-      max: 100,
-    },
-    colors: [theme.palette.primary.main],
-    grid: {
-      xaxis: {
-        lines: {
-          show: true,
-        },
-      },
-    },
-  });
-
-  const complianceChartSeries = [
-    {
-      name: t('evaluation-detail.competencies.compliance'),
-      data: data?.competencies.map((comp) => comp.compliancePercentage) || [],
-    },
-  ];
-
-  // Gráfico de progreso de completitud
-  const completionChartOptions = useChart({
-    chart: {
-      type: 'donut',
-    },
-    labels: data?.competencies.map((comp) => comp.competenceName) || [],
-    legend: {
-      position: 'bottom',
-    },
-    plotOptions: {
-      pie: {
-        donut: {
-          labels: {
-            show: true,
-            total: {
-              show: true,
-              label: t('evaluation-detail.competencies.completion'),
-              formatter: () => {
-                const totalQuestions = data?.competencies.reduce(
-                  (acc, comp) => acc + comp.totalQuestions,
-                  0
-                ) || 0;
-                const answeredQuestions = data?.competencies.reduce(
-                  (acc, comp) => acc + comp.answeredQuestions,
-                  0
-                ) || 0;
-                return totalQuestions ? `${((answeredQuestions / totalQuestions) * 100).toFixed(0)}%` : '0%';
-              },
-            },
-          },
-        },
-      },
-    },
-    colors: data?.competencies.map((comp) => comp.color || theme.palette.primary.main) || [],
-  });
-
-  const completionChartSeries = data?.competencies.map((comp) => comp.answeredQuestions) || [];
 
   if (loading) {
     return <LoadingScreen />;
@@ -309,12 +228,7 @@ export function EvaluationDetailView({ id }: Props) {
               <Typography variant="h6" sx={{ mb: 3 }}>
                 {t('evaluation-detail.chart.complianceByCompetence')}
               </Typography>
-              <Chart
-                type="bar"
-                series={complianceChartSeries}
-                options={complianceChartOptions}
-                sx={{ height: 320 }}
-              />
+              <ComplianceByCompetencyChart data={data} />
             </Card>
 
             {/* Gráfico de progreso de completitud */}
@@ -322,15 +236,21 @@ export function EvaluationDetailView({ id }: Props) {
               <Typography variant="h6" sx={{ mb: 3 }}>
                 {t('evaluation-detail.chart.completionProgress')}
               </Typography>
-              <Chart
-                type="donut"
-                series={completionChartSeries}
-                options={completionChartOptions}
-                sx={{ height: 320 }}
-              />
+              <CompletionProgressChart data={data} />
             </Card>
           </Stack>
         )}
+
+        {/* Gráfico Spider - Full Width */}
+        <Card sx={{ p: 3 }}>
+          <Typography variant="h6" sx={{ mb: 3 }}>
+            {t('evaluation-detail.spider.title')}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            {t('evaluation-detail.spider.description')}
+          </Typography>
+          <SpiderEvaluatorChart participantId={id} />
+        </Card>
 
         {/* Título de competencias */}
         <Box

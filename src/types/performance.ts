@@ -647,6 +647,8 @@ export type IEvaluationDetailBreakdownByRole = {
   relationship: string;
   score: number;
   weight: number;
+  weightedScore: number;
+  scoreContribution: number;
 };
 
 export type IEvaluationDetailCompetence = {
@@ -669,5 +671,69 @@ export type IEvaluationDetail = {
   campaignName: string;
   overallCompetencyScore: number;
   competencies: IEvaluationDetailCompetence[];
+};
+
+// ----------------------------------------------------------------------
+// Types for Spider Evaluator Chart
+// ----------------------------------------------------------------------
+
+export type ISpiderEvaluator = {
+  evaluatorId: number;
+  displayName: string;
+  relationship: string;
+  score: number;
+};
+
+export type ISpiderCompetency = {
+  competenceId: number;
+  competenceName: string;
+  color: string;
+  expectedLevel: number;
+  evaluators: ISpiderEvaluator[];
+};
+
+export type ISpiderData = {
+  participantId: number;
+  employeeName: string;
+  campaignName: string;
+  campaignType: string;
+  scaleMax: number;
+  competencies: ISpiderCompetency[];
+};
+
+// ----------------------------------------------------------------------
+// Types for Campaign Analysis View
+// ----------------------------------------------------------------------
+
+export type IRadarCompetency = {
+  competenceId: number;
+  competenceName: string;
+  color: string;
+  expectedLevel: number;
+  overallScore: number;
+  compliancePercentage: number;
+  breakdownByRole: { relationship: string; avgScore: number; weight: number }[];
+};
+
+export type IRelationshipItem = {
+  relationship: string;
+  totalResponses: number;
+  percentage: number;
+  totalAssigned: number;
+  totalResponded: number;
+  participationRate: number;
+};
+
+export type ICampaignAnalysisEmployee = {
+  id: number;
+  participantId: number;
+  campaignName: string;
+  employeeName: string;
+  photoUrl?: string;
+  jobPosition: string;
+  organizationalUnitName: string;
+  status: string;
+  dueDate: string;
+  avgScore: number | null;
 };
 

@@ -1,7 +1,13 @@
 'use client';
 
-import { useSetState } from 'minimal-shared/hooks';
+import type {
+  IRadarCompetency,
+  IRelationshipItem,
+  ICampaignAnalysisEmployee,
+} from 'src/types/performance';
+
 import { useState, useEffect, useCallback } from 'react';
+import { usePopover, useSetState } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -9,10 +15,12 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import TableBody from '@mui/material/TableBody';
@@ -41,50 +49,21 @@ import {
   normalizeOrganizationalUnitListResponse,
 } from 'src/services/organization/organizationalUnit.service';
 import {
+  ExportCampaignAnalyticsService,
   GetEvaluationListPaginationService,
   GetCampaignAnalyticsCompetencyService,
   GetCampaignRelationshipDistributionService,
 } from 'src/services/performance/evaluations-list.service';
 
 import { Label } from 'src/components/label';
+import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { TablePaginationCustom } from 'src/components/table';
+import { CustomPopover } from 'src/components/custom-popover';
 import { Chart, useChart, ChartLegends } from 'src/components/chart';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 // ----------------------------------------------------------------------
-
-interface IRadarCompetency {
-  competenceId: number;
-  competenceName: string;
-  color: string;
-  expectedLevel: number;
-  overallScore: number;
-  compliancePercentage: number;
-  breakdownByRole: { relationship: string; avgScore: number; weight: number }[];
-}
-
-interface IRelationshipItem {
-  relationship: string;
-  totalResponses: number;
-  percentage: number;
-  totalAssigned: number;
-  totalResponded: number;
-  participationRate: number;
-}
-
-interface IEmployee {
-  id: number;
-  participantId: number;
-  campaignName: string;
-  employeeName: string;
-  photoUrl?: string;
-  jobPosition: string;
-  organizationalUnitName: string;
-  status: string;
-  dueDate: string;
-  avgScore: number | null;
-}
 
 type FilterOption = { id: string; name: string };
 
@@ -532,7 +511,7 @@ function EmployeeTable({
   onRowsPerPageChange,
   onViewParticipant,
 }: {
-  rows: IEmployee[];
+  rows: ICampaignAnalysisEmployee[];
   page: number;
   rowsPerPage: number;
   totalCount: number;
@@ -687,19 +666,55 @@ export function CampaignAnalysisView({ campaignId }: Props) {
   const { t } = useTranslate('performance');
   const [radarData, setRadarData] = useState<IRadarCompetency[]>([]);
   const [relationshipData, setRelationshipData] = useState<IRelationshipItem[]>([]);
-  const [employees, setEmployees] = useState<IEmployee[]>([]);
+  const [employees, setEmployees] = useState<ICampaignAnalysisEmployee[]>([]);
   const [employeeMeta, setEmployeeMeta] = useState({ itemCount: 0 });
   const [loadingCharts, setLoadingCharts] = useState(true);
   const [loadingTable, setLoadingTable] = useState(true);
   const [empPage, setEmpPage] = useState(0);
   const [empRowsPerPage, setEmpRowsPerPage] = useState(10);
   const [dense, setDense] = useState(false);
+  const [exporting, setExporting] = useState(false);
+
+  const exportPopover = usePopover();
 
   const filters = useSetState<TableFilters>({
     name: '',
     organizationalUnitIds: [],
     orderDirection: '',
   });
+
+  const handleExport = useCallback(
+    async (format: 0 | 1) => {
+      setExporting(true);
+      exportPopover.onClose();
+      try {
+        const response = await ExportCampaignAnalyticsService(campaignId, format);
+        
+        const blob = new Blob([response.data], {
+          type: format === 0 
+            ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            : 'application/pdf',
+        });
+        
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `analisis_campana_${campaignId}_${new Date().getTime()}.${format === 0 ? 'xlsx' : 'pdf'}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        
+        toast.success(t('campaign-analysis.messages.success.exported'));
+      } catch (err) {
+        console.error('Error exporting campaign analysis:', err);
+        toast.error(t('campaign-analysis.messages.error.exporting'));
+      } finally {
+        setExporting(false);
+      }
+    },
+    [campaignId, exportPopover, t]
+  );
 
   // ── Fetch charts ────────────────────────────────────────────────────────
   useEffect(() => {
@@ -771,6 +786,16 @@ export function CampaignAnalysisView({ campaignId }: Props) {
           { name: t('campaign-analysis.breadcrumbs.campaigns'), href: paths.dashboard.performance.configureEvaluations },
           { name: t('campaign-analysis.breadcrumbs.analysis') },
         ]}
+        action={
+          <Button
+            variant="contained"
+            startIcon={<Iconify icon="solar:download-bold" />}
+            onClick={exportPopover.onOpen}
+            disabled={exporting}
+          >
+            {exporting ? t('campaign-analysis.actions.exporting') : t('campaign-analysis.actions.export')}
+          </Button>
+        }
         sx={{ mb: { xs: 3, md: 5 } }}
       />
 
@@ -860,6 +885,31 @@ export function CampaignAnalysisView({ campaignId }: Props) {
           />
         )}
       </Card>
+
+      <CustomPopover
+        open={exportPopover.open}
+        anchorEl={exportPopover.anchorEl}
+        onClose={exportPopover.onClose}
+        slotProps={{ arrow: { placement: 'top-right' } }}
+      >
+        <MenuList>
+          <MenuItem
+            onClick={() => handleExport(0)}
+            disabled={exporting}
+          >
+            <Iconify icon="solar:file-text-bold" />
+            {t('campaign-analysis.actions.exportExcel')}
+          </MenuItem>
+
+          <MenuItem
+            onClick={() => handleExport(1)}
+            disabled={exporting}
+          >
+            <Iconify icon="solar:file-text-bold" />
+            {t('campaign-analysis.actions.exportPdf')}
+          </MenuItem>
+        </MenuList>
+      </CustomPopover>
     </DashboardContent>
   );
 }

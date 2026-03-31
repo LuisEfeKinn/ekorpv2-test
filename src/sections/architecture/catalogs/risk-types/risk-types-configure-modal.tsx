@@ -26,6 +26,7 @@ import {
   GetRiskScaleMapService,
   GetRiskImpactLevelsService,
   GetRiskToleranceLevelsService,
+  GetRiskDeficiencyLevelsService,
   GetRiskProbabilityLevelsService,
 } from 'src/services/architecture/catalogs/riskTypes.service';
 
@@ -41,23 +42,25 @@ type Props = DialogProps & {
 };
 
 export function RiskTypesConfigureModal({ open, onClose, dataId, source, ...other }: Props) {
-  const { t } = useTranslate('catalogs');
+  const { t, currentLang } = useTranslate('catalogs');
   const router = useRouter();
   
   const [openToleranceConfig, setOpenToleranceConfig] = useState(false);
 
   const getLink = (base: string) => source === 'map' ? `${base}&source=map` : base;
 
-  const tf = useCallback((key: string, d: string) => {
+  const tf = useCallback((key: string, en: string, es?: string) => {
     const v = t(key);
-    return v && v !== key ? v : d;
-  }, [t]);
+    if (v && v !== key) return v;
+    return currentLang?.value === 'es' ? (es ?? en) : en;
+  }, [t, currentLang?.value]);
 
   const [loading, setLoading] = useState(false);
   const [toleranceLevels, setToleranceLevels] = useState<any[]>([]);
   const [loadingTol, setLoadingTol] = useState(false);
   const [probabilityLevels, setProbabilityLevels] = useState<any[]>([]);
   const [impactLevels, setImpactLevels] = useState<any[]>([]);
+  const [deficiencyLevels, setDeficiencyLevels] = useState<any[]>([]);
 
   const loadMap = useCallback(async () => {
     if (!dataId) return;
@@ -119,20 +122,35 @@ export function RiskTypesConfigureModal({ open, onClose, dataId, source, ...othe
     }
   }, [dataId]);
 
+  const loadDeficiency = useCallback(async () => {
+    if (!dataId) return;
+    try {
+      const res = await GetRiskDeficiencyLevelsService({ risktype: dataId });
+      const raw = (res as any)?.data;
+      const listArr: any[] = Array.isArray(raw) ? (Array.isArray(raw[0]) ? raw[0] : raw) : [];
+      setDeficiencyLevels(Array.isArray(listArr) ? listArr : []);
+    } catch {
+      setDeficiencyLevels([]);
+    }
+  }, [dataId]);
+
   useEffect(() => {
     if (open && dataId) {
       loadMap();
       loadTolerance();
       loadProbability();
       loadImpact();
+      loadDeficiency();
     }
-  }, [open, dataId, loadMap, loadTolerance, loadProbability, loadImpact]);
+  }, [open, dataId, loadMap, loadTolerance, loadProbability, loadImpact, loadDeficiency]);
 
   const probabilityCount = useMemo(() => Array.isArray(probabilityLevels) ? probabilityLevels.length : 0, [probabilityLevels]);
 
   const impactCount = useMemo(() => Array.isArray(impactLevels) ? impactLevels.length : 0, [impactLevels]);
 
   const toleranceCount = useMemo(() => Array.isArray(toleranceLevels) ? toleranceLevels.length : 0, [toleranceLevels]);
+
+  const deficiencyCount = useMemo(() => Array.isArray(deficiencyLevels) ? deficiencyLevels.length : 0, [deficiencyLevels]);
 
   const handleClose = useCallback(() => {
     onClose();
@@ -141,7 +159,7 @@ export function RiskTypesConfigureModal({ open, onClose, dataId, source, ...othe
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth {...other}>
       <DialogTitle>
-        {tf('risk-types.configure.title', 'Configure risk type')}
+        {tf('risk-types.configure.title', 'Configure risk type', 'Configurar tipo de riesgo')}
       </DialogTitle>
       <DialogContent dividers>
         {(loading || loadingTol) ? (
@@ -156,7 +174,7 @@ export function RiskTypesConfigureModal({ open, onClose, dataId, source, ...othe
                   onClick={() => { if (dataId) router.push(getLink(paths.dashboard.architecture.catalogs.riskTypesProbabilityLevels(String(dataId)))); }}
                   sx={{ flex: 1, px: 2, py: 1.25, borderRadius: 1, border: '1px solid', borderColor: 'divider', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}
                 >
-                  <Typography variant="body2" sx={{ fontWeight: 600 }}>{tf('risk-types.configure.probability', 'Probability Levels')}</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>{tf('risk-types.configure.probability', 'Probability Levels', 'Niveles de Probabilidad')}</Typography>
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <Typography variant="caption" sx={{ color: 'text.secondary' }}>({probabilityCount})</Typography>
                     <Iconify icon="eva:arrowhead-right-fill" />
@@ -168,9 +186,21 @@ export function RiskTypesConfigureModal({ open, onClose, dataId, source, ...othe
                   onClick={() => { if (dataId) router.push(paths.dashboard.architecture.catalogs.riskTypesImpactLevels(String(dataId))); }}
                   sx={{ flex: 1, px: 2, py: 1.25, borderRadius: 1, border: '1px solid', borderColor: 'divider', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}
                 >
-                  <Typography variant="body2" sx={{ fontWeight: 600 }}>{tf('risk-types.configure.impact', 'Impact Levels')}</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>{tf('risk-types.configure.impact', 'Impact Levels', 'Niveles de Impacto')}</Typography>
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <Typography variant="caption" sx={{ color: 'text.secondary' }}>({impactCount})</Typography>
+                    <Iconify icon="eva:arrowhead-right-fill" />
+                  </Stack>
+                </Box>
+              </ListItem>
+              <ListItem sx={{ px: 0, mt: 1 }}>
+                <Box
+                  onClick={() => { if (dataId) router.push(getLink(paths.dashboard.architecture.catalogs.riskTypesDeficiencyLevels(String(dataId)))); }}
+                  sx={{ flex: 1, px: 2, py: 1.25, borderRadius: 1, border: '1px solid', borderColor: 'divider', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}
+                >
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>{tf('risk-types.configure.deficiency', 'Deficiency Levels', 'Niveles de Deficiencia')}</Typography>
+                  <Stack direction="row" alignItems="center" spacing={1}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>({deficiencyCount})</Typography>
                     <Iconify icon="eva:arrowhead-right-fill" />
                   </Stack>
                 </Box>
@@ -180,7 +210,7 @@ export function RiskTypesConfigureModal({ open, onClose, dataId, source, ...othe
                   onClick={() => { if (dataId) router.push(getLink(paths.dashboard.architecture.catalogs.riskTypesToleranceLevels(String(dataId)))); }}
                   sx={{ flex: 1, px: 2, py: 1.25, borderRadius: 1, border: '1px solid', borderColor: 'divider', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}
                 >
-                  <Typography variant="body2" sx={{ fontWeight: 600 }}>{tf('risk-types.configure.tolerance', 'Risk Tolerance Levels')}</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>{tf('risk-types.configure.tolerance', 'Risk Tolerance Levels', 'Niveles de Tolerancia al Riesgo')}</Typography>
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <Typography variant="caption" sx={{ color: 'text.secondary' }}>({toleranceCount})</Typography>
                     <Iconify icon="eva:arrowhead-right-fill" />
@@ -192,7 +222,7 @@ export function RiskTypesConfigureModal({ open, onClose, dataId, source, ...othe
                   onClick={() => setOpenToleranceConfig(!openToleranceConfig)}
                   sx={{ width: '100%', px: 2, py: 1.25, borderRadius: 1, border: '1px solid', borderColor: 'divider', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}
                 >
-                  <Typography variant="body2" sx={{ fontWeight: 600 }}>{tf('risk-types.configure.tolerance_config', 'Configure Risk Tolerance Levels')}</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>{tf('risk-types.configure.tolerance_config', 'Configure Risk Tolerance Levels', 'Configurar niveles de tolerancia')}</Typography>
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <Iconify icon={openToleranceConfig ? "eva:arrow-ios-upward-fill" : "eva:arrow-ios-downward-fill"} />
                   </Stack>
@@ -207,7 +237,7 @@ export function RiskTypesConfigureModal({ open, onClose, dataId, source, ...othe
       </DialogContent>
       <Divider />
       <DialogActions>
-        <Button onClick={handleClose}>{tf('common.close', 'Close')}</Button>
+        <Button onClick={handleClose}>{tf('common.close', 'Close', 'Cerrar')}</Button>
       </DialogActions>
     </Dialog>
   );

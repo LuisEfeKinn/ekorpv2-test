@@ -1,4 +1,4 @@
-import type { DialogProps } from '@mui/material/Dialog';
+import type { DrawerProps } from '@mui/material/Drawer';
 
 import { useState, useEffect, useCallback } from 'react';
 
@@ -7,31 +7,33 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { LoadingButton } from '@mui/lab';
 import Switch from '@mui/material/Switch';
-import Dialog from '@mui/material/Dialog';
+import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 import { alpha, useTheme } from '@mui/material/styles';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import CircularProgress from '@mui/material/CircularProgress';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useTranslate } from 'src/locales';
 import { GetDomainPaginationService } from 'src/services/architecture/catalogs/domains.service';
+import { GetImpactRatioService } from 'src/services/architecture/related-data/related-data.service';
 import { GetProvidersPaginationService } from 'src/services/architecture/catalogs/providers.service';
 import { GetSystemTypesPaginationService } from 'src/services/architecture/catalogs/systemTypes.service';
-import { GetDataTableByIdService, SaveOrUpdateDataTableService } from 'src/services/architecture/data/dataTable.service';
-import { GetImpactRatioService, GetLocalExternalService } from 'src/services/architecture/related-data/related-data.service';
+import {
+  GetApplicationTableByIdService,
+  SaveOrUpdateApplicationTableService,
+} from 'src/services/architecture/applications/applicationTable.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-type Props = DialogProps & {
+type Props = DrawerProps & {
   open: boolean;
   onClose: () => void;
   dataId?: string;
@@ -41,17 +43,14 @@ type Props = DialogProps & {
 type FormData = {
   name: string;
   description: string;
-  file: string;
-  type: string;
-  rules: string;
-  localExternal: string;
+  architecture: boolean;
+  sla: boolean;
   nomenclature: string;
   code: string;
-  superiorData: string;
-  dataType: {
+  provider: {
     id: number;
   };
-  provider: {
+  systemType: {
     id: number;
   };
   Domains: {
@@ -74,30 +73,27 @@ type FormData = {
 export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave, ...other }: Props) {
   const { t } = useTranslate('architecture');
   const theme = useTheme();
+  const titleId = 'application-flow-edit-title';
 
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [dataTypes, setDataTypes] = useState<any[]>([]);
-  const [providers, setProviders] = useState<any[]>([]);
-  const [domains, setDomains] = useState<any[]>([]);
+  const [systemTypes, setSystemTypes] = useState<Array<{ id: number; name: string }>>([]);
+  const [providers, setProviders] = useState<Array<{ id: number; name: string }>>([]);
+  const [domains, setDomains] = useState<Array<{ id: number; code: string; name: string }>>([]);
   const [impactRatioOptions, setImpactRatioOptions] = useState<string[]>([]);
-  const [localExternalOptions, setLocalExternalOptions] = useState<string[]>([]);
   const [loadingCatalogs, setLoadingCatalogs] = useState(true);
 
   const [formData, setFormData] = useState<FormData>({
     name: '',
     description: '',
-    file: '',
-    type: '',
-    rules: '',
-    localExternal: '',
+    architecture: false,
+    sla: false,
     nomenclature: '',
     code: '',
-    superiorData: '',
-    dataType: {
+    provider: {
       id: 0
     },
-    provider: {
+    systemType: {
       id: 0
     },
     Domains: {
@@ -121,19 +117,17 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
       if (open) {
         setLoadingCatalogs(true);
         try {
-          const [dataTypesRes, providersRes, domainsRes, impactRatioRes, localExternalRes] = await Promise.all([
+          const [systemTypesRes, providersRes, domainsRes, impactRatioRes] = await Promise.all([
             GetSystemTypesPaginationService({ page: 1, perPage: 100 }),
             GetProvidersPaginationService({ page: 1, perPage: 100 }),
             GetDomainPaginationService({ page: 1, perPage: 100 }),
             GetImpactRatioService(),
-            GetLocalExternalService()
           ]);
 
-          setDataTypes(dataTypesRes.data?.[0] || []);
+          setSystemTypes(systemTypesRes.data?.[0] || []);
           setProviders(providersRes.data?.[0] || []);
           setDomains(domainsRes.data?.[0] || []);
           setImpactRatioOptions(impactRatioRes.data || []);
-          setLocalExternalOptions(localExternalRes.data || []);
         } catch (error) {
           console.error('Error loading catalogs:', error);
           toast.error(t('application.diagram.messages.error.loadingCatalogs'));
@@ -152,21 +146,18 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
 
     setLoading(true);
     try {
-      const response = await GetDataTableByIdService(dataId);
+      const response = await GetApplicationTableByIdService(dataId);
       if (response?.data) {
         const data = response.data;
         setFormData({
           name: data.name || '',
           description: data.description || '',
-          file: data.file || '',
-          type: data.type || '',
-          rules: data.rules || '',
-          localExternal: data.localExternal || '',
+          architecture: data.architecture || false,
+          sla: data.sla || false,
           nomenclature: data.nomenclature || '',
           code: data.code || '',
-          superiorData: data.superiorData || '',
-          dataType: data.dataType ? { id: data.dataType.id } : { id: 0 },
           provider: data.provider ? { id: data.provider.id } : { id: 0 },
+          systemType: data.systemType ? { id: data.systemType.id } : { id: 0 },
           Domains: data.Domains ? { id: data.Domains.id } : { id: 0 },
           contractedCapacity: data.contractedCapacity || '',
           adoptionContractDate: data.adoptionContractDate || '',
@@ -198,15 +189,12 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
         setFormData({
           name: '',
           description: '',
-          file: '',
-          type: '',
-          rules: '',
-          localExternal: '',
+          architecture: false,
+          sla: false,
           nomenclature: '',
           code: '',
-          superiorData: '',
-          dataType: { id: 0 },
           provider: { id: 0 },
+          systemType: { id: 0 },
           Domains: { id: 0 },
           contractedCapacity: '',
           adoptionContractDate: '',
@@ -224,11 +212,8 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
   }, [open, dataId, loadData]);
 
   // Manejar cambios en los campos
-  const handleChange = useCallback((field: string, value: string | boolean | number | any) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+  const handleChange = useCallback(<K extends keyof FormData>(field: K, value: FormData[K]) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   }, []);
 
   // Validar formulario
@@ -237,7 +222,9 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
     formData.description.trim() !== '' &&
     formData.code.trim() !== '' &&
     formData.nomenclature.trim() !== '' &&
-    formData.localExternal.trim() !== '';
+    formData.provider.id > 0 &&
+    formData.systemType.id > 0 &&
+    formData.Domains.id > 0;
 
   // Guardar o actualizar
   const handleSave = async () => {
@@ -248,7 +235,7 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
 
     setSaving(true);
     try {
-      await SaveOrUpdateDataTableService(formData, dataId);
+      await SaveOrUpdateApplicationTableService(formData, dataId);
       toast.success(
         dataId
           ? t('application.table.messages.success.updated')
@@ -276,51 +263,41 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
   };
 
   return (
-    <Dialog
+    <Drawer
       open={open}
       onClose={handleClose}
-      maxWidth="md"
-      fullWidth
-      PaperProps={{
-        sx: {
-          borderRadius: 3,
-          overflow: 'hidden',
-          boxShadow: `0 24px 48px ${alpha(theme.palette.common.black, 0.24)}`,
-        },
-      }}
+      anchor="right"
+      aria-labelledby={titleId}
+      PaperProps={{ sx: { width: { xs: '100%', sm: 640, md: 760 }, maxWidth: '100%' } }}
       {...other}
     >
-      {/* Header con gradiente */}
-      <Box
-        sx={{
-          background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
-          px: 3,
-          py: 3,
-          position: 'relative',
-          overflow: 'hidden',
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            opacity: 0.1,
-          },
-        }}
-      >
-        <Stack direction="row" spacing={2} alignItems="center">
-          <Box sx={{ flex: 1 }}>
-            <Typography variant="h5" sx={{ color: 'common.white', fontWeight: 700, mb: 0.5 }}>
-              {dataId
-                ? t('application.table.dialogs.edit.title')
-                : t('application.table.dialogs.create.title')}
-            </Typography>
-          </Box>
-        </Stack>
-      </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <Box
+          sx={{
+            background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+            px: 3,
+            py: 3,
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Typography
+                id={titleId}
+                variant="h5"
+                sx={{ color: 'common.white', fontWeight: 700, mb: 0.5 }}
+              >
+                {dataId ? t('application.table.dialogs.edit.title') : t('application.table.dialogs.create.title')}
+              </Typography>
+            </Box>
+            <IconButton onClick={handleClose} disabled={saving} sx={{ color: 'common.white' }}>
+              <Iconify icon="solar:close-circle-bold" width={22} />
+            </IconButton>
+          </Stack>
+        </Box>
 
-      <DialogContent sx={{ p: 0 }}>
+        <Box sx={{ flex: 1, overflow: 'auto' }}>
         {loading ? (
           <Box
             sx={{
@@ -435,68 +412,31 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
                 </Typography>
               </Stack>
 
-              <Stack spacing={2.5}>
-                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
-                  <TextField
-                    fullWidth
-                    label={t('data.table.table.columns.type')}
-                    value={formData.type}
-                    onChange={(e) => handleChange('type', e.target.value)}
-                    disabled={saving}
-                    InputProps={{
-                      startAdornment: (
-                        <Iconify
-                          icon="solar:add-folder-bold"
-                          width={20}
-                          sx={{ color: 'text.disabled', mr: 1 }}
-                        />
-                      ),
-                    }}
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 2,
-                      },
-                    }}
-                  />
-
-                  <TextField
-                    fullWidth
-                    label={t('application.table.table.columns.file')}
-                    value={formData.file}
-                    onChange={(e) => handleChange('file', e.target.value)}
-                    disabled={saving}
-                    InputProps={{
-                      startAdornment: (
-                        <Iconify
-                          icon="solar:copy-bold"
-                          width={20}
-                          sx={{ color: 'text.disabled', mr: 1 }}
-                        />
-                      ),
-                    }}
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 2,
-                      },
-                    }}
-                  />
-                </Box>
-
-                <TextField
-                  fullWidth
-                  label={t('application.table.table.columns.rules')}
-                  value={formData.rules}
-                  onChange={(e) => handleChange('rules', e.target.value)}
-                  multiline
-                  rows={2}
-                  disabled={saving}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                    },
-                  }}
+              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={formData.architecture}
+                      onChange={(e) => handleChange('architecture', e.target.checked)}
+                      disabled={saving}
+                      color="primary"
+                    />
+                  }
+                  label={t('application.table.table.columns.architecture')}
                 />
-              </Stack>
+
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={formData.sla}
+                      onChange={(e) => handleChange('sla', e.target.checked)}
+                      disabled={saving}
+                      color="success"
+                    />
+                  }
+                  label={t('application.table.table.columns.sla')}
+                />
+              </Box>
             </Paper>
 
             <Divider />
@@ -533,42 +473,7 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
                 </Typography>
               </Stack>
 
-              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr 1fr' }, gap: 2 }}>
-                <Autocomplete
-                  fullWidth
-                  options={localExternalOptions}
-                  value={formData.localExternal || null}
-                  onChange={(event, newValue) => handleChange('localExternal', newValue || '')}
-                  disabled={saving}
-                  loading={loadingCatalogs}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label={t('application.table.table.columns.localExternal')}
-                      required
-                      placeholder="U/E"
-                      InputProps={{
-                        ...params.InputProps,
-                        startAdornment: (
-                          <>
-                            <Iconify
-                              icon="solar:map-point-bold"
-                              width={20}
-                              sx={{ color: 'text.disabled', ml: 1, mr: 0.5 }}
-                            />
-                            {params.InputProps.startAdornment}
-                          </>
-                        ),
-                      }}
-                    />
-                  )}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                    },
-                  }}
-                />
-
+              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
                 <TextField
                   fullWidth
                   label={t('application.table.table.columns.nomenclature')}
@@ -642,11 +547,11 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
 
               <Autocomplete
                 fullWidth
-                options={dataTypes}
+              options={systemTypes}
                 getOptionLabel={(option) => option.name || ''}
-                value={dataTypes.find(dt => dt.id === formData.dataType.id) || null}
+              value={systemTypes.find((st) => st.id === formData.systemType.id) || null}
                 onChange={(_, newValue) => {
-                  handleChange('dataType', { id: newValue?.id || 0 });
+                handleChange('systemType', { id: newValue?.id || 0 });
                 }}
                 disabled={saving || loadingCatalogs}
                 loading={loadingCatalogs}
@@ -950,56 +855,58 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
             </Paper>
           </Stack>
         )}
-      </DialogContent>
+        </Box>
 
-      <DialogActions
-        sx={{
-          px: 3,
-          py: 2.5,
-          bgcolor: alpha(theme.palette.grey[500], 0.04),
-          gap: 1.5,
-        }}
-      >
-        <Button
-          onClick={handleClose}
-          disabled={saving}
-          variant="outlined"
-          color="inherit"
+        <Box
           sx={{
-            borderRadius: 2,
             px: 3,
-            height: 44,
-            borderColor: alpha(theme.palette.grey[500], 0.32),
-            '&:hover': {
-              borderColor: theme.palette.grey[500],
-              bgcolor: alpha(theme.palette.grey[500], 0.08),
-            },
+            py: 2.5,
+            bgcolor: alpha(theme.palette.grey[500], 0.04),
+            borderTop: `1px solid ${alpha(theme.palette.divider, 0.08)}`,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            gap: 1.5,
           }}
         >
-          <Iconify icon="solar:close-circle-bold" width={20} sx={{ mr: 1 }} />
-          {t('application.table.actions.cancel')}
-        </Button>
-        <LoadingButton
-          variant="contained"
-          onClick={handleSave}
-          loading={saving}
-          disabled={loading || !isFormValid()}
-          startIcon={<Iconify icon="solar:check-circle-bold" width={20} />}
-          sx={{
-            borderRadius: 2,
-            px: 4,
-            height: 44,
-            boxShadow: `0 8px 16px ${alpha(theme.palette.primary.main, 0.24)}`,
-            '&:hover': {
-              boxShadow: `0 12px 24px ${alpha(theme.palette.primary.main, 0.32)}`,
-            },
-          }}
-        >
-          {dataId
-            ? t('application.table.actions.update')
-            : t('application.table.actions.save')}
-        </LoadingButton>
-      </DialogActions>
-    </Dialog>
+          <Button
+            onClick={handleClose}
+            disabled={saving}
+            variant="outlined"
+            color="inherit"
+            sx={{
+              borderRadius: 2,
+              px: 3,
+              height: 44,
+              borderColor: alpha(theme.palette.grey[500], 0.32),
+              '&:hover': {
+                borderColor: theme.palette.grey[500],
+                bgcolor: alpha(theme.palette.grey[500], 0.08),
+              },
+            }}
+          >
+            <Iconify icon="solar:close-circle-bold" width={20} sx={{ mr: 1 }} />
+            {t('application.table.actions.cancel')}
+          </Button>
+          <LoadingButton
+            variant="contained"
+            onClick={handleSave}
+            loading={saving}
+            disabled={loading || !isFormValid()}
+            startIcon={<Iconify icon="solar:check-circle-bold" width={20} />}
+            sx={{
+              borderRadius: 2,
+              px: 4,
+              height: 44,
+              boxShadow: `0 8px 16px ${alpha(theme.palette.primary.main, 0.24)}`,
+              '&:hover': {
+                boxShadow: `0 12px 24px ${alpha(theme.palette.primary.main, 0.32)}`,
+              },
+            }}
+          >
+            {dataId ? t('application.table.actions.update') : t('application.table.actions.save')}
+          </LoadingButton>
+        </Box>
+      </Box>
+    </Drawer>
   );
 }

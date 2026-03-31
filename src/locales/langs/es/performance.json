@@ -1558,6 +1558,20 @@
       "people": "Personas",
       "responses": "Respuestas"
     },
+    "actions": {
+      "export": "Exportar",
+      "exporting": "Exportando...",
+      "exportExcel": "Exportar a Excel",
+      "exportPdf": "Exportar a PDF"
+    },
+    "messages": {
+      "success": {
+        "exported": "Análisis exportado correctamente"
+      },
+      "error": {
+        "exporting": "Error al exportar el análisis"
+      }
+    },
     "table": {
       "title": "Participantes",
       "subheader": "Lista de empleados con sus resultados",
@@ -1606,24 +1620,36 @@
       "answered": "Respondidas",
       "completion": "Completitud",
       "breakdownByRole": "Desglose por Rol",
-      "noCompetencies": "No hay competencias evaluadas"
+      "noCompetencies": "No hay competencias evaluadas",
+      "expectedLevel": "Nivel Esperado",
+      "totalContribution": "Contribución Total",
+      "compliancePercentage": "Porcentaje de Cumplimiento"
     },
     "chart": {
       "expectedVsObtained": "Nivel Esperado vs Obtenido",
       "complianceByCompetence": "Cumplimiento por Competencia",
-      "completionProgress": "Progreso de Completitud",
+      "completionProgress": "Distribución de Contribución por Evaluador",
       "roleBreakdown": "Evaluación por Rol",
       "expected": "Esperado",
       "obtained": "Obtenido",
       "score": "Puntuación",
-      "weight": "Peso"
+      "weight": "Peso",
+      "noData": "No hay datos disponibles para mostrar",
+      "noEvaluators": "No hay evaluadores asignados"
     },
     "relationships": {
       "MANAGER": "Jefe Inmediato/Supervisor",
       "PEER": "Par",
       "SUBORDINATE": "Colaborador",
       "SELF": "Autoevaluación",
+      "SUPERVISOR": "Supervisor",
       "OTHER": "Otro"
+    },
+    "spider": {
+      "title": "Análisis por Evaluador",
+      "description": "Comparación del nivel esperado vs. la calificación de cada evaluador por competencia",
+      "expectedLevel": "Nivel Esperado",
+      "noData": "No hay datos disponibles para el gráfico spider"
     },
     "messages": {
       "success": {
@@ -1634,7 +1660,8 @@
         "loading": "Error al cargar el detalle de la evaluación",
         "notFound": "No se encontró la evaluación solicitada",
         "invalidData": "Los datos de la evaluación no son válidos",
-        "exporting": "Error al exportar la evaluación"
+        "exporting": "Error al exportar la evaluación",
+        "loadingSpider": "Error al cargar el gráfico de evaluadores"
       }
     },
     "empty": {

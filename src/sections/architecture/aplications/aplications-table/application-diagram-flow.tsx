@@ -26,14 +26,11 @@ import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
+import Drawer from '@mui/material/Drawer';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import DialogTitle from '@mui/material/DialogTitle';
 import { alpha, useTheme } from '@mui/material/styles';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { useTranslate } from 'src/locales';
@@ -963,6 +960,8 @@ export function ApplicationDiagramFlow({
 }: ApplicationDiagramFlowProps) {
   const { t } = useTranslate('architecture');
   const theme = useTheme();
+  const deleteDrawerTitleId = 'application-flow-delete-title';
+  const mapDrawerTitleId = 'application-flow-map-title';
 
   const [loading, setLoading] = useState(true);
   const [rootNodes, setRootNodes] = useState<RootNode[]>([]);
@@ -2110,118 +2109,117 @@ export function ApplicationDiagramFlow({
       />
 
       {/* Dialog de confirmación para eliminar */}
-      <Dialog
+      <Drawer
         open={deleteDialog.open}
         onClose={handleCloseDeleteDialog}
-        maxWidth="xs"
-        fullWidth
+        anchor="right"
+        aria-labelledby={deleteDrawerTitleId}
+        PaperProps={{ sx: { width: { xs: '100%', sm: 420 }, maxWidth: '100%' } }}
       >
-        <DialogTitle>
-          {t('application.diagram.actions.delete')} {deleteDialog.name}
-        </DialogTitle>
-        <DialogContent>
-          <Typography>
-            {t('application.diagram.dialogs.delete.title', { name: deleteDialog.name })}
-          </Typography>
-          <Typography>
-            {t('application.diagram.dialogs.delete.content')}
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDeleteDialog} color="inherit">
-            {t('application.diagram.actions.cancel')}
-          </Button>
-          <Button
-            onClick={handleConfirmDelete}
-            color="error"
-            variant="contained"
-            autoFocus
-          >
-            {t('application.diagram.actions.delete')}
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Modal del diagrama/mapa */}
-      <Dialog
-        open={diagramModal.open}
-        onClose={handleCloseDiagramModal}
-        maxWidth="xl"
-        fullWidth
-        PaperProps={{
-          sx: {
-            height: '90vh',
-            borderRadius: 3,
-          },
-        }}
-      >
-        <DialogTitle
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
-            pb: 2,
-          }}
-        >
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
-            <Box
-              sx={{
-                width: 40,
-                height: 40,
-                borderRadius: 2,
-                bgcolor: alpha(theme.palette.info.main, 0.1),
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Iconify
-                icon="solar:map-point-bold"
-                width={24}
-                sx={{ color: 'info.main' }}
-              />
-            </Box>
-            <Box sx={{ flex: 1 }}>
-              <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                {t('application.diagram.dialogs.map.title') || 'Mapa de Relaciones'}
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                {diagramModal.nodeLabel}
-              </Typography>
-            </Box>
-          </Stack>
-          <IconButton
-            onClick={handleCloseDiagramModal}
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <Box
             sx={{
-              color: 'text.secondary',
-              '&:hover': {
-                bgcolor: 'action.hover',
-              },
+              px: 3,
+              py: 2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
             }}
           >
-            <Iconify icon="solar:close-circle-bold" width={24} />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent
-          sx={{
-            p: 0,
-            height: '100%',
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'column'
-          }}
-        >
-          {diagramModal.dataId && (
-            <Box sx={{ flex: 1, position: 'relative' }}>
-              <ApplicationTableDiagram
-                applicationId={diagramModal.dataId}
-                sx={{ height: '100%', borderRadius: 0 }}
-              />
-            </Box>
-          )}
-        </DialogContent>
-      </Dialog>
+            <Typography id={deleteDrawerTitleId} variant="h6" sx={{ fontWeight: 700 }}>
+              {t('application.diagram.actions.delete')} {deleteDialog.name}
+            </Typography>
+            <IconButton onClick={handleCloseDeleteDialog} sx={{ color: 'text.secondary' }}>
+              <Iconify icon="solar:close-circle-bold" width={24} />
+            </IconButton>
+          </Box>
+
+          <Box sx={{ p: 3, flex: 1 }}>
+            <Typography>
+              {t('application.diagram.dialogs.delete.title', { name: deleteDialog.name })}
+            </Typography>
+            <Typography sx={{ mt: 1 }}>
+              {t('application.diagram.dialogs.delete.content')}
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              px: 3,
+              py: 2.5,
+              bgcolor: alpha(theme.palette.grey[500], 0.04),
+              borderTop: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+              display: 'flex',
+              justifyContent: 'flex-end',
+              gap: 1.5,
+            }}
+          >
+            <Button onClick={handleCloseDeleteDialog} color="inherit" variant="outlined">
+              {t('application.diagram.actions.cancel')}
+            </Button>
+            <Button onClick={handleConfirmDelete} color="error" variant="contained">
+              {t('application.diagram.actions.delete')}
+            </Button>
+          </Box>
+        </Box>
+      </Drawer>
+
+      {/* Modal del diagrama/mapa */}
+      <Drawer
+        open={diagramModal.open}
+        onClose={handleCloseDiagramModal}
+        anchor="right"
+        aria-labelledby={mapDrawerTitleId}
+        PaperProps={{ sx: { width: { xs: '100%', md: 1100 }, maxWidth: '100%' } }}
+      >
+        <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+          <Box
+            sx={{
+              px: 3,
+              py: 2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+            }}
+          >
+            <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1, minWidth: 0 }}>
+              <Box
+                sx={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 2,
+                  bgcolor: alpha(theme.palette.info.main, 0.1),
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <Iconify icon="solar:map-point-bold" width={24} sx={{ color: 'info.main' }} />
+              </Box>
+              <Box sx={{ flex: 1, minWidth: 0 }}>
+                <Typography id={mapDrawerTitleId} variant="h6" sx={{ fontWeight: 700 }}>
+                  {t('application.diagram.dialogs.map.title') || 'Mapa de Relaciones'}
+                </Typography>
+                <Typography variant="caption" color="text.secondary" noWrap>
+                  {diagramModal.nodeLabel}
+                </Typography>
+              </Box>
+            </Stack>
+            <IconButton onClick={handleCloseDiagramModal} sx={{ color: 'text.secondary' }}>
+              <Iconify icon="solar:close-circle-bold" width={24} />
+            </IconButton>
+          </Box>
+
+          <Box sx={{ flex: 1, overflow: 'hidden' }}>
+            {diagramModal.dataId && (
+              <ApplicationTableDiagram applicationId={diagramModal.dataId} sx={{ height: '100%', borderRadius: 0 }} />
+            )}
+          </Box>
+        </Box>
+      </Drawer>
 
       {/* Popover de filtros */}
       {/* <ApplicationFiltersPopover

@@ -15,7 +15,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { useTranslate } from 'src/locales';
 import { GetDomainPaginationService } from 'src/services/architecture/catalogs/domains.service';
-import { GetDataTypesPaginationService } from 'src/services/architecture/catalogs/dataTypes.service';
+import { GetSystemTypesPaginationService } from 'src/services/architecture/catalogs/systemTypes.service';
 
 import { toast } from 'src/components/snackbar';
 
@@ -28,7 +28,7 @@ type Domain = {
   color?: string;
 };
 
-type DataType = {
+type SystemType = {
   id: number;
   name: string;
 };
@@ -57,11 +57,11 @@ export function ApplicationFiltersPopover({
   const { t } = useTranslate('architecture');
 
   const [domains, setDomains] = useState<Domain[]>([]);
-  const [dataTypes, setDataTypes] = useState<DataType[]>([]);
+  const [systemTypes, setSystemTypes] = useState<SystemType[]>([]);
   const [loadingDomains, setLoadingDomains] = useState(false);
   const [loadingTypes, setLoadingTypes] = useState(false);
   const [selectedDomain, setSelectedDomain] = useState<Domain | null>(null);
-  const [selectedType, setSelectedType] = useState<DataType | null>(null);
+  const [selectedType, setSelectedType] = useState<SystemType | null>(null);
 
   // Cargar dominios
   const loadDomains = useCallback(async () => {
@@ -79,16 +79,15 @@ export function ApplicationFiltersPopover({
     }
   }, [t]);
 
-  // Cargar tipos de datos
-  const loadDataTypes = useCallback(async () => {
+  const loadSystemTypes = useCallback(async () => {
     setLoadingTypes(true);
     try {
-      const response = await GetDataTypesPaginationService({});
+      const response = await GetSystemTypesPaginationService({});
       if (response && response.data && Array.isArray(response.data[0])) {
-        setDataTypes(response.data[0]);
+        setSystemTypes(response.data[0]);
       }
     } catch (error) {
-      console.error('Error loading data types:', error);
+      console.error('Error loading system types:', error);
       toast.error(t('application.diagram.filters.errors.loadTypes'));
     } finally {
       setLoadingTypes(false);
@@ -99,9 +98,9 @@ export function ApplicationFiltersPopover({
   useEffect(() => {
     if (open) {
       loadDomains();
-      loadDataTypes();
+      loadSystemTypes();
     }
-  }, [open, loadDomains, loadDataTypes]);
+  }, [open, loadDomains, loadSystemTypes]);
 
   // Sincronizar valores seleccionados cuando cambian las props
   useEffect(() => {
@@ -114,13 +113,13 @@ export function ApplicationFiltersPopover({
   }, [selectedDomainId, domains]);
 
   useEffect(() => {
-    if (selectedTypeId && dataTypes.length > 0) {
-      const type = dataTypes.find((tp) => tp.id === selectedTypeId);
+    if (selectedTypeId && systemTypes.length > 0) {
+      const type = systemTypes.find((tp) => tp.id === selectedTypeId);
       setSelectedType(type || null);
     } else {
       setSelectedType(null);
     }
-  }, [selectedTypeId, dataTypes]);
+  }, [selectedTypeId, systemTypes]);
 
   // Handler para aplicar filtros
   const handleApply = useCallback(() => {
@@ -226,7 +225,7 @@ export function ApplicationFiltersPopover({
         {/* Autocomplete de Tipos */}
         <Autocomplete
           fullWidth
-          options={dataTypes}
+          options={systemTypes}
           value={selectedType}
           onChange={(event, newValue) => setSelectedType(newValue)}
           getOptionLabel={(option) => option.name}

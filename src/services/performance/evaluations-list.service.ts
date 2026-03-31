@@ -27,3 +27,24 @@ export const GetCampaignRelationshipDistributionService = async (id: string | nu
   );
   return response;
 };
+
+export const ExportCampaignAnalyticsService = async (
+  campaignId: string | number,
+  exportFormat: 0 | 1
+) => {
+  const response = await axios.get(
+    `${endpoints.performance.evaluationsList.analyticsCompetency}/${campaignId}/analytics-competency`,
+    {
+      params: { exportFormat },
+      responseType: 'blob',
+    }
+  );
+  return response;
+};
+
+export const GetSpiderEvaluatorService = async (participantId: string | number) => {
+  const response = await axios.get(
+    `${endpoints.performance.evaluationsList.spiderEvaluator}/${participantId}/spider-evaluator`
+  );
+  return response;
+};

@@ -464,6 +464,7 @@ export const endpoints = {
       byId: '/performance-management/results/participant', // + /:id/competency-gap
       analyticsCompetency: '/performance-management/results/campaign', // + /:id/analytics-competency
       relationshipDistribution: '/performance-management/results/campaign', // + /:id/relationship-distribution
+      spiderEvaluator: '/performance-management/results/participant', // + /:id/spider-evaluator
     }
   },
 
@@ -617,7 +618,7 @@ export const endpoints = {
       flow: {
         all: '/api/system/flow',
         byId: '/api/system/flow', // + /:id
-        save: '/api/system/flow', // + /:id/children
+        save: '/api/system', // + /:id/children
         delete: '/api/system/flow', // + /:id/children
         domain: '/api/system/flow/domains',
         domainById: '/api/system/flow/domain', // + /:id
