@@ -69,7 +69,7 @@ export function UserManagmentView() {
     { id: '', width: 88 },
     { id: 'fullName', label: tUsers('user-management.table.columns.fullName'), sortField: 'employee.firstName' },
     { id: 'position', label: tUsers('user-management.table.columns.position'), width: 180 },
-    { id: 'skill', label: tUsers('user-management.table.columns.skill'), width: 150 },
+    { id: 'skill', label: tUsers('user-management.table.columns.skill'), width: 200 },
     { id: 'location', label: tUsers('user-management.table.columns.location'), width: 180, sortField: 'country.name' },
     { id: 'billingRate', label: tUsers('user-management.table.columns.billingRate'), width: 150 },
     { id: 'weeklyHours', label: tUsers('user-management.table.columns.weeklyHours'), width: 120 },

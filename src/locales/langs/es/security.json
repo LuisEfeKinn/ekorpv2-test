@@ -14,16 +14,22 @@
       "update": "Actualizar Rol",
       "cancel": "Cancelar",
       "save": "Guardar",
-      "permissions": "Permisos"
+      "permissions": "Permisos",
+      "back": "Volver"
     },
     "table": {
       "columns": {
         "name": "Nombre",
         "description": "Descripción",
+        "isDefault": "Tipo",
         "permissions": "Permisos",
         "status": "Estado",
         "createdAt": "Fecha de Creación",
         "updatedAt": "Última Actualización"
+      },
+      "isDefault": {
+        "default": "Predeterminado",
+        "custom": "Personalizado"
       },
       "filters": {
         "all": "Todos",
@@ -376,11 +382,15 @@
     },
     "table": {
       "title": "Gestión de Permisos",
-      "subtitle": "Configura los permisos para este rol por módulo",
-      "selectModule": "Seleccionar Módulo",
+      "subtitle": "Configura los ítems para este rol",
+      "saveChanges": "Guardar Cambios",
+      "selectAll": "Seleccionar todo",
       "item": "Elemento",
       "itemsCount": "elementos",
       "noData": "No hay datos disponibles"
+    },
+    "info": {
+      "readOnly": "Este es un rol predeterminado. Sus ítems no pueden modificarse."
     },
     "modules": {
       "dashboard": "Panel de Control",

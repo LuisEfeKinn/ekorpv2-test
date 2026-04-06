@@ -16,6 +16,7 @@ import { RouterLink } from 'src/routes/components';
 
 import { useTranslate } from 'src/locales';
 
+import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomPopover } from 'src/components/custom-popover';
@@ -35,6 +36,8 @@ export function RoleTableRow({ row, selected, editHref, onSelectRow, onDeleteRow
   const menuActions = usePopover();
   const confirmDialog = useBoolean();
 
+  const isDefault = row.isDefault === 1;
+
   const renderMenuActions = () => (
     <CustomPopover
       open={menuActions.open}
@@ -43,12 +46,14 @@ export function RoleTableRow({ row, selected, editHref, onSelectRow, onDeleteRow
       slotProps={{ arrow: { placement: 'right-top' } }}
     >
       <MenuList>
-        <li>
-          <MenuItem component={RouterLink} href={editHref} onClick={() => menuActions.onClose()}>
-            <Iconify icon="solar:pen-bold" />
-            {t('roles.actions.edit')}
-          </MenuItem>
-        </li>
+        {!isDefault && (
+          <li>
+            <MenuItem component={RouterLink} href={editHref} onClick={() => menuActions.onClose()}>
+              <Iconify icon="solar:pen-bold" />
+              {t('roles.actions.edit')}
+            </MenuItem>
+          </li>
+        )}
 
         <li>
           <MenuItem
@@ -61,16 +66,18 @@ export function RoleTableRow({ row, selected, editHref, onSelectRow, onDeleteRow
           </MenuItem>
         </li>
 
-        <MenuItem
-          onClick={() => {
-            confirmDialog.onTrue();
-            menuActions.onClose();
-          }}
-          sx={{ color: 'error.main' }}
-        >
-          <Iconify icon="solar:trash-bin-trash-bold" />
-          {t('roles.actions.delete')}
-        </MenuItem>
+        {!isDefault && (
+          <MenuItem
+            onClick={() => {
+              confirmDialog.onTrue();
+              menuActions.onClose();
+            }}
+            sx={{ color: 'error.main' }}
+          >
+            <Iconify icon="solar:trash-bin-trash-bold" />
+            {t('roles.actions.delete')}
+          </MenuItem>
+        )}
       </MenuList>
     </CustomPopover>
   );
@@ -92,7 +99,6 @@ export function RoleTableRow({ row, selected, editHref, onSelectRow, onDeleteRow
   return (
     <>
       <TableRow hover selected={selected} aria-checked={selected} tabIndex={-1}>
-        {/* Actions Column - Primera columna como en employment-type */}
         <TableCell>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton
@@ -104,7 +110,6 @@ export function RoleTableRow({ row, selected, editHref, onSelectRow, onDeleteRow
           </Box>
         </TableCell>
 
-        {/* Name Column */}
         <TableCell>
           <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
             <Box component="span" sx={{ color: 'text.primary', fontWeight: 'fontWeightMedium' }}>
@@ -113,13 +118,21 @@ export function RoleTableRow({ row, selected, editHref, onSelectRow, onDeleteRow
           </Stack>
         </TableCell>
 
-        {/* Description Column */}
         <TableCell>
           <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
             <Box component="span" sx={{ color: 'text.secondary' }}>
               {row.description}
             </Box>
           </Stack>
+        </TableCell>
+
+        <TableCell>
+          <Label
+            variant="soft"
+            color={isDefault ? 'warning' : 'default'}
+          >
+            {isDefault ? t('roles.table.isDefault.default') : t('roles.table.isDefault.custom')}
+          </Label>
         </TableCell>
       </TableRow>
 

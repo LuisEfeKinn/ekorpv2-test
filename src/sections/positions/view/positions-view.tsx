@@ -1,7 +1,7 @@
 'use client';
 
 import type { TableHeadCellProps } from 'src/components/table';
-import type { IPosition, IPositionTableFilters } from 'src/types/organization';
+import type { IJobKm, IJobKmTableFilters } from 'src/types/organization';
 
 import { varAlpha } from 'minimal-shared/utils';
 import { useBoolean, useSetState } from 'minimal-shared/hooks';
@@ -22,9 +22,9 @@ import { RouterLink } from 'src/routes/components';
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 import {
-  DeletePositionService,
-  GetPositionPaginationService
-} from 'src/services/organization/position.service';
+  GetJobsKmService,
+  DeleteJobKmService,
+} from 'src/services/organization/job-km.service';
 
 import { Label } from 'src/components/label';
 import { toast } from 'src/components/snackbar';
@@ -55,7 +55,7 @@ export function PositionView() {
   const table = useTable();
   const confirmDialog = useBoolean();
 
-  const [tableData, setTableData] = useState<IPosition[]>([]);
+  const [tableData, setTableData] = useState<IJobKm[]>([]);
   const [totalItems, setTotalItems] = useState(0);
 
   const STATUS_OPTIONS = useMemo(() => [
@@ -64,18 +64,19 @@ export function PositionView() {
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(() => [
     { id: '', width: 88 },
-    { id: 'name', label: t('position.table.columns.name'), width: 200, sortField: 'job.name' },
+    { id: 'name', label: t('position.table.columns.name'), width: 200, sortField: 'name' },
     { id: 'superiorJob', label: t('position.table.columns.superiorJob'), width: 180 },
+    { id: 'numberOfPositions', label: t('position.table.columns.numberOfPositions'), width: 120 },
     { id: 'objectives', label: t('position.table.columns.objectives'), width: 200 },
     { id: 'requirements', label: t('position.table.columns.requirements'), width: 200 },
     { id: 'academic', label: t('position.table.columns.academic'), width: 180 },
     { id: 'experience', label: t('position.table.columns.experience'), width: 180 },
-    { id: 'location', label: t('position.table.columns.location'), width: 180 }
+    { id: 'location', label: t('position.table.columns.location'), width: 180 },
   ], [t]);
 
-  const filters = useSetState<IPositionTableFilters>({
+  const filters = useSetState<IJobKmTableFilters>({
     name: '',
-    status: 'all'
+    status: 'all',
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
@@ -99,7 +100,7 @@ export function PositionView() {
         order: serverOrderBy ? `${serverOrderBy}:${serverOrder}` : undefined,
       };
 
-      const response = await GetPositionPaginationService(params);
+      const response = await GetJobsKmService(params);
 
       setTableData(response?.data?.data || []);
       setTotalItems(response?.data?.meta?.itemCount || 0);
@@ -129,7 +130,7 @@ export function PositionView() {
   const handleDeleteRow = useCallback(
     async (id: string) => {
       try {
-        const response = await DeletePositionService(id);
+        const response = await DeleteJobKmService(id);
 
         if (response.data.statusCode === 200) {
           toast.success(t('position.messages.success.deleted'));
@@ -146,7 +147,7 @@ export function PositionView() {
   const handleDeleteRows = useCallback(async () => {
     try {
       // Eliminar múltiples elementos
-      const deletePromises = table.selected.map(id => DeletePositionService(id));
+      const deletePromises = table.selected.map((id) => DeleteJobKmService(id));
       await Promise.all(deletePromises);
 
       toast.success(t('position.messages.success.deletedMultiple'));
@@ -278,7 +279,7 @@ export function PositionView() {
               onSelectAllRows={(checked) =>
                 table.onSelectAllRows(
                   checked,
-                  dataFiltered.map((row) => row.id)
+                  dataFiltered.map((row) => String(row.id))
                 )
               }
               action={
@@ -310,10 +311,10 @@ export function PositionView() {
                     <PositionTableRow
                       key={row.id}
                       row={row}
-                      selected={table.selected.includes(row.id)}
-                      onSelectRow={() => table.onSelectRow(row.id)}
-                      onDeleteRow={() => handleDeleteRow(row.id)}
-                      editHref={`${paths.dashboard.organizations.positionsEdit(row.id)}`}
+                      selected={table.selected.includes(String(row.id))}
+                      onSelectRow={() => table.onSelectRow(String(row.id))}
+                      onDeleteRow={() => handleDeleteRow(String(row.id))}
+                      editHref={paths.dashboard.organizations.positionsEdit(String(row.id))}
                     />
                   ))}
 
@@ -348,8 +349,8 @@ export function PositionView() {
 // ----------------------------------------------------------------------
 
 type ApplyFilterProps = {
-  inputData: IPosition[];
-  filters: IPositionTableFilters;
+  inputData: IJobKm[];
+  filters: IJobKmTableFilters;
   comparator: (a: any, b: any) => number;
 };
 

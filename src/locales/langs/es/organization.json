@@ -317,6 +317,7 @@
       "columns": {
         "name": "Nombre",
         "superiorJob": "Cargo Superior",
+        "numberOfPositions": "Empleados Requeridos",
         "objectives": "Objetivos",
         "expectedResults": "Resultados Esperados",
         "requirements": "Requisitos",
@@ -428,6 +429,16 @@
           "label": "Unidad Organizacional",
           "placeholder": "Buscar y seleccionar unidad organizacional",
           "helperText": "Seleccione la unidad organizacional a la que pertenece este cargo (opcional)"
+        },
+        "numberOfPositions": {
+          "label": "Empleados Requeridos",
+          "placeholder": "Ej: 3",
+          "helperText": "Número de empleados requeridos para este cargo"
+        },
+        "competencies": {
+          "label": "Competencias",
+          "placeholder": "Buscar y seleccionar competencias",
+          "helperText": "Seleccione las competencias asociadas a este cargo (opcional)"
         }
       },
       "sections": {
@@ -685,7 +696,8 @@
         "employees": {
           "label": "Empleados",
           "add": "Agregar empleado",
-          "empty": "No hay empleados asignados"
+          "empty": "No hay empleados asignados",
+          "maxReached": "Máximo alcanzado"
         },
         "parentPosition": {
           "label": "Cargo Padre",
@@ -765,10 +777,13 @@
       "loadError": "Error al cargar el organigrama. Intenta nuevamente.",
       "confirmDelete": "¿Estás seguro de eliminar este cargo?",
       "deleteError": "Error al eliminar el cargo. Intenta nuevamente.",
+      "deleteSuccess": "Cargo eliminado con éxito.",
+      "createSuccess": "¡Cargo creado con éxito!",
+      "updateSuccess": "¡Cargo actualizado con éxito!",
+      "saveError": "Error al guardar el cargo. Intenta nuevamente.",
       "assignmentFor": "Funcionalidad de asignación para este cargo",
       "noData": "No se encontraron datos del organigrama.",
-      "createFirstPosition": "Crear primer cargo",
-      "saveError": "Error al guardar el cargo. Intenta nuevamente."
+      "createFirstPosition": "Crear primer cargo"
     }
   },
   "vigencies": {

@@ -630,6 +630,7 @@ export type IEvaluationList = {
 export type IEvaluationListTableFilters = {
   name: string;
   vigencyId: string;
+  vigencyName: string;
   organizationalUnitIds: string[];
   orderDirection: 'ASC' | 'DESC' | '';
 };

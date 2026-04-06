@@ -36,7 +36,7 @@ export function EvaluationsListTableFiltersResult({
   }, [filters, onResetPage]);
 
   const handleRemoveVigency = useCallback(() => {
-    filters.setState({ vigencyId: '' });
+    filters.setState({ vigencyId: '', vigencyName: '' });
     onResetPage();
   }, [filters, onResetPage]);
 
@@ -54,6 +54,7 @@ export function EvaluationsListTableFiltersResult({
     filters.setState({
       name: '',
       vigencyId: '',
+      vigencyName: '',
       organizationalUnitIds: [],
       orderDirection: '',
     });
@@ -73,7 +74,7 @@ export function EvaluationsListTableFiltersResult({
         label={`${t('evaluations-list.table.filters.vigency')}:`}
         isShow={!!filters.state.vigencyId}
       >
-        <Chip {...chipProps} label={filters.state.vigencyId} onDelete={handleRemoveVigency} />
+        <Chip {...chipProps} label={filters.state.vigencyName} onDelete={handleRemoveVigency} />
       </FiltersBlock>
 
       <FiltersBlock

@@ -191,7 +191,7 @@ export function EvaluationsListTableToolbar({ filters, onResetPage }: Props) {
           getOptionLabel={(option) => option.name}
           value={vigencyOptions.find((opt) => opt.id === filters.state.vigencyId) || null}
           onChange={(event, newValue) => {
-            filters.setState({ vigencyId: newValue?.id || '' });
+            filters.setState({ vigencyId: newValue?.id || '', vigencyName: newValue?.name || '' });
             onResetPage();
           }}
           onInputChange={(event, newInputValue) => {

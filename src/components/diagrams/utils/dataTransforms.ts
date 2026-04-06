@@ -76,6 +76,25 @@ export function transformTreeToReactFlow(
 }
 
 /**
+ * Convierte un array de árboles raíz (forest) a formato React Flow
+ */
+export function transformForestToReactFlow(
+  roots: OrganizationPosition[],
+  collapsedNodes?: Set<string>
+): { nodes: Node[]; edges: Edge[] } {
+  const allNodes: Node[] = [];
+  const allEdges: Edge[] = [];
+
+  roots.forEach((root) => {
+    const { nodes, edges } = transformTreeToReactFlow(root, collapsedNodes);
+    allNodes.push(...nodes);
+    allEdges.push(...edges);
+  });
+
+  return { nodes: allNodes, edges: allEdges };
+}
+
+/**
  * Actualiza la visibilidad de nodos basado en el estado de colapso
  */
 export function updateNodesVisibility(

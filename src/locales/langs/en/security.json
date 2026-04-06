@@ -14,16 +14,22 @@
       "update": "Update Role",
       "cancel": "Cancel",
       "save": "Save",
-      "permissions": "Permissions"
+      "permissions": "Permissions",
+      "back": "Back"
     },
     "table": {
       "columns": {
         "name": "Name",
         "description": "Description",
+        "isDefault": "Type",
         "permissions": "Permissions",
         "status": "Status",
         "createdAt": "Created Date",
         "updatedAt": "Last Updated"
+      },
+      "isDefault": {
+        "default": "Default",
+        "custom": "Custom"
       },
       "filters": {
         "all": "All",
@@ -376,11 +382,15 @@
     },
     "table": {
       "title": "Permissions Management",
-      "subtitle": "Configure permissions for this role by module",
-      "selectModule": "Select Module",
+      "subtitle": "Configure items for this role",
+      "saveChanges": "Save Changes",
+      "selectAll": "Select all",
       "item": "Item",
       "itemsCount": "items",
       "noData": "No data available"
+    },
+    "info": {
+      "readOnly": "This is a default role. Its items cannot be modified."
     },
     "modules": {
       "dashboard": "Dashboard",

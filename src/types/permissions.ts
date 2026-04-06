@@ -1,59 +1,42 @@
 // ----------------------------------------------------------------------
 
-export type ModuleOption = {
-  id: string;
-  name: string;
-  icon?: string;
-};
-
-export type PermissionItem = {
-  itemId: string;
+export type IRoleCatalogItem = {
+  itemId: number;
   itemName: string;
-  permissions: Array<{
-    permissionId: string;
-    permissionName: string;
-  }>;
+  icon: string;
+  route: string;
+  order: number;
+  itemparentId: number | null;
 };
 
-export type ModuleData = {
-  moduleId: string;
+export type IRoleCatalogModule = {
+  moduleId: number;
   moduleName: string;
-  items: PermissionItem[];
+  moduleOrder: number;
+  items: IRoleCatalogItem[];
 };
 
-export type AvailablePermission = {
-  id: string;
-  name: string;
-  icon?: string;
-  color?: string;
+export type IRoleAssignedItem = IRoleCatalogItem & { scope: string };
+
+export type IRoleAssignedModule = {
+  moduleId: number;
+  moduleName: string;
+  moduleOrder: number;
+  items: IRoleAssignedItem[];
+};
+
+export type IRoleCatalogResponse = {
+  statusCode: number;
+  data: IRoleCatalogModule[];
+};
+
+export type IRoleItemsResponse = {
+  statusCode: number;
+  data: IRoleAssignedModule[];
 };
 
 export type PermissionsTableProps = {
   roleId: string;
   roleName?: string;
-};
-
-export type PermissionsRoleViewProps = {
-  roleId: string;
-};
-
-// Tipos para las respuestas de la API
-export type GetPermissionsRelatedDataResponse = {
-  modules: Array<{
-    id: string;
-    name: string;
-    icon?: string;
-  }>;
-  permissions: Array<{
-    id: string;
-    name: string;
-  }>;
-};
-
-export type GetRolePermissionsResponse = ModuleData;
-
-export type UpdateRolePermissionRequest = {
-  roleId: number;
-  itemId: number;
-  permissionId: number;
+  isDefault?: number;
 };

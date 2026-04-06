@@ -3,8 +3,9 @@ import type { OrganizationPosition } from 'src/types/organizational-chart-positi
 import { useMemo, useState, useCallback } from 'react';
 
 import { createOrganizationalLayout } from '../layouts/treeLayout';
-import { 
+import {
   transformTreeToReactFlow,
+  transformForestToReactFlow,
 } from '../utils/dataTransforms';
 
 // ----------------------------------------------------------------------
@@ -17,7 +18,7 @@ interface UseDiagramDataOptions {
 }
 
 export function useDiagramData(
-  rootData: OrganizationPosition | null,
+  rootData: OrganizationPosition | OrganizationPosition[] | null,
   options: UseDiagramDataOptions = {}
 ) {
   const [collapsedNodes, setCollapsedNodes] = useState<Set<string>>(new Set());
@@ -28,7 +29,11 @@ export function useDiagramData(
   // Memoizar la transformación de datos base
   const baseNodesAndEdges = useMemo(() => {
     if (!rootData) return { nodes: [], edges: [] };
-    
+
+    if (Array.isArray(rootData)) {
+      return transformForestToReactFlow(rootData, new Set());
+    }
+
     return transformTreeToReactFlow(rootData, new Set());
   }, [rootData]);
 
@@ -87,22 +92,19 @@ export function useDiagramData(
   const handleCollapseAll = useCallback(() => {
     if (!rootData) return;
 
-    // Optimizado: Solo colapsar nodos que tienen hijos
     const getNodeIdsWithChildren = (node: OrganizationPosition): string[] => {
       const ids: string[] = [];
-      
       if (node.children && node.children.length > 0) {
         if (node.positionId) ids.push(node.positionId);
-        
-        node.children.forEach(child => {
+        node.children.forEach((child) => {
           ids.push(...getNodeIdsWithChildren(child));
         });
       }
-      
       return ids;
     };
 
-    const nodeIdsWithChildren = getNodeIdsWithChildren(rootData);
+    const roots = Array.isArray(rootData) ? rootData : [rootData];
+    const nodeIdsWithChildren = roots.flatMap((r) => getNodeIdsWithChildren(r));
     setCollapsedNodes(new Set(nodeIdsWithChildren));
   }, [rootData]);
 

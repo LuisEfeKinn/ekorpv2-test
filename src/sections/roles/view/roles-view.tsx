@@ -61,6 +61,7 @@ export function RolesView() {
     { id: 'actions', width: 88 },
     { id: 'name', label: t('roles.table.columns.name') },
     { id: 'description', label: t('roles.table.columns.description') },
+    { id: 'isDefault', label: t('roles.table.columns.isDefault'), width: 120 },
   ], [t]);
 
   const filters = useSetState<IRoleTableFilters>({

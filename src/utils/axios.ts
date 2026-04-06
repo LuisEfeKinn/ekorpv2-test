@@ -185,6 +185,16 @@ export const endpoints = {
       edit: '/api/jobs', // + /:id
       delete: '/api/jobs' // + /:id
     },
+    jobsKm: {
+      all: '/api/jobs-km',
+      save: '/api/jobs-km',
+      update: '/api/jobs-km', // + /:id
+      edit: '/api/jobs-km',   // + /:id
+      delete: '/api/jobs-km', // + /:id
+      tree: '/api/jobs-km/tree',
+      detail: '/api/jobs-km',      // + /:id/detail  (GET / PATCH)
+      createDetail: '/api/jobs-km/detail', // POST
+    },
     vigencies: {
       all: '/vigencies',
       save: '/vigencies',
@@ -206,7 +216,9 @@ export const endpoints = {
       save: '/rol',
       update: '/rol',
       edit: '/rol', // + /:id
-      delete: '/rol' // + /:id
+      delete: '/rol', // + /:id
+      itemsCatalog: '/rol/items-catalog', // + ?scope=admin|employee
+      items: '/rol' // + /:id/items
     },
     permissions: {
       getByRole: '/items-with-permission',

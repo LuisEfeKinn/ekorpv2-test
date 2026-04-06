@@ -15,7 +15,7 @@ import { useDiagramData } from './hooks/useDiagramData';
 // ----------------------------------------------------------------------
 
 export interface OrganizationChartProps {
-  data: OrganizationPosition | null;
+  data: OrganizationPosition | OrganizationPosition[] | null;
   onPositionEdit?: (position: OrganizationPosition) => void;
   onPositionDelete?: (position: OrganizationPosition) => void;
   onPositionAssign?: (position: OrganizationPosition) => void;
@@ -56,7 +56,9 @@ function OrganizationChartComponent({
     employee: EmployeeNode,
   }), []);
 
-  if (!data) {
+  const isEmpty = !data || (Array.isArray(data) && data.length === 0);
+
+  if (isEmpty) {
     return (
       <Box
         sx={{

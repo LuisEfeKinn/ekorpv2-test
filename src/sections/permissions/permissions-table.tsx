@@ -1,329 +1,191 @@
 'use client';
 
-import type {
-  ModuleData,
-  ModuleOption,
-  PermissionItem,
-  AvailablePermission,
-  PermissionsTableProps
-} from 'src/types/permissions';
+import type { IRoleCatalogModule, PermissionsTableProps } from 'src/types/permissions';
 
 import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import Chip from '@mui/material/Chip';
-import Table from '@mui/material/Table';
+import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
+import Alert from '@mui/material/Alert';
 import Switch from '@mui/material/Switch';
-import Select from '@mui/material/Select';
-import Tooltip from '@mui/material/Tooltip';
-import TableRow from '@mui/material/TableRow';
-import MenuItem from '@mui/material/MenuItem';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import InputLabel from '@mui/material/InputLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Skeleton from '@mui/material/Skeleton';
+import Accordion from '@mui/material/Accordion';
 import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
-import FormControl from '@mui/material/FormControl';
-import TableContainer from '@mui/material/TableContainer';
+import CardContent from '@mui/material/CardContent';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
 
 import { useTranslate } from 'src/locales';
 import {
-  DeletePermissionService,
-  GetRolePermissionsService,
-  UpdateRolePermissionService,
-  GetPermissionsRelatedDataService
-} from 'src/services/security/permissions.service';
+  GetRoleItemsService,
+  UpdateRoleItemsService,
+  GetRoleItemsCatalogService,
+} from 'src/services/security/roles.service';
 
+import { Label } from 'src/components/label';
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { EmptyContent } from 'src/components/empty-content';
-import { LoadingScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
-export function PermissionsTable({ roleId, roleName }: PermissionsTableProps) {
+const PermissionsTableSkeleton = () => (
+  <Card>
+    <CardHeader
+      title={
+        <Stack direction="row" alignItems="center" spacing={1.5}>
+          <Skeleton variant="circular" width={28} height={28} />
+          <Skeleton variant="text" width={250} height={32} />
+        </Stack>
+      }
+      subheader={<Skeleton variant="text" width={180} height={20} sx={{ mt: 1 }} />}
+      action={<Skeleton variant="rectangular" width={120} height={32} sx={{ borderRadius: 1 }} />}
+      sx={{ pb: 0 }}
+    />
+    <CardContent sx={{ pt: 2.5, pb: '20px !important' }}>
+      <Stack spacing={1.5}>
+        {[1, 2, 3, 4].map((index) => (
+          <Box
+            key={index}
+            sx={{
+              border: '1px solid',
+              borderColor: 'divider',
+              borderRadius: '10px',
+              overflow: 'hidden',
+            }}
+          >
+            <Box sx={{ p: 2.5, bgcolor: 'grey.50' }}>
+              <Stack direction="row" alignItems="center" justifyContent="space-between">
+                <Stack direction="row" alignItems="center" spacing={1.5}>
+                  <Skeleton variant="rounded" width={28} height={28} />
+                  <Skeleton variant="text" width={150} height={24} />
+                </Stack>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Skeleton variant="rounded" width={50} height={24} />
+                  <Skeleton variant="circular" width={24} height={24} />
+                </Stack>
+              </Stack>
+            </Box>
+          </Box>
+        ))}
+      </Stack>
+    </CardContent>
+  </Card>
+);
+
+// ----------------------------------------------------------------------
+
+export function PermissionsTable({ roleId, roleName, isDefault }: PermissionsTableProps) {
   const { t } = useTranslate('security');
   const { t: tNav } = useTranslate('navbar');
-  
+
   const [loading, setLoading] = useState(true);
-  const [loadingModule, setLoadingModule] = useState(false);
-  const [moduleOptions, setModuleOptions] = useState<ModuleOption[]>([]);
-  const [selectedModule, setSelectedModule] = useState<string>('');
-  const [moduleData, setModuleData] = useState<ModuleData | null>(null);
-  const [availablePermissions, setAvailablePermissions] = useState<AvailablePermission[]>([]);
+  const [catalog, setCatalog] = useState<IRoleCatalogModule[]>([]);
+  const [selectedItemIds, setSelectedItemIds] = useState<Set<number>>(new Set());
 
-  // Mapeo simple para los íconos que llegan del backend
-  const getModuleIcon = (iconName: string): string => {
-    const iconMap: Record<string, string> = {
-      dashboard: 'solar:widget-bold-duotone',
-      users: 'solar:user-bold',
-      building: 'solar:buildings-2-bold',
-      shield: 'solar:shield-check-bold',
-      settings: 'solar:settings-bold',
-    };
-    
-    return iconMap[iconName?.toLowerCase().trim()] || 'solar:list-bold';
-  };
+  const readOnly = isDefault === 1;
 
-  const getPermissionDisplayName = useCallback((permissionName: string): string => {
-    const nameMap: Record<string, string> = {
-      view: t('permissions.actions.view'),
-      create: t('permissions.actions.create'),
-      edit: t('permissions.actions.edit'),
-      delete: t('permissions.actions.delete'),
-      update: t('permissions.actions.edit'),
-      read: t('permissions.actions.view'),
-    };
-    
-    return nameMap[permissionName.toLowerCase()] || permissionName;
-  }, [t]);
-
-  const getPermissionIcon = useCallback((permissionName: string): string => {
-    const iconMap: Record<string, string> = {
-      view: 'solar:eye-bold',
-      read: 'solar:eye-bold',
-      create: 'solar:add-circle-bold',
-      edit: 'solar:pen-bold',
-      update: 'solar:pen-bold',
-      delete: 'solar:trash-bin-trash-bold',
-    };
-    
-    return iconMap[permissionName.toLowerCase()] || 'solar:shield-check-bold';
-  }, []);
-
-  const getPermissionColor = useCallback((permissionName: string): string => {
-    const colorMap: Record<string, string> = {
-      view: 'success',
-      read: 'success',
-      create: 'warning',
-      edit: 'info',
-      update: 'info',
-      delete: 'error',
-    };
-    
-    return colorMap[permissionName.toLowerCase()] || 'primary';
-  }, []);
-
-  // Cargar módulos disponibles al iniciar
-  useEffect(() => {
-    const fetchModules = async () => {
-      try {
-        const response = await GetPermissionsRelatedDataService({ roleId });
-        
-        if (response.data?.data) {
-          const { modules, permissions } = response.data.data;
-          
-          // Establecer opciones de módulos con íconos
-          setModuleOptions(modules?.map((module: any) => ({
-            id: module.id,
-            name: module.name,
-            icon: getModuleIcon(module.icon)
-          })) || []);
-          
-          // Procesar permisos usando las funciones helper directamente
-          if (permissions && permissions.length > 0) {
-            const processedPermissions = permissions.map((permission: any) => ({
-              id: permission.id,
-              name: getPermissionDisplayName(permission.name),
-              icon: getPermissionIcon(permission.name),
-              color: getPermissionColor(permission.name)
-            }));
-            setAvailablePermissions(processedPermissions);
-          } else {
-            setAvailablePermissions([]);
-          }
-          
-          // Seleccionar el primer módulo por defecto
-          if (modules && modules.length > 0) {
-            setSelectedModule(modules[0].id);
-          }
-        } else {
-          setModuleOptions([]);
-          setAvailablePermissions([]);
-        }
-      } catch (error) {
-        console.error('Error fetching modules:', error);
-        toast.error(t('permissions.messages.error.loadingModules'));
-        setModuleOptions([]);
-        setAvailablePermissions([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (roleId) {
-      fetchModules();
-    }
-  }, [roleId, t, getPermissionDisplayName, getPermissionIcon, getPermissionColor]);
-
-  // Cargar datos del módulo seleccionado
-  const loadModuleData = useCallback(async (moduleId: string) => {
-    if (!moduleId) return;
-
+  const loadData = useCallback(async () => {
     try {
-      setLoadingModule(true);
-      const response = await GetRolePermissionsService({
-        roleId,
-        moduleId
-      });
+      setLoading(true);
+      const [catalogResponse, itemsResponse] = await Promise.all([
+        GetRoleItemsCatalogService('admin'),
+        GetRoleItemsService(roleId),
+      ]);
 
-      if (response.data?.data !== null && response.data?.data !== undefined) {
-        setModuleData(response.data.data);
-      } else {
-        setModuleData({ moduleId, moduleName: '', items: [] });
-      }
-    } catch (error) {
-      console.error('Error fetching module data:', error);
+      setCatalog(catalogResponse.data?.data || []);
+
+      const assigned = new Set<number>();
+      (itemsResponse.data?.data || []).forEach((module) => {
+        module.items.forEach((item) => assigned.add(item.itemId));
+      });
+      setSelectedItemIds(assigned);
+    } catch {
       toast.error(t('permissions.messages.error.loading'));
-      setModuleData({ moduleId, moduleName: '', items: [] });
     } finally {
-      setLoadingModule(false);
+      setLoading(false);
     }
   }, [roleId, t]);
 
-  // Cargar datos cuando cambia el módulo seleccionado
   useEffect(() => {
-    if (selectedModule) {
-      loadModuleData(selectedModule);
+    if (roleId) {
+      loadData();
     }
-  }, [selectedModule, loadModuleData]);
+  }, [roleId, loadData]);
 
-  // Manejar cambio de permiso (optimistic updates)
-  const handlePermissionChange = async (
-    itemId: string,
-    permissionId: string,
-    hasPermissionValue: boolean
-  ) => {
-    try {
-      // Cambio optimista inmediato
-      setModuleData(prevData => {
-        if (!prevData) return prevData;
-        
-        return {
-          ...prevData,
-          items: prevData.items.map(item => {
-            if (item.itemId === itemId) {
-              if (!hasPermissionValue) {
-                // Agregar permiso
-                const permissionToAdd = availablePermissions.find(p => p.id === permissionId);
-                return {
-                  ...item,
-                  permissions: [
-                    ...item.permissions,
-                    {
-                      permissionId,
-                      permissionName: permissionToAdd?.name || 'Permission'
-                    }
-                  ]
-                };
-              } else {
-                // Quitar permiso
-                return {
-                  ...item,
-                  permissions: item.permissions.filter(p => p.permissionId !== permissionId)
-                };
-              }
-            }
-            return item;
-          })
-        };
-      });
-
-      // Enviar al backend
-      if (!hasPermissionValue) {
-        await UpdateRolePermissionService({
-          roleId: Number(roleId),
-          itemId: Number(itemId),
-          permissionId: Number(permissionId)
-        });
-      } else {
-        const existingPermission = moduleData?.items
-          .find(item => item.itemId === itemId)
-          ?.permissions
-          .find(p => p.permissionId === permissionId);
-
-        if (existingPermission) {
-          await DeletePermissionService(existingPermission.permissionId);
+  const applyNewSelection = useCallback(
+    async (newSelected: Set<number>, previousSelected: Set<number>) => {
+      setSelectedItemIds(newSelected);
+      try {
+        const response = await UpdateRoleItemsService(roleId, Array.from(newSelected));
+        if (response.data?.message) {
+          toast.success(response.data.message);
+        } else {
+          toast.success(t('permissions.messages.success.saving'));
         }
+      } catch {
+        setSelectedItemIds(previousSelected);
+        toast.error(t('permissions.messages.error.saving'));
       }
+    },
+    [roleId, t]
+  );
 
-      toast.success(t('permissions.messages.success.updated'));
+  const handleToggleItem = useCallback(
+    (itemId: number) => {
+      if (readOnly) return;
+      const newSelected = new Set(selectedItemIds);
+      if (newSelected.has(itemId)) {
+        newSelected.delete(itemId);
+      } else {
+        newSelected.add(itemId);
+      }
+      applyNewSelection(newSelected, selectedItemIds);
+    },
+    [readOnly, selectedItemIds, applyNewSelection]
+  );
 
-    } catch (error) {
-      console.error('Error updating permission:', error);
-      
-      // Revertir cambio optimista en caso de error
-      setModuleData(prevData => {
-        if (!prevData) return prevData;
-        
-        return {
-          ...prevData,
-          items: prevData.items.map(item => {
-            if (item.itemId === itemId) {
-              if (hasPermissionValue) {
-                // Si falló quitar, volver a agregar
-                const permissionToRestore = availablePermissions.find(p => p.id === permissionId);
-                return {
-                  ...item,
-                  permissions: [
-                    ...item.permissions,
-                    {
-                      permissionId,
-                      permissionName: permissionToRestore?.name || 'Permission'
-                    }
-                  ]
-                };
-              } else {
-                // Si falló agregar, volver a quitar
-                return {
-                  ...item,
-                  permissions: item.permissions.filter(p => p.permissionId !== permissionId)
-                };
-              }
-            }
-            return item;
-          })
-        };
-      });
+  const handleSelectModule = useCallback(
+    (module: IRoleCatalogModule) => {
+      if (readOnly) return;
+      const moduleItemIds = module.items.map((i) => i.itemId);
+      const moduleAllSelected = moduleItemIds.every((id) => selectedItemIds.has(id));
+      const newSelected = new Set(selectedItemIds);
+      if (moduleAllSelected) {
+        moduleItemIds.forEach((id) => newSelected.delete(id));
+      } else {
+        moduleItemIds.forEach((id) => newSelected.add(id));
+      }
+      applyNewSelection(newSelected, selectedItemIds);
+    },
+    [readOnly, selectedItemIds, applyNewSelection]
+  );
 
-      toast.error(t('permissions.messages.error.updating'));
-    }
-  };
+  const handleSelectAll = useCallback(() => {
+    if (readOnly) return;
+    const allItemIds = catalog.flatMap((m) => m.items.map((i) => i.itemId));
+    const allSelected = allItemIds.every((id) => selectedItemIds.has(id));
+    const newSelected = allSelected ? new Set<number>() : new Set(allItemIds);
+    applyNewSelection(newSelected, selectedItemIds);
+  }, [readOnly, catalog, selectedItemIds, applyNewSelection]);
 
-  // Verificar si un item tiene un permiso específico
-  const hasPermission = (item: PermissionItem, permissionId: string): boolean => 
-    item.permissions.some(p => p.permissionId === permissionId);
+  const allItemIds = catalog.flatMap((m) => m.items.map((i) => i.itemId));
+  const globalAllSelected = allItemIds.length > 0 && allItemIds.every((id) => selectedItemIds.has(id));
+  const globalSomeSelected = allItemIds.some((id) => selectedItemIds.has(id)) && !globalAllSelected;
 
-  // Obtener ícono del módulo actual
-  const getCurrentModuleIcon = (): string => {
-    const currentModule = moduleOptions.find(module => module.id === selectedModule);
-    return currentModule?.icon || 'solar:list-bold';
-  };
+  const getModuleSelectedCount = (module: IRoleCatalogModule) =>
+    module.items.filter((item) => selectedItemIds.has(item.itemId)).length;
 
-  // Estado de carga inicial
   if (loading) {
-    return (
-      <Card>
-        <CardHeader
-          title={
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Iconify icon="solar:shield-check-bold" width={24} />
-              <Typography variant="h6">
-                {t('permissions.table.title')}
-              </Typography>
-            </Box>
-          }
-        />
-        <LoadingScreen />
-      </Card>
-    );
+    return <PermissionsTableSkeleton />;
   }
 
-  // Sin módulos disponibles
-  if (moduleOptions.length === 0) {
+  if (!catalog.length) {
     return (
       <Card>
         <CardHeader
@@ -335,10 +197,9 @@ export function PermissionsTable({ roleId, roleName }: PermissionsTableProps) {
               </Typography>
             </Box>
           }
-          subheader={t('permissions.table.subtitle')}
         />
-        <EmptyContent 
-          filled 
+        <EmptyContent
+          filled
           title={t('permissions.empty.title')}
           description={t('permissions.empty.description')}
           sx={{ py: 10 }}
@@ -348,228 +209,230 @@ export function PermissionsTable({ roleId, roleName }: PermissionsTableProps) {
   }
 
   return (
-    <Card>
-      <CardHeader
-        title={
-          <Stack direction="row" alignItems="center" spacing={1.5}>
-            <Iconify 
-              icon="solar:shield-check-bold" 
-              width={28} 
-              sx={{ color: 'success.main' }}
-            />
-            <Typography variant="h6">
-              {t('permissions.table.title')} {roleName && `- ${roleName}`}
-            </Typography>
-          </Stack>
-        }
-        subheader={t('permissions.table.subtitle')}
-        action={
-          <FormControl sx={{ minWidth: 250 }} size="small">
-            <InputLabel>{t('permissions.table.selectModule')}</InputLabel>
-            <Select
-              value={selectedModule}
-              onChange={(e) => setSelectedModule(e.target.value)}
-              label={t('permissions.table.selectModule')}
-              disabled={loadingModule}
-            >
-              {moduleOptions.map((module) => (
-                <MenuItem key={module.id} value={module.id}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Iconify icon={module.icon as any} width={16} />
-                    {tNav(module.name) || module.name}
-                  </Box>
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        }
-        sx={{ pb: 2 }}
-      />
-
-      {loadingModule && (
-        <Box sx={{ p: 3 }}>
-          <LoadingScreen />
-        </Box>
+    <Stack spacing={3}>
+      {readOnly && (
+        <Alert severity="info" icon={<Iconify icon="solar:shield-check-bold" />}>
+          {t('permissions.info.readOnly')}
+        </Alert>
       )}
 
-      {!loadingModule && moduleData && (
-        <>
-          {moduleData.moduleName && (
-            <Box 
-              sx={{ 
-                mx: 3, 
-                mb: 2, 
-                p: 2, 
-                bgcolor: 'grey.50',
-                borderRadius: 1,
-                border: '1px solid',
-                borderColor: 'grey.200'
-              }}
-            >
-              <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
-                <Box
+      <Card>
+        <CardHeader
+          title={
+            <Stack direction="row" alignItems="center" spacing={1.5}>
+              <Iconify icon="solar:shield-check-bold" width={28} sx={{ color: 'success.main' }} />
+              <Typography variant="h6">
+                {t('permissions.table.title')} {roleName && `- ${roleName}`}
+              </Typography>
+            </Stack>
+          }
+          subheader={t('permissions.table.subtitle')}
+          action={
+            !readOnly && (
+              <FormControlLabel
+                label={
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    {t('permissions.table.selectAll')}
+                  </Typography>
+                }
+                control={
+                  <Checkbox
+                    checked={globalAllSelected}
+                    indeterminate={globalSomeSelected}
+                    onChange={handleSelectAll}
+                    size="small"
+                  />
+                }
+                sx={{ mr: 0 }}
+              />
+            )
+          }
+          sx={{ pb: 0 }}
+        />
+
+        <CardContent sx={{ pt: 2.5, pb: '20px !important' }}>
+          <Stack spacing={1.5}>
+            {catalog.map((module) => {
+              const selectedCount = getModuleSelectedCount(module);
+              const totalCount = module.items.length;
+              const hasSelected = selectedCount > 0;
+              const moduleAllSelected = totalCount > 0 && selectedCount === totalCount;
+              const moduleSomeSelected = hasSelected && !moduleAllSelected;
+
+              return (
+                <Accordion
+                  key={module.moduleId}
+                  defaultExpanded={false}
+                  disableGutters
                   sx={{
-                    p: 1,
-                    borderRadius: 1.5,
-                    bgcolor: 'primary.lighter',
-                    color: 'primary.main',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
+                    border: '1px solid',
+                    borderColor: hasSelected ? 'primary.light' : 'divider',
+                    borderRadius: '10px !important',
+                    overflow: 'hidden',
+                    '&:before': { display: 'none' },
+                    boxShadow: 'none',
+                    transition: 'border-color 0.2s',
                   }}
                 >
-                  <Iconify icon={getCurrentModuleIcon() as any} width={20} />
-                </Box>
-                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                  {tNav(moduleData.moduleName) || moduleData.moduleName}
-                </Typography>
-              </Stack>
-              <Typography variant="body2" color="text.secondary" sx={{ ml: 5 }}>
-                {moduleData.items.length} {t('permissions.table.itemsCount')}
-              </Typography>
-            </Box>
-          )}
-
-          <TableContainer sx={{ 
-            overflow: 'auto',
-            maxWidth: '100%',
-            '&::-webkit-scrollbar': {
-              height: 8,
-            },
-            '&::-webkit-scrollbar-track': {
-              backgroundColor: 'grey.100',
-              borderRadius: 4,
-            },
-            '&::-webkit-scrollbar-thumb': {
-              backgroundColor: 'grey.300',
-              borderRadius: 4,
-            },
-            '&::-webkit-scrollbar-thumb:hover': {
-              backgroundColor: 'grey.400',
-            },
-          }}>
-            <Table sx={{ 
-              minWidth: Math.max(800, 300 + (availablePermissions.length * 120))
-            }}>
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ width: 300 }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                      {t('permissions.table.item')}
-                    </Typography>
-                  </TableCell>
-                  
-                  {availablePermissions.length > 0 ? (
-                    availablePermissions.map((permission) => (
-                      <TableCell key={permission.id} align="center" sx={{ width: 120 }}>
-                        <Stack direction="column" alignItems="center" spacing={0.5}>
-                          <Iconify 
-                            icon={permission.icon as any || 'solar:shield-check-bold'} 
-                            width={20}
-                            sx={{ color: `${permission.color || 'primary'}.main` }}
-                          />
-                          <Typography variant="caption" sx={{ fontWeight: 600 }}>
-                            {permission.name}
-                          </Typography>
-                        </Stack>
-                      </TableCell>
-                    ))
-                  ) : (
-                    <TableCell align="center">
-                      <Typography variant="caption" color="text.secondary">
-                        {t('permissions.empty.noPermissionsAvailable')}
-                      </Typography>
-                    </TableCell>
-                  )}
-                </TableRow>
-              </TableHead>
-              
-              <TableBody>
-                {moduleData.items.length > 0 ? (
-                  moduleData.items.map((item) => (
-                    <TableRow 
-                      key={item.itemId} 
-                      hover
-                      sx={{
-                        '&:hover': {
-                          bgcolor: 'grey.50'
-                        }
-                      }}
-                    >
-                      <TableCell>
-                        <Box>
-                          <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                            {tNav(item.itemName) || item.itemName}
-                          </Typography>
-                          {item.permissions.length > 0 && (
-                            <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-                              {item.permissions.map((perm) => (
-                                <Chip
-                                  key={perm.permissionId}
-                                  label={getPermissionDisplayName(perm.permissionName)}
-                                  size="small"
-                                  color="primary"
-                                  variant="soft"
-                                  sx={{ fontSize: '0.7rem' }}
-                                />
-                              ))}
-                            </Box>
-                          )}
-                        </Box>
-                      </TableCell>
-                      
-                      {availablePermissions.map((permission) => {
-                        const hasPermissionValue = hasPermission(item, permission.id);
-                        
-                        return (
-                          <TableCell key={permission.id} align="center">
-                            <Tooltip 
-                              title={`${permission.name} ${tNav(item.itemName) || item.itemName}`}
-                              arrow
-                            >
-                              <Switch
-                                checked={hasPermissionValue}
-                                onChange={() => 
-                                  handlePermissionChange(
-                                    item.itemId, 
-                                    permission.id, 
-                                    hasPermissionValue
-                                  )
-                                }
-                                color={permission.color as any}
-                                size="small"
-                                sx={{
-                                  '& .MuiSwitch-thumb': {
-                                    boxShadow: 2
-                                  }
-                                }}
-                              />
-                            </Tooltip>
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell 
-                      colSpan={availablePermissions.length + 1} 
-                      sx={{ border: 0, p: 0 }}
-                    >
-                      <EmptyContent
-                        filled
-                        title={t('permissions.empty.noItems')}
-                        description={t('permissions.empty.noItemsDescription')}
-                        sx={{ py: 6 }}
+                  <AccordionSummary
+                    expandIcon={
+                      <Iconify
+                        icon="solar:alt-arrow-down-bold"
+                        width={18}
+                        sx={{ color: 'text.secondary' }}
                       />
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </>
-      )}
-    </Card>
+                    }
+                    sx={{
+                      '&.MuiAccordionSummary-root': { padding: '0 20px', minHeight: 56 },
+                      bgcolor: hasSelected ? 'primary.lighter' : 'grey.50',
+                      transition: 'background-color 0.2s',
+                      '& .MuiAccordionSummary-content': { my: 0, mr: 1 },
+                      '& .MuiAccordionSummary-expandIconWrapper': { 
+                        alignItems: 'center',
+                        alignSelf: 'center'
+                      },
+                    }}
+                  >
+                    <Stack
+                      direction="row"
+                      alignItems="center"
+                      justifyContent="space-between"
+                      sx={{ width: 1 }}
+                    >
+                      <Stack direction="row" alignItems="center" spacing={1.5}>
+                        <Box
+                          sx={{
+                            p: 0.75,
+                            borderRadius: 1,
+                            bgcolor: hasSelected ? 'primary.main' : 'grey.200',
+                            color: hasSelected ? 'common.white' : 'text.secondary',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'background-color 0.2s, color 0.2s',
+                          }}
+                        >
+                          <Iconify icon="solar:list-bold" width={16} />
+                        </Box>
+
+                        <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                          {tNav(module.moduleName) || module.moduleName}
+                        </Typography>
+                      </Stack>
+
+                      <Stack direction="row" alignItems="center" spacing={1}>
+                        <Label
+                          variant="soft"
+                          color={hasSelected ? 'primary' : 'default'}
+                          sx={{ fontWeight: 600 }}
+                        >
+                          {selectedCount}/{totalCount}
+                        </Label>
+
+                        {!readOnly && (
+                          <Checkbox
+                            size="small"
+                            checked={moduleAllSelected}
+                            indeterminate={moduleSomeSelected}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleSelectModule(module);
+                            }}
+                            sx={{ p: 0.5 }}
+                          />
+                        )}
+                      </Stack>
+                    </Stack>
+                  </AccordionSummary>
+
+                  <AccordionDetails sx={{ p: 0 }}>
+                    <Box sx={{ px: 2.5, py: 2 }}>
+                      <Grid container spacing={1.5}>
+                        {module.items.map((item) => {
+                          const isSelected = selectedItemIds.has(item.itemId);
+
+                          return (
+                            <Grid key={item.itemId} size={{ xs: 12, sm: 6, md: 4 }}>
+                              <Card
+                                variant="outlined"
+                                onClick={() => handleToggleItem(item.itemId)}
+                                sx={{
+                                  cursor: readOnly ? 'default' : 'pointer',
+                                  borderRadius: 1.5,
+                                  borderColor: isSelected ? 'primary.main' : 'divider',
+                                  bgcolor: isSelected ? 'primary.lighter' : 'background.paper',
+                                  transition: 'all 0.15s ease',
+                                  ...(!readOnly && {
+                                    '&:hover': {
+                                      borderColor: 'primary.light',
+                                      bgcolor: isSelected ? 'primary.lighter' : 'grey.50',
+                                      boxShadow: (theme) =>
+                                        theme.customShadows?.z4 ||
+                                        '0 4px 8px 0 rgba(0,0,0,0.08)',
+                                    },
+                                  }),
+                                }}
+                              >
+                                <Stack
+                                  direction="row"
+                                  alignItems="center"
+                                  justifyContent="space-between"
+                                  sx={{ px: 2, py: 1.5, gap: 1 }}
+                                >
+                                  <Stack
+                                    direction="row"
+                                    alignItems="center"
+                                    spacing={1}
+                                    sx={{ minWidth: 0 }}
+                                  >
+                                    <Box
+                                      sx={{
+                                        width: 6,
+                                        height: 6,
+                                        borderRadius: '50%',
+                                        bgcolor: isSelected ? 'primary.main' : 'text.disabled',
+                                        flexShrink: 0,
+                                        transition: 'background-color 0.15s',
+                                      }}
+                                    />
+                                    <Typography
+                                      variant="body2"
+                                      sx={{
+                                        fontWeight: isSelected ? 600 : 400,
+                                        color: isSelected ? 'primary.dark' : 'text.primary',
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
+                                        whiteSpace: 'nowrap',
+                                        transition: 'color 0.15s',
+                                      }}
+                                    >
+                                      {tNav(item.itemName) || item.itemName}
+                                    </Typography>
+                                  </Stack>
+
+                                  <Switch
+                                    checked={isSelected}
+                                    disabled={readOnly}
+                                    size="small"
+                                    color="primary"
+                                    onClick={(e) => e.stopPropagation()}
+                                    onChange={() => handleToggleItem(item.itemId)}
+                                    sx={{ flexShrink: 0 }}
+                                  />
+                                </Stack>
+                              </Card>
+                            </Grid>
+                          );
+                        })}
+                      </Grid>
+                    </Box>
+                  </AccordionDetails>
+                </Accordion>
+              );
+            })}
+          </Stack>
+        </CardContent>
+      </Card>
+    </Stack>
   );
 }

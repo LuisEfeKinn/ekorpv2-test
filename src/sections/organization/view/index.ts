@@ -4,6 +4,4 @@ export * from './organization-edit';
 
 export * from './organization-create';
 
-// export * from './organizational-chart-view';
-
-export * from './organizational-chart-view-new';
+export * from './organizational-chart-view';

@@ -1,4 +1,4 @@
-import type { IPosition } from 'src/types/organization';
+import type { IJobKm, ICompetencyKm } from 'src/types/organization';
 
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
@@ -16,72 +16,67 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useTranslate } from 'src/locales';
 import { GetOrganizationalUnitPaginationService } from 'src/services/organization/organizationalUnit.service';
-import { SaveOrUpdatePositionService, GetPositionPaginationService, } from 'src/services/organization/position.service';
+import {
+  GetJobsKmService,
+  SaveOrUpdateJobKmService,
+  GetCompetenciesKmService,
+} from 'src/services/organization/job-km.service';
 
 import { toast } from 'src/components/snackbar';
 import { Form, Field } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
-export type PositionCreateSchemaType = {
-  name: string;
-  objectives?: string;
-  expectedResults?: string;
-  requirements?: string;
-  otherFunctions?: string;
-  code?: string;
-  minimumAcademicLevel?: string;
-  desiredAcademicLevel?: string;
-  minimumExperience?: string;
-  desiredExperience?: string;
-  supervises?: string;
-  regionalLocation?: string;
-  headquarters?: string;
-  version?: string;
-  superiorJob?: number | null;
-  organizationalUnitId?: string | null;
-};
+const PositionSchema = z.object({
+  name: z.string().min(1),
+  code: z.string().max(80).optional().or(z.literal('')),
+  objectives: z.string().optional(),
+  expectedResults: z.string().optional(),
+  requirements: z.string().optional(),
+  otherFunctions: z.string().optional(),
+  minimumAcademicLevel: z.string().max(512).optional().or(z.literal('')),
+  desiredAcademicLevel: z.string().max(512).optional().or(z.literal('')),
+  minimumExperience: z.string().max(512).optional().or(z.literal('')),
+  desiredExperience: z.string().max(512).optional().or(z.literal('')),
+  supervises: z.string().max(512).optional().or(z.literal('')),
+  regionalLocation: z.string().max(512).optional().or(z.literal('')),
+  headquarters: z.string().max(512).optional().or(z.literal('')),
+  version: z.string().max(64).optional().or(z.literal('')),
+  numberOfPositions: z.number().int().min(0).optional().nullable(),
+  superiorJobId: z.number().optional().nullable(),
+  organizationalUnitId: z.number().optional().nullable(),
+  // Almacena objetos completos; los IDs se extraen al hacer submit
+  competencyIds: z.array(z.any()).optional(),
+});
+
+type PositionFormValues = z.infer<typeof PositionSchema>;
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  currentPosition?: IPosition;
+  currentPosition?: IJobKm;
 };
 
 export function PositionCreateEditForm({ currentPosition }: Props) {
   const router = useRouter();
   const { t } = useTranslate('organization');
-  const [positionOptions, setPositionOptions] = useState<Array<{ id: number; name: string }>>([]);
-  const [loadingPositions, setLoadingPositions] = useState(false);
-  const [organizationalUnitOptions, setOrganizationalUnitOptions] = useState<Array<{ id: string; name: string }>>([]);
-  const [loadingOrganizationalUnits, setLoadingOrganizationalUnits] = useState(false);
 
-  const OrganizationCreateSchema = z.object({
-    name: z.string().min(1, { message: t('position.form.fields.name.required') }),
-    objectives: z.string().optional(),
-    expectedResults: z.string().optional(),
-    requirements: z.string().optional(),
-    otherFunctions: z.string().optional(),
-    code: z.string().max(80).optional().or(z.literal('')),
-    minimumAcademicLevel: z.string().max(512).optional().or(z.literal('')),
-    desiredAcademicLevel: z.string().max(512).optional().or(z.literal('')),
-    minimumExperience: z.string().max(512).optional().or(z.literal('')),
-    desiredExperience: z.string().max(512).optional().or(z.literal('')),
-    supervises: z.string().max(512).optional().or(z.literal('')),
-    regionalLocation: z.string().max(512).optional().or(z.literal('')),
-    headquarters: z.string().max(512).optional().or(z.literal('')),
-    version: z.string().max(64).optional().or(z.literal('')),
-    superiorJob: z.number().optional().nullable(),
-    organizationalUnitId: z.string().optional().nullable(),
-  });
+  const [jobOptions, setJobOptions] = useState<Array<{ id: number; name: string }>>([]);
+  const [loadingJobs, setLoadingJobs] = useState(false);
 
-  const defaultValues: PositionCreateSchemaType = {
+  const [orgUnitOptions, setOrgUnitOptions] = useState<Array<{ id: number; name: string }>>([]);
+  const [loadingOrgUnits, setLoadingOrgUnits] = useState(false);
+
+  const [competencyOptions, setCompetencyOptions] = useState<ICompetencyKm[]>([]);
+  const [loadingCompetencies, setLoadingCompetencies] = useState(false);
+
+  const defaultValues: PositionFormValues = {
     name: '',
+    code: '',
     objectives: '',
     expectedResults: '',
     requirements: '',
     otherFunctions: '',
-    code: '',
     minimumAcademicLevel: '',
     desiredAcademicLevel: '',
     minimumExperience: '',
@@ -90,19 +85,39 @@ export function PositionCreateEditForm({ currentPosition }: Props) {
     regionalLocation: '',
     headquarters: '',
     version: '',
-    superiorJob: null,
+    numberOfPositions: null,
+    superiorJobId: null,
     organizationalUnitId: null,
+    competencyIds: [],
   };
 
-  const methods = useForm({
+  const methods = useForm<PositionFormValues>({
     mode: 'onSubmit',
-    resolver: zodResolver(OrganizationCreateSchema),
+    resolver: zodResolver(PositionSchema),
     defaultValues,
-    values: currentPosition ? {
-      ...currentPosition,
-      superiorJob: currentPosition.superiorJob?.id || null,
-      organizationalUnitId: currentPosition.organizationalUnit?.id || null,
-    } : undefined,
+    values: currentPosition
+      ? {
+          name: currentPosition.name ?? '',
+          code: currentPosition.code ?? '',
+          objectives: currentPosition.objectives ?? '',
+          expectedResults: currentPosition.expectedResults ?? '',
+          requirements: currentPosition.requirements ?? '',
+          otherFunctions: currentPosition.otherFunctions ?? '',
+          minimumAcademicLevel: currentPosition.minimumAcademicLevel ?? '',
+          desiredAcademicLevel: currentPosition.desiredAcademicLevel ?? '',
+          minimumExperience: currentPosition.minimumExperience ?? '',
+          desiredExperience: currentPosition.desiredExperience ?? '',
+          supervises: currentPosition.supervises ?? '',
+          regionalLocation: currentPosition.regionalLocation ?? '',
+          headquarters: currentPosition.headquarters ?? '',
+          version: currentPosition.version ?? '',
+          numberOfPositions: currentPosition.numberOfPositions ?? null,
+          superiorJobId: currentPosition.superiorJob?.id ?? null,
+          organizationalUnitId: currentPosition.organizationalUnit?.id ?? null,
+          competencyIds:
+            currentPosition.competencies?.map((c) => ({ id: String(c.id), name: c.name })) ?? [],
+        }
+      : undefined,
   });
 
   const {
@@ -111,106 +126,129 @@ export function PositionCreateEditForm({ currentPosition }: Props) {
     formState: { isSubmitting },
   } = methods;
 
-  // Precargar la opción inicial si existe currentPosition.superiorJob
+  // Pre-cargar opciones cuando hay datos iniciales
   useEffect(() => {
     if (currentPosition?.superiorJob) {
-      setPositionOptions([{
-        id: currentPosition.superiorJob.id,
-        name: currentPosition.superiorJob.name,
-      }]);
+      setJobOptions([
+        { id: currentPosition.superiorJob.id, name: currentPosition.superiorJob.name },
+      ]);
     }
   }, [currentPosition]);
 
-  // Precargar la opción inicial si existe currentPosition.organizationalUnit
   useEffect(() => {
     if (currentPosition?.organizationalUnit) {
-      setOrganizationalUnitOptions([{
-        id: currentPosition.organizationalUnit.id,
-        name: currentPosition.organizationalUnit.name,
-      }]);
+      setOrgUnitOptions([
+        {
+          id: currentPosition.organizationalUnit.id,
+          name: currentPosition.organizationalUnit.name,
+        },
+      ]);
     }
   }, [currentPosition]);
 
-  const handleSearchPositions = async (searchValue: string) => {
-    try {
-      setLoadingPositions(true);
-      const response = await GetPositionPaginationService({
-        page: 1,
-        perPage: 20,
-        search: searchValue,
+  useEffect(() => {
+    // Precarga las competencias actuales en las opciones para que los chips
+    if (currentPosition?.competencies?.length) {
+      setCompetencyOptions((prev) => {
+        const existing = new Set(prev.map((c) => c.id));
+        const toAdd = currentPosition.competencies!
+          .filter((c) => !existing.has(String(c.id)))
+          .map((c) => ({ id: String(c.id), name: c.name }));
+        return toAdd.length ? [...prev, ...toAdd] : prev;
       });
+    }
+  }, [currentPosition]);
 
+  // ----------------------------------------------------------------------
+
+  const handleSearchJobs = async (search: string) => {
+    try {
+      setLoadingJobs(true);
+      const response = await GetJobsKmService({ page: 1, perPage: 20, search });
       if (response.status === 200) {
-        const data = response.data?.data || [];
-        const options = data.map((position: any) => ({
-          id: position.id,
-          name: position.name,
-        }));
-        setPositionOptions(options);
+        setJobOptions(
+          (response.data?.data ?? []).map((j) => ({ id: j.id, name: j.name }))
+        );
       }
-    } catch (error) {
-      console.error('Error loading positions:', error);
-      setPositionOptions([]);
+    } catch {
+      setJobOptions([]);
     } finally {
-      setLoadingPositions(false);
+      setLoadingJobs(false);
     }
   };
 
-  const handleSearchOrganizationalUnits = async (searchValue: string) => {
+  const handleSearchOrgUnits = async (search: string) => {
     try {
-      setLoadingOrganizationalUnits(true);
+      setLoadingOrgUnits(true);
       const response = await GetOrganizationalUnitPaginationService({
         page: 1,
         perPage: 20,
-        search: searchValue,
+        search,
       });
-
       if (response.status === 200) {
         const data = response.data[0] || [];
-        // Función para aplanar el árbol de unidades organizacionales
-        const flattenUnits = (units: any[]): any[] => {
-          const result: any[] = [];
+        const flattenUnits = (units: any[]): Array<{ id: number; name: string }> => {
+          const result: Array<{ id: number; name: string }> = [];
           units.forEach((unit) => {
-            result.push({ id: unit.id, name: unit.name });
-            if (unit.children && unit.children.length > 0) {
+            result.push({ id: Number(unit.id), name: unit.name });
+            if (unit.children?.length) {
               result.push(...flattenUnits(unit.children));
             }
           });
           return result;
         };
-        const options = flattenUnits(data as any);
-        setOrganizationalUnitOptions(options);
+        setOrgUnitOptions(flattenUnits(data as any));
       }
-    } catch (error) {
-      console.error('Error loading organizational units:', error);
-      setOrganizationalUnitOptions([]);
+    } catch {
+      setOrgUnitOptions([]);
     } finally {
-      setLoadingOrganizationalUnits(false);
+      setLoadingOrgUnits(false);
     }
   };
 
+  const handleSearchCompetencies = async (search: string) => {
+    try {
+      setLoadingCompetencies(true);
+      const response = await GetCompetenciesKmService({ page: 1, perPage: 30, search });
+      if (response.status === 200) {
+        setCompetencyOptions(response.data?.data?.data ?? []);
+      }
+    } catch {
+      setCompetencyOptions([]);
+    } finally {
+      setLoadingCompetencies(false);
+    }
+  };
+
+  // ----------------------------------------------------------------------
+
   const onSubmit = handleSubmit(async (data) => {
     try {
-      // Transformar los datos antes de enviar
-      const dataToSend = {
+      const payload = {
         ...data,
-        superiorJob: data.superiorJob || undefined, // Enviar undefined si es null
-        organizationalUnitId: data.organizationalUnitId || undefined, // Enviar undefined si es null
+        superiorJobId: data.superiorJobId ?? null,
+        organizationalUnitId: data.organizationalUnitId ?? null,
+        numberOfPositions: data.numberOfPositions ?? undefined,
+        // Extraer IDs numéricos de los objetos seleccionados
+        competencyIds: (data.competencyIds as ICompetencyKm[] ?? []).map((c) => Number(c.id)),
       };
 
-      await SaveOrUpdatePositionService(
-        dataToSend,
-        currentPosition?.id
-      );
+      await SaveOrUpdateJobKmService(payload, currentPosition?.id);
 
       reset();
-      toast.success(currentPosition ? t('position.messages.updateSuccess') : t('position.messages.createSuccess'));
-      router.push(paths.dashboard.organizations.positions); // Ruta de retorno
+      toast.success(
+        currentPosition
+          ? t('position.messages.updateSuccess')
+          : t('position.messages.createSuccess')
+      );
+      router.push(paths.dashboard.organizations.positions);
     } catch (error: any) {
       console.error('Error saving position:', error);
       toast.error(t(error?.message || 'position.messages.saveError'));
     }
   });
+
+  // ----------------------------------------------------------------------
 
   const renderDetails = () => (
     <Card>
@@ -231,99 +269,110 @@ export function PositionCreateEditForm({ currentPosition }: Props) {
           />
         </Box>
 
-        <Field.Autocomplete
-          name="superiorJob"
-          label={t('position.form.fields.superiorJob.label')}
-          helperText={t('position.form.fields.superiorJob.helperText')}
-          options={positionOptions}
-          loading={loadingPositions}
-          onOpen={() => {
-            // Cargar opciones iniciales cuando se abre el autocomplete
-            if (positionOptions.length === 0 || (positionOptions.length === 1 && currentPosition?.superiorJob)) {
-              handleSearchPositions('');
-            }
-          }}
-          onInputChange={(event, value, reason) => {
-            // Solo buscar cuando el usuario escribe manualmente
-            if (reason === 'input' && value) {
-              handleSearchPositions(value);
-            }
-          }}
-          getOptionLabel={(option) => {
-            if (typeof option === 'number') {
-              // Cuando es el valor inicial (id del cargo superior)
-              const found = positionOptions.find((p) => p.id === option);
-              if (found) return found.name;
-              // Si aún no está en las opciones pero existe en currentPosition
-              if (currentPosition?.superiorJob?.id === option) {
-                return currentPosition.superiorJob.name;
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2 }}>
+          <Field.Autocomplete
+            name="superiorJobId"
+            label={t('position.form.fields.superiorJob.label')}
+            helperText={t('position.form.fields.superiorJob.helperText')}
+            options={jobOptions}
+            loading={loadingJobs}
+            onOpen={() => {
+              if (jobOptions.length <= 1) handleSearchJobs('');
+            }}
+            onInputChange={(_e, value, reason) => {
+              if (reason === 'input') handleSearchJobs(value);
+            }}
+            getOptionLabel={(option) => {
+              if (typeof option === 'number') {
+                return jobOptions.find((j) => j.id === option)?.name
+                  ?? currentPosition?.superiorJob?.name
+                  ?? '';
               }
-              return '';
+              return option?.name ?? '';
+            }}
+            isOptionEqualToValue={(option, value) =>
+              option.id === (typeof value === 'number' ? value : value?.id)
             }
-            return option?.name || '';
-          }}
-          isOptionEqualToValue={(option, value) => {
-            if (typeof value === 'number') {
-              return option.id === value;
+            onChange={(_e, newValue) => {
+              methods.setValue('superiorJobId', newValue?.id ?? null);
+            }}
+            slotProps={{
+              textField: { placeholder: t('position.form.fields.superiorJob.placeholder') },
+            }}
+          />
+
+          <Field.Autocomplete
+            name="organizationalUnitId"
+            label={t('position.form.fields.organizationalUnit.label')}
+            helperText={t('position.form.fields.organizationalUnit.helperText')}
+            options={orgUnitOptions}
+            loading={loadingOrgUnits}
+            onOpen={() => {
+              if (orgUnitOptions.length <= 1) handleSearchOrgUnits('');
+            }}
+            onInputChange={(_e, value, reason) => {
+              if (reason === 'input') handleSearchOrgUnits(value);
+            }}
+            getOptionLabel={(option) => {
+              if (typeof option === 'number') {
+                return orgUnitOptions.find((u) => u.id === option)?.name
+                  ?? currentPosition?.organizationalUnit?.name
+                  ?? '';
+              }
+              return option?.name ?? '';
+            }}
+            isOptionEqualToValue={(option, value) =>
+              option.id === (typeof value === 'number' ? value : value?.id)
             }
-            return option.id === value?.id;
-          }}
-          onChange={(event, newValue) => {
-            const selectedId = newValue?.id || null;
-            methods.setValue('superiorJob', selectedId);
-          }}
-          slotProps={{
-            textField: {
-              placeholder: t('position.form.fields.superiorJob.placeholder'),
-            },
-          }}
-        />
+            onChange={(_e, newValue) => {
+              methods.setValue('organizationalUnitId', newValue?.id ?? null);
+            }}
+            slotProps={{
+              textField: { placeholder: t('position.form.fields.organizationalUnit.placeholder') },
+            }}
+          />
+        </Box>
+
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2 }}>
+          <Field.Text
+            name="numberOfPositions"
+            type="number"
+            label={t('position.form.fields.numberOfPositions.label')}
+            helperText={t('position.form.fields.numberOfPositions.helperText')}
+            slotProps={{ htmlInput: { min: 0 } }}
+            onChange={(e) => {
+              const val = e.target.value;
+              methods.setValue(
+                'numberOfPositions',
+                val === '' ? null : parseInt(val, 10)
+              );
+            }}
+          />
+
+          <Field.Text
+            name="version"
+            label={t('position.form.fields.version.label')}
+            helperText={t('position.form.fields.version.helperText')}
+          />
+        </Box>
 
         <Field.Autocomplete
-          name="organizationalUnitId"
-          label={t('position.form.fields.organizationalUnit.label')}
-          helperText={t('position.form.fields.organizationalUnit.helperText')}
-          options={organizationalUnitOptions}
-          loading={loadingOrganizationalUnits}
+          name="competencyIds"
+          multiple
+          label={t('position.form.fields.competencies.label')}
+          helperText={t('position.form.fields.competencies.helperText')}
+          options={competencyOptions}
+          loading={loadingCompetencies}
           onOpen={() => {
-            // Cargar opciones iniciales cuando se abre el autocomplete
-            if (organizationalUnitOptions.length === 0 || (organizationalUnitOptions.length === 1 && currentPosition?.organizationalUnit)) {
-              handleSearchOrganizationalUnits('');
-            }
+            if (competencyOptions.length === 0) handleSearchCompetencies('');
           }}
-          onInputChange={(event, value, reason) => {
-            // Solo buscar cuando el usuario escribe manualmente
-            if (reason === 'input' && value) {
-              handleSearchOrganizationalUnits(value);
-            }
+          onInputChange={(_e, value, reason) => {
+            if (reason === 'input') handleSearchCompetencies(value);
           }}
-          getOptionLabel={(option) => {
-            if (typeof option === 'string') {
-              // Cuando es el valor inicial (id de la unidad organizacional)
-              const found = organizationalUnitOptions.find((u) => u.id === option);
-              if (found) return found.name;
-              // Si aún no está en las opciones pero existe en currentPosition
-              if (currentPosition?.organizationalUnit?.id === option) {
-                return currentPosition.organizationalUnit.name;
-              }
-              return '';
-            }
-            return option?.name || '';
-          }}
-          isOptionEqualToValue={(option, value) => {
-            if (typeof value === 'string') {
-              return option.id === value;
-            }
-            return option.id === value?.id;
-          }}
-          onChange={(event, newValue) => {
-            const selectedId = newValue?.id || null;
-            methods.setValue('organizationalUnitId', selectedId);
-          }}
+          getOptionLabel={(option) => option?.name ?? ''}
+          isOptionEqualToValue={(option, value) => option?.id === value?.id}
           slotProps={{
-            textField: {
-              placeholder: t('position.form.fields.organizationalUnit.placeholder'),
-            },
+            textField: { placeholder: t('position.form.fields.competencies.placeholder') },
           }}
         />
 
@@ -413,12 +462,6 @@ export function PositionCreateEditForm({ currentPosition }: Props) {
             label={t('position.form.fields.headquarters.label')}
             helperText={t('position.form.fields.headquarters.helperText')}
           />
-
-          <Field.Text
-            name="version"
-            label={t('position.form.fields.version.label')}
-            helperText={t('position.form.fields.version.helperText')}
-          />
         </Box>
       </Stack>
     </Card>
@@ -426,12 +469,7 @@ export function PositionCreateEditForm({ currentPosition }: Props) {
 
   const renderActions = () => (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, justifyContent: 'flex-start' }}>
-      <Button
-        size="medium"
-        variant="soft"
-        color="inherit"
-        onClick={() => router.back()}
-      >
+      <Button size="medium" variant="soft" color="inherit" onClick={() => router.back()}>
         {t('position.actions.cancel')}
       </Button>
 

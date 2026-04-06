@@ -317,6 +317,7 @@
       "columns": {
         "name": "Name",
         "superiorJob": "Superior Position",
+        "numberOfPositions": "Required Employees",
         "objectives": "Objectives",
         "expectedResults": "Expected Results",
         "requirements": "Requirements",
@@ -428,6 +429,16 @@
           "label": "Organizational Unit",
           "placeholder": "Search and select organizational unit",
           "helperText": "Select the organizational unit this position belongs to (optional)"
+        },
+        "numberOfPositions": {
+          "label": "Required Employees",
+          "placeholder": "E.g.: 3",
+          "helperText": "Number of employees required for this position"
+        },
+        "competencies": {
+          "label": "Competencies",
+          "placeholder": "Search and select competencies",
+          "helperText": "Select the competencies associated with this position (optional)"
         }
       },
       "sections": {
@@ -685,7 +696,8 @@
         "employees": {
           "label": "Employees",
           "add": "Add employee",
-          "empty": "No employees assigned"
+          "empty": "No employees assigned",
+          "maxReached": "Maximum reached"
         },
         "parentPosition": {
           "label": "Parent Position",
@@ -765,10 +777,13 @@
       "loadError": "Error loading organizational chart. Please try again.",
       "confirmDelete": "Are you sure you want to delete this position?",
       "deleteError": "Error deleting position. Please try again.",
+      "deleteSuccess": "Position deleted successfully.",
+      "createSuccess": "Position created successfully!",
+      "updateSuccess": "Position updated successfully!",
+      "saveError": "Error saving position. Please try again.",
       "assignmentFor": "Assignment functionality for this position",
       "noData": "No organizational chart data found.",
-      "createFirstPosition": "Create first position",
-      "saveError": "Error saving position. Please try again."
+      "createFirstPosition": "Create first position"
     }
   },
   "vigencies": {

@@ -1,5 +1,7 @@
 'use client';
 
+import type { IRoleOption } from 'src/types/roles';
+
 import * as z from 'zod';
 import { useState, useEffect } from 'react';
 import { useBoolean } from 'minimal-shared/hooks';
@@ -40,7 +42,7 @@ type Props = {
 export function UsersGeneral({ currentUser }: Props) {
   const { t } = useTranslate('security');
   const router = useRouter();
-  const [roleOptions, setRoleOptions] = useState<Array<{ id: string | number; name: string }>>([]);
+  const [roleOptions, setRoleOptions] = useState<IRoleOption[]>([]);
 
   const showPassword = useBoolean();
   const showConfirmPassword = useBoolean();

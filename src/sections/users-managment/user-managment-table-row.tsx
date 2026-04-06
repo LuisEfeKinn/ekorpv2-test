@@ -122,8 +122,8 @@ export function UserManagmentTableRow({ row, selected, editHref, onSelectRow, on
         <TableCell>
           <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
             <Box component="span" sx={{ color: 'text.primary' }}>
-              {row.skills && row.skills.length > 0 
-                ? row.skills.map(skill => skill.name).join(', ')
+              {row.competencyKm && row.competencyKm.length > 0 
+                ? row.competencyKm.map(skill => skill.name).join(', ')
                 : 'Sin habilidades'}
             </Box>
           </Stack>

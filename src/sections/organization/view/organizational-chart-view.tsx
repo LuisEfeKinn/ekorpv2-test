@@ -1,13 +1,20 @@
 'use client';
 
-import type { OrganizationPosition, OrganizationalChartData } from 'src/types/organizational-chart-position';
+import type {
+  OrganizationPosition,
+  JobOrganigramPosition,
+  OrganizationalUnitNode,
+  OrganizationalChartData,
+} from 'src/types/organizational-chart-position';
 
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { paths } from 'src/routes/paths';
@@ -15,394 +22,315 @@ import { RouterLink } from 'src/routes/components';
 
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
-import { 
-  OrganizationalChartService,
-} from 'src/services/organization/organizational-chart.service';
+import { GetOrganizationalOrganigramService } from 'src/services/organization/organigram.service';
+import {
+  DeleteJobKmService,
+  GetJobsKmTreeService,
+} from 'src/services/organization/job-km.service';
 
+import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
+import { OrganizationChart } from 'src/components/diagrams';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
-import { OrganizationalChart } from 'src/components/organizational-chart';
-import { ChartControls } from 'src/components/organizational-chart/chart-controls';
-import { PositionChartNodeOption3 } from 'src/components/organizational-chart/position-chart-node-option3';
 
 import { PositionCreateDrawer } from '../organization-position-create-drawer';
 
 // ----------------------------------------------------------------------
 
+const DEFAULT_COLOR = '#0288d1';
+
+const transformJobsToOrganizationPosition = (
+  job: JobOrganigramPosition,
+  parentId?: string
+): OrganizationPosition => {
+  const vacancies = Math.max(0, job.numberOfPositions - job.employees.length);
+
+  return {
+    id: `job-${job.id}`,
+    positionId: job.id.toString(),
+    name: job.name,
+    positionCode: job.code || `JOB-${job.id}`,
+    positionImage: null,
+    organizationId: job.organizationalUnit?.id || 'default',
+    organizationName: job.organizationalUnit?.name || 'Sin organización',
+    organizationColor: job.organizationalUnit?.color || DEFAULT_COLOR,
+    location: 'N/A',
+    hierarchicalLevel: 'N/A',
+    requiredEmployees: job.numberOfPositions,
+    vacancies,
+    parentPositionId: parentId || null,
+    parentPositionName: null,
+    description: undefined,
+    skills: job.competencies?.map((c) => c.name) || [],
+    isManagerial: (job.children?.length || 0) > 0,
+    assignedEmployees: job.employees.map((emp) => ({
+      id: emp.id,
+      firstName: emp.fullName.split(' ')[0] || '',
+      firstLastName: emp.fullName.split(' ').slice(1).join(' ') || '',
+      email: `${emp.id}@example.com`,
+      avatarUrl: null,
+      isActive: true,
+    })),
+    children: job.children?.map((child) =>
+      transformJobsToOrganizationPosition(child, job.id.toString())
+    ),
+  };
+};
+
+const transformOrgUnitToOrganizationPosition = (
+  unit: OrganizationalUnitNode,
+  parentId?: string
+): OrganizationPosition => ({
+  id: `org-${unit.id}`,
+  positionId: unit.id,
+  name: unit.name,
+  positionCode: unit.code,
+  positionImage: null,
+  organizationId: unit.id,
+  organizationName: unit.name,
+  organizationColor: unit.color || DEFAULT_COLOR,
+  location: 'N/A',
+  hierarchicalLevel: 'N/A',
+  requiredEmployees: 0,
+  vacancies: 0,
+  parentPositionId: parentId || null,
+  parentPositionName: null,
+  description: unit.description || undefined,
+  skills: [],
+  isManagerial: (unit.children?.length || 0) > 0,
+  assignedEmployees: [],
+  children: unit.children?.map((child) =>
+    transformOrgUnitToOrganizationPosition(child, unit.id)
+  ),
+});
+
+const calculateTreeMetrics = (
+  node: OrganizationPosition,
+  depth: number = 0
+): { totalPositions: number; totalEmployees: number; totalVacancies: number; maxDepth: number } => {
+  let totalPositions = 1;
+  let totalEmployees = node.assignedEmployees.length;
+  let totalVacancies = node.vacancies;
+  let maxDepth = depth;
+
+  if (node.children) {
+    node.children.forEach((child) => {
+      const metrics = calculateTreeMetrics(child, depth + 1);
+      totalPositions += metrics.totalPositions;
+      totalEmployees += metrics.totalEmployees;
+      totalVacancies += metrics.totalVacancies;
+      maxDepth = Math.max(maxDepth, metrics.maxDepth);
+    });
+  }
+
+  return { totalPositions, totalEmployees, totalVacancies, maxDepth };
+};
+
+const extractOrganizations = (
+  node: OrganizationPosition
+): Array<{ id: string; name: string; color: string }> => {
+  const orgs = new Map<string, { id: string; name: string; color: string }>();
+
+  const traverse = (n: OrganizationPosition) => {
+    if (n.organizationId && !orgs.has(n.organizationId)) {
+      orgs.set(n.organizationId, {
+        id: n.organizationId,
+        name: n.organizationName,
+        color: n.organizationColor,
+      });
+    }
+    if (n.children) n.children.forEach(traverse);
+  };
+
+  traverse(node);
+  return Array.from(orgs.values());
+};
+
+export type OrganigramViewType = 'jobs' | 'organizational';
+
 export function OrganizationalChartView() {
   const { t } = useTranslate('organization');
-  
-  // Estados
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [chartData, setChartData] = useState<OrganizationalChartData | null>(null);
-  const [openCreatePosition, setOpenCreatePosition] = useState(false);
-  const [selectedPositionForEdit, setSelectedPositionForEdit] = useState<OrganizationPosition | null>(null);
-  
-  // Estados para zoom
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const chartContainerRef = useRef<HTMLDivElement>(null);
-  const chartContentRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const zoomLevelRef = useRef(1);
-  const [displayZoom, setDisplayZoom] = useState(1);
-  const updateDisplayRef = useRef<number | null>(null);
+  const [viewType, setViewType] = useState<OrganigramViewType>('jobs');
 
-  // Función para aplicar zoom directamente al DOM (ultra optimizada)
-  const applyZoom = useCallback((newZoom: number) => {
-    if (chartContentRef.current) {
-      zoomLevelRef.current = newZoom;
-      chartContentRef.current.style.transform = `scale(${newZoom})`;
-      
-      // Usar RAF para sincronizar con el repaint del navegador
-      if (updateDisplayRef.current) {
-        cancelAnimationFrame(updateDisplayRef.current);
-      }
-      
-      updateDisplayRef.current = requestAnimationFrame(() => {
-        setDisplayZoom(newZoom);
-        updateDisplayRef.current = null;
-      });
-    }
-  }, []);
+  // Drawer state
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [editPositionId, setEditPositionId] = useState<string | null>(null);
 
-  // ✅ Función para centrar SOLO al cargar inicialmente
-  const centerOnLoad = useCallback(() => {
-    if (scrollContainerRef.current && chartContentRef.current) {
-      const scrollContainer = scrollContainerRef.current;
-      const contentContainer = chartContentRef.current;
-      
-      // Obtener el elemento interno que contiene el organigrama real
-      const innerBox = contentContainer.querySelector(':scope > div');
-      
-      if (innerBox) {
-        // Obtener las dimensiones reales del scroll
-        const scrollWidth = scrollContainer.scrollWidth;
-        const clientWidth = scrollContainer.clientWidth;
-        
-        // Calcular el centro exacto del contenido scrolleable
-        const centerX = (scrollWidth - clientWidth) / 2;
-        
-        // Centrar horizontalmente y mantener arriba con un pequeño margen
-        scrollContainer.scrollTo({
-          left: Math.max(0, centerX),
-          top: 20, // Pequeño margen superior
-          behavior: 'smooth'
-        });
-      } else {
-        console.warn('⚠️ No se encontró el elemento interno del organigrama');
-      }
-    }
-  }, []);
-
-  // Cargar datos del organigrama
-  const loadChartData = useCallback(async () => {
+  const loadChartData = useCallback(async ({ background = false } = {}) => {
     try {
-      setLoading(true);
+      if (!background) {
+        setLoading(true);
+      }
       setError(null);
-      
-      const response = await OrganizationalChartService.getOrganizationalChart();
-      setChartData(response.data);
+
+      if (viewType === 'jobs') {
+        const response = await GetJobsKmTreeService();
+        const jobsData = response.data as JobOrganigramPosition[];
+
+        if (!jobsData || jobsData.length === 0) {
+          setChartData(null);
+          return;
+        }
+
+        const roots = jobsData.map((job) => transformJobsToOrganizationPosition(job));
+
+        const metrics = roots.reduce(
+          (acc, r) => {
+            const m = calculateTreeMetrics(r);
+            return {
+              totalPositions: acc.totalPositions + m.totalPositions,
+              totalEmployees: acc.totalEmployees + m.totalEmployees,
+              totalVacancies: acc.totalVacancies + m.totalVacancies,
+              maxDepth: Math.max(acc.maxDepth, m.maxDepth),
+            };
+          },
+          { totalPositions: 0, totalEmployees: 0, totalVacancies: 0, maxDepth: 0 }
+        );
+
+        const organizations = roots.flatMap((r) => extractOrganizations(r));
+        const uniqueOrgs = Array.from(
+          new Map(organizations.map((o) => [o.id, o])).values()
+        );
+
+        setChartData({ root: roots, ...metrics, organizations: uniqueOrgs, functionalAreas: [] });
+      } else {
+        const response = await GetOrganizationalOrganigramService({});
+        const orgData = response.data as OrganizationalUnitNode[];
+
+        if (!orgData || orgData.length === 0) {
+          setChartData(null);
+          return;
+        }
+
+        const roots = orgData.map((unit) => transformOrgUnitToOrganizationPosition(unit));
+
+        const metrics = roots.reduce(
+          (acc, r) => {
+            const m = calculateTreeMetrics(r);
+            return {
+              totalPositions: acc.totalPositions + m.totalPositions,
+              totalEmployees: acc.totalEmployees + m.totalEmployees,
+              totalVacancies: acc.totalVacancies + m.totalVacancies,
+              maxDepth: Math.max(acc.maxDepth, m.maxDepth),
+            };
+          },
+          { totalPositions: 0, totalEmployees: 0, totalVacancies: 0, maxDepth: 0 }
+        );
+
+        const organizations = roots.flatMap((r) => extractOrganizations(r));
+        const uniqueOrgs = Array.from(
+          new Map(organizations.map((o) => [o.id, o])).values()
+        );
+
+        setChartData({ root: roots, ...metrics, organizations: uniqueOrgs, functionalAreas: [] });
+      }
     } catch (err) {
       console.error('Error loading organizational chart:', err);
       setError(t('organigrama.messages.loadError'));
     } finally {
       setLoading(false);
     }
-  }, [t]);
+  }, [t, viewType]);
 
   useEffect(() => {
     loadChartData();
   }, [loadChartData]);
 
-  // Inicializar zoom y centrar cuando se carga el organigrama
-  useEffect(() => {
-    if (chartData?.root && !loading && chartContentRef.current && scrollContainerRef.current) {
-      // Aplicar zoom inicial del 60% (0.6)
-      applyZoom(0.6);
-      
-      let mutationObserver: MutationObserver | null = null;
-      let centeringTimeout: NodeJS.Timeout | null = null;
-      let mutationCount = 0;
-      let lastMutationTime = Date.now();
-      
-      // Función para centrar con seguimiento
-      const attemptCenter = () => {
-        if (chartContentRef.current) {
-          const contentRect = chartContentRef.current.getBoundingClientRect();
-          
-          // Si el contenido tiene dimensiones válidas, centrar
-          if (contentRect.width > 0 && contentRect.height > 0) {
-            console.log('Centrando organigrama después de', mutationCount, 'mutaciones');
-            centerOnLoad();
-          }
-        }
-      };
-      
-      // Observar cambios en el DOM del organigrama
-      if (chartContentRef.current) {
-        mutationObserver = new MutationObserver((mutations) => {
-          const now = Date.now();
-          mutationCount += mutations.length;
-          lastMutationTime = now;
-          
-          // Cancelar timeout anterior si existe
-          if (centeringTimeout) {
-            clearTimeout(centeringTimeout);
-          }
-          
-          // Esperar 800ms después de la última mutación antes de centrar
-          // Esto da tiempo a que todos los nodos se expandan
-          centeringTimeout = setTimeout(() => {
-            const timeSinceLastMutation = Date.now() - lastMutationTime;
-            
-            // Solo centrar si han pasado al menos 700ms sin mutaciones
-            if (timeSinceLastMutation >= 700) {
-              attemptCenter();
-              
-              // Desconectar el observer después de centrar
-              if (mutationObserver) {
-                mutationObserver.disconnect();
-              }
-            }
-          }, 800);
-        });
-        
-        // Observar cambios en el subárbol (nodos que se agregan)
-        mutationObserver.observe(chartContentRef.current, {
-          childList: true,
-          subtree: true,
-          attributes: false,
-        });
-      }
-      
-      // Fallback: centrar después de 3 segundos si no se ha centrado aún
-      const fallbackTimeout = setTimeout(() => {
-        console.log('⏰ Centrando por timeout (fallback)');
-        attemptCenter();
-        if (mutationObserver) {
-          mutationObserver.disconnect();
-        }
-      }, 3000);
-      
-      return () => {
-        if (mutationObserver) {
-          mutationObserver.disconnect();
-        }
-        if (centeringTimeout) {
-          clearTimeout(centeringTimeout);
-        }
-        clearTimeout(fallbackTimeout);
-      };
-    }
-    
-    return undefined;
-  }, [chartData, loading, centerOnLoad, applyZoom]);  const ensureChildrenArray = (position: OrganizationPosition): OrganizationPosition & { children: OrganizationPosition[] } => {
-    // Filtrar solo children que realmente existen y tienen ID válido
-    const validChildren = position.children?.filter(child => 
-      child && 
-      child.positionId && 
-      child.name
-    ) || [];
-    
-    return {
-      ...position,
-      children: validChildren,
-    };
+  const handleViewTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setViewType(event.target.checked ? 'organizational' : 'jobs');
   };
 
-  // Handlers para las acciones del cargo
-  const handlePositionEdit = useCallback(async (position: OrganizationPosition) => {
-    console.log('📝 Editando cargo:', position);
-    setSelectedPositionForEdit(position);
-    setOpenCreatePosition(true);
+  const handleCreatePosition = () => {
+    setEditPositionId(null);
+    setDrawerOpen(true);
+  };
+
+  const handleEditPosition = useCallback((position: OrganizationPosition) => {
+    setEditPositionId(position.positionId);
+    setDrawerOpen(true);
   }, []);
 
-  const handlePositionDelete = useCallback(async (position: OrganizationPosition) => {
-    if (!position.positionId) return;
+  const handleDeletePosition = useCallback(
+    async (position: OrganizationPosition) => {
+      try {
+        await DeleteJobKmService(position.positionId);
+        toast.success(t('organigrama.messages.deleteSuccess'));
+        await loadChartData({ background: true });
+      } catch (err: any) {
+        console.error('Error deleting position:', err);
+        const apiMessage =
+          err?.response?.data?.message || err?.message;
+        toast.error(apiMessage || t('organigrama.messages.deleteError'));
+      }
+    },
+    [loadChartData, t]
+  );
 
-    try {
-      await OrganizationalChartService.deletePosition(position.positionId);
-      console.log('✅ Cargo eliminado:', position.positionId);
-      await loadChartData();
-    } catch (err) {
-      console.error('Error deleting position:', err);
-      alert(t('organigrama.messages.deleteError'));
-    }
-  }, [loadChartData, t]);
+  const handleDrawerClose = () => {
+    setDrawerOpen(false);
+    setEditPositionId(null);
+  };
 
-  const handlePositionAssign = useCallback(async (position: OrganizationPosition) => {
-    console.log('👥 Asignando empleados al cargo:', position);
-    alert(t('organigrama.messages.assignmentFor'));
-  }, [t]);
+  const handleDrawerSuccess = () => {
+    handleDrawerClose();
+    loadChartData({ background: true });
+  };
 
-  // Handlers para zoom (ultra optimizados)
-  const handleZoomIn = useCallback(() => {
-    const newZoom = Math.min(zoomLevelRef.current + 0.1, 3);
-    applyZoom(Math.round(newZoom * 100) / 100);
-  }, [applyZoom]);
-
-  const handleZoomOut = useCallback(() => {
-    const newZoom = Math.max(zoomLevelRef.current - 0.1, 0.1);
-    applyZoom(Math.round(newZoom * 100) / 100);
-  }, [applyZoom]);
-
-  const handleZoomReset = useCallback(() => {
-    applyZoom(1);
-  }, [applyZoom]);
-
-  const handleZoomChange = useCallback((newZoom: number) => {
-    applyZoom(Math.round(newZoom * 100) / 100);
-  }, [applyZoom]);
-
-  const handleFitToScreen = useCallback(() => {
-    if (chartContainerRef.current && chartContentRef.current) {
-      const container = chartContainerRef.current;
-      const content = chartContentRef.current;
-      
-      // Resetear zoom temporalmente para obtener dimensiones reales
-      chartContentRef.current.style.transform = 'scale(1)';
-      
-      const containerRect = container.getBoundingClientRect();
-      const contentRect = content.getBoundingClientRect();
-      
-      const padding = 40;
-      const scaleX = (containerRect.width - padding) / contentRect.width;
-      const scaleY = (containerRect.height - padding) / contentRect.height;
-      
-      const optimalZoom = Math.min(scaleX, scaleY, 1);
-      const finalZoom = Math.max(optimalZoom, 0.1);
-      
-      applyZoom(finalZoom);
-    }
-  }, [applyZoom]);
-
-  const handleFullscreen = useCallback(() => {
-    if (!document.fullscreenElement && chartContainerRef.current) {
-      chartContainerRef.current.requestFullscreen().catch(console.error);
-      setIsFullscreen(true);
-    } else if (document.fullscreenElement) {
-      document.exitFullscreen().catch(console.error);
-      setIsFullscreen(false);
-    }
-  }, []);
-
-  // Escuchar cambios de fullscreen
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
-    };
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, []);
-
-  // Handler para zoom con rueda del mouse (ultra optimizado)
-  const handleWheel = useCallback((event: WheelEvent) => {
-    if (event.ctrlKey || event.metaKey) {
-      event.preventDefault();
-      
-      const delta = event.deltaY > 0 ? -0.05 : 0.05; // Increments más pequeños para suavidad
-      const newZoom = Math.min(Math.max(zoomLevelRef.current + delta, 0.1), 3);
-      
-      applyZoom(Math.round(newZoom * 100) / 100);
-    }
-  }, [applyZoom]);
-
-  // Agregar listener para zoom con rueda
-  useEffect(() => {
-    const container = chartContainerRef.current;
-    if (container) {
-      container.addEventListener('wheel', handleWheel, { passive: false });
-      return () => {
-        container.removeEventListener('wheel', handleWheel);
-        // Cleanup RAF si está pendiente
-        if (updateDisplayRef.current) {
-          cancelAnimationFrame(updateDisplayRef.current);
-        }
-      };
-    }
-    return undefined;
-  }, [handleWheel]);
-
-  // Handlers para el drawer
-  const handleCreatePosition = useCallback(() => {
-    setSelectedPositionForEdit(null);
-    setOpenCreatePosition(true);
-  }, []);
-
-  const handleCloseDrawer = useCallback(() => {
-    setOpenCreatePosition(false);
-    setSelectedPositionForEdit(null);
-  }, []);
-
-  // Renderizar nodo de cargo
-  const renderPositionNode = useCallback((positionData: OrganizationPosition) => (
-    <PositionChartNodeOption3
-      data={positionData}
-      onEdit={handlePositionEdit}
-      onDelete={handlePositionDelete}
-      onAssign={handlePositionAssign}
-    />
-  ), [handlePositionEdit, handlePositionDelete, handlePositionAssign]);
-
-  // Estado de carga
-  if (loading) {
-    return (
-      <DashboardContent>
-        <CustomBreadcrumbs
-          heading={t('organigrama.title')}
-          links={[
-            { name: t('organization.breadcrumbs.dashboard'), href: paths.dashboard.root },
-            { name: t('organization.breadcrumbs.organizationUnit') },
-          ]}
-          sx={{ mb: { xs: 3, md: 5 } }}
-        />
-        
+  const renderContent = () => {
+    if (loading) {
+      return (
         <Box
           sx={{
+            minHeight: 400,
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            minHeight: 400,
-            gap: 2,
           }}
         >
-          <CircularProgress size={60} />
-          <Typography variant="body1" color="text.secondary">
+          <CircularProgress />
+          <Typography variant="body2" sx={{ ml: 2 }}>
             {t('organigrama.messages.loading')}
           </Typography>
         </Box>
-      </DashboardContent>
-    );
-  }
+      );
+    }
 
-  if (error) {
-    return (
-      <DashboardContent>
-        <CustomBreadcrumbs
-          heading={t('organigrama.title')}
-          links={[
-            { name: t('organigrama.breadcrumbs.dashboard'), href: paths.dashboard.root },
-            { name: t('organigrama.title') },
-          ]}
-          sx={{ mb: { xs: 3, md: 5 } }}
-        />
-        
-        <Alert 
-          severity="error" 
-          action={
-            <Button onClick={loadChartData} variant="outlined" size="small">
-              {t('organigrama.actions.retry')}
-            </Button>
-          }
-        >
-          {error}
+    if (error) {
+      return (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          <Typography variant="body2">{error}</Typography>
+          <Button size="small" onClick={() => loadChartData()} sx={{ mt: 1 }}>
+            {t('common.tryAgain')}
+          </Button>
         </Alert>
-      </DashboardContent>
+      );
+    }
+
+    const hasData = chartData?.root &&
+      (Array.isArray(chartData.root) ? chartData.root.length > 0 : true);
+
+    if (!hasData) {
+      return (
+        <Alert severity="info" sx={{ mb: 3 }}>
+          <Typography variant="body2">{t('organigrama.messages.noData')}</Typography>
+        </Alert>
+      );
+    }
+
+    return (
+      <Box sx={{ height: 'calc(100vh - 250px)', minHeight: 600 }}>
+        <OrganizationChart
+          data={chartData.root}
+          onPositionEdit={viewType === 'jobs' ? handleEditPosition : undefined}
+          onPositionDelete={viewType === 'jobs' ? handleDeletePosition : undefined}
+        />
+      </Box>
     );
-  }
+  };
 
   return (
     <DashboardContent>
@@ -413,8 +341,43 @@ export function OrganizationalChartView() {
           { name: t('organization.breadcrumbs.organizationUnit') },
         ]}
         action={
-          <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
-            {/* ✅ Botón de organizaciones con mejor diseño */}
+          <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap', alignItems: 'center' }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={viewType === 'organizational'}
+                  onChange={handleViewTypeChange}
+                  color="primary"
+                />
+              }
+              label={
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  <Iconify
+                    icon={
+                      viewType === 'jobs'
+                        ? 'solar:case-minimalistic-bold'
+                        : 'solar:buildings-2-bold-duotone'
+                    }
+                    width={18}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    {viewType === 'jobs'
+                      ? t('organigrama.viewTypes.jobs')
+                      : t('organigrama.viewTypes.organizational')}
+                  </Typography>
+                </Box>
+              }
+              sx={{
+                m: 0,
+                bgcolor: 'background.paper',
+                px: 2,
+                py: 0.5,
+                borderRadius: 1.5,
+                border: '1px solid',
+                borderColor: 'divider',
+              }}
+            />
+
             <Button
               component={RouterLink}
               href={paths.dashboard.organizations.organizations}
@@ -436,11 +399,10 @@ export function OrganizationalChartView() {
             >
               {t('organigrama.actions.manageOrganizations')}
             </Button>
-            
-            {/* ✅ Botón principal mejorado */}
+
             <Button
               variant="contained"
-              startIcon={<Iconify icon="mingcute:add-line" />} 
+              startIcon={<Iconify icon="mingcute:add-line" />}
               onClick={handleCreatePosition}
             >
               {t('organigrama.actions.createPosition')}
@@ -450,302 +412,197 @@ export function OrganizationalChartView() {
         sx={{ mb: { xs: 3, md: 4 } }}
       />
 
-      {/* ✅ Header mejorado con métricas y descripción */}
       {chartData && (
-        <Box>
-          {/* ✅ Panel de métricas mejorado */}
-          <Box 
-            sx={{ 
-              display: 'grid',
-              gridTemplateColumns: { 
-                xs: '1fr',
-                sm: 'repeat(2, 1fr)',
-                md: 'repeat(4, 1fr)'
-              },
-              gap: 2,
-              mb: 3,
-            }}
-          >
-            {/* Total de cargos */}
-            <Box
-              sx={{
-                p: 2.5,
-                bgcolor: 'background.paper',
-                borderRadius: 2,
-                border: '1px solid',
-                borderColor: 'divider',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                transition: 'all 0.2s ease',
-                '&:hover': {
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
-                  transform: 'translateY(-2px)',
-                },
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-                <Box
-                  sx={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 2,
-                    bgcolor: 'primary.lighter',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Iconify 
-                    icon="solar:case-minimalistic-bold-duotone" 
-                    width={24} 
-                    color="primary.main" 
-                  />
-                </Box>
-                <Box>
-                  <Typography variant="h4" sx={{ fontWeight: 700, color: 'primary.main' }}>
-                    {chartData.totalPositions}
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                    {t('organigrama.metrics.totalPositions')}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-
-            {/* Total de empleados */}
-            <Box
-              sx={{
-                p: 2.5,
-                bgcolor: 'background.paper',
-                borderRadius: 2,
-                border: '1px solid',
-                borderColor: 'divider',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                transition: 'all 0.2s ease',
-                '&:hover': {
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
-                  transform: 'translateY(-2px)',
-                },
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-                <Box
-                  sx={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 2,
-                    bgcolor: 'success.lighter',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Iconify 
-                    icon="solar:users-group-rounded-bold-duotone" 
-                    width={24} 
-                    color="success.main" 
-                  />
-                </Box>
-                <Box>
-                  <Typography variant="h4" sx={{ fontWeight: 700, color: 'success.main' }}>
-                    {chartData.totalEmployees}
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                    {t('organigrama.metrics.activeEmployees')}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-
-            {/* Organizaciones */}
-            <Box
-              sx={{
-                p: 2.5,
-                bgcolor: 'background.paper',
-                borderRadius: 2,
-                border: '1px solid',
-                borderColor: 'divider',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                transition: 'all 0.2s ease',
-                '&:hover': {
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
-                  transform: 'translateY(-2px)',
-                },
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-                <Box
-                  sx={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 2,
-                    bgcolor: 'info.lighter',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Iconify 
-                    icon="solar:buildings-2-bold-duotone"
-                    width={24} 
-                    color="info.main" 
-                  />
-                </Box>
-                <Box>
-                  <Typography variant="h4" sx={{ fontWeight: 700, color: 'info.main' }}>
-                    {chartData.organizations.length}
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                    {t('organigrama.metrics.organizations')}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-
-            {/* ✅ Métrica adicional: Cargos vacantes */}
-            <Box
-              sx={{
-                p: 2.5,
-                bgcolor: 'background.paper',
-                borderRadius: 2,
-                border: '1px solid',
-                borderColor: 'divider',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                transition: 'all 0.2s ease',
-                '&:hover': {
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
-                  transform: 'translateY(-2px)',
-                },
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-                <Box
-                  sx={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 2,
-                    bgcolor: 'warning.lighter',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Iconify 
-                    icon="solar:user-plus-bold-duotone"
-                    width={24} 
-                    color="warning.main" 
-                  />
-                </Box>
-                <Box>
-                  <Typography variant="h4" sx={{ fontWeight: 700, color: 'warning.main' }}>
-                    {/* ✅ Calcular cargos vacantes */}
-                    {chartData.totalVacancies}
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                    {t('organigrama.metrics.openVacancies')}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-      )}
-
-      {/* Organigrama */}
-      {chartData?.root ? (
         <Box
-          ref={chartContainerRef}
           sx={{
-            position: 'relative',
-            bgcolor: isFullscreen ? 'background.default' : 'background.neutral',
-            borderRadius: isFullscreen ? 0 : 2,
-            border: '1px solid',
-            borderColor: 'divider',
-            minHeight: 600,
-            height: isFullscreen ? '100vh' : 700,
-            width: '100%',
-            overflow: 'hidden',
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(4, 1fr)',
+            },
+            gap: 2,
+            mb: 3,
           }}
         >
-          <ChartControls
-            onZoomIn={handleZoomIn}
-            onZoomOut={handleZoomOut}
-            onZoomReset={handleZoomReset}
-            onFitToScreen={handleFitToScreen}
-            onFullscreen={handleFullscreen}
-            zoomLevel={displayZoom}
-            onZoomChange={handleZoomChange}
-            minZoom={0.1}
-            maxZoom={3}
-          />
-
           <Box
-            ref={scrollContainerRef}
             sx={{
-              width: '100%',
-              height: '100%',
-              overflow: 'auto',
-              
-              '&::-webkit-scrollbar': {
-                width: 12,
-                height: 12,
-              },
-              '&::-webkit-scrollbar-track': {
-                bgcolor: 'rgba(0,0,0,0.05)',
-                borderRadius: 2,
-              },
-              '&::-webkit-scrollbar-thumb': {
-                bgcolor: 'rgba(0,0,0,0.2)',
-                borderRadius: 2,
-                border: '2px solid transparent',
-                backgroundClip: 'content-box',
-                '&:hover': {
-                  bgcolor: 'rgba(0,0,0,0.3)',
-                },
-              },
+              p: 2.5,
+              bgcolor: 'background.paper',
+              borderRadius: 2,
+              border: '1px solid',
+              borderColor: 'divider',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              transition: 'all 0.2s ease',
+              '&:hover': { boxShadow: '0 4px 16px rgba(0,0,0,0.08)', transform: 'translateY(-2px)' },
             }}
           >
-            <Box
-              ref={chartContentRef}
-              sx={{
-                transformOrigin: 'top center',
-                minWidth: 'max-content',
-                minHeight: 'max-content',
-                padding: '50px 500px',
-                textAlign: 'center',
-                willChange: 'transform',
-              }}
-            >
-              <Box sx={{ display: 'inline-block' }}>
-                <OrganizationalChart
-                  data={ensureChildrenArray(chartData.root)}
-                  lineHeight="120px"
-                  lineColor="var(--palette-primary-light)"
-                  lineWidth="2px"
-                  nodeItem={renderPositionNode}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+              <Box
+                sx={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 2,
+                  bgcolor: 'info.lighter',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Iconify icon="solar:case-minimalistic-bold" width={24} sx={{ color: 'info.dark' }} />
+              </Box>
+              <Box sx={{ flex: 1 }}>
+                <Typography variant="h4" sx={{ fontWeight: 700, color: 'info.main', lineHeight: 1.2 }}>
+                  {chartData.totalPositions || 0}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500 }}>
+                  {t('organigrama.metrics.totalPositions')}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              p: 2.5,
+              bgcolor: 'background.paper',
+              borderRadius: 2,
+              border: '1px solid',
+              borderColor: 'divider',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              transition: 'all 0.2s ease',
+              '&:hover': { boxShadow: '0 4px 16px rgba(0,0,0,0.08)', transform: 'translateY(-2px)' },
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+              <Box
+                sx={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 2,
+                  bgcolor: 'success.lighter',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Iconify
+                  icon="solar:users-group-rounded-bold-duotone"
+                  width={24}
+                  sx={{ color: 'success.dark' }}
                 />
+              </Box>
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  variant="h4"
+                  sx={{ fontWeight: 700, color: 'success.main', lineHeight: 1.2 }}
+                >
+                  {chartData.totalEmployees || 0}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500 }}>
+                  {t('organigrama.metrics.activeEmployees')}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              p: 2.5,
+              bgcolor: 'background.paper',
+              borderRadius: 2,
+              border: '1px solid',
+              borderColor: 'divider',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              transition: 'all 0.2s ease',
+              '&:hover': { boxShadow: '0 4px 16px rgba(0,0,0,0.08)', transform: 'translateY(-2px)' },
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+              <Box
+                sx={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 2,
+                  bgcolor: 'primary.light',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Iconify
+                  icon="solar:buildings-2-bold-duotone"
+                  width={24}
+                  sx={{ color: 'primary.dark' }}
+                />
+              </Box>
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  variant="h4"
+                  sx={{ fontWeight: 700, color: 'primary.main', lineHeight: 1.2 }}
+                >
+                  {chartData.organizations?.length || 0}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500 }}>
+                  {t('organigrama.metrics.organizations')}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              p: 2.5,
+              bgcolor: 'background.paper',
+              borderRadius: 2,
+              border: '1px solid',
+              borderColor: 'divider',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              transition: 'all 0.2s ease',
+              '&:hover': { boxShadow: '0 4px 16px rgba(0,0,0,0.08)', transform: 'translateY(-2px)' },
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+              <Box
+                sx={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 2,
+                  bgcolor: 'warning.lighter',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Iconify
+                  icon="solar:user-plus-bold-duotone"
+                  width={24}
+                  sx={{ color: 'warning.dark' }}
+                />
+              </Box>
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  variant="h4"
+                  sx={{ fontWeight: 700, color: 'warning.main', lineHeight: 1.2 }}
+                >
+                  {chartData.totalVacancies || 0}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500 }}>
+                  {t('organigrama.metrics.openVacancies')}
+                </Typography>
               </Box>
             </Box>
           </Box>
         </Box>
-      ) : (
-        <Alert severity="info" sx={{ mt: 3 }}>
-          <Typography variant="body2">
-            {t('organigrama.messages.noData')} 
-            <Button 
-              size="small" 
-              onClick={handleCreatePosition}
-              sx={{ ml: 1 }}
-            >
-              {t('organigrama.actions.createFirstPosition')}
-            </Button>
-          </Typography>
-        </Alert>
       )}
 
+      {renderContent()}
+
       <PositionCreateDrawer
-        open={openCreatePosition}
-        onClose={handleCloseDrawer}
-        editData={selectedPositionForEdit}
+        open={drawerOpen}
+        onClose={handleDrawerClose}
+        editPositionId={editPositionId}
+        onSuccess={handleDrawerSuccess}
       />
     </DashboardContent>
   );

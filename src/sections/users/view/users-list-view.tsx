@@ -1,6 +1,6 @@
 'use client';
 
-import type { IRole } from 'src/types/roles';
+import type { IRoleOption } from 'src/types/roles';
 import type { TableHeadCellProps } from 'src/components/table';
 import type { IUser, IUserTableFilters } from 'src/types/users';
 
@@ -53,7 +53,7 @@ export function UsersListView() {
 
   const [tableData, setTableData] = useState<IUser[]>([]);
   const [totalItems, setTotalItems] = useState(0);
-  const [roleOptions, setRoleOptions] = useState<IRole[]>([]);
+  const [roleOptions, setRoleOptions] = useState<IRoleOption[]>([]);
 
   const STATUS_OPTIONS = useMemo(() => [
     { value: 'all', label: t('users.table.filters.all') },

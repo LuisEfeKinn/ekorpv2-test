@@ -36,7 +36,7 @@ export interface OrganizationPosition {
 }
 
 export interface OrganizationalChartData {
-  root: OrganizationPosition;
+  root: OrganizationPosition | OrganizationPosition[];
   totalPositions: number;
   totalEmployees: number;
   totalVacancies: number;
@@ -61,11 +61,19 @@ export interface JobOrganigramOrganizationalUnit {
   color: string;
 }
 
-export interface JobOrganigramPosition {
-  id: number;
+export interface JobOrganigramCompetency {
+  id: string;
   name: string;
+  code?: string;
+  color?: string;
+}
+
+export interface JobOrganigramPosition {
+  id: string;
+  name: string;
+  code?: string;
   numberOfPositions: number;
-  competencies: string | null;
+  competencies: JobOrganigramCompetency[];
   organizationalUnit: JobOrganigramOrganizationalUnit | null;
   employees: JobOrganigramEmployee[];
   children: JobOrganigramPosition[];

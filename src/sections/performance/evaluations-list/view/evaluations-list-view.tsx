@@ -57,6 +57,7 @@ export function EvaluationsListView() {
   const filters = useSetState<IEvaluationListTableFilters>({
     name: '',
     vigencyId: '',
+    vigencyName: '',
     organizationalUnitIds: [],
     orderDirection: '',
   });

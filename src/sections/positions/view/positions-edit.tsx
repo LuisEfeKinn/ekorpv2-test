@@ -1,6 +1,6 @@
 'use client';
 
-import type { IPosition } from 'src/types/organization';
+import type { IJobKm } from 'src/types/organization';
 
 import { useState, useEffect } from 'react';
 
@@ -8,7 +8,7 @@ import { paths } from 'src/routes/paths';
 
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
-import { GetPositionByIdService } from 'src/services/organization/position.service';
+import { GetJobKmByIdService } from 'src/services/organization/job-km.service';
 
 import { LoadingScreen } from 'src/components/loading-screen';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
@@ -23,7 +23,7 @@ type Props = {
 
 export function PositionEditView({ id }: Props) {
   const { t } = useTranslate('organization');
-  const [currentPosition, setCurrentPosition] = useState<IPosition | null>(null);
+  const [currentPosition, setCurrentPosition] = useState<IJobKm | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,9 +31,8 @@ export function PositionEditView({ id }: Props) {
     const fetchPosition = async () => {
       try {
         setLoading(true);
-        const response = await GetPositionByIdService(id);
-        console.log('Fetch position response:', response);
-        
+        const response = await GetJobKmByIdService(id);
+
         if (response.status === 200) {
           setCurrentPosition(response.data);
         } else {

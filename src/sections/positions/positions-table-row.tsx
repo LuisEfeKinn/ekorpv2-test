@@ -1,4 +1,4 @@
-import type { IPosition } from 'src/types/organization';
+import type { IJobKm } from 'src/types/organization';
 
 import { useBoolean, usePopover } from 'minimal-shared/hooks';
 
@@ -22,7 +22,7 @@ import { CustomPopover } from 'src/components/custom-popover';
 // ----------------------------------------------------------------------
 
 type Props = {
-  row: IPosition;
+  row: IJobKm;
   selected: boolean;
   editHref: string;
   onSelectRow: () => void;
@@ -133,6 +133,12 @@ export function PositionTableRow({ row, selected, editHref, onSelectRow, onDelet
               </Box>
             )}
           </Stack>
+        </TableCell>
+
+        <TableCell>
+          <Box component="span" sx={{ typography: 'body2', color: 'text.primary' }}>
+            {row?.numberOfPositions ?? '—'}
+          </Box>
         </TableCell>
 
         <TableCell>
