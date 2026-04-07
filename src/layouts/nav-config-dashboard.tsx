@@ -321,13 +321,7 @@ export const navData: NavSectionProps['data'] = [
 export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
   const { t } = useTranslate('navbar');
   
-  // Si no hay módulos, retornar array vacío (sin menú)
-  if (!modules || modules.length === 0) {
-    return [];
-  }
-
-  // Convertir módulos dinámicos a estructura de navegación
-  const dynamicNavData = convertModulesToNavData(modules, t);
+  const dynamicNavData = convertModulesToNavData(modules ?? [], t);
 
   try {
     const archIdx = dynamicNavData.findIndex((s) => s.subheader === t('architecture.title'));
@@ -488,25 +482,34 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
     //   }
     }
 
-    // const userAdminSectionTitle = t('userAdministration.title');
-    // const userAdminUsersTitle = t('userAdministration.items.usersClarity');
+    const userAdminSectionTitle = t('userAdministration.title');
+    const userAdminUsersTitle = t('userAdministration.items.usersClarity');
 
-    // const hasUserAdminSection = dynamicNavData.some(
-    //   (section) => section.subheader === userAdminSectionTitle
-    // );
+    const userAdminSection = dynamicNavData.find((section) => section.subheader === userAdminSectionTitle);
 
-    // if (!hasUserAdminSection) {
-    //   dynamicNavData.push({
-    //     subheader: userAdminSectionTitle,
-    //     items: [
-    //       {
-    //         title: userAdminUsersTitle,
-    //         path: paths.dashboard.userAdministration.usersTable,
-    //         icon: getNavIcon('user'),
-    //       },
-    //     ],
-    //   });
-    // }
+    if (!userAdminSection) {
+      dynamicNavData.push({
+        subheader: userAdminSectionTitle,
+        items: [
+          {
+            title: userAdminUsersTitle,
+            path: paths.dashboard.userAdministration.usersTable,
+            icon: getNavIcon('user'),
+          },
+        ],
+      });
+    } else {
+      const existingUsersItem = userAdminSection.items.find((it) => it.title === userAdminUsersTitle);
+      if (existingUsersItem) {
+        existingUsersItem.path = paths.dashboard.userAdministration.usersTable;
+      } else {
+        userAdminSection.items.push({
+          title: userAdminUsersTitle,
+          path: paths.dashboard.userAdministration.usersTable,
+          icon: getNavIcon('user'),
+        });
+      }
+    }
   } catch {
     void 0;
   }

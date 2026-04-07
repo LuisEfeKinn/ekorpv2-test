@@ -251,7 +251,6 @@ export function StrategicObjectivesTableView() {
   const [currentObjective, setCurrentObjective] = useState<IStrategicObjective | null>(null);
 
   const [tableData, setTableData] = useState<IStrategicObjectiveFlowNode[]>([]);
-  const [totalItems, setTotalItems] = useState(0);
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
   const [visibleColumns, setVisibleColumns] = useState<string[]>(() =>
     getSanitizedVisibleColumns(DEFAULT_COLUMNS)
@@ -407,11 +406,9 @@ export function StrategicObjectivesTableView() {
 
       setTableData(list);
       setExpandedRows(new Set());
-      setTotalItems(list.length); // Total root items or total items? For tree view, pagination is tricky.
     } catch (error) {
       console.error('Error loading objectives:', error);
       setTableData([]);
-      setTotalItems(0);
     }
   }, [flowParams]);
 

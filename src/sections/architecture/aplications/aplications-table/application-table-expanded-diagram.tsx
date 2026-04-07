@@ -7,6 +7,7 @@ import type { Theme, SxProps } from '@mui/material/styles';
 
 import {
   useMemo,
+  Fragment,
   useState,
   useEffect,
   useCallback,
@@ -73,6 +74,8 @@ type DataTableExpandedDiagramProps = {
   nodeLabel: string;
   onBack: () => void;
   onNavigateToChild?: (child: ChildNode) => void;
+  path?: Array<{ id: string; label: string }>;
+  onNavigateToPathIndex?: (index: number) => void;
   sx?: SxProps<Theme>;
 };
 
@@ -310,6 +313,8 @@ export function ApplicationTableExpandedDiagram({
   nodeLabel,
   onBack,
   onNavigateToChild,
+  path,
+  onNavigateToPathIndex,
   sx,
 }: DataTableExpandedDiagramProps) {
   const { t } = useTranslate('architecture');
@@ -557,7 +562,7 @@ export function ApplicationTableExpandedDiagram({
               boxShadow: 4,
             }}
           >
-            {t('process.table.actions.add')}
+            {t('application.table.actions.addChild')}
           </Button>
         </Box>
 
@@ -660,14 +665,34 @@ export function ApplicationTableExpandedDiagram({
               <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
                 {t('application.map.diagram.subDiagram.home')}
               </Typography>
-              <Iconify
-                icon="eva:arrow-ios-forward-fill"
-                width={16}
-                sx={{ color: 'text.disabled' }}
-              />
-              <Typography variant="caption" sx={{ fontWeight: 700, color: 'primary.main' }}>
-                {nodeLabel}
-              </Typography>
+              {(path && path.length > 0 ? path : [{ id: nodeId, label: nodeLabel }]).map((p, index, arr) => (
+                <Fragment key={`${p.id}-${index}`}>
+                  <Iconify icon="eva:arrow-ios-forward-fill" width={16} sx={{ color: 'text.disabled' }} />
+                  {index < arr.length - 1 && onNavigateToPathIndex ? (
+                    <Button
+                      variant="text"
+                      size="small"
+                      onClick={() => onNavigateToPathIndex(index)}
+                      sx={{
+                        minWidth: 0,
+                        p: 0,
+                        lineHeight: 1,
+                        textTransform: 'none',
+                        fontWeight: 700,
+                        fontSize: '0.75rem',
+                        color: 'text.secondary',
+                        '&:hover': { bgcolor: 'transparent', color: 'text.primary' },
+                      }}
+                    >
+                      {p.label}
+                    </Button>
+                  ) : (
+                    <Typography variant="caption" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                      {p.label}
+                    </Typography>
+                  )}
+                </Fragment>
+              ))}
             </Stack>
           </Stack>
         </Paper>
@@ -692,7 +717,7 @@ export function ApplicationTableExpandedDiagram({
             boxShadow: 4,
           }}
         >
-          {t('process.table.actions.add')}
+          {t('application.table.actions.addChild')}
         </Button>
       </Box>
 

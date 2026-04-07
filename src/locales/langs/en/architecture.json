@@ -1164,6 +1164,54 @@
           "backError": "Error returning to the main diagram",
           "loadMapError": "Error loading the relationship map"
         }
+      },
+      "jobSystems": {
+        "title": "Jobs with system access",
+        "titleWithSystem": "Jobs with access to {{system}}",
+        "subtitle": "Manage the Job ↔ System relationship",
+        "form": {
+          "title": "Create / edit relation",
+          "fields": {
+            "job": "Job",
+            "observations": "Observations"
+          },
+          "validation": {
+            "jobRequired": "Job is required"
+          }
+        },
+        "list": {
+          "title": "Registered relations",
+          "loading": "Loading relations...",
+          "empty": "No jobs related to this system",
+          "columns": {
+            "job": "Job",
+            "observations": "Observations",
+            "actions": "Actions"
+          }
+        },
+        "actions": {
+          "close": "Close",
+          "refresh": "Refresh",
+          "create": "Create",
+          "update": "Update",
+          "edit": "Edit",
+          "delete": "Delete",
+          "cancel": "Cancel",
+          "cancelEdit": "Cancel edit"
+        },
+        "deleteDialog": {
+          "title": "Delete relation",
+          "content": "Do you want to delete this relation?"
+        },
+        "messages": {
+          "loadError": "Could not load relations",
+          "jobsLoadError": "Could not load jobs",
+          "saveError": "Could not save the relation",
+          "deleteError": "Could not delete the relation",
+          "created": "Relation created successfully",
+          "updated": "Relation updated successfully",
+          "deleted": "Relation deleted successfully"
+        }
       }
     },
     "timeline": {

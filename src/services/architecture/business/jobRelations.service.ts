@@ -20,6 +20,13 @@ export type SaveJobSystemRelationPayload = {
   system: { id: number };
 };
 
+export type JobSystemRelation = {
+  id: number;
+  observations?: string;
+  job: { id: number; name?: string };
+  system: { id: number; name?: string };
+};
+
 export type SaveJobIndicatorRelationPayload = {
   observations?: string;
   creationDate: string;
@@ -56,6 +63,11 @@ export const SaveJobDocumentRelationService = async (data: SaveJobDocumentRelati
 
 export const SaveJobSystemRelationService = async (data: SaveJobSystemRelationPayload) => {
   const response = await axios.post(endpoints.architecture.business.jobRelations.jobSystems, data);
+  return response;
+};
+
+export const GetJobSystemRelationsService = async () => {
+  const response = await axios.get<JobSystemRelation[]>(endpoints.architecture.business.jobRelations.jobSystems);
   return response;
 };
 

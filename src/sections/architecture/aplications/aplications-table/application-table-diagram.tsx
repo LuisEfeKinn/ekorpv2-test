@@ -38,6 +38,7 @@ import { GetApplicationTableMapByIdService } from 'src/services/architecture/app
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 
+import { ApplicationJobSystemsDrawer } from './application-job-systems-drawer';
 import { ApplicationTableExpandedDiagram } from './application-table-expanded-diagram';
 
 // ----------------------------------------------------------------------
@@ -64,7 +65,7 @@ type DataTableDiagramProps = {
 type ExpandedNode = {
   id: string;
   label: string;
-} | null;
+};
 
 // Custom Node Components
 function CentralNode({ data }: any) {
@@ -269,7 +270,8 @@ export function ApplicationTableDiagram({ applicationId, sx }: DataTableDiagramP
   const [mapData, setMapData] = useState<MapData | null>(null);
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
-  const [expandedNode, setExpandedNode] = useState<ExpandedNode>(null);
+  const [expandedStack, setExpandedStack] = useState<ExpandedNode[]>([]);
+  const [jobSystemsOpen, setJobSystemsOpen] = useState(false);
 
   const colors = useMemo(() => [
     theme.palette.primary.main,
@@ -280,6 +282,27 @@ export function ApplicationTableDiagram({ applicationId, sx }: DataTableDiagramP
     theme.palette.error.main,
     theme.palette.primary.dark,
   ], [theme]);
+
+  const isJobsNode = useCallback((child: ChildNode) => {
+    const id = String(child.id ?? '').toLowerCase();
+    const label = String(child.label ?? '').toLowerCase();
+    return (
+      id === 'job' ||
+      id === 'jobs' ||
+      id === 'cargo' ||
+      id === 'cargos' ||
+      id.includes('job') ||
+      id.includes('cargo') ||
+      label.includes('cargo') ||
+      label.includes('cargos') ||
+      label.includes('job') ||
+      label.includes('jobs') ||
+      label.includes('actor') ||
+      label.includes('actors')
+    );
+  }, []);
+
+  const currentExpanded = expandedStack.length > 0 ? expandedStack[expandedStack.length - 1] : null;
 
   const generateNodesAndEdges = useCallback((data: MapData) => {
     const radius = 400;
@@ -315,7 +338,11 @@ export function ApplicationTableDiagram({ applicationId, sx }: DataTableDiagramP
           id: child.id,
           color,
           onClick: () => {
-            setExpandedNode({ id: child.id, label: child.label });
+            if (isJobsNode(child)) {
+              setJobSystemsOpen(true);
+              return;
+            }
+            setExpandedStack([{ id: child.id, label: child.label }]);
           },
         },
         draggable: true,
@@ -344,7 +371,7 @@ export function ApplicationTableDiagram({ applicationId, sx }: DataTableDiagramP
 
     setNodes([centralNode, ...childNodes]);
     setEdges(newEdges);
-  }, [colors, setNodes, setEdges]);
+  }, [colors, isJobsNode, setEdges, setNodes]);
 
   useEffect(() => {
     const fetchMapData = async () => {
@@ -356,7 +383,7 @@ export function ApplicationTableDiagram({ applicationId, sx }: DataTableDiagramP
         generateNodesAndEdges(data);
       } catch (error) {
         console.error('Error al cargar el mapa:', error);
-        toast.error(t('application.map.diagram.messages.error.loadMapError'));
+        toast.error(t('application.map.messages.error.loadMapError'));
       } finally {
         setLoading(false);
       }
@@ -368,18 +395,37 @@ export function ApplicationTableDiagram({ applicationId, sx }: DataTableDiagramP
   }, [applicationId, generateNodesAndEdges, t]);
 
   // Si hay un nodo expandido, mostrar el diagrama expandido
-  if (expandedNode) {
+  if (currentExpanded) {
     return (
-      <ApplicationTableExpandedDiagram
-        applicationId={applicationId}
-        nodeId={expandedNode.id}
-        nodeLabel={expandedNode.label}
-        onBack={() => setExpandedNode(null)}
-        onNavigateToChild={(child) => {
-          setExpandedNode({ id: child.id, label: child.label });
-        }}
-        sx={sx}
-      />
+      <>
+        <ApplicationTableExpandedDiagram
+          applicationId={applicationId}
+          nodeId={currentExpanded.id}
+          nodeLabel={currentExpanded.label}
+          path={expandedStack}
+          onBack={() => {
+            setExpandedStack((prev) => (prev.length <= 1 ? [] : prev.slice(0, -1)));
+          }}
+          onNavigateToChild={(child) => {
+            if (isJobsNode(child)) {
+              setJobSystemsOpen(true);
+              return;
+            }
+            setExpandedStack((prev) => [...prev, { id: child.id, label: child.label }]);
+          }}
+          onNavigateToPathIndex={(index) => {
+            setExpandedStack((prev) => prev.slice(0, index + 1));
+          }}
+          sx={sx}
+        />
+
+        <ApplicationJobSystemsDrawer
+          open={jobSystemsOpen}
+          onClose={() => setJobSystemsOpen(false)}
+          systemId={Number(applicationId)}
+          systemLabel={mapData?.label}
+        />
+      </>
     );
   }
 
@@ -478,22 +524,23 @@ export function ApplicationTableDiagram({ applicationId, sx }: DataTableDiagramP
   }
 
   return (
-    <Card
-      sx={{
-        width: '100%',
-        position: 'relative',
-        overflow: 'hidden',
-        bgcolor: 'background.neutral',
-        ...sx,
-      }}
-    >
-      <Box
+    <>
+      <Card
         sx={{
           width: '100%',
-          height: 850,
           position: 'relative',
+          overflow: 'hidden',
+          bgcolor: 'background.neutral',
+          ...sx,
         }}
       >
+        <Box
+          sx={{
+            width: '100%',
+            height: 850,
+            position: 'relative',
+          }}
+        >
         {/* Indicador de nodos - Parte superior izquierda */}
         <Box
           sx={{
@@ -627,7 +674,7 @@ export function ApplicationTableDiagram({ applicationId, sx }: DataTableDiagramP
           </Paper>
         </Box>
 
-        <ReactFlow
+          <ReactFlow
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
@@ -667,8 +714,16 @@ export function ApplicationTableDiagram({ applicationId, sx }: DataTableDiagramP
             }}
             maskColor={alpha(theme.palette.background.paper, 0.8)}
           />
-        </ReactFlow>
-      </Box>
-    </Card>
+          </ReactFlow>
+        </Box>
+      </Card>
+
+      <ApplicationJobSystemsDrawer
+        open={jobSystemsOpen}
+        onClose={() => setJobSystemsOpen(false)}
+        systemId={Number(applicationId)}
+        systemLabel={mapData?.label}
+      />
+    </>
   );
 }

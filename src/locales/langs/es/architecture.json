@@ -1229,6 +1229,54 @@
           "backError": "Error al volver al diagrama principal",
           "loadMapError": "Error al cargar el mapa de relaciones"
         }
+      },
+      "jobSystems": {
+        "title": "Cargos con acceso al sistema",
+        "titleWithSystem": "Cargos con acceso a {{system}}",
+        "subtitle": "Administra la relación Cargo ↔ Sistema",
+        "form": {
+          "title": "Crear / editar relación",
+          "fields": {
+            "job": "Cargo",
+            "observations": "Observaciones"
+          },
+          "validation": {
+            "jobRequired": "El cargo es obligatorio"
+          }
+        },
+        "list": {
+          "title": "Relaciones registradas",
+          "loading": "Cargando relaciones...",
+          "empty": "No hay cargos relacionados a este sistema",
+          "columns": {
+            "job": "Cargo",
+            "observations": "Observaciones",
+            "actions": "Acciones"
+          }
+        },
+        "actions": {
+          "close": "Cerrar",
+          "refresh": "Actualizar",
+          "create": "Crear",
+          "update": "Actualizar",
+          "edit": "Editar",
+          "delete": "Eliminar",
+          "cancel": "Cancelar",
+          "cancelEdit": "Cancelar edición"
+        },
+        "deleteDialog": {
+          "title": "Eliminar relación",
+          "content": "¿Deseas eliminar esta relación?"
+        },
+        "messages": {
+          "loadError": "No se pudieron cargar las relaciones",
+          "jobsLoadError": "No se pudieron cargar los cargos",
+          "saveError": "No se pudo guardar la relación",
+          "deleteError": "No se pudo eliminar la relación",
+          "created": "Relación creada con éxito",
+          "updated": "Relación actualizada con éxito",
+          "deleted": "Relación eliminada con éxito"
+        }
       }
     },
     "timeline": {
