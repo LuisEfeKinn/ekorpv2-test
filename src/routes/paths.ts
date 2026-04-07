@@ -260,6 +260,10 @@ export const paths = {
     // Users Administration
     userAdministration: {
       usersTable: `${ROOTS.DASHBOARD}/users-administration/users`,
+      roles: `${ROOTS.DASHBOARD}/users-administration/roles`,
+      rolesCreate: `${ROOTS.DASHBOARD}/users-administration/roles/create`,
+      rolesEdit: (id: string) => `${ROOTS.DASHBOARD}/users-administration/roles/edit/${id}`,
+      rolePermissions: (id: string) => `${ROOTS.DASHBOARD}/users-administration/permissions/${id}`,
     },
 
     // Assets Modules

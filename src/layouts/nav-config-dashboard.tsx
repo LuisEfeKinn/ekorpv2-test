@@ -482,34 +482,6 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
     //   }
     }
 
-    const userAdminSectionTitle = t('userAdministration.title');
-    const userAdminUsersTitle = t('userAdministration.items.usersClarity');
-
-    const userAdminSection = dynamicNavData.find((section) => section.subheader === userAdminSectionTitle);
-
-    if (!userAdminSection) {
-      dynamicNavData.push({
-        subheader: userAdminSectionTitle,
-        items: [
-          {
-            title: userAdminUsersTitle,
-            path: paths.dashboard.userAdministration.usersTable,
-            icon: getNavIcon('user'),
-          },
-        ],
-      });
-    } else {
-      const existingUsersItem = userAdminSection.items.find((it) => it.title === userAdminUsersTitle);
-      if (existingUsersItem) {
-        existingUsersItem.path = paths.dashboard.userAdministration.usersTable;
-      } else {
-        userAdminSection.items.push({
-          title: userAdminUsersTitle,
-          path: paths.dashboard.userAdministration.usersTable,
-          icon: getNavIcon('user'),
-        });
-      }
-    }
   } catch {
     void 0;
   }

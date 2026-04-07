@@ -5,7 +5,7 @@ import type { IOrganizationalUnit } from 'src/types/organization';
 import type { IUserClarity, IUserClarityCreatePayload } from 'src/types/users';
 
 import * as z from 'zod';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useEffect, useCallback } from 'react';
 
@@ -22,6 +22,7 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
 import { useTranslate } from 'src/locales';
+import { GetRolesPaginationService } from 'src/services/security/roles.service';
 import { GetJobsPaginationService } from 'src/services/architecture/business/jobs.service';
 import {
   GetOrganizationalUnitPaginationService,
@@ -92,6 +93,7 @@ const userClaritySchema = (t: (key: string) => string) =>
     actividadEconomica: z.string(),
     lenguaje: z.string(),
     zonaHoraria: z.string(),
+    roleIds: z.array(z.string()).min(1, { message: t('users.form.validation.roleRequired') }),
   });
 
 type UserClarityFormValues = z.infer<ReturnType<typeof userClaritySchema>>;
@@ -141,12 +143,14 @@ export function UsersClarityCreateForm({
       actividadEconomica: '',
       lenguaje: '1',
       zonaHoraria: 'America/Bogota',
+      roleIds: [],
     },
   });
 
   const {
     handleSubmit,
     reset,
+    control,
     formState: { isSubmitting },
   } = methods;
 
@@ -160,6 +164,7 @@ export function UsersClarityCreateForm({
   const [documentTypes, setDocumentTypes] = useState<string[]>([]);
   const [profiles, setProfiles] = useState<Array<{ idperfil: number; nombreperfil: string }>>([]);
   const [activeUsers, setActiveUsers] = useState<IUserClarity[]>([]);
+  const [roleOptions, setRoleOptions] = useState<Array<{ id: string | number; name: string }>>([]);
 
   const mapUserToFormValues = useCallback(
     (user: IUserClarity): UserClarityFormValues => ({
@@ -195,6 +200,7 @@ export function UsersClarityCreateForm({
       actividadEconomica: user.actividadeconomica,
       lenguaje: String(user.lenguaje),
       zonaHoraria: user.zonahoraria,
+      roleIds: user.roleIds ?? user.linkedUserRoles?.map((r) => r.id) ?? [],
     }),
     []
   );
@@ -284,6 +290,17 @@ export function UsersClarityCreateForm({
       .catch(() => {
         if (mounted) setActiveUsers([]);
       });
+
+    GetRolesPaginationService({ page: 1, take: 100 })
+      .then((res) => {
+        const data: Array<{ id: string | number; name: string }> = Array.isArray(res?.data?.data)
+          ? res.data.data
+          : [];
+        if (mounted) setRoleOptions(data);
+      })
+      .catch(() => {
+        if (mounted) setRoleOptions([]);
+      });
     return () => {
       mounted = false;
     };
@@ -327,6 +344,7 @@ export function UsersClarityCreateForm({
         actividadEconomica: '',
         lenguaje: '1',
         zonaHoraria: 'America/Bogota',
+        roleIds: [],
       });
     }
   }, [initialUser, mapUserToFormValues, reset]);
@@ -338,6 +356,7 @@ export function UsersClarityCreateForm({
       UsersClarity?: { id: number };
       immediateSupervisor?: { id: number };
       actores?: { id: number };
+      job?: { id: number };
     } => ({
       nombres: values.nombres,
       apellidos: values.primerApellido,
@@ -380,6 +399,7 @@ export function UsersClarityCreateForm({
         ? { id: Number(values.jefeInmediato) }
         : undefined,
       actores: values.cargos ? { id: Number(values.cargos) } : undefined,
+      job: values.cargos ? { id: Number(values.cargos) } : undefined,
       UsersClarity: values.jefeInmediato ? { id: Number(values.jefeInmediato) } : undefined,
       template: 'saga',
       templateTheme: 'blue',
@@ -393,6 +413,7 @@ export function UsersClarityCreateForm({
       templateComponentTheme: 'blue',
       templateMenuTheme: 'blue',
       templateMenuColor: '#FFFFFF',
+      roleIds: values.roleIds,
     }),
     [profiles]
   );
@@ -465,6 +486,37 @@ export function UsersClarityCreateForm({
             label={t('usersClarity.form.fields.codigoEmpleado')}
           />
           <Field.Text name="clave" label={t('usersClarity.form.fields.clave')} type="password" />
+
+          <Controller
+            name="roleIds"
+            control={control}
+            render={({ field }) => (
+              <FormControl fullWidth>
+                <InputLabel id="roleIds-label">{t('users.form.fields.roles.label')}</InputLabel>
+                <Select
+                  labelId="roleIds-label"
+                  multiple
+                  value={field.value}
+                  onChange={(e) =>
+                    field.onChange((e.target.value as Array<string | number>).map(String))
+                  }
+                  label={t('users.form.fields.roles.label')}
+                  renderValue={(selected) =>
+                    roleOptions
+                      .filter((option) => selected.includes(String(option.id)))
+                      .map((option) => option.name)
+                      .join(', ')
+                  }
+                >
+                  {roleOptions.map((option) => (
+                    <MenuItem key={option.id} value={String(option.id)}>
+                      {option.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )}
+          />
 
           <Field.Select name="perfil" label={t('usersClarity.form.fields.perfil')}>
             <MenuItem value="">

@@ -42,6 +42,19 @@ export interface IUserOption {
 
 export interface IUserClarity {
   idusuario: number;
+  userId?: string;
+  roleIds?: string[];
+  linkedUserRoles?: Array<{
+    id: string;
+    name: string;
+  }>;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string | null;
+  actores?: { id: number };
+  job?: { id: number };
+  perfil?: { id: number };
+  profile?: { id: number };
   nombres: string;
   apellidos: string;
   apellido2: string | null;
@@ -98,4 +111,5 @@ export type IUserClarityRelations = {
   UsersClarity?: { id: number };
   immediateSupervisor?: { id: number };
   actores?: { id: number };
+  job?: { id: number };
 };

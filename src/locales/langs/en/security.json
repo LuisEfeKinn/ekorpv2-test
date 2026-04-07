@@ -279,10 +279,12 @@
     "table": {
       "columns": {
         "id": "ID",
+        "userId": "User ID",
         "username": "Username",
         "names": "Names",
         "firstLastName": "First Last Name",
         "email1": "Email 1",
+        "roles": "Roles",
         "userStatus": "User Status",
         "position": "Positions",
         "profile": "Profile",

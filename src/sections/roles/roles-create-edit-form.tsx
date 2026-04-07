@@ -30,9 +30,10 @@ export type RoleCreateSchemaType = {
 
 type Props = {
   currentRole?: IRole;
+  redirectTo?: string;
 };
 
-export function RoleCreateEditForm({ currentRole }: Props) {
+export function RoleCreateEditForm({ currentRole, redirectTo }: Props) {
   const router = useRouter();
   const { t } = useTranslate('security');
 
@@ -80,7 +81,7 @@ export function RoleCreateEditForm({ currentRole }: Props) {
             ? t('roles.messages.success.updated') 
             : t('roles.messages.success.created')
         );
-        router.push(paths.dashboard.security.roles);
+        router.push(redirectTo ?? paths.dashboard.security.roles);
       }
     } catch (error) {
       console.error('Error saving role:', error);

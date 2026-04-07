@@ -37,7 +37,8 @@
   "userAdministration": {
     "title": "Users Clarity",
     "items": {
-      "usersClarity": "Users"
+      "usersClarity": "Users",
+      "roles": "Roles"
     }
   },
   "settings": {

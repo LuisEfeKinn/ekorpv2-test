@@ -27,11 +27,12 @@ type Props = {
   row: IRole;
   selected: boolean;
   editHref: string;
+  permissionsHref?: string;
   onSelectRow: () => void;
   onDeleteRow: () => void;
 };
 
-export function RoleTableRow({ row, selected, editHref, onSelectRow, onDeleteRow }: Props) {
+export function RoleTableRow({ row, selected, editHref, permissionsHref, onSelectRow, onDeleteRow }: Props) {
   const { t } = useTranslate('security');
   const menuActions = usePopover();
   const confirmDialog = useBoolean();
@@ -58,7 +59,7 @@ export function RoleTableRow({ row, selected, editHref, onSelectRow, onDeleteRow
         <li>
           <MenuItem
             component={RouterLink}
-            href={paths.dashboard.security.rolePermissions(row.id)}
+            href={permissionsHref ?? paths.dashboard.security.rolePermissions(row.id)}
             onClick={() => menuActions.onClose()}
           >
             <Iconify icon="solar:shield-check-bold" sx={{ color: 'success.main' }} />
