@@ -1,4 +1,9 @@
-import type { IUserClarity, IUserClarityRelations, IUserClarityCreatePayload } from 'src/types/users';
+import type {
+  IUserClarity,
+  IUserClarityRelations,
+  IUserClarityCreatePayload,
+  IUserClarityUpdatePayload,
+} from 'src/types/users';
 
 // utils
 import axios, { endpoints } from 'src/utils/axios';
@@ -44,8 +49,19 @@ export const GetPointsByLoggedUserService = async () => {
   return response;
 };
 
-export const GetUsersClarityAllService = async () => {
-  const response = await axios.get<IUserClarity[]>('/api/users-clarity/all');
+export type UsersClarityAllParams = Partial<{
+  nombre: string;
+  correo: string;
+  rolId: string | number;
+  estadoUsuario: string | number;
+  cargo: string;
+  unidadOrganizacional: string;
+  jefeInmediato: string;
+  tipoUsuario: string | number;
+}>;
+
+export const GetUsersClarityAllService = async (params?: UsersClarityAllParams) => {
+  const response = await axios.get<IUserClarity[]>('/api/users-clarity/all', { params });
   return response;
 };
 
@@ -58,7 +74,7 @@ export const CreateUserClarityService = async (
 
 export const UpdateUserClarityService = async (
   id: number,
-  payload: IUserClarityCreatePayload & IUserClarityRelations
+  payload: IUserClarityUpdatePayload & IUserClarityRelations
 ) => {
   const response = await axios.patch(`/api/users-clarity/${id}`, payload);
   return response;
@@ -66,6 +82,40 @@ export const UpdateUserClarityService = async (
 
 export const DeleteUserClarityService = async (id: number) => {
   const response = await axios.delete(`/api/users-clarity/${id}`);
+  return response;
+};
+
+export const DownloadUsersClarityTemplateService = async () => {
+  const response = await axios.get('/api/users-clarity/download/template', {
+    responseType: 'blob',
+  });
+  return response;
+};
+
+export type UsersClarityDownloadExcelParams = UsersClarityAllParams & {
+  columns: string;
+};
+
+export const DownloadUsersClarityExcelService = async (params: UsersClarityDownloadExcelParams) => {
+  const response = await axios.get('/api/users-clarity/download/excel', {
+    params,
+    responseType: 'blob',
+  });
+  return response;
+};
+
+export type UsersClarityUploadResponse = {
+  statusCode: number;
+  data?: { created?: number };
+  message?: string;
+};
+
+export const UploadUsersClarityTemplateService = async (formData: FormData) => {
+  const response = await axios.post<UsersClarityUploadResponse>('/api/users-clarity/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   return response;
 };
 

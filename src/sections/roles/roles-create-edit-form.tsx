@@ -31,9 +31,11 @@ export type RoleCreateSchemaType = {
 type Props = {
   currentRole?: IRole;
   redirectTo?: string;
+  onSuccess?: () => void;
+  onCancel?: () => void;
 };
 
-export function RoleCreateEditForm({ currentRole, redirectTo }: Props) {
+export function RoleCreateEditForm({ currentRole, redirectTo, onSuccess, onCancel }: Props) {
   const router = useRouter();
   const { t } = useTranslate('security');
 
@@ -81,7 +83,11 @@ export function RoleCreateEditForm({ currentRole, redirectTo }: Props) {
             ? t('roles.messages.success.updated') 
             : t('roles.messages.success.created')
         );
-        router.push(redirectTo ?? paths.dashboard.security.roles);
+        if (onSuccess) {
+          onSuccess();
+        } else {
+          router.push(redirectTo ?? paths.dashboard.security.roles);
+        }
       }
     } catch (error) {
       console.error('Error saving role:', error);
@@ -125,7 +131,7 @@ export function RoleCreateEditForm({ currentRole, redirectTo }: Props) {
         size="medium"
         variant="soft"
         color="inherit"
-        onClick={() => router.back()}
+        onClick={() => (onCancel ? onCancel() : router.back())}
       >
         {t('roles.actions.cancel')}
       </Button>

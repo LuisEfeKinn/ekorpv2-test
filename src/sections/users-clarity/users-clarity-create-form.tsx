@@ -2,10 +2,10 @@
 
 import type { IJob } from 'src/types/architecture/jobs';
 import type { IOrganizationalUnit } from 'src/types/organization';
-import type { IUserClarity, IUserClarityCreatePayload } from 'src/types/users';
+import type { IUserClarity, IUserClarityCreatePayload, IUserClarityRelations } from 'src/types/users';
 
 import * as z from 'zod';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useEffect, useCallback } from 'react';
 
@@ -51,50 +51,64 @@ type UsersClarityCreateFormProps = {
   mode?: 'create' | 'edit';
 };
 
-const userClaritySchema = (t: (key: string) => string) =>
-  z.object({
-    nombres: z.string().min(1, { message: t('usersClarity.form.validation.nombresRequired') }),
-    primerApellido: z
-      .string()
-      .min(1, { message: t('usersClarity.form.validation.primerApellidoRequired') }),
-    segundoApellido: z
-      .string()
-      .min(1, { message: t('usersClarity.form.validation.segundoApellidoRequired') }),
-    usuario: z.string().min(1, { message: t('usersClarity.form.validation.usuarioRequired') }),
-    correoElectronico1: z
-      .string()
-      .min(1, { message: t('usersClarity.form.validation.correoElectronico1Required') }),
-    codigoEmpleado: z
-      .string()
-      .min(1, { message: t('usersClarity.form.validation.codigoEmpleadoRequired') }),
-    clave: z.string().min(1, { message: t('usersClarity.form.validation.claveRequired') }),
-    perfil: z.string(),
-    unidadOrganizacional: z.string(),
-    cargos: z.string(),
-    jefeInmediato: z.string(),
-    tipoAutenticacion: z.string(),
-    estadoUsuario: z.string(),
-    tipoUsuario: z.string(),
-    imagen: z.string(),
-    alias: z.string(),
-    avatar: z.string(),
-    numeroIdentificacion: z.string(),
-    tipoIdentificacion: z.string(),
-    correoElectronico2: z.string(),
-    celular: z.string(),
-    direccionCasa: z.string(),
-    telefonoCasa: z.string(),
-    direccionOficina: z.string(),
-    usuariosSistema: z.string(),
-    tipoPersona: z.string(),
-    empresa: z.string(),
-    tipoEmpresa: z.string(),
-    nitEmpresa: z.string(),
-    actividadEconomica: z.string(),
-    lenguaje: z.string(),
-    zonaHoraria: z.string(),
-    roleIds: z.array(z.string()).min(1, { message: t('users.form.validation.roleRequired') }),
-  });
+const userClaritySchema = (t: (key: string) => string, mode: 'create' | 'edit') =>
+  z
+    .object({
+      nombres: z.string().optional(),
+      primerApellido: z.string().optional(),
+      segundoApellido: z.string().optional(),
+      usuario: z.string().optional(),
+      correoElectronico1: z.string().optional(),
+      codigoEmpleado: z.string().optional(),
+      clave: z.string().optional(),
+      roleId: z.string().optional(),
+      perfil: z.string().optional(),
+      unidadOrganizacional: z.string().optional(),
+      cargos: z.string().optional(),
+      jefeInmediato: z.string().optional(),
+      tipoAutenticacion: z.string().optional(),
+      estadoUsuario: z.string().optional(),
+      tipoUsuario: z.string().optional(),
+      imagen: z.string().optional(),
+      alias: z.string().optional(),
+      avatar: z.string().optional(),
+      numeroIdentificacion: z.string().optional(),
+      tipoIdentificacion: z.string().optional(),
+      correoElectronico2: z.string().optional(),
+      celular: z.string().optional(),
+      direccionCasa: z.string().optional(),
+      telefonoCasa: z.string().optional(),
+      direccionOficina: z.string().optional(),
+      usuariosSistema: z.string().optional(),
+      tipoPersona: z.string().optional(),
+      empresa: z.string().optional(),
+      tipoEmpresa: z.string().optional(),
+      nitEmpresa: z.string().optional(),
+      actividadEconomica: z.string().optional(),
+      lenguaje: z.string().optional(),
+      zonaHoraria: z.string().optional(),
+    })
+    .superRefine((values, ctx) => {
+      if (mode !== 'create') return;
+
+      const required: Array<{ key: keyof typeof values; message: string }> = [
+        { key: 'nombres', message: t('usersClarity.form.validation.nombresRequired') },
+        { key: 'primerApellido', message: t('usersClarity.form.validation.primerApellidoRequired') },
+        { key: 'segundoApellido', message: t('usersClarity.form.validation.segundoApellidoRequired') },
+        { key: 'usuario', message: t('usersClarity.form.validation.usuarioRequired') },
+        { key: 'correoElectronico1', message: t('usersClarity.form.validation.correoElectronico1Required') },
+        { key: 'codigoEmpleado', message: t('usersClarity.form.validation.codigoEmpleadoRequired') },
+        { key: 'clave', message: t('usersClarity.form.validation.claveRequired') },
+        { key: 'roleId', message: t('users.form.validation.roleRequired') },
+      ];
+
+      required.forEach(({ key, message }) => {
+        const value = values[key];
+        if (typeof value !== 'string' || value.trim().length === 0) {
+          ctx.addIssue({ code: z.ZodIssueCode.custom, path: [key], message });
+        }
+      });
+    });
 
 type UserClarityFormValues = z.infer<ReturnType<typeof userClaritySchema>>;
 
@@ -109,7 +123,7 @@ export function UsersClarityCreateForm({
 
   const methods = useForm<UserClarityFormValues>({
     mode: 'onSubmit',
-    resolver: zodResolver(userClaritySchema(t)),
+    resolver: zodResolver(userClaritySchema(t, mode)),
     defaultValues: {
       nombres: '',
       primerApellido: '',
@@ -143,14 +157,13 @@ export function UsersClarityCreateForm({
       actividadEconomica: '',
       lenguaje: '1',
       zonaHoraria: 'America/Bogota',
-      roleIds: [],
+      roleId: '',
     },
   });
 
   const {
     handleSubmit,
     reset,
-    control,
     formState: { isSubmitting },
   } = methods;
 
@@ -173,12 +186,12 @@ export function UsersClarityCreateForm({
       segundoApellido: user.apellido2 ?? '',
       usuario: user.usuario,
       correoElectronico1: user.correoElectronico,
-      codigoEmpleado: '',
+      codigoEmpleado: user.alias ?? '',
       clave: '',
-      perfil: '',
-      unidadOrganizacional: '',
-      cargos: '',
-      jefeInmediato: '',
+      perfil: user.perfil?.id ? String(user.perfil.id) : user.profile?.id ? String(user.profile.id) : '',
+      unidadOrganizacional: user.empresa ?? '',
+      cargos: user.job?.id ? String(user.job.id) : user.actores?.id ? String(user.actores.id) : '',
+      jefeInmediato: user.UsersClarity?.id ? String(user.UsersClarity.id) : '',
       tipoAutenticacion: String(user.tipoautenticacion),
       estadoUsuario: String(user.estadousuario),
       tipoUsuario: String(user.tipousuario),
@@ -200,7 +213,10 @@ export function UsersClarityCreateForm({
       actividadEconomica: user.actividadeconomica,
       lenguaje: String(user.lenguaje),
       zonaHoraria: user.zonahoraria,
-      roleIds: user.roleIds ?? user.linkedUserRoles?.map((r) => r.id) ?? [],
+      roleId:
+        user.roleIds?.[0] ??
+        user.linkedUserRoles?.[0]?.id ??
+        '',
     }),
     []
   );
@@ -344,78 +360,117 @@ export function UsersClarityCreateForm({
         actividadEconomica: '',
         lenguaje: '1',
         zonaHoraria: 'America/Bogota',
-        roleIds: [],
+        roleId: '',
       });
     }
   }, [initialUser, mapUserToFormValues, reset]);
 
   const buildPayload = useCallback(
-    (values: UserClarityFormValues): IUserClarityCreatePayload & {
+    (values: UserClarityFormValues): Partial<IUserClarityCreatePayload> & {
       perfil?: { id: number };
       profile?: { id: number };
       UsersClarity?: { id: number };
       immediateSupervisor?: { id: number };
       actores?: { id: number };
       job?: { id: number };
-    } => ({
-      nombres: values.nombres,
-      apellidos: values.primerApellido,
-      apellido2: values.segundoApellido || null,
-      usuario: values.usuario,
-      clave: values.clave,
-      correoElectronico: values.correoElectronico1,
-      fechaCreacion: new Date().toISOString(),
-      fechaSuspension: null,
-      imagen: values.imagen || null,
-      tipo: values.tipoUsuario === '1' ? 'INTERNAL' : 'EXTERNAL',
-      fechaultimologin: null,
-      intentoslogin: 0,
-      tipousuario: Number(values.tipoUsuario),
-      zonahoraria: values.zonaHoraria || 'America/Bogota',
-      identificacion: values.numeroIdentificacion,
-      avatarusuario: values.avatar || null,
-      direccioncasa: values.direccionCasa,
-      direccionoficina: values.direccionOficina,
-      telefonocasa: values.telefonoCasa,
-      telefonooficina: values.telefonoCasa,
-      telefonocelular: values.celular,
-      correoelectronico2: values.correoElectronico2 || null,
-      alias: values.alias,
-      fechamodificacion: null,
-      estadousuario: Number(values.estadoUsuario),
-      lenguaje: Number(values.lenguaje),
-      empresa: values.empresa,
-      nitempresa: values.nitEmpresa,
-      actividadeconomica: values.actividadEconomica,
-      tipopersona: Number(values.tipoPersona),
-      tipoautenticacion: Number(values.tipoAutenticacion),
-      indcambiopwd: 0,
-      tokenpwd: null,
-      descripcionPerfil:
-        profiles.find((p) => String(p.idperfil) === values.perfil)?.nombreperfil || values.perfil,
-      perfil: values.perfil ? { id: Number(values.perfil) } : undefined,
-      profile: values.perfil ? { id: Number(values.perfil) } : undefined,
-      immediateSupervisor: values.jefeInmediato
-        ? { id: Number(values.jefeInmediato) }
-        : undefined,
-      actores: values.cargos ? { id: Number(values.cargos) } : undefined,
-      job: values.cargos ? { id: Number(values.cargos) } : undefined,
-      UsersClarity: values.jefeInmediato ? { id: Number(values.jefeInmediato) } : undefined,
-      template: 'saga',
-      templateTheme: 'blue',
-      templateLayout: 'horizontal',
-      templateMenuMode: 'static',
-      templateOrientationRtl: 'N',
-      templateHorizontal: 'Y',
-      templateDarkMenu: 'N',
-      templateDarkMode: 'N',
-      templateLayoutPrimaryColor: '#1976D2',
-      templateComponentTheme: 'blue',
-      templateMenuTheme: 'blue',
-      templateMenuColor: '#FFFFFF',
-      roleIds: values.roleIds,
-    }),
-    [profiles]
+    } => {
+      const isNonEmpty = (value: unknown): value is string =>
+        typeof value === 'string' && value.trim().length > 0;
+
+      const payload: Partial<IUserClarityCreatePayload> & {
+        perfil?: { id: number };
+        profile?: { id: number };
+        UsersClarity?: { id: number };
+        immediateSupervisor?: { id: number };
+        actores?: { id: number };
+        job?: { id: number };
+      } = {};
+
+      if (mode === 'create') {
+        payload.fechaCreacion = new Date().toISOString();
+        payload.fechaSuspension = null;
+        payload.fechaultimologin = null;
+        payload.intentoslogin = 0;
+        payload.fechamodificacion = null;
+        payload.indcambiopwd = 0;
+        payload.tokenpwd = null;
+        payload.template = 'saga';
+        payload.templateTheme = 'blue';
+        payload.templateLayout = 'horizontal';
+        payload.templateMenuMode = 'static';
+        payload.templateOrientationRtl = 'N';
+        payload.templateHorizontal = 'Y';
+        payload.templateDarkMenu = 'N';
+        payload.templateDarkMode = 'N';
+        payload.templateLayoutPrimaryColor = '#1976D2';
+        payload.templateComponentTheme = 'blue';
+        payload.templateMenuTheme = 'blue';
+        payload.templateMenuColor = '#FFFFFF';
+      }
+
+      if (isNonEmpty(values.nombres)) payload.nombres = values.nombres;
+      if (isNonEmpty(values.primerApellido)) payload.apellidos = values.primerApellido;
+      if (typeof values.segundoApellido === 'string')
+        payload.apellido2 = values.segundoApellido.trim() ? values.segundoApellido : null;
+      if (isNonEmpty(values.usuario)) payload.usuario = values.usuario;
+      if (mode === 'create' && isNonEmpty(values.clave)) payload.clave = values.clave;
+      if (isNonEmpty(values.correoElectronico1)) payload.correoElectronico = values.correoElectronico1;
+
+      if (typeof values.imagen === 'string') payload.imagen = values.imagen.trim() ? values.imagen : null;
+      if (isNonEmpty(values.avatar)) payload.avatarusuario = values.avatar;
+      if (isNonEmpty(values.zonaHoraria)) payload.zonahoraria = values.zonaHoraria;
+      if (isNonEmpty(values.numeroIdentificacion)) payload.identificacion = values.numeroIdentificacion;
+      if (isNonEmpty(values.direccionCasa)) payload.direccioncasa = values.direccionCasa;
+      if (isNonEmpty(values.direccionOficina)) payload.direccionoficina = values.direccionOficina;
+      if (isNonEmpty(values.telefonoCasa)) payload.telefonocasa = values.telefonoCasa;
+      if (isNonEmpty(values.telefonoCasa)) payload.telefonooficina = values.telefonoCasa;
+      if (isNonEmpty(values.celular)) payload.telefonocelular = values.celular;
+      if (typeof values.correoElectronico2 === 'string')
+        payload.correoelectronico2 = values.correoElectronico2.trim() ? values.correoElectronico2 : null;
+
+      if (isNonEmpty(values.codigoEmpleado)) payload.alias = values.codigoEmpleado;
+      else if (isNonEmpty(values.alias)) payload.alias = values.alias;
+
+      if (isNonEmpty(values.unidadOrganizacional)) payload.empresa = values.unidadOrganizacional;
+      else if (isNonEmpty(values.empresa)) payload.empresa = values.empresa;
+
+      if (isNonEmpty(values.nitEmpresa)) payload.nitempresa = values.nitEmpresa;
+      if (isNonEmpty(values.actividadEconomica)) payload.actividadeconomica = values.actividadEconomica;
+
+      if (isNonEmpty(values.tipoUsuario)) {
+        payload.tipousuario = Number(values.tipoUsuario);
+        payload.tipo = values.tipoUsuario === '1' ? 'INTERNAL' : 'EXTERNAL';
+      }
+
+      if (isNonEmpty(values.estadoUsuario)) payload.estadousuario = Number(values.estadoUsuario);
+      if (isNonEmpty(values.lenguaje)) payload.lenguaje = Number(values.lenguaje);
+      if (isNonEmpty(values.tipoPersona)) payload.tipopersona = Number(values.tipoPersona);
+      if (isNonEmpty(values.tipoAutenticacion)) payload.tipoautenticacion = Number(values.tipoAutenticacion);
+
+      if (isNonEmpty(values.perfil)) {
+        payload.descripcionPerfil =
+          profiles.find((p) => String(p.idperfil) === values.perfil)?.nombreperfil || values.perfil;
+        payload.perfil = { id: Number(values.perfil) };
+        payload.profile = { id: Number(values.perfil) };
+      }
+
+      if (isNonEmpty(values.jefeInmediato)) {
+        payload.immediateSupervisor = { id: Number(values.jefeInmediato) };
+        payload.UsersClarity = { id: Number(values.jefeInmediato) };
+      }
+
+      if (isNonEmpty(values.cargos)) {
+        payload.actores = { id: Number(values.cargos) };
+        payload.job = { id: Number(values.cargos) };
+      }
+
+      if (isNonEmpty(values.roleId)) {
+        payload.roleIds = [values.roleId];
+      }
+
+      return payload;
+    },
+    [mode, profiles]
   );
 
   const onSubmit = handleSubmit(async (data) => {
@@ -425,7 +480,7 @@ export function UsersClarityCreateForm({
         await UpdateUserClarityService(initialUser.idusuario, payload);
         toast.success(t('users.actions.update'));
       } else {
-        await CreateUserClarityService(payload);
+        await CreateUserClarityService(payload as IUserClarityCreatePayload & IUserClarityRelations);
         toast.success(t('users.actions.create'));
       }
       reset();
@@ -467,56 +522,73 @@ export function UsersClarityCreateForm({
             gridTemplateColumns: { xs: 'repeat(1, 1fr)' },
           }}
         >
-          <Field.Text name="nombres" label={t('usersClarity.form.fields.nombres')} />
+          <Field.Text
+            name="nombres"
+            label={
+              mode === 'create'
+                ? `${t('usersClarity.form.fields.nombres')} *`
+                : t('usersClarity.form.fields.nombres')
+            }
+          />
           <Field.Text
             name="primerApellido"
-            label={t('usersClarity.form.fields.primerApellido')}
+            label={
+              mode === 'create'
+                ? `${t('usersClarity.form.fields.primerApellido')} *`
+                : t('usersClarity.form.fields.primerApellido')
+            }
           />
           <Field.Text
             name="segundoApellido"
-            label={t('usersClarity.form.fields.segundoApellido')}
+            label={
+              mode === 'create'
+                ? `${t('usersClarity.form.fields.segundoApellido')} *`
+                : t('usersClarity.form.fields.segundoApellido')
+            }
           />
-          <Field.Text name="usuario" label={t('usersClarity.form.fields.usuario')} />
+          <Field.Text
+            name="usuario"
+            label={
+              mode === 'create'
+                ? `${t('usersClarity.form.fields.usuario')} *`
+                : t('usersClarity.form.fields.usuario')
+            }
+          />
           <Field.Text
             name="correoElectronico1"
-            label={t('usersClarity.form.fields.correoElectronico1')}
+            label={
+              mode === 'create'
+                ? `${t('usersClarity.form.fields.correoElectronico1')} *`
+                : t('usersClarity.form.fields.correoElectronico1')
+            }
           />
           <Field.Text
             name="codigoEmpleado"
-            label={t('usersClarity.form.fields.codigoEmpleado')}
+            label={
+              mode === 'create'
+                ? `${t('usersClarity.form.fields.codigoEmpleado')} *`
+                : t('usersClarity.form.fields.codigoEmpleado')
+            }
           />
-          <Field.Text name="clave" label={t('usersClarity.form.fields.clave')} type="password" />
+          {mode === 'create' ? (
+            <Field.Text name="clave" label={`${t('usersClarity.form.fields.clave')} *`} type="password" />
+          ) : null}
 
-          <Controller
-            name="roleIds"
-            control={control}
-            render={({ field }) => (
-              <FormControl fullWidth>
-                <InputLabel id="roleIds-label">{t('users.form.fields.roles.label')}</InputLabel>
-                <Select
-                  labelId="roleIds-label"
-                  multiple
-                  value={field.value}
-                  onChange={(e) =>
-                    field.onChange((e.target.value as Array<string | number>).map(String))
-                  }
-                  label={t('users.form.fields.roles.label')}
-                  renderValue={(selected) =>
-                    roleOptions
-                      .filter((option) => selected.includes(String(option.id)))
-                      .map((option) => option.name)
-                      .join(', ')
-                  }
-                >
-                  {roleOptions.map((option) => (
-                    <MenuItem key={option.id} value={String(option.id)}>
-                      {option.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )}
-          />
+          <Field.Select
+            name="roleId"
+            label={
+              mode === 'create'
+                ? `${t('users.form.fields.roles.label')} *`
+                : t('users.form.fields.roles.label')
+            }
+          >
+            <MenuItem value="">{t('usersClarity.table.filters.all')}</MenuItem>
+            {roleOptions.map((option) => (
+              <MenuItem key={option.id} value={String(option.id)}>
+                {option.name}
+              </MenuItem>
+            ))}
+          </Field.Select>
 
           <Field.Select name="perfil" label={t('usersClarity.form.fields.perfil')}>
             <MenuItem value="">
@@ -534,7 +606,7 @@ export function UsersClarityCreateForm({
               {t('usersClarity.table.filters.all')}
             </MenuItem>
             {organizationalUnits.map((ou) => (
-              <MenuItem key={ou.id} value={ou.id}>
+              <MenuItem key={ou.id} value={ou.code}>
                 {ou.name}
               </MenuItem>
             ))}

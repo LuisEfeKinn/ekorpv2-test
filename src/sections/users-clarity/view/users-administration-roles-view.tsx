@@ -3,26 +3,26 @@
 import type { TableHeadCellProps } from 'src/components/table';
 import type { IRole, IRoleTableFilters } from 'src/types/roles';
 
-import { varAlpha } from 'minimal-shared/utils';
 import { useSetState, useDebounce } from 'minimal-shared/hooks';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
+import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import Drawer from '@mui/material/Drawer';
+import Divider from '@mui/material/Divider';
 import TableBody from '@mui/material/TableBody';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 
 import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
 
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { DeleteRoleService, GetRolesPaginationService } from 'src/services/security/roles.service';
 
-import { Label } from 'src/components/label';
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
@@ -39,12 +39,14 @@ import {
 
 import { RoleTableRow } from 'src/sections/roles/roles-table-row';
 import { RoleTableToolbar } from 'src/sections/roles/roles-table-toolbar';
+import { PermissionsTable } from 'src/sections/permissions/permissions-table';
+import { RoleCreateEditForm } from 'src/sections/roles/roles-create-edit-form';
 import { RoleTableFiltersResult } from 'src/sections/roles/roles-table-filters-result';
 
 type ApplyFilterProps = {
   inputData: IRole[];
   filters: IRoleTableFilters;
-  comparator: (a: any, b: any) => number;
+  comparator: (a: Record<string, string | number>, b: Record<string, string | number>) => number;
 };
 
 function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
@@ -53,7 +55,7 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
   stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
+    const order = comparator(a[0] as unknown as Record<string, string | number>, b[0] as unknown as Record<string, string | number>);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
@@ -75,11 +77,9 @@ export function UsersAdministrationRolesView() {
 
   const [tableData, setTableData] = useState<IRole[]>([]);
   const [totalItems, setTotalItems] = useState(0);
-
-  const STATUS_OPTIONS = useMemo(
-    () => [{ value: 'all', label: t('roles.table.filters.all') }],
-    [t]
-  );
+  const [openFormDrawer, setOpenFormDrawer] = useState(false);
+  const [editingRole, setEditingRole] = useState<IRole | null>(null);
+  const [permissionsRole, setPermissionsRole] = useState<{ id: string; name: string } | null>(null);
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(
     () => [
@@ -160,16 +160,18 @@ export function UsersAdministrationRolesView() {
       <CustomBreadcrumbs
         heading={t('roles.title')}
         links={[
-          { name: t('roles.breadcrumbs.dashboard'), href: paths.dashboard.root },
-          { name: t('userAdministration.title'), href: paths.dashboard.userAdministration.usersTable },
+          { name: t('usersClarity.breadcrumbs.dashboard'), href: paths.dashboard.root },
+          { name: t('usersClarity.title'), href: paths.dashboard.userAdministration.usersTable },
           { name: t('roles.title') },
         ]}
         action={
           <Button
-            component={RouterLink}
-            href={paths.dashboard.userAdministration.rolesCreate}
             variant="contained"
             startIcon={<Iconify icon="mingcute:add-line" />}
+            onClick={() => {
+              setEditingRole(null);
+              setOpenFormDrawer(true);
+            }}
           >
             {t('roles.actions.add')}
           </Button>
@@ -178,30 +180,6 @@ export function UsersAdministrationRolesView() {
       />
 
       <Card>
-        <Tabs
-          value="all"
-          sx={[
-            (theme) => ({
-              px: { md: 2.5 },
-              boxShadow: `inset 0 -2px 0 0 ${varAlpha(theme.vars.palette.grey['500Channel'], 0.08)}`,
-            }),
-          ]}
-        >
-          {STATUS_OPTIONS.map((tabItem) => (
-            <Tab
-              key={tabItem.value}
-              iconPosition="end"
-              value={tabItem.value}
-              label={tabItem.label}
-              icon={
-                <Label variant="filled" color="default">
-                  {totalItems}
-                </Label>
-              }
-            />
-          ))}
-        </Tabs>
-
         <RoleTableToolbar
           filters={currentFilters}
           onFilters={(name, value) => {
@@ -247,6 +225,11 @@ export function UsersAdministrationRolesView() {
                       onDeleteRow={() => handleDeleteRow(row.id)}
                       editHref={paths.dashboard.userAdministration.rolesEdit(row.id)}
                       permissionsHref={paths.dashboard.userAdministration.rolePermissions(row.id)}
+                      onEdit={() => {
+                        setEditingRole(row);
+                        setOpenFormDrawer(true);
+                      }}
+                      onPermissions={() => setPermissionsRole({ id: row.id, name: row.name })}
                     />
                   ))}
 
@@ -271,7 +254,82 @@ export function UsersAdministrationRolesView() {
           onRowsPerPageChange={table.onChangeRowsPerPage}
         />
       </Card>
+
+      <Drawer
+        anchor="right"
+        open={openFormDrawer}
+        onClose={() => setOpenFormDrawer(false)}
+        slotProps={{ backdrop: { invisible: true } }}
+        PaperProps={{ sx: { width: { xs: 1, md: 640 } } }}
+      >
+        <Stack sx={{ height: 1, display: 'flex', flexDirection: 'column' }}>
+          <Box
+            sx={{
+              p: 2.5,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              borderBottom: (theme) => `solid 1px ${theme.vars.palette.divider}`,
+            }}
+          >
+            <Typography variant="h6">
+              {editingRole ? t('roles.actions.edit') : t('roles.actions.create')}
+            </Typography>
+
+            <IconButton onClick={() => setOpenFormDrawer(false)}>
+              <Iconify icon="mingcute:close-line" />
+            </IconButton>
+          </Box>
+
+          <Scrollbar sx={{ flexGrow: 1, p: 2.5 }}>
+            <RoleCreateEditForm
+              currentRole={editingRole || undefined}
+              onCancel={() => setOpenFormDrawer(false)}
+              onSuccess={() => {
+                setOpenFormDrawer(false);
+                setEditingRole(null);
+                loadData();
+              }}
+            />
+          </Scrollbar>
+
+          <Divider sx={{ borderStyle: 'dashed' }} />
+        </Stack>
+      </Drawer>
+
+      <Drawer
+        anchor="right"
+        open={Boolean(permissionsRole)}
+        onClose={() => setPermissionsRole(null)}
+        slotProps={{ backdrop: { invisible: true } }}
+        PaperProps={{ sx: { width: { xs: 1, md: 720 } } }}
+      >
+        <Stack sx={{ height: 1, display: 'flex', flexDirection: 'column' }}>
+          <Box
+            sx={{
+              p: 2.5,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              borderBottom: (theme) => `solid 1px ${theme.vars.palette.divider}`,
+            }}
+          >
+            <Typography variant="h6">
+              {permissionsRole ? `${t('permissions.title')} - ${permissionsRole.name}` : t('permissions.title')}
+            </Typography>
+
+            <IconButton onClick={() => setPermissionsRole(null)}>
+              <Iconify icon="mingcute:close-line" />
+            </IconButton>
+          </Box>
+
+          <Scrollbar sx={{ flexGrow: 1, p: 2.5 }}>
+            {permissionsRole ? <PermissionsTable roleId={permissionsRole.id} roleName={permissionsRole.name} /> : null}
+          </Scrollbar>
+
+          <Divider sx={{ borderStyle: 'dashed' }} />
+        </Stack>
+      </Drawer>
     </DashboardContent>
   );
 }
-

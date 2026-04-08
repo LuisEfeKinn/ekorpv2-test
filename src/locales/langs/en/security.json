@@ -106,7 +106,9 @@
     },
     "status": {
       "active": "Active",
-      "inactive": "Inactive"
+      "preregistered": "Preregistered",
+      "inactive": "Inactive",
+      "deleted": "Deleted"
     }
   },
   "users": {
@@ -277,6 +279,15 @@
       "refresh": "Refresh table"
     },
     "table": {
+      "actions": {
+        "uploadTemplate": "Upload template",
+        "downloadTemplate": "Download template",
+        "download": "Download",
+        "exportExcel": "Export Excel"
+      },
+      "toolbar": {
+        "columns": "Columns"
+      },
       "columns": {
         "id": "ID",
         "userId": "User ID",
@@ -296,15 +307,62 @@
       "filters": {
         "all": "All",
         "active": "Active",
+        "preregistered": "Preregistered",
         "inactive": "Inactive",
+        "deleted": "Deleted",
         "search": "Search users...",
-        "clear": "Clear filters"
+        "clear": "Clear filters",
+        "nombre": "Name",
+        "correo": "Email",
+        "rol": "Role",
+        "cargo": "Position",
+        "unidadOrganizacional": "Organizational Unit",
+        "jefeInmediato": "Immediate Boss",
+        "tipoUsuario": "User type",
+        "tipoUsuarioInterno": "Internal",
+        "tipoUsuarioExterno": "External"
+      },
+      "uploadDialog": {
+        "title": "Bulk user upload",
+        "actions": {
+          "close": "Close",
+          "cancel": "Cancel",
+          "upload": "Upload",
+          "remove": "Remove"
+        },
+        "instructions": {
+          "title": "Instructions",
+          "step1": "Create an Excel file with the following header columns: ",
+          "columns": "USUARIO, CLAVE, NOMBRES, PRIMER_APELLIDO, SEGUNDO_APELLIDO, CODIGO_EMPLEADO, CORREO_ELECTRONICO, ID_CARGO, JEFE INMEDIATO (username), TIPO_DE_AUTENTICACION (Database=1, LDAP=2, External=3), ESTADO_USUARIO (Active=0, Inactive=2), TIPO_USUARIO (Internal=1, External=2).",
+          "step2": "Keep in mind the position (ID_CARGO) must be associated with the Organizational Unit; otherwise it will not be loaded into the system.",
+          "step3": "Download the template.",
+          "step4": "Enter the list of users to upload and save the file with a name that does not contain spaces or special characters.",
+          "step5": "Drag and drop the saved file in the box below, or select it using the 'Select file' button.",
+          "step6": "Click the 'Upload' button to start the upload process."
+        },
+        "drop": {
+          "selectedTitle": "Selected file",
+          "title": "Select Excel file",
+          "subtitle": "or click to select from your device",
+          "formats": "Allowed formats: .xlsx, .xls • 1 file"
+        },
+        "errors": {
+          "tooManyFiles": "Only 1 file is allowed.",
+          "invalidType": "Invalid format. Use .xlsx or .xls.",
+          "generic": "Could not upload the file. Please try again.",
+          "noFile": "Select a file."
+        }
       }
     },
     "messages": {
       "error": {
         "loading": "Error loading Clarity users"
-      }
+      },
+      "downloadTemplateError": "Error downloading template",
+      "downloadExcelError": "Error downloading Excel",
+      "uploadSuccess": "Template uploaded successfully",
+      "uploadError": "Error uploading template",
+      "createdCount": "created"
     },
     "form": {
       "sections": {

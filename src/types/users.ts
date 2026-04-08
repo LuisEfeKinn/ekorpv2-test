@@ -55,6 +55,7 @@ export interface IUserClarity {
   job?: { id: number };
   perfil?: { id: number };
   profile?: { id: number };
+  UsersClarity?: { id: number };
   nombres: string;
   apellidos: string;
   apellido2: string | null;
@@ -104,6 +105,8 @@ export interface IUserClarity {
 }
 
 export type IUserClarityCreatePayload = Omit<IUserClarity, 'idusuario'>;
+
+export type IUserClarityUpdatePayload = Partial<IUserClarityCreatePayload>;
 
 export type IUserClarityRelations = {
   perfil?: { id: number };

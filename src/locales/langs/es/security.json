@@ -106,7 +106,9 @@
     },
     "status": {
       "active": "Activo",
-      "inactive": "Inactivo"
+      "preregistered": "Preregistrado",
+      "inactive": "Inactivo",
+      "deleted": "Eliminado"
     }
   },
   "users": {
@@ -277,6 +279,15 @@
       "refresh": "Refrescar tabla"
     },
     "table": {
+      "actions": {
+        "uploadTemplate": "Cargar plantilla",
+        "downloadTemplate": "Descargar plantilla",
+        "download": "Descargar",
+        "exportExcel": "Exportar Excel"
+      },
+      "toolbar": {
+        "columns": "Columnas"
+      },
       "columns": {
         "id": "ID",
         "userId": "User ID",
@@ -296,15 +307,62 @@
       "filters": {
         "all": "Todos",
         "active": "Activos",
+        "preregistered": "Preregistrados",
         "inactive": "Inactivos",
+        "deleted": "Eliminados",
         "search": "Buscar usuarios...",
-        "clear": "Limpiar filtros"
+        "clear": "Limpiar filtros",
+        "nombre": "Nombre",
+        "correo": "Correo",
+        "rol": "Rol",
+        "cargo": "Cargo",
+        "unidadOrganizacional": "Unidad Organizacional",
+        "jefeInmediato": "Jefe Inmediato",
+        "tipoUsuario": "Tipo de usuario",
+        "tipoUsuarioInterno": "Interno",
+        "tipoUsuarioExterno": "Externo"
+      },
+      "uploadDialog": {
+        "title": "Carga masiva de usuarios",
+        "actions": {
+          "close": "Cerrar",
+          "cancel": "Cancelar",
+          "upload": "Cargar",
+          "remove": "Quitar"
+        },
+        "instructions": {
+          "title": "Instrucciones",
+          "step1": "Debe crear un archivo excel con las siguientes columnas como encabezado: ",
+          "columns": "USUARIO, CLAVE, NOMBRES, PRIMER_APELLIDO, SEGUNDO_APELLIDO, CODIGO_EMPLEADO, CORREO_ELECTRONICO, ID_CARGO, JEFE INMEDIATO (Nombre del usuario), TIPO_DE_AUTENTICACION (Base de datos=1, LDAP=2, Externo=3), ESTADO_USUARIO (Activo=0, Inactivo=2), TIPO_USUARIO (Interno=1, Externo=2).",
+          "step2": "Tener en cuenta que el cargo debe estar asociado a la Unidad Organizacional, de lo contrario no se cargará en el sistema.",
+          "step3": "Descargar plantilla.",
+          "step4": "Ingrese el listado de usuarios a cargar y guarde el archivo con un nombre que no contenga espacios, ni caracteres especiales.",
+          "step5": "Puede arrastrar y soltar el archivo guardado en el cuadro a continuación, o seleccionarlo, mediante el botón 'Seleccionar archivo'.",
+          "step6": "Haga clic en el boton 'Cargar' para iniciar el proceso de cargue."
+        },
+        "drop": {
+          "selectedTitle": "Archivo seleccionado",
+          "title": "Seleccionar archivo Excel",
+          "subtitle": "o haz clic para seleccionar desde tu dispositivo",
+          "formats": "Formatos permitidos: .xlsx, .xls • 1 archivo"
+        },
+        "errors": {
+          "tooManyFiles": "Solo se permite 1 archivo.",
+          "invalidType": "Formato no permitido. Usa .xlsx o .xls.",
+          "generic": "No se pudo cargar el archivo. Intenta nuevamente.",
+          "noFile": "Selecciona un archivo."
+        }
       }
     },
     "messages": {
       "error": {
         "loading": "Error al cargar los usuarios de Clarity"
-      }
+      },
+      "downloadTemplateError": "Error al descargar la plantilla",
+      "downloadExcelError": "Error al descargar el Excel",
+      "uploadSuccess": "Plantilla cargada correctamente",
+      "uploadError": "Error al cargar la plantilla",
+      "createdCount": "creados"
     },
     "form": {
       "sections": {

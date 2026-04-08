@@ -6,10 +6,10 @@ import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
 import Switch from '@mui/material/Switch';
+import Tooltip from '@mui/material/Tooltip';
 import Checkbox from '@mui/material/Checkbox';
 import Skeleton from '@mui/material/Skeleton';
 import Accordion from '@mui/material/Accordion';
@@ -33,6 +33,11 @@ import { Iconify } from 'src/components/iconify';
 import { EmptyContent } from 'src/components/empty-content';
 
 // ----------------------------------------------------------------------
+
+type ItemNode = {
+  item: IRoleCatalogModule['items'][number];
+  children: ItemNode[];
+};
 
 const PermissionsTableSkeleton = () => (
   <Card>
@@ -150,6 +155,26 @@ export function PermissionsTable({ roleId, roleName, isDefault }: PermissionsTab
     [readOnly, selectedItemIds, applyNewSelection]
   );
 
+  const handleToggleMany = useCallback(
+    (itemIds: number[]) => {
+      if (readOnly) return;
+      const uniqueIds = Array.from(new Set(itemIds));
+      if (!uniqueIds.length) return;
+
+      const allSelected = uniqueIds.every((id) => selectedItemIds.has(id));
+      const newSelected = new Set(selectedItemIds);
+
+      if (allSelected) {
+        uniqueIds.forEach((id) => newSelected.delete(id));
+      } else {
+        uniqueIds.forEach((id) => newSelected.add(id));
+      }
+
+      applyNewSelection(newSelected, selectedItemIds);
+    },
+    [applyNewSelection, readOnly, selectedItemIds]
+  );
+
   const handleSelectModule = useCallback(
     (module: IRoleCatalogModule) => {
       if (readOnly) return;
@@ -259,6 +284,40 @@ export function PermissionsTable({ roleId, roleName, isDefault }: PermissionsTab
               const moduleAllSelected = totalCount > 0 && selectedCount === totalCount;
               const moduleSomeSelected = hasSelected && !moduleAllSelected;
 
+              const sortedItems = [...module.items].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+              const nodeById = new Map<number, ItemNode>();
+              const roots: ItemNode[] = [];
+
+              sortedItems.forEach((item) => {
+                nodeById.set(item.itemId, { item, children: [] });
+              });
+
+              sortedItems.forEach((item) => {
+                const node = nodeById.get(item.itemId);
+                if (!node) return;
+
+                const parentId = item.itemparentId;
+                const parentNode = parentId ? nodeById.get(parentId) : undefined;
+
+                if (parentNode) {
+                  parentNode.children.push(node);
+                } else {
+                  roots.push(node);
+                }
+              });
+
+              const sortTree = (nodes: ItemNode[]) => {
+                nodes.sort((a, b) => (a.item.order ?? 0) - (b.item.order ?? 0));
+                nodes.forEach((n) => sortTree(n.children));
+              };
+
+              sortTree(roots);
+
+              const collectIds = (node: ItemNode): number[] => [
+                node.item.itemId,
+                ...node.children.flatMap(collectIds),
+              ];
+
               return (
                 <Accordion
                   key={module.moduleId}
@@ -347,84 +406,102 @@ export function PermissionsTable({ roleId, roleName, isDefault }: PermissionsTab
 
                   <AccordionDetails sx={{ p: 0 }}>
                     <Box sx={{ px: 2.5, py: 2 }}>
-                      <Grid container spacing={1.5}>
-                        {module.items.map((item) => {
-                          const isSelected = selectedItemIds.has(item.itemId);
+                      <Stack spacing={1.25}>
+                        {roots.map((node) => {
+                          const renderNode = (n: ItemNode, depth: number) => {
+                            const label = tNav(n.item.itemName) || n.item.itemName;
+                            const nodeIds = collectIds(n);
+                            const isSelected = selectedItemIds.has(n.item.itemId);
+                            const hasChildren = n.children.length > 0;
+                            const allChildrenSelected = hasChildren
+                              ? nodeIds.every((id) => selectedItemIds.has(id))
+                              : isSelected;
 
-                          return (
-                            <Grid key={item.itemId} size={{ xs: 12, sm: 6, md: 4 }}>
-                              <Card
-                                variant="outlined"
-                                onClick={() => handleToggleItem(item.itemId)}
-                                sx={{
-                                  cursor: readOnly ? 'default' : 'pointer',
-                                  borderRadius: 1.5,
-                                  borderColor: isSelected ? 'primary.main' : 'divider',
-                                  bgcolor: isSelected ? 'primary.lighter' : 'background.paper',
-                                  transition: 'all 0.15s ease',
-                                  ...(!readOnly && {
-                                    '&:hover': {
-                                      borderColor: 'primary.light',
-                                      bgcolor: isSelected ? 'primary.lighter' : 'grey.50',
-                                      boxShadow: (theme) =>
-                                        theme.customShadows?.z4 ||
-                                        '0 4px 8px 0 rgba(0,0,0,0.08)',
-                                    },
-                                  }),
-                                }}
-                              >
-                                <Stack
-                                  direction="row"
-                                  alignItems="center"
-                                  justifyContent="space-between"
-                                  sx={{ px: 2, py: 1.5, gap: 1 }}
+                            return (
+                              <Box key={n.item.itemId} sx={{ display: 'grid', gap: 1 }}>
+                                <Card
+                                  variant="outlined"
+                                  onClick={() => (hasChildren ? handleToggleMany(nodeIds) : handleToggleItem(n.item.itemId))}
+                                  sx={{
+                                    cursor: readOnly ? 'default' : 'pointer',
+                                    borderRadius: 1.5,
+                                    borderColor: isSelected ? 'primary.main' : 'divider',
+                                    bgcolor: isSelected ? 'primary.lighter' : 'background.paper',
+                                    transition: 'all 0.15s ease',
+                                    ...(!readOnly && {
+                                      '&:hover': {
+                                        borderColor: 'primary.light',
+                                        bgcolor: isSelected ? 'primary.lighter' : 'grey.50',
+                                        boxShadow: (theme) =>
+                                          theme.customShadows?.z4 || '0 4px 8px 0 rgba(0,0,0,0.08)',
+                                      },
+                                    }),
+                                  }}
                                 >
                                   <Stack
                                     direction="row"
                                     alignItems="center"
-                                    spacing={1}
-                                    sx={{ minWidth: 0 }}
+                                    justifyContent="space-between"
+                                    sx={{ px: 2, py: 1.5, gap: 1, pl: 2 + depth * 2 }}
                                   >
-                                    <Box
-                                      sx={{
-                                        width: 6,
-                                        height: 6,
-                                        borderRadius: '50%',
-                                        bgcolor: isSelected ? 'primary.main' : 'text.disabled',
-                                        flexShrink: 0,
-                                        transition: 'background-color 0.15s',
-                                      }}
-                                    />
-                                    <Typography
-                                      variant="body2"
-                                      sx={{
-                                        fontWeight: isSelected ? 600 : 400,
-                                        color: isSelected ? 'primary.dark' : 'text.primary',
-                                        overflow: 'hidden',
-                                        textOverflow: 'ellipsis',
-                                        whiteSpace: 'nowrap',
-                                        transition: 'color 0.15s',
-                                      }}
+                                    <Tooltip
+                                      title={label}
+                                      placement="top"
+                                      enterDelay={150}
+                                      enterNextDelay={150}
+                                      disableInteractive
                                     >
-                                      {tNav(item.itemName) || item.itemName}
-                                    </Typography>
-                                  </Stack>
+                                      <Typography
+                                        variant="body2"
+                                        title={label}
+                                        sx={{
+                                          minWidth: 0,
+                                          fontWeight: isSelected ? 600 : 500,
+                                          color: isSelected ? 'primary.dark' : 'text.primary',
+                                          overflow: 'hidden',
+                                          textOverflow: 'ellipsis',
+                                          whiteSpace: 'nowrap',
+                                          transition: 'color 0.15s',
+                                        }}
+                                      >
+                                        {label}
+                                      </Typography>
+                                    </Tooltip>
 
-                                  <Switch
-                                    checked={isSelected}
-                                    disabled={readOnly}
-                                    size="small"
-                                    color="primary"
-                                    onClick={(e) => e.stopPropagation()}
-                                    onChange={() => handleToggleItem(item.itemId)}
-                                    sx={{ flexShrink: 0 }}
-                                  />
-                                </Stack>
-                              </Card>
-                            </Grid>
-                          );
+                                    <Switch
+                                      checked={hasChildren ? allChildrenSelected : isSelected}
+                                      disabled={readOnly}
+                                      size="small"
+                                      color="primary"
+                                      onClick={(e) => e.stopPropagation()}
+                                      onChange={() =>
+                                        hasChildren ? handleToggleMany(nodeIds) : handleToggleItem(n.item.itemId)
+                                      }
+                                      sx={{ flexShrink: 0 }}
+                                    />
+                                  </Stack>
+                                </Card>
+
+                                {hasChildren ? (
+                                  <Box
+                                    sx={{
+                                      ml: 2,
+                                      pl: 2,
+                                      borderLeft: (theme) => `1px dashed ${theme.vars.palette.divider}`,
+                                      display: 'grid',
+                                      gap: 1,
+                                    }}
+                                  >
+                                    {n.children.map((c) => renderNode(c, depth + 1))}
+                                  </Box>
+                                ) : null}
+                              </Box>
+                            );
+                          };
+
+                          return renderNode(node, 0);
                         })}
-                      </Grid>
+                      </Stack>
                     </Box>
                   </AccordionDetails>
                 </Accordion>

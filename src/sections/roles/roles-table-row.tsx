@@ -28,11 +28,22 @@ type Props = {
   selected: boolean;
   editHref: string;
   permissionsHref?: string;
+  onEdit?: () => void;
+  onPermissions?: () => void;
   onSelectRow: () => void;
   onDeleteRow: () => void;
 };
 
-export function RoleTableRow({ row, selected, editHref, permissionsHref, onSelectRow, onDeleteRow }: Props) {
+export function RoleTableRow({
+  row,
+  selected,
+  editHref,
+  permissionsHref,
+  onEdit,
+  onPermissions,
+  onSelectRow,
+  onDeleteRow,
+}: Props) {
   const { t } = useTranslate('security');
   const menuActions = usePopover();
   const confirmDialog = useBoolean();
@@ -49,22 +60,46 @@ export function RoleTableRow({ row, selected, editHref, permissionsHref, onSelec
       <MenuList>
         {!isDefault && (
           <li>
-            <MenuItem component={RouterLink} href={editHref} onClick={() => menuActions.onClose()}>
-              <Iconify icon="solar:pen-bold" />
-              {t('roles.actions.edit')}
-            </MenuItem>
+            {onEdit ? (
+              <MenuItem
+                onClick={() => {
+                  onEdit();
+                  menuActions.onClose();
+                }}
+              >
+                <Iconify icon="solar:pen-bold" />
+                {t('roles.actions.edit')}
+              </MenuItem>
+            ) : (
+              <MenuItem component={RouterLink} href={editHref} onClick={() => menuActions.onClose()}>
+                <Iconify icon="solar:pen-bold" />
+                {t('roles.actions.edit')}
+              </MenuItem>
+            )}
           </li>
         )}
 
         <li>
-          <MenuItem
-            component={RouterLink}
-            href={permissionsHref ?? paths.dashboard.security.rolePermissions(row.id)}
-            onClick={() => menuActions.onClose()}
-          >
-            <Iconify icon="solar:shield-check-bold" sx={{ color: 'success.main' }} />
-            {t('roles.actions.permissions')}
-          </MenuItem>
+          {onPermissions ? (
+            <MenuItem
+              onClick={() => {
+                onPermissions();
+                menuActions.onClose();
+              }}
+            >
+              <Iconify icon="solar:shield-check-bold" sx={{ color: 'success.main' }} />
+              {t('roles.actions.permissions')}
+            </MenuItem>
+          ) : (
+            <MenuItem
+              component={RouterLink}
+              href={permissionsHref ?? paths.dashboard.security.rolePermissions(row.id)}
+              onClick={() => menuActions.onClose()}
+            >
+              <Iconify icon="solar:shield-check-bold" sx={{ color: 'success.main' }} />
+              {t('roles.actions.permissions')}
+            </MenuItem>
+          )}
         </li>
 
         {!isDefault && (
