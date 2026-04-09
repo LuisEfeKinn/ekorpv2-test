@@ -2,7 +2,7 @@
 
 import type { IJob } from 'src/types/architecture/jobs';
 import type { IOrganizationalUnit } from 'src/types/organization';
-import type { IUserClarity, IUserClarityCreatePayload, IUserClarityRelations } from 'src/types/users';
+import type { IUserClarity, IUserClarityRelations, IUserClarityCreatePayload } from 'src/types/users';
 
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
