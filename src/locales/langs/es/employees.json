@@ -125,6 +125,10 @@
       "columns": {
         "fullName": "Nombre Completo",
         "email": "Correo Electrónico",
+        "username": "Usuario",
+        "language": "Idioma",
+        "timezone": "Zona horaria",
+        "immediateSupervisor": "Jefe inmediato",
         "position": "Posición y Empleo",
         "skill": "Habilidad",
         "location": "Ubicación",
@@ -137,6 +141,26 @@
         "actions": "Acciones",
         "perHour": "por hora",
         "perWeek": "por semana"
+      },
+      "extraColumns": {
+        "id": "ID",
+        "userId": "ID de usuario",
+        "documentId": "Documento",
+        "tel": "Teléfono",
+        "postalCode": "Código postal",
+        "updatedAt": "Actualizado",
+        "address": "Dirección",
+        "billingRatePerHour": "Tarifa por hora",
+        "minimumBillingRatePerHour": "Tarifa mínima por hora",
+        "recurringWeeklyLimitHours": "Límite semanal (horas)",
+        "organizationalUnitId": "Unidad organizacional",
+        "municipalityId": "Municipio",
+        "paymentPeriod": "Período de pago",
+        "coin": "Moneda",
+        "employmentType": "Tipo de empleo",
+        "skills": "Habilidades",
+        "competencyKm": "Competencias",
+        "location": "Ubicación"
       },
       "toolbar": {
         "search": "Buscar empleados..."
@@ -155,6 +179,65 @@
       "emptyState": {
         "noData": "No se encontraron empleados",
         "noResults": "No se encontraron resultados para tu búsqueda"
+      },
+      "actions": {
+        "uploadTemplate": "Cargar Plantilla",
+        "downloadExcel": "Descargar Excel",
+        "downloadTemplate": "Descargar Plantilla",
+        "viewDetails": "Ver detalles",
+        "columns": "Columnas"
+      },
+      "messages": {
+        "downloadError": "Error al descargar el archivo",
+        "downloadTemplateError": "Error al descargar la plantilla",
+        "uploadSuccess": "Plantilla cargada correctamente",
+        "uploadError": "Error al cargar la plantilla"
+      },
+      "uploadDrawer": {
+        "title": "Carga masiva de empleados",
+        "actions": {
+          "close": "Cerrar",
+          "cancel": "Cancelar",
+          "upload": "Cargar",
+          "remove": "Quitar"
+        },
+        "instructions": {
+          "title": "Instrucciones",
+          "excelHeadersIntro": "Debe crear un archivo excel con las siguientes columnas como encabezado:",
+          "excelHeadersList": "- USUARIO\n- CLAVE (mínimo 5 caracteres)\n- NOMBRES\n- PRIMER_APELLIDO\n- SEGUNDO_APELLIDO (opcional)\n- CORREO_ELECTRONICO\n- NOMENCLATURA_CARGO\n- JEFE INMEDIATO (opcional; acepta USUARIO o correo; si mandas nombre y es ambiguo no carga)\n- ESTADO_USUARIO (0 = Activo, 1 = Inactivo; también acepta texto Activo/Inactivo)",
+          "jobOrgUnitNote": "Tener en cuenta que el cargo debe estar asociado a la Unidad Organizacional, de lo contrario no se cargará en el sistema.",
+          "downloadTemplate": "Descargar plantilla",
+          "fillAndSave": "Ingrese el listado de usuarios a cargar, guarde el archivo con un nombre que no contenga espacios, ni caracteres especiales.",
+          "dragOrSelect": "Puede arrastrar y soltar el archivo guardado en el cuadro a continuación, o seleccionarlo, mediante el botón 'Seleccionar archivo'.",
+          "clickUpload": "Haga clic en el botón 'Cargar' para iniciar el proceso de cargue."
+        },
+        "drop": {
+          "title": "Seleccionar archivo Excel",
+          "selectedTitle": "Archivo seleccionado",
+          "subtitle": "o haz clic para seleccionar desde tu dispositivo",
+          "formats": "Formatos permitidos: .xlsx, .xls • 1 archivo"
+        },
+        "errors": {
+          "tooManyFiles": "Solo se permite 1 archivo.",
+          "invalidType": "Formato no permitido. Usa .xlsx o .xls.",
+          "generic": "No se pudo cargar el archivo. Intenta nuevamente.",
+          "noFile": "Selecciona un archivo.",
+          "uploadFailed": "No se pudo cargar. Intenta nuevamente."
+        },
+        "validation": {
+          "rowLabel": "Fila",
+          "truncatedListNotice": "Se omitieron algunos errores ({{total}} en total).",
+          "backendTruncatedNotice": "La lista de errores fue truncada por el servidor."
+        }
+      }
+    },
+    "detailsDrawer": {
+      "title": "Detalles del empleado",
+      "sections": {
+        "raw": "Datos completos"
+      },
+      "actions": {
+        "close": "Cerrar"
       }
     },
     "form": {
@@ -284,6 +367,24 @@
           "helperText": "Ingrese el número de teléfono del usuario",
           "required": "El número de teléfono es requerido"
         },
+        "username": {
+          "label": "Usuario",
+          "placeholder": "Ingrese el usuario",
+          "helperText": "Ingrese el nombre de usuario"
+        },
+        "language": {
+          "label": "Idioma",
+          "empty": "Ninguno"
+        },
+        "timezone": {
+          "label": "Zona horaria",
+          "placeholder": "Ej. America/Bogota",
+          "helperText": "Ingrese la zona horaria"
+        },
+        "immediateSupervisor": {
+          "label": "Jefe inmediato",
+          "placeholder": "Buscar empleado..."
+        },
         "password": {
           "label": "Contraseña",
           "placeholder": "Ingrese la contraseña",
@@ -306,6 +407,12 @@
         "paymentInfo": "Información de Pago",
         "accountInfo": "Cuenta de Usuario",
         "accountInfoDescription": "Estos campos son requeridos solo al crear un nuevo empleado. Al editar, son opcionales."
+      }
+    },
+    "enums": {
+      "language": {
+        "spanish": "Español",
+        "english": "Inglés"
       }
     },
     "dialogs": {

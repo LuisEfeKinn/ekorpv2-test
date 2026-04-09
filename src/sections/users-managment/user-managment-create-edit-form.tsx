@@ -11,9 +11,10 @@ import type {
 } from 'src/types/employees';
 
 import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
+import { useDebounce } from 'minimal-shared/hooks';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -22,9 +23,12 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Accordion from '@mui/material/Accordion';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
+import CircularProgress from '@mui/material/CircularProgress';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 
@@ -33,8 +37,8 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useTranslate } from 'src/locales';
 import { GetSelectCoinService } from 'src/services/organization/company.service';
-import { SaveOrUpdateUserManagmentService } from 'src/services/employees/user-managment.service';
 import { GetEmployeesPaymentPeriods } from 'src/services/employees/employment-payment-period.service';
+import { SaveOrUpdateUserManagmentService, GetUserManagmentPaginationService } from 'src/services/employees/user-managment.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
@@ -43,6 +47,8 @@ import { RegionAutocompleteStandalone } from 'src/components/hook-form/rhf-regio
 import { MunicipalityAutocompleteStandalone } from 'src/components/hook-form/rhf-municipality-autocomplete-standalone';
 import { Form, Field, SkillAutocomplete, PositionAutocomplete, EmploymentTypeAutocomplete, } from 'src/components/hook-form';
 import { OrganizationalUnitAutocompleteStandalone } from 'src/components/hook-form/rhf-organizational-unit-autocomplete-standalone';
+
+import { Language } from 'src/types/employees';
 
 import { LearningPathsManagementModal } from './learning-paths-management-modal';
 
@@ -54,6 +60,11 @@ export type UserManagementCreateSchemaType = IUserManagementFormSchema;
 
 type Props = {
   currentUser?: IUserManagement;
+};
+
+type SupervisorOption = {
+  id: string;
+  name: string;
 };
 
 export function UserManagementCreateEditForm({ currentUser }: Props) {
@@ -78,6 +89,11 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
 
   const isCreating = !currentUser;
 
+  const [supervisorInputValue, setSupervisorInputValue] = useState('');
+  const [supervisorOptions, setSupervisorOptions] = useState<SupervisorOption[]>([]);
+  const [supervisorLoading, setSupervisorLoading] = useState(false);
+  const debouncedSupervisorSearch = useDebounce(supervisorInputValue, 400);
+
   // Estados para precargar datos al editar
   const [preloadCountryId, setPreloadCountryId] = useState<string | undefined>(undefined);
   const [preloadRegionId, setPreloadRegionId] = useState<string | undefined>(undefined);
@@ -92,6 +108,15 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
     secondName: z.string(),
     firstLastName: z.string().min(1, { message: tUsers('user-management.form.fields.firstLastName.required') }),
     secondLastName: z.string(),
+    username: z.string(),
+    language: z.union([z.nativeEnum(Language), z.literal(0)]),
+    timezone: z.string(),
+    immediateSupervisor: z
+      .object({
+        id: z.string(),
+        name: z.string(),
+      })
+      .nullable(),
     address: z.string().min(1, { message: tUsers('user-management.form.fields.address.required') }),
     countrySelect: z.object({
       id: z.string(),
@@ -158,6 +183,12 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
     secondName: currentUser.secondName || '', // No viene en la respuesta actual  
     firstLastName: currentUser.firstLastName || '', // No viene en la respuesta actual
     secondLastName: currentUser.secondLastName || '', // No viene en la respuesta actual
+    username: currentUser.username || '',
+    language: currentUser.language ?? 0,
+    timezone: currentUser.timezone || '',
+    immediateSupervisor: currentUser.immediateSupervisorId
+      ? { id: String(currentUser.immediateSupervisorId.id), name: currentUser.immediateSupervisorId.name }
+      : null,
     address: currentUser.address || '',
     countrySelect: null, // Se cargará con el autocomplete
     regionSelect: null, // Se cargará con el autocomplete
@@ -183,6 +214,10 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
     secondName: '',
     firstLastName: '',
     secondLastName: '',
+    username: '',
+    language: 0,
+    timezone: '',
+    immediateSupervisor: null,
     address: '',
     countrySelect: null,
     regionSelect: null,
@@ -214,8 +249,42 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
   const {
     handleSubmit,
     setValue,
+    control,
     formState: { isSubmitting },
   } = methods;
+
+  const fetchSupervisors = useCallback(async (search?: string) => {
+    setSupervisorLoading(true);
+    try {
+      const response = await GetUserManagmentPaginationService({
+        page: 1,
+        perPage: 20,
+        ...(search?.trim() ? { search: search.trim() } : {}),
+      });
+
+      const data: SupervisorOption[] = (response.data?.data ?? []).map((emp: IUserManagement) => {
+        const name = [emp.firstName, emp.secondName, emp.firstLastName, emp.secondLastName]
+          .filter(Boolean)
+          .join(' ');
+
+        return {
+          id: String(emp.id),
+          name: name || emp.email || String(emp.id),
+        };
+      });
+
+      setSupervisorOptions(data);
+    } catch (error) {
+      console.error('Error fetching supervisors:', error);
+      setSupervisorOptions([]);
+    } finally {
+      setSupervisorLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchSupervisors(debouncedSupervisorSearch);
+  }, [debouncedSupervisorSearch, fetchSupervisors]);
 
   // Lógica de precarga para editar - actualizada para nueva estructura de respuesta
   useEffect(() => {
@@ -376,8 +445,22 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
 
       // Convertir los datos del formulario al formato esperado por el servicio
       // Excluir los campos de autocomplete que se mapean manualmente
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { countrySelect, regionSelect, skillId, positionId, organizationalUnitId, employmentTypeId, municipalityId, documentId, ...formDataWithoutAutocompletes } = data;
+       
+      const {
+        countrySelect,
+        regionSelect,
+        skillId,
+        positionId,
+        organizationalUnitId,
+        employmentTypeId,
+        municipalityId,
+        documentId,
+        immediateSupervisor,
+        username,
+        language,
+        timezone,
+        ...formDataWithoutAutocompletes
+      } = data;
 
       const formDataForService: IUserManagementFormData = {
         ...formDataWithoutAutocompletes,
@@ -388,6 +471,22 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
         organizationalUnitId: organizationalUnitId ? parseInt(organizationalUnitId.id, 10) : 0,
         ...(documentId && { documentId }),
       };
+
+      if (immediateSupervisor?.id) {
+        formDataForService.immediateSupervisorId = parseInt(immediateSupervisor.id, 10);
+      }
+
+      if (username.trim()) {
+        formDataForService.username = username.trim();
+      }
+
+      if (timezone.trim()) {
+        formDataForService.timezone = timezone.trim();
+      }
+
+      if (language !== 0) {
+        formDataForService.language = language;
+      }
 
       // Incluir campos de cuenta solo si tienen valor
       if (formDataWithoutAutocompletes.email) {
@@ -504,6 +603,14 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
           />
         </Grid>
 
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Field.Text
+            name="username"
+            label={tUsers('user-management.form.fields.username.label')}
+            placeholder={tUsers('user-management.form.fields.username.placeholder')}
+          />
+        </Grid>
+
         <Grid size={{ xs: 12 }}>
           <Field.Text
             name="address"
@@ -563,6 +670,31 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
             name="postalCode"
             label={tUsers('user-management.form.fields.postalCode.label')}
             placeholder={tUsers('user-management.form.fields.postalCode.placeholder')}
+          />
+        </Grid>
+
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Field.Select
+            name="language"
+            label={tUsers('user-management.form.fields.language.label')}
+          >
+            <MenuItem value={0}>
+              {tUsers('user-management.form.fields.language.empty')}
+            </MenuItem>
+            <MenuItem value={1}>
+              {tUsers('user-management.enums.language.spanish')}
+            </MenuItem>
+            <MenuItem value={2}>
+              {tUsers('user-management.enums.language.english')}
+            </MenuItem>
+          </Field.Select>
+        </Grid>
+
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Field.Text
+            name="timezone"
+            label={tUsers('user-management.form.fields.timezone.label')}
+            placeholder={tUsers('user-management.form.fields.timezone.placeholder')}
           />
         </Grid>
       </Grid>
@@ -627,6 +759,46 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
             name="recurringWeeklyLimitHours"
             label={tUsers('user-management.form.fields.recurringWeeklyLimitHours.label')}
             placeholder={tUsers('user-management.form.fields.recurringWeeklyLimitHours.placeholder')}
+          />
+        </Grid>
+
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Controller
+            name="immediateSupervisor"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Autocomplete<SupervisorOption, false, false, false>
+                options={supervisorOptions}
+                loading={supervisorLoading}
+                value={field.value}
+                onChange={(_, newValue) => field.onChange(newValue)}
+                inputValue={supervisorInputValue}
+                onInputChange={(_, newInputValue) => setSupervisorInputValue(newInputValue)}
+                getOptionLabel={(option) => option.name}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                filterOptions={(options) => options}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={tUsers('user-management.form.fields.immediateSupervisor.label')}
+                    placeholder={tUsers('user-management.form.fields.immediateSupervisor.placeholder')}
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                    slotProps={{
+                      input: {
+                        ...params.InputProps,
+                        endAdornment: (
+                          <>
+                            {supervisorLoading && <CircularProgress size={14} />}
+                            {params.InputProps.endAdornment}
+                          </>
+                        ),
+                      },
+                    }}
+                  />
+                )}
+              />
+            )}
           />
         </Grid>
       </Grid>

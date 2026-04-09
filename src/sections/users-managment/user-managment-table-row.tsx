@@ -24,17 +24,34 @@ import { CustomPopover } from 'src/components/custom-popover';
 
 type Props = {
   row: IUserManagement;
+  extraColumns: string[];
   selected: boolean;
   editHref: string;
   onSelectRow: () => void;
   onDeleteRow: () => void;
+  onViewDetails: () => void;
 };
 
-export function UserManagmentTableRow({ row, selected, editHref, onSelectRow, onDeleteRow }: Props) {
+export function UserManagmentTableRow({
+  row,
+  extraColumns,
+  selected,
+  editHref,
+  onSelectRow,
+  onDeleteRow,
+  onViewDetails,
+}: Props) {
   const { t: tUsers } = useTranslate('employees');
   const { t: tCommon } = useTranslate('common');
   const menuActions = usePopover();
   const confirmDialog = useBoolean();
+
+  const languageLabel =
+    row.language === 1
+      ? tUsers('user-management.enums.language.spanish')
+      : row.language === 2
+        ? tUsers('user-management.enums.language.english')
+        : '-';
 
   const renderMenuActions = () => (
     <CustomPopover
@@ -44,6 +61,16 @@ export function UserManagmentTableRow({ row, selected, editHref, onSelectRow, on
       slotProps={{ arrow: { placement: 'right-top' } }}
     >
       <MenuList>
+        <MenuItem
+          onClick={() => {
+            onViewDetails();
+            menuActions.onClose();
+          }}
+        >
+          <Iconify icon="solar:eye-bold" />
+          {tUsers('user-management.table.actions.viewDetails')}
+        </MenuItem>
+
         <li>
           <MenuItem component={RouterLink} href={editHref} onClick={() => menuActions.onClose()}>
             <Iconify icon="solar:pen-bold" />
@@ -79,6 +106,49 @@ export function UserManagmentTableRow({ row, selected, editHref, onSelectRow, on
     />
   );
 
+  const isRecord = (value: unknown): value is Record<string, unknown> =>
+    typeof value === 'object' && value !== null;
+
+  const getNameFromRecord = (value: Record<string, unknown>): string | null => {
+    const name = value.name;
+    if (typeof name === 'string' && name.trim()) return name;
+    return null;
+  };
+
+  const renderExtraValue = (value: unknown) => {
+    if (value === null || value === undefined || value === '') return '-';
+    if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') return String(value);
+
+    if (Array.isArray(value)) {
+      const items = value.filter((v) => v !== null && v !== undefined);
+      if (!items.length) return '-';
+
+      if (items.every((item) => isRecord(item) && typeof (item as Record<string, unknown>).name === 'string')) {
+        const names = items
+          .map((item) => getNameFromRecord(item as Record<string, unknown>))
+          .filter((n): n is string => typeof n === 'string' && n.trim().length > 0);
+        return names.length ? names.join(', ') : '-';
+      }
+
+      if (items.every((item) => ['string', 'number', 'boolean'].includes(typeof item))) {
+        return items.map((item) => String(item)).join(', ');
+      }
+    }
+
+    if (isRecord(value)) {
+      const name = getNameFromRecord(value);
+      if (name) return name;
+    }
+
+    try {
+      const asJson = JSON.stringify(value);
+      if (typeof asJson !== 'string') return '-';
+      return asJson.length > 60 ? `${asJson.slice(0, 60)}…` : asJson;
+    } catch {
+      return '-';
+    }
+  };
+
   return (
     <>
       <TableRow hover selected={selected} aria-checked={selected} tabIndex={-1}>
@@ -107,6 +177,22 @@ export function UserManagmentTableRow({ row, selected, editHref, onSelectRow, on
         <TableCell>
           <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
             <Box component="span" sx={{ color: 'text.primary' }}>
+              {row.username || '-'}
+            </Box>
+          </Stack>
+        </TableCell>
+
+        <TableCell>
+          <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
+            <Box component="span" sx={{ color: 'text.primary' }}>
+              {row.immediateSupervisorId?.name || '-'}
+            </Box>
+          </Stack>
+        </TableCell>
+
+        <TableCell>
+          <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
+            <Box component="span" sx={{ color: 'text.primary' }}>
               {row.position?.name || 'Sin posición'}
             </Box>
             <Chip
@@ -122,8 +208,8 @@ export function UserManagmentTableRow({ row, selected, editHref, onSelectRow, on
         <TableCell>
           <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
             <Box component="span" sx={{ color: 'text.primary' }}>
-              {row.competencyKm && row.competencyKm.length > 0 
-                ? row.competencyKm.map(skill => skill.name).join(', ')
+              {row.competencyKm && row.competencyKm.length > 0
+                ? row.competencyKm.map((skill) => skill.name).join(', ')
                 : 'Sin habilidades'}
             </Box>
           </Stack>
@@ -142,7 +228,7 @@ export function UserManagmentTableRow({ row, selected, editHref, onSelectRow, on
 
         <TableCell>
           <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
-            <Box component="span" sx={{ color: 'text.primary', fontWeight: 'fontWeightMedium' }}>
+            <Box component="span" sx={{ color: 'text.primary' }}>
               {row?.minimumBillingRatePerHour || '0'} {row.coin?.name || 'COP'}
             </Box>
             <Box component="span" sx={{ color: 'text.secondary', fontSize: '0.75rem' }}>
@@ -165,6 +251,32 @@ export function UserManagmentTableRow({ row, selected, editHref, onSelectRow, on
         <TableCell sx={{ whiteSpace: 'nowrap' }}>
           {row.startedWorkOn ? new Date(row.startedWorkOn).toLocaleDateString() : 'Sin fecha'}
         </TableCell>
+
+        <TableCell>
+          <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
+            <Box component="span" sx={{ color: 'text.primary' }}>
+              {languageLabel}
+            </Box>
+          </Stack>
+        </TableCell>
+
+        <TableCell>
+          <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
+            <Box component="span" sx={{ color: 'text.primary' }}>
+              {row.timezone || '-'}
+            </Box>
+          </Stack>
+        </TableCell>
+
+        {extraColumns.map((colId) => (
+          <TableCell key={colId}>
+            <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
+              <Box component="span" sx={{ color: 'text.primary' }}>
+                {renderExtraValue((row as unknown as Record<string, unknown>)[colId])}
+              </Box>
+            </Stack>
+          </TableCell>
+        ))}
       </TableRow>
 
       {renderMenuActions()}

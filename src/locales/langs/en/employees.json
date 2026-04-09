@@ -125,6 +125,10 @@
       "columns": {
         "fullName": "Full Name",
         "email": "Email",
+        "username": "Username",
+        "language": "Language",
+        "timezone": "Time zone",
+        "immediateSupervisor": "Immediate Supervisor",
         "position": "Position and Employment",
         "skill": "Skill",
         "location": "Location",
@@ -137,6 +141,26 @@
         "actions": "Actions",
         "perHour": "per hour",
         "perWeek": "per week"
+      },
+      "extraColumns": {
+        "id": "ID",
+        "userId": "User ID",
+        "documentId": "Document",
+        "tel": "Phone",
+        "postalCode": "Postal code",
+        "updatedAt": "Updated",
+        "address": "Address",
+        "billingRatePerHour": "Hourly rate",
+        "minimumBillingRatePerHour": "Minimum hourly rate",
+        "recurringWeeklyLimitHours": "Weekly limit (hours)",
+        "organizationalUnitId": "Organizational Unit",
+        "municipalityId": "Municipality",
+        "paymentPeriod": "Payment period",
+        "coin": "Currency",
+        "employmentType": "Employment type",
+        "skills": "Skills",
+        "competencyKm": "Competencies",
+        "location": "Location"
       },
       "toolbar": {
         "search": "Search employees..."
@@ -155,6 +179,65 @@
       "emptyState": {
         "noData": "No employees found",
         "noResults": "No results found for your search"
+      },
+      "actions": {
+        "uploadTemplate": "Upload Template",
+        "downloadExcel": "Download Excel",
+        "downloadTemplate": "Download Template",
+        "viewDetails": "View details",
+        "columns": "Columns"
+      },
+      "messages": {
+        "downloadError": "Error downloading file",
+        "downloadTemplateError": "Error downloading template",
+        "uploadSuccess": "Template uploaded successfully",
+        "uploadError": "Error uploading template"
+      },
+      "uploadDrawer": {
+        "title": "Bulk upload employees",
+        "actions": {
+          "close": "Close",
+          "cancel": "Cancel",
+          "upload": "Upload",
+          "remove": "Remove"
+        },
+        "instructions": {
+          "title": "Instructions",
+          "excelHeadersIntro": "You must create an Excel file with the following columns as headers:",
+          "excelHeadersList": "- USERNAME\n- PASSWORD (minimum 5 characters)\n- FIRST_NAME\n- FIRST_LAST_NAME\n- SECOND_LAST_NAME (optional)\n- EMAIL\n- JOB_NOMENCLATURE\n- IMMEDIATE_SUPERVISOR (optional; accepts USERNAME or email; if you send a name and it is ambiguous it will not be loaded)\n- USER_STATUS (0 = Active, 1 = Inactive; also accepts text Active/Inactive)",
+          "jobOrgUnitNote": "Note: the job must be associated with the Organizational Unit; otherwise it will not be loaded into the system.",
+          "downloadTemplate": "Download template",
+          "fillAndSave": "Enter the list of users to upload, and save the file with a name that contains no spaces or special characters.",
+          "dragOrSelect": "You can drag and drop the saved file into the box below, or select it using the 'Select file' button.",
+          "clickUpload": "Click the 'Upload' button to start the upload process."
+        },
+        "drop": {
+          "title": "Select Excel file",
+          "selectedTitle": "Selected file",
+          "subtitle": "or click to select from your device",
+          "formats": "Allowed formats: .xlsx, .xls • 1 file"
+        },
+        "errors": {
+          "tooManyFiles": "Only 1 file is allowed.",
+          "invalidType": "Invalid file type. Use .xlsx or .xls.",
+          "generic": "Could not load the file. Please try again.",
+          "noFile": "Select a file.",
+          "uploadFailed": "Upload failed. Please try again."
+        },
+        "validation": {
+          "rowLabel": "Row",
+          "truncatedListNotice": "Some errors were omitted ({{total}} total).",
+          "backendTruncatedNotice": "The error list was truncated by the server."
+        }
+      }
+    },
+    "detailsDrawer": {
+      "title": "Employee details",
+      "sections": {
+        "raw": "Full data"
+      },
+      "actions": {
+        "close": "Close"
       }
     },
     "form": {
@@ -284,6 +367,24 @@
           "helperText": "Enter the user's phone number",
           "required": "Phone number is required"
         },
+        "username": {
+          "label": "Username",
+          "placeholder": "Enter username",
+          "helperText": "Enter the username"
+        },
+        "language": {
+          "label": "Language",
+          "empty": "None"
+        },
+        "timezone": {
+          "label": "Time zone",
+          "placeholder": "e.g. America/Bogota",
+          "helperText": "Enter the time zone"
+        },
+        "immediateSupervisor": {
+          "label": "Immediate Supervisor",
+          "placeholder": "Search employee..."
+        },
         "password": {
           "label": "Password",
           "placeholder": "Enter password",
@@ -306,6 +407,12 @@
         "paymentInfo": "Payment Information",
         "accountInfo": "User Account",
         "accountInfoDescription": "These fields are required only when creating a new employee. When editing, they are optional."
+      }
+    },
+    "enums": {
+      "language": {
+        "spanish": "Spanish",
+        "english": "English"
       }
     },
     "dialogs": {

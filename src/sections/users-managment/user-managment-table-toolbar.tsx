@@ -2,12 +2,16 @@ import type { IRegionOption, ICountryOption } from 'src/types/locations';
 import type { ISkillOption, IUserManagementTableFilters } from 'src/types/employees';
 import type { IPositionOption, IOrganizationalUnitOption } from 'src/types/organization';
 
-import { useState, useCallback } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 
+import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useTranslate } from 'src/locales';
 import { GetSkillsPaginationService } from 'src/services/employees/skills.service';
@@ -19,16 +23,30 @@ import {
 } from 'src/services/organization/organizationalUnit.service';
 
 import { Iconify } from 'src/components/iconify';
+import { usePopover, CustomPopover } from 'src/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   filters: IUserManagementTableFilters;
   onFilters: (name: string, value: string) => void;
+  allColumns: Array<{ id: string; label: string }>;
+  fixedColumnIds: Set<string>;
+  visibleColumns: string[];
+  onChangeColumns: (columnId: string) => void;
 };
 
-export function UserManagmentTableToolbar({ filters, onFilters }: Props) {
+export function UserManagmentTableToolbar({
+  filters,
+  onFilters,
+  allColumns,
+  fixedColumnIds,
+  visibleColumns,
+  onChangeColumns,
+}: Props) {
   const { t: tUsers } = useTranslate('employees');
+  const popover = usePopover();
+  const fixedColumnSet = useMemo(() => fixedColumnIds, [fixedColumnIds]);
   
   // Estados para las opciones de cada autocomplete
   const [positionOptions, setPositionOptions] = useState<IPositionOption[]>([]);
@@ -147,37 +165,48 @@ export function UserManagmentTableToolbar({ filters, onFilters }: Props) {
   }, []);
 
   return (
-    <Stack spacing={2} sx={{ p: 2.5 }}>
-      {/* Campo de búsqueda principal - siempre ocupa todo el ancho */}
-      <TextField
-        fullWidth
-        value={filters.name}
-        onChange={handleFilterName}
-        placeholder={tUsers('user-management.table.toolbar.search')}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
-            </InputAdornment>
-          ),
-        }}
-      />
+    <>
+      <Stack spacing={2} sx={{ p: 2.5 }}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems={{ sm: 'center' }}>
+          <TextField
+            fullWidth
+            value={filters.name}
+            onChange={handleFilterName}
+            placeholder={tUsers('user-management.table.toolbar.search')}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                </InputAdornment>
+              ),
+            }}
+          />
 
-      {/* Grid responsive para los autocompletes de filtros */}
-      <Stack
-        spacing={2}
-        direction={{ xs: 'column', sm: 'row' }}
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: {
-            xs: '1fr', // Móvil: 1 columna
-            sm: 'repeat(2, 1fr)', // Tablet: 2 columnas
-            md: 'repeat(3, 1fr)', // Desktop: 3 columnas
-            lg: 'repeat(5, 1fr)', // Desktop grande: 5 columnas (todos en una fila)
-          },
-          gap: 2,
-        }}
-      >
+          <Button
+            color="inherit"
+            variant="outlined"
+            startIcon={<Iconify icon="solar:settings-bold" />}
+            onClick={popover.onOpen}
+            sx={{ textTransform: 'capitalize', whiteSpace: 'nowrap' }}
+          >
+            {tUsers('user-management.table.actions.columns')}
+          </Button>
+        </Stack>
+
+        <Stack
+          spacing={2}
+          direction={{ xs: 'column', sm: 'row' }}
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(3, 1fr)',
+              lg: 'repeat(5, 1fr)',
+            },
+            gap: 2,
+          }}
+        >
         {/* Autocomplete para Posición */}
         <Autocomplete
           fullWidth
@@ -347,7 +376,35 @@ export function UserManagmentTableToolbar({ filters, onFilters }: Props) {
             />
           )}
         />
+        </Stack>
       </Stack>
-    </Stack>
+
+      <CustomPopover
+        open={popover.open}
+        anchorEl={popover.anchorEl}
+        onClose={popover.onClose}
+        slotProps={{ arrow: { placement: 'top-right' } }}
+      >
+        <Box sx={{ p: 2, maxWidth: 320 }}>
+          <Stack spacing={1}>
+            {allColumns.map((column) => (
+              <FormControlLabel
+                key={column.id}
+                control={
+                  <Checkbox
+                    checked={fixedColumnSet.has(column.id) || visibleColumns.includes(column.id)}
+                    disabled={fixedColumnSet.has(column.id)}
+                    onChange={() => {
+                      if (!fixedColumnSet.has(column.id)) onChangeColumns(column.id);
+                    }}
+                  />
+                }
+                label={column.label}
+              />
+            ))}
+          </Stack>
+        </Box>
+      </CustomPopover>
+    </>
   );
 }

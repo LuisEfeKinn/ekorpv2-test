@@ -42,6 +42,32 @@ export const DeleteUserManagmentService = async (id: any) => {
   return response;
 };
 
+export const DownloadEmployeesTemplateService = async () => {
+  const response = await axios.get('/employees/download/template', {
+    responseType: 'blob',
+  });
+  return response;
+};
+
+export const DownloadEmployeesExcelService = async (
+  params?: Record<string, string | number | boolean | undefined>
+) => {
+  const response = await axios.get('/employees/download/excel', {
+    responseType: 'blob',
+    params,
+  });
+  return response;
+};
+
+export const UploadEmployeesTemplateService = async (formData: FormData) => {
+  const response = await axios.post('/employees/upload/template', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response;
+};
+
 
 // ----------------------------------------------------------------------
 // Learning Paths Assignment to User Management

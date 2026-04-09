@@ -36,6 +36,16 @@ export interface IEmploymentTypeOption {
 
 // ----------------------------------------------------------------------
 
+export enum Language {
+  SPANISH = 1,
+  ENGLISH = 2,
+}
+
+export type IImmediateSupervisor = {
+  id: number;
+  name: string;
+};
+
 export type IUserManagement = {
   id: string;
   userId: string;
@@ -85,6 +95,10 @@ export type IUserManagement = {
   startedWorkOn: Date | string;
   createdAt: Date | string;
   deletedAt: Date | string | null;
+  language?: Language | null;
+  username?: string | null;
+  timezone?: string | null;
+  immediateSupervisorId?: IImmediateSupervisor | null;
   
   // Campos opcionales que pueden no venir en la respuesta actual
   firstName?: string;
@@ -128,6 +142,10 @@ export type IUserManagementFormData = {
   tel?: string;
   password?: string;
   confirmPassword?: string;
+  language?: Language;
+  username?: string;
+  timezone?: string;
+  immediateSupervisorId?: number;
 };
 
 // Interface para el formulario que incluye los autocompletes
@@ -136,6 +154,10 @@ export type IUserManagementFormSchema = {
   secondName: string;
   firstLastName: string;
   secondLastName: string;
+  username: string;
+  language: Language | 0;
+  timezone: string;
+  immediateSupervisor: { id: string; name: string } | null;
   address: string;
   countrySelect?: { id: string; name: string; } | null;
   regionSelect?: { id: string; name: string; } | null;
