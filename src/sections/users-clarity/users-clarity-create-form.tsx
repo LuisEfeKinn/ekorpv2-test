@@ -89,8 +89,6 @@ const userClaritySchema = (t: (key: string) => string, mode: 'create' | 'edit') 
       zonaHoraria: z.string().optional(),
     })
     .superRefine((values, ctx) => {
-      if (mode !== 'create') return;
-
       const required: Array<{ key: keyof typeof values; message: string }> = [
         { key: 'nombres', message: t('usersClarity.form.validation.nombresRequired') },
         { key: 'primerApellido', message: t('usersClarity.form.validation.primerApellidoRequired') },
@@ -98,9 +96,12 @@ const userClaritySchema = (t: (key: string) => string, mode: 'create' | 'edit') 
         { key: 'usuario', message: t('usersClarity.form.validation.usuarioRequired') },
         { key: 'correoElectronico1', message: t('usersClarity.form.validation.correoElectronico1Required') },
         { key: 'codigoEmpleado', message: t('usersClarity.form.validation.codigoEmpleadoRequired') },
-        { key: 'clave', message: t('usersClarity.form.validation.claveRequired') },
         { key: 'roleId', message: t('users.form.validation.roleRequired') },
       ];
+
+      if (mode === 'create') {
+        required.push({ key: 'clave', message: t('usersClarity.form.validation.claveRequired') });
+      }
 
       required.forEach(({ key, message }) => {
         const value = values[key];
@@ -181,11 +182,11 @@ export function UsersClarityCreateForm({
 
   const mapUserToFormValues = useCallback(
     (user: IUserClarity): UserClarityFormValues => ({
-      nombres: user.nombres,
-      primerApellido: user.apellidos,
+      nombres: user.nombres ?? '',
+      primerApellido: user.apellidos ?? '',
       segundoApellido: user.apellido2 ?? '',
-      usuario: user.usuario,
-      correoElectronico1: user.correoElectronico,
+      usuario: user.usuario ?? '',
+      correoElectronico1: user.correoElectronico ?? '',
       codigoEmpleado: user.alias ?? '',
       clave: '',
       perfil: user.perfil?.id ? String(user.perfil.id) : user.profile?.id ? String(user.profile.id) : '',
@@ -196,23 +197,23 @@ export function UsersClarityCreateForm({
       estadoUsuario: String(user.estadousuario),
       tipoUsuario: String(user.tipousuario),
       imagen: user.imagen ?? '',
-      alias: user.alias,
+      alias: user.alias ?? '',
       avatar: user.avatarusuario ?? '',
-      numeroIdentificacion: user.identificacion,
+      numeroIdentificacion: user.identificacion ?? '',
       tipoIdentificacion: '',
       correoElectronico2: user.correoelectronico2 ?? '',
-      celular: user.telefonocelular,
-      direccionCasa: user.direccioncasa,
-      telefonoCasa: user.telefonocasa,
-      direccionOficina: user.direccionoficina,
+      celular: user.telefonocelular ?? '',
+      direccionCasa: user.direccioncasa ?? '',
+      telefonoCasa: user.telefonocasa ?? '',
+      direccionOficina: user.direccionoficina ?? '',
       usuariosSistema: '',
       tipoPersona: String(user.tipopersona),
-      empresa: user.empresa,
+      empresa: user.empresa ?? '',
       tipoEmpresa: '',
-      nitEmpresa: user.nitempresa,
-      actividadEconomica: user.actividadeconomica,
+      nitEmpresa: user.nitempresa ?? '',
+      actividadEconomica: user.actividadeconomica ?? '',
       lenguaje: String(user.lenguaje),
-      zonaHoraria: user.zonahoraria,
+      zonaHoraria: user.zonahoraria ?? 'America/Bogota',
       roleId:
         user.roleIds?.[0] ??
         user.linkedUserRoles?.[0]?.id ??
@@ -524,64 +525,33 @@ export function UsersClarityCreateForm({
         >
           <Field.Text
             name="nombres"
-            label={
-              mode === 'create'
-                ? `${t('usersClarity.form.fields.nombres')} *`
-                : t('usersClarity.form.fields.nombres')
-            }
+            label={`${t('usersClarity.form.fields.nombres')} *`}
           />
           <Field.Text
             name="primerApellido"
-            label={
-              mode === 'create'
-                ? `${t('usersClarity.form.fields.primerApellido')} *`
-                : t('usersClarity.form.fields.primerApellido')
-            }
+            label={`${t('usersClarity.form.fields.primerApellido')} *`}
           />
           <Field.Text
             name="segundoApellido"
-            label={
-              mode === 'create'
-                ? `${t('usersClarity.form.fields.segundoApellido')} *`
-                : t('usersClarity.form.fields.segundoApellido')
-            }
+            label={`${t('usersClarity.form.fields.segundoApellido')} *`}
           />
           <Field.Text
             name="usuario"
-            label={
-              mode === 'create'
-                ? `${t('usersClarity.form.fields.usuario')} *`
-                : t('usersClarity.form.fields.usuario')
-            }
+            label={`${t('usersClarity.form.fields.usuario')} *`}
           />
           <Field.Text
             name="correoElectronico1"
-            label={
-              mode === 'create'
-                ? `${t('usersClarity.form.fields.correoElectronico1')} *`
-                : t('usersClarity.form.fields.correoElectronico1')
-            }
+            label={`${t('usersClarity.form.fields.correoElectronico1')} *`}
           />
           <Field.Text
             name="codigoEmpleado"
-            label={
-              mode === 'create'
-                ? `${t('usersClarity.form.fields.codigoEmpleado')} *`
-                : t('usersClarity.form.fields.codigoEmpleado')
-            }
+            label={`${t('usersClarity.form.fields.codigoEmpleado')} *`}
           />
           {mode === 'create' ? (
             <Field.Text name="clave" label={`${t('usersClarity.form.fields.clave')} *`} type="password" />
           ) : null}
 
-          <Field.Select
-            name="roleId"
-            label={
-              mode === 'create'
-                ? `${t('users.form.fields.roles.label')} *`
-                : t('users.form.fields.roles.label')
-            }
-          >
+          <Field.Select name="roleId" label={`${t('users.form.fields.roles.label')} *`}>
             <MenuItem value="">{t('usersClarity.table.filters.all')}</MenuItem>
             {roleOptions.map((option) => (
               <MenuItem key={option.id} value={String(option.id)}>

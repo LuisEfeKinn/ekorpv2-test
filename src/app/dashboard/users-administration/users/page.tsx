@@ -852,6 +852,7 @@ export default function Page() {
 
           <Scrollbar sx={{ flexGrow: 1, p: 2.5 }}>
             <UsersClarityCreateForm
+              key={editingUser ? `edit-${editingUser.idusuario}` : 'create'}
               mode={editingUser ? 'edit' : 'create'}
               initialUser={editingUser ?? undefined}
               onSuccess={() => {
