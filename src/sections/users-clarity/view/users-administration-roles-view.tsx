@@ -71,6 +71,54 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   return inputData;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function parseRole(value: unknown): IRole | null {
+  if (!isRecord(value)) return null;
+  const idRaw = value.id;
+  const id = typeof idRaw === 'string' || typeof idRaw === 'number' ? String(idRaw) : '';
+  const name = typeof value.name === 'string' ? value.name : '';
+  if (!id || !name) return null;
+  const description = typeof value.description === 'string' ? value.description : '';
+  const slug = typeof value.slug === 'string' || value.slug === null ? value.slug : null;
+  const isDefaultRaw = value.isDefault;
+  const isDefault = typeof isDefaultRaw === 'number' ? isDefaultRaw : Number(isDefaultRaw);
+
+  return {
+    id,
+    name,
+    description,
+    slug,
+    isDefault: Number.isFinite(isDefault) ? isDefault : 0,
+    createdAt: value.createdAt as unknown as Date,
+    updatedAt: value.updatedAt as unknown as Date,
+    deletedAt: value.deletedAt as unknown as Date | null,
+  };
+}
+
+function normalizeRolesListResponse(raw: unknown): { data: IRole[]; total: number } {
+  const listSource = (() => {
+    if (Array.isArray(raw)) return raw;
+    if (isRecord(raw) && Array.isArray(raw.data)) return raw.data;
+    if (isRecord(raw) && isRecord(raw.data) && Array.isArray(raw.data.data)) return raw.data.data;
+    return [];
+  })();
+
+  const data = listSource.map(parseRole).filter((item): item is IRole => item !== null);
+
+  const total = (() => {
+    if (isRecord(raw) && isRecord(raw.meta) && typeof raw.meta.itemCount === 'number') return raw.meta.itemCount;
+    if (isRecord(raw) && isRecord(raw.data) && isRecord(raw.data.meta) && typeof raw.data.meta.itemCount === 'number') {
+      return raw.data.meta.itemCount;
+    }
+    return data.length;
+  })();
+
+  return { data, total };
+}
+
 export function UsersAdministrationRolesView() {
   const { t } = useTranslate('security');
   const table = useTable();
@@ -107,11 +155,9 @@ export function UsersAdministrationRolesView() {
       };
 
       const response = await GetRolesPaginationService(params);
-
-      if (response.data.statusCode === 200) {
-        setTableData(response.data.data || []);
-        setTotalItems(response.data.data?.length || 0);
-      }
+      const normalized = normalizeRolesListResponse(response.data as unknown);
+      setTableData(normalized.data);
+      setTotalItems(normalized.total);
     } catch (error) {
       console.error('Error loading roles:', error);
       toast.error(t('roles.messages.error.loading'));
