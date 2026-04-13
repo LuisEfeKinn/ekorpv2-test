@@ -225,7 +225,10 @@
           "uploadFailed": "Upload failed. Please try again."
         },
         "validation": {
+          "title": "Validation errors",
           "rowLabel": "Row",
+          "fieldLabel": "Field",
+          "messageLabel": "Message",
           "truncatedListNotice": "Some errors were omitted ({{total}} total).",
           "backendTruncatedNotice": "The error list was truncated by the server."
         }

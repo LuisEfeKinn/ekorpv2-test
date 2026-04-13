@@ -225,7 +225,10 @@
           "uploadFailed": "No se pudo cargar. Intenta nuevamente."
         },
         "validation": {
+          "title": "Errores de validación",
           "rowLabel": "Fila",
+          "fieldLabel": "Campo",
+          "messageLabel": "Mensaje",
           "truncatedListNotice": "Se omitieron algunos errores ({{total}} en total).",
           "backendTruncatedNotice": "La lista de errores fue truncada por el servidor."
         }

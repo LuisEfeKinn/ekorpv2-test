@@ -12,14 +12,20 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
+import Alert from '@mui/material/Alert';
 import Table from '@mui/material/Table';
 import Stack from '@mui/material/Stack';
 import { LoadingButton } from '@mui/lab';
 import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
+import TableRow from '@mui/material/TableRow';
+import TableHead from '@mui/material/TableHead';
+import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
+import AlertTitle from '@mui/material/AlertTitle';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import TableContainer from '@mui/material/TableContainer';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -601,6 +607,8 @@ type EmployeesUploadTemplateDrawerProps = {
   onUpload: (file: File) => Promise<void>;
 };
 
+const MAX_UPLOAD_ERROR_ITEMS = 50;
+
 function EmployeesUploadTemplateDrawer({
   open,
   uploading,
@@ -610,12 +618,12 @@ function EmployeesUploadTemplateDrawer({
 }: EmployeesUploadTemplateDrawerProps) {
   const { t: tUsers } = useTranslate('employees');
   const [file, setFile] = useState<File | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [drawerError, setDrawerError] = useState<EmployeesUploadDrawerError | null>(null);
 
   useEffect(() => {
     if (!open) {
       setFile(null);
-      setError(null);
+      setDrawerError(null);
     }
   }, [open]);
 
@@ -635,20 +643,20 @@ function EmployeesUploadTemplateDrawer({
 
       if (code === 'too-many-files') {
         const msg = tUsers('user-management.table.uploadDrawer.errors.tooManyFiles');
-        setError(msg);
+        setDrawerError({ kind: 'message', message: msg });
         toast.error(msg);
         return;
       }
 
       if (code === 'file-invalid-type') {
         const msg = tUsers('user-management.table.uploadDrawer.errors.invalidType');
-        setError(msg);
+        setDrawerError({ kind: 'message', message: msg });
         toast.error(msg);
         return;
       }
 
       const msg = tUsers('user-management.table.uploadDrawer.errors.generic');
-      setError(msg);
+      setDrawerError({ kind: 'message', message: msg });
       toast.error(msg);
     },
     [tUsers]
@@ -661,7 +669,7 @@ function EmployeesUploadTemplateDrawer({
     disabled: uploading,
     onDropAccepted: (files) => {
       setFile(files[0] ?? null);
-      setError(null);
+      setDrawerError(null);
     },
     onDropRejected: handleDropRejected,
   });
@@ -673,7 +681,7 @@ function EmployeesUploadTemplateDrawer({
   const handleConfirmUpload = useCallback(async () => {
     if (!file) {
       const msg = tUsers('user-management.table.uploadDrawer.errors.noFile');
-      setError(msg);
+      setDrawerError({ kind: 'message', message: msg });
       toast.error(msg);
       return;
     }
@@ -681,9 +689,9 @@ function EmployeesUploadTemplateDrawer({
       await onUpload(file);
       onClose();
     } catch (uploadError) {
-      const info = getEmployeesUploadErrorInfo(uploadError, tUsers);
-      setError(info.details ? `${info.title}\n\n${info.details}` : info.title);
-      toast.error(info.title);
+      const parsed = getEmployeesUploadError(uploadError, tUsers);
+      setDrawerError(parsed);
+      toast.error(parsed.kind === 'backend' ? parsed.title : parsed.message);
     }
   }, [file, onClose, onUpload, tUsers]);
 
@@ -800,7 +808,7 @@ function EmployeesUploadTemplateDrawer({
                   borderColor: theme.vars.palette.primary.main,
                   backgroundColor: varAlpha(theme.vars.palette.primary.mainChannel, 0.08),
                 }),
-                ...((isDragReject || !!error) && {
+                ...((isDragReject || !!drawerError) && {
                   borderColor: theme.vars.palette.error.main,
                   backgroundColor: varAlpha(theme.vars.palette.error.mainChannel, 0.08),
                 }),
@@ -834,7 +842,7 @@ function EmployeesUploadTemplateDrawer({
                     onClick={(event) => {
                       event.stopPropagation();
                       setFile(null);
-                      setError(null);
+                      setDrawerError(null);
                     }}
                     disabled={uploading}
                     sx={{ textTransform: 'none' }}
@@ -854,14 +862,81 @@ function EmployeesUploadTemplateDrawer({
             </Stack>
           </Box>
 
-          {!!error && (
-            <Typography
-              variant="caption"
-              color="error.main"
-              sx={{ display: 'block', mt: 1, whiteSpace: 'pre-line' }}
-            >
-              {error}
-            </Typography>
+          {!!drawerError && (
+            <Box sx={{ mt: 1.5 }}>
+              {drawerError.kind === 'backend' ? (
+                <Box sx={{ display: 'grid', gap: 1 }}>
+                  <Alert severity="error" variant="outlined">
+                    <AlertTitle>
+                      {tUsers('user-management.table.uploadDrawer.validation.title', {
+                        defaultValue: 'Errores de validación',
+                      })}
+                    </AlertTitle>
+                    <Typography variant="body2" sx={{ whiteSpace: 'pre-line' }}>
+                      {drawerError.title}
+                    </Typography>
+                    {drawerError.truncated && (
+                      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.75 }}>
+                        {tUsers('user-management.table.uploadDrawer.validation.backendTruncatedNotice')}
+                      </Typography>
+                    )}
+                  </Alert>
+
+                  <Box
+                    sx={{
+                      borderRadius: 1.5,
+                      border: (theme) => `1px solid ${theme.vars.palette.divider}`,
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <TableContainer sx={{ maxHeight: 260 }}>
+                      <Table size="small" stickyHeader>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell sx={{ width: 88 }}>
+                              {tUsers('user-management.table.uploadDrawer.validation.rowLabel')}
+                            </TableCell>
+                            <TableCell sx={{ width: 220 }}>
+                              {tUsers('user-management.table.uploadDrawer.validation.fieldLabel', {
+                                defaultValue: 'Campo',
+                              })}
+                            </TableCell>
+                            <TableCell>
+                              {tUsers('user-management.table.uploadDrawer.validation.messageLabel', {
+                                defaultValue: 'Mensaje',
+                              })}
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {drawerError.errors.slice(0, MAX_UPLOAD_ERROR_ITEMS).map((item) => (
+                            <TableRow key={`${item.row}-${item.field}-${item.message}`}>
+                              <TableCell>{item.row}</TableCell>
+                              <TableCell sx={{ fontWeight: 600 }}>{item.field}</TableCell>
+                              <TableCell>{item.message}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Box>
+
+                  {drawerError.errors.length > MAX_UPLOAD_ERROR_ITEMS && (
+                    <Typography variant="caption" color="text.secondary">
+                      {tUsers('user-management.table.uploadDrawer.validation.truncatedListNotice', {
+                        total: drawerError.errors.length,
+                      })}
+                    </Typography>
+                  )}
+                </Box>
+              ) : (
+                <Alert severity="error" variant="outlined">
+                  <Typography variant="body2" sx={{ whiteSpace: 'pre-line' }}>
+                    {drawerError.message}
+                  </Typography>
+                </Alert>
+              )}
+            </Box>
           )}
 
           <Button
@@ -984,39 +1059,50 @@ type EmployeesUploadValidationErrorItem = {
 };
 
 type EmployeesUploadValidationErrorResponse = {
+  statusCode?: number;
   message?: string;
   errors?: EmployeesUploadValidationErrorItem[];
   truncated?: boolean;
 };
 
+type EmployeesUploadDrawerError =
+  | { kind: 'message'; message: string }
+  | { kind: 'backend'; title: string; errors: EmployeesUploadValidationErrorItem[]; truncated: boolean };
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
-function getEmployeesUploadErrorInfo(
-  error: unknown,
-  tUsers: TranslateFn
-): { title: string; details?: string } {
+function getEmployeesUploadError(error: unknown, tUsers: TranslateFn): EmployeesUploadDrawerError {
+  const fallback = tUsers('user-management.table.uploadDrawer.errors.uploadFailed');
+
+  if (typeof error === 'string') {
+    return { kind: 'message', message: error || fallback };
+  }
+
   if (!isRecord(error)) {
-    return { title: tUsers('user-management.table.uploadDrawer.errors.uploadFailed') };
+    return { kind: 'message', message: fallback };
   }
 
-  const response = error.response;
-  if (!isRecord(response)) {
-    const maybeMessage = typeof error.message === 'string' ? error.message : undefined;
-    return { title: maybeMessage ?? tUsers('user-management.table.uploadDrawer.errors.uploadFailed') };
-  }
+  const payloadSource: Record<string, unknown> = (() => {
+    if ('errors' in error || 'truncated' in error || 'statusCode' in error || 'message' in error) {
+      return error;
+    }
 
-  const data = response.data;
-  if (!isRecord(data)) {
-    return { title: tUsers('user-management.table.uploadDrawer.errors.uploadFailed') };
-  }
+    const response = error.response;
+    if (isRecord(response) && isRecord(response.data)) {
+      return response.data;
+    }
+
+    return error;
+  })();
 
   const payload: EmployeesUploadValidationErrorResponse = {
-    message: typeof data.message === 'string' ? data.message : undefined,
-    truncated: typeof data.truncated === 'boolean' ? data.truncated : undefined,
-    errors: Array.isArray(data.errors)
-      ? data.errors
+    statusCode: typeof payloadSource.statusCode === 'number' ? payloadSource.statusCode : undefined,
+    message: typeof payloadSource.message === 'string' ? payloadSource.message : undefined,
+    truncated: typeof payloadSource.truncated === 'boolean' ? payloadSource.truncated : undefined,
+    errors: Array.isArray(payloadSource.errors)
+      ? payloadSource.errors
           .map((item): EmployeesUploadValidationErrorItem | null => {
             if (!isRecord(item)) return null;
             const row = typeof item.row === 'number' ? item.row : Number(item.row);
@@ -1029,31 +1115,15 @@ function getEmployeesUploadErrorInfo(
       : undefined,
   };
 
-  const title = payload.message ?? tUsers('user-management.table.uploadDrawer.errors.uploadFailed');
+  const title = payload.message ?? fallback;
+  const errors = payload.errors ?? [];
+  const truncated = payload.truncated ?? false;
 
-  if (!payload.errors?.length) {
-    return { title };
+  if (errors.length) {
+    return { kind: 'backend', title, errors, truncated };
   }
 
-  const maxItems = 80;
-  const shown = payload.errors.slice(0, maxItems);
-  const hasMore = payload.errors.length > maxItems;
-
-  const lines = ['errors:', ...shown.map((item) => JSON.stringify(item))];
-
-  if (hasMore) {
-    lines.push(
-      tUsers('user-management.table.uploadDrawer.validation.truncatedListNotice', {
-        total: payload.errors.length,
-      })
-    );
-  }
-
-  if (payload.truncated) {
-    lines.push(tUsers('user-management.table.uploadDrawer.validation.backendTruncatedNotice'));
-  }
-
-  return { title, details: lines.join('\n') };
+  return { kind: 'message', message: title };
 }
 
 function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {

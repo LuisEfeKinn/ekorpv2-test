@@ -14,7 +14,7 @@ import * as z from 'zod';
 import { useDebounce } from 'minimal-shared/hooks';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -67,6 +67,50 @@ type SupervisorOption = {
   name: string;
 };
 
+type IntlWithSupportedValuesOf = typeof Intl & {
+  supportedValuesOf: (key: 'timeZone') => string[];
+};
+
+function hasSupportedValuesOf(intl: typeof Intl): intl is IntlWithSupportedValuesOf {
+  const maybe = intl as unknown as { supportedValuesOf?: unknown };
+  return typeof maybe.supportedValuesOf === 'function';
+}
+
+function getTimeZoneOptions(): string[] {
+  if (typeof Intl !== 'undefined' && hasSupportedValuesOf(Intl)) {
+    return Intl.supportedValuesOf('timeZone');
+  }
+
+  return [
+    'America/Bogota',
+    'America/Mexico_City',
+    'America/Lima',
+    'America/Caracas',
+    'America/Santiago',
+    'America/Argentina/Buenos_Aires',
+    'America/La_Paz',
+    'America/Guayaquil',
+    'America/Panama',
+    'America/Costa_Rica',
+    'America/Guatemala',
+    'America/El_Salvador',
+    'America/Tegucigalpa',
+    'America/Managua',
+    'America/Santo_Domingo',
+    'America/Puerto_Rico',
+    'America/Havana',
+    'America/New_York',
+    'America/Chicago',
+    'America/Denver',
+    'America/Los_Angeles',
+    'Europe/Madrid',
+    'Europe/London',
+    'Europe/Paris',
+    'Europe/Berlin',
+    'UTC',
+  ];
+}
+
 export function UserManagementCreateEditForm({ currentUser }: Props) {
   const router = useRouter();
   const { t: tUsers } = useTranslate('employees');
@@ -88,6 +132,19 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const isCreating = !currentUser;
+
+  const timeZoneOptions = useMemo(() => {
+    const base = getTimeZoneOptions();
+    const unique = new Set(base);
+    if (currentUser?.timezone) unique.add(currentUser.timezone);
+    const list = Array.from(unique);
+    list.sort((a, b) => a.localeCompare(b));
+    const preferred = 'America/Bogota';
+    if (unique.has(preferred)) {
+      return [preferred, ...list.filter((item) => item !== preferred)];
+    }
+    return list;
+  }, [currentUser?.timezone]);
 
   const [supervisorInputValue, setSupervisorInputValue] = useState('');
   const [supervisorOptions, setSupervisorOptions] = useState<SupervisorOption[]>([]);
@@ -691,10 +748,31 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
-          <Field.Text
+          <Controller
             name="timezone"
-            label={tUsers('user-management.form.fields.timezone.label')}
-            placeholder={tUsers('user-management.form.fields.timezone.placeholder')}
+            control={control}
+            render={({ field, fieldState }) => (
+              <Autocomplete<string, false, false, true>
+                options={timeZoneOptions}
+                value={field.value ?? ''}
+                onChange={(_, newValue) => field.onChange(newValue ?? '')}
+                freeSolo
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
+                getOptionLabel={(option) => option}
+                isOptionEqualToValue={(option, value) => option === value}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={tUsers('user-management.form.fields.timezone.label')}
+                    placeholder={tUsers('user-management.form.fields.timezone.placeholder')}
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message ?? tUsers('user-management.form.fields.timezone.helperText')}
+                  />
+                )}
+              />
+            )}
           />
         </Grid>
       </Grid>
