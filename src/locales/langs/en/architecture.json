@@ -233,6 +233,7 @@
     "title": "RASCI Matrix",
     "filters": {
       "columns": "Filter columns",
+      "rows": "Filter rows",
       "search": "Search processes"
     },
     "actions": {

@@ -46,10 +46,16 @@ import {
   DeleteApplicationTableMapNodeService,
   GetApplicationTableMapByIdExpandService
 } from 'src/services/architecture/applications/applicationMap.service';
+import {
+  type JobSystemRelation,
+  GetJobSystemRelationsService,
+  DeleteJobSystemRelationService,
+} from 'src/services/architecture/business/jobRelations.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 
+import { ApplicationJobSystemsDrawer } from './application-job-systems-drawer';
 import { ApplicationTableNodeCreateModal } from './application-table-node-create-modal';
 
 // ----------------------------------------------------------------------
@@ -57,14 +63,14 @@ import { ApplicationTableNodeCreateModal } from './application-table-node-create
 type ChildNode = {
   id: string;
   label: string;
-  data?: string | number;
+  data?: unknown;
   children?: ChildNode[];
 };
 
 type MapData = {
   id: number | string;
   label: string;
-  data?: string | number;
+  data?: unknown;
   children: ChildNode[];
 };
 
@@ -72,6 +78,7 @@ type DataTableExpandedDiagramProps = {
   applicationId: string;
   nodeId: string;
   nodeLabel: string;
+  systemLabel?: string;
   onBack: () => void;
   onNavigateToChild?: (child: ChildNode) => void;
   path?: Array<{ id: string; label: string }>;
@@ -159,7 +166,7 @@ function CentralNode({ data }: any) {
 
 function ChildNodeWithDelete({ data }: any) {
   const theme = useTheme();
-  const { color, label, id, onClick, onDelete } = data;
+  const { color, label, id, onClick, onDelete, onEdit } = data;
 
   return (
     <Paper
@@ -180,6 +187,10 @@ function ChildNodeWithDelete({ data }: any) {
           transform: 'translateY(-4px) scale(1.03)',
           boxShadow: `0 8px 32px ${alpha(color, 0.35)}`,
           borderColor: color,
+          '& .edit-button': {
+            opacity: 1,
+            transform: 'scale(1)',
+          },
           '& .delete-button': {
             opacity: 1,
             transform: 'scale(1)',
@@ -214,6 +225,34 @@ function ChildNodeWithDelete({ data }: any) {
           transform: 'translate(-50%, -50%)',
         }}
       />
+
+      <IconButton
+        className="edit-button"
+        size="small"
+        onClick={(e) => {
+          e.stopPropagation();
+          onEdit?.();
+        }}
+        sx={{
+          position: 'absolute',
+          top: 8,
+          right: 44,
+          opacity: 0,
+          transform: 'scale(0.8)',
+          transition: 'all 0.2s ease',
+          bgcolor: alpha(theme.palette.primary.main, 0.9),
+          color: 'white',
+          width: 28,
+          height: 28,
+          '&:hover': {
+            bgcolor: theme.palette.primary.main,
+            transform: 'scale(1.1)',
+          },
+          zIndex: 10,
+        }}
+      >
+        <Iconify icon="solar:pen-bold" width={16} />
+      </IconButton>
 
       {/* Botón de eliminar */}
       <IconButton
@@ -311,6 +350,7 @@ export function ApplicationTableExpandedDiagram({
   applicationId,
   nodeId,
   nodeLabel,
+  systemLabel,
   onBack,
   onNavigateToChild,
   path,
@@ -324,11 +364,39 @@ export function ApplicationTableExpandedDiagram({
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [jobSystemsOpen, setJobSystemsOpen] = useState(false);
+  const [jobSystemsRelationId, setJobSystemsRelationId] = useState<number | null>(null);
   const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; nodeId: string | null }>({
     open: false,
     nodeId: null,
   });
   const [deleting, setDeleting] = useState(false);
+
+  const isJobSystemsModule = useMemo(() => {
+    const id = String(nodeId ?? '').toLowerCase();
+    const label = String(nodeLabel ?? '').toLowerCase();
+    return (
+      id === 'job' ||
+      id === 'jobs' ||
+      id === 'cargo' ||
+      id === 'cargos' ||
+      id.includes('job') ||
+      id.includes('cargo') ||
+      label.includes('cargo') ||
+      label.includes('cargos') ||
+      label.includes('job') ||
+      label.includes('jobs')
+    );
+  }, [nodeId, nodeLabel]);
+
+  const normalizeJobSystemRelations = useCallback((raw: unknown): JobSystemRelation[] => {
+    if (!Array.isArray(raw)) return [];
+    return raw.filter((it): it is JobSystemRelation => {
+      if (!it || typeof it !== 'object') return false;
+      const rec = it as Record<string, unknown>;
+      return typeof rec.id === 'number';
+    });
+  }, []);
 
   const colors = useMemo(
     () => [
@@ -346,16 +414,43 @@ export function ApplicationTableExpandedDiagram({
   const fetchExpandedData = useCallback(async () => {
     try {
       setLoading(true);
+      if (isJobSystemsModule) {
+        const systemId = Number(applicationId);
+        const res = await GetJobSystemRelationsService();
+        const list = normalizeJobSystemRelations((res as { data?: unknown })?.data);
+
+        const systemRelations = list.filter((r) => Number(r?.system?.id) === systemId);
+
+        const data: MapData = {
+          id: nodeId,
+          label: nodeLabel,
+          children: systemRelations.map((r) => {
+            const jobId = Number(r?.job?.id);
+            const jobName = r?.job?.name;
+            const label = jobName && String(jobName).trim().length > 0
+              ? String(jobName)
+              : `${t('application.jobSystems.form.fields.job')} #${jobId}`;
+            return { id: String(r.id), label, data: { jobId } };
+          }),
+        };
+
+        setMapData(data);
+        return;
+      }
+
       const response = await GetApplicationTableMapByIdExpandService(applicationId, nodeId);
-      const data = response.data;
-      setMapData(data);
+      setMapData(response.data);
     } catch (error) {
       console.error('Error al cargar el mapa expandido:', error);
-      toast.error(t('application.map.messages.error.loadMapError'));
+      toast.error(
+        isJobSystemsModule
+          ? t('application.jobSystems.messages.loadError')
+          : t('application.map.messages.error.loadMapError')
+      );
     } finally {
       setLoading(false);
     }
-  }, [applicationId, nodeId, t]);
+  }, [applicationId, isJobSystemsModule, nodeId, nodeLabel, normalizeJobSystemRelations, t]);
 
   const generateNodesAndEdges = useCallback(
     (data: MapData) => {
@@ -376,26 +471,40 @@ export function ApplicationTableExpandedDiagram({
       };
 
       const childNodes: Node[] = data.children.map((child: ChildNode, index: number) => {
+        const rawChildId = String(child.id ?? '').trim();
+        const safeChildId = rawChildId.length > 0 ? rawChildId : `child-${index}`;
         const angle = index * angleStep - Math.PI / 2;
         const x = centerX + Math.cos(angle) * radius - 90;
         const y = centerY + Math.sin(angle) * radius - 90;
         const color = colors[index % colors.length];
 
         return {
-          id: child.id,
+          id: safeChildId,
           type: 'child',
           position: { x, y },
           data: {
             label: child.label,
-            id: child.id,
+            id: rawChildId.length > 0 ? rawChildId : safeChildId,
             color,
-            onClick: () => {
-              if (onNavigateToChild) {
-                onNavigateToChild(child);
-              }
-            },
+            onClick: isJobSystemsModule
+              ? undefined
+              : () => {
+                  if (rawChildId.length === 0) return;
+                  if (onNavigateToChild) {
+                    onNavigateToChild(child);
+                  }
+                },
+            onEdit: isJobSystemsModule
+              ? () => {
+                  const relationId = Number(rawChildId);
+                  if (!Number.isFinite(relationId)) return;
+                  setJobSystemsRelationId(relationId);
+                  setJobSystemsOpen(true);
+                }
+              : undefined,
             onDelete: () => {
-              setDeleteDialog({ open: true, nodeId: child.id });
+              if (rawChildId.length === 0) return;
+              setDeleteDialog({ open: true, nodeId: rawChildId });
             },
           },
           draggable: true,
@@ -403,11 +512,13 @@ export function ApplicationTableExpandedDiagram({
       });
 
       const newEdges: Edge[] = data.children.map((child: ChildNode, index: number) => {
+        const rawChildId = String(child.id ?? '').trim();
+        const safeChildId = rawChildId.length > 0 ? rawChildId : `child-${index}`;
         const color = colors[index % colors.length];
         return {
-          id: `central-${child.id}`,
+          id: `central-${safeChildId}`,
           source: 'central',
-          target: child.id,
+          target: safeChildId,
           type: 'straight',
           animated: true,
           style: {
@@ -424,7 +535,7 @@ export function ApplicationTableExpandedDiagram({
       setNodes([centralNode, ...childNodes]);
       setEdges(newEdges);
     },
-    [colors, onNavigateToChild, setNodes, setEdges]
+    [colors, isJobSystemsModule, onNavigateToChild, setEdges, setNodes]
   );
 
   const handleDeleteNode = async () => {
@@ -432,13 +543,22 @@ export function ApplicationTableExpandedDiagram({
 
     try {
       setDeleting(true);
-      await DeleteApplicationTableMapNodeService(applicationId, deleteDialog.nodeId);
-      toast.success(t('application.table.messages.success.deleted'));
+      if (isJobSystemsModule) {
+        await DeleteJobSystemRelationService(deleteDialog.nodeId);
+        toast.success(t('application.jobSystems.messages.deleted'));
+      } else {
+        await DeleteApplicationTableMapNodeService(applicationId, deleteDialog.nodeId);
+        toast.success(t('application.table.messages.success.deleted'));
+      }
       setDeleteDialog({ open: false, nodeId: null });
       await fetchExpandedData();
     } catch (error) {
       console.error('Error al eliminar el nodo:', error);
-      toast.error(t('application.table.messages.error.deleting'));
+      toast.error(
+        isJobSystemsModule
+          ? t('application.jobSystems.messages.deleteError')
+          : t('application.table.messages.error.deleting')
+      );
     } finally {
       setDeleting(false);
     }
@@ -556,7 +676,14 @@ export function ApplicationTableExpandedDiagram({
             variant="contained"
             color="primary"
             startIcon={<Iconify icon="solar:add-circle-bold" />}
-            onClick={() => setOpenCreateModal(true)}
+            onClick={() => {
+              if (isJobSystemsModule) {
+                setJobSystemsRelationId(null);
+                setJobSystemsOpen(true);
+                return;
+              }
+              setOpenCreateModal(true);
+            }}
             sx={{
               borderRadius: 2,
               boxShadow: 4,
@@ -605,12 +732,26 @@ export function ApplicationTableExpandedDiagram({
         </Box>
 
         {/* Modal de creación */}
-        <ApplicationTableNodeCreateModal
-          open={openCreateModal}
-          onClose={() => setOpenCreateModal(false)}
+        {!isJobSystemsModule && (
+          <ApplicationTableNodeCreateModal
+            open={openCreateModal}
+            onClose={() => setOpenCreateModal(false)}
+            onSuccess={fetchExpandedData}
+            applicationId={applicationId}
+            parentNodeId={nodeId}
+          />
+        )}
+
+        <ApplicationJobSystemsDrawer
+          open={jobSystemsOpen}
+          onClose={() => {
+            setJobSystemsOpen(false);
+            setJobSystemsRelationId(null);
+          }}
           onSuccess={fetchExpandedData}
-          applicationId={applicationId}
-          parentNodeId={nodeId}
+          systemId={Number(applicationId)}
+          systemLabel={systemLabel}
+          relationId={jobSystemsRelationId}
         />
       </Card>
     );
@@ -711,7 +852,14 @@ export function ApplicationTableExpandedDiagram({
           variant="contained"
           color="primary"
           startIcon={<Iconify icon="solar:add-circle-bold" />}
-          onClick={() => setOpenCreateModal(true)}
+          onClick={() => {
+            if (isJobSystemsModule) {
+              setJobSystemsRelationId(null);
+              setJobSystemsOpen(true);
+              return;
+            }
+            setOpenCreateModal(true);
+          }}
           sx={{
             borderRadius: 2,
             boxShadow: 4,
@@ -899,12 +1047,26 @@ export function ApplicationTableExpandedDiagram({
       </Box>
 
       {/* Modal de creación */}
-      <ApplicationTableNodeCreateModal
-        open={openCreateModal}
-        onClose={() => setOpenCreateModal(false)}
+      {!isJobSystemsModule && (
+        <ApplicationTableNodeCreateModal
+          open={openCreateModal}
+          onClose={() => setOpenCreateModal(false)}
+          onSuccess={fetchExpandedData}
+          applicationId={applicationId}
+          parentNodeId={nodeId}
+        />
+      )}
+
+      <ApplicationJobSystemsDrawer
+        open={jobSystemsOpen}
+        onClose={() => {
+          setJobSystemsOpen(false);
+          setJobSystemsRelationId(null);
+        }}
         onSuccess={fetchExpandedData}
-        applicationId={applicationId}
-        parentNodeId={nodeId}
+        systemId={Number(applicationId)}
+        systemLabel={systemLabel}
+        relationId={jobSystemsRelationId}
       />
 
       {/* Dialog de confirmación de eliminación */}
@@ -914,9 +1076,13 @@ export function ApplicationTableExpandedDiagram({
         maxWidth="xs"
         fullWidth
       >
-        <DialogTitle>{t('application.table.dialogs.delete.title')}</DialogTitle>
+        <DialogTitle>
+          {isJobSystemsModule ? t('application.jobSystems.deleteDialog.title') : t('application.table.dialogs.delete.title')}
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText>{t('application.table.dialogs.delete.content')}</DialogContentText>
+          <DialogContentText>
+            {isJobSystemsModule ? t('application.jobSystems.deleteDialog.content') : t('application.table.dialogs.delete.content')}
+          </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 3 }}>
           <Button
@@ -925,7 +1091,7 @@ export function ApplicationTableExpandedDiagram({
             onClick={() => setDeleteDialog({ open: false, nodeId: null })}
             disabled={deleting}
           >
-            {t('application.table.actions.cancel')}
+            {isJobSystemsModule ? t('application.jobSystems.actions.cancel') : t('application.table.actions.cancel')}
           </Button>
           <Button
             variant="contained"
@@ -936,7 +1102,7 @@ export function ApplicationTableExpandedDiagram({
               deleting ? <CircularProgress size={20} color="inherit" /> : <Iconify icon="solar:trash-bin-trash-bold" />
             }
           >
-            {t('application.table.dialogs.delete.confirm')}
+            {isJobSystemsModule ? t('application.jobSystems.actions.delete') : t('application.table.dialogs.delete.confirm')}
           </Button>
         </DialogActions>
       </Dialog>

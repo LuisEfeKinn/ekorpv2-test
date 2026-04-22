@@ -6,35 +6,22 @@ import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import {
   Stack,
-  Table,
   Drawer,
   Button,
-  Dialog,
   Divider,
-  TableRow,
-  TableHead,
-  TableBody,
   TextField,
-  TableCell,
   Typography,
   IconButton,
-  DialogTitle,
   Autocomplete,
-  DialogActions,
-  DialogContent,
-  TableContainer,
   CircularProgress,
-  DialogContentText,
 } from '@mui/material';
 
 import { useTranslate } from 'src/locales';
 import { GetJobsPaginationService } from 'src/services/architecture/business/jobs.service';
 import {
-  type JobSystemRelation,
-  GetJobSystemRelationsService,
   SaveJobSystemRelationService,
   UpdateJobSystemRelationService,
-  DeleteJobSystemRelationService,
+  GetJobSystemRelationByIdService,
 } from 'src/services/architecture/business/jobRelations.service';
 
 import { toast } from 'src/components/snackbar';
@@ -47,6 +34,8 @@ type Props = {
   onClose: () => void;
   systemId: number;
   systemLabel?: string;
+  relationId?: number | null;
+  onSuccess?: () => void;
   sx?: SxProps<Theme>;
 };
 
@@ -71,27 +60,27 @@ function normalizeList(raw: unknown): unknown[] {
   return [];
 }
 
-export function ApplicationJobSystemsDrawer({ open, onClose, systemId, systemLabel, sx }: Props) {
+export function ApplicationJobSystemsDrawer({
+  open,
+  onClose,
+  systemId,
+  systemLabel,
+  relationId,
+  onSuccess,
+  sx,
+}: Props) {
   const { t } = useTranslate('architecture');
 
-  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [jobsLoading, setJobsLoading] = useState(false);
+  const [relationLoading, setRelationLoading] = useState(false);
 
-  const [relations, setRelations] = useState<JobSystemRelation[]>([]);
   const [jobOptions, setJobOptions] = useState<Option[]>([]);
 
-  const [editingId, setEditingId] = useState<number | null>(null);
   const [selectedJobId, setSelectedJobId] = useState<number | null>(null);
   const [observations, setObservations] = useState('');
 
-  const [deleteState, setDeleteState] = useState<{ open: boolean; id: number | null }>({ open: false, id: null });
-  const [deleting, setDeleting] = useState(false);
-
-  const systemRelations = useMemo(
-    () => relations.filter((r) => Number(r?.system?.id) === systemId),
-    [relations, systemId]
-  );
+  const isEditing = relationId != null;
 
   const selectedJobOption = useMemo(() => {
     if (selectedJobId == null) return null;
@@ -124,34 +113,45 @@ export function ApplicationJobSystemsDrawer({ open, onClose, systemId, systemLab
     }
   }, [t]);
 
-  const loadRelations = useCallback(async () => {
-    try {
-      setLoading(true);
-      const res = await GetJobSystemRelationsService();
-      const list = (res as { data?: unknown })?.data;
-      setRelations(Array.isArray(list) ? (list as JobSystemRelation[]) : []);
-    } catch {
-      setRelations([]);
-      toast.error(t('application.map.jobSystems.messages.loadError'));
-    } finally {
-      setLoading(false);
-    }
-  }, [t]);
-
   const resetForm = useCallback(() => {
-    setEditingId(null);
     setSelectedJobId(null);
     setObservations('');
   }, []);
+
+  const loadRelationById = useCallback(async () => {
+    if (relationId == null) return;
+    try {
+      setRelationLoading(true);
+      const res = await GetJobSystemRelationByIdService(relationId);
+      const rec = (res as { data?: unknown })?.data as
+        | { id?: unknown; observations?: unknown; job?: { id?: unknown }; system?: { id?: unknown } }
+        | undefined;
+
+      const jobId = Number(rec?.job?.id);
+      const sysId = Number(rec?.system?.id);
+
+      if (!Number.isFinite(jobId) || !Number.isFinite(sysId) || sysId !== systemId) {
+        toast.error(t('application.map.jobSystems.messages.loadError'));
+        return;
+      }
+
+      setSelectedJobId(jobId);
+      setObservations(String(rec?.observations ?? ''));
+    } catch {
+      toast.error(t('application.map.jobSystems.messages.loadError'));
+    } finally {
+      setRelationLoading(false);
+    }
+  }, [relationId, systemId, t]);
 
   useEffect(() => {
     if (!open) return () => {};
 
     resetForm();
-    loadRelations();
     loadJobs();
+    loadRelationById();
     return () => {};
-  }, [loadJobs, loadRelations, open, resetForm]);
+  }, [loadJobs, loadRelationById, open, resetForm]);
 
   const handleSubmit = useCallback(async () => {
     if (selectedJobId == null) {
@@ -168,253 +168,100 @@ export function ApplicationJobSystemsDrawer({ open, onClose, systemId, systemLab
         system: { id: systemId },
       };
 
-      if (editingId != null) {
-        await UpdateJobSystemRelationService(editingId, payload);
+      if (relationId != null) {
+        await UpdateJobSystemRelationService(relationId, payload);
         toast.success(t('application.map.jobSystems.messages.updated'));
       } else {
         await SaveJobSystemRelationService(payload);
         toast.success(t('application.map.jobSystems.messages.created'));
       }
 
-      resetForm();
-      await loadRelations();
+      onSuccess?.();
+      onClose();
     } catch {
       toast.error(t('application.map.jobSystems.messages.saveError'));
     } finally {
       setSaving(false);
     }
-  }, [editingId, loadRelations, observations, resetForm, selectedJobId, systemId, t]);
-
-  const beginEdit = useCallback((row: JobSystemRelation) => {
-    setEditingId(row.id);
-    setSelectedJobId(Number(row.job?.id));
-    setObservations(String(row.observations ?? ''));
-  }, []);
-
-  const confirmDelete = useCallback((id: number) => setDeleteState({ open: true, id }), []);
-
-  const handleDelete = useCallback(async () => {
-    if (deleteState.id == null) return;
-    try {
-      setDeleting(true);
-      await DeleteJobSystemRelationService(deleteState.id);
-      toast.success(t('application.map.jobSystems.messages.deleted'));
-      setDeleteState({ open: false, id: null });
-      if (editingId === deleteState.id) resetForm();
-      await loadRelations();
-    } catch {
-      toast.error(t('application.map.jobSystems.messages.deleteError'));
-    } finally {
-      setDeleting(false);
-    }
-  }, [deleteState.id, editingId, loadRelations, resetForm, t]);
+  }, [observations, onClose, onSuccess, relationId, selectedJobId, systemId, t]);
 
   const title = systemLabel
     ? t('application.map.jobSystems.titleWithSystem', { system: systemLabel })
     : t('application.map.jobSystems.title');
 
   return (
-    <>
-      <Drawer
-        open={open}
-        onClose={onClose}
-        anchor="right"
-        PaperProps={{ sx: { width: { xs: 1, sm: 520, md: 680 }, ...sx } }}
-      >
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 3, py: 2 }}>
-          <Stack spacing={0.5}>
-            <Typography variant="h6">{title}</Typography>
-            <Typography variant="body2" color="text.secondary">
-              {t('application.map.jobSystems.subtitle')}
-            </Typography>
-          </Stack>
-
-          <IconButton onClick={onClose} aria-label={t('application.map.jobSystems.actions.close')}>
-            <Iconify icon="solar:close-circle-bold" />
-          </IconButton>
+    <Drawer
+      open={open}
+      onClose={onClose}
+      anchor="right"
+      PaperProps={{ sx: { width: { xs: 1, sm: 520, md: 680 }, ...sx } }}
+    >
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 3, py: 2 }}>
+        <Stack spacing={0.5}>
+          <Typography variant="h6">{title}</Typography>
+          <Typography variant="body2" color="text.secondary">
+            {t('application.map.jobSystems.subtitle')}
+          </Typography>
         </Stack>
 
-        <Divider />
+        <IconButton onClick={onClose} aria-label={t('application.map.jobSystems.actions.close')}>
+          <Iconify icon="solar:close-circle-bold" />
+        </IconButton>
+      </Stack>
 
-        <Stack spacing={2.5} sx={{ px: 3, py: 2.5 }}>
-          <Typography variant="subtitle2">{t('application.map.jobSystems.form.title')}</Typography>
+      <Divider />
 
-          <Autocomplete
-            options={jobOptions}
-            value={selectedJobOption}
-            onChange={(_, value) => setSelectedJobId(value?.id ?? null)}
-            getOptionLabel={(option) => option.label}
-            loading={jobsLoading}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={t('application.map.jobSystems.form.fields.job')}
-                placeholder={t('application.map.jobSystems.form.fields.job')}
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <>
-                      {jobsLoading ? <CircularProgress color="inherit" size={18} /> : null}
-                      {params.InputProps.endAdornment}
-                    </>
-                  ),
-                }}
-              />
-            )}
-            disabled={saving || loading}
-          />
+      <Stack spacing={2.5} sx={{ px: 3, py: 2.5 }}>
+        <Typography variant="subtitle2">{t('application.map.jobSystems.form.title')}</Typography>
 
-          <TextField
-            label={t('application.map.jobSystems.form.fields.observations')}
-            placeholder={t('application.map.jobSystems.form.fields.observations')}
-            value={observations}
-            onChange={(e) => setObservations(e.target.value)}
-            disabled={saving || loading}
-            multiline
-            minRows={3}
-          />
+        <Autocomplete
+          options={jobOptions}
+          value={selectedJobOption}
+          onChange={(_, value) => setSelectedJobId(value?.id ?? null)}
+          getOptionLabel={(option) => option.label}
+          loading={jobsLoading}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={t('application.map.jobSystems.form.fields.job')}
+              placeholder={t('application.map.jobSystems.form.fields.job')}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <>
+                    {jobsLoading ? <CircularProgress color="inherit" size={18} /> : null}
+                    {params.InputProps.endAdornment}
+                  </>
+                ),
+              }}
+            />
+          )}
+          disabled={saving || relationLoading}
+        />
 
-          <Stack direction="row" spacing={1.5} justifyContent="flex-end">
-            {editingId != null ? (
-              <Button
-                variant="outlined"
-                color="inherit"
-                onClick={resetForm}
-                disabled={saving || loading}
-                startIcon={<Iconify icon="solar:close-circle-bold" />}
-              >
-                {t('application.map.jobSystems.actions.cancelEdit')}
-              </Button>
-            ) : null}
+        <TextField
+          label={t('application.map.jobSystems.form.fields.observations')}
+          placeholder={t('application.map.jobSystems.form.fields.observations')}
+          value={observations}
+          onChange={(e) => setObservations(e.target.value)}
+          disabled={saving || relationLoading}
+          multiline
+          minRows={3}
+        />
 
-            <Button
-              variant="contained"
-              onClick={handleSubmit}
-              disabled={saving || loading}
-              startIcon={
-                saving ? <CircularProgress size={18} color="inherit" /> : <Iconify icon="solar:check-circle-bold" />
-              }
-            >
-              {editingId != null ? t('application.map.jobSystems.actions.update') : t('application.map.jobSystems.actions.create')}
-            </Button>
-          </Stack>
-        </Stack>
-
-        <Divider />
-
-        <Stack spacing={2} sx={{ px: 3, py: 2.5 }}>
-          <Stack direction="row" alignItems="center" justifyContent="space-between">
-            <Typography variant="subtitle2">{t('application.map.jobSystems.list.title')}</Typography>
-            <Button
-              variant="outlined"
-              onClick={loadRelations}
-              disabled={loading}
-              startIcon={loading ? <CircularProgress size={18} /> : <Iconify icon="solar:refresh-circle-bold" />}
-            >
-              {t('application.map.jobSystems.actions.refresh')}
-            </Button>
-          </Stack>
-
-          <TableContainer sx={{ borderRadius: 1.5, border: (theme) => `1px solid ${theme.palette.divider}` }}>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ fontWeight: 700 }}>{t('application.map.jobSystems.list.columns.job')}</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>{t('application.map.jobSystems.list.columns.observations')}</TableCell>
-                  <TableCell sx={{ fontWeight: 700, width: 120 }} align="right">
-                    {t('application.map.jobSystems.list.columns.actions')}
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {loading ? (
-                  <TableRow>
-                    <TableCell colSpan={3}>
-                      <Stack direction="row" spacing={1.5} alignItems="center">
-                        <CircularProgress size={18} />
-                        <Typography variant="body2" color="text.secondary">
-                          {t('application.map.jobSystems.list.loading')}
-                        </Typography>
-                      </Stack>
-                    </TableCell>
-                  </TableRow>
-                ) : systemRelations.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={3}>
-                      <Typography variant="body2" color="text.secondary">
-                        {t('application.map.jobSystems.list.empty')}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  systemRelations.map((row) => (
-                    <TableRow key={row.id} hover selected={editingId === row.id}>
-                      <TableCell>{String(row.job?.name ?? `#${row.job?.id ?? '-'}`)}</TableCell>
-                      <TableCell>
-                        <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
-                          {row.observations ? String(row.observations) : '-'}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="right">
-                        <Stack direction="row" spacing={0.5} justifyContent="flex-end">
-                          <IconButton
-                            size="small"
-                            onClick={() => beginEdit(row)}
-                            aria-label={t('application.map.jobSystems.actions.edit')}
-                          >
-                            <Iconify icon="solar:pen-bold" width={18} />
-                          </IconButton>
-                          <IconButton
-                            size="small"
-                            color="error"
-                            onClick={() => confirmDelete(row.id)}
-                            aria-label={t('application.map.jobSystems.actions.delete')}
-                          >
-                            <Iconify icon="solar:trash-bin-trash-bold" width={18} />
-                          </IconButton>
-                        </Stack>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Stack>
-      </Drawer>
-
-      <Dialog
-        open={deleteState.open}
-        onClose={() => !deleting && setDeleteState({ open: false, id: null })}
-        maxWidth="xs"
-        fullWidth
-      >
-        <DialogTitle>{t('application.map.jobSystems.deleteDialog.title')}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{t('application.map.jobSystems.deleteDialog.content')}</DialogContentText>
-        </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 2.5 }}>
-          <Button
-            variant="outlined"
-            color="inherit"
-            onClick={() => setDeleteState({ open: false, id: null })}
-            disabled={deleting}
-          >
-            {t('application.map.jobSystems.actions.cancel')}
-          </Button>
+        <Stack direction="row" spacing={1.5} justifyContent="flex-end">
           <Button
             variant="contained"
-            color="error"
-            onClick={handleDelete}
-            disabled={deleting}
+            onClick={handleSubmit}
+            disabled={saving || relationLoading}
             startIcon={
-              deleting ? <CircularProgress size={18} color="inherit" /> : <Iconify icon="solar:trash-bin-trash-bold" />
+              saving ? <CircularProgress size={18} color="inherit" /> : <Iconify icon="solar:check-circle-bold" />
             }
           >
-            {t('application.map.jobSystems.actions.delete')}
+            {isEditing ? t('application.map.jobSystems.actions.update') : t('application.map.jobSystems.actions.create')}
           </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+        </Stack>
+      </Stack>
+    </Drawer>
   );
 }

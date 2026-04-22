@@ -231,6 +231,7 @@
     "title": "Matriz RASCI",
     "filters": {
       "columns": "Filtrar columnas",
+      "rows": "Filtrar filas",
       "search": "Buscar procesos"
     },
     "actions": {

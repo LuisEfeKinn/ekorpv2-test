@@ -45,12 +45,14 @@ import { ProcessJobLinkModal } from '../processes-table/process-job-link-modal';
 
 export function ProcessesRasciMatrixView() {
   const { t } = useTranslate('architecture');
+  const { t: tCommon } = useTranslate();
   const theme = useTheme();
 
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [matrix, setMatrix] = useState<any | null>(null);
-  const [columnFilter, setColumnFilter] = useState<any[]>([]);
+  const [matrix, setMatrix] = useState<RasciMatrix | null>(null);
+  const [columnFilter, setColumnFilter] = useState<RasciColumn[]>([]);
+  const [rowFilter, setRowFilter] = useState<RasciProcessOption[]>([]);
   const [searchProcess, setSearchProcess] = useState('');
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -77,8 +79,11 @@ export function ProcessesRasciMatrixView() {
     setLoading(true);
     try {
       const response = await GetProcessRasciMatrixService();
-      const payload = (response as any)?.data?.data ?? (response as any)?.data ?? response;
-      setMatrix(payload);
+      const payload =
+        (response as { data?: { data?: unknown } })?.data?.data ??
+        (response as { data?: unknown })?.data ??
+        response;
+      setMatrix(normalizeRasciMatrix(payload));
     } catch {
       setMatrix(null);
     } finally {
@@ -88,51 +93,75 @@ export function ProcessesRasciMatrixView() {
 
   useEffect(() => { loadMatrix(); }, [loadMatrix]);
 
-  const columns = useMemo(() => {
-    const cols = (matrix as any)?.columns;
-    const list = Array.isArray(cols) ? cols.map((c: any) => ({ id: Number(c?.id), name: String(c?.name ?? '') })) : [];
-    if (columnFilter.length > 0) {
-      const ids = new Set(columnFilter.map((c: any) => c.id));
-      return list.filter((c) => ids.has(c.id));
+  const allColumns = useMemo<RasciColumn[]>(() => matrix?.columns ?? [], [matrix]);
+
+  const allRows = useMemo<RasciRow[]>(() => matrix?.rows ?? [], [matrix]);
+
+  const allColumnOptions = useMemo<RasciColumn[]>(() => allColumns, [allColumns]);
+
+  const allRowOptions = useMemo<RasciProcessOption[]>(
+    () =>
+      allRows.map((r) => ({
+        id: r.processId,
+        name: r.processName,
+        nomenclature: r.processNomenclature,
+        label: r.processNomenclature ? `${r.processNomenclature} - ${r.processName}` : r.processName,
+      })),
+    [allRows]
+  );
+
+  const selectedRowIds = useMemo(() => new Set(rowFilter.map((r) => r.id)), [rowFilter]);
+  const selectedColumnIds = useMemo(() => new Set(columnFilter.map((c) => c.id)), [columnFilter]);
+
+  const rowsAfterTextSearch = useMemo(() => {
+    if (!searchProcess.trim()) return allRows;
+    const term = searchProcess.toLowerCase();
+    return allRows.filter((r) => {
+      const name = r.processName.toLowerCase();
+      const nom = r.processNomenclature.toLowerCase();
+      return name.includes(term) || nom.includes(term);
+    });
+  }, [allRows, searchProcess]);
+
+  const rowsAfterRowFilter = useMemo(() => {
+    if (selectedRowIds.size === 0) return rowsAfterTextSearch;
+    return rowsAfterTextSearch.filter((r) => selectedRowIds.has(r.processId));
+  }, [rowsAfterTextSearch, selectedRowIds]);
+
+  const nonEmptyColumnIds = useMemo(() => {
+    const ids = new Set<number>();
+    rowsAfterRowFilter.forEach((row) => {
+      row.cells.forEach((cell) => {
+        if (cell.actionTypeNomenclature) ids.add(cell.jobId);
+      });
+    });
+    return ids;
+  }, [rowsAfterRowFilter]);
+
+  const visibleColumns = useMemo(() => {
+    if (selectedColumnIds.size > 0) {
+      return allColumns.filter((c) => selectedColumnIds.has(c.id));
     }
-    return list;
-  }, [matrix, columnFilter]);
+    return allColumns.filter((c) => nonEmptyColumnIds.has(c.id));
+  }, [allColumns, nonEmptyColumnIds, selectedColumnIds]);
 
-  const rows = useMemo(() => {
-    const rs = (matrix as any)?.rows;
-    if (!Array.isArray(rs)) return [];
+  const visibleColumnIds = useMemo(() => new Set(visibleColumns.map((c) => c.id)), [visibleColumns]);
 
-    // Filter by process name
-    let filtered = rs;
-    if (searchProcess) {
-      filtered = rs.filter((r: any) =>
-        (r?.processName || '').toLowerCase().includes(searchProcess.toLowerCase()) ||
-        (r?.processNomenclature || '').toLowerCase().includes(searchProcess.toLowerCase())
-      );
-    }
-
-    return filtered.map((r: any) => ({
-      processId: Number(r?.processId),
-      processName: String(r?.processName ?? ''),
-      processNomenclature: String(r?.processNomenclature ?? ''),
-      cells: Array.isArray(r?.cells) ? r.cells : [],
-    }));
-  }, [matrix, searchProcess]);
-
-  const allColumnOptions = useMemo(() => {
-    const cols = (matrix as any)?.columns;
-    return Array.isArray(cols) ? cols.map((c: any) => ({ id: Number(c?.id), name: String(c?.name ?? '') })) : [];
-  }, [matrix]);
+  const visibleRows = useMemo(() => {
+    if (selectedRowIds.size > 0) return rowsAfterRowFilter;
+    return rowsAfterRowFilter.filter((row) =>
+      row.cells.some((cell) => Boolean(cell.actionTypeNomenclature) && visibleColumnIds.has(cell.jobId))
+    );
+  }, [rowsAfterRowFilter, selectedRowIds, visibleColumnIds]);
 
   const existingJobIdsForSelectedProcess = useMemo(() => {
     if (!selectedProcessId) return undefined;
-    const rs = (matrix as any)?.rows;
-    if (!Array.isArray(rs)) return undefined;
-    const row = rs.find((r: any) => Number(r?.processId) === Number(selectedProcessId));
-    const cells = Array.isArray(row?.cells) ? row.cells : [];
+    const rs = matrix?.rows ?? [];
+    const row = rs.find((r) => Number(r.processId) === Number(selectedProcessId));
+    const cells = row?.cells ?? [];
     return cells
-      .filter((c: any) => Boolean(c?.actionTypeNomenclature))
-      .map((c: any) => Number(c?.jobId))
+      .filter((c) => Boolean(c.actionTypeNomenclature))
+      .map((c) => Number(c.jobId))
       .filter((id: number) => Number.isFinite(id));
   }, [matrix, selectedProcessId]);
 
@@ -178,15 +207,15 @@ export function ProcessesRasciMatrixView() {
   };
 
   const exportCsv = useCallback(() => {
-    const header = ['NOMENCLATURA_PROCESO', ...columns.map((c) => c.name)].join(',');
-    const lines = rows.map((r) => {
+    const header = ['NOMENCLATURA_PROCESO', ...visibleColumns.map((c) => c.name)].join(',');
+    const lines = visibleRows.map((r) => {
       const cellMap: Record<number, string> = {};
-      r.cells.forEach((c: any) => {
+      r.cells.forEach((c) => {
         if (c.actionTypeNomenclature) {
           cellMap[c.jobId] = c.actionTypeNomenclature;
         }
       });
-      const values = columns.map((col) => `"${cellMap[col.id] ?? ''}"`);
+      const values = visibleColumns.map((col) => `"${cellMap[col.id] ?? ''}"`);
       return [`"${r.processNomenclature}"`, ...values].join(',');
     });
     const csv = [header, ...lines].join('\n');
@@ -197,7 +226,7 @@ export function ProcessesRasciMatrixView() {
     a.download = 'matriz-rasci.csv';
     a.click();
     URL.revokeObjectURL(url);
-  }, [columns, rows]);
+  }, [visibleColumns, visibleRows]);
 
   // --- Styles & Constants ---
 
@@ -261,10 +290,12 @@ export function ProcessesRasciMatrixView() {
             <Autocomplete
               multiple
               limitTags={2}
+              disableCloseOnSelect
               options={allColumnOptions}
               value={columnFilter}
               onChange={(_, val) => setColumnFilter(val)}
               getOptionLabel={(opt) => opt.name}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               renderTags={(value, getTagProps) =>
                 value.map((option, index) => (
                   <Chip size="small" variant="filled" label={option.name} {...getTagProps({ index })} />
@@ -272,6 +303,23 @@ export function ProcessesRasciMatrixView() {
               }
               renderInput={(params) => <TextField {...params} size="small" placeholder={t('rasciMatrix.filters.columns')} />}
               sx={{ minWidth: 260, maxWidth: 400 }}
+            />
+            <Autocomplete
+              multiple
+              limitTags={2}
+              disableCloseOnSelect
+              options={allRowOptions}
+              value={rowFilter}
+              onChange={(_, val) => setRowFilter(val)}
+              getOptionLabel={(opt) => opt.label}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip size="small" variant="filled" label={option.label} {...getTagProps({ index })} />
+                ))
+              }
+              renderInput={(params) => <TextField {...params} size="small" placeholder={t('rasciMatrix.filters.rows')} />}
+              sx={{ minWidth: 260, maxWidth: 520 }}
             />
           </Stack>
 
@@ -362,7 +410,7 @@ export function ProcessesRasciMatrixView() {
                     >
                       {t('rasciMatrix.table.processesRoles')}
                     </TableCell>
-                    {columns.map((col, idx) => (
+                    {visibleColumns.map((col, idx) => (
                       <TableCell
                         key={`col-${col.id}-${idx}`}
                         align="center"
@@ -383,8 +431,32 @@ export function ProcessesRasciMatrixView() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row, rIdx) => {
-                    const isLastRow = rIdx === rows.length - 1;
+                  {visibleRows.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={Math.max(visibleColumns.length + 1, 1)} sx={{ py: 8, borderBottom: 'none' }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                          <Box sx={{ width: 1, maxWidth: 420 }}>
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: 1,
+                                py: 2,
+                              }}
+                            >
+                              <Typography variant="h6" sx={{ color: 'text.disabled', textAlign: 'center' }}>
+                                {tCommon('filters.noResults')}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    visibleRows.map((row, rIdx) => {
+                      const isLastRow = rIdx === visibleRows.length - 1;
                     return (
                       <TableRow key={`row-${row.processId}-${rIdx}`} hover>
                         <TableCell
@@ -437,8 +509,8 @@ export function ProcessesRasciMatrixView() {
                           </Stack>
                         </TableCell>
 
-                        {columns.map((col, cIdx) => {
-                          const cell = row.cells.find((c: any) => c.jobId === col.id);
+                        {visibleColumns.map((col, cIdx) => {
+                          const cell = row.cells.find((c) => c.jobId === col.id);
                           const actionType = cell?.actionTypeNomenclature; // e.g. "R", "A"
                           const config = actionType ? RASCI_CONFIG[actionType] : null;
 
@@ -475,7 +547,8 @@ export function ProcessesRasciMatrixView() {
                         })}
                       </TableRow>
                     );
-                  })}
+                  })
+                  )}
                 </TableBody>
               </Table>
             </Box>
@@ -523,4 +596,99 @@ export function ProcessesRasciMatrixView() {
       />
     </DashboardContent>
   );
+}
+
+type RasciColumn = {
+  id: number;
+  name: string;
+};
+
+type RasciCell = {
+  jobId: number;
+  actionTypeNomenclature: string | null;
+};
+
+type RasciRow = {
+  processId: number;
+  processName: string;
+  processNomenclature: string;
+  cells: RasciCell[];
+};
+
+type RasciMatrix = {
+  columns: RasciColumn[];
+  rows: RasciRow[];
+};
+
+type RasciProcessOption = {
+  id: number;
+  name: string;
+  nomenclature: string;
+  label: string;
+};
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+}
+
+function toNumber(value: unknown): number | null {
+  if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+  if (typeof value === 'string') {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+  return null;
+}
+
+function toString(value: unknown): string {
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number') return String(value);
+  return '';
+}
+
+function normalizeRasciMatrix(payload: unknown): RasciMatrix {
+  const columns: RasciColumn[] = [];
+  const rows: RasciRow[] = [];
+
+  if (!isRecord(payload)) return { columns, rows };
+
+  const rawColumns = (payload as Record<string, unknown>).columns;
+  if (Array.isArray(rawColumns)) {
+    rawColumns.forEach((c) => {
+      if (!isRecord(c)) return;
+      const id = toNumber(c.id);
+      if (!id) return;
+      columns.push({ id, name: toString(c.name) });
+    });
+  }
+
+  const rawRows = (payload as Record<string, unknown>).rows;
+  if (Array.isArray(rawRows)) {
+    rawRows.forEach((r) => {
+      if (!isRecord(r)) return;
+      const processId = toNumber(r.processId);
+      if (!processId) return;
+      const rawCells = r.cells;
+      const cells: RasciCell[] = [];
+
+      if (Array.isArray(rawCells)) {
+        rawCells.forEach((cell) => {
+          if (!isRecord(cell)) return;
+          const jobId = toNumber(cell.jobId);
+          if (!jobId) return;
+          const actionTypeNomenclature = toString(cell.actionTypeNomenclature);
+          cells.push({ jobId, actionTypeNomenclature: actionTypeNomenclature || null });
+        });
+      }
+
+      rows.push({
+        processId,
+        processName: toString(r.processName),
+        processNomenclature: toString(r.processNomenclature),
+        cells,
+      });
+    });
+  }
+
+  return { columns, rows };
 }

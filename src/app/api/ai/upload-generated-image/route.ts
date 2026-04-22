@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 
 import { NextResponse } from 'next/server';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 /**
  * Downloads an AI-generated image from external URL and returns it as blob
