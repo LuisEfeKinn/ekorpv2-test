@@ -10,6 +10,13 @@ export type ProcessIndicatorRelation = {
   indicatorId?: number;
 };
 
+export type SystemProcessRelation = {
+  id: number;
+  observations?: string | null;
+  system?: { id: number; name?: string };
+  process?: { id: number; name?: string };
+};
+
 export const SaveProcessToolService = async (data: any) => {
   const response = await axios.post(endpoints.architecture.process.tools, data);
   return response;
@@ -41,12 +48,22 @@ export const DeleteProcessDocumentService = async (id: number | string) => {
 };
 
 export const GetDocumentsListService = async (params?: any) => {
-  const response = await axios.get(endpoints.architecture.documents.table.all, { params });
+  const response = await axios.get(endpoints.architecture.documents.table.allList, { params });
   return response;
 };
 
 export const SaveSystemProcessService = async (data: any) => {
   const response = await axios.post(endpoints.architecture.process.systems, data);
+  return response;
+};
+
+export const GetSystemProcessRelationsService = async () => {
+  const response = await axios.get<SystemProcessRelation[]>(endpoints.architecture.process.systems);
+  return response;
+};
+
+export const GetSystemProcessRelationByIdService = async (id: number | string) => {
+  const response = await axios.get<SystemProcessRelation>(`${endpoints.architecture.process.systems}/${id}`);
   return response;
 };
 

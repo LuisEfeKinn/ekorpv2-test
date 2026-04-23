@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 
 import { useTranslate } from 'src/locales';
+import { GetPositionPaginationService } from 'src/services/organization/position.service';
 import { GetRiskTypesPaginationService } from 'src/services/architecture/catalogs/riskTypes.service';
 import {
   GetRiskTypesService,
@@ -47,11 +48,14 @@ type FormData = {
   code: string;
   riskTypeId?: number | null;
   superiorRiskId?: number | null;
+  responsibleJobId?: number | null;
 };
 
 const RISK_DESCRIPTION_MAX_LENGTH = 400;
 
 // ----------------------------------------------------------------------
+
+type Option = { id: number; name: string };
 
 export function RiskTableModal({ open, onClose, riskId, onSave }: Props) {
   const { t, currentLang } = useTranslate('architecture');
@@ -63,9 +67,11 @@ export function RiskTableModal({ open, onClose, riskId, onSave }: Props) {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [loadingRiskTypes, setLoadingRiskTypes] = useState(false);
-  const [riskTypeOptions, setRiskTypeOptions] = useState<any[]>([]);
+  const [riskTypeOptions, setRiskTypeOptions] = useState<Option[]>([]);
   const [loadingSuperior, setLoadingSuperior] = useState(false);
-  const [superiorOptions, setSuperiorOptions] = useState<any[]>([]);
+  const [superiorOptions, setSuperiorOptions] = useState<Option[]>([]);
+  const [loadingResponsibleJobs, setLoadingResponsibleJobs] = useState(false);
+  const [responsibleJobOptions, setResponsibleJobOptions] = useState<Option[]>([]);
   const [codeError, setCodeError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<FormData>({
@@ -74,6 +80,7 @@ export function RiskTableModal({ open, onClose, riskId, onSave }: Props) {
     code: '',
     riskTypeId: null,
     superiorRiskId: null,
+    responsibleJobId: null,
   });
 
   // Cargar tipos de riesgo
@@ -162,6 +169,38 @@ export function RiskTableModal({ open, onClose, riskId, onSave }: Props) {
     }
   }, []);
 
+  const loadResponsibleJobs = useCallback(async (search?: string) => {
+    setLoadingResponsibleJobs(true);
+    try {
+      const response = await GetPositionPaginationService({ page: 1, perPage: 50, ...(search ? { search } : {}) });
+      const raw: unknown = response?.data;
+      const list: unknown[] =
+        raw && typeof raw === 'object' && 'data' in raw && Array.isArray((raw as { data?: unknown }).data)
+          ? ((raw as { data: unknown[] }).data ?? [])
+          : Array.isArray(raw)
+            ? raw
+            : [];
+
+      const toOption = (value: unknown): Option | null => {
+        if (!value || typeof value !== 'object') return null;
+        const v = value as Record<string, unknown>;
+        const id = Number(v.id);
+        const name = typeof v.name === 'string' ? v.name.trim() : '';
+        if (!Number.isFinite(id) || !name) return null;
+        return { id, name };
+      };
+
+      const normalized = list.map(toOption).filter((v): v is Option => v !== null);
+      const unique = Array.from(new Map(normalized.map((o) => [o.id, o])).values());
+      setResponsibleJobOptions(unique);
+    } catch (error) {
+      console.error('Error loading responsible jobs:', error);
+      setResponsibleJobOptions([]);
+    } finally {
+      setLoadingResponsibleJobs(false);
+    }
+  }, []);
+
   // Cargar datos cuando se abre el modal en modo edición
   const loadRiskData = useCallback(async () => {
     if (!riskId) return;
@@ -180,7 +219,17 @@ export function RiskTableModal({ open, onClose, riskId, onSave }: Props) {
         code: String(data?.code ?? '').trim(),
         riskTypeId: Number(data?.riskType?.id) || null,
         superiorRiskId: Number((data?.risk?.id ?? data?.superiorRisk?.id)) || null,
+        responsibleJobId: Number((data?.responsibleJob?.id ?? data?.responsibleJobId ?? data?.responsibleJob) as unknown) || null,
       });
+
+      const responsibleJobId = Number((data?.responsibleJob?.id ?? data?.responsibleJobId ?? data?.responsibleJob) as unknown);
+      const responsibleJobName = typeof data?.responsibleJob?.name === 'string' ? data.responsibleJob.name.trim() : '';
+      if (Number.isFinite(responsibleJobId) && responsibleJobId > 0 && responsibleJobName) {
+        setResponsibleJobOptions((prev) => {
+          if (prev.some((o) => o.id === responsibleJobId)) return prev;
+          return [{ id: responsibleJobId, name: responsibleJobName }, ...prev];
+        });
+      }
     } catch (error) {
       console.error('Error loading risk data:', error);
       toast.error(tf('risk.table.messages.error.loading', 'Error loading data', 'Error al cargar datos'));
@@ -205,13 +254,15 @@ export function RiskTableModal({ open, onClose, riskId, onSave }: Props) {
           code: '',
           riskTypeId: null,
           superiorRiskId: null,
+          responsibleJobId: null,
         });
       }
       setCodeError(null);
       loadRiskTypes();
       loadSuperiorRisks();
+      loadResponsibleJobs();
     }
-  }, [open, riskId, loadRiskData, loadRiskTypes, loadSuperiorRisks]);
+  }, [open, riskId, loadRiskData, loadRiskTypes, loadSuperiorRisks, loadResponsibleJobs]);
 
   // Manejar cambios en los campos
   const handleChange = useCallback((field: string, value: any) => {
@@ -285,6 +336,9 @@ export function RiskTableModal({ open, onClose, riskId, onSave }: Props) {
       payload.superiorRisk = formData.superiorRiskId != null
         ? { id: Number(formData.superiorRiskId) }
         : null;
+      if (formData.responsibleJobId != null) {
+        payload.responsibleJob = Number(formData.responsibleJobId);
+      }
 
       await SaveOrUpdateRiskTableService(payload, riskId);
       toast.success(
@@ -436,6 +490,42 @@ export function RiskTableModal({ open, onClose, riskId, onSave }: Props) {
                     endAdornment: (
                       <>
                         {loadingSuperior ? <CircularProgress color="inherit" size={20} /> : null}
+                        {params.InputProps.endAdornment}
+                      </>
+                    ),
+                  }}
+                />
+              )}
+            />
+
+            <Autocomplete
+              fullWidth
+              options={responsibleJobOptions}
+              getOptionLabel={(option) => option.name}
+              value={responsibleJobOptions.find((opt) => opt.id === formData.responsibleJobId) || null}
+              onChange={(_, newValue) => handleChange('responsibleJobId', newValue?.id ?? null)}
+              loading={loadingResponsibleJobs}
+              disabled={saving}
+              onOpen={() => { if (!responsibleJobOptions.length) loadResponsibleJobs(); }}
+              onInputChange={(_, val) => {
+                const s = (val || '').trim();
+                loadResponsibleJobs(s.length >= 2 ? s : undefined);
+              }}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              filterOptions={(x) => x}
+              renderOption={(props, option) => (
+                <li {...props} key={`responsible-job-${option.id}`}>{option.name}</li>
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={t('risk.table.table.columns.responsibleJob')}
+                  placeholder={t('risk.table.dialogs.form.responsibleJobHelper')}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        {loadingResponsibleJobs ? <CircularProgress color="inherit" size={20} /> : null}
                         {params.InputProps.endAdornment}
                       </>
                     ),

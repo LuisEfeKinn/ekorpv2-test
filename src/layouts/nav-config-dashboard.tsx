@@ -486,6 +486,40 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
     void 0;
   }
 
+  try {
+    const documentsSubheader = t('documents.title');
+    const documentManagementTitle = t('documents.items.documentManagement');
+
+    const docsSectionIdx = dynamicNavData.findIndex((s) => s.subheader === documentsSubheader);
+    if (docsSectionIdx >= 0) {
+      const section = dynamicNavData[docsSectionIdx];
+      const alreadyExists = section.items.some(
+        (it) => it.title === documentManagementTitle || it.path === paths.dashboard.documents.documentManagement
+      );
+
+      if (!alreadyExists) {
+        section.items.push({
+          title: documentManagementTitle,
+          path: paths.dashboard.documents.documentManagement,
+          icon: getNavIcon('file'),
+        });
+      }
+    } else {
+      dynamicNavData.push({
+        subheader: documentsSubheader,
+        items: [
+          {
+            title: documentManagementTitle,
+            path: paths.dashboard.documents.documentManagement,
+            icon: getNavIcon('file'),
+          },
+        ],
+      });
+    }
+  } catch {
+    void 0;
+  }
+
   // Agregar sección de Overview como primera sección (opcional)
   // const overviewSection = {
   //   subheader: 'Overview',

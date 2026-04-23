@@ -1,0 +1,123 @@
+{
+  "documentManagement": {
+    "title": "Gestión documental",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "documents": "Documentos"
+    },
+    "table": {
+      "columns": {
+        "id": "ID",
+        "code": "Código",
+        "name": "Nombre",
+        "description": "Descripción",
+        "version": "Versión",
+        "writingDate": "Fecha de elaboración",
+        "expirationDate": "Fecha de vencimiento",
+        "type": "Tipo",
+        "status": "Estado",
+        "documentType": "Tipo de documento",
+        "author": "Autor",
+        "ranking": "Ranking",
+        "active": "Activo",
+        "file": "Archivo",
+        "link": "Enlace",
+        "options": "Opciones"
+      },
+      "values": {
+        "active": {
+          "yes": "Sí",
+          "no": "No"
+        }
+      },
+      "toolbar": {
+        "search": "Buscar por código o nombre..."
+      }
+    },
+    "actions": {
+      "create": "Crear documento",
+      "preview": "Previsualizar",
+      "download": "Descargar",
+      "open": "Abrir",
+      "edit": "Editar",
+      "map": "Mapa",
+      "delete": "Eliminar",
+      "save": "Guardar",
+      "clear": "Limpiar",
+      "cancel": "Cancelar"
+    },
+    "map": {
+      "title": "Mapa de documento",
+      "subtitle": "Mapa",
+      "actions": {
+        "back": "Atrás"
+      },
+      "messages": {
+        "loading": "Cargando mapa...",
+        "empty": "No hay datos para mostrar.",
+        "expandNotAvailable": "Vista expandida aún no disponible",
+        "deleteNotAvailable": "Eliminar aún no disponible"
+      },
+      "drawer": {
+        "createTitle": "Formulario",
+        "editTitle": "Editar"
+      }
+    },
+    "drawer": {
+      "title": {
+        "create": "Nuevo documento",
+        "edit": "Editar documento"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": "Nombre",
+        "code": "Código",
+        "description": "Descripción",
+        "version": "Versión",
+        "documentType": "Tipo de documento",
+        "documentStatus": "Estado",
+        "author": "Autor",
+        "verifier": "Editor",
+        "writingDate": "Fecha de redacción",
+        "expirationDate": "Fecha de expiración",
+        "file": "Archivo",
+        "type": "Tipo",
+        "link": "Dirección URL externa"
+      },
+      "fileDropzone": {
+        "title": "Archivo (obligatorio)",
+        "helper": "Arrastra y suelta o haz clic para seleccionar",
+        "selected": "Seleccionado: {{name}}"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Documento creado correctamente",
+        "updated": "Documento actualizado correctamente",
+        "deleted": "Documento eliminado correctamente"
+      },
+      "info": {
+        "previewNotSupported": "Este tipo de archivo no se puede previsualizar aquí"
+      },
+      "error": {
+        "loading": "Error al cargar documentos",
+        "saving": "Error al guardar el documento",
+        "deleting": "Error al eliminar el documento",
+        "preview": "No se pudo previsualizar el documento",
+        "downloading": "No se pudo descargar el documento",
+        "invalidForm": "Revisa los campos requeridos",
+        "fileRequired": "El archivo es obligatorio"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar documento",
+        "content": "¿Deseas eliminar este documento?"
+      },
+      "preview": {
+        "title": "Previsualización"
+      }
+    }
+  }
+}

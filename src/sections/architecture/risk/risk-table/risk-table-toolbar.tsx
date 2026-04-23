@@ -18,7 +18,7 @@ import { useTranslate } from 'src/locales';
 import { Iconify } from 'src/components/iconify';
 import { usePopover, CustomPopover } from 'src/components/custom-popover';
 
-import { ALL_COLUMNS } from './risk-table-config';
+import { ALL_COLUMNS, type RiskTableColumn } from './risk-table-config';
 
 // ----------------------------------------------------------------------
 
@@ -43,9 +43,16 @@ export function RiskTableToolbar({
   onTypeChange,
   riskTypeOptions,
 }: Props) {
+  const { t, currentLang } = useTranslate('architecture');
   const { t: tCommon } = useTranslate('common');
   const popover = usePopover();
   const [filtersOpen, setFiltersOpen] = useState(false);
+
+  const getColumnLabel = useCallback((column: RiskTableColumn) => {
+    const keyValue = t(column.labelKey);
+    if (keyValue && keyValue !== column.labelKey) return keyValue;
+    return currentLang?.value === 'es' ? column.fallback.es : column.fallback.en;
+  }, [t, currentLang?.value]);
   
   const handleFilterName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -193,7 +200,7 @@ export function RiskTableToolbar({
                     onChange={() => onChangeColumns(column.id)}
                   />
                 }
-                label={column.label}
+                label={getColumnLabel(column)}
               />
             ))}
           </Stack>

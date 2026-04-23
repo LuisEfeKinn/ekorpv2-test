@@ -64,7 +64,7 @@ type FormData = {
   impactLevel: number;
 };
 
-// ----------------------------------------------------------------------
+// --------------------------------------------------------
 
 export function ApplicationDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave, ...other }: Props) {
   const { t } = useTranslate('architecture');

@@ -3,7 +3,7 @@ import type { NextConfig } from 'next';
 const isStaticExport = false;
 
 const nextConfig: NextConfig = {
-  trailingSlash: true,
+  trailingSlash: false,
   output: isStaticExport ? 'export' : undefined,
   env: {
     BUILD_STATIC_EXPORT: JSON.stringify(isStaticExport),
@@ -29,7 +29,6 @@ const nextConfig: NextConfig = {
   ],
   experimental: {
     optimizePackageImports: [
-      '@aws-amplify/ui-react-liveness',
       '@mui/material',
       '@mui/icons-material',
       '@mui/lab',

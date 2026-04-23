@@ -58,15 +58,15 @@ import { RiskTableRow } from '../risk-table-row';
 import { RiskTableModal } from '../risk-table-modal';
 import { RiskFiltersResult } from '../risk-table-filters-result';
 import { RiskJobsRelationModal } from '../risk-jobs-relation-modal';
-import { ALL_COLUMNS, DEFAULT_COLUMNS } from '../risk-table-config';
 import { RiskTableToolbar, type RiskTypeOption } from '../risk-table-toolbar';
+import { ALL_COLUMNS, DEFAULT_COLUMNS, type RiskTableColumn } from '../risk-table-config';
 
 // ----------------------------------------------------------------------
 
 // ----------------------------------------------------------------------
 
 export function RiskTableView() {
-  const { t } = useTranslate('architecture');
+  const { t, currentLang } = useTranslate('architecture');
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -116,12 +116,20 @@ export function RiskTableView() {
   ], [t]);
 
   const TABLE_HEAD = useMemo(() => {
-    const dynamicColumns = ALL_COLUMNS.filter((col) => visibleColumns.includes(col.id));
+    const getColumnLabel = (column: RiskTableColumn) => {
+      const keyValue = t(column.labelKey);
+      if (keyValue && keyValue !== column.labelKey) return keyValue;
+      return currentLang?.value === 'es' ? column.fallback.es : column.fallback.en;
+    };
+
+    const dynamicColumns = ALL_COLUMNS
+      .filter((col) => visibleColumns.includes(col.id))
+      .map((col) => ({ id: col.id, label: getColumnLabel(col) }));
     return [
       { id: '', width: 88 },
       ...dynamicColumns,
     ];
-  }, [visibleColumns]);
+  }, [visibleColumns, t, currentLang?.value]);
 
   type RiskTableFilters = {
     name: string;

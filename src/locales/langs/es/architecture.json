@@ -6,6 +6,97 @@
       "providers": "Proveedores"
     }
   },
+  "audit": {
+    "form": {
+      "fields": {
+        "relatedSystems": {
+          "label": "Relaciones vinculadas con el Sistema"
+        },
+        "user": {
+          "label": "Usuario"
+        },
+        "date": {
+          "label": "Fecha"
+        },
+        "report": {
+          "label": "Hallazgos",
+          "placeholder": "Ingrese los hallazgos"
+        },
+        "recommendations": {
+          "label": "Recomendaciones",
+          "placeholder": "Ingrese las recomendaciones"
+        },
+        "comments": {
+          "label": "Comentarios"
+        },
+        "processCompliance": {
+          "label": "Cumplimiento del Proceso"
+        },
+        "organizationCompliance": {
+          "label": "Cumplimiento de la Organización (Rol)"
+        },
+        "policiesCompliance": {
+          "label": "Cumplimiento de Políticas, Normas y Procedimientos"
+        },
+        "toolsUsage": {
+          "label": "Utilización de Herramientas"
+        },
+        "deliverablesCompliance": {
+          "label": "Cumplimiento de Entregables, Calidad, SLAs, OLAs"
+        },
+        "file": {
+          "label": "Archivo",
+          "placeholder": "Seleccione un archivo",
+          "helper": "Subida de archivo disponible después de adicionar el registro"
+        },
+        "status": {
+          "label": "Estado"
+        },
+        "lastReview": {
+          "label": "Fecha de Última Revisión"
+        },
+        "collaborators": {
+          "label": "Colaboradores/Responsables implicados"
+        },
+        "type": {
+          "label": "Tipo"
+        }
+      },
+      "placeholders": {
+        "select": "Seleccione"
+      },
+      "actions": {
+        "save": "Guardar",
+        "clear": "Limpiar",
+        "cancel": "Cancelar",
+        "chooseFile": "Seleccionar"
+      },
+      "errors": {
+        "required": "Este campo es obligatorio"
+      },
+      "status": {
+        "options": {
+          "active": "Activo",
+          "inactive": "Inactivo"
+        }
+      },
+      "type": {
+        "options": {
+          "internal": "Auditoría Interna",
+          "external": "Auditoría Externa"
+        }
+      },
+      "compliance": {
+        "options": {
+          "excellent": "Excelente",
+          "good": "Bueno",
+          "needsImprovement": "Debe Mejorar",
+          "urgentImprovement": "Urge mejorar",
+          "notApplicable": "No aplica"
+        }
+      }
+    }
+  },
   "risk": {
     "table": {
       "title": "Tabla de Riesgos",
@@ -69,6 +160,11 @@
           "code": "Código",
           "riskType": "Tipo de Riesgo",
           "superiorRisk": "Riesgo Superior",
+          "responsibleJob": "Puesto Responsable",
+          "createdBy": "Creado Por",
+          "createdDate": "Fecha de Creación",
+          "lastModifiedBy": "Modificado Por",
+          "lastModifiedDate": "Fecha de Modificación",
           "actions": "Acciones"
         },
         "toolbar": {
@@ -130,7 +226,8 @@
         },
         "form": {
           "riskTypeHelper": "Seleccione el tipo de riesgo de las opciones disponibles",
-          "superiorRiskHelper": "Escriba el riesgo superior de las opciones disponibles"
+          "superiorRiskHelper": "Escriba el riesgo superior de las opciones disponibles",
+          "responsibleJobHelper": "Seleccione el puesto responsable de las opciones disponibles"
         },
         "delete": {
           "title": "Eliminar Tabla de Riesgos",
@@ -1272,6 +1369,186 @@
         "messages": {
           "loadError": "No se pudieron cargar las relaciones",
           "jobsLoadError": "No se pudieron cargar los cargos",
+          "saveError": "No se pudo guardar la relación",
+          "deleteError": "No se pudo eliminar la relación",
+          "created": "Relación creada con éxito",
+          "updated": "Relación actualizada con éxito",
+          "deleted": "Relación eliminada con éxito"
+        }
+      },
+      "systemProcesses": {
+        "title": "Procesos con acceso al sistema",
+        "titleWithSystem": "Procesos con acceso a {{system}}",
+        "subtitle": "Administra la relación Sistema ↔ Proceso",
+        "form": {
+          "title": "Crear / editar relación",
+          "fields": {
+            "process": "Proceso",
+            "observations": "Observaciones"
+          },
+          "validation": {
+            "processRequired": "El proceso es obligatorio"
+          }
+        },
+        "actions": {
+          "close": "Cerrar",
+          "create": "Crear",
+          "update": "Actualizar",
+          "edit": "Editar",
+          "delete": "Eliminar",
+          "cancel": "Cancelar"
+        },
+        "deleteDialog": {
+          "title": "Eliminar relación",
+          "content": "¿Deseas eliminar esta relación?"
+        },
+        "messages": {
+          "loadError": "No se pudieron cargar las relaciones",
+          "processesLoadError": "No se pudieron cargar los procesos",
+          "saveError": "No se pudo guardar la relación",
+          "deleteError": "No se pudo eliminar la relación",
+          "created": "Relación creada con éxito",
+          "updated": "Relación actualizada con éxito",
+          "deleted": "Relación eliminada con éxito"
+        }
+      },
+      "systemTechnologies": {
+        "title": "Tecnologías con acceso al sistema",
+        "titleWithSystem": "Tecnologías con acceso a {{system}}",
+        "subtitle": "Administra la relación Sistema ↔ Tecnología",
+        "form": {
+          "title": "Crear / editar relación",
+          "fields": {
+            "technology": "Tecnología",
+            "observations": "Observaciones"
+          },
+          "validation": {
+            "technologyRequired": "La tecnología es obligatoria"
+          }
+        },
+        "actions": {
+          "close": "Cerrar",
+          "create": "Crear",
+          "update": "Actualizar",
+          "edit": "Editar",
+          "delete": "Eliminar",
+          "cancel": "Cancelar"
+        },
+        "deleteDialog": {
+          "title": "Eliminar relación",
+          "content": "¿Deseas eliminar esta relación?"
+        },
+        "messages": {
+          "loadError": "No se pudieron cargar las relaciones",
+          "technologiesLoadError": "No se pudieron cargar las tecnologías",
+          "saveError": "No se pudo guardar la relación",
+          "deleteError": "No se pudo eliminar la relación",
+          "created": "Relación creada con éxito",
+          "updated": "Relación actualizada con éxito",
+          "deleted": "Relación eliminada con éxito"
+        }
+      },
+      "systemData": {
+        "title": "Datos con acceso al sistema",
+        "titleWithSystem": "Datos con acceso a {{system}}",
+        "subtitle": "Administra la relación Sistema ↔ Dato",
+        "form": {
+          "title": "Crear / editar relación",
+          "fields": {
+            "data": "Dato",
+            "observations": "Observaciones"
+          },
+          "validation": {
+            "dataRequired": "El dato es obligatorio"
+          }
+        },
+        "actions": {
+          "close": "Cerrar",
+          "create": "Crear",
+          "update": "Actualizar",
+          "edit": "Editar",
+          "delete": "Eliminar",
+          "cancel": "Cancelar"
+        },
+        "deleteDialog": {
+          "title": "Eliminar relación",
+          "content": "¿Deseas eliminar esta relación?"
+        },
+        "messages": {
+          "loadError": "No se pudieron cargar las relaciones",
+          "dataLoadError": "No se pudieron cargar los datos",
+          "saveError": "No se pudo guardar la relación",
+          "deleteError": "No se pudo eliminar la relación",
+          "created": "Relación creada con éxito",
+          "updated": "Relación actualizada con éxito",
+          "deleted": "Relación eliminada con éxito"
+        }
+      },
+      "systemDocuments": {
+        "title": "Documentos con acceso al sistema",
+        "titleWithSystem": "Documentos con acceso a {{system}}",
+        "subtitle": "Administra la relación Sistema ↔ Documento",
+        "form": {
+          "title": "Crear / editar relación",
+          "fields": {
+            "document": "Documento",
+            "observations": "Observaciones"
+          },
+          "validation": {
+            "documentRequired": "El documento es obligatorio"
+          }
+        },
+        "actions": {
+          "close": "Cerrar",
+          "create": "Crear",
+          "update": "Actualizar",
+          "edit": "Editar",
+          "delete": "Eliminar",
+          "cancel": "Cancelar"
+        },
+        "deleteDialog": {
+          "title": "Eliminar relación",
+          "content": "¿Deseas eliminar esta relación?"
+        },
+        "messages": {
+          "loadError": "No se pudieron cargar las relaciones",
+          "documentsLoadError": "No se pudieron cargar los documentos",
+          "saveError": "No se pudo guardar la relación",
+          "deleteError": "No se pudo eliminar la relación",
+          "created": "Relación creada con éxito",
+          "updated": "Relación actualizada con éxito",
+          "deleted": "Relación eliminada con éxito"
+        }
+      },
+      "systemIndicators": {
+        "title": "Indicadores con acceso al sistema",
+        "titleWithSystem": "Indicadores con acceso a {{system}}",
+        "subtitle": "Administra la relación Sistema ↔ Indicador",
+        "form": {
+          "title": "Crear / editar relación",
+          "fields": {
+            "indicator": "Indicador",
+            "observations": "Observaciones"
+          },
+          "validation": {
+            "indicatorRequired": "El indicador es obligatorio"
+          }
+        },
+        "actions": {
+          "close": "Cerrar",
+          "create": "Crear",
+          "update": "Actualizar",
+          "edit": "Editar",
+          "delete": "Eliminar",
+          "cancel": "Cancelar"
+        },
+        "deleteDialog": {
+          "title": "Eliminar relación",
+          "content": "¿Deseas eliminar esta relación?"
+        },
+        "messages": {
+          "loadError": "No se pudieron cargar las relaciones",
+          "indicatorsLoadError": "No se pudieron cargar los indicadores",
           "saveError": "No se pudo guardar la relación",
           "deleteError": "No se pudo eliminar la relación",
           "created": "Relación creada con éxito",

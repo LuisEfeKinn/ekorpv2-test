@@ -622,6 +622,13 @@ export const paths = {
       actionMeasures: `${ROOTS.DASHBOARD}/architecture/action-measures`,
     },
 
+    documents: {
+      documentManagement: `${ROOTS.DASHBOARD}/documents/document-management`,
+      documentManagementMap: (id: string) => `${ROOTS.DASHBOARD}/documents/document-management/map?id=${encodeURIComponent(id)}`,
+      documentManagementMapExpand: (documentId: string, nodeId: string) =>
+        `${ROOTS.DASHBOARD}/documents/document-management/map/expand?id=${encodeURIComponent(documentId)}&nodeId=${encodeURIComponent(nodeId)}`,
+    },
+
     ai: {
       courseGenerator: {
         root: `${ROOTS.DASHBOARD}/ai/course-generator`,

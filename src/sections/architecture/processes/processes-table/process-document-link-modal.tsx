@@ -24,6 +24,7 @@ type Props = {
 export function ProcessDocumentLinkModal({ open, onClose, onSuccess, processId, existingItemIds, relationId, initialData, allowDelete }: Props) {
   const { t } = useTranslate('architecture');
   const [loading, setLoading] = useState(false);
+  const [optionsLoading, setOptionsLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [items, setItems] = useState<any[]>([]);
   const [form, setForm] = useState({
@@ -34,11 +35,12 @@ export function ProcessDocumentLinkModal({ open, onClose, onSuccess, processId, 
   useEffect(() => {
     const load = async () => {
       try {
+        setOptionsLoading(true);
         const currentSelectedId = initialData?.documentId ?? initialData?.document?.id ?? null;
         const excludedIds = new Set<number>(Array.isArray(existingItemIds) ? existingItemIds : []);
         if (currentSelectedId != null) excludedIds.delete(Number(currentSelectedId));
 
-        const response = await GetDocumentsListService({ perPage: 1000 });
+        const response = await GetDocumentsListService();
         // Process Documents
         const raw = response?.data;
         let list: any[] = [];
@@ -64,6 +66,8 @@ export function ProcessDocumentLinkModal({ open, onClose, onSuccess, processId, 
       } catch (e) {
         console.error('Error loading documents:', e);
         toast.error(t('process.map.modals.common.loadError'));
+      } finally {
+        setOptionsLoading(false);
       }
     };
     if (open) {
@@ -76,7 +80,10 @@ export function ProcessDocumentLinkModal({ open, onClose, onSuccess, processId, 
     }
   }, [open, t, initialData, existingItemIds]);
 
-  const options = useMemo(() => items.map((i: any) => ({ label: i?.name || `#${i?.id}`, id: i?.id })), [items]);
+  const options = useMemo(
+    () => items.map((i: any) => ({ label: String(i?.name ?? i?.label ?? `#${i?.id}`), id: i?.id })),
+    [items]
+  );
 
   const handleSubmit = async () => {
     setSubmitted(true);
@@ -118,12 +125,22 @@ export function ProcessDocumentLinkModal({ open, onClose, onSuccess, processId, 
             options={options}
             value={options.find((o) => o.id === form.itemId) || null}
             onChange={(_: any, v: any) => setForm((f) => ({ ...f, itemId: v?.id || null }))}
+            loading={optionsLoading}
             renderInput={(params: any) => (
               <TextField
                 {...params}
                 label={t('process.map.modals.document.fieldLabel')}
                 error={submitted && !form.itemId}
                 helperText={submitted && !form.itemId ? t('process.map.modals.common.missingData') : ''}
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: (
+                    <>
+                      {optionsLoading ? <CircularProgress color="inherit" size={18} /> : null}
+                      {params.InputProps.endAdornment}
+                    </>
+                  ),
+                }}
               />
             )}
           />

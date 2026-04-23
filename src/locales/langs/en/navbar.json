@@ -201,6 +201,12 @@
       "catalogs": "Catalogs"
     }
   },
+  "documents": {
+    "title": "Documents",
+    "items": {
+      "documentManagement": "Document Management"
+    }
+  },
   "ai": {
     "title": "Artificial Intelligence",
     "items": {

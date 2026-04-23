@@ -8,6 +8,97 @@
       "providers": "Providers"
     }
   },
+  "audit": {
+    "form": {
+      "fields": {
+        "relatedSystems": {
+          "label": "Linked relations with the System"
+        },
+        "user": {
+          "label": "User"
+        },
+        "date": {
+          "label": "Date"
+        },
+        "report": {
+          "label": "Findings",
+          "placeholder": "Enter findings"
+        },
+        "recommendations": {
+          "label": "Recommendations",
+          "placeholder": "Enter recommendations"
+        },
+        "comments": {
+          "label": "Comments"
+        },
+        "processCompliance": {
+          "label": "Process Compliance"
+        },
+        "organizationCompliance": {
+          "label": "Organization Compliance (Role)"
+        },
+        "policiesCompliance": {
+          "label": "Policies, Standards and Procedures Compliance"
+        },
+        "toolsUsage": {
+          "label": "Tools Usage"
+        },
+        "deliverablesCompliance": {
+          "label": "Deliverables Compliance, Quality, SLAs, OLAs"
+        },
+        "file": {
+          "label": "File",
+          "placeholder": "Select a file",
+          "helper": "File upload available after adding the record"
+        },
+        "status": {
+          "label": "Status"
+        },
+        "lastReview": {
+          "label": "Last Review Date"
+        },
+        "collaborators": {
+          "label": "Collaborators/Responsible parties involved"
+        },
+        "type": {
+          "label": "Type"
+        }
+      },
+      "placeholders": {
+        "select": "Select"
+      },
+      "actions": {
+        "save": "Save",
+        "clear": "Clear",
+        "cancel": "Cancel",
+        "chooseFile": "Choose"
+      },
+      "errors": {
+        "required": "This field is required"
+      },
+      "status": {
+        "options": {
+          "active": "Active",
+          "inactive": "Inactive"
+        }
+      },
+      "type": {
+        "options": {
+          "internal": "Internal Audit",
+          "external": "External Audit"
+        }
+      },
+      "compliance": {
+        "options": {
+          "excellent": "Excellent",
+          "good": "Good",
+          "needsImprovement": "Needs improvement",
+          "urgentImprovement": "Urgent improvement",
+          "notApplicable": "Not applicable"
+        }
+      }
+    }
+  },
   "risk": {
     "table": {
       "title": "Risk Table",
@@ -18,7 +109,7 @@
         "edit": "Edit Risk Table"
       },
       "actions": {
-        "add": "Add Risk Architecture",
+        "add": "Add Risk ",
         "edit": "Edit",
         "delete": "Delete",
         "cancel": "Cancel",
@@ -71,6 +162,11 @@
           "code": "Code",
           "riskType": "Risk Type",
           "superiorRisk": "Parent Risk",
+          "responsibleJob": "Responsible Job",
+          "createdBy": "Created By",
+          "createdDate": "Created Date",
+          "lastModifiedBy": "Modified By",
+          "lastModifiedDate": "Modified Date",
           "actions": "Actions"
         },
         "toolbar": {
@@ -132,7 +228,8 @@
         },
         "form": {
           "riskTypeHelper": "Select the risk type from the available options",
-          "superiorRiskHelper": "Type the parent risk from the available options"
+          "superiorRiskHelper": "Type the parent risk from the available options",
+          "responsibleJobHelper": "Select the responsible job from the available options"
         },
         "delete": {
           "title": "Delete Risk Table",
@@ -1207,6 +1304,186 @@
         "messages": {
           "loadError": "Could not load relations",
           "jobsLoadError": "Could not load jobs",
+          "saveError": "Could not save the relation",
+          "deleteError": "Could not delete the relation",
+          "created": "Relation created successfully",
+          "updated": "Relation updated successfully",
+          "deleted": "Relation deleted successfully"
+        }
+      },
+      "systemProcesses": {
+        "title": "Processes with system access",
+        "titleWithSystem": "Processes with access to {{system}}",
+        "subtitle": "Manage the System ↔ Process relationship",
+        "form": {
+          "title": "Create / edit relation",
+          "fields": {
+            "process": "Process",
+            "observations": "Observations"
+          },
+          "validation": {
+            "processRequired": "Process is required"
+          }
+        },
+        "actions": {
+          "close": "Close",
+          "create": "Create",
+          "update": "Update",
+          "edit": "Edit",
+          "delete": "Delete",
+          "cancel": "Cancel"
+        },
+        "deleteDialog": {
+          "title": "Delete relation",
+          "content": "Do you want to delete this relation?"
+        },
+        "messages": {
+          "loadError": "Could not load relations",
+          "processesLoadError": "Could not load processes",
+          "saveError": "Could not save the relation",
+          "deleteError": "Could not delete the relation",
+          "created": "Relation created successfully",
+          "updated": "Relation updated successfully",
+          "deleted": "Relation deleted successfully"
+        }
+      },
+      "systemTechnologies": {
+        "title": "Technologies with system access",
+        "titleWithSystem": "Technologies with access to {{system}}",
+        "subtitle": "Manage the System ↔ Technology relationship",
+        "form": {
+          "title": "Create / edit relation",
+          "fields": {
+            "technology": "Technology",
+            "observations": "Observations"
+          },
+          "validation": {
+            "technologyRequired": "Technology is required"
+          }
+        },
+        "actions": {
+          "close": "Close",
+          "create": "Create",
+          "update": "Update",
+          "edit": "Edit",
+          "delete": "Delete",
+          "cancel": "Cancel"
+        },
+        "deleteDialog": {
+          "title": "Delete relation",
+          "content": "Do you want to delete this relation?"
+        },
+        "messages": {
+          "loadError": "Could not load relations",
+          "technologiesLoadError": "Could not load technologies",
+          "saveError": "Could not save the relation",
+          "deleteError": "Could not delete the relation",
+          "created": "Relation created successfully",
+          "updated": "Relation updated successfully",
+          "deleted": "Relation deleted successfully"
+        }
+      },
+      "systemData": {
+        "title": "Data with system access",
+        "titleWithSystem": "Data with access to {{system}}",
+        "subtitle": "Manage the System ↔ Data relationship",
+        "form": {
+          "title": "Create / edit relation",
+          "fields": {
+            "data": "Data",
+            "observations": "Observations"
+          },
+          "validation": {
+            "dataRequired": "Data is required"
+          }
+        },
+        "actions": {
+          "close": "Close",
+          "create": "Create",
+          "update": "Update",
+          "edit": "Edit",
+          "delete": "Delete",
+          "cancel": "Cancel"
+        },
+        "deleteDialog": {
+          "title": "Delete relation",
+          "content": "Do you want to delete this relation?"
+        },
+        "messages": {
+          "loadError": "Could not load relations",
+          "dataLoadError": "Could not load data assets",
+          "saveError": "Could not save the relation",
+          "deleteError": "Could not delete the relation",
+          "created": "Relation created successfully",
+          "updated": "Relation updated successfully",
+          "deleted": "Relation deleted successfully"
+        }
+      },
+      "systemDocuments": {
+        "title": "Documents with system access",
+        "titleWithSystem": "Documents with access to {{system}}",
+        "subtitle": "Manage the System ↔ Document relationship",
+        "form": {
+          "title": "Create / edit relation",
+          "fields": {
+            "document": "Document",
+            "observations": "Observations"
+          },
+          "validation": {
+            "documentRequired": "Document is required"
+          }
+        },
+        "actions": {
+          "close": "Close",
+          "create": "Create",
+          "update": "Update",
+          "edit": "Edit",
+          "delete": "Delete",
+          "cancel": "Cancel"
+        },
+        "deleteDialog": {
+          "title": "Delete relation",
+          "content": "Do you want to delete this relation?"
+        },
+        "messages": {
+          "loadError": "Could not load relations",
+          "documentsLoadError": "Could not load documents",
+          "saveError": "Could not save the relation",
+          "deleteError": "Could not delete the relation",
+          "created": "Relation created successfully",
+          "updated": "Relation updated successfully",
+          "deleted": "Relation deleted successfully"
+        }
+      },
+      "systemIndicators": {
+        "title": "Indicators with system access",
+        "titleWithSystem": "Indicators with access to {{system}}",
+        "subtitle": "Manage the System ↔ Indicator relationship",
+        "form": {
+          "title": "Create / edit relation",
+          "fields": {
+            "indicator": "Indicator",
+            "observations": "Observations"
+          },
+          "validation": {
+            "indicatorRequired": "Indicator is required"
+          }
+        },
+        "actions": {
+          "close": "Close",
+          "create": "Create",
+          "update": "Update",
+          "edit": "Edit",
+          "delete": "Delete",
+          "cancel": "Cancel"
+        },
+        "deleteDialog": {
+          "title": "Delete relation",
+          "content": "Do you want to delete this relation?"
+        },
+        "messages": {
+          "loadError": "Could not load relations",
+          "indicatorsLoadError": "Could not load indicators",
           "saveError": "Could not save the relation",
           "deleteError": "Could not delete the relation",
           "created": "Relation created successfully",

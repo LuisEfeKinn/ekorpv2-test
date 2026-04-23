@@ -519,6 +519,9 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
         ...formDataWithoutAutocompletes
       } = data;
 
+      void countrySelect;
+      void regionSelect;
+
       const formDataForService: IUserManagementFormData = {
         ...formDataWithoutAutocompletes,
         municipalityId: municipalityId ? parseInt(municipalityId.id, 10) : 0,

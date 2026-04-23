@@ -78,6 +78,12 @@ export function RiskTableRow({ row, mapHref, selected, onEditRow, onSelectRow, o
             {row?.risk?.name || row?.superiorRisk?.name || ''}
           </Box>
         );
+      case 'responsibleJob':
+        return (
+          <Box component="span" sx={{ color: 'text.primary', fontWeight: 'fontWeightMedium' }}>
+            {row?.responsibleJob?.name || ''}
+          </Box>
+        );
       default:
         return (row as any)[columnId];
     }

@@ -2,7 +2,7 @@
 
 import '@xyflow/react/dist/style.css';
 
-import type { Node, Edge } from '@xyflow/react';
+import type { Node, Edge, NodeProps } from '@xyflow/react';
 import type { Theme, SxProps } from '@mui/material/styles';
 
 import {
@@ -41,22 +41,55 @@ import DialogContent from '@mui/material/DialogContent';
 import CircularProgress from '@mui/material/CircularProgress';
 import DialogContentText from '@mui/material/DialogContentText';
 
+import axios from 'src/utils/axios';
+
 import { useTranslate } from 'src/locales';
 import {
   DeleteApplicationTableMapNodeService,
   GetApplicationTableMapByIdExpandService
 } from 'src/services/architecture/applications/applicationMap.service';
 import {
+  type SystemDataRelation,
+  GetSystemDataRelationsService,
+  DeleteSystemDataRelationService,
+} from 'src/services/architecture/data/systemData.service';
+import {
   type JobSystemRelation,
   GetJobSystemRelationsService,
   DeleteJobSystemRelationService,
 } from 'src/services/architecture/business/jobRelations.service';
+import {
+  type SystemProcessRelation,
+  DeleteSystemProcessService,
+  GetSystemProcessRelationsService,
+} from 'src/services/architecture/process/processRelations.service';
+import {
+  type SystemDocumentRelation,
+  GetSystemDocumentRelationsService,
+  DeleteSystemDocumentRelationService,
+} from 'src/services/architecture/documents/systemDocuments.service';
+import {
+  type SystemIndicatorRelation,
+  GetSystemIndicatorRelationsService,
+  DeleteSystemIndicatorRelationService,
+} from 'src/services/architecture/indicators/systemIndicators.service';
+import {
+  type SystemTechnologyRelation,
+  GetSystemTechnologyRelationsService,
+  DeleteSystemTechnologyRelationService,
+} from 'src/services/architecture/infrastructure/systemTechnologies.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 
 import { ApplicationJobSystemsDrawer } from './application-job-systems-drawer';
+import { ApplicationSystemDataDrawer } from './application-system-data-drawer';
+import { ApplicationSystemAuditsDrawer } from './application-system-audits-drawer';
 import { ApplicationTableNodeCreateModal } from './application-table-node-create-modal';
+import { ApplicationSystemProcessesDrawer } from './application-system-processes-drawer';
+import { ApplicationSystemDocumentsDrawer } from './application-system-documents-drawer';
+import { ApplicationSystemIndicatorsDrawer } from './application-system-indicators-drawer';
+import { ApplicationSystemTechnologiesDrawer } from './application-system-technologies-drawer';
 
 // ----------------------------------------------------------------------
 
@@ -87,9 +120,37 @@ type DataTableExpandedDiagramProps = {
 };
 
 // Custom Node Components
-function CentralNode({ data }: any) {
+type CentralNodeData = { label: string; appId: number | string };
+
+type ChildNodeData = {
+  color: string;
+  label: string;
+  id: string;
+  onClick?: () => void;
+  onDelete?: () => void;
+  onEdit?: () => void;
+  editButtonCorner?: 'top-left' | 'top-right';
+};
+
+function isCentralNodeData(value: unknown): value is CentralNodeData {
+  if (!value || typeof value !== 'object') return false;
+  const rec = value as Record<string, unknown>;
+  return (
+    (typeof rec.label === 'string' || typeof rec.label === 'number') &&
+    (typeof rec.appId === 'string' || typeof rec.appId === 'number')
+  );
+}
+
+function isChildNodeData(value: unknown): value is ChildNodeData {
+  if (!value || typeof value !== 'object') return false;
+  const rec = value as Record<string, unknown>;
+  return typeof rec.color === 'string' && typeof rec.label === 'string' && typeof rec.id === 'string';
+}
+
+function CentralNode({ data }: NodeProps) {
   const { t } = useTranslate('architecture');
   const theme = useTheme();
+  const safeData: CentralNodeData = isCentralNodeData(data) ? data : { label: '-', appId: '-' };
 
   return (
     <Paper
@@ -125,7 +186,7 @@ function CentralNode({ data }: any) {
 
       <Stack spacing={1.5} alignItems="center">
         <Chip
-          label={`ID: ${data.appId}`}
+          label={`ID: ${safeData.appId}`}
           size="small"
           sx={{
             bgcolor: alpha(theme.palette.common.white, 0.25),
@@ -147,7 +208,7 @@ function CentralNode({ data }: any) {
             lineHeight: 1.3,
           }}
         >
-          {data.label}
+          {safeData.label}
         </Typography>
         <Typography
           variant="caption"
@@ -164,9 +225,17 @@ function CentralNode({ data }: any) {
   );
 }
 
-function ChildNodeWithDelete({ data }: any) {
+function ChildNodeWithDelete({ data }: NodeProps) {
   const theme = useTheme();
-  const { color, label, id, onClick, onDelete, onEdit } = data;
+  const safeData: ChildNodeData = isChildNodeData(data)
+    ? data
+    : { color: theme.palette.grey[400], label: '-', id: '-' };
+  const { color, label, id, onClick, onDelete, onEdit } = safeData;
+  const editCorner = safeData.editButtonCorner ?? 'top-left';
+  const editButtonPlacement =
+    editCorner === 'top-left'
+      ? ({ left: 8, right: 'auto' } as const)
+      : ({ right: 44, left: 'auto' } as const);
 
   return (
     <Paper
@@ -226,33 +295,35 @@ function ChildNodeWithDelete({ data }: any) {
         }}
       />
 
-      <IconButton
-        className="edit-button"
-        size="small"
-        onClick={(e) => {
-          e.stopPropagation();
-          onEdit?.();
-        }}
-        sx={{
-          position: 'absolute',
-          top: 8,
-          right: 44,
-          opacity: 0,
-          transform: 'scale(0.8)',
-          transition: 'all 0.2s ease',
-          bgcolor: alpha(theme.palette.primary.main, 0.9),
-          color: 'white',
-          width: 28,
-          height: 28,
-          '&:hover': {
-            bgcolor: theme.palette.primary.main,
-            transform: 'scale(1.1)',
-          },
-          zIndex: 10,
-        }}
-      >
-        <Iconify icon="solar:pen-bold" width={16} />
-      </IconButton>
+      {onEdit ? (
+        <IconButton
+          className="edit-button"
+          size="small"
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit();
+          }}
+          sx={{
+            position: 'absolute',
+            top: 8,
+            ...editButtonPlacement,
+            opacity: 0,
+            transform: 'scale(0.8)',
+            transition: 'all 0.2s ease',
+            bgcolor: alpha(theme.palette.primary.main, 0.9),
+            color: 'white',
+            width: 28,
+            height: 28,
+            '&:hover': {
+              bgcolor: theme.palette.primary.main,
+              transform: 'scale(1.1)',
+            },
+            zIndex: 10,
+          }}
+        >
+          <Iconify icon="solar:pen-bold" width={16} />
+        </IconButton>
+      ) : null}
 
       {/* Botón de eliminar */}
       <IconButton
@@ -366,6 +437,18 @@ export function ApplicationTableExpandedDiagram({
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [jobSystemsOpen, setJobSystemsOpen] = useState(false);
   const [jobSystemsRelationId, setJobSystemsRelationId] = useState<number | null>(null);
+  const [systemProcessesOpen, setSystemProcessesOpen] = useState(false);
+  const [systemProcessesRelationId, setSystemProcessesRelationId] = useState<number | null>(null);
+  const [systemTechnologiesOpen, setSystemTechnologiesOpen] = useState(false);
+  const [systemTechnologiesRelationId, setSystemTechnologiesRelationId] = useState<number | null>(null);
+  const [systemDataOpen, setSystemDataOpen] = useState(false);
+  const [systemDataRelationId, setSystemDataRelationId] = useState<number | null>(null);
+  const [systemDocumentsOpen, setSystemDocumentsOpen] = useState(false);
+  const [systemDocumentsRelationId, setSystemDocumentsRelationId] = useState<number | null>(null);
+  const [systemIndicatorsOpen, setSystemIndicatorsOpen] = useState(false);
+  const [systemIndicatorsRelationId, setSystemIndicatorsRelationId] = useState<number | null>(null);
+  const [systemAuditsOpen, setSystemAuditsOpen] = useState(false);
+  const [systemAuditId, setSystemAuditId] = useState<number | null>(null);
   const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; nodeId: string | null }>({
     open: false,
     nodeId: null,
@@ -389,6 +472,96 @@ export function ApplicationTableExpandedDiagram({
     );
   }, [nodeId, nodeLabel]);
 
+  const isSystemProcessesModule = useMemo(() => {
+    const id = String(nodeId ?? '').toLowerCase();
+    const label = String(nodeLabel ?? '').toLowerCase();
+    return (
+      id === 'process' ||
+      id === 'processes' ||
+      id === 'proceso' ||
+      id === 'procesos' ||
+      id.includes('process') ||
+      id.includes('proceso') ||
+      label.includes('process') ||
+      label.includes('processes') ||
+      label.includes('proceso') ||
+      label.includes('procesos')
+    );
+  }, [nodeId, nodeLabel]);
+
+  const isSystemTechnologiesModule = useMemo(() => {
+    const id = String(nodeId ?? '').toLowerCase();
+    const label = String(nodeLabel ?? '').toLowerCase();
+    return (
+      id === 'technology' ||
+      id === 'technologies' ||
+      id === 'tecnologia' ||
+      id === 'tecnologias' ||
+      id.includes('technolog') ||
+      id.includes('tecnolog') ||
+      label.includes('technolog') ||
+      label.includes('tecnolog')
+    );
+  }, [nodeId, nodeLabel]);
+
+  const isSystemDataModule = useMemo(() => {
+    const id = String(nodeId ?? '').toLowerCase();
+    const label = String(nodeLabel ?? '').toLowerCase();
+    return (
+      id === 'data' ||
+      id === 'datos' ||
+      id.includes('data') ||
+      id.includes('dato') ||
+      label.includes('data') ||
+      label.includes('dato') ||
+      label.includes('datos')
+    );
+  }, [nodeId, nodeLabel]);
+
+  const isSystemIndicatorsModule = useMemo(() => {
+    const id = String(nodeId ?? '').toLowerCase();
+    const label = String(nodeLabel ?? '').toLowerCase();
+    return (
+      id === 'indicator' ||
+      id === 'indicators' ||
+      id === 'indicador' ||
+      id === 'indicadores' ||
+      id.includes('indicator') ||
+      id.includes('indicador') ||
+      label.includes('indicator') ||
+      label.includes('indicador') ||
+      label.includes('kpi')
+    );
+  }, [nodeId, nodeLabel]);
+
+  const isSystemDocumentsModule = useMemo(() => {
+    const id = String(nodeId ?? '').toLowerCase();
+    const label = String(nodeLabel ?? '').toLowerCase();
+    return (
+      id === 'document' ||
+      id === 'documents' ||
+      id === 'documento' ||
+      id === 'documentos' ||
+      id.includes('document') ||
+      label.includes('document')
+    );
+  }, [nodeId, nodeLabel]);
+
+  const isSystemAuditsModule = useMemo(() => {
+    const id = String(nodeId ?? '').toLowerCase();
+    const label = String(nodeLabel ?? '').toLowerCase();
+    return (
+      id === 'audit' ||
+      id === 'audits' ||
+      id === 'auditoria' ||
+      id === 'auditorias' ||
+      id.includes('audit') ||
+      id.includes('auditor') ||
+      label.includes('audit') ||
+      label.includes('auditor')
+    );
+  }, [nodeId, nodeLabel]);
+
   const normalizeJobSystemRelations = useCallback((raw: unknown): JobSystemRelation[] => {
     if (!Array.isArray(raw)) return [];
     return raw.filter((it): it is JobSystemRelation => {
@@ -396,6 +569,79 @@ export function ApplicationTableExpandedDiagram({
       const rec = it as Record<string, unknown>;
       return typeof rec.id === 'number';
     });
+  }, []);
+
+  const normalizeSystemProcessRelations = useCallback((raw: unknown): SystemProcessRelation[] => {
+    if (!Array.isArray(raw)) return [];
+    return raw.filter((it): it is SystemProcessRelation => {
+      if (!it || typeof it !== 'object') return false;
+      const rec = it as Record<string, unknown>;
+      return typeof rec.id === 'number';
+    });
+  }, []);
+
+  const normalizeSystemTechnologyRelations = useCallback((raw: unknown): SystemTechnologyRelation[] => {
+    if (!Array.isArray(raw)) return [];
+    return raw.filter((it): it is SystemTechnologyRelation => {
+      if (!it || typeof it !== 'object') return false;
+      const rec = it as Record<string, unknown>;
+      return typeof rec.id === 'number';
+    });
+  }, []);
+
+  const normalizeSystemDataRelations = useCallback((raw: unknown): SystemDataRelation[] => {
+    if (!Array.isArray(raw)) return [];
+    return raw.filter((it): it is SystemDataRelation => {
+      if (!it || typeof it !== 'object') return false;
+      const rec = it as Record<string, unknown>;
+      return typeof rec.id === 'number';
+    });
+  }, []);
+
+  const normalizeSystemDocumentRelations = useCallback((raw: unknown): SystemDocumentRelation[] => {
+    if (!Array.isArray(raw)) return [];
+    return raw.filter((it): it is SystemDocumentRelation => {
+      if (!it || typeof it !== 'object') return false;
+      const rec = it as Record<string, unknown>;
+      return typeof rec.id === 'number';
+    });
+  }, []);
+
+  const normalizeSystemIndicatorRelations = useCallback((raw: unknown): SystemIndicatorRelation[] => {
+    if (!Array.isArray(raw)) return [];
+    return raw.filter((it): it is SystemIndicatorRelation => {
+      if (!it || typeof it !== 'object') return false;
+      const rec = it as Record<string, unknown>;
+      return typeof rec.id === 'number';
+    });
+  }, []);
+
+  type SystemAuditRecord = {
+    id: number;
+    date: string | null;
+    type: string | null;
+  };
+
+  const normalizeSystemAudits = useCallback((raw: unknown): SystemAuditRecord[] => {
+    const list: unknown[] = Array.isArray(raw)
+      ? raw
+      : raw && typeof raw === 'object'
+        ? Array.isArray((raw as Record<string, unknown>).data)
+          ? ((raw as Record<string, unknown>).data as unknown[])
+          : []
+        : [];
+
+    return list
+      .map((it) => {
+        if (!it || typeof it !== 'object') return null;
+        const rec = it as Record<string, unknown>;
+        const id = Number(rec.id);
+        if (!Number.isFinite(id)) return null;
+        const date = typeof rec.date === 'string' ? rec.date : null;
+        const type = typeof rec.type === 'string' ? rec.type : null;
+        return { id, date, type };
+      })
+      .filter((it): it is SystemAuditRecord => it !== null);
   }, []);
 
   const colors = useMemo(
@@ -429,7 +675,7 @@ export function ApplicationTableExpandedDiagram({
             const jobName = r?.job?.name;
             const label = jobName && String(jobName).trim().length > 0
               ? String(jobName)
-              : `${t('application.jobSystems.form.fields.job')} #${jobId}`;
+              : `${t('application.map.jobSystems.form.fields.job')} #${jobId}`;
             return { id: String(r.id), label, data: { jobId } };
           }),
         };
@@ -438,19 +684,226 @@ export function ApplicationTableExpandedDiagram({
         return;
       }
 
+      if (isSystemProcessesModule) {
+        const systemId = Number(applicationId);
+        const res = await GetSystemProcessRelationsService();
+        const list = normalizeSystemProcessRelations((res as { data?: unknown })?.data);
+
+        const systemRelations = list.filter((r) => Number(r?.system?.id) === systemId);
+
+        const data: MapData = {
+          id: nodeId,
+          label: nodeLabel,
+          children: systemRelations.map((r) => {
+            const processId = Number(r?.process?.id);
+            const processName = r?.process?.name;
+            const label = processName && String(processName).trim().length > 0
+              ? String(processName)
+              : `${t('application.map.systemProcesses.form.fields.process')} #${processId}`;
+            return { id: String(r.id), label, data: { processId } };
+          }),
+        };
+
+        setMapData(data);
+        return;
+      }
+
+      if (isSystemTechnologiesModule) {
+        const systemId = Number(applicationId);
+        const res = await GetSystemTechnologyRelationsService();
+        const list = normalizeSystemTechnologyRelations((res as { data?: unknown })?.data);
+
+        const systemRelations = list.filter((r) => {
+          const sysId = Number(r?.system?.id ?? (r as { systemId?: unknown } | undefined)?.systemId);
+          return sysId === systemId;
+        });
+
+        const data: MapData = {
+          id: nodeId,
+          label: nodeLabel,
+          children: systemRelations.map((r) => {
+            const techId = Number(
+              r?.technology?.id ??
+                (r as { technologyId?: unknown; technology_id?: unknown } | undefined)?.technologyId ??
+                (r as { technology_id?: unknown } | undefined)?.technology_id
+            );
+            const techName = r?.technology?.name;
+            const label = techName && String(techName).trim().length > 0
+              ? String(techName)
+              : `${t('application.map.systemTechnologies.form.fields.technology')} #${Number.isFinite(techId) ? techId : '-'}`;
+            return { id: String(r.id), label, data: { technologyId: techId } };
+          }),
+        };
+
+        setMapData(data);
+        return;
+      }
+
+      if (isSystemDataModule) {
+        const systemId = Number(applicationId);
+        const res = await GetSystemDataRelationsService();
+        const list = normalizeSystemDataRelations((res as { data?: unknown })?.data);
+
+        const systemRelations = list.filter((r) => {
+          const sysId = Number(r?.system?.id ?? (r as { systemId?: unknown } | undefined)?.systemId);
+          return sysId === systemId;
+        });
+
+        const data: MapData = {
+          id: nodeId,
+          label: nodeLabel,
+          children: systemRelations.map((r) => {
+            const dataId = Number(
+              r?.data?.id ??
+                (r as { dataId?: unknown; data_id?: unknown } | undefined)?.dataId ??
+                (r as { data_id?: unknown } | undefined)?.data_id
+            );
+            const dataName = r?.data?.name;
+            const label = dataName && String(dataName).trim().length > 0
+              ? String(dataName)
+              : `${t('application.map.systemData.form.fields.data')} #${Number.isFinite(dataId) ? dataId : '-'}`;
+            return { id: String(r.id), label, data: { dataId } };
+          }),
+        };
+
+        setMapData(data);
+        return;
+      }
+
+      if (isSystemDocumentsModule) {
+        const systemId = Number(applicationId);
+        const res = await GetSystemDocumentRelationsService();
+        const list = normalizeSystemDocumentRelations((res as { data?: unknown })?.data);
+
+        const systemRelations = list.filter((r) => {
+          const sysId = Number(r?.system?.id ?? (r as { systemId?: unknown } | undefined)?.systemId);
+          return sysId === systemId;
+        });
+
+        const data: MapData = {
+          id: nodeId,
+          label: nodeLabel,
+          children: systemRelations.map((r) => {
+            const documentId = Number(
+              r?.document?.id ??
+                (r as { documentId?: unknown; document_id?: unknown } | undefined)?.documentId ??
+                (r as { document_id?: unknown } | undefined)?.document_id
+            );
+            const documentName = r?.document?.name;
+            const label = documentName && String(documentName).trim().length > 0
+              ? String(documentName)
+              : `${t('application.map.systemDocuments.form.fields.document')} #${Number.isFinite(documentId) ? documentId : '-'}`;
+            return { id: String(r.id), label, data: { documentId } };
+          }),
+        };
+
+        setMapData(data);
+        return;
+      }
+
+      if (isSystemIndicatorsModule) {
+        const systemId = Number(applicationId);
+        const res = await GetSystemIndicatorRelationsService();
+        const list = normalizeSystemIndicatorRelations((res as { data?: unknown })?.data);
+
+        const systemRelations = list.filter((r) => {
+          const sysId = Number(r?.system?.id ?? (r as { systemId?: unknown } | undefined)?.systemId);
+          return sysId === systemId;
+        });
+
+        const data: MapData = {
+          id: nodeId,
+          label: nodeLabel,
+          children: systemRelations.map((r) => {
+            const indicatorId = Number(
+              r?.indicator?.id ??
+                (r as { indicatorId?: unknown; indicator_id?: unknown } | undefined)?.indicatorId ??
+                (r as { indicator_id?: unknown } | undefined)?.indicator_id
+            );
+            const indicatorName = r?.indicator?.indicatorName ?? r?.indicator?.name;
+            const label = indicatorName && String(indicatorName).trim().length > 0
+              ? String(indicatorName)
+              : `${t('application.map.systemIndicators.form.fields.indicator')} #${Number.isFinite(indicatorId) ? indicatorId : '-'}`;
+            return { id: String(r.id), label, data: { indicatorId } };
+          }),
+        };
+
+        setMapData(data);
+        return;
+      }
+
+      if (isSystemAuditsModule) {
+        const systemId = Number(applicationId);
+        try {
+          const res = await axios.get(`/api/audits/system/${encodeURIComponent(String(systemId))}`);
+          const list = normalizeSystemAudits((res as { data?: unknown })?.data);
+
+          const data: MapData = {
+            id: nodeId,
+            label: nodeLabel,
+            children: list.map((r) => {
+              const dateLabel = r.date && String(r.date).includes('T') ? String(r.date).split('T')[0] : r.date;
+              const label = r.type && String(r.type).trim().length > 0
+                ? dateLabel
+                  ? `${String(r.type)} (${dateLabel})`
+                  : String(r.type)
+                : `#${r.id}`;
+
+              return { id: String(r.id), label, data: { auditId: r.id } };
+            }),
+          };
+
+          setMapData(data);
+          return;
+        } catch (error) {
+          console.error('Error loading audits list:', error);
+        }
+      }
+
       const response = await GetApplicationTableMapByIdExpandService(applicationId, nodeId);
       setMapData(response.data);
     } catch (error) {
       console.error('Error al cargar el mapa expandido:', error);
       toast.error(
         isJobSystemsModule
-          ? t('application.jobSystems.messages.loadError')
+          ? t('application.map.jobSystems.messages.loadError')
+          : isSystemProcessesModule
+            ? t('application.map.systemProcesses.messages.loadError')
+            : isSystemTechnologiesModule
+              ? t('application.map.systemTechnologies.messages.loadError')
+              : isSystemDataModule
+                ? t('application.map.systemData.messages.loadError')
+                : isSystemDocumentsModule
+                  ? t('application.map.systemDocuments.messages.loadError')
+                  : isSystemIndicatorsModule
+                    ? t('application.map.systemIndicators.messages.loadError')
+                    : isSystemAuditsModule
+                      ? t('application.table.messages.loadError')
           : t('application.map.messages.error.loadMapError')
       );
     } finally {
       setLoading(false);
     }
-  }, [applicationId, isJobSystemsModule, nodeId, nodeLabel, normalizeJobSystemRelations, t]);
+  }, [
+    applicationId,
+    isJobSystemsModule,
+    isSystemProcessesModule,
+    isSystemTechnologiesModule,
+    isSystemDataModule,
+    isSystemDocumentsModule,
+    isSystemIndicatorsModule,
+    isSystemAuditsModule,
+    nodeId,
+    nodeLabel,
+    normalizeJobSystemRelations,
+    normalizeSystemProcessRelations,
+    normalizeSystemTechnologyRelations,
+    normalizeSystemDataRelations,
+    normalizeSystemDocumentRelations,
+    normalizeSystemIndicatorRelations,
+    normalizeSystemAudits,
+    t,
+  ]);
 
   const generateNodesAndEdges = useCallback(
     (data: MapData) => {
@@ -477,6 +930,60 @@ export function ApplicationTableExpandedDiagram({
         const x = centerX + Math.cos(angle) * radius - 90;
         const y = centerY + Math.sin(angle) * radius - 90;
         const color = colors[index % colors.length];
+        const isRelationModule =
+          isJobSystemsModule ||
+          isSystemProcessesModule ||
+          isSystemTechnologiesModule ||
+          isSystemDataModule ||
+          isSystemDocumentsModule ||
+          isSystemIndicatorsModule ||
+          isSystemAuditsModule;
+
+        const handleEditRelation = () => {
+          const relationId = Number(rawChildId);
+          if (!Number.isFinite(relationId)) return;
+
+          if (isJobSystemsModule) {
+            setJobSystemsRelationId(relationId);
+            setJobSystemsOpen(true);
+            return;
+          }
+
+          if (isSystemProcessesModule) {
+            setSystemProcessesRelationId(relationId);
+            setSystemProcessesOpen(true);
+            return;
+          }
+
+          if (isSystemTechnologiesModule) {
+            setSystemTechnologiesRelationId(relationId);
+            setSystemTechnologiesOpen(true);
+            return;
+          }
+
+          if (isSystemDataModule) {
+            setSystemDataRelationId(relationId);
+            setSystemDataOpen(true);
+            return;
+          }
+
+          if (isSystemDocumentsModule) {
+            setSystemDocumentsRelationId(relationId);
+            setSystemDocumentsOpen(true);
+            return;
+          }
+
+          if (isSystemIndicatorsModule) {
+            setSystemIndicatorsRelationId(relationId);
+            setSystemIndicatorsOpen(true);
+            return;
+          }
+
+          if (isSystemAuditsModule) {
+            setSystemAuditId(relationId);
+            setSystemAuditsOpen(true);
+          }
+        };
 
         return {
           id: safeChildId,
@@ -486,22 +993,13 @@ export function ApplicationTableExpandedDiagram({
             label: child.label,
             id: rawChildId.length > 0 ? rawChildId : safeChildId,
             color,
-            onClick: isJobSystemsModule
-              ? undefined
+            onClick: isRelationModule
+              ? handleEditRelation
               : () => {
                   if (rawChildId.length === 0) return;
-                  if (onNavigateToChild) {
-                    onNavigateToChild(child);
-                  }
+                  onNavigateToChild?.(child);
                 },
-            onEdit: isJobSystemsModule
-              ? () => {
-                  const relationId = Number(rawChildId);
-                  if (!Number.isFinite(relationId)) return;
-                  setJobSystemsRelationId(relationId);
-                  setJobSystemsOpen(true);
-                }
-              : undefined,
+            onEdit: isRelationModule ? handleEditRelation : undefined,
             onDelete: () => {
               if (rawChildId.length === 0) return;
               setDeleteDialog({ open: true, nodeId: rawChildId });
@@ -535,7 +1033,19 @@ export function ApplicationTableExpandedDiagram({
       setNodes([centralNode, ...childNodes]);
       setEdges(newEdges);
     },
-    [colors, isJobSystemsModule, onNavigateToChild, setEdges, setNodes]
+    [
+      colors,
+      isJobSystemsModule,
+      isSystemProcessesModule,
+      isSystemTechnologiesModule,
+      isSystemDataModule,
+      isSystemDocumentsModule,
+      isSystemIndicatorsModule,
+      isSystemAuditsModule,
+      onNavigateToChild,
+      setEdges,
+      setNodes,
+    ]
   );
 
   const handleDeleteNode = async () => {
@@ -545,7 +1055,28 @@ export function ApplicationTableExpandedDiagram({
       setDeleting(true);
       if (isJobSystemsModule) {
         await DeleteJobSystemRelationService(deleteDialog.nodeId);
-        toast.success(t('application.jobSystems.messages.deleted'));
+        toast.success(t('application.map.jobSystems.messages.deleted'));
+      } else if (isSystemProcessesModule) {
+        await DeleteSystemProcessService(deleteDialog.nodeId);
+        toast.success(t('application.map.systemProcesses.messages.deleted'));
+      } else if (isSystemTechnologiesModule) {
+        await DeleteSystemTechnologyRelationService(deleteDialog.nodeId);
+        toast.success(t('application.map.systemTechnologies.messages.deleted'));
+      } else if (isSystemDataModule) {
+        await DeleteSystemDataRelationService(deleteDialog.nodeId);
+        toast.success(t('application.map.systemData.messages.deleted'));
+      } else if (isSystemDocumentsModule) {
+        await DeleteSystemDocumentRelationService(deleteDialog.nodeId);
+        toast.success(t('application.map.systemDocuments.messages.deleted'));
+      } else if (isSystemIndicatorsModule) {
+        await DeleteSystemIndicatorRelationService(deleteDialog.nodeId);
+        toast.success(t('application.map.systemIndicators.messages.deleted'));
+      } else if (isSystemAuditsModule) {
+        const systemId = Number(applicationId);
+        await axios.delete(
+          `/api/audits/system/${encodeURIComponent(String(systemId))}/${encodeURIComponent(String(deleteDialog.nodeId))}`
+        );
+        toast.success(t('application.table.messages.success.deleted'));
       } else {
         await DeleteApplicationTableMapNodeService(applicationId, deleteDialog.nodeId);
         toast.success(t('application.table.messages.success.deleted'));
@@ -556,7 +1087,19 @@ export function ApplicationTableExpandedDiagram({
       console.error('Error al eliminar el nodo:', error);
       toast.error(
         isJobSystemsModule
-          ? t('application.jobSystems.messages.deleteError')
+          ? t('application.map.jobSystems.messages.deleteError')
+          : isSystemProcessesModule
+            ? t('application.map.systemProcesses.messages.deleteError')
+            : isSystemTechnologiesModule
+              ? t('application.map.systemTechnologies.messages.deleteError')
+              : isSystemDataModule
+                ? t('application.map.systemData.messages.deleteError')
+                : isSystemDocumentsModule
+                  ? t('application.map.systemDocuments.messages.deleteError')
+                  : isSystemIndicatorsModule
+                    ? t('application.map.systemIndicators.messages.deleteError')
+                    : isSystemAuditsModule
+                      ? t('application.table.messages.error.deleting')
           : t('application.table.messages.error.deleting')
       );
     } finally {
@@ -682,6 +1225,36 @@ export function ApplicationTableExpandedDiagram({
                 setJobSystemsOpen(true);
                 return;
               }
+              if (isSystemProcessesModule) {
+                setSystemProcessesRelationId(null);
+                setSystemProcessesOpen(true);
+                return;
+              }
+              if (isSystemTechnologiesModule) {
+                setSystemTechnologiesRelationId(null);
+                setSystemTechnologiesOpen(true);
+                return;
+              }
+              if (isSystemDataModule) {
+                setSystemDataRelationId(null);
+                setSystemDataOpen(true);
+                return;
+              }
+              if (isSystemDocumentsModule) {
+                setSystemDocumentsRelationId(null);
+                setSystemDocumentsOpen(true);
+                return;
+              }
+              if (isSystemIndicatorsModule) {
+                setSystemIndicatorsRelationId(null);
+                setSystemIndicatorsOpen(true);
+                return;
+              }
+              if (isSystemAuditsModule) {
+                setSystemAuditId(null);
+                setSystemAuditsOpen(true);
+                return;
+              }
               setOpenCreateModal(true);
             }}
             sx={{
@@ -732,7 +1305,13 @@ export function ApplicationTableExpandedDiagram({
         </Box>
 
         {/* Modal de creación */}
-        {!isJobSystemsModule && (
+        {!isJobSystemsModule &&
+          !isSystemProcessesModule &&
+          !isSystemTechnologiesModule &&
+          !isSystemDataModule &&
+          !isSystemDocumentsModule &&
+          !isSystemIndicatorsModule &&
+          !isSystemAuditsModule && (
           <ApplicationTableNodeCreateModal
             open={openCreateModal}
             onClose={() => setOpenCreateModal(false)}
@@ -752,6 +1331,78 @@ export function ApplicationTableExpandedDiagram({
           systemId={Number(applicationId)}
           systemLabel={systemLabel}
           relationId={jobSystemsRelationId}
+        />
+
+        <ApplicationSystemProcessesDrawer
+          open={systemProcessesOpen}
+          onClose={() => {
+            setSystemProcessesOpen(false);
+            setSystemProcessesRelationId(null);
+          }}
+          onSuccess={fetchExpandedData}
+          systemId={Number(applicationId)}
+          systemLabel={systemLabel}
+          relationId={systemProcessesRelationId}
+        />
+
+        <ApplicationSystemTechnologiesDrawer
+          open={systemTechnologiesOpen}
+          onClose={() => {
+            setSystemTechnologiesOpen(false);
+            setSystemTechnologiesRelationId(null);
+          }}
+          onSuccess={fetchExpandedData}
+          systemId={Number(applicationId)}
+          systemLabel={systemLabel}
+          relationId={systemTechnologiesRelationId}
+        />
+
+        <ApplicationSystemDataDrawer
+          open={systemDataOpen}
+          onClose={() => {
+            setSystemDataOpen(false);
+            setSystemDataRelationId(null);
+          }}
+          onSuccess={fetchExpandedData}
+          systemId={Number(applicationId)}
+          systemLabel={systemLabel}
+          relationId={systemDataRelationId}
+        />
+
+        <ApplicationSystemDocumentsDrawer
+          open={systemDocumentsOpen}
+          onClose={() => {
+            setSystemDocumentsOpen(false);
+            setSystemDocumentsRelationId(null);
+          }}
+          onSuccess={fetchExpandedData}
+          systemId={Number(applicationId)}
+          systemLabel={systemLabel}
+          relationId={systemDocumentsRelationId}
+        />
+
+        <ApplicationSystemIndicatorsDrawer
+          open={systemIndicatorsOpen}
+          onClose={() => {
+            setSystemIndicatorsOpen(false);
+            setSystemIndicatorsRelationId(null);
+          }}
+          onSuccess={fetchExpandedData}
+          systemId={Number(applicationId)}
+          systemLabel={systemLabel}
+          relationId={systemIndicatorsRelationId}
+        />
+
+        <ApplicationSystemAuditsDrawer
+          open={systemAuditsOpen}
+          onClose={() => {
+            setSystemAuditsOpen(false);
+            setSystemAuditId(null);
+          }}
+          onSuccess={fetchExpandedData}
+          systemId={Number(applicationId)}
+          systemLabel={systemLabel}
+          auditId={systemAuditId}
         />
       </Card>
     );
@@ -856,6 +1507,36 @@ export function ApplicationTableExpandedDiagram({
             if (isJobSystemsModule) {
               setJobSystemsRelationId(null);
               setJobSystemsOpen(true);
+              return;
+            }
+            if (isSystemProcessesModule) {
+              setSystemProcessesRelationId(null);
+              setSystemProcessesOpen(true);
+              return;
+            }
+            if (isSystemTechnologiesModule) {
+              setSystemTechnologiesRelationId(null);
+              setSystemTechnologiesOpen(true);
+              return;
+            }
+            if (isSystemDataModule) {
+              setSystemDataRelationId(null);
+              setSystemDataOpen(true);
+              return;
+            }
+            if (isSystemDocumentsModule) {
+              setSystemDocumentsRelationId(null);
+              setSystemDocumentsOpen(true);
+              return;
+            }
+            if (isSystemIndicatorsModule) {
+              setSystemIndicatorsRelationId(null);
+              setSystemIndicatorsOpen(true);
+              return;
+            }
+            if (isSystemAuditsModule) {
+              setSystemAuditId(null);
+              setSystemAuditsOpen(true);
               return;
             }
             setOpenCreateModal(true);
@@ -1039,7 +1720,11 @@ export function ApplicationTableExpandedDiagram({
           <MiniMap
             nodeColor={(node) => {
               if (node.type === 'central') return theme.palette.primary.main;
-              return (node.data as any).color || theme.palette.grey[400];
+              if (node.data && typeof node.data === 'object' && 'color' in node.data) {
+                const c = (node.data as { color?: unknown }).color;
+                if (typeof c === 'string') return c;
+              }
+              return theme.palette.grey[400];
             }}
             maskColor={alpha(theme.palette.background.paper, 0.8)}
           />
@@ -1047,7 +1732,13 @@ export function ApplicationTableExpandedDiagram({
       </Box>
 
       {/* Modal de creación */}
-      {!isJobSystemsModule && (
+      {!isJobSystemsModule &&
+        !isSystemProcessesModule &&
+        !isSystemTechnologiesModule &&
+        !isSystemDataModule &&
+        !isSystemDocumentsModule &&
+        !isSystemIndicatorsModule &&
+        !isSystemAuditsModule && (
         <ApplicationTableNodeCreateModal
           open={openCreateModal}
           onClose={() => setOpenCreateModal(false)}
@@ -1069,6 +1760,78 @@ export function ApplicationTableExpandedDiagram({
         relationId={jobSystemsRelationId}
       />
 
+      <ApplicationSystemProcessesDrawer
+        open={systemProcessesOpen}
+        onClose={() => {
+          setSystemProcessesOpen(false);
+          setSystemProcessesRelationId(null);
+        }}
+        onSuccess={fetchExpandedData}
+        systemId={Number(applicationId)}
+        systemLabel={systemLabel}
+        relationId={systemProcessesRelationId}
+      />
+
+      <ApplicationSystemTechnologiesDrawer
+        open={systemTechnologiesOpen}
+        onClose={() => {
+          setSystemTechnologiesOpen(false);
+          setSystemTechnologiesRelationId(null);
+        }}
+        onSuccess={fetchExpandedData}
+        systemId={Number(applicationId)}
+        systemLabel={systemLabel}
+        relationId={systemTechnologiesRelationId}
+      />
+
+      <ApplicationSystemDataDrawer
+        open={systemDataOpen}
+        onClose={() => {
+          setSystemDataOpen(false);
+          setSystemDataRelationId(null);
+        }}
+        onSuccess={fetchExpandedData}
+        systemId={Number(applicationId)}
+        systemLabel={systemLabel}
+        relationId={systemDataRelationId}
+      />
+
+      <ApplicationSystemDocumentsDrawer
+        open={systemDocumentsOpen}
+        onClose={() => {
+          setSystemDocumentsOpen(false);
+          setSystemDocumentsRelationId(null);
+        }}
+        onSuccess={fetchExpandedData}
+        systemId={Number(applicationId)}
+        systemLabel={systemLabel}
+        relationId={systemDocumentsRelationId}
+      />
+
+      <ApplicationSystemIndicatorsDrawer
+        open={systemIndicatorsOpen}
+        onClose={() => {
+          setSystemIndicatorsOpen(false);
+          setSystemIndicatorsRelationId(null);
+        }}
+        onSuccess={fetchExpandedData}
+        systemId={Number(applicationId)}
+        systemLabel={systemLabel}
+        relationId={systemIndicatorsRelationId}
+      />
+
+      <ApplicationSystemAuditsDrawer
+        open={systemAuditsOpen}
+        onClose={() => {
+          setSystemAuditsOpen(false);
+          setSystemAuditId(null);
+        }}
+        onSuccess={fetchExpandedData}
+        systemId={Number(applicationId)}
+        systemLabel={systemLabel}
+        auditId={systemAuditId}
+      />
+
       {/* Dialog de confirmación de eliminación */}
       <Dialog
         open={deleteDialog.open}
@@ -1077,11 +1840,35 @@ export function ApplicationTableExpandedDiagram({
         fullWidth
       >
         <DialogTitle>
-          {isJobSystemsModule ? t('application.jobSystems.deleteDialog.title') : t('application.table.dialogs.delete.title')}
+          {isJobSystemsModule
+            ? t('application.map.jobSystems.deleteDialog.title')
+            : isSystemProcessesModule
+              ? t('application.map.systemProcesses.deleteDialog.title')
+              : isSystemTechnologiesModule
+                ? t('application.map.systemTechnologies.deleteDialog.title')
+                : isSystemDataModule
+                  ? t('application.map.systemData.deleteDialog.title')
+                  : isSystemDocumentsModule
+                    ? t('application.map.systemDocuments.deleteDialog.title')
+                    : isSystemIndicatorsModule
+                      ? t('application.map.systemIndicators.deleteDialog.title')
+              : t('application.table.dialogs.delete.title')}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {isJobSystemsModule ? t('application.jobSystems.deleteDialog.content') : t('application.table.dialogs.delete.content')}
+            {isJobSystemsModule
+              ? t('application.map.jobSystems.deleteDialog.content')
+              : isSystemProcessesModule
+                ? t('application.map.systemProcesses.deleteDialog.content')
+                : isSystemTechnologiesModule
+                  ? t('application.map.systemTechnologies.deleteDialog.content')
+                  : isSystemDataModule
+                    ? t('application.map.systemData.deleteDialog.content')
+                    : isSystemDocumentsModule
+                      ? t('application.map.systemDocuments.deleteDialog.content')
+                      : isSystemIndicatorsModule
+                        ? t('application.map.systemIndicators.deleteDialog.content')
+                : t('application.table.dialogs.delete.content')}
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 3 }}>
@@ -1091,7 +1878,19 @@ export function ApplicationTableExpandedDiagram({
             onClick={() => setDeleteDialog({ open: false, nodeId: null })}
             disabled={deleting}
           >
-            {isJobSystemsModule ? t('application.jobSystems.actions.cancel') : t('application.table.actions.cancel')}
+            {isJobSystemsModule
+              ? t('application.map.jobSystems.actions.cancel')
+              : isSystemProcessesModule
+                ? t('application.map.systemProcesses.actions.cancel')
+                : isSystemTechnologiesModule
+                  ? t('application.map.systemTechnologies.actions.cancel')
+                  : isSystemDataModule
+                    ? t('application.map.systemData.actions.cancel')
+                    : isSystemDocumentsModule
+                      ? t('application.map.systemDocuments.actions.cancel')
+                      : isSystemIndicatorsModule
+                        ? t('application.map.systemIndicators.actions.cancel')
+                : t('application.table.actions.cancel')}
           </Button>
           <Button
             variant="contained"
@@ -1102,7 +1901,19 @@ export function ApplicationTableExpandedDiagram({
               deleting ? <CircularProgress size={20} color="inherit" /> : <Iconify icon="solar:trash-bin-trash-bold" />
             }
           >
-            {isJobSystemsModule ? t('application.jobSystems.actions.delete') : t('application.table.dialogs.delete.confirm')}
+            {isJobSystemsModule
+              ? t('application.map.jobSystems.actions.delete')
+              : isSystemProcessesModule
+                ? t('application.map.systemProcesses.actions.delete')
+                : isSystemTechnologiesModule
+                  ? t('application.map.systemTechnologies.actions.delete')
+                  : isSystemDataModule
+                    ? t('application.map.systemData.actions.delete')
+                    : isSystemDocumentsModule
+                      ? t('application.map.systemDocuments.actions.delete')
+                      : isSystemIndicatorsModule
+                        ? t('application.map.systemIndicators.actions.delete')
+                : t('application.table.dialogs.delete.confirm')}
           </Button>
         </DialogActions>
       </Dialog>

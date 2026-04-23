@@ -95,6 +95,13 @@ export const endpoints = {
     upload: '/upload-file/upload',
     delete: '/upload-file/delete'
   },
+  documents: {
+    all: '/api/documents',
+    save: '/api/documents',
+    update: '/api/documents',
+    edit: '/api/documents',
+    delete: '/api/documents',
+  },
   auth: {
     me: '/user/init/data',
     login: '/auth/login',
@@ -611,12 +618,15 @@ export const endpoints = {
     documents: {
       table: {
         all: '/api/documents',
-      }
+        allList: '/api/documents/all',
+      },
+      systemDocuments: '/api/system-documents'
     },
     indicators: {
       table: {
         all: '/api/indicators',
-      }
+      },
+      systemIndicators: '/api/system-indicators'
     },
     actionMeasures: '/api/action-measures',
     aplications: {
@@ -656,6 +666,7 @@ export const endpoints = {
         edit: '/api/data', // + /:id
         delete: '/api/data', // + /:id
       },
+      systemData: '/api/system-data',
       flow: {
         all: '/api/dataflow/flow',
         byId: '/api/dataflow', // + /:id
@@ -685,6 +696,7 @@ export const endpoints = {
         edit: '/api/technologies', // + /:id
         delete: '/api/technologies', // + /:id
       },
+      systemTechnologies: '/api/system-technologies',
       flow: {
         all: '/api/technology/flow',
         byId: '/api/technology/flow', // + /:id

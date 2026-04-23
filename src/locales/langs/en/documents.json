@@ -1,0 +1,123 @@
+{
+  "documentManagement": {
+    "title": "Document management",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "documents": "Documents"
+    },
+    "table": {
+      "columns": {
+        "id": "ID",
+        "code": "Code",
+        "name": "Name",
+        "description": "Description",
+        "version": "Version",
+        "writingDate": "Writing date",
+        "expirationDate": "Expiration date",
+        "type": "Type",
+        "status": "Status",
+        "documentType": "Document type",
+        "author": "Author",
+        "ranking": "Ranking",
+        "active": "Active",
+        "file": "File",
+        "link": "Link",
+        "options": "Options"
+      },
+      "values": {
+        "active": {
+          "yes": "Yes",
+          "no": "No"
+        }
+      },
+      "toolbar": {
+        "search": "Search by code or name..."
+      }
+    },
+    "actions": {
+      "create": "Create document",
+      "preview": "Preview",
+      "download": "Download",
+      "open": "Open",
+      "edit": "Edit",
+      "map": "Map",
+      "delete": "Delete",
+      "save": "Save",
+      "clear": "Clear",
+      "cancel": "Cancel"
+    },
+    "map": {
+      "title": "Document map",
+      "subtitle": "Map",
+      "actions": {
+        "back": "Back"
+      },
+      "messages": {
+        "loading": "Loading map...",
+        "empty": "No data to display.",
+        "expandNotAvailable": "Expanded view is not available yet",
+        "deleteNotAvailable": "Delete is not available yet"
+      },
+      "drawer": {
+        "createTitle": "Form",
+        "editTitle": "Edit"
+      }
+    },
+    "drawer": {
+      "title": {
+        "create": "New document",
+        "edit": "Edit document"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": "Name",
+        "code": "Code",
+        "description": "Description",
+        "version": "Version",
+        "documentType": "Document type",
+        "documentStatus": "Status",
+        "author": "Author",
+        "verifier": "Editor",
+        "writingDate": "Writing date",
+        "expirationDate": "Expiration date",
+        "file": "File",
+        "type": "Type",
+        "link": "External URL"
+      },
+      "fileDropzone": {
+        "title": "File (required)",
+        "helper": "Drag and drop or click to select",
+        "selected": "Selected: {{name}}"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Document created successfully",
+        "updated": "Document updated successfully",
+        "deleted": "Document deleted successfully"
+      },
+      "info": {
+        "previewNotSupported": "This file type can’t be previewed here"
+      },
+      "error": {
+        "loading": "Error loading documents",
+        "saving": "Error saving document",
+        "deleting": "Error deleting document",
+        "preview": "Unable to preview document",
+        "downloading": "Unable to download document",
+        "invalidForm": "Check required fields",
+        "fileRequired": "File is required"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete document",
+        "content": "Do you want to delete this document?"
+      },
+      "preview": {
+        "title": "Preview"
+      }
+    }
+  }
+}
