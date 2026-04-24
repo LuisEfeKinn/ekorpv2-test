@@ -58,6 +58,52 @@
         "expandNotAvailable": "Vista expandida aún no disponible",
         "deleteNotAvailable": "Eliminar aún no disponible"
       },
+      "relations": {
+        "kinds": {
+          "process": "Proceso",
+          "job": "Cargo",
+          "objective": "Objetivo estratégico",
+          "organizationalUnit": "Unidad organizacional",
+          "tool": "Herramienta"
+        },
+        "titles": {
+          "create": "Relacionar {{entity}}",
+          "edit": "Editar relación de {{entity}}"
+        },
+        "fields": {
+          "process": "Proceso",
+          "job": "Cargo",
+          "objective": "Objetivo",
+          "organizationalUnit": "Unidad organizacional",
+          "tool": "Herramienta",
+          "observations": "Observaciones"
+        },
+        "validation": {
+          "required": "Campo requerido"
+        },
+        "actions": {
+          "cancel": "Cancelar",
+          "create": "Crear",
+          "update": "Actualizar",
+          "delete": "Eliminar"
+        },
+        "dialogs": {
+          "delete": {
+            "title": "Eliminar relación",
+            "content": "¿Deseas eliminar la relación de \"{{name}}\"?"
+          }
+        },
+        "messages": {
+          "loadError": "No se pudieron cargar los datos",
+          "missingData": "Revisa los campos requeridos",
+          "saveError": "Error al guardar la relación",
+          "deleteError": "Error al eliminar la relación",
+          "deleteMissingId": "No se pudo identificar la relación para eliminar",
+          "created": "Relación creada correctamente",
+          "updated": "Relación actualizada correctamente",
+          "deleted": "Relación eliminada correctamente"
+        }
+      },
       "drawer": {
         "createTitle": "Formulario",
         "editTitle": "Editar"

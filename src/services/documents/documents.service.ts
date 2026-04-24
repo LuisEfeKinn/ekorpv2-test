@@ -7,11 +7,11 @@ export type DocumentRelationRef = {
 export type DocumentUpsertFormValues = {
   code: string;
   name: string;
-  description: string;
+  description: string | null;
   version: number;
-  writingDate: string;
-  expirationDate: string;
-  type: string;
+  writingDate: string | null;
+  expirationDate: string | null;
+  type: string | null;
   link: string;
   documentStatusId: number;
   documentTypeId: number;
@@ -99,10 +99,18 @@ export type GetDocumentsParams = {
   page: number;
   perPage: number;
   search?: string;
+  name?: string;
 };
 
 export const GetDocumentsPaginationService = async (params: GetDocumentsParams) => {
-  const response = await axios.get<DocumentsListResponse>(endpoints.documents.all, { params });
+  const { search, name, ...rest } = params;
+  const term = (name ?? search ?? '').trim();
+  const response = await axios.get<DocumentsListResponse>(endpoints.documents.all, {
+    params: {
+      ...rest,
+      ...(term ? { name: term } : {}),
+    },
+  });
   return response;
 };
 
@@ -179,15 +187,20 @@ export const DownloadDocumentService = async (
 export const buildDocumentFormData = (values: DocumentUpsertFormValues, file?: File | null): FormData => {
   const formData = new FormData();
 
+  const appendNullableTextField = (key: string, value: string | null | undefined) => {
+    if (value === null || value === undefined) return;
+    formData.append(key, value);
+  };
+
   if (file) formData.append('file', file);
 
   formData.append('code', values.code);
   formData.append('name', values.name);
-  formData.append('description', values.description);
+  appendNullableTextField('description', values.description);
   formData.append('version', String(values.version));
-  formData.append('writingDate', values.writingDate);
-  formData.append('expirationDate', values.expirationDate);
-  formData.append('type', values.type);
+  appendNullableTextField('writingDate', values.writingDate);
+  appendNullableTextField('expirationDate', values.expirationDate);
+  appendNullableTextField('type', values.type);
   formData.append('link', values.link);
   formData.append('documentStatusId', String(values.documentStatusId));
   formData.append('documentTypeId', String(values.documentTypeId));

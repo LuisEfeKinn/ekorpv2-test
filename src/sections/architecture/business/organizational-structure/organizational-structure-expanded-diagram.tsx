@@ -1297,7 +1297,7 @@ function OrganizationalUnitDocumentsDrawer({
     const loadDocuments = async () => {
       try {
         setLoadingDocuments(true);
-        const response = await GetDocumentsListService({ page: 1, perPage: 1000 });
+        const response = await GetDocumentsListService();
         const list = normalizeList(response?.data || []);
         const mapped = list
           .map((item: any) => ({

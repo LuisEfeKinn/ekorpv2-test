@@ -74,7 +74,7 @@ export function ToolsRelationsDrawer({ open, onClose, onSuccess, toolId, kind }:
     try {
       let response;
       if (isDocument) {
-        response = await GetDocumentsListService({ page: 1, perPage: 1000 });
+        response = await GetDocumentsListService();
       } else {
         response = await GetIndicatorsListService({ page: 1, perPage: 1000 });
       }

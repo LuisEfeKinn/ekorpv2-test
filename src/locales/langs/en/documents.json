@@ -58,6 +58,52 @@
         "expandNotAvailable": "Expanded view is not available yet",
         "deleteNotAvailable": "Delete is not available yet"
       },
+      "relations": {
+        "kinds": {
+          "process": "Process",
+          "job": "Position",
+          "objective": "Strategic objective",
+          "organizationalUnit": "Organizational unit",
+          "tool": "Tool"
+        },
+        "titles": {
+          "create": "Relate {{entity}}",
+          "edit": "Edit {{entity}} relation"
+        },
+        "fields": {
+          "process": "Process",
+          "job": "Position",
+          "objective": "Objective",
+          "organizationalUnit": "Organizational unit",
+          "tool": "Tool",
+          "observations": "Observations"
+        },
+        "validation": {
+          "required": "Required field"
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "create": "Create",
+          "update": "Update",
+          "delete": "Delete"
+        },
+        "dialogs": {
+          "delete": {
+            "title": "Delete relation",
+            "content": "Do you want to delete the relation for \"{{name}}\"?"
+          }
+        },
+        "messages": {
+          "loadError": "Could not load data",
+          "missingData": "Check required fields",
+          "saveError": "Could not save the relation",
+          "deleteError": "Could not delete the relation",
+          "deleteMissingId": "Could not identify the relation to delete",
+          "created": "Relation created successfully",
+          "updated": "Relation updated successfully",
+          "deleted": "Relation deleted successfully"
+        }
+      },
       "drawer": {
         "createTitle": "Form",
         "editTitle": "Edit"

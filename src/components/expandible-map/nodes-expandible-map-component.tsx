@@ -141,7 +141,9 @@ function CentralNode({ data }: NodeProps) {
         background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
         boxShadow: `0 12px 40px ${alpha(theme.palette.primary.main, 0.5)}`,
         cursor: 'grab',
+        width: 'fit-content',
         minWidth: 280,
+        maxWidth: 560,
         position: 'relative',
         '&:active': { cursor: 'grabbing' },
       }}
@@ -165,12 +167,20 @@ function CentralNode({ data }: NodeProps) {
           label={String(nodeData.label || '')}
           size="small"
           sx={{
+            maxWidth: '100%',
             bgcolor: alpha(theme.palette.common.white, 0.25),
             color: 'common.white',
             fontWeight: 700,
             fontSize: '0.75rem',
             height: 24,
             backdropFilter: 'blur(10px)',
+            '& .MuiChip-label': {
+              display: 'block',
+              maxWidth: '100%',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            },
           }}
         />
         <Typography
@@ -525,7 +535,25 @@ export function NodesExpandibleMapInitial<TSectionPayload = unknown>({
   );
 
   const generate = useCallback((): { nodes: Node[]; edges: Edge[] } => {
-    const radius = 400;
+    const centralLabelLength = String(center.label || '').length;
+    const maxSectionLabelLength = sections.reduce((acc, section) => {
+      const next = String(section.label || '').length;
+      return next > acc ? next : acc;
+    }, 0);
+
+    const estimatedCentralWidth = Math.min(
+      560,
+      Math.max(280, 280 + Math.max(0, centralLabelLength - 24) * 4)
+    );
+
+    const estimatedChildWidth = Math.min(
+      260,
+      Math.max(180, 180 + Math.max(0, maxSectionLabelLength - 18) * 2)
+    );
+
+    const centerHalfWidth = estimatedCentralWidth / 2;
+    const childHalfWidth = estimatedChildWidth / 2;
+    const radius = Math.max(400, centerHalfWidth + childHalfWidth + 100);
     const angleStep = (2 * Math.PI) / (sections.length || 1);
     const centerX = 0;
     const centerY = 0;
@@ -533,14 +561,14 @@ export function NodesExpandibleMapInitial<TSectionPayload = unknown>({
     const centralNode: Node = {
       id: 'central',
       type: 'central',
-      position: { x: centerX - 140, y: centerY - 80 },
+      position: { x: centerX - centerHalfWidth, y: centerY - 80 },
       data: { label: center.label, subtitle: centerSubtitle },
       draggable: true,
     };
 
     const childNodes: Node[] = sections.map((section, index) => {
       const angle = index * angleStep - Math.PI / 2;
-      const x = centerX + Math.cos(angle) * radius - 90;
+      const x = centerX + Math.cos(angle) * radius - childHalfWidth;
       const y = centerY + Math.sin(angle) * radius - 90;
       const color = section.color ?? colors[index % colors.length];
       const id = String(section.id);
@@ -819,12 +847,12 @@ export function NodesExpandibleMapExpanded<TItemPayload = unknown>({
       draggable: true,
     };
 
-    const spacingY = 240;
-    const startY = -((items.length - 1) * spacingY) / 2;
-
     const childNodes: Node[] = items.map((item, index) => {
-      const y = startY + index * spacingY;
-      const x = centerX + 360;
+      const spacingY = 260;
+      const step = Math.floor(index / 2) + 1;
+      const sign = index % 2 === 0 ? -1 : 1;
+      const x = centerX - 110;
+      const y = centerY + sign * step * spacingY - 90;
       const color = colors[index % colors.length];
       const id = String(item.id);
 
@@ -852,7 +880,7 @@ export function NodesExpandibleMapExpanded<TItemPayload = unknown>({
         source: 'central',
         target: id,
         animated: true,
-        style: { strokeWidth: 2, stroke: alpha(color, 0.7) },
+        style: { strokeWidth: 2, stroke: alpha(color, 0.65), strokeDasharray: '4 6', strokeLinecap: 'round' },
       };
     });
 
@@ -884,73 +912,129 @@ export function NodesExpandibleMapExpanded<TItemPayload = unknown>({
         </Box>
       ) : null}
 
-      <Box
-        sx={{
-          mb: 2,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 2,
-        }}
-      >
-        <Stack direction="row" spacing={1.25} alignItems="center" sx={{ minWidth: 0 }}>
-          <Button
-            variant="text"
-            onClick={onBackToMap}
-            startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
-          >
-            {resolveText(mergedLabels.backToMap, lang)}
-          </Button>
-          <Typography variant="h6" sx={{ minWidth: 0 }} noWrap>
-            {headerTitle}
-          </Typography>
-        </Stack>
+      <Card sx={{ width: '100%', position: 'relative', overflow: 'hidden', bgcolor: 'background.neutral' }}>
+        <Box sx={{ position: 'relative' }}>
+          <Box sx={{ position: 'absolute', top: { xs: 12, sm: 16 }, left: { xs: 12, sm: 16 }, zIndex: 110 }}>
+            <Stack direction="row" spacing={1.5} alignItems="center">
+              <IconButton
+                size="small"
+                onClick={onBackToMap}
+                sx={{
+                  bgcolor: alpha(theme.palette.background.paper, 0.9),
+                  backdropFilter: 'blur(8px)',
+                  border: `1px solid ${alpha(theme.palette.divider, 0.12)}`,
+                  '&:hover': { bgcolor: alpha(theme.palette.background.paper, 1) },
+                }}
+                aria-label="back-to-map"
+              >
+                <Iconify icon="eva:arrow-ios-back-fill" width={18} />
+              </IconButton>
+              <Paper
+                elevation={2}
+                sx={{
+                  px: { xs: 1.5, sm: 2 },
+                  py: { xs: 1, sm: 1.25 },
+                  borderRadius: 999,
+                  bgcolor: alpha(theme.palette.background.paper, 0.9),
+                  backdropFilter: 'blur(8px)',
+                  border: `1px solid ${alpha(theme.palette.divider, 0.12)}`,
+                  maxWidth: { xs: 240, sm: 420 },
+                }}
+              >
+                <Typography variant="body2" sx={{ fontWeight: 700 }} noWrap>
+                  {headerTitle}
+                </Typography>
+              </Paper>
+            </Stack>
+          </Box>
 
-        {onOpenFormDrawer ? (
-          <Button
-            variant="contained"
-            onClick={onOpenFormDrawer}
-            startIcon={<Iconify icon="mingcute:add-line" />}
-            aria-label="open-form-drawer"
-          >
-            {resolveText(mergedLabels.openForm, lang)}
-          </Button>
-        ) : null}
-      </Box>
+          {onOpenFormDrawer ? (
+            <Box sx={{ position: 'absolute', top: { xs: 12, sm: 16 }, right: { xs: 12, sm: 16 }, zIndex: 110 }}>
+              <Button
+                variant="contained"
+                onClick={onOpenFormDrawer}
+                startIcon={<Iconify icon="mingcute:add-line" />}
+                aria-label="open-form-drawer"
+                sx={{ borderRadius: 999 }}
+              >
+                {resolveText(mergedLabels.openForm, lang)}
+              </Button>
+            </Box>
+          ) : null}
 
-      <Box sx={{ width: '100%', height, position: 'relative' }}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          nodeTypes={nodeTypes}
-          fitView
-          fitViewOptions={{ padding: 0.3, maxZoom: 1, duration: 800 }}
-          minZoom={0.3}
-          maxZoom={1.2}
-          panOnScroll={false}
-          panOnDrag={[0, 1]}
-          selectionOnDrag={false}
-          zoomOnScroll
-          zoomOnPinch
-          zoomOnDoubleClick={false}
-          preventScrolling={false}
-          defaultEdgeOptions={{ type: 'straight', animated: true }}
-          proOptions={{ hideAttribution: true }}
-        >
-          <Background color={alpha(theme.palette.primary.main, 0.08)} gap={24} size={2} variant={BackgroundVariant.Dots} />
-          <Controls showInteractive={false} />
-          <MiniMap
-            nodeColor={(n) => {
-              if (n.type === 'central') return theme.palette.primary.main;
-              return alpha(theme.palette.primary.main, 0.7);
-            }}
-            maskColor={alpha(theme.palette.background.paper, 0.8)}
-            style={{ backgroundColor: alpha(theme.palette.background.paper, 0.9) }}
-          />
-        </ReactFlow>
-      </Box>
+          <Box sx={{ position: 'absolute', top: { xs: 64, sm: 72 }, left: { xs: 12, sm: 16 }, zIndex: 100, pointerEvents: 'none' }}>
+            <Paper
+              elevation={2}
+              sx={{
+                px: { xs: 1.5, sm: 2 },
+                py: { xs: 1, sm: 1.25 },
+                borderRadius: 999,
+                bgcolor: alpha(theme.palette.background.paper, 0.9),
+                backdropFilter: 'blur(8px)',
+                border: `1px solid ${alpha(theme.palette.divider, 0.12)}`,
+              }}
+            >
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Box
+                  sx={{
+                    width: { xs: 6, sm: 8 },
+                    height: { xs: 6, sm: 8 },
+                    borderRadius: '50%',
+                    bgcolor: theme.palette.success.main,
+                    animation: 'blink 2s ease-in-out infinite',
+                    '@keyframes blink': { '0%, 100%': { opacity: 1 }, '50%': { opacity: 0.3 } },
+                  }}
+                />
+                <Typography
+                  variant="caption"
+                  sx={{ fontWeight: 600, color: 'text.secondary', fontSize: { xs: '0.7rem', sm: '0.75rem' } }}
+                >
+                  {items.length} {resolveText(mergedLabels.connected, lang)}
+                </Typography>
+              </Stack>
+            </Paper>
+          </Box>
+
+          <Box sx={{ width: '100%', height, position: 'relative' }}>
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              nodeTypes={nodeTypes}
+              fitView
+              fitViewOptions={{ padding: 0.3, maxZoom: 1, duration: 800 }}
+              minZoom={0.3}
+              maxZoom={1.2}
+              panOnScroll={false}
+              panOnDrag={[0, 1]}
+              selectionOnDrag={false}
+              zoomOnScroll
+              zoomOnPinch
+              zoomOnDoubleClick={false}
+              preventScrolling={false}
+              defaultEdgeOptions={{ type: 'straight', animated: true, style: { strokeDasharray: '4 6', strokeLinecap: 'round' } }}
+              proOptions={{ hideAttribution: true }}
+            >
+              <Background
+                color={alpha(theme.palette.primary.main, 0.08)}
+                gap={24}
+                size={2}
+                variant={BackgroundVariant.Dots}
+              />
+              <Controls showInteractive={false} />
+              <MiniMap
+                nodeColor={(n) => {
+                  if (n.type === 'central') return theme.palette.primary.main;
+                  return alpha(theme.palette.primary.main, 0.7);
+                }}
+                maskColor={alpha(theme.palette.background.paper, 0.8)}
+                style={{ backgroundColor: alpha(theme.palette.background.paper, 0.9) }}
+              />
+            </ReactFlow>
+          </Box>
+        </Box>
+      </Card>
     </Box>
   );
 }

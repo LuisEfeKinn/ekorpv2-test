@@ -17,6 +17,25 @@ export type SystemProcessRelation = {
   process?: { id: number; name?: string };
 };
 
+export type ProcessDocumentRelation = {
+  id: number;
+  observations?: string | null;
+  createdBy?: string | null;
+  createdDate?: string | null;
+  lastModifiedBy?: string | null;
+  lastModifiedDate?: string | null;
+  process?: { id: number; name?: string | null; code?: string | null } | null;
+  document?: { id: number; name?: string | null; code?: string | null } | null;
+  processId?: number;
+  documentId?: number;
+};
+
+export type SaveProcessDocumentPayload = {
+  observations?: string;
+  process: { id: number };
+  document: { id: number };
+};
+
 export const SaveProcessToolService = async (data: any) => {
   const response = await axios.post(endpoints.architecture.process.tools, data);
   return response;
@@ -32,15 +51,16 @@ export const DeleteProcessToolService = async (id: number | string) => {
   return response;
 };
 
-export const SaveProcessDocumentService = async (data: any) => {
-  const response = await axios.post(endpoints.architecture.process.documents, data);
+export const SaveProcessDocumentService = async (payload: SaveProcessDocumentPayload) =>
+  axios.post(endpoints.architecture.process.documents, payload);
+
+export const GetProcessDocumentByIdService = async (id: number | string) => {
+  const response = await axios.get<ProcessDocumentRelation>(`${endpoints.architecture.process.documents}/${id}`);
   return response;
 };
 
-export const UpdateProcessDocumentService = async (id: number | string, data: any) => {
-  const response = await axios.patch(`${endpoints.architecture.process.documents}/${id}`, data);
-  return response;
-};
+export const UpdateProcessDocumentService = async (id: number | string, payload: SaveProcessDocumentPayload) =>
+  axios.patch(`${endpoints.architecture.process.documents}/${id}`, payload);
 
 export const DeleteProcessDocumentService = async (id: number | string) => {
   const response = await axios.delete(`${endpoints.architecture.process.documents}/${id}`);

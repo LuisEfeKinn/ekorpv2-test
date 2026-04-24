@@ -5,7 +5,7 @@ import type { DocumentItem, DocumentUpsertFormValues } from 'src/services/docume
 
 import { useDropzone } from 'react-dropzone';
 import { useDebounce } from 'minimal-shared/hooks';
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useMemo, useState, useEffect, useCallback, useRef } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -65,6 +65,16 @@ const emptyDocumentForm = (): DocumentUpsertFormState => ({
 
 const normalizeLink = (rawLink: string): string => rawLink.replaceAll('`', '').trim();
 
+const normalizeExternalUrl = (rawLink: string): string | null => {
+  const normalized = normalizeLink(rawLink);
+  if (!normalized) return null;
+
+  if (/^https?:\/\//i.test(normalized)) return normalized;
+  if (/^[a-z][a-z\d+\-.]*:/i.test(normalized)) return null;
+
+  return `https://${normalized}`;
+};
+
 type Props = {
   open: boolean;
   onClose: () => void;
@@ -100,8 +110,14 @@ export function DocumentCreateEditDrawer({
   const [verifierOptions, setVerifierOptions] = useState<IUserManagement[]>([]);
   const [verifierLoading, setVerifierLoading] = useState(false);
 
+  // ... otros estados
+  const [focusFields, setFocusFields] = useState({ writing: false, expiration: false });
+
   const debouncedAuthorSearch = useDebounce(authorSearch.trim(), 400);
   const debouncedVerifierSearch = useDebounce(verifierSearch.trim(), 400);
+
+  const writingRef = useRef<HTMLInputElement>(null);
+  const expirationRef = useRef<HTMLInputElement>(null);
 
   const selectedAuthor = useMemo(
     () => authorOptions.find((opt) => opt.id === form.authorId) ?? null,
@@ -112,6 +128,8 @@ export function DocumentCreateEditDrawer({
     () => verifierOptions.find((opt) => opt.id === form.verifierId) ?? null,
     [verifierOptions, form.verifierId]
   );
+
+  const externalLink = useMemo(() => normalizeExternalUrl(form.link), [form.link]);
 
   const resetForm = useCallback(() => {
     setForm(emptyDocumentForm());
@@ -179,13 +197,19 @@ export function DocumentCreateEditDrawer({
     []
   );
 
+  const hasInvalidDateRange =
+    Boolean(form.writingDate) &&
+    Boolean(form.expirationDate) &&
+    form.expirationDate < form.writingDate;
+
   const canSave =
     form.name.trim() &&
     form.code.trim() &&
     form.version.trim() &&
     form.documentTypeId.trim() &&
     form.documentStatusId.trim() &&
-    (file || existingFileName);
+    (file || existingFileName) &&
+    !hasInvalidDateRange;
 
   const fileError = submitted && !file && !existingFileName;
 
@@ -202,6 +226,11 @@ export function DocumentCreateEditDrawer({
   const handleSave = useCallback(async () => {
     setSubmitted(true);
     if (!canSave) return;
+
+    if (hasInvalidDateRange) {
+      toast.error('La fecha de expiración no puede ser menor a la fecha de redacción.');
+      return;
+    }
 
     const versionNumber = Number(form.version);
     const documentTypeId = Number(form.documentTypeId);
@@ -220,11 +249,11 @@ export function DocumentCreateEditDrawer({
       const values: DocumentUpsertFormValues = {
         code: form.code.trim(),
         name: form.name.trim(),
-        description: form.description.trim(),
+        description: form.description.trim() || null,
         version: versionNumber,
-        writingDate: form.writingDate,
-        expirationDate: form.expirationDate,
-        type: form.type.trim(),
+        writingDate: form.writingDate.trim() || null,
+        expirationDate: form.expirationDate.trim() || null,
+        type: form.type.trim() || null,
         link: normalizedLink,
         documentStatusId,
         documentTypeId,
@@ -250,7 +279,16 @@ export function DocumentCreateEditDrawer({
     } finally {
       setSaving(false);
     }
-  }, [canSave, editRow, file, form, onSuccess, t]);
+  }, [canSave, editRow, file, form, hasInvalidDateRange, onSuccess, t]);
+
+  const handleOpenExternalLink = useCallback(() => {
+    if (!externalLink) {
+      toast.error('El enlace no es válido.');
+      return;
+    }
+
+    window.open(externalLink, '_blank', 'noopener,noreferrer');
+  }, [externalLink]);
 
   return (
     <Drawer
@@ -386,19 +424,44 @@ export function DocumentCreateEditDrawer({
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
+              inputRef={writingRef} // Referencia para controlar el input
               label={t('documentManagement.form.fields.writingDate')}
-              type="date"
+              type={focusFields.writing || form.writingDate ? "date" : "text"} 
               value={form.writingDate}
               onChange={(e) => updateField('writingDate', e.target.value)}
-              InputLabelProps={{ shrink: Boolean(form.writingDate) }}
+              onFocus={() => {
+                setFocusFields((prev) => ({ ...prev, writing: true }));
+                // Esperamos un milisegundo a que React cambie el type y abrimos el calendario
+                setTimeout(() => {
+                  writingRef.current?.showPicker?.();
+                }, 10);
+              }}
+              onBlur={() => setFocusFields((prev) => ({ ...prev, writing: false }))}
+              InputLabelProps={{ shrink: !!(focusFields.writing || form.writingDate) }}
             />
+            
             <TextField
               fullWidth
+              inputRef={expirationRef}
               label={t('documentManagement.form.fields.expirationDate')}
-              type="date"
+              type={focusFields.expiration || form.expirationDate ? "date" : "text"}
               value={form.expirationDate}
               onChange={(e) => updateField('expirationDate', e.target.value)}
-              InputLabelProps={{ shrink: Boolean(form.expirationDate) }}
+              error={hasInvalidDateRange}
+              helperText={
+                hasInvalidDateRange
+                  ? 'La fecha de expiración no puede ser menor a la fecha de redacción.'
+                  : undefined
+              }
+              inputProps={{ min: form.writingDate || undefined }}
+              onFocus={() => {
+                setFocusFields((prev) => ({ ...prev, expiration: true }));
+                setTimeout(() => {
+                  expirationRef.current?.showPicker?.();
+                }, 10);
+              }}
+              onBlur={() => setFocusFields((prev) => ({ ...prev, expiration: false }))}
+              InputLabelProps={{ shrink: !!(focusFields.expiration || form.expirationDate) }}
             />
           </Stack>
 
@@ -494,6 +557,19 @@ export function DocumentCreateEditDrawer({
             value={form.link}
             onChange={(e) => updateField('link', e.target.value)}
           />
+
+          {isEdit ? (
+            <Button
+              variant="outlined"
+              color="primary"
+              startIcon={<Iconify icon="solar:eye-bold" />}
+              onClick={handleOpenExternalLink}
+              disabled={!externalLink}
+              sx={{ justifySelf: 'start' }}
+            >
+              Ver enlace
+            </Button>
+          ) : null}
         </Box>
       </Scrollbar>
 

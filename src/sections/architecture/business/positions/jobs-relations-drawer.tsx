@@ -154,7 +154,7 @@ export function JobsRelationsDrawer({ open, onClose, onSuccess, jobId, kind, ini
       if (kind === 'process') {
         res = await GetProcessTablePaginationService({ page: 1, perPage: 1000 });
       } else if (kind === 'document') {
-        res = await GetDocumentsListService({ page: 1, perPage: 1000 });
+        res = await GetDocumentsListService();
       } else if (kind === 'system') {
         res = await GetApplicationTablePaginationService({ page: 1, perPage: 1000 });
       } else if (kind === 'data') {

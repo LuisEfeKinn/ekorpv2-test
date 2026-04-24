@@ -134,7 +134,7 @@ export function ObjectiveRelationsDrawer({ open, onClose, onSuccess, objectiveId
       } else if (kind === 'job') {
         res = await GetJobsPaginationService({ page: 1, perPage: 1000 });
       } else if (kind === 'document') {
-        res = await GetDocumentsListService({ page: 1, perPage: 1000 });
+        res = await GetDocumentsListService();
       } else {
         res = await GetIndicatorsListService({ page: 1, perPage: 1000 });
       }

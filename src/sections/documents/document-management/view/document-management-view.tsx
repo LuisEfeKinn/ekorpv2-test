@@ -27,6 +27,7 @@ import { useRouter } from 'src/routes/hooks';
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 import {
+  GetDocumentByIdService,
   DeleteDocumentService,
   DownloadDocumentService,
   GetDocumentsPaginationService,
@@ -91,6 +92,31 @@ const downloadBlob = (blob: Blob, fileName: string) => {
   link.click();
   link.remove();
   URL.revokeObjectURL(blobUrl);
+};
+
+const isObject = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null;
+
+const normalizeDocumentDetail = (value: unknown, fallback: DocumentItem): DocumentItem => {
+  if (!isObject(value)) return fallback;
+
+  const source = isObject(value.data) ? value.data : value;
+  const detail = isObject(source) ? source : {};
+
+  return {
+    ...fallback,
+    ...(typeof detail.id === 'number' ? { id: detail.id } : {}),
+    ...(typeof detail.code === 'string' ? { code: detail.code } : {}),
+    ...(typeof detail.name === 'string' ? { name: detail.name } : {}),
+    ...(typeof detail.description === 'string' ? { description: detail.description } : {}),
+    ...(typeof detail.version === 'number' ? { version: detail.version } : {}),
+    ...(typeof detail.writingDate === 'string' ? { writingDate: detail.writingDate } : {}),
+    ...(typeof detail.expirationDate === 'string' ? { expirationDate: detail.expirationDate } : {}),
+    ...(typeof detail.modificationDate === 'string' ? { modificationDate: detail.modificationDate } : {}),
+    ...(typeof detail.file === 'string' ? { file: detail.file } : {}),
+    ...(typeof detail.type === 'string' ? { type: detail.type } : {}),
+    ...(typeof detail.link === 'string' ? { link: detail.link } : {}),
+    ...(typeof detail.originalFile === 'string' ? { originalFile: detail.originalFile } : {}),
+  };
 };
 
 export function DocumentManagementView() {
@@ -160,7 +186,7 @@ export function DocumentManagementView() {
       const response = await GetDocumentsPaginationService({
         page: table.page + 1,
         perPage: table.rowsPerPage,
-        ...(debouncedSearch ? { search: debouncedSearch } : {}),
+        ...(debouncedSearch ? { name: debouncedSearch } : {}),
       });
 
       const extracted = extractDocumentsPayload(response.data as DocumentsListResponse | unknown);
@@ -188,9 +214,17 @@ export function DocumentManagementView() {
   }, [upsertDrawer]);
 
   const handleOpenEdit = useCallback(
-    (row: DocumentItem) => {
-      setEditRow(row);
-      upsertDrawer.onTrue();
+    async (row: DocumentItem) => {
+      try {
+        setEditRow(row);
+        upsertDrawer.onTrue();
+
+        const response = await GetDocumentByIdService(row.id);
+        setEditRow((current) => normalizeDocumentDetail(response.data, current ?? row));
+      } catch {
+        setEditRow(row);
+        upsertDrawer.onTrue();
+      }
     },
     [upsertDrawer]
   );
@@ -288,7 +322,7 @@ export function DocumentManagementView() {
                   <DocumentManagementTableRow
                     key={row.id}
                     row={row}
-                    onEditRow={() => handleOpenEdit(row)}
+                    onEditRow={() => void handleOpenEdit(row)}
                     onPreviewRow={() => handleOpenPreview(row)}
                     onDownloadRow={() => void handleDownloadRow(row)}
                     onDeleteRow={() => handleDeleteRow(row.id)}
