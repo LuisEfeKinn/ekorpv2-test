@@ -449,6 +449,17 @@ function DocumentManagementTableRow({ row, onEditRow, onPreviewRow, onDownloadRo
             <Iconify icon="solar:map-point-bold" />
             {t('documentManagement.actions.map')}
           </MenuItem>
+
+          <MenuItem
+            onClick={() => {
+              router.push(paths.dashboard.documents.documentFeedbacks(String(row.id)));
+              menuActions.onClose();
+            }}
+          >
+            <Iconify icon="solar:document-text-bold" />
+            {t('documentManagement.actions.feedbacks')}
+          </MenuItem>
+
           <MenuItem
             onClick={() => {
               confirmDialog.onTrue();

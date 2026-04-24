@@ -41,6 +41,7 @@
       "open": "Abrir",
       "edit": "Editar",
       "map": "Mapa",
+      "feedbacks": "Lecciones & Propuestas",
       "delete": "Eliminar",
       "save": "Guardar",
       "clear": "Limpiar",
@@ -154,6 +155,12 @@
         "downloading": "No se pudo descargar el documento",
         "invalidForm": "Revisa los campos requeridos",
         "fileRequired": "El archivo es obligatorio"
+      }
+    },
+    "feedbacks": {
+      "title": "Lecciones Aprendidas & Propuestas de Mejora",
+      "actions": {
+        "back": "Atrás"
       }
     },
     "dialogs": {

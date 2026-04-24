@@ -113,6 +113,21 @@ function normalizeList(raw: unknown): unknown[] {
   return [];
 }
 
+function unwrapRelationPayload(raw: unknown): Record<string, unknown> | null {
+  let current: unknown = raw;
+
+  for (let i = 0; i < 4; i += 1) {
+    if (!isRecord(current)) break;
+    if (!('data' in current)) break;
+
+    const next = (current as { data?: unknown }).data;
+    if (!isRecord(next)) break;
+    current = next;
+  }
+
+  return isRecord(current) ? current : null;
+}
+
 function extractDefaults(kind: DocumentMapRelationKind, payload: unknown): RelationDefaults {
   if (!isRecord(payload)) return { relatedId: null, observations: '' };
 
@@ -273,67 +288,70 @@ export function DocumentMapNodeCrudDrawer({
     try {
       setLoading(true);
 
+      const defaults = extractDefaults(kind, target?.payload);
+
       if (kind === 'process') {
         const res = await GetProcessDocumentByIdService(relationId);
-        const data: ProcessDocumentRelation | undefined = res?.data;
-        const relatedId = coerceId(data?.processId) ?? coerceId(data?.process?.id) ?? null;
+        const data = unwrapRelationPayload(res?.data) as (ProcessDocumentRelation & Record<string, unknown>) | null;
+        const relatedId =
+          coerceId(data?.processId) ??
+          coerceId((data?.process as { id?: unknown } | undefined)?.id) ??
+          defaults.relatedId;
         setForm({
           relatedId,
-          observations: typeof data?.observations === 'string' ? data.observations : '',
+          observations: typeof data?.observations === 'string' ? data.observations : defaults.observations,
         });
-        setEditingRelationLabel(String(data?.process?.name ?? ''));
+        setEditingRelationLabel(String((data?.process as { name?: unknown } | undefined)?.name ?? targetLabel ?? ''));
         return;
       }
 
       if (kind === 'job') {
         const res = await GetJobDocumentRelationByIdService(relationId);
-        const base = res?.data;
-        const data = isRecord(base) && isRecord(base.data) ? (base.data as Record<string, unknown>) : (base as unknown);
+        const data = unwrapRelationPayload(res?.data);
         if (!isRecord(data)) return;
-        const relatedId = coerceId(data.jobId) ?? coerceId((data.job as { id?: unknown } | undefined)?.id) ?? null;
+        const relatedId = coerceId(data.jobId) ?? coerceId((data.job as { id?: unknown } | undefined)?.id) ?? defaults.relatedId;
         setForm({
           relatedId,
-          observations: typeof data.observations === 'string' ? data.observations : '',
+          observations: typeof data.observations === 'string' ? data.observations : defaults.observations,
         });
-        setEditingRelationLabel(String((data.job as { name?: unknown } | undefined)?.name ?? ''));
+        setEditingRelationLabel(String((data.job as { name?: unknown } | undefined)?.name ?? targetLabel ?? ''));
         return;
       }
 
       if (kind === 'objective') {
         const res = await GetDocumentObjectiveRelationByIdService(relationId);
-        const base = res?.data;
-        const data = isRecord(base) && isRecord(base.data) ? (base.data as Record<string, unknown>) : (base as unknown);
+        const data = unwrapRelationPayload(res?.data);
         if (!isRecord(data)) return;
         const relatedId =
-          coerceId(data.objectiveId) ?? coerceId((data.objective as { id?: unknown } | undefined)?.id) ?? null;
+          coerceId(data.objectiveId) ?? coerceId((data.objective as { id?: unknown } | undefined)?.id) ?? defaults.relatedId;
         setForm({
           relatedId,
-          observations: typeof data.observations === 'string' ? data.observations : '',
+          observations: typeof data.observations === 'string' ? data.observations : defaults.observations,
         });
-        setEditingRelationLabel(String((data.objective as { name?: unknown } | undefined)?.name ?? ''));
+        setEditingRelationLabel(String((data.objective as { name?: unknown } | undefined)?.name ?? targetLabel ?? ''));
         return;
       }
 
       if (kind === 'organizationalUnit') {
         const res = await GetOrganizationalUnitDocumentByIdService(relationId);
-        const data: OrganizationalUnitDocumentRelation | undefined = res?.data?.data;
-        const relatedId = coerceId(data?.organizationalUnit?.id) ?? null;
+        const data = unwrapRelationPayload(res?.data) as (OrganizationalUnitDocumentRelation & Record<string, unknown>) | null;
+        const relatedId = coerceId(data?.organizationalUnit?.id) ?? defaults.relatedId;
         setForm({
           relatedId,
-          observations: typeof data?.observations === 'string' ? data.observations : '',
+          observations: typeof data?.observations === 'string' ? data.observations : defaults.observations,
         });
-        setEditingRelationLabel(String(data?.organizationalUnit?.name ?? ''));
+        setEditingRelationLabel(String(data?.organizationalUnit?.name ?? targetLabel ?? ''));
         return;
       }
 
       const res = await GetToolDocumentRelationByIdService(relationId);
-      const data: ToolDocumentRelation | undefined = res?.data;
-      const relatedId = coerceId(data?.toolId) ?? coerceId(data?.tool?.id) ?? null;
+      const data = unwrapRelationPayload(res?.data) as (ToolDocumentRelation & Record<string, unknown>) | null;
+      const relatedId = coerceId(data?.toolId) ?? coerceId(data?.tool?.id) ?? defaults.relatedId;
       setForm({
         relatedId,
-        observations: typeof data?.observations === 'string' ? data.observations : '',
+        observations: typeof data?.observations === 'string' ? data.observations : defaults.observations,
       });
-      setEditingRelationLabel(String(data?.tool?.name ?? ''));
+      setEditingRelationLabel(String(data?.tool?.name ?? targetLabel ?? ''));
     } catch {
       setEditingRelationLabel('');
       const defaults = extractDefaults(kind, target?.payload);
@@ -359,7 +377,9 @@ export function DocumentMapNodeCrudDrawer({
     void loadEditRelation();
   }, [kind, loadEditRelation, loadOptions, mode, open, target?.payload]);
 
-  const canSubmit = form.relatedId != null;
+  const observationsValue = form.observations.trim();
+  const observationsError = submitted && !observationsValue;
+  const canSubmit = form.relatedId != null && Boolean(observationsValue);
 
   const handleSave = useCallback(async () => {
     setSubmitted(true);
@@ -369,8 +389,7 @@ export function DocumentMapNodeCrudDrawer({
       return;
     }
 
-    const obs = form.observations.trim();
-    const observations = obs ? obs : undefined;
+    const observations = observationsValue;
 
     try {
       setLoading(true);
@@ -379,7 +398,7 @@ export function DocumentMapNodeCrudDrawer({
         const payload: SaveProcessDocumentPayload = {
           process: { id: Number(form.relatedId) },
           document: { id: documentId },
-          ...(observations ? { observations } : {}),
+          observations,
         };
         if (mode === 'edit' && relationId != null) {
           await UpdateProcessDocumentService(relationId, payload);
@@ -388,7 +407,7 @@ export function DocumentMapNodeCrudDrawer({
         }
       } else if (kind === 'job') {
         const payload = {
-          ...(observations ? { observations } : {}),
+          observations,
           job: { id: Number(form.relatedId) },
           document: { id: documentId },
         };
@@ -399,7 +418,7 @@ export function DocumentMapNodeCrudDrawer({
         }
       } else if (kind === 'objective') {
         const payload = {
-          ...(observations ? { observations } : {}),
+          observations,
           objective: { id: Number(form.relatedId) },
           document: { id: documentId },
         };
@@ -410,7 +429,7 @@ export function DocumentMapNodeCrudDrawer({
         }
       } else if (kind === 'organizationalUnit') {
         const payload = {
-          observations: observations ?? ' ',
+          observations,
           organizationalUnit: { id: Number(form.relatedId) },
           document: { id: documentId },
         };
@@ -421,7 +440,7 @@ export function DocumentMapNodeCrudDrawer({
         }
       } else {
         const payload = {
-          ...(observations ? { observations } : {}),
+          observations,
           tool: { id: Number(form.relatedId) },
           document: { id: documentId },
         };
@@ -444,7 +463,7 @@ export function DocumentMapNodeCrudDrawer({
     } finally {
       setLoading(false);
     }
-  }, [canSubmit, documentId, form.observations, form.relatedId, kind, mode, onClose, onSuccess, relationId, t]);
+  }, [canSubmit, documentId, form.relatedId, kind, mode, observationsValue, onClose, onSuccess, relationId, t]);
 
   const handleDelete = useCallback(async () => {
     if (mode !== 'edit' || relationId == null) return;
@@ -517,6 +536,7 @@ export function DocumentMapNodeCrudDrawer({
           <Autocomplete
             options={filteredOptions}
             value={selectedOption}
+            disabled={mode === 'edit' || loading}
             onChange={(_, next) => setForm((prev) => ({ ...prev, relatedId: next?.id ?? null }))}
             getOptionLabel={(opt) => opt.label}
             isOptionEqualToValue={(a, b) => a.id === b.id}
@@ -546,8 +566,13 @@ export function DocumentMapNodeCrudDrawer({
             onChange={(e) => setForm((prev) => ({ ...prev, observations: e.target.value }))}
             multiline
             minRows={3}
+            error={observationsError}
             inputProps={{ maxLength: MAX_VARCHAR_LENGTH }}
-            helperText={`${form.observations.length}/${MAX_VARCHAR_LENGTH}`}
+            helperText={
+              observationsError
+                ? t('documentManagement.map.relations.validation.required')
+                : `${form.observations.length}/${MAX_VARCHAR_LENGTH}`
+            }
           />
 
           <Stack direction="row" spacing={1.5} sx={{ pt: 1 }}>
@@ -571,7 +596,7 @@ export function DocumentMapNodeCrudDrawer({
               disabled={loading || !canSubmit}
               fullWidth
               startIcon={
-                loading ? <CircularProgress size={18} color="inherit" /> : <Iconify icon="mingcute:save-line" />
+                loading ? <CircularProgress size={18} color="inherit" /> : <Iconify icon="solar:pen-bold" />
               }
             >
               {mode === 'edit'

@@ -627,6 +627,7 @@ export const paths = {
       documentManagementMap: (id: string) => `${ROOTS.DASHBOARD}/documents/document-management/map?id=${encodeURIComponent(id)}`,
       documentManagementMapExpand: (documentId: string, nodeId: string) =>
         `${ROOTS.DASHBOARD}/documents/document-management/map/expand?id=${encodeURIComponent(documentId)}&nodeId=${encodeURIComponent(nodeId)}`,
+      documentFeedbacks: (id: string) => `${ROOTS.DASHBOARD}/documents/document-management/feedbacks?id=${encodeURIComponent(id)}`,
     },
 
     ai: {

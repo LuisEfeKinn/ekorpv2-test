@@ -31,7 +31,7 @@ type Props = {
   initialDescription?: string;
   feedbackId?: string | number;
   objectiveId?: string | number;
-  fileEntity?: 'objective' | 'organizational-unit';
+  fileEntity?: 'objective' | 'organizational-unit' | 'document';
   fileEntityId?: string | number;
   isLessonLearned?: boolean;
   editMode?: boolean;
@@ -95,7 +95,7 @@ export function SharedFeedbackCreateDrawer({
       setLoading(true);
       const trimmed = description.slice(0, MAX_VARCHAR_LENGTH);
 
-      if (resolvedEntity === 'organizational-unit' && !editMode) {
+      if ((resolvedEntity === 'organizational-unit' || resolvedEntity === 'document') && !editMode) {
         if (!resolvedEntityId) {
           toast.error(t('process.feedbacks.invalidId'));
           setLoading(false);
@@ -112,7 +112,7 @@ export function SharedFeedbackCreateDrawer({
           formData.append('file', selectedFile);
         }
 
-        const url = `/api/feedbacks/organizational-unit/${encodeURIComponent(String(resolvedEntityId))}/with-file`;
+        const url = `/api/feedbacks/${encodeURIComponent(resolvedEntity)}/${encodeURIComponent(String(resolvedEntityId))}/with-file`;
 
         setUploading(true);
         await axios.post(url, formData);

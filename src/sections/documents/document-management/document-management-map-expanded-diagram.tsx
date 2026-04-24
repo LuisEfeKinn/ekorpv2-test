@@ -21,6 +21,9 @@ import { DeleteDocumentObjectiveRelationService } from 'src/services/architectur
 import { DeleteProcessDocumentService } from 'src/services/architecture/process/processRelations.service';
 import { DeleteToolDocumentRelationService } from 'src/services/architecture/tools/toolsRelations.service';
 import { DeleteOrganizationalUnitDocumentService } from 'src/services/organization/organizationalUnit.service';
+import {
+  DeleteDocumentFeedbackService,
+} from 'src/services/documents/feedbacks.service';
 
 import { toast } from 'src/components/snackbar';
 import {
@@ -30,6 +33,7 @@ import {
 import { ConfirmDialog } from 'src/components/custom-dialog';
 
 import { DocumentMapNodeCrudDrawer, type DocumentMapRelationKind } from './document-map-node-crud-drawers';
+import { DocumentLessonsProposalsDrawer } from './document-lessons-proposals-drawer';
 
 type Props = {
   documentId: string;
@@ -54,37 +58,34 @@ const coerceId = (value: unknown): number | null => {
   return null;
 };
 
-const detectKind = (nodeIdValue: string, labelValue: string): DocumentMapRelationKind => {
-  const nodeLower = nodeIdValue.toLowerCase();
-  const labelLower = labelValue.toLowerCase();
+const FEEDBACK_NODE_IDS = new Set(['lec', 'prm']);
 
-  const isProcess = nodeLower.includes('process') || labelLower.includes('proce') || labelLower.includes('proceso');
-  const isJob =
-    nodeLower.includes('job') ||
-    nodeLower.includes('position') ||
-    labelLower.includes('cargo') ||
-    labelLower.includes('puesto') ||
-    labelLower.includes('actor');
-  const isObjective = nodeLower.includes('objective') || labelLower.includes('objetiv');
-  const isOrg =
-    nodeLower.includes('organiz') ||
-    nodeLower.includes('org') ||
-    labelLower.includes('unidad') ||
-    labelLower.includes('estructura') ||
-    labelLower.includes('organizac');
-  const isTool = nodeLower.includes('tool') || labelLower.includes('herramient');
+const normalizeNodeId = (nodeIdValue: string): string => nodeIdValue.trim().toLowerCase();
 
-  if (isProcess) return 'process';
-  if (isJob) return 'job';
-  if (isObjective) return 'objective';
-  if (isOrg) return 'organizationalUnit';
-  if (isTool) return 'tool';
+const detectKind = (nodeIdValue: string): DocumentMapRelationKind => {
+  const idLower = nodeIdValue.toLowerCase();
+
+  if (idLower === 'pro') return 'process';
+  if (idLower === 'job') return 'job';
+  if (idLower === 'obj') return 'objective';
+  if (idLower === 'ou') return 'organizationalUnit';
+  if (idLower === 'tool') return 'tool';
+  
   return 'process';
+};
+
+const isFeedbackNode = (nodeIdValue: string): boolean => {
+  return FEEDBACK_NODE_IDS.has(normalizeNodeId(nodeIdValue));
+};
+
+const isLessonNode = (nodeIdValue: string): boolean => {
+  return normalizeNodeId(nodeIdValue) === 'lec';
 };
 
 type DeleteTarget = {
   relationId: number;
   label: string;
+  nodeId: string;
 };
 
 const extractRelationId = (payload: unknown): number | null => {
@@ -105,6 +106,11 @@ export function DocumentManagementMapExpandedDiagram({ documentId, nodeId, heigh
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerMode, setDrawerMode] = useState<'create' | 'edit'>('create');
   const [drawerTarget, setDrawerTarget] = useState<ExpandibleMapNode | null>(null);
+  const [feedbackDrawerOpen, setFeedbackDrawerOpen] = useState(false);
+  const [feedbackEditMode, setFeedbackEditMode] = useState(false);
+  const [feedbackIsLesson, setFeedbackIsLesson] = useState(false);
+  const [feedbackId, setFeedbackId] = useState<string | number | null>(null);
+  const [feedbackEditData, setFeedbackEditData] = useState<unknown>(null);
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null);
   const [deleting, setDeleting] = useState(false);
 
@@ -159,9 +165,12 @@ export function DocumentManagementMapExpandedDiagram({ documentId, nodeId, heigh
   );
 
   const headerTitle = documentLabel || t('documentManagement.map.title');
+    const normalizedNodeId = useMemo(() => normalizeNodeId(String(nodeId ?? '')), [nodeId]);
+    const isFeedbackContext = FEEDBACK_NODE_IDS.has(normalizedNodeId);
+    const isLessonContext = normalizedNodeId === 'lec';
   const currentKind = useMemo(
-    () => detectKind(String(nodeId ?? ''), String(expandedData?.label ?? '')),
-    [expandedData?.label, nodeId]
+     () => detectKind(String(nodeId ?? '')),
+     [nodeId]
   );
 
   const existingRelatedIds = useMemo(() => {
@@ -204,10 +213,20 @@ export function DocumentManagementMapExpandedDiagram({ documentId, nodeId, heigh
   }, [router]);
 
   const handleOpenDrawer = useCallback((mode: 'create' | 'edit', target: ExpandibleMapNode | null) => {
-    setDrawerMode(mode);
-    setDrawerTarget(target);
-    setDrawerOpen(true);
-  }, []);
+    const normalizedTargetId = target ? normalizeNodeId(String(target.id)) : '';
+
+    if (isFeedbackContext || (target && FEEDBACK_NODE_IDS.has(normalizedTargetId))) {
+      setFeedbackEditMode(mode === 'edit');
+      setFeedbackIsLesson(isFeedbackContext ? isLessonContext : normalizedTargetId === 'lec');
+      setFeedbackId(mode === 'edit' && target ? extractRelationId(target.payload) : null);
+      setFeedbackEditData(target?.payload ?? null);
+      setFeedbackDrawerOpen(true);
+    } else {
+      setDrawerMode(mode);
+      setDrawerTarget(target);
+      setDrawerOpen(true);
+    }
+  }, [isFeedbackContext, isLessonContext]);
 
   const handleCloseDrawer = useCallback(() => {
     setDrawerOpen(false);
@@ -223,7 +242,11 @@ export function DocumentManagementMapExpandedDiagram({ documentId, nodeId, heigh
     try {
       setDeleting(true);
       const id = deleteTarget.relationId;
-      if (currentKind === 'process') {
+      
+      // Detectar si es un feedback basado en el label
+        if (isFeedbackNode(deleteTarget.nodeId)) {
+        await DeleteDocumentFeedbackService(id);
+      } else if (currentKind === 'process') {
         await DeleteProcessDocumentService(id);
       } else if (currentKind === 'job') {
         await DeleteJobDocumentRelationService(id);
@@ -303,7 +326,7 @@ export function DocumentManagementMapExpandedDiagram({ documentId, nodeId, heigh
             toast.error(t('documentManagement.map.relations.messages.deleteMissingId'));
             return;
           }
-          setDeleteTarget({ relationId, label: item.label });
+          setDeleteTarget({ relationId, label: item.label, nodeId: String(item.id) });
         }}
         height={height}
         sx={sx}
@@ -326,6 +349,22 @@ export function DocumentManagementMapExpandedDiagram({ documentId, nodeId, heigh
               }
             : null
         }
+      />
+
+      <DocumentLessonsProposalsDrawer
+        open={feedbackDrawerOpen}
+        onClose={() => {
+          setFeedbackDrawerOpen(false);
+          setFeedbackEditMode(false);
+          setFeedbackEditData(null);
+          setFeedbackId(null);
+        }}
+        onSuccess={handleDrawerSuccess}
+        documentId={Number(documentId)}
+        isLessonLearned={feedbackIsLesson}
+        editMode={feedbackEditMode}
+        initialData={feedbackEditData}
+        feedbackId={feedbackId ? String(feedbackId) : undefined}
       />
 
       <ConfirmDialog

@@ -41,6 +41,7 @@
       "open": "Open",
       "edit": "Edit",
       "map": "Map",
+      "feedbacks": "Lessons & Proposals",
       "delete": "Delete",
       "save": "Save",
       "clear": "Clear",
@@ -154,6 +155,12 @@
         "downloading": "Unable to download document",
         "invalidForm": "Check required fields",
         "fileRequired": "File is required"
+      }
+    },
+    "feedbacks": {
+      "title": "Learned Lessons & Improvement Proposals",
+      "actions": {
+        "back": "Back"
       }
     },
     "dialogs": {

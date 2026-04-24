@@ -838,6 +838,14 @@ export function NodesExpandibleMapExpanded<TItemPayload = unknown>({
   const generate = useCallback((): { nodes: Node[]; edges: Edge[] } => {
     const centerX = 0;
     const centerY = 0;
+    const childNodeWidth = 240;
+    const childNodeHeight = 170;
+    const minRingRadius = 320;
+    const nodeCount = Math.max(items.length, 1);
+    const circumferenceRadius = (nodeCount * (childNodeWidth + 40)) / (2 * Math.PI);
+    const centerClearanceRadius = 260 + childNodeHeight / 2;
+    const ringRadius = Math.max(minRingRadius, circumferenceRadius, centerClearanceRadius);
+    const angleStep = (2 * Math.PI) / nodeCount;
 
     const centralNode: Node = {
       id: 'central',
@@ -848,11 +856,9 @@ export function NodesExpandibleMapExpanded<TItemPayload = unknown>({
     };
 
     const childNodes: Node[] = items.map((item, index) => {
-      const spacingY = 260;
-      const step = Math.floor(index / 2) + 1;
-      const sign = index % 2 === 0 ? -1 : 1;
-      const x = centerX - 110;
-      const y = centerY + sign * step * spacingY - 90;
+      const angle = -Math.PI / 2 + index * angleStep;
+      const x = centerX + ringRadius * Math.cos(angle) - childNodeWidth / 2;
+      const y = centerY + ringRadius * Math.sin(angle) - childNodeHeight / 2;
       const color = colors[index % colors.length];
       const id = String(item.id);
 
