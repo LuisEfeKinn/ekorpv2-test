@@ -15,25 +15,32 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
 import { useTranslate } from 'src/locales';
-import { GetDocumentMapByIdService, GetDocumentMapExpandService } from 'src/services/documents/documents.service';
-import { DeleteJobDocumentRelationService } from 'src/services/architecture/business/jobRelations.service';
-import { DeleteDocumentObjectiveRelationService } from 'src/services/architecture/business/objectiveRelations.service';
-import { DeleteProcessDocumentService } from 'src/services/architecture/process/processRelations.service';
-import { DeleteToolDocumentRelationService } from 'src/services/architecture/tools/toolsRelations.service';
-import { DeleteOrganizationalUnitDocumentService } from 'src/services/organization/organizationalUnit.service';
 import {
   DeleteDocumentFeedbackService,
 } from 'src/services/documents/feedbacks.service';
+import { DeleteProcessDocumentService } from 'src/services/architecture/process/processRelations.service';
+import { DeleteJobDocumentRelationService } from 'src/services/architecture/business/jobRelations.service';
+import { DeleteToolDocumentRelationService } from 'src/services/architecture/tools/toolsRelations.service';
+import { DeleteOrganizationalUnitDocumentService } from 'src/services/organization/organizationalUnit.service';
+import { DeleteDocumentObjectiveRelationService } from 'src/services/architecture/business/objectiveRelations.service';
+import {
+  GetDocumentMapByIdService,
+  GetDocumentMapExpandService,
+  DeleteDocumentExamRelationService,
+  DeleteDocumentUserRelationService,
+  DeleteDocumentTopicRelationService,
+  DeleteDocumentCompetencyRelationService,
+} from 'src/services/documents/documents.service';
 
 import { toast } from 'src/components/snackbar';
+import { ConfirmDialog } from 'src/components/custom-dialog';
 import {
   type ExpandibleMapNode,
   NodesExpandibleMapExpanded,
 } from 'src/components/expandible-map';
-import { ConfirmDialog } from 'src/components/custom-dialog';
 
-import { DocumentMapNodeCrudDrawer, type DocumentMapRelationKind } from './document-map-node-crud-drawers';
 import { DocumentLessonsProposalsDrawer } from './document-lessons-proposals-drawer';
+import { DocumentMapNodeCrudDrawer, type DocumentMapRelationKind } from './document-map-node-crud-drawers';
 
 type Props = {
   documentId: string;
@@ -58,9 +65,7 @@ const coerceId = (value: unknown): number | null => {
   return null;
 };
 
-const FEEDBACK_NODE_IDS = new Set(['lec', 'prm']);
-
-const normalizeNodeId = (nodeIdValue: string): string => nodeIdValue.trim().toLowerCase();
+const normalizeText = (value: unknown): string => String(value ?? '').trim().toLowerCase();
 
 const detectKind = (nodeIdValue: string): DocumentMapRelationKind => {
   const idLower = nodeIdValue.toLowerCase();
@@ -70,22 +75,106 @@ const detectKind = (nodeIdValue: string): DocumentMapRelationKind => {
   if (idLower === 'obj') return 'objective';
   if (idLower === 'ou') return 'organizationalUnit';
   if (idLower === 'tool') return 'tool';
+  if (idLower === 'top') return 'topic';
+  if (idLower === 'usr') return 'subscriber';
+  if (idLower === 'cmp') return 'competency';
+  if (idLower === 'exm') return 'exam';
   
   return 'process';
 };
 
-const isFeedbackNode = (nodeIdValue: string): boolean => {
-  return FEEDBACK_NODE_IDS.has(normalizeNodeId(nodeIdValue));
+const isLessonContextNode = (nodeIdValue: unknown, labelValue: unknown): boolean => {
+  const nodeLower = normalizeText(nodeIdValue);
+  const labelLower = normalizeText(labelValue);
+  return (
+    nodeLower === 'lec' ||
+    nodeLower.includes('lec') ||
+    labelLower.includes('lección') ||
+    labelLower.includes('leccion') ||
+    labelLower.includes('lecciones') ||
+    labelLower.includes('lesson') ||
+    labelLower.includes('lessons')
+  );
 };
 
-const isLessonNode = (nodeIdValue: string): boolean => {
-  return normalizeNodeId(nodeIdValue) === 'lec';
+const isProposalContextNode = (nodeIdValue: unknown, labelValue: unknown): boolean => {
+  const nodeLower = normalizeText(nodeIdValue);
+  const labelLower = normalizeText(labelValue);
+  return (
+    nodeLower === 'prm' ||
+    nodeLower === 'prp' ||
+    nodeLower.includes('prm') ||
+    nodeLower.includes('prp') ||
+    labelLower.includes('propuesta') ||
+    labelLower.includes('propuestas') ||
+    labelLower.includes('mejora') ||
+    labelLower.includes('proposal') ||
+    labelLower.includes('proposals')
+  );
+};
+
+const isFeedbackPayload = (payload: unknown): boolean => {
+  if (!isRecord(payload)) return false;
+  if ('improvementLesson' in payload) return true;
+  if ('feedbackId' in payload) return true;
+  if ('feedback' in payload && isRecord(payload.feedback)) return true;
+  return false;
+};
+
+const getFeedbackIdFromPayload = (payload: unknown): number | null => {
+  if (!isRecord(payload)) return null;
+
+  const directFeedbackId = coerceId(payload.feedbackId);
+  if (directFeedbackId != null) return directFeedbackId;
+
+  if ('feedback' in payload && isRecord(payload.feedback)) {
+    const nestedId = coerceId((payload.feedback as Record<string, unknown>).id);
+    if (nestedId != null) return nestedId;
+  }
+
+  if ('data' in payload && isRecord(payload.data) && 'feedback' in payload.data && isRecord(payload.data.feedback)) {
+    const nestedId = coerceId((payload.data.feedback as Record<string, unknown>).id);
+    if (nestedId != null) return nestedId;
+  }
+
+  const directId = coerceId(payload.id);
+  if (directId != null) return directId;
+
+  const relationId = coerceId(payload.relationId);
+  if (relationId != null) return relationId;
+
+  return null;
+};
+
+const getFeedbackInitialDataFromPayload = (payload: unknown): unknown => {
+  if (!isRecord(payload)) return payload;
+  if ('feedback' in payload) return payload.feedback;
+  if ('data' in payload && isRecord(payload.data) && 'feedback' in payload.data) return payload.data.feedback;
+  return payload;
+};
+
+const getFeedbackIsLessonFromPayload = (payload: unknown): boolean | null => {
+  if (!isRecord(payload)) return null;
+  if (typeof payload.improvementLesson === 'boolean') return payload.improvementLesson;
+  if ('feedback' in payload && isRecord(payload.feedback) && typeof payload.feedback.improvementLesson === 'boolean') {
+    return payload.feedback.improvementLesson;
+  }
+  if (
+    'data' in payload &&
+    isRecord(payload.data) &&
+    'feedback' in payload.data &&
+    isRecord(payload.data.feedback) &&
+    typeof payload.data.feedback.improvementLesson === 'boolean'
+  ) {
+    return payload.data.feedback.improvementLesson;
+  }
+  return null;
 };
 
 type DeleteTarget = {
-  relationId: number;
+  id: number;
   label: string;
-  nodeId: string;
+  kind: 'feedback' | 'relation';
 };
 
 const extractRelationId = (payload: unknown): number | null => {
@@ -165,9 +254,10 @@ export function DocumentManagementMapExpandedDiagram({ documentId, nodeId, heigh
   );
 
   const headerTitle = documentLabel || t('documentManagement.map.title');
-    const normalizedNodeId = useMemo(() => normalizeNodeId(String(nodeId ?? '')), [nodeId]);
-    const isFeedbackContext = FEEDBACK_NODE_IDS.has(normalizedNodeId);
-    const isLessonContext = normalizedNodeId === 'lec';
+  const expandedLabel = expandedData?.label ?? '';
+  const isLessonContext = useMemo(() => isLessonContextNode(nodeId, expandedLabel), [expandedLabel, nodeId]);
+  const isProposalContext = useMemo(() => isProposalContextNode(nodeId, expandedLabel), [expandedLabel, nodeId]);
+  const isFeedbackContext = isLessonContext || isProposalContext;
   const currentKind = useMemo(
      () => detectKind(String(nodeId ?? '')),
      [nodeId]
@@ -195,7 +285,27 @@ export function DocumentManagementMapExpandedDiagram({ documentId, nodeId, heigh
           );
         return coerceId(fallback);
       }
-      if (isRecord(payload)) return coerceId(payload.toolId) ?? coerceId((payload.tool as { id?: unknown } | undefined)?.id);
+      if (currentKind === 'tool') {
+        if (isRecord(payload)) return coerceId(payload.toolId) ?? coerceId((payload.tool as { id?: unknown } | undefined)?.id);
+        return coerceId(fallback);
+      }
+      if (currentKind === 'topic') {
+        if (isRecord(payload)) return coerceId(payload.topicId) ?? coerceId((payload.topic as { id?: unknown } | undefined)?.id);
+        return coerceId(fallback);
+      }
+      if (currentKind === 'subscriber') {
+        if (isRecord(payload)) return coerceId(payload.userId) ?? coerceId((payload.user as { id?: unknown } | undefined)?.id);
+        return coerceId(fallback);
+      }
+      if (currentKind === 'competency') {
+        if (isRecord(payload))
+          return coerceId(payload.competencyId) ?? coerceId((payload.competency as { id?: unknown } | undefined)?.id);
+        return coerceId(fallback);
+      }
+      if (isRecord(payload)) {
+        const evaluation = payload.evaluation as { evaluationId?: unknown } | undefined;
+        return coerceId(payload.evaluationId) ?? coerceId(evaluation?.evaluationId);
+      }
       return coerceId(fallback);
     };
 
@@ -212,21 +322,30 @@ export function DocumentManagementMapExpandedDiagram({ documentId, nodeId, heigh
     router.push(paths.dashboard.documents.documentManagement);
   }, [router]);
 
-  const handleOpenDrawer = useCallback((mode: 'create' | 'edit', target: ExpandibleMapNode | null) => {
-    const normalizedTargetId = target ? normalizeNodeId(String(target.id)) : '';
+  const handleOpenDrawer = useCallback(
+    (mode: 'create' | 'edit', target: ExpandibleMapNode | null) => {
+      const targetIsFeedback = target ? isFeedbackPayload(target.payload) : false;
+      const openFeedback = isFeedbackContext || targetIsFeedback;
 
-    if (isFeedbackContext || (target && FEEDBACK_NODE_IDS.has(normalizedTargetId))) {
-      setFeedbackEditMode(mode === 'edit');
-      setFeedbackIsLesson(isFeedbackContext ? isLessonContext : normalizedTargetId === 'lec');
-      setFeedbackId(mode === 'edit' && target ? extractRelationId(target.payload) : null);
-      setFeedbackEditData(target?.payload ?? null);
-      setFeedbackDrawerOpen(true);
-    } else {
+      if (openFeedback) {
+        const payload = target?.payload ?? null;
+        const inferredIsLesson = getFeedbackIsLessonFromPayload(payload);
+        const isLesson = inferredIsLesson ?? isLessonContext;
+
+        setFeedbackEditMode(mode === 'edit');
+        setFeedbackIsLesson(isLesson);
+        setFeedbackId(mode === 'edit' && target ? getFeedbackIdFromPayload(target.payload) : null);
+        setFeedbackEditData(target ? getFeedbackInitialDataFromPayload(target.payload) : null);
+        setFeedbackDrawerOpen(true);
+        return;
+      }
+
       setDrawerMode(mode);
       setDrawerTarget(target);
       setDrawerOpen(true);
-    }
-  }, [isFeedbackContext, isLessonContext]);
+    },
+    [isFeedbackContext, isLessonContext]
+  );
 
   const handleCloseDrawer = useCallback(() => {
     setDrawerOpen(false);
@@ -241,10 +360,9 @@ export function DocumentManagementMapExpandedDiagram({ documentId, nodeId, heigh
     if (!deleteTarget) return;
     try {
       setDeleting(true);
-      const id = deleteTarget.relationId;
+      const id = deleteTarget.id;
       
-      // Detectar si es un feedback basado en el label
-        if (isFeedbackNode(deleteTarget.nodeId)) {
+      if (deleteTarget.kind === 'feedback') {
         await DeleteDocumentFeedbackService(id);
       } else if (currentKind === 'process') {
         await DeleteProcessDocumentService(id);
@@ -254,8 +372,16 @@ export function DocumentManagementMapExpandedDiagram({ documentId, nodeId, heigh
         await DeleteDocumentObjectiveRelationService(id);
       } else if (currentKind === 'organizationalUnit') {
         await DeleteOrganizationalUnitDocumentService(id);
-      } else {
+      } else if (currentKind === 'tool') {
         await DeleteToolDocumentRelationService(id);
+      } else if (currentKind === 'topic') {
+        await DeleteDocumentTopicRelationService(id);
+      } else if (currentKind === 'subscriber') {
+        await DeleteDocumentUserRelationService(id);
+      } else if (currentKind === 'competency') {
+        await DeleteDocumentCompetencyRelationService(id);
+      } else {
+        await DeleteDocumentExamRelationService(id);
       }
       toast.success(t('documentManagement.map.relations.messages.deleted'));
       handleDrawerSuccess();
@@ -321,12 +447,13 @@ export function DocumentManagementMapExpandedDiagram({ documentId, nodeId, heigh
         onItemClick={(item) => handleOpenDrawer('edit', item)}
         onItemEdit={(item) => handleOpenDrawer('edit', item)}
         onItemDelete={(item) => {
-          const relationId = extractRelationId(item.payload);
-          if (relationId == null) {
+          const isFeedbackItem = isFeedbackContext || isFeedbackPayload(item.payload);
+          const id = isFeedbackItem ? getFeedbackIdFromPayload(item.payload) : extractRelationId(item.payload);
+          if (id == null) {
             toast.error(t('documentManagement.map.relations.messages.deleteMissingId'));
             return;
           }
-          setDeleteTarget({ relationId, label: item.label, nodeId: String(item.id) });
+          setDeleteTarget({ id, label: item.label, kind: isFeedbackItem ? 'feedback' : 'relation' });
         }}
         height={height}
         sx={sx}

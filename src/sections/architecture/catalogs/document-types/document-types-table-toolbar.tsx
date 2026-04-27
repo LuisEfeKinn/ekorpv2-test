@@ -1,0 +1,47 @@
+import type { DocumentTypeFilters } from 'src/types/architecture/catalogs/document-types';
+
+import { useCallback } from 'react';
+
+import InputAdornment from '@mui/material/InputAdornment';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+
+import { useTranslate } from 'src/locales';
+
+import { Iconify } from 'src/components/iconify';
+
+type Props = {
+  filters: DocumentTypeFilters;
+  onFilters: (name: 'name', value: string) => void;
+};
+
+export function DocumentTypesTableToolbar({ filters, onFilters }: Props) {
+  const { t } = useTranslate('catalogs');
+
+  const handleFilterName = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onFilters('name', event.target.value);
+    },
+    [onFilters]
+  );
+
+  return (
+    <Stack spacing={2} alignItems={{ xs: 'flex-end', md: 'center' }} direction={{ xs: 'column', md: 'row' }} sx={{ p: 2.5 }}>
+      <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
+        <TextField
+          fullWidth
+          value={filters.name}
+          onChange={handleFilterName}
+          placeholder={t('document-types.toolbar.search')}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Stack>
+    </Stack>
+  );
+}

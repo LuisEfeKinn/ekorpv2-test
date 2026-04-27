@@ -22,6 +22,9 @@
         "active": "Activo",
         "file": "Archivo",
         "link": "Enlace",
+        "createdDate": "Fecha de creación",
+        "lastModifiedDate": "Fecha última actualización",
+        "originalFile": "Archivo original",
         "options": "Opciones"
       },
       "values": {
@@ -38,14 +41,24 @@
       "create": "Crear documento",
       "preview": "Previsualizar",
       "download": "Descargar",
+      "exportExcel": "Exportar Excel",
       "open": "Abrir",
       "edit": "Editar",
+      "changeControl": "Control de cambios",
       "map": "Mapa",
       "feedbacks": "Lecciones & Propuestas",
       "delete": "Eliminar",
       "save": "Guardar",
       "clear": "Limpiar",
       "cancel": "Cancelar"
+    },
+    "filters": {
+      "any": "Todos",
+      "order": "Orden",
+      "orderNone": "Sin orden",
+      "orderNameAsc": "Nombre (A-Z)",
+      "orderNameDesc": "Nombre (Z-A)",
+      "orderCreatedDesc": "Fecha de creación (reciente)"
     },
     "map": {
       "title": "Mapa de documento",
@@ -65,7 +78,11 @@
           "job": "Cargo",
           "objective": "Objetivo estratégico",
           "organizationalUnit": "Unidad organizacional",
-          "tool": "Herramienta"
+          "tool": "Herramienta",
+          "topic": "Clasificación",
+          "subscriber": "Suscriptor",
+          "competency": "Competencia",
+          "exam": "Examen"
         },
         "titles": {
           "create": "Relacionar {{entity}}",
@@ -77,6 +94,10 @@
           "objective": "Objetivo",
           "organizationalUnit": "Unidad organizacional",
           "tool": "Herramienta",
+          "topic": "Clasificación",
+          "subscriber": "Usuario",
+          "competency": "Competencia",
+          "exam": "Examen",
           "observations": "Observaciones"
         },
         "validation": {
@@ -116,6 +137,41 @@
         "edit": "Editar documento"
       }
     },
+    "changeControl": {
+      "drawer": {
+        "title": "Control de cambios de documentos {{code}}"
+      },
+      "form": {
+        "fields": {
+          "comments": "Comentarios de cambio"
+        }
+      },
+      "table": {
+        "columns": {
+          "changeDate": "Fecha último cambio",
+          "userName": "Nombre del usuario",
+          "currentStatus": "Estado actual",
+          "previousStatus": "Estado previo",
+          "numberOfDays": "Número de días desde el status previo",
+          "comments": "Comentarios sobre cambios realizados al documento"
+        },
+        "filters": {
+          "changeDate": "Filtrar fecha...",
+          "userName": "Filtrar usuario...",
+          "currentStatus": "Filtrar estado...",
+          "previousStatus": "Filtrar estado...",
+          "numberOfDays": "Filtrar días...",
+          "comments": "Filtrar comentarios..."
+        }
+      },
+      "messages": {
+        "error": {
+          "loading": "Error al cargar control de cambios",
+          "creating": "No se pudo registrar el control de cambios",
+          "missingUser": "No se pudo registrar el control de cambios: usuario inválido"
+        }
+      }
+    },
     "form": {
       "fields": {
         "name": "Nombre",
@@ -153,6 +209,8 @@
         "deleting": "Error al eliminar el documento",
         "preview": "No se pudo previsualizar el documento",
         "downloading": "No se pudo descargar el documento",
+        "exporting": "No se pudo exportar el Excel",
+        "exportMissingColumns": "Selecciona al menos una columna para exportar",
         "invalidForm": "Revisa los campos requeridos",
         "fileRequired": "El archivo es obligatorio"
       }

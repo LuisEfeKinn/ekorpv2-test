@@ -14,50 +14,85 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { useTranslate } from 'src/locales';
 import { GetJobsPaginationService } from 'src/services/architecture/business/jobs.service';
+import { GetUserManagmentPaginationService } from 'src/services/employees/user-managment.service';
+import { GetToolsTablePaginationService } from 'src/services/architecture/tools/toolsTable.service';
 import { GetObjectivesPaginationService } from 'src/services/architecture/business/objectives.service';
-import {
-  DeleteDocumentObjectiveRelationService,
-  GetDocumentObjectiveRelationByIdService,
-  SaveDocumentObjectiveRelationService,
-  UpdateDocumentObjectiveRelationService,
-} from 'src/services/architecture/business/objectiveRelations.service';
-import {
-  DeleteJobDocumentRelationService,
-  GetJobDocumentRelationByIdService,
-  SaveJobDocumentRelationService,
-  UpdateJobDocumentRelationService,
-} from 'src/services/architecture/business/jobRelations.service';
 import { GetProcessTablePaginationService } from 'src/services/architecture/process/processTable.service';
 import {
-  DeleteProcessDocumentService,
-  GetProcessDocumentByIdService,
-  SaveProcessDocumentService,
-  UpdateProcessDocumentService,
-  type SaveProcessDocumentPayload,
-  type ProcessDocumentRelation,
-} from 'src/services/architecture/process/processRelations.service';
-import { GetToolsTablePaginationService } from 'src/services/architecture/tools/toolsTable.service';
+  SaveJobDocumentRelationService,
+  DeleteJobDocumentRelationService,
+  UpdateJobDocumentRelationService,
+  GetJobDocumentRelationByIdService,
+} from 'src/services/architecture/business/jobRelations.service';
 import {
-  DeleteToolDocumentRelationService,
-  GetToolDocumentRelationByIdService,
-  SaveToolDocumentRelationService,
-  UpdateToolDocumentRelationService,
+  SaveDocumentObjectiveRelationService,
+  DeleteDocumentObjectiveRelationService,
+  UpdateDocumentObjectiveRelationService,
+  GetDocumentObjectiveRelationByIdService,
+} from 'src/services/architecture/business/objectiveRelations.service';
+import {
   type ToolDocumentRelation,
+  SaveToolDocumentRelationService,
+  DeleteToolDocumentRelationService,
+  UpdateToolDocumentRelationService,
+  GetToolDocumentRelationByIdService,
 } from 'src/services/architecture/tools/toolsRelations.service';
 import {
-  DeleteOrganizationalUnitDocumentService,
-  GetOrganizationalUnitDocumentByIdService,
-  GetOrganizationalUnitPaginationService,
+  SaveProcessDocumentService,
+  DeleteProcessDocumentService,
+  UpdateProcessDocumentService,
+  type ProcessDocumentRelation,
+  GetProcessDocumentByIdService,
+  type SaveProcessDocumentPayload,
+} from 'src/services/architecture/process/processRelations.service';
+import {
   SaveOrganizationalUnitDocumentService,
+  GetOrganizationalUnitPaginationService,
+  DeleteOrganizationalUnitDocumentService,
   UpdateOrganizationalUnitDocumentService,
   normalizeOrganizationalUnitListResponse,
   type OrganizationalUnitDocumentRelation,
+  GetOrganizationalUnitDocumentByIdService,
 } from 'src/services/organization/organizationalUnit.service';
+import {
+  GetTopicsService,
+  GetCompetenciesService,
+  GetEvaluationClarityService,
+  SaveDocumentExamRelationService,
+  SaveDocumentUserRelationService,
+  SaveDocumentTopicRelationService,
+  type DocumentExamRelationPayload,
+  type DocumentUserRelationPayload,
+  DeleteDocumentExamRelationService,
+  DeleteDocumentUserRelationService,
+  UpdateDocumentExamRelationService,
+  UpdateDocumentUserRelationService,
+  type DocumentTopicRelationPayload,
+  DeleteDocumentTopicRelationService,
+  GetDocumentExamRelationByIdService,
+  GetDocumentUserRelationByIdService,
+  UpdateDocumentTopicRelationService,
+  GetDocumentTopicRelationByIdService,
+  SaveDocumentCompetencyRelationService,
+  type DocumentCompetencyRelationPayload,
+  DeleteDocumentCompetencyRelationService,
+  UpdateDocumentCompetencyRelationService,
+  GetDocumentCompetencyRelationByIdService,
+} from 'src/services/documents/documents.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 
-export type DocumentMapRelationKind = 'process' | 'job' | 'objective' | 'organizationalUnit' | 'tool';
+export type DocumentMapRelationKind =
+  | 'process'
+  | 'job'
+  | 'objective'
+  | 'organizationalUnit'
+  | 'tool'
+  | 'topic'
+  | 'subscriber'
+  | 'competency'
+  | 'exam';
 
 type DrawerMode = 'create' | 'edit';
 
@@ -155,6 +190,27 @@ function extractDefaults(kind: DocumentMapRelationKind, payload: unknown): Relat
     return { relatedId: id, observations };
   }
 
+  if (kind === 'topic') {
+    const id = coerceId(payload.topicId) ?? coerceId((payload.topic as { id?: unknown } | undefined)?.id);
+    return { relatedId: id, observations: '' };
+  }
+
+  if (kind === 'subscriber') {
+    const id = coerceId(payload.userId) ?? coerceId((payload.user as { id?: unknown } | undefined)?.id);
+    return { relatedId: id, observations };
+  }
+
+  if (kind === 'competency') {
+    const id = coerceId(payload.competencyId) ?? coerceId((payload.competency as { id?: unknown } | undefined)?.id);
+    return { relatedId: id, observations: '' };
+  }
+
+  if (kind === 'exam') {
+    const evaluation = payload.evaluation as { evaluationId?: unknown } | undefined;
+    const id = coerceId(payload.evaluationId) ?? coerceId(evaluation?.evaluationId);
+    return { relatedId: id, observations: '' };
+  }
+
   const id = coerceId(payload.toolId) ?? coerceId((payload.tool as { id?: unknown } | undefined)?.id);
   return { relatedId: id, observations };
 }
@@ -194,6 +250,13 @@ export function DocumentMapNodeCrudDrawer({
   const relationId = target?.relationId ?? null;
   const targetLabel = target?.label ?? '';
 
+  const requiresObservations = useMemo(() => {
+    if (kind === 'topic') return false;
+    if (kind === 'competency') return false;
+    if (kind === 'exam') return false;
+    return true;
+  }, [kind]);
+
   const drawerTitle = useMemo(() => {
     const base =
       kind === 'process'
@@ -204,7 +267,15 @@ export function DocumentMapNodeCrudDrawer({
             ? t('documentManagement.map.relations.kinds.objective')
             : kind === 'organizationalUnit'
               ? t('documentManagement.map.relations.kinds.organizationalUnit')
-              : t('documentManagement.map.relations.kinds.tool');
+              : kind === 'tool'
+                ? t('documentManagement.map.relations.kinds.tool')
+                : kind === 'topic'
+                  ? t('documentManagement.map.relations.kinds.topic')
+                  : kind === 'subscriber'
+                    ? t('documentManagement.map.relations.kinds.subscriber')
+                    : kind === 'competency'
+                      ? t('documentManagement.map.relations.kinds.competency')
+                      : t('documentManagement.map.relations.kinds.exam');
 
     return mode === 'edit'
       ? t('documentManagement.map.relations.titles.edit', { entity: base })
@@ -216,7 +287,11 @@ export function DocumentMapNodeCrudDrawer({
     if (kind === 'job') return t('documentManagement.map.relations.fields.job');
     if (kind === 'objective') return t('documentManagement.map.relations.fields.objective');
     if (kind === 'organizationalUnit') return t('documentManagement.map.relations.fields.organizationalUnit');
-    return t('documentManagement.map.relations.fields.tool');
+    if (kind === 'tool') return t('documentManagement.map.relations.fields.tool');
+    if (kind === 'topic') return t('documentManagement.map.relations.fields.topic');
+    if (kind === 'subscriber') return t('documentManagement.map.relations.fields.subscriber');
+    if (kind === 'competency') return t('documentManagement.map.relations.fields.competency');
+    return t('documentManagement.map.relations.fields.exam');
   }, [kind, t]);
 
   const mergedOptions = useMemo(() => {
@@ -251,6 +326,72 @@ export function DocumentMapNodeCrudDrawer({
         const mapped = list
           .map((it) => ({ id: Number(it?.id), label: `${String(it?.name ?? `#${it?.id}`)}` }))
           .filter((it) => Number.isFinite(it.id) && it.id > 0);
+        setOptions(mapped);
+        return;
+      }
+
+      if (kind === 'subscriber') {
+        const res = await GetUserManagmentPaginationService({ search: undefined, perPage: 20 });
+        const list = normalizeList(res?.data);
+        const mapped = list
+          .map((it) => {
+            if (!isRecord(it)) return null;
+            const id = coerceId(it.userId) ?? coerceId(it.id);
+            if (id == null || id <= 0) return null;
+            const fullName = typeof it.fullName === 'string' ? it.fullName : '';
+            const firstName = typeof it.firstName === 'string' ? it.firstName : '';
+            const secondName = typeof it.secondName === 'string' ? it.secondName : '';
+            const firstLastName = typeof it.firstLastName === 'string' ? it.firstLastName : '';
+            const secondLastName = typeof it.secondLastName === 'string' ? it.secondLastName : '';
+            const fallbackName = [firstName, secondName, firstLastName, secondLastName].filter(Boolean).join(' ').trim();
+            const label = (fullName || fallbackName || `#${String(id)}`).trim();
+            return { id, label };
+          })
+          .filter((x): x is Option => Boolean(x));
+        setOptions(mapped);
+        return;
+      }
+
+      if (kind === 'topic') {
+        const res = await GetTopicsService();
+        const list = normalizeList(res?.data);
+        const mapped = list
+          .map((it) => ({
+            id: Number(isRecord(it) ? it.id : NaN),
+            label: String(isRecord(it) ? it.name ?? '' : '').trim(),
+          }))
+          .filter((it) => Number.isFinite(it.id) && it.id > 0 && Boolean(it.label));
+        setOptions(mapped);
+        return;
+      }
+
+      if (kind === 'competency') {
+        const res = await GetCompetenciesService();
+        const list = normalizeList(res?.data);
+        const mapped = list
+          .map((it) => ({
+            id: Number(isRecord(it) ? it.id : NaN),
+            label: labelForOption(it) || `#${String(isRecord(it) ? it.id : '')}`,
+          }))
+          .filter((it) => Number.isFinite(it.id) && it.id > 0);
+        setOptions(mapped);
+        return;
+      }
+
+      if (kind === 'exam') {
+        const res = await GetEvaluationClarityService();
+        const list = normalizeList(res?.data);
+        const mapped = list
+          .map((it) => {
+            if (!isRecord(it)) return null;
+            const evaluationId = Number(it.evaluationId);
+            if (!Number.isFinite(evaluationId) || evaluationId <= 0) return null;
+            const date = typeof it.date === 'string' ? it.date.slice(0, 10) : '';
+            const result = typeof it.result === 'number' && Number.isFinite(it.result) ? String(it.result) : '';
+            const label = [`#${evaluationId}`, date, result].filter(Boolean).join(' - ');
+            return { id: evaluationId, label };
+          })
+          .filter((x): x is Option => Boolean(x));
         setOptions(mapped);
         return;
       }
@@ -344,14 +485,57 @@ export function DocumentMapNodeCrudDrawer({
         return;
       }
 
-      const res = await GetToolDocumentRelationByIdService(relationId);
-      const data = unwrapRelationPayload(res?.data) as (ToolDocumentRelation & Record<string, unknown>) | null;
-      const relatedId = coerceId(data?.toolId) ?? coerceId(data?.tool?.id) ?? defaults.relatedId;
-      setForm({
-        relatedId,
-        observations: typeof data?.observations === 'string' ? data.observations : defaults.observations,
-      });
-      setEditingRelationLabel(String(data?.tool?.name ?? targetLabel ?? ''));
+      if (kind === 'tool') {
+        const res = await GetToolDocumentRelationByIdService(relationId);
+        const data = unwrapRelationPayload(res?.data) as (ToolDocumentRelation & Record<string, unknown>) | null;
+        const relatedId = coerceId(data?.toolId) ?? coerceId(data?.tool?.id) ?? defaults.relatedId;
+        setForm({
+          relatedId,
+          observations: typeof data?.observations === 'string' ? data.observations : defaults.observations,
+        });
+        setEditingRelationLabel(String(data?.tool?.name ?? targetLabel ?? ''));
+        return;
+      }
+
+      if (kind === 'topic') {
+        const res = await GetDocumentTopicRelationByIdService(relationId);
+        const data = unwrapRelationPayload(res?.data);
+        if (!isRecord(data)) return;
+        const relatedId = coerceId(data.topicId) ?? coerceId((data.topic as { id?: unknown } | undefined)?.id) ?? defaults.relatedId;
+        setForm({ relatedId, observations: '' });
+        setEditingRelationLabel(String((data.topic as { name?: unknown } | undefined)?.name ?? targetLabel ?? ''));
+        return;
+      }
+
+      if (kind === 'subscriber') {
+        const res = await GetDocumentUserRelationByIdService(relationId);
+        const data = unwrapRelationPayload(res?.data);
+        if (!isRecord(data)) return;
+        const relatedId = coerceId(data.userId) ?? coerceId((data.user as { id?: unknown } | undefined)?.id) ?? defaults.relatedId;
+        const obs = typeof data.observations === 'string' ? data.observations : defaults.observations;
+        setForm({ relatedId, observations: obs });
+        setEditingRelationLabel(String((data.user as { fullName?: unknown; email?: unknown } | undefined)?.fullName ?? targetLabel ?? ''));
+        return;
+      }
+
+      if (kind === 'competency') {
+        const res = await GetDocumentCompetencyRelationByIdService(relationId);
+        const data = unwrapRelationPayload(res?.data);
+        if (!isRecord(data)) return;
+        const relatedId =
+          coerceId(data.competencyId) ?? coerceId((data.competency as { id?: unknown } | undefined)?.id) ?? defaults.relatedId;
+        setForm({ relatedId, observations: '' });
+        setEditingRelationLabel(String((data.competency as { name?: unknown } | undefined)?.name ?? targetLabel ?? ''));
+        return;
+      }
+
+      const res = await GetDocumentExamRelationByIdService(relationId);
+      const data = unwrapRelationPayload(res?.data);
+      if (!isRecord(data)) return;
+      const evaluation = data.evaluation as { evaluationId?: unknown } | undefined;
+      const relatedId = coerceId(data.evaluationId) ?? coerceId(evaluation?.evaluationId) ?? defaults.relatedId;
+      setForm({ relatedId, observations: '' });
+      setEditingRelationLabel(String(relatedId != null ? `#${relatedId}` : targetLabel ?? ''));
     } catch {
       setEditingRelationLabel('');
       const defaults = extractDefaults(kind, target?.payload);
@@ -378,8 +562,8 @@ export function DocumentMapNodeCrudDrawer({
   }, [kind, loadEditRelation, loadOptions, mode, open, target?.payload]);
 
   const observationsValue = form.observations.trim();
-  const observationsError = submitted && !observationsValue;
-  const canSubmit = form.relatedId != null && Boolean(observationsValue);
+  const observationsError = requiresObservations && submitted && !observationsValue;
+  const canSubmit = form.relatedId != null && (!requiresObservations || Boolean(observationsValue));
 
   const handleSave = useCallback(async () => {
     setSubmitted(true);
@@ -438,7 +622,7 @@ export function DocumentMapNodeCrudDrawer({
         } else {
           await SaveOrganizationalUnitDocumentService(payload);
         }
-      } else {
+      } else if (kind === 'tool') {
         const payload = {
           observations,
           tool: { id: Number(form.relatedId) },
@@ -448,6 +632,47 @@ export function DocumentMapNodeCrudDrawer({
           await UpdateToolDocumentRelationService(relationId, payload);
         } else {
           await SaveToolDocumentRelationService(payload);
+        }
+      } else if (kind === 'topic') {
+        const payload: DocumentTopicRelationPayload = {
+          document: { id: documentId },
+          topic: { id: Number(form.relatedId) },
+        };
+        if (mode === 'edit' && relationId != null) {
+          await UpdateDocumentTopicRelationService(relationId, payload);
+        } else {
+          await SaveDocumentTopicRelationService(payload);
+        }
+      } else if (kind === 'subscriber') {
+        const payload: DocumentUserRelationPayload = {
+          observations,
+          document: { id: documentId },
+          user: { id: Number(form.relatedId) },
+        };
+        if (mode === 'edit' && relationId != null) {
+          await UpdateDocumentUserRelationService(relationId, payload);
+        } else {
+          await SaveDocumentUserRelationService(payload);
+        }
+      } else if (kind === 'competency') {
+        const payload: DocumentCompetencyRelationPayload = {
+          document: { id: documentId },
+          competency: { id: Number(form.relatedId) },
+        };
+        if (mode === 'edit' && relationId != null) {
+          await UpdateDocumentCompetencyRelationService(relationId, payload);
+        } else {
+          await SaveDocumentCompetencyRelationService(payload);
+        }
+      } else {
+        const payload: DocumentExamRelationPayload = {
+          document: { id: documentId },
+          evaluation: { evaluationId: Number(form.relatedId) },
+        };
+        if (mode === 'edit' && relationId != null) {
+          await UpdateDocumentExamRelationService(relationId, payload);
+        } else {
+          await SaveDocumentExamRelationService(payload);
         }
       }
 
@@ -478,8 +703,16 @@ export function DocumentMapNodeCrudDrawer({
         await DeleteDocumentObjectiveRelationService(relationId);
       } else if (kind === 'organizationalUnit') {
         await DeleteOrganizationalUnitDocumentService(relationId);
-      } else {
+      } else if (kind === 'tool') {
         await DeleteToolDocumentRelationService(relationId);
+      } else if (kind === 'topic') {
+        await DeleteDocumentTopicRelationService(relationId);
+      } else if (kind === 'subscriber') {
+        await DeleteDocumentUserRelationService(relationId);
+      } else if (kind === 'competency') {
+        await DeleteDocumentCompetencyRelationService(relationId);
+      } else {
+        await DeleteDocumentExamRelationService(relationId);
       }
       toast.success(t('documentManagement.map.relations.messages.deleted'));
       onSuccess();
@@ -560,20 +793,22 @@ export function DocumentMapNodeCrudDrawer({
             )}
           />
 
-          <TextField
-            label={t('documentManagement.map.relations.fields.observations')}
-            value={form.observations}
-            onChange={(e) => setForm((prev) => ({ ...prev, observations: e.target.value }))}
-            multiline
-            minRows={3}
-            error={observationsError}
-            inputProps={{ maxLength: MAX_VARCHAR_LENGTH }}
-            helperText={
-              observationsError
-                ? t('documentManagement.map.relations.validation.required')
-                : `${form.observations.length}/${MAX_VARCHAR_LENGTH}`
-            }
-          />
+          {requiresObservations ? (
+            <TextField
+              label={t('documentManagement.map.relations.fields.observations')}
+              value={form.observations}
+              onChange={(e) => setForm((prev) => ({ ...prev, observations: e.target.value }))}
+              multiline
+              minRows={3}
+              error={observationsError}
+              inputProps={{ maxLength: MAX_VARCHAR_LENGTH }}
+              helperText={
+                observationsError
+                  ? t('documentManagement.map.relations.validation.required')
+                  : `${form.observations.length}/${MAX_VARCHAR_LENGTH}`
+              }
+            />
+          ) : null}
 
           <Stack direction="row" spacing={1.5} sx={{ pt: 1 }}>
             <Button variant="outlined" color="inherit" onClick={onClose} disabled={loading} fullWidth>

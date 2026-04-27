@@ -83,6 +83,63 @@
       "dateControls": {
         "label": "Controles de Fecha",
         "description": "Define y gestiona los controles de fecha dentro de la arquitectura empresarial."
+      },
+      "documentTypes": {
+        "label": "Tipos de Documentos",
+        "description": "Define y gestiona los diferentes tipos de documentos."
+      }
+    }
+  },
+  "document-types": {
+    "title": "Tipos de Documentos",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Listado de Catálogos"
+    },
+    "actions": {
+      "save": "Guardar",
+      "update": "Actualizar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "toolbar": {
+      "search": "Buscar tipos de documentos..."
+    },
+    "filters": {
+      "all": "Todos"
+    },
+    "columns": {
+      "name": "Nombre",
+      "documentCode": "Código"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear Tipo de Documento"
+      },
+      "edit": {
+        "title": "Editar Tipo de Documento"
+      },
+      "delete": {
+        "title": "Eliminar Tipo de Documento",
+        "content": "Esta acción no se puede deshacer.",
+        "contentMultiple": "¿Estás seguro de que deseas eliminar {count} elementos? Esta acción no se puede deshacer."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Tipo de documento creado exitosamente.",
+        "updated": "Tipo de documento actualizado exitosamente.",
+        "deleted": "Tipo de documento eliminado exitosamente.",
+        "deletedMultiple": "{count} elementos eliminados exitosamente."
+      },
+      "error": {
+        "loading": "Error al cargar los tipos de documentos.",
+        "deleting": "Error al eliminar el tipo de documento.",
+        "deletingMultiple": "Error al eliminar los tipos de documentos.",
+        "validation": "Completa los campos obligatorios.",
+        "general": "Ocurrió un error. Inténtalo de nuevo."
       }
     }
   },

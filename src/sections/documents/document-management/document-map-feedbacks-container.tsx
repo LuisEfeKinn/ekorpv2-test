@@ -9,18 +9,15 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import IconButton from '@mui/material/IconButton';
 
 import { useTranslate } from 'src/locales';
 import { GetDocumentByIdService } from 'src/services/documents/documents.service';
 import {
   type DocumentFeedback,
-  GetFeedbackByIdService,
 } from 'src/services/documents/feedbacks.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
-import { ConfirmDialog } from 'src/components/custom-dialog';
 
 import { DocumentMapFeedbacksDiagram } from './document-map-feedbacks-diagram';
 import { DocumentLessonsProposalsDrawer } from './document-lessons-proposals-drawer';
@@ -93,8 +90,7 @@ export function DocumentMapFeedbacksDiagramContainer({ documentId, height, sx }:
     void fetchDocument();
   }, [documentId, reloadKey, t]);
 
-  const lessons = useMemo<FeedbackNode[]>(() => {
-    return (documentDetail?.feedbacks ?? [])
+  const lessons = useMemo<FeedbackNode[]>(() => (documentDetail?.feedbacks ?? [])
       .filter((f) => f.improvementLesson)
       .map((f) => ({
         id: f.id,
@@ -102,11 +98,9 @@ export function DocumentMapFeedbacksDiagramContainer({ documentId, height, sx }:
         description: f.description,
         isLesson: true,
         data: f,
-      }));
-  }, [documentDetail?.feedbacks]);
+      })), [documentDetail?.feedbacks]);
 
-  const proposals = useMemo<FeedbackNode[]>(() => {
-    return (documentDetail?.feedbacks ?? [])
+  const proposals = useMemo<FeedbackNode[]>(() => (documentDetail?.feedbacks ?? [])
       .filter((f) => !f.improvementLesson)
       .map((f) => ({
         id: f.id,
@@ -114,8 +108,7 @@ export function DocumentMapFeedbacksDiagramContainer({ documentId, height, sx }:
         description: f.problem || f.description,
         isLesson: false,
         data: f,
-      }));
-  }, [documentDetail?.feedbacks]);
+      })), [documentDetail?.feedbacks]);
 
   const handleAddLesson = useCallback(() => {
     setEditMode(false);

@@ -617,6 +617,8 @@ export const paths = {
         domains: `${ROOTS.DASHBOARD}/architecture/catalogs/domains`,
         // Date Controls
         dateControls: `${ROOTS.DASHBOARD}/architecture/catalogs/date-controls`,
+        // Document types
+        documentTypes: `${ROOTS.DASHBOARD}/architecture/catalogs/document-types`,
       },
 
       actionMeasures: `${ROOTS.DASHBOARD}/architecture/action-measures`,

@@ -5,7 +5,7 @@ import '@xyflow/react/dist/style.css';
 import type { Node, Edge } from '@xyflow/react';
 import type { Theme, SxProps } from '@mui/material/styles';
 
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useMemo, useEffect, useCallback } from 'react';
 import {
   Handle,
   MiniMap,
@@ -25,9 +25,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
-import CircularProgress from '@mui/material/CircularProgress';
 
-import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 
 type FeedbackNode = {
@@ -98,12 +96,6 @@ function CentralNode({ data }: any) {
           }}
         >
           {String(data.label || '')}
-        </Typography>
-        <Typography
-          variant="caption"
-          sx={{ color: alpha(theme.palette.common.white, 0.85), fontWeight: 600, fontSize: '0.7rem' }}
-        >
-          Lecciones & Propuestas
         </Typography>
       </Stack>
     </Paper>

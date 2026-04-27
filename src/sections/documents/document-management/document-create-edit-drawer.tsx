@@ -5,7 +5,7 @@ import type { DocumentItem, DocumentUpsertFormValues } from 'src/services/docume
 
 import { useDropzone } from 'react-dropzone';
 import { useDebounce } from 'minimal-shared/hooks';
-import { useMemo, useState, useEffect, useCallback, useRef } from 'react';
+import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -24,12 +24,19 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { useTranslate } from 'src/locales';
 import { GetUserManagmentPaginationService } from 'src/services/employees/user-managment.service';
-import { CreateDocumentService, UpdateDocumentService } from 'src/services/documents/documents.service';
+import {
+  CreateDocumentService,
+  UpdateDocumentService,
+  CreateDocumentChangeControlService,
+  GetDocumentChangeControlsByDocumentIdService,
+} from 'src/services/documents/documents.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 import { getFileMeta, FileThumbnail } from 'src/components/file-thumbnail';
+
+import { useAuthContext } from 'src/auth/hooks';
 
 export type DocumentSelectOption = { id: number; name: string };
 
@@ -93,11 +100,14 @@ export function DocumentCreateEditDrawer({
   onSuccess,
 }: Props) {
   const { t } = useTranslate('documents');
+  const { user } = useAuthContext();
   const isEdit = Boolean(editRow);
 
   const [form, setForm] = useState<DocumentUpsertFormState>(emptyDocumentForm);
   const [saving, setSaving] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [changeControlComments, setChangeControlComments] = useState('');
+  const previousStatusIdRef = useRef<number | null>(null);
 
   const [file, setFile] = useState<File | null>(null);
   const [existingFileName, setExistingFileName] = useState<string>('');
@@ -163,8 +173,12 @@ export function DocumentCreateEditDrawer({
       setExistingFileName(editRow.originalFile || editRow.file || '');
       setFile(null);
       setSubmitted(false);
+      setChangeControlComments('');
+      previousStatusIdRef.current = editRow.documentStatus?.id ?? null;
     } else {
       resetForm();
+      setChangeControlComments('');
+      previousStatusIdRef.current = null;
     }
   }, [editRow, open, resetForm]);
 
@@ -196,6 +210,13 @@ export function DocumentCreateEditDrawer({
     },
     []
   );
+
+  const getUserOptionLabel = useCallback((opt: IUserManagement) => {
+    const fullName = String(opt.fullName ?? '').trim();
+    const email = String(opt.email ?? '').trim();
+    const label = [fullName, email].filter(Boolean).join(' - ');
+    return label || String(opt.id ?? '');
+  }, []);
 
   const hasInvalidDateRange =
     Boolean(form.writingDate) &&
@@ -263,6 +284,55 @@ export function DocumentCreateEditDrawer({
 
       if (editRow) {
         await UpdateDocumentService(editRow.id, values, file);
+        const nextUserId = Number(user?.id);
+        const nextCurrentStatusId = documentStatusId;
+        const nextPreviousStatusId = previousStatusIdRef.current ?? documentStatusId;
+
+        if (Number.isFinite(nextUserId)) {
+          const changeDateIso = new Date().toISOString();
+
+          let numberOfDays = 0;
+          try {
+            const { items } = await GetDocumentChangeControlsByDocumentIdService(editRow.id);
+            const mostRecent = items
+              .filter((x) => Boolean(x.changeDate))
+              .sort((a, b) => new Date(b.changeDate).getTime() - new Date(a.changeDate).getTime())[0];
+
+            const previousDate =
+              mostRecent?.changeDate ||
+              editRow.lastModifiedDate ||
+              editRow.modificationDate ||
+              editRow.createdDate ||
+              editRow.writingDate;
+
+            if (previousDate) {
+              const diffMs = new Date(changeDateIso).getTime() - new Date(previousDate).getTime();
+              if (Number.isFinite(diffMs)) {
+                numberOfDays = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+              }
+            }
+          } catch {
+            numberOfDays = 0;
+          }
+
+          try {
+            await CreateDocumentChangeControlService({
+              documentCode: values.code,
+              changeDate: changeDateIso,
+              comments: changeControlComments.trim(),
+              numberOfDays,
+              version: values.version,
+              document: { id: editRow.id },
+              user: { id: nextUserId },
+              currentStatus: { id: nextCurrentStatusId },
+              previousStatus: { id: nextPreviousStatusId },
+            });
+          } catch {
+            toast.error(t('documentManagement.changeControl.messages.error.creating'));
+          }
+        } else {
+          toast.error(t('documentManagement.changeControl.messages.error.missingUser'));
+        }
         toast.success(t('documentManagement.messages.success.updated'));
       } else {
         if (!file) {
@@ -279,7 +349,7 @@ export function DocumentCreateEditDrawer({
     } finally {
       setSaving(false);
     }
-  }, [canSave, editRow, file, form, hasInvalidDateRange, onSuccess, t]);
+  }, [canSave, changeControlComments, editRow, file, form, hasInvalidDateRange, onSuccess, t, user?.id]);
 
   const handleOpenExternalLink = useCallback(() => {
     if (!externalLink) {
@@ -321,14 +391,16 @@ export function DocumentCreateEditDrawer({
             required
             label={t('documentManagement.form.fields.name')}
             value={form.name}
-            onChange={(e) => updateField('name', e.target.value)}
+            onChange={(e) => updateField('name', e.target.value.slice(0, 128))}
+            inputProps={{ maxLength: 128 }}
           />
 
           <TextField
             required
             label={t('documentManagement.form.fields.code')}
             value={form.code}
-            onChange={(e) => updateField('code', e.target.value)}
+            onChange={(e) => updateField('code', e.target.value.slice(0, 128))}
+            inputProps={{ maxLength: 128 }}
           />
 
           <TextField
@@ -379,7 +451,7 @@ export function DocumentCreateEditDrawer({
             value={selectedAuthor}
             onChange={(_, next) => updateField('authorId', next?.id ?? '')}
             onInputChange={(_, value) => setAuthorSearch(value)}
-            getOptionLabel={(opt) => opt.fullName || opt.email || opt.id}
+            getOptionLabel={getUserOptionLabel}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -403,7 +475,7 @@ export function DocumentCreateEditDrawer({
             value={selectedVerifier}
             onChange={(_, next) => updateField('verifierId', next?.id ?? '')}
             onInputChange={(_, value) => setVerifierSearch(value)}
-            getOptionLabel={(opt) => opt.fullName || opt.email || opt.id}
+            getOptionLabel={getUserOptionLabel}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -491,6 +563,16 @@ export function DocumentCreateEditDrawer({
             />
           )}
 
+          {isEdit ? (
+            <TextField
+              label={t('documentManagement.changeControl.form.fields.comments')}
+              value={changeControlComments}
+              onChange={(e) => setChangeControlComments(e.target.value)}
+              multiline
+              minRows={2}
+            />
+          ) : null}
+
           <Box>
             <Typography variant="body2" sx={{ mb: 1, fontWeight: 'fontWeightSemiBold' }}>
               {t('documentManagement.form.fields.file')}
@@ -522,11 +604,35 @@ export function DocumentCreateEditDrawer({
                 <Typography variant="subtitle2" noWrap>
                   {t('documentManagement.form.fileDropzone.title')}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" noWrap>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{
+                    whiteSpace: 'normal',
+                    overflowX: 'hidden',
+                    overflowY: 'auto',
+                    maxHeight: '4.2em',
+                    lineHeight: 1.4,
+                    wordBreak: 'break-word',
+                  }}
+                >
                   {t('documentManagement.form.fileDropzone.helper')}
                 </Typography>
                 {(file || existingFileName) && (
-                  <Typography variant="caption" color="text.secondary" noWrap>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{
+                      mt: 0.25,
+                      display: 'block',
+                      whiteSpace: 'normal',
+                      overflowX: 'hidden',
+                      overflowY: 'auto',
+                      maxHeight: '4.2em',
+                      lineHeight: 1.4,
+                      wordBreak: 'break-word',
+                    }}
+                  >
                     {t('documentManagement.form.fileDropzone.selected', { name: getFileMeta(file ?? existingFileName).name })}
                   </Typography>
                 )}

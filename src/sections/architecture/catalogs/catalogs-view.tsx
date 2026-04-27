@@ -229,6 +229,14 @@ const CATALOGS_CONFIG = [
     path: paths.dashboard.architecture.catalogs.dateControls,
     color: '#8f8829ff',
   },
+  {
+    id: 'documentTypes',
+    labelKey: 'main.items.documentTypes.label',
+    descriptionKey: 'main.items.documentTypes.description',
+    icon: 'solar:document-text-bold',
+    path: paths.dashboard.architecture.catalogs.documentTypes,
+    color: '#22C55E',
+  },
 ] as const satisfies readonly CatalogConfig[];
 
 // ----------------------------------------------------------------------

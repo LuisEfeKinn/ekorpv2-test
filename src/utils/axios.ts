@@ -851,6 +851,13 @@ export const endpoints = {
         update: '/api/date-controls',
         edit: '/api/date-controls', // + /:id
         delete: '/api/date-controls' // + /:id
+      },
+      documentTypes: {
+        all: '/api/document-types',
+        save: '/api/document-types',
+        update: '/api/document-types',
+        edit: '/api/document-types', // + /:id
+        delete: '/api/document-types' // + /:id
       }
     }
   }

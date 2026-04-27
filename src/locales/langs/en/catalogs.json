@@ -83,6 +83,63 @@
       "dateControls": {
         "label": "Date Controls",
         "description": "Define and manage date control settings within the enterprise architecture."
+      },
+      "documentTypes": {
+        "label": "Document Types",
+        "description": "Define and manage the different document types."
+      }
+    }
+  },
+  "document-types": {
+    "title": "Document Types",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Catalogs List"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "toolbar": {
+      "search": "Search document types..."
+    },
+    "filters": {
+      "all": "All"
+    },
+    "columns": {
+      "name": "Name",
+      "documentCode": "Code"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Document Type"
+      },
+      "edit": {
+        "title": "Edit Document Type"
+      },
+      "delete": {
+        "title": "Delete Document Type",
+        "content": "This action cannot be undone.",
+        "contentMultiple": "Are you sure you want to delete {count} items? This action cannot be undone."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Document type created successfully.",
+        "updated": "Document type updated successfully.",
+        "deleted": "Document type deleted successfully.",
+        "deletedMultiple": "{count} items deleted successfully."
+      },
+      "error": {
+        "loading": "Error loading document types.",
+        "deleting": "Error deleting document type.",
+        "deletingMultiple": "Error deleting document types.",
+        "validation": "Please fill in the required fields.",
+        "general": "Something went wrong. Please try again."
       }
     }
   },
