@@ -1,0 +1,21 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: deps
+    image: ekorp-front-v2:dev
+    container_name: ekorp-front-v2-dev
+    restart: unless-stopped
+    init: true
+    command: ["yarn", "dev"]
+    ports:
+      - "8082:8082"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+      PORT: 8082
+    volumes:
+      - .:/app
+      - /app/node_modules

@@ -3,12 +3,12 @@ import type { DocumentType } from 'src/types/architecture/catalogs/document-type
 import { useBoolean, usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-import Stack from '@mui/material/Stack';
-import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 
 import { useTranslate } from 'src/locales';

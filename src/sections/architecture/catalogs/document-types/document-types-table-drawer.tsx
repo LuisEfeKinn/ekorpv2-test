@@ -1,16 +1,16 @@
 import type { DrawerProps } from '@mui/material/Drawer';
 import type { DocumentTypePayload } from 'src/types/architecture/catalogs/document-types';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 
-import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
+import { LoadingButton } from '@mui/lab';
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { LoadingButton } from '@mui/lab';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { useTranslate } from 'src/locales';
 import {

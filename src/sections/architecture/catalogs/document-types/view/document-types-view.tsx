@@ -5,16 +5,16 @@ import type { DocumentType, DocumentTypeFilters } from 'src/types/architecture/c
 
 import { varAlpha } from 'minimal-shared/utils';
 import { useBoolean, useSetState } from 'minimal-shared/hooks';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import IconButton from '@mui/material/IconButton';
 import Tab from '@mui/material/Tab';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
+import Card from '@mui/material/Card';
 import Tabs from '@mui/material/Tabs';
+import Table from '@mui/material/Table';
+import Button from '@mui/material/Button';
+import TableBody from '@mui/material/TableBody';
+import IconButton from '@mui/material/IconButton';
 
 import { paths } from 'src/routes/paths';
 
@@ -31,10 +31,10 @@ import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
-import { getComparator, TableHeadCustom, TableNoData, TableSelectedAction, useTable } from 'src/components/table';
+import { useTable, TableNoData, getComparator, TableHeadCustom, TableSelectedAction } from 'src/components/table';
 
-import { DocumentTypesTableDrawer } from '../document-types-table-drawer';
 import { DocumentTypesTableRow } from '../document-types-table-row';
+import { DocumentTypesTableDrawer } from '../document-types-table-drawer';
 import { DocumentTypesTableToolbar } from '../document-types-table-toolbar';
 
 type Comparator<T> = (a: T, b: T) => number;

@@ -102,6 +102,18 @@ export const endpoints = {
     edit: '/api/documents',
     delete: '/api/documents',
   },
+  announcements: {
+    all: '/api/announcements',
+    save: '/api/announcements',
+    update: '/api/announcements',
+    edit: '/api/announcements',
+    delete: '/api/announcements',
+  },
+  notifiableEvents: {
+    all: '/api/notifiable-events',
+    update: '/api/notifiable-events',
+    edit: '/api/notifiable-events',
+  },
   auth: {
     me: '/user/init/data',
     login: '/auth/login',

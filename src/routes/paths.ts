@@ -282,6 +282,13 @@ export const paths = {
       inventoryHistory: `${ROOTS.DASHBOARD}/assets/record`,
     },
 
+    // Notifications Modules
+    notifications: {
+      root: `${ROOTS.DASHBOARD}/notificaciones`,
+      announcements: `${ROOTS.DASHBOARD}/notificaciones/anuncios`,
+      templates: `${ROOTS.DASHBOARD}/notificaciones/plantillas-de-notificaciones`,
+    },
+
 
     // Settings Modules
     settings: {

@@ -2,9 +2,9 @@ import type { DocumentTypeFilters } from 'src/types/architecture/catalogs/docume
 
 import { useCallback } from 'react';
 
-import InputAdornment from '@mui/material/InputAdornment';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 
 import { useTranslate } from 'src/locales';
 

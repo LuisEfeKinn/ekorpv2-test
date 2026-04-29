@@ -323,6 +323,43 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
   
   const dynamicNavData = convertModulesToNavData(modules ?? [], t);
 
+  // TEMP: Mostrar Notificaciones/Anuncios para todos los usuarios
+  // (sin depender de asignación de rol/módulo desde backend)
+  try {
+    const notificationsSubheader = 'Notificaciones';
+    const announcementsTitle = 'Anuncios';
+    const templatesTitle = 'Plantillas de notificaciones';
+
+    const sectionIdx = dynamicNavData.findIndex((s) => s.subheader === notificationsSubheader);
+    const announcementsItem = {
+      title: announcementsTitle,
+      path: paths.dashboard.notifications.announcements,
+      icon: getNavIcon('list-ul'),
+    };
+
+    const templatesItem = {
+      title: templatesTitle,
+      path: paths.dashboard.notifications.templates,
+      icon: getNavIcon('list-ul'),
+    };
+
+    if (sectionIdx >= 0) {
+      const section = dynamicNavData[sectionIdx];
+      const existsAnnouncements = section.items?.some((it) => it.path === announcementsItem.path);
+      if (!existsAnnouncements) section.items.push(announcementsItem);
+
+      const existsTemplates = section.items?.some((it) => it.path === templatesItem.path);
+      if (!existsTemplates) section.items.push(templatesItem);
+    } else {
+      dynamicNavData.push({
+        subheader: notificationsSubheader,
+        items: [announcementsItem, templatesItem],
+      });
+    }
+  } catch (e) {
+    // ignore
+  }
+
   try {
     const archIdx = dynamicNavData.findIndex((s) => s.subheader === t('architecture.title'));
     if (archIdx >= 0) {
