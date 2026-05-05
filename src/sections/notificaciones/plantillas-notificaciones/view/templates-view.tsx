@@ -16,6 +16,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import { paths } from 'src/routes/paths';
 
+import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { GetNotifiableEventsService, normalizeNotifiableEventsResponse } from 'src/services/notifications/notifiable-events.service';
 
@@ -42,6 +43,7 @@ const compareValues = (a: string | number, b: string | number) => {
 };
 
 export function NotificationTemplatesView() {
+  const { t } = useTranslate('notifications');
   const table = useTable({ defaultOrderBy: 'id', defaultOrder: 'asc' });
   const editDrawer = useBoolean();
 
@@ -56,12 +58,12 @@ export function NotificationTemplatesView() {
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(
     () => [
       { id: '', label: '', width: 72 },
-      { id: 'id', label: 'ID', width: 100 },
-      { id: 'notificationEventKey', label: 'Nombre del evento', width: 340 },
-      { id: 'auditableObject', label: 'Objeto Auditado', width: 220 },
-      { id: 'subjectTemplate', label: 'Asunto', width: 360 },
+      { id: 'id', label: t('templates.columns.id'), width: 100 },
+      { id: 'notificationEventKey', label: t('templates.columns.eventName'), width: 340 },
+      { id: 'auditableObject', label: t('templates.columns.auditableObject'), width: 220 },
+      { id: 'subjectTemplate', label: t('templates.columns.subject'), width: 360 },
     ],
-    []
+    [t]
   );
 
   const loadData = useCallback(async () => {
@@ -139,11 +141,11 @@ export function NotificationTemplatesView() {
   return (
     <DashboardContent>
       <CustomBreadcrumbs
-        heading="Plantillas de notificaciones"
+        heading={t('templates.title')}
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           { name: 'Notificaciones', href: paths.dashboard.notifications.root },
-          { name: 'Plantillas de notificaciones', href: paths.dashboard.notifications.templates },
+          { name: t('templates.title'), href: paths.dashboard.notifications.templates },
         ]}
         sx={{ mb: { xs: 3, md: 5 } }}
       />
@@ -154,7 +156,7 @@ export function NotificationTemplatesView() {
             fullWidth
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Buscar por evento o asunto..."
+            placeholder={t('templates.searchPlaceholder')}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

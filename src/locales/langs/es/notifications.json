@@ -1,0 +1,64 @@
+{
+  "config": {
+    "title": "Configuración de notificaciones",
+    "noData": "No se encontraron grupos de notificaciones",
+    "columns": {
+      "event": "Evento",
+      "notifications": "Notificaciones",
+      "options": "Opciones"
+    },
+    "actions": {
+      "addNotification": "Agregar notificación",
+      "editEvent": "Editar evento"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "editDrawer": {
+      "title": "Editar evento de notificación",
+      "eventKey": "Evento",
+      "auditableObject": "Objeto Auditado",
+      "subjectTemplate": "Asunto",
+      "messageTemplate": "Mensaje",
+      "existingNotifications": "Notificaciones configuradas",
+      "noNotifications": "Sin notificaciones configuradas",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "successMsg": "Evento actualizado",
+      "errorMsg": "Error al actualizar el evento"
+    },
+    "addDrawer": {
+      "title": "Agregar notificación",
+      "eventContext": "Evento",
+      "auditableObject": "Objeto Auditado",
+      "name": "Nombre",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "successMsg": "Notificación agregada",
+      "errorMsg": "Error al agregar la notificación"
+    }
+  },
+  "templates": {
+    "title": "Plantillas de notificaciones",
+    "searchPlaceholder": "Buscar por evento o asunto...",
+    "columns": {
+      "id": "ID",
+      "eventName": "Nombre del evento",
+      "auditableObject": "Objeto Auditado",
+      "subject": "Asunto"
+    },
+    "editDrawer": {
+      "title": "Editar plantilla",
+      "id": "ID",
+      "eventName": "Nombre del evento",
+      "auditableObject": "Objeto Auditado",
+      "subject": "Asunto",
+      "message": "Mensaje",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "successMsg": "Plantilla actualizada",
+      "errorMsg": "Error al actualizar la plantilla"
+    }
+  }
+}

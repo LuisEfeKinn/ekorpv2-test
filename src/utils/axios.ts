@@ -114,6 +114,9 @@ export const endpoints = {
     update: '/api/notifiable-events',
     edit: '/api/notifiable-events',
   },
+  notificationConfigurations: {
+    all: '/api/notification-configurations',
+  },
   auth: {
     me: '/user/init/data',
     login: '/auth/login',

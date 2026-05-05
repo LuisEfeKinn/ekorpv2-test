@@ -1,6 +1,6 @@
 'use client';
 
-import type { NotifiableEvent, NotifiableEventUpdatePayload } from 'src/types/notifications';
+import type { NotificationConfigEvent, NotificationConfigGroup } from 'src/types/notifications';
 
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
@@ -8,15 +8,15 @@ import { useMemo, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Stack from '@mui/material/Stack';
-import { LoadingButton } from '@mui/lab';
-import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
+import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
+import { LoadingButton } from '@mui/lab';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 import { useTranslate } from 'src/locales';
-import { UpdateNotifiableEventService } from 'src/services/notifications/notifiable-events.service';
+import { CreateNotificationConfigurationService } from 'src/services/notifications/notification-configurations.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
@@ -26,36 +26,34 @@ import { Form, Field } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 
 type FormValues = {
-  subjectTemplate: string;
-  messageTemplate: string;
+  name: string;
 };
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  current?: NotifiableEvent | null;
+  event: NotificationConfigEvent | null;
+  group: NotificationConfigGroup | null;
+  notifiableId: number | null;
   onSaved?: () => void;
 };
 
-export function TemplatesEditDrawer({ open, onClose, current, onSaved }: Props) {
+export function NotificationConfigAddDrawer({
+  open,
+  onClose,
+  event,
+  group,
+  notifiableId,
+  onSaved,
+}: Props) {
   const { t } = useTranslate('notifications');
 
   const schema = useMemo(
-    () =>
-      z.object({
-        subjectTemplate: z.string().min(1, { message: 'El asunto es requerido' }),
-        messageTemplate: z.string().min(1, { message: 'El mensaje es requerido' }),
-      }),
+    () => z.object({ name: z.string().min(1, { message: 'Required' }) }),
     []
   );
 
-  const defaultValues = useMemo<FormValues>(
-    () => ({
-      subjectTemplate: current?.subjectTemplate ?? '',
-      messageTemplate: current?.messageTemplate ?? '',
-    }),
-    [current]
-  );
+  const defaultValues = useMemo<FormValues>(() => ({ name: '' }), []);
 
   const methods = useForm<FormValues>({
     mode: 'onSubmit',
@@ -75,32 +73,21 @@ export function TemplatesEditDrawer({ open, onClose, current, onSaved }: Props) 
   }, [open, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
-    if (!current?.id) return;
+    if (!event?.id) return;
     try {
-      const auditableId = current?.auditableObject?.id;
-      if (!auditableId) {
-        toast.error('Este evento no tiene objeto auditado');
-        return;
-      }
-
-      const payload: NotifiableEventUpdatePayload = {
-        notificationEventKey: current.notificationEventKey,
-        subjectTemplate: data.subjectTemplate,
-        messageTemplate: data.messageTemplate,
-        auditableObject: { id: Number(auditableId) },
-      };
-
-      await UpdateNotifiableEventService(current.id, payload);
-      toast.success(t('templates.editDrawer.successMsg'));
+      await CreateNotificationConfigurationService({
+        eventId: event.id,
+        notifiableId: notifiableId ?? 0,
+        name: data.name,
+        status: 1,
+      });
+      toast.success(t('config.addDrawer.successMsg'));
       onClose();
       onSaved?.();
     } catch (error: any) {
-      toast.error(error?.message || t('templates.editDrawer.errorMsg'));
+      toast.error(error?.message || t('config.addDrawer.errorMsg'));
     }
   });
-
-  const auditableObjectName =
-    current?.auditableObject?.objectKey ?? String(current?.auditableObject?.id ?? '-');
 
   return (
     <Drawer
@@ -108,14 +95,14 @@ export function TemplatesEditDrawer({ open, onClose, current, onSaved }: Props) 
       onClose={onClose}
       anchor="right"
       slotProps={{ backdrop: { invisible: true } }}
-      PaperProps={{ sx: { width: { xs: 1, md: 640 } } }}
+      PaperProps={{ sx: { width: { xs: 1, md: 480 } } }}
     >
       <Form methods={methods} onSubmit={onSubmit}>
         <Stack sx={{ height: 1 }}>
           {/* Header */}
           <Stack direction="row" alignItems="center" sx={{ px: 2.5, py: 2 }}>
             <Typography variant="h6" sx={{ flex: 1 }}>
-              {t('templates.editDrawer.title')}
+              {t('config.addDrawer.title')}
             </Typography>
             <IconButton onClick={onClose}>
               <Iconify icon="mingcute:close-line" />
@@ -130,43 +117,31 @@ export function TemplatesEditDrawer({ open, onClose, current, onSaved }: Props) 
               <Stack spacing={1}>
                 <Stack direction="row" spacing={1} alignItems="baseline">
                   <Typography variant="caption" sx={{ color: 'text.disabled', minWidth: 130 }}>
-                    {t('templates.editDrawer.id')}
+                    {t('config.addDrawer.eventContext')}
                   </Typography>
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                    {current?.id ?? '-'}
+                    {event?.notificationEventKey ?? '-'}
                   </Typography>
                 </Stack>
 
                 <Stack direction="row" spacing={1} alignItems="baseline">
                   <Typography variant="caption" sx={{ color: 'text.disabled', minWidth: 130 }}>
-                    {t('templates.editDrawer.eventName')}
+                    {t('config.addDrawer.auditableObject')}
                   </Typography>
                   <Typography variant="body2">
-                    {current?.notificationEventKey ?? '-'}
-                  </Typography>
-                </Stack>
-
-                <Stack direction="row" spacing={1} alignItems="baseline">
-                  <Typography variant="caption" sx={{ color: 'text.disabled', minWidth: 130 }}>
-                    {t('templates.editDrawer.auditableObject')}
-                  </Typography>
-                  <Typography variant="body2">
-                    {auditableObjectName}
+                    {group?.auditableObject?.objectKey ?? '-'}
                   </Typography>
                 </Stack>
               </Stack>
 
               <Divider sx={{ borderStyle: 'dashed' }} />
 
-              {/* Editable fields */}
-              <Field.Text name="subjectTemplate" label={t('templates.editDrawer.subject')} />
-
-              <Stack spacing={0.75}>
-                <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                  {t('templates.editDrawer.message')}
-                </Typography>
-                <Field.Editor name="messageTemplate" />
-              </Stack>
+              {/* Único campo editable */}
+              <Field.Text
+                name="name"
+                label={t('config.addDrawer.name')}
+                autoFocus
+              />
             </Stack>
           </Scrollbar>
 
@@ -175,15 +150,15 @@ export function TemplatesEditDrawer({ open, onClose, current, onSaved }: Props) 
           {/* Footer */}
           <Stack direction="row" spacing={1.5} sx={{ p: 2.5, justifyContent: 'flex-end' }}>
             <Button color="inherit" variant="soft" onClick={onClose}>
-              {t('templates.editDrawer.cancel')}
+              {t('config.addDrawer.cancel')}
             </Button>
             <LoadingButton
               type="submit"
               variant="contained"
               loading={isSubmitting}
-              disabled={!current?.id}
+              disabled={!event?.id}
             >
-              {t('templates.editDrawer.save')}
+              {t('config.addDrawer.save')}
             </LoadingButton>
           </Stack>
         </Stack>

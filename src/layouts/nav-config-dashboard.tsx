@@ -329,6 +329,7 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
     const notificationsSubheader = 'Notificaciones';
     const announcementsTitle = 'Anuncios';
     const templatesTitle = 'Plantillas de notificaciones';
+    const configTitle = 'Configuración de notificaciones';
 
     const sectionIdx = dynamicNavData.findIndex((s) => s.subheader === notificationsSubheader);
     const announcementsItem = {
@@ -343,6 +344,12 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
       icon: getNavIcon('list-ul'),
     };
 
+    const configItem = {
+      title: configTitle,
+      path: paths.dashboard.notifications.config,
+      icon: getNavIcon('cogs'),
+    };
+
     if (sectionIdx >= 0) {
       const section = dynamicNavData[sectionIdx];
       const existsAnnouncements = section.items?.some((it) => it.path === announcementsItem.path);
@@ -350,10 +357,13 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
 
       const existsTemplates = section.items?.some((it) => it.path === templatesItem.path);
       if (!existsTemplates) section.items.push(templatesItem);
+
+      const existsConfig = section.items?.some((it) => it.path === configItem.path);
+      if (!existsConfig) section.items.push(configItem);
     } else {
       dynamicNavData.push({
         subheader: notificationsSubheader,
-        items: [announcementsItem, templatesItem],
+        items: [announcementsItem, templatesItem, configItem],
       });
     }
   } catch (e) {

@@ -179,15 +179,17 @@ export function DocumentManagementView() {
   const [previewRow, setPreviewRow] = useState<DocumentItem | null>(null);
   const [changeControlRow, setChangeControlRow] = useState<DocumentItem | null>(null);
 
+  const { onResetPage } = table;
+
   useEffect(() => {
-    table.onResetPage();
+    onResetPage();
   }, [
     debouncedName,
     filters.version,
     filters.status,
     filters.writingDate,
     filters.expirationDate,
-    table,
+    onResetPage,
   ]);
 
   const totalItems = meta?.itemCount ?? rows.length;
@@ -680,7 +682,7 @@ export function DocumentManagementView() {
 
         <TablePaginationCustom
           page={table.page}
-          count={loading ? 0 : totalItems}
+          count={totalItems}
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
           onRowsPerPageChange={table.onChangeRowsPerPage}

@@ -24,6 +24,7 @@ import { Toolbar } from './components/toolbar';
 import { BubbleToolbar } from './components/bubble-toolbar';
 import { CodeHighlightBlock } from './components/code-highlight-block';
 import { ClearFormat as ClearFormatExtension } from './extension/clear-format';
+import { FontSize as FontSizeExtension } from './extension/font-size';
 import { TextTransform as TextTransformExtension } from './extension/text-transform';
 
 // ----------------------------------------------------------------------
@@ -91,6 +92,7 @@ export function Editor({
         addNodeView: () => ReactNodeViewRenderer(CodeHighlightBlock),
       }).configure({ lowlight }),
       // Custom extensions
+      FontSizeExtension,
       TextTransformExtension,
       ClearFormatExtension,
     ],

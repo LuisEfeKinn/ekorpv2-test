@@ -287,6 +287,7 @@ export const paths = {
       root: `${ROOTS.DASHBOARD}/notificaciones`,
       announcements: `${ROOTS.DASHBOARD}/notificaciones/anuncios`,
       templates: `${ROOTS.DASHBOARD}/notificaciones/plantillas-de-notificaciones`,
+      config: `${ROOTS.DASHBOARD}/notificaciones/configuracion-de-notificaciones`,
     },
 
 

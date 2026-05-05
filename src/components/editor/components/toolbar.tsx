@@ -12,6 +12,7 @@ import { editorClasses } from '../classes';
 import { ImageBlock } from './image-block';
 import { ToolbarItem } from './toolbar-item';
 import { HeadingBlock } from './heading-block';
+import { FontSizeBlock } from './font-size-block';
 import { toolbarIcons } from './toolbar-icons';
 import { useToolbarState } from './use-toolbar-state';
 
@@ -37,6 +38,8 @@ export function Toolbar({
       {...other}
     >
       <HeadingBlock editor={editor} isActive={toolbarState.isTextLevel} />
+
+      <FontSizeBlock editor={editor} />
 
       {/* Text styles */}
       <ToolbarBlock>

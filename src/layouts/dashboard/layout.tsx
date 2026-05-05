@@ -33,6 +33,8 @@ import { LanguagePopover } from '../components/language-popover';
 import { dashboardLayoutVars, dashboardNavColorVars } from './css-vars';
 import { MainSection, layoutClasses, HeaderSection, LayoutSection } from '../core';
 
+import { WsNotificationsBell } from 'src/sections/notificaciones/ws-notifications/ws-notifications-bell';
+
 // import { _workspaces } from '../nav-config-workspace';
 // import { ContactsPopover } from '../components/contacts-popover';
 // import { NotificationsDrawer } from '../components/notifications-drawer';
@@ -157,8 +159,8 @@ export function DashboardLayout({
           {/** @slot Language popover */}
           <LanguagePopover data={allLangs} />
 
-          {/* * @slot Notifications popover
-          <NotificationsDrawer data={_notifications} /> */}
+          {/** @slot Notifications bell */}
+          <WsNotificationsBell />
 
           {/* * @slot Contacts popover
           <ContactsPopover data={_contacts} /> */}

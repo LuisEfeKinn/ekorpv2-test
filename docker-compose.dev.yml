@@ -3,12 +3,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      # Se detiene en la etapa de instalación de dependencias
       target: deps
+      args:
+        BUILD_NODE_OPTIONS: --max-old-space-size=4096
     image: ekorp-front-v2:dev
     container_name: ekorp-front-v2-dev
     restart: unless-stopped
     init: true
-    command: ["yarn", "dev"]
+    # Ejecuta el modo desarrollo de Next.js
+    command: ["yarn", "dev", "-p", "8082"]
     ports:
       - "8082:8082"
     env_file:
@@ -16,6 +20,9 @@ services:
     environment:
       NODE_ENV: development
       PORT: 8082
+      # En desarrollo, Next.js lee esto directamente
+      NEXT_PUBLIC_HOST_API: ${NEXT_PUBLIC_HOST_API}
     volumes:
       - .:/app
+      # Protege los node_modules del contenedor para que no se sobreescriban con los de tu host
       - /app/node_modules

@@ -52,6 +52,36 @@ export type NotifiableEventUpdatePayload = {
   auditableObject: { id: number };
 };
 
+// Notification Configuration types
+
+export type NotificationConfigNotifiable = {
+  id: number;
+  notifiableKey: string;
+};
+
+export type NotificationConfigItem = {
+  id: number;
+  name: string;
+  status: number;
+  notifiable: NotificationConfigNotifiable;
+};
+
+export type NotificationConfigEvent = {
+  id: number;
+  notificationEventKey: string;
+  subjectTemplate: string;
+  messageTemplate: string;
+  notifications: NotificationConfigItem[];
+};
+
+export type NotificationConfigGroup = {
+  auditableObject: {
+    id: number;
+    objectKey: string;
+  };
+  events: NotificationConfigEvent[];
+};
+
 export type AnnouncementUpsertPayload = {
   title: string;
   order: number;
