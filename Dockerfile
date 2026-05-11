@@ -15,17 +15,8 @@ RUN yarn install --frozen-lockfile
 FROM base AS build
 RUN corepack enable && corepack prepare yarn@1.22.22 --activate
 
-# Importante: Declarar ARGs para que Next.js los vea en el 'build'
-ARG NEXT_PUBLIC_AWS_AMPLIFY_IDENTITY_POOL_ID
-ARG NEXT_PUBLIC_AWS_AMPLIFY_USER_POOL_CLIENT_ID
-ARG NEXT_PUBLIC_AWS_AMPLIFY_USER_POOL_ID
-ARG NEXT_PUBLIC_AWS_REGION
-ARG NEXT_PUBLIC_HOST_API
-ARG NEXT_PUBLIC_RECAPTCHA_SITE_KEY
-ARG NEXT_PUBLIC_SERVER_URL
-ARG NEXT_PUBLIC_WIDGET_BASE_URL
-
 COPY --from=deps /app/node_modules ./node_modules
+# Next.js resuelve NEXT_PUBLIC_* durante el build, por eso el .env debe estar disponible en esta etapa.
 COPY . .
 
 ENV NODE_ENV=production

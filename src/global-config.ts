@@ -64,8 +64,11 @@ export const CONFIG: ConfigValue = {
    */
   amplify: {
     userPoolId: process.env.NEXT_PUBLIC_AWS_AMPLIFY_USER_POOL_ID ?? '',
-    userPoolWebClientId: process.env.NEXT_PUBLIC_AWS_AMPLIFY_USER_POOL_WEB_CLIENT_ID ?? '',
-    region: process.env.NEXT_PUBLIC_AWS_AMPLIFY_REGION ?? '',
+    userPoolWebClientId:
+      process.env.NEXT_PUBLIC_AWS_AMPLIFY_USER_POOL_WEB_CLIENT_ID
+      ?? process.env.NEXT_PUBLIC_AWS_AMPLIFY_USER_POOL_CLIENT_ID
+      ?? '',
+    region: process.env.NEXT_PUBLIC_AWS_AMPLIFY_REGION ?? process.env.NEXT_PUBLIC_AWS_REGION ?? '',
   },
   /**
    * Auth0
