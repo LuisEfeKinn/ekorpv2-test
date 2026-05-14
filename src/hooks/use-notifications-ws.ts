@@ -9,7 +9,15 @@ import { CONFIG } from 'src/global-config';
 export type WsNotification = {
   id: string;
   event: string;
-  data: { id: number; name: string; code: string };
+  data: {
+    id: number;
+    eventKey: string;
+    notifiableKey: string;
+    subject: string;
+    message: string;
+    read: boolean;
+    createdAt: string;
+  };
   receivedAt: Date;
   isRead: boolean;
 };
@@ -50,15 +58,24 @@ export function useNotificationsWs() {
       try {
         const msg = JSON.parse(evt.data) as {
           event: string;
-          data: { id: number; name: string; code: string };
+          data: {
+            id: number;
+            eventKey: string;
+            notifiableKey: string;
+            subject: string;
+            message: string;
+            read: boolean;
+            createdAt: string;
+          };
         };
+        if (msg.event !== 'notification') return;
         setNotifications((prev) => [
           {
             id: `${Date.now()}-${Math.random()}`,
             event: msg.event,
             data: msg.data,
             receivedAt: new Date(),
-            isRead: false,
+            isRead: msg.data.read,
           },
           ...prev,
         ]);

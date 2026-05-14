@@ -1,6 +1,6 @@
 'use client';
 
-import type { NotificationConfigEvent, NotificationConfigGroup } from 'src/types/notifications';
+import type { NotificationConfigItem, NotificationConfigEvent, NotificationConfigGroup } from 'src/types/notifications';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useBoolean } from 'minimal-shared/hooks';
@@ -10,6 +10,7 @@ import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
 import Table from '@mui/material/Table';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import Skeleton from '@mui/material/Skeleton';
 import TableRow from '@mui/material/TableRow';
@@ -19,24 +20,35 @@ import TableHead from '@mui/material/TableHead';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Accordion from '@mui/material/Accordion';
+import { LoadingButton } from '@mui/lab';
+import CircularProgress from '@mui/material/CircularProgress';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 
 import { paths } from 'src/routes/paths';
 
 import { useTranslate } from 'src/locales';
+import axios, { endpoints } from 'src/utils/axios';
 import { DashboardContent } from 'src/layouts/dashboard';
-import { GetNotificationConfigurationsService } from 'src/services/notifications/notification-configurations.service';
+import {
+  GetNotificationConfigurationsService,
+  ActivateNotificationConfigService,
+  DeactivateNotificationConfigService,
+  AssignRoleToNotificationService,
+} from 'src/services/notifications/notification-configurations.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
+import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 import { NotificationConfigEditDrawer } from '../notification-config-edit-drawer';
 import { NotificationConfigAddDrawer } from '../notification-config-add-drawer';
 
 // ----------------------------------------------------------------------
+
+type Role = { id: number; name: string };
 
 function formatObjectKey(key: string): string {
   return key
@@ -59,6 +71,22 @@ export function NotificationConfigView() {
   const [selectedEvent, setSelectedEvent] = useState<NotificationConfigEvent | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<NotificationConfigGroup | null>(null);
   const [selectedNotifiableId, setSelectedNotifiableId] = useState<number | null>(null);
+  const [toggling, setToggling] = useState<Set<number>>(new Set());
+  const [roles, setRoles] = useState<Role[]>([]);
+
+  // Role delete confirm
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState<{ notifiableId: number; roleName: string } | null>(null);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    axios.get<any>(endpoints.security.roles.all)
+      .then((res) => {
+        const raw: any[] = Array.isArray(res.data?.data) ? res.data.data : [];
+        setRoles(raw.map((r: any) => ({ id: Number(r.id), name: r.name ?? String(r.id) })));
+      })
+      .catch(() => {});
+  }, []);
 
   const loadData = useCallback(async () => {
     try {
@@ -92,10 +120,56 @@ export function NotificationConfigView() {
   const handleAdd = (group: NotificationConfigGroup, event: NotificationConfigEvent) => {
     setSelectedGroup(group);
     setSelectedEvent(event);
-    // notifiableId viene del primer notifiable ya registrado en el evento
-    const notifiableId = event.notifications?.[0]?.notifiable?.id ?? null;
-    setSelectedNotifiableId(notifiableId);
     addDrawer.onTrue();
+  };
+
+  const handleToggleStatus = useCallback(
+    async (notif: NotificationConfigItem) => {
+      if (toggling.has(notif.id)) return;
+      setToggling((prev) => new Set([...prev, notif.id]));
+      try {
+        if (notif.status === 1) {
+          await DeactivateNotificationConfigService(notif.id);
+        } else {
+          await ActivateNotificationConfigService(notif.id);
+        }
+        await loadData();
+      } catch (err: any) {
+        toast.error(err?.message || 'Error al cambiar el estado');
+      } finally {
+        setToggling((prev) => {
+          const next = new Set(prev);
+          next.delete(notif.id);
+          return next;
+        });
+      }
+    },
+    [toggling, loadData]
+  );
+
+  const handleOpenDeleteRole = useCallback(
+    (notifiableId: number, roleName: string) => {
+      setPendingDelete({ notifiableId, roleName });
+      setConfirmOpen(true);
+    },
+    []
+  );
+
+  const handleConfirmDeleteRole = async () => {
+    if (!pendingDelete) return;
+    setDeleting(true);
+    try {
+      await AssignRoleToNotificationService(pendingDelete.notifiableId, null);
+      await DeactivateNotificationConfigService(pendingDelete.notifiableId);
+      toast.success('Rol eliminado y notificación desactivada');
+      setConfirmOpen(false);
+      setPendingDelete(null);
+      await loadData();
+    } catch (err: any) {
+      toast.error(err?.message || 'Error al eliminar el rol');
+    } finally {
+      setDeleting(false);
+    }
   };
 
   return (
@@ -157,13 +231,13 @@ export function NotificationConfigView() {
                     <Table size="small" sx={{ minWidth: 720 }}>
                       <TableHead>
                         <TableRow>
-                          <TableCell sx={{ width: 340, color: 'text.secondary' }}>
+                          <TableCell sx={{ width: 300, color: 'text.secondary' }}>
                             {t('config.columns.event')}
                           </TableCell>
                           <TableCell sx={{ color: 'text.secondary' }}>
                             {t('config.columns.notifications')}
                           </TableCell>
-                          <TableCell align="right" sx={{ width: 120, color: 'text.secondary' }}>
+                          <TableCell align="right" sx={{ width: 100, color: 'text.secondary' }}>
                             {t('config.columns.options')}
                           </TableCell>
                         </TableRow>
@@ -181,12 +255,14 @@ export function NotificationConfigView() {
                             <EventRow
                               key={event.id}
                               event={event}
+                              roles={roles}
+                              toggling={toggling}
+                              onDeleteRole={handleOpenDeleteRole}
+                              onToggleNotif={handleToggleStatus}
                               onEdit={() => handleEdit(group, event)}
                               onAdd={() => handleAdd(group, event)}
                               addLabel={t('config.actions.addNotification')}
                               editLabel={t('config.actions.editEvent')}
-                              activeLabel={t('config.status.active')}
-                              inactiveLabel={t('config.status.inactive')}
                             />
                           ))
                         )}
@@ -216,6 +292,23 @@ export function NotificationConfigView() {
         notifiableId={selectedNotifiableId}
         onSaved={loadData}
       />
+
+      <ConfirmDialog
+        open={confirmOpen}
+        onClose={() => { setConfirmOpen(false); setPendingDelete(null); }}
+        title="Quitar rol y desactivar"
+        content={`¿Quitar el rol "${pendingDelete?.roleName}" y desactivar esta notificación? La notificación seguirá existiendo pero sin rol ni estado activo.`}
+        action={
+          <LoadingButton
+            color="error"
+            variant="contained"
+            loading={deleting}
+            onClick={handleConfirmDeleteRole}
+          >
+            Eliminar
+          </LoadingButton>
+        }
+      />
     </DashboardContent>
   );
 }
@@ -224,35 +317,111 @@ export function NotificationConfigView() {
 
 type EventRowProps = {
   event: NotificationConfigEvent;
+  roles: Role[];
+  toggling: Set<number>;
+  onDeleteRole: (notificationId: number, roleName: string) => void;
+  onToggleNotif: (notif: NotificationConfigItem) => void;
   onEdit: () => void;
   onAdd: () => void;
   addLabel: string;
   editLabel: string;
-  activeLabel: string;
-  inactiveLabel: string;
 };
 
-function EventRow({ event, onEdit, onAdd, addLabel, editLabel, activeLabel, inactiveLabel }: EventRowProps) {
+function EventRow({ event, roles, toggling, onDeleteRole, onToggleNotif, onEdit, onAdd, addLabel, editLabel }: EventRowProps) {
   return (
     <TableRow hover>
       <TableCell>
         <Typography variant="body2" sx={{ color: 'text.primary' }}>
           {event.notificationEventKey}
         </Typography>
+        {event.subjectTemplate && (
+          <Typography variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
+            {event.subjectTemplate}
+          </Typography>
+        )}
       </TableCell>
 
       <TableCell>
-        <Stack direction="row" flexWrap="wrap" gap={0.75}>
+        <Stack direction="row" flexWrap="wrap" gap={1}>
           {event.notifications?.length ? (
-            event.notifications.map((notif) => (
-              <Chip
-                key={notif.id}
-                label={notif.name}
-                size="small"
-                color={notif.status === 1 ? 'success' : 'default'}
-                variant="soft"
-              />
-            ))
+            event.notifications.map((notif) => {
+              const roleName = notif.roleId != null
+                ? (roles.find((r) => r.id === Number(notif.roleId))?.name ?? `Rol ${notif.roleId}`)
+                : null;
+              const isActive = notif.status === 1;
+              const isToggling = toggling.has(notif.id);
+
+              return (
+                <Box
+                  key={notif.id}
+                  sx={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 0.5,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      position: 'relative',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      '&:hover .notif-delete-btn': { opacity: 1 },
+                    }}
+                  >
+                    <Chip
+                      label={roleName ?? notif.name}
+                      size="small"
+                      color={isActive && roleName ? 'success' : 'default'}
+                      variant="soft"
+                    />
+                    {roleName && (
+                      <Tooltip title="Quitar rol y desactivar">
+                        <IconButton
+                          className="notif-delete-btn"
+                          size="small"
+                          onClick={() => onDeleteRole(notif.id, roleName)}
+                          sx={{
+                            opacity: 0,
+                            transition: 'opacity 0.15s',
+                            position: 'absolute',
+                            right: -8,
+                            top: -8,
+                            width: 18,
+                            height: 18,
+                            bgcolor: 'error.main',
+                            color: 'common.white',
+                            '&:hover': { bgcolor: 'error.dark', opacity: '1 !important' },
+                          }}
+                        >
+                          <Iconify icon="mingcute:close-line" width={10} />
+                        </IconButton>
+                      </Tooltip>
+                    )}
+                  </Box>
+
+                  <Tooltip title={isActive ? 'Desactivar' : 'Activar'}>
+                    <span>
+                      <IconButton
+                        size="small"
+                        disabled={isToggling}
+                        onClick={() => onToggleNotif(notif)}
+                        sx={{ width: 22, height: 22 }}
+                      >
+                        {isToggling ? (
+                          <CircularProgress size={12} />
+                        ) : (
+                          <Iconify
+                            icon={isActive ? 'solar:pause-bold' : 'solar:play-bold'}
+                            width={14}
+                            sx={{ color: isActive ? 'warning.main' : 'success.main' }}
+                          />
+                        )}
+                      </IconButton>
+                    </span>
+                  </Tooltip>
+                </Box>
+              );
+            })
           ) : (
             <Typography variant="caption" sx={{ color: 'text.disabled' }}>
               —

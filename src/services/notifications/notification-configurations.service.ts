@@ -15,11 +15,23 @@ export const GetNotificationConfigurationsService = async (params?: {
 
 export type CreateNotificationConfigPayload = {
   eventId: number;
-  notifiableId: number;
   name: string;
   status: number;
+  roleId?: number | null;
 };
 
 export const CreateNotificationConfigurationService = async (
   payload: CreateNotificationConfigPayload
 ) => axios.post(endpoints.notificationConfigurations.all, payload);
+
+export const ActivateNotificationConfigService = (id: number) =>
+  axios.patch(`${endpoints.notificationConfigurations.activate}/${id}/activate`);
+
+export const DeactivateNotificationConfigService = (id: number) =>
+  axios.patch(`${endpoints.notificationConfigurations.deactivate}/${id}/deactivate`);
+
+export const AssignRoleToNotificationService = (id: number, roleId: number | null) =>
+  axios.patch(`${endpoints.notificationConfigurations.all}/${id}/role`, { roleId });
+
+export const DeleteNotificationConfigService = (id: number) =>
+  axios.delete(`${endpoints.notificationConfigurations.all}/${id}`);

@@ -27,17 +27,6 @@ import { varTap, varHover, transitionTap } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 
-function eventLabel(event: string): string {
-  const map: Record<string, string> = {
-    'document:created': 'Documento creado',
-    'document:updated': 'Documento actualizado',
-    'document:deleted': 'Documento eliminado',
-  };
-  return map[event] ?? event;
-}
-
-// ----------------------------------------------------------------------
-
 function NotificationRow({
   item,
   onRead,
@@ -72,25 +61,35 @@ function NotificationRow({
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
             <Chip
               size="small"
-              label={eventLabel(item.event)}
+              label={item.data.eventKey}
               color="primary"
               variant="soft"
               sx={{ height: 20, fontSize: 11 }}
             />
             <Typography variant="body2" sx={{ fontWeight: item.isRead ? 400 : 600 }}>
-              {item.data.name}
+              {item.data.subject}
             </Typography>
           </Box>
         }
         secondary={
-          <Box sx={{ display: 'flex', gap: 1, mt: 0.5, flexWrap: 'wrap' }}>
+          <Box sx={{ mt: 0.5 }}>
             <Typography variant="caption" sx={{ color: 'text.disabled' }}>
-              {fToNow(item.receivedAt)}
+              {fToNow(new Date(item.data.createdAt))}
             </Typography>
-            {item.data.code && (
-              <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                · {item.data.code}
-              </Typography>
+            {item.data.message && (
+              <Box
+                dangerouslySetInnerHTML={{ __html: item.data.message }}
+                sx={{
+                  mt: 0.5,
+                  fontSize: 12,
+                  color: 'text.secondary',
+                  lineHeight: 1.6,
+                  '& p': { m: 0, mb: 0.5 },
+                  '& strong': { fontWeight: 600 },
+                  '& a': { color: 'primary.main', wordBreak: 'break-all' },
+                  '& u': { textDecoration: 'underline' },
+                }}
+              />
             )}
           </Box>
         }

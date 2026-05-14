@@ -4,18 +4,20 @@ import type { NotificationConfigEvent, NotificationConfigGroup } from 'src/types
 
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
-import { useMemo, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
+import MenuItem from '@mui/material/MenuItem';
 import { LoadingButton } from '@mui/lab';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 import { useTranslate } from 'src/locales';
+import axios, { endpoints } from 'src/utils/axios';
 import { CreateNotificationConfigurationService } from 'src/services/notifications/notification-configurations.service';
 
 import { toast } from 'src/components/snackbar';
@@ -25,8 +27,10 @@ import { Form, Field } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
+type Role = { id: number; name: string };
+
 type FormValues = {
-  name: string;
+  roleId: number | '';
 };
 
 type Props = {
@@ -38,22 +42,29 @@ type Props = {
   onSaved?: () => void;
 };
 
-export function NotificationConfigAddDrawer({
-  open,
-  onClose,
-  event,
-  group,
-  notifiableId,
-  onSaved,
-}: Props) {
+export function NotificationConfigAddDrawer({ open, onClose, event, group, onSaved }: Props) {
   const { t } = useTranslate('notifications');
+  const [roles, setRoles] = useState<Role[]>([]);
+
+  useEffect(() => {
+    if (!open) return;
+    axios.get<any>(endpoints.security.roles.all).then((res) => {
+      const raw: any[] = Array.isArray(res.data?.data) ? res.data.data : [];
+      setRoles(raw.map((r: any) => ({ id: Number(r.id), name: r.name ?? String(r.id) })));
+    }).catch(() => {});
+  }, [open]);
 
   const schema = useMemo(
-    () => z.object({ name: z.string().min(1, { message: 'Required' }) }),
+    () =>
+      z.object({
+        roleId: z
+          .union([z.number().int().positive(), z.literal('')])
+          .refine((v) => v !== '', { message: 'Selecciona un rol' }),
+      }),
     []
   );
 
-  const defaultValues = useMemo<FormValues>(() => ({ name: '' }), []);
+  const defaultValues = useMemo<FormValues>(() => ({ roleId: '' }), []);
 
   const methods = useForm<FormValues>({
     mode: 'onSubmit',
@@ -61,11 +72,7 @@ export function NotificationConfigAddDrawer({
     defaultValues,
   });
 
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
+  const { reset, handleSubmit, formState: { isSubmitting } } = methods;
 
   useEffect(() => {
     if (!open) return;
@@ -73,13 +80,14 @@ export function NotificationConfigAddDrawer({
   }, [open, defaultValues, reset]);
 
   const onSubmit = handleSubmit(async (data) => {
-    if (!event?.id) return;
+    if (!event?.id || data.roleId === '') return;
+    const role = roles.find((r) => r.id === data.roleId);
     try {
       await CreateNotificationConfigurationService({
         eventId: event.id,
-        notifiableId: notifiableId ?? 0,
-        name: data.name,
+        name: role?.name ?? String(data.roleId),
         status: 1,
+        roleId: data.roleId as number,
       });
       toast.success(t('config.addDrawer.successMsg'));
       onClose();
@@ -95,11 +103,10 @@ export function NotificationConfigAddDrawer({
       onClose={onClose}
       anchor="right"
       slotProps={{ backdrop: { invisible: true } }}
-      PaperProps={{ sx: { width: { xs: 1, md: 480 } } }}
+      PaperProps={{ sx: { width: { xs: 1, md: 420 } } }}
     >
       <Form methods={methods} onSubmit={onSubmit}>
         <Stack sx={{ height: 1 }}>
-          {/* Header */}
           <Stack direction="row" alignItems="center" sx={{ px: 2.5, py: 2 }}>
             <Typography variant="h6" sx={{ flex: 1 }}>
               {t('config.addDrawer.title')}
@@ -113,7 +120,6 @@ export function NotificationConfigAddDrawer({
 
           <Scrollbar sx={{ flex: 1 }}>
             <Stack spacing={3} sx={{ p: 2.5 }}>
-              {/* Read-only context */}
               <Stack spacing={1}>
                 <Stack direction="row" spacing={1} alignItems="baseline">
                   <Typography variant="caption" sx={{ color: 'text.disabled', minWidth: 130 }}>
@@ -123,7 +129,6 @@ export function NotificationConfigAddDrawer({
                     {event?.notificationEventKey ?? '-'}
                   </Typography>
                 </Stack>
-
                 <Stack direction="row" spacing={1} alignItems="baseline">
                   <Typography variant="caption" sx={{ color: 'text.disabled', minWidth: 130 }}>
                     {t('config.addDrawer.auditableObject')}
@@ -136,18 +141,27 @@ export function NotificationConfigAddDrawer({
 
               <Divider sx={{ borderStyle: 'dashed' }} />
 
-              {/* Único campo editable */}
-              <Field.Text
-                name="name"
-                label={t('config.addDrawer.name')}
-                autoFocus
-              />
+              <Field.Select
+                name="roleId"
+                label="Rol que recibe la notificación"
+                disabled={roles.length === 0}
+              >
+                <MenuItem value="" disabled>
+                  <Typography variant="body2" sx={{ color: 'text.disabled' }}>
+                    Selecciona un rol
+                  </Typography>
+                </MenuItem>
+                {roles.map((role) => (
+                  <MenuItem key={role.id} value={role.id}>
+                    {role.name}
+                  </MenuItem>
+                ))}
+              </Field.Select>
             </Stack>
           </Scrollbar>
 
           <Divider />
 
-          {/* Footer */}
           <Stack direction="row" spacing={1.5} sx={{ p: 2.5, justifyContent: 'flex-end' }}>
             <Button color="inherit" variant="soft" onClick={onClose}>
               {t('config.addDrawer.cancel')}

@@ -116,6 +116,11 @@ export const endpoints = {
   },
   notificationConfigurations: {
     all: '/api/notification-configurations',
+    activate: '/api/notification-configurations',   // + /:id/activate
+    deactivate: '/api/notification-configurations', // + /:id/deactivate
+  },
+  notifiables: {
+    update: '/api/notifiables', // + /:id
   },
   auth: {
     me: '/user/init/data',

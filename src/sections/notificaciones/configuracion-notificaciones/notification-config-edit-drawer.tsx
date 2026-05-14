@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form';
 import { useMemo, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
@@ -65,11 +64,7 @@ export function NotificationConfigEditDrawer({ open, onClose, event, group, onSa
     defaultValues,
   });
 
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
+  const { reset, handleSubmit, formState: { isSubmitting } } = methods;
 
   useEffect(() => {
     if (!open) return;
@@ -93,8 +88,6 @@ export function NotificationConfigEditDrawer({ open, onClose, event, group, onSa
     }
   });
 
-  const statusColor = (status: number) => (status === 1 ? 'success' : 'default');
-
   return (
     <Drawer
       open={open}
@@ -105,7 +98,6 @@ export function NotificationConfigEditDrawer({ open, onClose, event, group, onSa
     >
       <Form methods={methods} onSubmit={onSubmit}>
         <Stack sx={{ height: 1 }}>
-          {/* Header */}
           <Stack direction="row" alignItems="center" sx={{ px: 2.5, py: 2 }}>
             <Typography variant="h6" sx={{ flex: 1 }}>
               {t('config.editDrawer.title')}
@@ -119,7 +111,6 @@ export function NotificationConfigEditDrawer({ open, onClose, event, group, onSa
 
           <Scrollbar sx={{ flex: 1 }}>
             <Stack spacing={3} sx={{ p: 2.5 }}>
-              {/* Read-only context */}
               <Stack spacing={1}>
                 <Stack direction="row" spacing={1} alignItems="baseline">
                   <Typography variant="caption" sx={{ color: 'text.disabled', minWidth: 120 }}>
@@ -129,7 +120,6 @@ export function NotificationConfigEditDrawer({ open, onClose, event, group, onSa
                     {event?.notificationEventKey ?? '-'}
                   </Typography>
                 </Stack>
-
                 <Stack direction="row" spacing={1} alignItems="baseline">
                   <Typography variant="caption" sx={{ color: 'text.disabled', minWidth: 120 }}>
                     {t('config.editDrawer.auditableObject')}
@@ -142,7 +132,6 @@ export function NotificationConfigEditDrawer({ open, onClose, event, group, onSa
 
               <Divider sx={{ borderStyle: 'dashed' }} />
 
-              {/* Editable fields */}
               <Field.Text name="subjectTemplate" label={t('config.editDrawer.subjectTemplate')} />
 
               <Stack spacing={0.75}>
@@ -151,39 +140,11 @@ export function NotificationConfigEditDrawer({ open, onClose, event, group, onSa
                 </Typography>
                 <Field.Editor name="messageTemplate" />
               </Stack>
-
-              <Divider sx={{ borderStyle: 'dashed' }} />
-
-              {/* Existing notifications */}
-              <Stack spacing={1.5}>
-                <Typography variant="subtitle2">
-                  {t('config.editDrawer.existingNotifications')}
-                </Typography>
-
-                {!event?.notifications?.length ? (
-                  <Typography variant="body2" sx={{ color: 'text.disabled' }}>
-                    {t('config.editDrawer.noNotifications')}
-                  </Typography>
-                ) : (
-                  <Stack direction="row" flexWrap="wrap" gap={1}>
-                    {event.notifications.map((notif) => (
-                      <Chip
-                        key={notif.id}
-                        label={notif.name}
-                        size="small"
-                        color={statusColor(notif.status)}
-                        variant="soft"
-                      />
-                    ))}
-                  </Stack>
-                )}
-              </Stack>
             </Stack>
           </Scrollbar>
 
           <Divider />
 
-          {/* Footer actions */}
           <Stack direction="row" spacing={1.5} sx={{ p: 2.5, justifyContent: 'flex-end' }}>
             <Button color="inherit" variant="soft" onClick={onClose}>
               {t('config.editDrawer.cancel')}

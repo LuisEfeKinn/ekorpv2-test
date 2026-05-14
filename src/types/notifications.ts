@@ -54,16 +54,11 @@ export type NotifiableEventUpdatePayload = {
 
 // Notification Configuration types
 
-export type NotificationConfigNotifiable = {
-  id: number;
-  notifiableKey: string;
-};
-
 export type NotificationConfigItem = {
   id: number;
   name: string;
   status: number;
-  notifiable: NotificationConfigNotifiable;
+  roleId?: number | null;
 };
 
 export type NotificationConfigEvent = {
