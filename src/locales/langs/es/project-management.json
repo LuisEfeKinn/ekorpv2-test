@@ -1,0 +1,194 @@
+{
+  "clients": {
+    "title": "Clientes",
+    "breadcrumbs": {
+      "dashboard": "Panel de Control",
+      "projectManagement": "Gestión de Proyectos",
+      "clients": "Clientes"
+    },
+    "actions": {
+      "new": "Nuevo cliente",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar cambios",
+      "create": "Crear cliente"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre / Correo",
+        "nit": "NIT",
+        "status": "Estado",
+        "createdAt": "Creado"
+      },
+      "toolbar": {
+        "search": "Buscar por nombre, NIT o correo...",
+        "statusLabel": "Estado"
+      },
+      "filters": {
+        "all": "Todos",
+        "active": "Activos",
+        "inactive": "Inactivos",
+        "searchLabel": "Búsqueda:",
+        "statusLabel": "Estado:"
+      }
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "drawer": {
+      "titleCreate": "Nuevo cliente",
+      "titleEdit": "Editar cliente",
+      "fields": {
+        "name": "Nombre",
+        "nit": "NIT",
+        "email": "Correo electrónico",
+        "isActive": "Activo"
+      },
+      "validation": {
+        "nameRequired": "El nombre es requerido",
+        "nitRequired": "El NIT es requerido",
+        "emailInvalid": "Ingresa un email válido"
+      }
+    },
+    "messages": {
+      "created": "Cliente creado correctamente",
+      "updated": "Cliente actualizado correctamente",
+      "deleted": "Cliente eliminado correctamente",
+      "errorCreate": "Error al crear el cliente",
+      "errorUpdate": "Error al actualizar el cliente",
+      "errorDelete": "Error al eliminar el cliente",
+      "errorLoading": "Error al cargar los clientes"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar cliente",
+        "content": "¿Estás seguro de que deseas eliminar a \"{{name}}\"?"
+      }
+    }
+  },
+  "projects": {
+    "title": "Proyectos",
+    "breadcrumbs": {
+      "dashboard": "Panel de Control",
+      "projectManagement": "Gestión de Proyectos",
+      "projects": "Proyectos"
+    },
+    "actions": {
+      "new": "Nuevo proyecto",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "save": "Guardar cambios",
+      "create": "Crear proyecto",
+      "viewDetail": "Ver detalle"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre / Cliente",
+        "status": "Estado",
+        "importance": "Importancia",
+        "size": "Tamaño",
+        "dates": "Fechas"
+      },
+      "toolbar": {
+        "search": "Buscar por nombre o cliente...",
+        "client": "Cliente",
+        "status": "Estado",
+        "importanceLevel": "Importancia"
+      }
+    },
+    "drawer": {
+      "titleCreate": "Nuevo proyecto",
+      "titleEdit": "Editar proyecto",
+      "fields": {
+        "name": "Nombre del proyecto",
+        "client": "Cliente",
+        "status": "Estado",
+        "importanceLevel": "Nivel de importancia",
+        "size": "Tamaño",
+        "complexity": "Complejidad",
+        "reintegroLevel": "Nivel de reintegro",
+        "generatesIncome": "Genera ingresos",
+        "startDate": "Fecha de inicio",
+        "endDate": "Fecha de fin",
+        "observations": "Observaciones"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Eliminar proyecto",
+        "content": "¿Estás seguro de que deseas eliminar \"{{name}}\"?"
+      }
+    },
+    "messages": {
+      "created": "Proyecto creado correctamente",
+      "updated": "Proyecto actualizado correctamente",
+      "deleted": "Proyecto eliminado correctamente",
+      "errorCreate": "Error al crear el proyecto",
+      "errorUpdate": "Error al actualizar el proyecto",
+      "errorDelete": "Error al eliminar el proyecto",
+      "errorLoading": "Error al cargar los proyectos"
+    },
+    "empty": {
+      "title": "No se encontraron proyectos"
+    },
+    "card": {
+      "generatesIncome": "Genera ingresos"
+    }
+  },
+  "workers": {
+    "title": "Empleados",
+    "breadcrumbs": {
+      "dashboard": "Panel de Control",
+      "projectManagement": "Gestión de Proyectos",
+      "workers": "Empleados"
+    },
+    "actions": {
+      "edit": "Editar",
+      "cancel": "Cancelar",
+      "save": "Guardar cambios"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre / Correo",
+        "position": "Cargo",
+        "experience": "Experiencia",
+        "technologies": "Tecnologías",
+        "status": "Estado",
+        "employmentType": "Tipo de contrato"
+      },
+      "toolbar": {
+        "search": "Buscar por nombre o correo...",
+        "workerStatus": "Estado",
+        "experienceLevel": "Nivel de experiencia",
+        "employmentType": "Tipo de contrato"
+      },
+      "filters": {
+        "searchLabel": "Búsqueda:",
+        "workerStatusLabel": "Estado:",
+        "experienceLevelLabel": "Experiencia:",
+        "employmentTypeLabel": "Contrato:"
+      }
+    },
+    "drawer": {
+      "title": "Editar empleado",
+      "fields": {
+        "workerStatus": "Estado",
+        "experienceLevel": "Nivel de experiencia",
+        "employmentType": "Tipo de contrato",
+        "technologies": "Tecnologías",
+        "technologiesHint": "Separadas por coma: NestJS, TypeScript, MySQL",
+        "yearsOfExperience": "Años de experiencia",
+        "yearsInCompany": "Años en empresa",
+        "observations": "Observaciones"
+      }
+    },
+    "messages": {
+      "updated": "Empleado actualizado correctamente",
+      "errorUpdate": "Error al actualizar el empleado",
+      "errorLoading": "Error al cargar los empleados"
+    }
+  }
+}

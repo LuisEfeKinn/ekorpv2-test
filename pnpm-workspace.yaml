@@ -1,0 +1,8 @@
+allowBuilds:
+  '@firebase/util': true
+  browser-tabs-lock: true
+  protobufjs: true
+  react-vertical-timeline-component: true
+  sharp: true
+  unrs-resolver: true
+shellEmulator: true

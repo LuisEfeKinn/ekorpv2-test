@@ -1,0 +1,234 @@
+{
+  "documentManagement": {
+    "title": "Document management",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "documents": "Documents"
+    },
+    "table": {
+      "columns": {
+        "id": "ID",
+        "code": "Code",
+        "name": "Name",
+        "description": "Description",
+        "version": "Version",
+        "writingDate": "Writing date",
+        "expirationDate": "Expiration date",
+        "type": "Type",
+        "status": "Status",
+        "documentType": "Document type",
+        "author": "Author",
+        "ranking": "Ranking",
+        "active": "Active",
+        "file": "File",
+        "link": "Link",
+        "createdDate": "Created date",
+        "lastModifiedDate": "Last updated",
+        "originalFile": "Original file",
+        "options": "Options"
+      },
+      "values": {
+        "active": {
+          "yes": "Yes",
+          "no": "No"
+        }
+      },
+      "toolbar": {
+        "search": "Search by code or name..."
+      }
+    },
+    "actions": {
+      "create": "Create document",
+      "preview": "Preview",
+      "download": "Download",
+      "exportExcel": "Export Excel",
+      "open": "Open",
+      "edit": "Edit",
+      "changeControl": "Change control",
+      "map": "Map",
+      "feedbacks": "Lessons & Proposals",
+      "delete": "Delete",
+      "save": "Save",
+      "clear": "Clear",
+      "cancel": "Cancel"
+    },
+    "filters": {
+      "any": "Any",
+      "order": "Order",
+      "orderNone": "No order",
+      "orderNameAsc": "Name (A-Z)",
+      "orderNameDesc": "Name (Z-A)",
+      "orderCreatedDesc": "Created date (newest)"
+    },
+    "map": {
+      "title": "Document map",
+      "subtitle": "Map",
+      "actions": {
+        "back": "Back"
+      },
+      "messages": {
+        "loading": "Loading map...",
+        "empty": "No data to display.",
+        "expandNotAvailable": "Expanded view is not available yet",
+        "deleteNotAvailable": "Delete is not available yet"
+      },
+      "relations": {
+        "kinds": {
+          "process": "Process",
+          "job": "Position",
+          "objective": "Strategic objective",
+          "organizationalUnit": "Organizational unit",
+          "tool": "Tool",
+          "topic": "Classification",
+          "subscriber": "Subscriber",
+          "competency": "Competency",
+          "exam": "Exam"
+        },
+        "titles": {
+          "create": "Relate {{entity}}",
+          "edit": "Edit {{entity}} relation"
+        },
+        "fields": {
+          "process": "Process",
+          "job": "Position",
+          "objective": "Objective",
+          "organizationalUnit": "Organizational unit",
+          "tool": "Tool",
+          "topic": "Classification",
+          "subscriber": "User",
+          "competency": "Competency",
+          "exam": "Exam",
+          "observations": "Observations"
+        },
+        "validation": {
+          "required": "Required field"
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "create": "Create",
+          "update": "Update",
+          "delete": "Delete"
+        },
+        "dialogs": {
+          "delete": {
+            "title": "Delete relation",
+            "content": "Do you want to delete the relation for \"{{name}}\"?"
+          }
+        },
+        "messages": {
+          "loadError": "Could not load data",
+          "missingData": "Check required fields",
+          "saveError": "Could not save the relation",
+          "deleteError": "Could not delete the relation",
+          "deleteMissingId": "Could not identify the relation to delete",
+          "created": "Relation created successfully",
+          "updated": "Relation updated successfully",
+          "deleted": "Relation deleted successfully"
+        }
+      },
+      "drawer": {
+        "createTitle": "Form",
+        "editTitle": "Edit"
+      }
+    },
+    "drawer": {
+      "title": {
+        "create": "New document",
+        "edit": "Edit document"
+      }
+    },
+    "changeControl": {
+      "drawer": {
+        "title": "Document change control {{code}}"
+      },
+      "form": {
+        "fields": {
+          "comments": "Change comments"
+        }
+      },
+      "table": {
+        "columns": {
+          "changeDate": "Last change date",
+          "userName": "User name",
+          "currentStatus": "Current status",
+          "previousStatus": "Previous status",
+          "numberOfDays": "Days since previous status",
+          "comments": "Comments about document changes"
+        },
+        "filters": {
+          "changeDate": "Filter date...",
+          "userName": "Filter user...",
+          "currentStatus": "Filter status...",
+          "previousStatus": "Filter status...",
+          "numberOfDays": "Filter days...",
+          "comments": "Filter comments..."
+        }
+      },
+      "messages": {
+        "error": {
+          "loading": "Error loading change control",
+          "creating": "Unable to register change control",
+          "missingUser": "Unable to register change control: invalid user"
+        }
+      }
+    },
+    "form": {
+      "fields": {
+        "name": "Name",
+        "code": "Code",
+        "description": "Description",
+        "version": "Version",
+        "documentType": "Document type",
+        "documentStatus": "Status",
+        "author": "Author",
+        "verifier": "Editor",
+        "writingDate": "Writing date",
+        "expirationDate": "Expiration date",
+        "file": "File",
+        "type": "Type",
+        "link": "External URL"
+      },
+      "fileDropzone": {
+        "title": "File (required)",
+        "helper": "Drag and drop or click to select",
+        "selected": "Selected: {{name}}"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Document created successfully",
+        "updated": "Document updated successfully",
+        "deleted": "Document deleted successfully"
+      },
+      "info": {
+        "previewNotSupported": "This file type can’t be previewed here"
+      },
+      "error": {
+        "loading": "Error loading documents",
+        "saving": "Error saving document",
+        "deleting": "Error deleting document",
+        "preview": "Unable to preview document",
+        "downloading": "Unable to download document",
+        "exporting": "Could not export Excel",
+        "exportMissingColumns": "Select at least one column to export",
+        "invalidForm": "Check required fields",
+        "fileRequired": "File is required"
+      }
+    },
+    "feedbacks": {
+      "title": "Learned Lessons & Improvement Proposals",
+      "actions": {
+        "back": "Back"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete document",
+        "content": "Do you want to delete this document?"
+      },
+      "preview": {
+        "title": "Preview"
+      }
+    }
+  }
+}

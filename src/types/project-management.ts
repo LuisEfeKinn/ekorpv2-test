@@ -1,0 +1,118 @@
+export type IClient = {
+  id: string;
+  nit: string;
+  name: string;
+  email: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt?: string;
+  deletedAt?: string | null;
+};
+
+export type IClientTableFilters = {
+  search: string;
+  isActive: string;
+};
+
+export type IClientResponse = {
+  data: IClient[];
+  meta: IProjectManagementMeta;
+};
+
+export type IProject = {
+  id: string;
+  name: string;
+  clientId: string;
+  clientName: string;
+  importanceLevelId: string;
+  importanceLevelName: string;
+  sizeId: string;
+  sizeName: string;
+  complexityId: string;
+  complexityName: string;
+  generatesIncome: boolean;
+  reintegroLevelId: string;
+  reintegroLevelName: string;
+  statusId: string;
+  statusName: string;
+  startDate: string;
+  endDate: string;
+  observations: string | null;
+  createdAt: string;
+};
+
+export type IProjectTableFilters = {
+  search: string;
+  statusId: string;
+  clientId: string;
+  importanceLevelId: string;
+};
+
+export type IProjectCreateUpdatePayload = {
+  name: string;
+  clientId: number;
+  importanceLevelId: number;
+  sizeId: number;
+  complexityId: number;
+  generatesIncome: boolean;
+  reintegroLevelId: number;
+  statusId: number;
+  startDate: string;
+  endDate: string;
+  observations?: string | null;
+};
+
+export type IWorker = {
+  id: string;
+  fullName: string;
+  email: string;
+  positionId: string | null;
+  positionName: string | null;
+  experienceLevelId: string | null;
+  experienceLevelName: string | null;
+  experienceSummary: string;
+  technologies: string | null;
+  workerStatusId: string | null;
+  workerStatusName: string | null;
+  employmentTypeId: string | null;
+  employmentTypeName: string | null;
+};
+
+export type IWorkerTableFilters = {
+  search: string;
+  workerStatusId: string;
+  experienceLevelId: string;
+  employmentTypeId: string;
+};
+
+export type IWorkerUpdatePayload = {
+  experienceLevelId?: number | null;
+  employmentTypeId?: number | null;
+  workerStatusId?: number | null;
+  technologies?: string | null;
+  observations?: string | null;
+  yearsInCompany?: number | null;
+  yearsOfExperience?: number | null;
+};
+
+// Catalog option — shared shape for most catalogs
+export type ICatalogOption = {
+  id: string;
+  name: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+// Activity status has an extra `key` field used for Kanban column mapping
+export type IActivityStatusOption = ICatalogOption & {
+  key: 'TODO' | 'IN_PROGRESS' | 'IN_TESTING' | 'DONE';
+};
+
+export type IProjectManagementMeta = {
+  page: number;
+  perPage: number;
+  itemCount: number;
+  pageCount: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+};

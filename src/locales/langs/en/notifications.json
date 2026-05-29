@@ -1,0 +1,65 @@
+{
+  "config": {
+    "title": "Notification Configuration",
+    "noData": "No notification groups found",
+    "columns": {
+      "event": "Event",
+      "notifications": "Notifications",
+      "options": "Options"
+    },
+    "actions": {
+      "addNotification": "Add notification",
+      "editEvent": "Edit event"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "editDrawer": {
+      "title": "Edit Notification Event",
+      "eventKey": "Event",
+      "auditableObject": "Auditable Object",
+      "subjectTemplate": "Subject",
+      "messageTemplate": "Message",
+      "existingNotifications": "Configured Notifications",
+      "noNotifications": "No notifications configured",
+      "cancel": "Cancel",
+      "save": "Save",
+      "successMsg": "Event updated",
+      "errorMsg": "Error updating event"
+    },
+    "addDrawer": {
+      "title": "Add Notification",
+      "eventContext": "Event",
+      "auditableObject": "Auditable Object",
+      "name": "Name",
+      "cancel": "Cancel",
+      "save": "Save",
+      "successMsg": "Notification added",
+      "errorMsg": "Error adding notification"
+    }
+  },
+  "templates": {
+    "title": "Notification Templates",
+    "searchPlaceholder": "Search by event or subject...",
+    "columns": {
+      "id": "ID",
+      "eventName": "Event Name",
+      "auditableObject": "Auditable Object",
+      "subject": "Subject"
+    },
+    "editDrawer": {
+      "title": "Edit Template",
+      "id": "ID",
+      "eventName": "Event Name",
+      "auditableObject": "Auditable Object",
+      "subject": "Subject",
+      "message": "Message",
+      "cancel": "Cancel",
+      "clear": "Clear",
+      "save": "Save",
+      "successMsg": "Template updated",
+      "errorMsg": "Error updating template"
+    }
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "clients": {
+    "title": "Clients",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "projectManagement": "Project Management",
+      "clients": "Clients"
+    },
+    "actions": {
+      "new": "New client",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save changes",
+      "create": "Create client"
+    },
+    "table": {
+      "columns": {
+        "name": "Name / Email",
+        "nit": "Tax ID",
+        "status": "Status",
+        "createdAt": "Created"
+      },
+      "toolbar": {
+        "search": "Search by name, tax ID or email...",
+        "statusLabel": "Status"
+      },
+      "filters": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive",
+        "searchLabel": "Search:",
+        "statusLabel": "Status:"
+      }
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "drawer": {
+      "titleCreate": "New client",
+      "titleEdit": "Edit client",
+      "fields": {
+        "name": "Name",
+        "nit": "Tax ID",
+        "email": "Email address",
+        "isActive": "Active"
+      },
+      "validation": {
+        "nameRequired": "Name is required",
+        "nitRequired": "Tax ID is required",
+        "emailInvalid": "Enter a valid email"
+      }
+    },
+    "messages": {
+      "created": "Client created successfully",
+      "updated": "Client updated successfully",
+      "deleted": "Client deleted successfully",
+      "errorCreate": "Error creating client",
+      "errorUpdate": "Error updating client",
+      "errorDelete": "Error deleting client",
+      "errorLoading": "Error loading clients"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete client",
+        "content": "Are you sure you want to delete \"{{name}}\"?"
+      }
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "projectManagement": "Project Management",
+      "projects": "Projects"
+    },
+    "actions": {
+      "new": "New project",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save changes",
+      "create": "Create project",
+      "viewDetail": "View detail"
+    },
+    "table": {
+      "columns": {
+        "name": "Name / Client",
+        "status": "Status",
+        "importance": "Importance",
+        "size": "Size",
+        "dates": "Dates"
+      },
+      "toolbar": {
+        "search": "Search by name or client...",
+        "client": "Client",
+        "status": "Status",
+        "importanceLevel": "Importance"
+      }
+    },
+    "drawer": {
+      "titleCreate": "New project",
+      "titleEdit": "Edit project",
+      "fields": {
+        "name": "Project name",
+        "client": "Client",
+        "status": "Status",
+        "importanceLevel": "Importance level",
+        "size": "Size",
+        "complexity": "Complexity",
+        "reintegroLevel": "Reintegro level",
+        "generatesIncome": "Generates income",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "observations": "Observations"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete project",
+        "content": "Are you sure you want to delete \"{{name}}\"?"
+      }
+    },
+    "messages": {
+      "created": "Project created successfully",
+      "updated": "Project updated successfully",
+      "deleted": "Project deleted successfully",
+      "errorCreate": "Error creating project",
+      "errorUpdate": "Error updating project",
+      "errorDelete": "Error deleting project",
+      "errorLoading": "Error loading projects"
+    },
+    "empty": {
+      "title": "No projects found"
+    },
+    "card": {
+      "generatesIncome": "Generates income"
+    }
+  },
+  "workers": {
+    "title": "Employees",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "projectManagement": "Project Management",
+      "workers": "Employees"
+    },
+    "actions": {
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "save": "Save changes"
+    },
+    "table": {
+      "columns": {
+        "name": "Name / Email",
+        "position": "Position",
+        "experience": "Experience",
+        "technologies": "Technologies",
+        "status": "Status",
+        "employmentType": "Contract type"
+      },
+      "toolbar": {
+        "search": "Search by name or email...",
+        "workerStatus": "Status",
+        "experienceLevel": "Experience level",
+        "employmentType": "Contract type"
+      },
+      "filters": {
+        "searchLabel": "Search:",
+        "workerStatusLabel": "Status:",
+        "experienceLevelLabel": "Experience:",
+        "employmentTypeLabel": "Contract:"
+      }
+    },
+    "drawer": {
+      "title": "Edit employee",
+      "fields": {
+        "workerStatus": "Status",
+        "experienceLevel": "Experience level",
+        "employmentType": "Contract type",
+        "technologies": "Technologies",
+        "technologiesHint": "Comma separated: NestJS, TypeScript, MySQL",
+        "yearsOfExperience": "Years of experience",
+        "yearsInCompany": "Years in company",
+        "observations": "Observations"
+      }
+    },
+    "messages": {
+      "updated": "Employee updated successfully",
+      "errorUpdate": "Error updating employee",
+      "errorLoading": "Error loading employees"
+    }
+  }
+}
