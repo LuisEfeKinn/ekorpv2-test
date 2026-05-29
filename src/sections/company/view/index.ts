@@ -1,1 +1,0 @@
-export { CompanyView } from './company-view';
