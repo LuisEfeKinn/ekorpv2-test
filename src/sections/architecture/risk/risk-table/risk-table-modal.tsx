@@ -441,7 +441,6 @@ export function RiskTableModal({ open, onClose, riskId, onSave }: Props) {
               disabled={saving}
               onOpen={() => { if (!riskTypeOptions.length) loadRiskTypes(); }}
               isOptionEqualToValue={(option, value) => option.id === value.id}
-              filterOptions={(x) => x}
               renderOption={(props, option) => (
                 <li {...props} key={`risktype-${option.id}`}>{option.name}</li>
               )}

@@ -48,7 +48,7 @@ export interface IProviderConfig {
   groupId: string | null;
   webhookUrl: string | null;
   json2VideoApiKey: string | null;
-  json2VideoWebhookUrl: string | null;
+  apiUrl: string | null;
 }
 
 export interface IModelConfig {
@@ -255,7 +255,7 @@ export async function getProviderConfig(providerName: string, token?: string): P
       groupId: null,
       webhookUrl: null,
       json2VideoApiKey: null,
-      json2VideoWebhookUrl: null,
+      apiUrl: null,
     };
   }
 
@@ -272,7 +272,7 @@ export async function getProviderConfig(providerName: string, token?: string): P
     groupId:              pick('GROUP_ID', 'GROUPID', 'GROUP ID', 'group_id', 'GroupId'),
     webhookUrl:           pick('WEBHOOK_URL', 'WEBHOOK URL', 'webhook_url'),
     json2VideoApiKey:     pick('JSON2VIDEO_API_KEY', 'JSON2VIDEO API KEY', 'json2video_api_key'),
-    json2VideoWebhookUrl: pick('JSON2VIDEO_WEBHOOK_URL', 'JSON2VIDEO WEBHOOK URL', 'json2video_webhook_url'),
+    apiUrl:               pick('API_URL', 'API URL', 'api_url'),
   };
 }
 

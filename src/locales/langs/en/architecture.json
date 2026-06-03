@@ -503,6 +503,21 @@
             "label": "Schedule Tasks",
             "placeholder": "Select"
           },
+          "taskStartDate": {
+            "label": "Task start date"
+          },
+          "taskDeadline": {
+            "label": "Task end date"
+          },
+          "fulfillmentAction": {
+            "label": "Fulfillment action type"
+          },
+          "taskType": {
+            "label": "Task type"
+          },
+          "reminder": {
+            "label": "Task reminder"
+          },
           "status": {
             "label": "Process Status",
             "placeholder": "Select status"

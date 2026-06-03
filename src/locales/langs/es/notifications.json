@@ -39,6 +39,83 @@
       "errorMsg": "Error al agregar la notificación"
     }
   },
+  "announcements": {
+    "title": "Anuncios",
+    "breadcrumbs": {
+      "notifications": "Notificaciones"
+    },
+    "actions": {
+      "new": "Nuevo",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "loadImage": "Cargar imagen",
+      "view": "Ver"
+    },
+    "search": "Buscar por título...",
+    "table": {
+      "columns": {
+        "id": "ID",
+        "title": "Título",
+        "type": "Tipo",
+        "status": "Estado",
+        "order": "Orden",
+        "file": "Imagen del anuncio",
+        "deadlineDate": "Fecha límite"
+      }
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "deleted": "Eliminado"
+    },
+    "types": {
+      "news": "Noticia",
+      "event": "Evento",
+      "article": "Artículo"
+    },
+    "form": {
+      "title": "Título",
+      "type": "Tipo",
+      "file": "Imagen del anuncio",
+      "content": "Contenido",
+      "author": "Autor",
+      "status": "Estado",
+      "order": "Orden",
+      "deadlineDate": "Fecha límite",
+      "select": "Seleccione",
+      "filePlaceholder": "https://...",
+      "orderPlaceholder": "0",
+      "contentPlaceholder": "Escribe algo increíble...",
+      "validation": {
+        "titleRequired": "El título es requerido",
+        "typeRequired": "El tipo es requerido",
+        "statusRequired": "El estado es requerido",
+        "orderRequired": "El orden es requerido",
+        "orderMin": "El orden debe ser mayor o igual a 0",
+        "fileRequired": "La imagen del anuncio es requerida"
+      }
+    },
+    "drawer": {
+      "createTitle": "Crear anuncio",
+      "editTitle": "Editar anuncio"
+    },
+    "messages": {
+      "created": "Anuncio creado",
+      "updated": "Anuncio actualizado",
+      "deleted": "Anuncio eliminado",
+      "error": {
+        "loading": "Error al cargar anuncios",
+        "saving": "Error al guardar el anuncio",
+        "deleting": "Error al eliminar anuncio"
+      }
+    },
+    "confirmDelete": {
+      "title": "Eliminar anuncio",
+      "content": "¿Seguro que quieres eliminar este anuncio?"
+    }
+  },
   "templates": {
     "title": "Plantillas de notificaciones",
     "searchPlaceholder": "Buscar por evento o asunto...",

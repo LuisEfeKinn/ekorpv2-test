@@ -36,7 +36,10 @@ export function ProcessCreateEditDrawer({ open, onClose, processId, onSaved }: P
       setLoading(true);
       const res = await GetProcessTableByIdService(String(processId));
       if (res?.status === 200 && res.data) {
-        setCurrent(res.data as unknown as IProcessTable);
+        // Handle both {id, name, ...} and {data: {id, name, ...}} response shapes
+        const rawData = res.data;
+        const processData = rawData?.id ? rawData : (rawData?.data ?? rawData);
+        setCurrent(processData as unknown as IProcessTable);
       } else {
         setCurrent(undefined);
       }

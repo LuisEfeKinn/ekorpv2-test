@@ -16,6 +16,8 @@ import IconButton from '@mui/material/IconButton';
 
 import { fDateTime } from 'src/utils/format-time';
 
+import { useTranslate } from 'src/locales';
+
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
@@ -29,23 +31,29 @@ type Props = {
 };
 
 export function AnnouncementsTableRow({ row, onEdit, onDelete }: Props) {
+  const { t } = useTranslate('notifications');
   const confirm = useBoolean();
   const popover = usePopover();
 
   const hasStatus = row.status !== null && row.status !== undefined;
   const statusValue = Number(row.status ?? 0);
-  const statusLabel =
-    !hasStatus ? '-' : statusValue === 1 ? 'Activo' : statusValue === 2 ? 'Eliminado' : 'Inactivo';
+  const statusLabel = !hasStatus
+    ? '-'
+    : statusValue === 1
+      ? t('announcements.status.active')
+      : statusValue === 2
+        ? t('announcements.status.deleted')
+        : t('announcements.status.inactive');
   const statusColor =
     !hasStatus ? 'default' : statusValue === 1 ? 'success' : statusValue === 2 ? 'warning' : 'error';
 
   const typeLabel =
     row.type === 'NOTICIA'
-      ? 'Noticia'
+      ? t('announcements.types.news')
       : row.type === 'EVENTO'
-        ? 'Evento'
+        ? t('announcements.types.event')
         : row.type === 'ARTICULO'
-          ? 'Artículo'
+          ? t('announcements.types.article')
           : row.type || '-';
 
   return (
@@ -92,7 +100,7 @@ export function AnnouncementsTableRow({ row, onEdit, onDelete }: Props) {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <FileThumbnail file={row.file} tooltip showImage sx={{ width: 36, height: 36 }} />
               <Link href={row.file} target="_blank" rel="noreferrer" underline="hover" noWrap>
-                Ver
+                {t('announcements.actions.view')}
               </Link>
             </Box>
           ) : (
@@ -121,7 +129,7 @@ export function AnnouncementsTableRow({ row, onEdit, onDelete }: Props) {
             }}
           >
             <Iconify icon="solar:pen-bold" />
-            Editar
+            {t('announcements.actions.edit')}
           </MenuItem>
 
           <MenuItem
@@ -132,7 +140,7 @@ export function AnnouncementsTableRow({ row, onEdit, onDelete }: Props) {
             sx={{ color: 'error.main' }}
           >
             <Iconify icon="solar:trash-bin-trash-bold" />
-            Eliminar
+            {t('announcements.actions.delete')}
           </MenuItem>
         </MenuList>
       </CustomPopover>
@@ -140,11 +148,11 @@ export function AnnouncementsTableRow({ row, onEdit, onDelete }: Props) {
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Eliminar anuncio"
-        content="¿Seguro que quieres eliminar este anuncio?"
+        title={t('announcements.confirmDelete.title')}
+        content={t('announcements.confirmDelete.content')}
         action={
           <Button variant="contained" color="error" onClick={onDelete}>
-            Eliminar
+            {t('announcements.actions.delete')}
           </Button>
         }
       />

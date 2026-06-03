@@ -17,6 +17,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import { paths } from 'src/routes/paths';
 
+import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { GetAnnouncementsService, DeleteAnnouncementService, normalizeAnnouncementsResponse } from 'src/services/notifications/announcements.service';
 
@@ -30,6 +31,7 @@ import { AnnouncementsTableRow } from '../announcements-table-row';
 import { AnnouncementCreateEditDrawer } from '../announcements-create-edit-drawer';
 
 export function AnnouncementsView() {
+  const { t } = useTranslate('notifications');
   const table = useTable({ defaultOrderBy: 'id', defaultOrder: 'asc' });
   const upsertDrawer = useBoolean();
 
@@ -43,15 +45,15 @@ export function AnnouncementsView() {
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(
     () => [
       { id: '', label: '', width: 72 },
-      { id: 'id', label: 'ID', width: 100 },
-      { id: 'title', label: 'Título', width: 280 },
-      { id: 'type', label: 'Tipo', width: 140 },
-      { id: 'status', label: 'Estado', width: 140 },
-      { id: 'order', label: 'Orden', width: 120, align: 'center' },
-      { id: 'file', label: 'Imagen del anuncio', width: 220 },
-      { id: 'deadlineDate', label: 'Fecha límite', width: 220 },
+      { id: 'id', label: t('announcements.table.columns.id'), width: 100 },
+      { id: 'title', label: t('announcements.table.columns.title'), width: 280 },
+      { id: 'type', label: t('announcements.table.columns.type'), width: 140 },
+      { id: 'status', label: t('announcements.table.columns.status'), width: 140 },
+      { id: 'order', label: t('announcements.table.columns.order'), width: 120, align: 'center' },
+      { id: 'file', label: t('announcements.table.columns.file'), width: 220 },
+      { id: 'deadlineDate', label: t('announcements.table.columns.deadlineDate'), width: 220 },
     ],
-    []
+    [t]
   );
 
   const loadData = useCallback(async () => {
@@ -62,20 +64,21 @@ export function AnnouncementsView() {
       setRows(Array.isArray(data) ? data : []);
     } catch (error: any) {
       console.error('Error loading announcements:', error);
-      toast.error(error?.message || 'Error al cargar anuncios');
+      toast.error(error?.message || t('announcements.messages.error.loading'));
       setRows([]);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     loadData();
   }, [loadData]);
 
+  const { onResetPage } = table;
   useEffect(() => {
-    table.onResetPage();
-  }, [debouncedSearch, table]);
+    onResetPage();
+  }, [debouncedSearch, onResetPage]);
 
   const filtered = useMemo(() => {
     if (!debouncedSearch) return rows;
@@ -106,27 +109,27 @@ export function AnnouncementsView() {
   const handleDelete = async (id: number) => {
     try {
       await DeleteAnnouncementService(id);
-      toast.success('Anuncio eliminado');
+      toast.success(t('announcements.messages.deleted'));
       setRows((prev) => prev.filter((r) => r.id !== id));
       table.onUpdatePageDeleteRow(paged.length);
     } catch (error: any) {
       console.error('Error deleting announcement:', error);
-      toast.error(error?.message || 'Error al eliminar anuncio');
+      toast.error(error?.message || t('announcements.messages.error.deleting'));
     }
   };
 
   return (
     <DashboardContent>
       <CustomBreadcrumbs
-        heading="Anuncios"
+        heading={t('announcements.title')}
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
-          { name: 'Notificaciones', href: paths.dashboard.notifications.root },
-          { name: 'Anuncios', href: paths.dashboard.notifications.announcements },
+          { name: t('announcements.breadcrumbs.notifications'), href: paths.dashboard.notifications.root },
+          { name: t('announcements.title'), href: paths.dashboard.notifications.announcements },
         ]}
         action={
           <Button variant="contained" startIcon={<Iconify icon="mingcute:add-line" />} onClick={handleNew}>
-            Nuevo
+            {t('announcements.actions.new')}
           </Button>
         }
         sx={{ mb: { xs: 3, md: 5 } }}
@@ -138,7 +141,7 @@ export function AnnouncementsView() {
             fullWidth
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Buscar por título..."
+            placeholder={t('announcements.search')}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

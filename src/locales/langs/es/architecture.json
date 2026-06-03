@@ -493,6 +493,21 @@
             "label": "Programar de tareas",
             "placeholder": "Seleccione"
           },
+          "taskStartDate": {
+            "label": "Fecha inicio para programar tareas"
+          },
+          "taskDeadline": {
+            "label": "Fecha final para programar tareas"
+          },
+          "fulfillmentAction": {
+            "label": "Tipo acción cumplimiento"
+          },
+          "taskType": {
+            "label": "Tipo de Tarea"
+          },
+          "reminder": {
+            "label": "Recordatorio de Tarea"
+          },
           "status": {
             "label": "Estado del Proceso",
             "placeholder": "Seleccione estado"

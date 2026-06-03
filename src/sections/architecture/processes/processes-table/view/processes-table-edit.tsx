@@ -35,7 +35,9 @@ export function ProcessTableEditView({ id }: Props) {
         console.log('Fetch process table response:', response);
         
         if (response.status === 200) {
-          setCurrentProcess(response.data);
+          const rawData = response.data;
+          const processData = rawData?.id ? rawData : (rawData?.data ?? rawData);
+          setCurrentProcess(processData);
         } else {
           setError(t('process.table.messages.notFound'));
         }

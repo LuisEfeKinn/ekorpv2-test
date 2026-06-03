@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { LoadingButton } from '@mui/lab';
 import Button from '@mui/material/Button';
@@ -17,6 +18,7 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
 import { useTranslate } from 'src/locales';
+import { GetActionTypesPaginationService } from 'src/services/architecture/catalogs/actionTypes.service';
 import { GetPeriodsPaginationService } from 'src/services/architecture/catalogs/periods.service';
 import { GetProcessTypesPaginationService } from 'src/services/architecture/catalogs/processTypes.service';
 import {
@@ -51,6 +53,11 @@ export type ProcessTableCreateSchemaType = {
   timeUnitId: number;
   superiorProcessId: number | null;
   sistemRequirement?: string;
+  taskStartDate?: string;
+  taskDeadline?: string;
+  fulfillmentAction?: number;
+  taskType?: number;
+  reminder?: number;
 };
 
 // ----------------------------------------------------------------------
@@ -67,7 +74,16 @@ export function ProcessCreateEditForm({ currentProcess, onClose }: Props) {
   const [processTypes, setProcessTypes] = useState<any[]>([]);
   const [processes, setProcesses] = useState<any[]>([]);
   const [periods, setPeriods] = useState<any[]>([]);
+  const [actionTypes, setActionTypes] = useState<any[]>([]);
   const [, setLoadingOptions] = useState(false);
+
+  const REMINDER_OPTIONS = [
+    { value: 1, label: '1 día' },
+    { value: 3, label: '3 días' },
+    { value: 7, label: '7 días' },
+    { value: 15, label: '15 días' },
+    { value: 30, label: '30 días' },
+  ];
 
   // Mocked options since services were not found
   const STATUS_OPTIONS = [
@@ -84,43 +100,32 @@ export function ProcessCreateEditForm({ currentProcess, onClose }: Props) {
     const loadOptions = async () => {
       setLoadingOptions(true);
       try {
-        const [typesRes, processesRes, periodsRes] = await Promise.all([
+        const normalizeList = (raw: any): any[] => {
+          if (Array.isArray(raw) && Array.isArray(raw[0])) return raw[0];
+          if (Array.isArray(raw)) return raw;
+          return raw?.data || [];
+        };
+
+        const [typesRes, processesRes, periodsRes, actionTypesRes] = await Promise.allSettled([
           GetProcessTypesPaginationService({ page: 1, perPage: 100 }),
           GetProcessFlowService(),
-          GetPeriodsPaginationService({ page: 1, perPage: 100 })
+          GetPeriodsPaginationService({ page: 1, perPage: 100 }),
+          GetActionTypesPaginationService({ page: 1, perPage: 100 }),
         ]);
 
-        // Handle structure [[{...}], count] or standard array
-        let typesData = [];
-        const rawTypesData = typesRes.data;
-
-        if (Array.isArray(rawTypesData) && Array.isArray(rawTypesData[0])) {
-          typesData = rawTypesData[0];
-        } else if (Array.isArray(rawTypesData)) {
-          typesData = rawTypesData;
-        } else {
-          typesData = rawTypesData?.data || [];
+        if (typesRes.status === 'fulfilled') {
+          setProcessTypes(normalizeList(typesRes.value.data));
         }
-
-        let periodsData = [];
-        const rawPeriodsData = periodsRes.data;
-
-        if (Array.isArray(rawPeriodsData) && Array.isArray(rawPeriodsData[0])) {
-          periodsData = rawPeriodsData[0];
-        } else if (Array.isArray(rawPeriodsData)) {
-          periodsData = rawPeriodsData;
-        } else {
-          periodsData = rawPeriodsData?.data || [];
+        if (processesRes.status === 'fulfilled') {
+          const pd = processesRes.value.data || [];
+          setProcesses(Array.isArray(pd) ? pd : []);
         }
-
-        const processesData = processesRes.data || [];
-
-        setProcessTypes(typesData);
-        setPeriods(periodsData);
-        setProcesses(Array.isArray(processesData) ? processesData : []);
-      } catch (error) {
-        console.error('Error loading options:', error);
-        toast.error('Error al cargar opciones');
+        if (periodsRes.status === 'fulfilled') {
+          setPeriods(normalizeList(periodsRes.value.data));
+        }
+        if (actionTypesRes.status === 'fulfilled') {
+          setActionTypes(normalizeList(actionTypesRes.value.data));
+        }
       } finally {
         setLoadingOptions(false);
       }
@@ -153,6 +158,13 @@ export function ProcessCreateEditForm({ currentProcess, onClose }: Props) {
     endDate: z.string().optional(),
     projectStatus: z.number().default(1),
     periodId: z.number().optional(),
+
+    // Task scheduling fields (conditional on scheduleTask = true)
+    taskStartDate: z.string().optional(),
+    taskDeadline: z.string().optional(),
+    fulfillmentAction: z.number().optional(),
+    taskType: z.number().optional(),
+    reminder: z.number().optional(),
   });
 
   const defaultValues: ProcessTableCreateSchemaType = {
@@ -175,6 +187,11 @@ export function ProcessCreateEditForm({ currentProcess, onClose }: Props) {
     timeUnitId: 0,
     superiorProcessId: null,
     sistemRequirement: '',
+    taskStartDate: '',
+    taskDeadline: '',
+    fulfillmentAction: 0,
+    taskType: 0,
+    reminder: 0,
   };
 
   const methods = useForm({
@@ -182,33 +199,42 @@ export function ProcessCreateEditForm({ currentProcess, onClose }: Props) {
     resolver: zodResolver(ProcessTableCreateSchema),
     defaultValues,
     values: currentProcess ? {
-      nomenclature: currentProcess.nomenclature || '',
-      name: currentProcess.name || '',
-      description: currentProcess.description || '',
-      result: currentProcess.result || '',
-      requiresOLA: currentProcess.requiresOLA || false,
-      periodicity: currentProcess.periodicity || 0,
-      workload: currentProcess.workload || 0,
-      cost: currentProcess.cost || 0,
-      context: currentProcess.context || '',
-      status: currentProcess.status || 1,
-      scheduleTask: currentProcess.scheduleTask || false,
-      startDate: currentProcess.startDate || new Date().toISOString(),
-      endDate: currentProcess.endDate || new Date().toISOString(),
-      projectStatus: currentProcess.projectStatus || 1,
+      nomenclature: currentProcess.nomenclature ?? '',
+      name: currentProcess.name ?? '',
+      description: currentProcess.description ?? '',
+      result: currentProcess.result ?? '',
+      requiresOLA: currentProcess.requiresOLA ?? false,
+      periodicity: currentProcess.periodicity ?? 0,
+      workload: currentProcess.workload ?? 0,
+      cost: currentProcess.cost ?? 0,
+      context: currentProcess.context ?? '',
+      status: currentProcess.status ?? 1,
+      scheduleTask: currentProcess.scheduleTask ?? false,
+      startDate: currentProcess.startDate ?? new Date().toISOString(),
+      endDate: currentProcess.endDate ?? new Date().toISOString(),
+      projectStatus: currentProcess.projectStatus ?? 1,
       processTypeId: (currentProcess as any).processType?.id || 0,
       periodId: (currentProcess as any).period?.id || 0,
-      timeUnitId: (currentProcess as any).timeUnit?.id || 0,
-      superiorProcessId: (currentProcess as any).superiorProcess?.id || null,
-      sistemRequirement: currentProcess.sistemRequirement || '',
+      timeUnitId: (currentProcess as any).timeUnit?.id ?? 0,
+      superiorProcessId: (currentProcess as any).superiorProcess?.id ?? null,
+      sistemRequirement: currentProcess.sistemRequirement ?? '',
+      taskStartDate: currentProcess.taskStartDate ?? '',
+      taskDeadline: currentProcess.taskDeadline ?? '',
+      fulfillmentAction: Number((currentProcess as any).fulfillmentAction) || 0,
+      taskType: currentProcess.taskType ?? 0,
+      reminder: currentProcess.reminder ?? 0,
     } : undefined,
   });
 
   const {
     reset,
+    watch,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
+
+  const scheduleTaskValue = watch('scheduleTask');
+  const showTaskFields = scheduleTaskValue === true || (scheduleTaskValue as any) === 'true';
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -235,7 +261,12 @@ export function ProcessCreateEditForm({ currentProcess, onClose }: Props) {
         timeUnit: data.timeUnitId ? { id: Number(data.timeUnitId) } : null,
         superiorProcess: data.superiorProcessId ? {
           id: Number(data.superiorProcessId)
-        } : null
+        } : null,
+        taskStartDate: data.scheduleTask ? (data.taskStartDate || null) : null,
+        taskDeadline: data.scheduleTask ? (data.taskDeadline || null) : null,
+        fulfillmentAction: data.scheduleTask ? (Number(data.fulfillmentAction) || null) : null,
+        taskType: data.scheduleTask ? (Number(data.taskType) || null) : null,
+        reminder: data.scheduleTask ? (Number(data.reminder) || null) : null,
       };
 
       await SaveOrUpdateProcessTableService(
@@ -349,6 +380,73 @@ export function ProcessCreateEditForm({ currentProcess, onClose }: Props) {
                 </MenuItem>
               ))}
             </Field.Select>
+
+            {showTaskFields && (
+              <>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
+                  <Field.DatePicker
+                    name="taskStartDate"
+                    label={t('process.table.form.fields.taskStartDate.label')}
+                    slotProps={{ textField: { required: true } }}
+                  />
+                  <Field.DatePicker
+                    name="taskDeadline"
+                    label={t('process.table.form.fields.taskDeadline.label')}
+                    slotProps={{ textField: { required: true } }}
+                  />
+                </Box>
+
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
+                  <Field.Select
+                    name="fulfillmentAction"
+                    label={t('process.table.form.fields.fulfillmentAction.label')}
+                    required
+                    InputLabelProps={{ shrink: true }}
+                  >
+                    <MenuItem value={0} sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
+                      {t('process.table.form.options.select')}
+                    </MenuItem>
+                    {actionTypes.map((option) => (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </Field.Select>
+                </Box>
+
+                <Field.Select
+                  name="taskType"
+                  label={t('process.table.form.fields.taskType.label')}
+                  required
+                  InputLabelProps={{ shrink: true }}
+                >
+                  <MenuItem value={0} sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
+                    {t('process.table.form.options.select')}
+                  </MenuItem>
+                  {actionTypes.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.name}
+                    </MenuItem>
+                  ))}
+                </Field.Select>
+
+                <Field.Select
+                  name="reminder"
+                  label={t('process.table.form.fields.reminder.label')}
+                  required
+                  InputLabelProps={{ shrink: true }}
+                >
+                  <MenuItem value={0} sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
+                    {t('process.table.form.options.select')}
+                  </MenuItem>
+                  {REMINDER_OPTIONS.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Field.Select>
+              </>
+            )}
 
             <Divider sx={{ borderStyle: 'dashed' }} />
 

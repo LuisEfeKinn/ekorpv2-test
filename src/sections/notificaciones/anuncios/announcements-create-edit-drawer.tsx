@@ -16,6 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
+import { useTranslate } from 'src/locales';
 import { SaveOrUpdateAnnouncementService } from 'src/services/notifications/announcements.service';
 
 import { toast } from 'src/components/snackbar';
@@ -41,30 +42,34 @@ type Props = {
   onSaved?: () => void;
 };
 
-const STATUS_OPTIONS = [
-  { value: 1, label: 'Activo' },
-  { value: 0, label: 'Inactivo' },
-  { value: 2, label: 'Eliminado' },
-];
-
-const TYPE_OPTIONS = [
-  { value: 'NOTICIA', label: 'Noticia' },
-  { value: 'EVENTO', label: 'Evento' },
-  { value: 'ARTICULO', label: 'Artículo' },
-];
+const STATUS_VALUES = [1, 0, 2] as const;
+const TYPE_VALUES = ['NOTICIA', 'EVENTO', 'ARTICULO'] as const;
 
 export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }: Props) {
+  const { t } = useTranslate('notifications');
   const isEdit = Boolean(current?.id);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const STATUS_OPTIONS = useMemo(() => [
+    { value: 1, label: t('announcements.status.active') },
+    { value: 0, label: t('announcements.status.inactive') },
+    { value: 2, label: t('announcements.status.deleted') },
+  ], [t]);
+
+  const TYPE_OPTIONS = useMemo(() => [
+    { value: 'NOTICIA', label: t('announcements.types.news') },
+    { value: 'EVENTO', label: t('announcements.types.event') },
+    { value: 'ARTICULO', label: t('announcements.types.article') },
+  ], [t]);
 
   const schema = useMemo(
     () =>
       z.object({
-        title: z.string().min(1, { message: 'El título es requerido' }),
-        type: z.string().min(1, { message: 'El tipo es requerido' }),
+        title: z.string().min(1, { message: t('announcements.form.validation.titleRequired') }),
+        type: z.string().min(1, { message: t('announcements.form.validation.typeRequired') }),
         status: z.preprocess(
           (val) => (val === '' ? undefined : Number(val)),
-          z.number({ required_error: 'El estado es requerido' })
+          z.number({ required_error: t('announcements.form.validation.statusRequired') })
         ),
         order: z.preprocess(
           (val) => {
@@ -72,15 +77,15 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
             return Number(val);
           },
           z
-            .number({ required_error: 'El orden es requerido' })
-            .min(0, { message: 'El orden debe ser mayor o igual a 0' })
+            .number({ required_error: t('announcements.form.validation.orderRequired') })
+            .min(0, { message: t('announcements.form.validation.orderMin') })
         ),
-        file: z.string().min(1, { message: 'La imagen del anuncio es requerida' }),
+        file: z.string().min(1, { message: t('announcements.form.validation.fileRequired') }),
         deadlineDate: z.string().nullable(),
         content: z.string().optional().default(''),
         author: z.string().optional().default(''),
       }),
-    []
+    [t]
   );
 
   const defaultValues = useMemo<AnnouncementFormValues>(
@@ -136,12 +141,12 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
 
       await SaveOrUpdateAnnouncementService(payload, current?.id);
 
-      toast.success(isEdit ? 'Anuncio actualizado' : 'Anuncio creado');
+      toast.success(isEdit ? t('announcements.messages.updated') : t('announcements.messages.created'));
       onClose();
       onSaved?.();
     } catch (error: any) {
       console.error('Error saving announcement:', error);
-      toast.error(error?.message || 'Error al guardar el anuncio');
+      toast.error(error?.message || t('announcements.messages.error.saving'));
     }
   });
 
@@ -157,7 +162,7 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
         <Stack sx={{ height: 1 }}>
           <Stack direction="row" alignItems="center" sx={{ px: 2.5, py: 2 }}>
             <Typography variant="h6" sx={{ flex: 1 }}>
-              {isEdit ? 'Editar anuncio' : 'Crear anuncio'}
+              {isEdit ? t('announcements.drawer.editTitle') : t('announcements.drawer.createTitle')}
             </Typography>
             <IconButton onClick={onClose}>
               <Iconify icon="mingcute:close-line" />
@@ -168,11 +173,11 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
 
           <Scrollbar sx={{ height: 1 }}>
             <Stack spacing={2.5} sx={{ p: 2.5 }}>
-              <Field.Text name="title" label="Título" required />
+              <Field.Text name="title" label={t('announcements.form.title')} required />
 
-              <Field.Select name="type" label="Tipo" required>
+              <Field.Select name="type" label={t('announcements.form.type')} required>
                 <MenuItem value="" disabled>
-                  Seleccione
+                  {t('announcements.form.select')}
                 </MenuItem>
                 {TYPE_OPTIONS.map((opt) => (
                   <MenuItem key={opt.value} value={opt.value}>
@@ -182,7 +187,12 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
               </Field.Select>
 
               <Stack spacing={1}>
-                <Field.Text name="file" label="Imagen del anuncio" placeholder="https://..." required />
+                <Field.Text
+                  name="file"
+                  label={t('announcements.form.file')}
+                  placeholder={t('announcements.form.filePlaceholder')}
+                  required
+                />
 
                 <input
                   ref={fileInputRef}
@@ -207,16 +217,16 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
                   onClick={() => fileInputRef.current?.click()}
                   sx={{ width: 1 }}
                 >
-                  Cargar imagen
+                  {t('announcements.actions.loadImage')}
                 </Button>
               </Stack>
 
-              <Field.Editor name="content" label="Contenido" />
-              <Field.Text name="author" label="Autor" />
+              <Field.Editor name="content" label={t('announcements.form.content')} placeholder={t('announcements.form.contentPlaceholder')} />
+              <Field.Text name="author" label={t('announcements.form.author')} />
 
-              <Field.Select name="status" label="Estado" required>
+              <Field.Select name="status" label={t('announcements.form.status')} required>
                 <MenuItem value="" disabled>
-                  Seleccione
+                  {t('announcements.form.select')}
                 </MenuItem>
                 {STATUS_OPTIONS.map((opt) => (
                   <MenuItem key={opt.value} value={opt.value}>
@@ -227,9 +237,9 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
 
               <Field.Text
                 name="order"
-                label="Orden"
+                label={t('announcements.form.order')}
                 type="number"
-                placeholder="0"
+                placeholder={t('announcements.form.orderPlaceholder')}
                 slotProps={{
                   htmlInput: {
                     inputMode: 'numeric',
@@ -256,7 +266,6 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
                   if (allowedKeys.includes(e.key)) return;
                   if (isMeta && ['a', 'c', 'v', 'x'].includes(e.key.toLowerCase())) return;
 
-                  // Only digits
                   if (!/^[0-9]$/.test(e.key)) e.preventDefault();
                 }}
                 onPaste={(e) => {
@@ -264,7 +273,7 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
                   if (text && !/^[0-9]+$/.test(text.trim())) e.preventDefault();
                 }}
               />
-              <Field.DatePicker name="deadlineDate" label="Fecha límite" />
+              <Field.DatePicker name="deadlineDate" label={t('announcements.form.deadlineDate')} />
             </Stack>
           </Scrollbar>
 
@@ -272,10 +281,10 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
 
           <Stack direction="row" spacing={1.5} sx={{ p: 2.5, justifyContent: 'flex-end' }}>
             <Button color="inherit" variant="soft" onClick={onClose}>
-              Cancelar
+              {t('announcements.actions.cancel')}
             </Button>
             <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-              Guardar
+              {t('announcements.actions.save')}
             </LoadingButton>
           </Stack>
         </Stack>

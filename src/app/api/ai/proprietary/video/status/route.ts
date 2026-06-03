@@ -13,19 +13,11 @@ export async function GET(req: NextRequest) {
 
     // Get config from backend
     const providerConfig = await getProviderConfig(PROVIDER_NAMES.PROPRIETARY, authToken || undefined);
-    const json2VideoUrl = providerConfig.json2VideoWebhookUrl;
-    const json2VideoApiKey = providerConfig.json2VideoApiKey;
+    const json2VideoUrl = providerConfig.apiUrl;
 
     if (!json2VideoUrl) {
       return NextResponse.json(
-        { error: 'JSON2VIDEO_WEBHOOK_URL not configured. Please configure it in AI Provider Settings.' },
-        { status: 500 }
-      );
-    }
-
-    if (!json2VideoApiKey) {
-      return NextResponse.json(
-        { error: 'JSON2VIDEO_API_KEY not configured. Please configure it in AI Provider Settings.' },
+        { error: 'API_URL not configured. Please configure it in AI Provider Settings.' },
         { status: 500 }
       );
     }
@@ -40,30 +32,29 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // Build the full JSON2Video API URL
-    const fullUrl = `${json2VideoUrl}/v2/movies/?project=${projectId}`;
-    console.log('[JSON2Video Status] Checking project:', projectId);
+    // Build the full JSON VIDEO ENGINE API URL
+    const fullUrl = `${json2VideoUrl}/api/v1/videos/${projectId}`;
+    console.log('[JSON VIDEO ENGINE Status] Checking project:', projectId);
 
-    // Call JSON2Video API with authentication
+    // Call JSON VIDEO ENGINE API with authentication
     const response = await fetch(fullUrl, {
       method: 'GET',
       headers: {
-        'x-api-key': json2VideoApiKey,
         'Content-Type': 'application/json',
       },
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('[JSON2Video Status] Error response:', response.status, errorText);
+      console.error('[JSON VIDEO ENGINE Status] Error response:', response.status, errorText);
       return NextResponse.json(
-        { error: `JSON2Video API failed: ${response.status}` },
+        { error: `JSON VIDEO ENGINE API failed: ${response.status}` },
         { status: response.status }
       );
     }
 
     const data = await response.json();
-    console.log('[JSON2Video Status] Response:', JSON.stringify(data, null, 2));
+    console.log('[JSON VIDEO ENGINE Status] Response:', JSON.stringify(data, null, 2));
 
     if (data?.movie?.status === 'error' || data?.movie?.success === false || data?.success === false) {
       const errorMessage = data?.movie?.message || 'Error en la generación del video';
@@ -75,7 +66,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(data);
   } catch (error: any) {
-    console.error('[JSON2Video Status] Error:', error);
+    console.error('[JSON VIDEO ENGINE Status] Error:', error);
     return NextResponse.json(
       { error: error.message || 'Internal server error' },
       { status: 500 }

@@ -39,6 +39,83 @@
       "errorMsg": "Error adding notification"
     }
   },
+  "announcements": {
+    "title": "Announcements",
+    "breadcrumbs": {
+      "notifications": "Notifications"
+    },
+    "actions": {
+      "new": "New",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "loadImage": "Load image",
+      "view": "View"
+    },
+    "search": "Search by title...",
+    "table": {
+      "columns": {
+        "id": "ID",
+        "title": "Title",
+        "type": "Type",
+        "status": "Status",
+        "order": "Order",
+        "file": "Announcement image",
+        "deadlineDate": "Deadline"
+      }
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "deleted": "Deleted"
+    },
+    "types": {
+      "news": "News",
+      "event": "Event",
+      "article": "Article"
+    },
+    "form": {
+      "title": "Title",
+      "type": "Type",
+      "file": "Announcement image",
+      "content": "Content",
+      "author": "Author",
+      "status": "Status",
+      "order": "Order",
+      "deadlineDate": "Deadline",
+      "select": "Select",
+      "filePlaceholder": "https://...",
+      "orderPlaceholder": "0",
+      "contentPlaceholder": "Write something awesome...",
+      "validation": {
+        "titleRequired": "Title is required",
+        "typeRequired": "Type is required",
+        "statusRequired": "Status is required",
+        "orderRequired": "Order is required",
+        "orderMin": "Order must be greater than or equal to 0",
+        "fileRequired": "Announcement image is required"
+      }
+    },
+    "drawer": {
+      "createTitle": "Create announcement",
+      "editTitle": "Edit announcement"
+    },
+    "messages": {
+      "created": "Announcement created",
+      "updated": "Announcement updated",
+      "deleted": "Announcement deleted",
+      "error": {
+        "loading": "Error loading announcements",
+        "saving": "Error saving announcement",
+        "deleting": "Error deleting announcement"
+      }
+    },
+    "confirmDelete": {
+      "title": "Delete announcement",
+      "content": "Are you sure you want to delete this announcement?"
+    }
+  },
   "templates": {
     "title": "Notification Templates",
     "searchPlaceholder": "Search by event or subject...",

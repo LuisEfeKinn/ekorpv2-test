@@ -22,7 +22,6 @@ import {
 } from 'src/services/architecture/risk/riskJobs.service';
 import {
   GetRiskImpactLevelsService,
-  GetRiskDeficiencyLevelsService,
   GetRiskProbabilityLevelsService
 } from 'src/services/architecture/risk/riskScales.service';
 
@@ -48,8 +47,7 @@ export function RiskTableNodeCreateModal({ open, onClose, onSuccess, riskId, par
   const [processes, setProcesses] = useState<any[]>([]);
   const [riskImpactLevels, setRiskImpactLevels] = useState<any[]>([]);
   const [riskProbabilityLevels, setRiskProbabilityLevels] = useState<any[]>([]);
-  const [riskDeficiencyLevels, setRiskDeficiencyLevels] = useState<any[]>([]);
-  const [form, setForm] = useState({ processId: null as null | number, severityLevel: '1', frequency: '1', probability: '1', impact: '1', riskImpactLevelId: null as null | number, riskProbabilityLevelId: null as null | number, riskDeficiencyLevelId: null as null | number, riskCondition: '' });
+  const [form, setForm] = useState({ processId: null as null | number, severityLevel: '1', frequency: '1', probability: '1', impact: '1', riskImpactLevelId: null as null | number, riskProbabilityLevelId: null as null | number, riskCondition: '' });
 
   useEffect(() => {
     const load = async () => {
@@ -59,11 +57,10 @@ export function RiskTableNodeCreateModal({ open, onClose, onSuccess, riskId, par
         const riskData: any = Array.isArray(riskRaw?.data) ? (riskRaw?.data?.[0] ?? {}) : (riskRaw?.data ?? riskRaw);
         const riskTypeId = Number((riskData?.riskType?.id ?? riskData?.riskTypeId ?? riskData?.type?.id) as any) || undefined;
 
-        const [procRes, impactRes, probRes, defLevelsRes] = await Promise.all([
+        const [procRes, impactRes, probRes] = await Promise.all([
           GetProcessesListService(),
           GetRiskImpactLevelsService(riskTypeId ? { risktype: riskTypeId } : undefined),
           GetRiskProbabilityLevelsService(riskTypeId ? { risktype: riskTypeId } : undefined),
-          GetRiskDeficiencyLevelsService(riskTypeId ? { risktype: riskTypeId } : undefined),
         ]);
         const list = Array.isArray(procRes?.data) ? procRes.data : Array.isArray(procRes?.data?.data) ? procRes.data.data : [];
         setProcesses(list);
@@ -79,15 +76,8 @@ export function RiskTableNodeCreateModal({ open, onClose, onSuccess, riskId, par
           : Array.isArray((probRes as any)?.data?.data)
             ? (probRes as any).data.data
             : [];
-        const defRaw = defLevelsRes?.data;
-        const defList: any[] = Array.isArray(defRaw)
-          ? (Array.isArray(defRaw[0]) ? defRaw[0] : defRaw.filter((it: any) => typeof it === 'object' && it))
-          : Array.isArray((defLevelsRes as any)?.data?.data)
-            ? (defLevelsRes as any).data.data
-            : [];
         setRiskImpactLevels(Array.isArray(impactList) ? impactList : []);
         setRiskProbabilityLevels(Array.isArray(probList) ? probList : []);
-        setRiskDeficiencyLevels(Array.isArray(defList) ? defList : []);
       } catch (e) {
         console.error(e);
         toast.error(tf('process.table.messages.error.loading', 'Error loading data', 'Error al cargar datos'));
@@ -105,7 +95,6 @@ export function RiskTableNodeCreateModal({ open, onClose, onSuccess, riskId, par
       const imp = String(initialData?.impact ?? '');
       const sevScaleId = Number((initialData?.riskImpactLevel?.id ?? initialData?.severityScale?.id ?? null) as any) || null;
       const freqScaleId = Number((initialData?.riskProbabilityLevel?.id ?? initialData?.frequencyScale?.id ?? null) as any) || null;
-      const defId = Number((initialData?.riskDeficiencyLevel?.id ?? null) as any) || null;
       const cond = String(initialData?.riskCondition ?? '');
       setForm({
         processId: Number.isFinite(procId) && procId > 0 ? procId : null,
@@ -115,7 +104,6 @@ export function RiskTableNodeCreateModal({ open, onClose, onSuccess, riskId, par
         impact: imp || '1',
         riskImpactLevelId: sevScaleId,
         riskProbabilityLevelId: freqScaleId,
-        riskDeficiencyLevelId: defId,
         riskCondition: cond,
       });
     }
@@ -130,15 +118,13 @@ export function RiskTableNodeCreateModal({ open, onClose, onSuccess, riskId, par
     const list = (Array.isArray(riskProbabilityLevels) ? riskProbabilityLevels : []).filter((s: any) => s && s.id != null);
     return list.map((s: any) => ({ id: Number(s.id), label: String(s?.probabilityName ?? s?.probabilityValue ?? `#${s.id}`), value: Number(s?.probabilityValue ?? 0) }));
   }, [riskProbabilityLevels]);
-  const deficiencyLevelOptions = useMemo(() => (Array.isArray(riskDeficiencyLevels) ? riskDeficiencyLevels : []).filter((d: any) => d && d.id != null).map((d: any) => ({ id: Number(d.id), label: String(d.deficiencyName || `#${d.id}`) })), [riskDeficiencyLevels]);
-
   const handleSubmit = async () => {
     if (!form.processId) {
       toast.error(tf('process.table.messages.error.loading', 'Error loading data', 'Error al cargar datos'));
       return;
     }
-    if (!form.riskImpactLevelId || !form.riskProbabilityLevelId || !form.riskDeficiencyLevelId) {
-      toast.error(tf('risk.table.messages.error.missingScales', 'Select scales and deficiency level', 'Selecciona escalas y nivel de deficiencia'));
+    if (!form.riskImpactLevelId || !form.riskProbabilityLevelId) {
+      toast.error(tf('risk.table.messages.error.missingScales', 'Select impact and probability scales', 'Selecciona escalas de impacto y probabilidad'));
       return;
     }
     const impactOpt = impactLevelOptions.find((o) => o.id === form.riskImpactLevelId);
@@ -151,7 +137,6 @@ export function RiskTableNodeCreateModal({ open, onClose, onSuccess, riskId, par
       riskCondition: form.riskCondition || '',
       risk: { id: Number(riskId) },
       process: { id: Number(form.processId) },
-      riskDeficiencyLevel: { id: Number(form.riskDeficiencyLevelId) },
       riskImpactLevel: { id: Number(form.riskImpactLevelId) },
       riskProbabilityLevel: { id: Number(form.riskProbabilityLevelId) },
     };
@@ -207,8 +192,6 @@ export function RiskTableNodeCreateModal({ open, onClose, onSuccess, riskId, par
             }))}
             renderInput={(params) => <TextField {...params} label={t('riskMap.form.fields.probability')} />}
           />
-          <Autocomplete options={deficiencyLevelOptions} value={deficiencyLevelOptions.find((o) => o.id === form.riskDeficiencyLevelId) || null} onChange={(_, v) => setForm((f) => ({ ...f, riskDeficiencyLevelId: v?.id ?? null }))} renderInput={(params) => <TextField {...params} label={t('riskMap.form.fields.deficiency')} />} />
-
           <TextField label={t('riskMap.form.fields.riskCondition')} value={form.riskCondition} onChange={(e) => setForm((f) => ({ ...f, riskCondition: e.target.value }))} />
           <Stack direction="row" spacing={1} sx={{ pt: 1 }}>
             <Button variant="outlined" onClick={onClose}>{t('risk.table.actions.cancel')}</Button>
