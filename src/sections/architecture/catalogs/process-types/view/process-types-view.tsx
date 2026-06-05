@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { ProcessTypesTableRow } from '../process-types-table-row';
-import { ProcessTypesTableModal } from '../process-types-table-modal';
+import { ProcessTypesTableDrawer } from '../process-types-table-drawer';
 import { ProcessTypesTableToolbar } from '../process-types-table-toolbar';
 import { ProcessTypesTableFiltersResult } from '../process-types-table-filters-result';
 
@@ -350,7 +350,7 @@ export function ProcessTypesView() {
 
       {renderConfirmDialog()}
 
-      <ProcessTypesTableModal
+      <ProcessTypesTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

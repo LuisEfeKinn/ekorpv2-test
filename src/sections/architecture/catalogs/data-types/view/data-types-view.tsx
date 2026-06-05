@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { DataTypesTableRow } from '../data-types-table-row';
-import { DataTypesTableModal } from '../data-types-table-modal';
+import { DataTypesTableDrawer } from '../data-types-table-drawer';
 import { DataTypesTableToolbar } from '../data-types-table-toolbar';
 import { DataTypesTableFiltersResult } from '../data-types-table-filters-result';
 
@@ -350,7 +350,7 @@ export function DataTypesView() {
 
       {renderConfirmDialog()}
 
-      <DataTypesTableModal
+      <DataTypesTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

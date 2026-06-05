@@ -434,6 +434,26 @@
           "cost": "Cost",
           "result": "Result",
           "context": "Context",
+          "status": "Status",
+          "startDate": "Start Date",
+          "endDate": "End Date",
+          "scheduleTask": "Scheduled Task",
+          "projectStatus": "Project Status",
+          "taskType": "Task Type",
+          "taskDeadline": "Task Deadline",
+          "taskStartDate": "Task Start Date",
+          "taskUpdateDate": "Task Update Date",
+          "fulfillmentAction": "Fulfillment Action",
+          "reminder": "Reminder",
+          "sistemRequirement": "System Requirement",
+          "superiorProcess": "Superior Process",
+          "processType": "Process Type",
+          "period": "Period",
+          "timeUnit": "Time Unit",
+          "createdBy": "Created By",
+          "createdDate": "Creation Date",
+          "lastModifiedBy": "Modified By",
+          "lastModifiedDate": "Modification Date",
           "actions": "Actions"
         },
         "toolbar": {
@@ -760,6 +780,12 @@
           "code": "Code",
           "riskType": "Tool Type",
           "superiorRisk": "Parent Tool",
+          "toolType": "Tool Type",
+          "superiorTool": "Parent Tool",
+          "createdBy": "Created By",
+          "createdDate": "Creation Date",
+          "lastModifiedBy": "Modified By",
+          "lastModifiedDate": "Modification Date",
           "actions": "Actions"
         },
         "toolbar": {
@@ -2427,6 +2453,69 @@
         "uploadSuccess": "File uploaded successfully",
         "uploadError": "Error uploading the file",
         "downloadError": "Error downloading the file"
+      },
+      "columns": {
+        "code": "Code",
+        "name": "Name",
+        "description": "Description",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "measurementForm": "Measurement Form",
+        "consequencesOfNotAchieving": "Consequences of Not Achieving",
+        "objectiveLevel": "Objective Level",
+        "typeName": "Objective Type",
+        "superiorObjectiveName": "Superior Objective",
+        "createdBy": "Created By",
+        "createdDate": "Creation Date",
+        "lastModifiedBy": "Modified By",
+        "lastModifiedDate": "Modification Date"
+      },
+      "tabs": {
+        "all": "All"
+      },
+      "breadcrumbs": {
+        "architecture": "Architecture",
+        "title": "Strategic Objectives"
+      },
+      "form": {
+        "titleCreate": "Create Strategic Objective",
+        "titleEdit": "Edit Strategic Objective",
+        "fields": {
+          "name": "Name",
+          "code": "Code",
+          "description": "Description",
+          "level": "Level",
+          "type": "Type",
+          "startDate": "Draft Date",
+          "endDate": "Expiration Date",
+          "measurementForm": "Measurement Form",
+          "consequencesOfNotAchieving": "Consequences of Not Achieving",
+          "superiorObjective": "Superior Objective"
+        },
+        "selectPlaceholder": "Select",
+        "actions": {
+          "cancel": "Cancel",
+          "save": "Save"
+        },
+        "messages": {
+          "createSuccess": "Strategic objective created successfully",
+          "updateSuccess": "Strategic objective updated successfully",
+          "saveError": "Error saving strategic objective",
+          "loadError": "Could not load strategic objective",
+          "deleteSuccess": "Strategic objective deleted successfully",
+          "deleteError": "Could not delete strategic objective",
+          "duplicateError": "Strategic objective already exists",
+          "dateError": "Expiration date cannot be before draft date",
+          "filterDateError": "End date cannot be before start date",
+          "nameRequired": "Name is required",
+          "codeRequired": "Code is required",
+          "descriptionRequired": "Description is required",
+          "levelRequired": "Level is required",
+          "startDateRequired": "Draft date is required",
+          "endDateRequired": "Expiration date is required",
+          "measurementFormRequired": "Measurement form is required",
+          "consequencesRequired": "Consequences of not achieving are required"
+        }
       }
     }
   },
@@ -2466,6 +2555,63 @@
       "upload": "Upload",
       "download": "Download",
       "downloadTemplate": "Download Template"
+    }
+  },
+  "actionMeasures": {
+    "table": {
+      "breadcrumbs": {
+        "architecture": "Architecture",
+        "title": "Action Measures"
+      },
+      "columns": {
+        "code": "Code / Nomenclature",
+        "name": "Name",
+        "description": "Description"
+      },
+      "tabs": {
+        "all": "All"
+      },
+      "actions": {
+        "map": "Map",
+        "add": "Add",
+        "retry": "Retry"
+      },
+      "dialogs": {
+        "delete": {
+          "title": "Delete",
+          "content": "Are you sure you want to delete this item?"
+        },
+        "deleteButton": "Delete"
+      }
+    },
+    "form": {
+      "titleCreate": "Create Action Measure",
+      "titleEdit": "Edit Action Measure",
+      "fields": {
+        "name": "Name",
+        "description": "Description",
+        "code": "Code",
+        "measureType": "Measure Type",
+        "resultType": "Result Type",
+        "provider": "Provider",
+        "superiorActionMeasure": "Superior Action Measure"
+      },
+      "selectNone": "None",
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "messages": {
+        "loadCatalogsError": "Error loading catalogs",
+        "loadDataError": "Error loading data",
+        "nameCodeRequired": "Name and Code are required",
+        "createSuccess": "Action Measure created successfully",
+        "updateSuccess": "Action Measure updated successfully",
+        "createError": "Error creating Action Measure",
+        "updateError": "Error updating Action Measure",
+        "deleteSuccess": "Deleted successfully",
+        "deleteError": "Could not delete"
+      }
     }
   }
 }

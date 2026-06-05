@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { useTranslate } from 'src/locales';
+
 import { GetProvidersPaginationService } from 'src/services/architecture/catalogs/providers.service';
 import { GetActionMeasuresService, CreateActionMeasureService, UpdateActionMeasureService, GetActionMeasureByIdService } from 'src/services/architecture/actionMeasures.service';
 
@@ -42,6 +44,7 @@ type FormData = {
 // ----------------------------------------------------------------------
 
 export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...other }: Props) {
+  const { t } = useTranslate('architecture');
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   
@@ -88,7 +91,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
 
     } catch (error) {
       console.error('Error loading catalogs:', error);
-      toast.error('Error al cargar catálogos');
+      toast.error(t('actionMeasures.form.messages.loadCatalogsError', { defaultValue: 'Error loading catalogs' }));
     }
   }, []);
 
@@ -129,7 +132,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
       }
     } catch (error) {
       console.error('Error loading data:', error);
-      toast.error('Error al cargar datos');
+      toast.error(t('actionMeasures.form.messages.loadDataError', { defaultValue: 'Error loading data' }));
     } finally {
       setLoading(false);
     }
@@ -170,7 +173,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
 
   const handleSave = async () => {
     if (!formData.name || !formData.code) {
-      toast.error('Nombre y Código son requeridos');
+      toast.error(t('actionMeasures.form.messages.nameCodeRequired', { defaultValue: 'Name and Code are required' }));
       return;
     }
 
@@ -191,18 +194,18 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
       if (dataId) {
         console.log('Calling UpdateActionMeasureService');
         await UpdateActionMeasureService(dataId, payload);
-        toast.success('Action Measure actualizado exitosamente');
+        toast.success(t('actionMeasures.form.messages.updateSuccess', { defaultValue: 'Action Measure updated successfully' }));
       } else {
         console.log('Calling CreateActionMeasureService');
         await CreateActionMeasureService(payload);
-        toast.success('Action Measure creado exitosamente');
+        toast.success(t('actionMeasures.form.messages.createSuccess', { defaultValue: 'Action Measure created successfully' }));
       }
       
       onSave();
       onClose();
     } catch (error) {
       console.error('Error saving action measure:', error);
-      toast.error(dataId ? 'Error al actualizar Action Measure' : 'Error al crear Action Measure');
+      toast.error(dataId ? t('actionMeasures.form.messages.updateError', { defaultValue: 'Error updating Action Measure' }) : t('actionMeasures.form.messages.createError', { defaultValue: 'Error creating Action Measure' }));
     } finally {
       setSaving(false);
     }
@@ -219,7 +222,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
     >
       <Box sx={{ p: 2.5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Typography variant="h6">
-          {dataId ? 'Editar Action Measure' : 'Crear Action Measure'}
+          {dataId ? t('actionMeasures.form.titleEdit', { defaultValue: 'Edit Action Measure' }) : t('actionMeasures.form.titleCreate', { defaultValue: 'Create Action Measure' })}
         </Typography>
 
         <IconButton onClick={onClose}>
@@ -244,7 +247,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
             <Stack spacing={3}>
               <TextField
                 fullWidth
-                label="Nombre"
+                label={t('actionMeasures.form.fields.name', { defaultValue: 'Name' })}
                 value={formData.name}
                 onChange={(e) => handleChange('name', e.target.value)}
                 required
@@ -253,7 +256,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
 
               <TextField
                 fullWidth
-                label="Descripción"
+                label={t('actionMeasures.form.fields.description', { defaultValue: 'Description' })}
                 value={formData.description}
                 onChange={(e) => handleChange('description', e.target.value)}
                 disabled={saving}
@@ -263,7 +266,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
 
               <TextField
                 fullWidth
-                label="Código"
+                label={t('actionMeasures.form.fields.code', { defaultValue: 'Code' })}
                 value={formData.code}
                 onChange={(e) => handleChange('code', e.target.value)}
                 required
@@ -274,7 +277,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
                 <TextField
                   fullWidth
                   type="number"
-                  label="Measure Type"
+                  label={t('actionMeasures.form.fields.measureType', { defaultValue: 'Measure Type' })}
                   value={formData.measureType}
                   onChange={(e) => handleChange('measureType', Number(e.target.value))}
                   disabled={saving}
@@ -282,7 +285,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
                 <TextField
                   fullWidth
                   type="number"
-                  label="Result Type"
+                  label={t('actionMeasures.form.fields.resultType', { defaultValue: 'Result Type' })}
                   value={formData.resultType}
                   onChange={(e) => handleChange('resultType', Number(e.target.value))}
                   disabled={saving}
@@ -293,7 +296,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
                 <TextField
                   fullWidth
                   select
-                  label="Provider"
+                  label={t('actionMeasures.form.fields.provider', { defaultValue: 'Provider' })}
                   value={formData.providerId}
                   onChange={(e) => handleChange('providerId', Number(e.target.value))}
                   disabled={saving}
@@ -302,7 +305,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
                   }}
                 >
                   <MenuItem value={0} sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
-                    Ninguno
+                    {t('actionMeasures.form.selectNone', { defaultValue: 'None' })}
                   </MenuItem>
                   {providers.map((option) => (
                     <MenuItem key={option.id} value={option.id}>
@@ -314,7 +317,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
                 <TextField
                   fullWidth
                   select
-                  label="Superior Action Measure"
+                  label={t('actionMeasures.form.fields.superiorActionMeasure', { defaultValue: 'Superior Action Measure' })}
                   value={formData.superiorActionMeasureId}
                   onChange={(e) => handleChange('superiorActionMeasureId', Number(e.target.value))}
                   disabled={saving}
@@ -323,7 +326,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
                   }}
                 >
                   <MenuItem value={0} sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
-                    Ninguna
+                    {t('actionMeasures.form.selectNone', { defaultValue: 'None' })}
                   </MenuItem>
                   {actionMeasuresList
                     .filter((item) => String(item.id) !== dataId) // Evitar seleccionarse a sí mismo
@@ -342,14 +345,14 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
       <Box sx={{ p: 2.5, borderTop: (theme) => `dashed 1px ${theme.vars.palette.divider}` }}>
         <Stack direction="row" spacing={1.5} justifyContent="flex-end">
           <Button variant="outlined" color="inherit" onClick={onClose} disabled={saving}>
-            Cancelar
+            {t('actionMeasures.form.actions.cancel', { defaultValue: 'Cancel' })}
           </Button>
           <LoadingButton
             variant="contained"
             onClick={handleSave}
             loading={saving}
           >
-            Guardar
+            {t('actionMeasures.form.actions.save', { defaultValue: 'Save' })}
           </LoadingButton>
         </Stack>
       </Box>

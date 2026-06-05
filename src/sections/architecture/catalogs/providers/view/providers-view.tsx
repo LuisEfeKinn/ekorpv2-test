@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { ProvidersTableRow } from '../providers-table-row';
-import { ProvidersTableModal } from '../providers-table-modal';
+import { ProvidersTableDrawer } from '../providers-table-drawer';
 import { ProvidersTableToolbar } from '../providers-table-toolbar';
 import { ProvidersTableFiltersResult } from '../providers-table-filters-result';
 
@@ -356,7 +356,7 @@ export function ProvidersView() {
 
       {renderConfirmDialog()}
 
-      <ProvidersTableModal
+      <ProvidersTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

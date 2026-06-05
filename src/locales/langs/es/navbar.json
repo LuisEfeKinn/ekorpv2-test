@@ -214,5 +214,13 @@
       "aiProvidersSettings": "Configuración de Proveedores de IA",
       "aiRoutesGenerator": "Generador de Rutas con IA"
     }
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "items": {
+      "announcements": "Anuncios",
+      "templates": "Plantillas de notificaciones",
+      "config": "Configuración de notificaciones"
+    }
   }
 }

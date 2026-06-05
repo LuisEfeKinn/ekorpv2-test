@@ -214,5 +214,13 @@
       "aiProvidersSettings": "AI Providers Settings",
       "aiRoutesGenerator": "AI Route Generator"
     }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "items": {
+      "announcements": "Announcements",
+      "templates": "Notification templates",
+      "config": "Notification settings"
+    }
   }
 }

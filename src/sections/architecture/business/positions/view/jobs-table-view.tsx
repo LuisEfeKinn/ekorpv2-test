@@ -98,9 +98,9 @@ export function JobsTableView() {
     const dynamicColumns = ALL_COLUMNS.filter((col) => visibleColumns.includes(col.id));
     return [
       { id: '', width: 88 },
-      ...dynamicColumns,
+      ...dynamicColumns.map((col) => ({ ...col, label: t(col.label) })),
     ];
-  }, [visibleColumns]);
+  }, [visibleColumns, t]);
 
   const filters = useSetState<{ name: string; status: string }>({
     name: '',

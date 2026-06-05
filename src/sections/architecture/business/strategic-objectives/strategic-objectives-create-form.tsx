@@ -15,6 +15,8 @@ import Typography from '@mui/material/Typography';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
+import { useTranslate } from 'src/locales';
+
 import { GetObjectiveTypesPaginationService } from 'src/services/architecture/catalogs/objectiveTypes.service';
 import { SaveOrUpdateObjectivesService, GetObjectivesPaginationService } from 'src/services/architecture/business/objectives.service';
 
@@ -44,6 +46,7 @@ type Props = {
 };
 
 export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObjective }: Props) {
+  const { t } = useTranslate('architecture');
   const router = useRouter();
 
   const [objectiveTypeOptions, setObjectiveTypeOptions] = useState<Option[]>([]);
@@ -53,21 +56,21 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
   const schema = useMemo(
     () =>
       z.object({
-        name: z.string().min(1, { message: 'El nombre es obligatorio' }),
-        code: z.string().min(1, { message: 'El código es obligatorio' }),
-        description: z.string().min(1, { message: 'La descripción es obligatoria' }),
-        objectiveLevel: z.number().min(1, { message: 'El nivel es obligatorio' }),
+        name: z.string().min(1, { message: t('strategicObjectives.table.form.messages.nameRequired') }),
+        code: z.string().min(1, { message: t('strategicObjectives.table.form.messages.codeRequired') }),
+        description: z.string().min(1, { message: t('strategicObjectives.table.form.messages.descriptionRequired') }),
+        objectiveLevel: z.number().min(1, { message: t('strategicObjectives.table.form.messages.levelRequired') }),
         objectiveTypeId: z.number().optional().nullable(),
-        startDate: z.string().min(1, { message: 'La fecha de redacción es obligatoria' }),
-        endDate: z.string().min(1, { message: 'La fecha de expiración es obligatoria' }),
-        measurementForm: z.string().min(1, { message: 'La forma de medición es obligatoria' }),
+        startDate: z.string().min(1, { message: t('strategicObjectives.table.form.messages.startDateRequired') }),
+        endDate: z.string().min(1, { message: t('strategicObjectives.table.form.messages.endDateRequired') }),
+        measurementForm: z.string().min(1, { message: t('strategicObjectives.table.form.messages.measurementFormRequired') }),
         consequencesOfNotAchieving: z
           .string()
-          .min(1, { message: 'Las consecuencias de no lograrlo son obligatorias' }),
+          .min(1, { message: t('strategicObjectives.table.form.messages.consequencesRequired') }),
         participantId: z.string().optional(),
         superiorObjectiveId: z.number().optional().nullable(),
       }),
-    []
+    [t]
   );
 
   const defaultValues = useMemo<FormValues>(() => ({
@@ -192,7 +195,7 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
       const end = data.endDate ? dayjs(data.endDate) : null;
 
       if (start && end && end.isBefore(start, 'day')) {
-        toast.error('La fecha de expiración no puede ser menor a la fecha de redacción');
+        toast.error(t('strategicObjectives.table.form.messages.dateError'));
         return;
       }
 
@@ -215,7 +218,7 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
       if (!isEdit) {
         reset();
       }
-      toast.success(isEdit ? 'Objetivo estratégico actualizado con éxito' : 'Objetivo estratégico creado con éxito');
+      toast.success(isEdit ? t('strategicObjectives.table.form.messages.updateSuccess') : t('strategicObjectives.table.form.messages.createSuccess'));
       if (onSuccess) {
         onSuccess();
       } else {
@@ -231,9 +234,9 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
         return lower.includes('ya existe') || lower.includes('already exists');
       });
       if (duplicateMessage) {
-        toast.error('El objetivo estratégico ya existe');
+        toast.error(t('strategicObjectives.table.form.messages.duplicateError'));
       } else {
-        toast.error('Error al guardar el objetivo estratégico');
+        toast.error(t('strategicObjectives.table.form.messages.saveError'));
       }
     }
   });
@@ -241,22 +244,22 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h6" sx={{ mb: 3 }}>
-        {isEdit ? 'Editar Objetivo Estratégico' : 'Crear Objetivo Estratégico'}
+        {isEdit ? t('strategicObjectives.table.form.titleEdit') : t('strategicObjectives.table.form.titleCreate')}
       </Typography>
 
       <Form methods={methods} onSubmit={onSubmit}>
         <Stack spacing={3}>
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
-            <Field.Text name="name" label="Nombre" required />
-            <Field.Text name="code" label="Código" required />
+            <Field.Text name="name" label={t('strategicObjectives.table.form.fields.name')} required />
+            <Field.Text name="code" label={t('strategicObjectives.table.form.fields.code')} required />
           </Box>
 
-          <Field.Text name="description" label="Descripción" required multiline minRows={3} />
+          <Field.Text name="description" label={t('strategicObjectives.table.form.fields.description')} required multiline minRows={3} />
 
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
             <Field.Select
               name="objectiveLevel"
-              label="Nivel"
+              label={t('strategicObjectives.table.form.fields.level')}
               required
               onChange={(event) => {
                 const value = Number(event.target.value);
@@ -264,7 +267,7 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
               }}
             >
               <MenuItem value={0} disabled>
-                Seleccione
+                {t('strategicObjectives.table.form.selectPlaceholder')}
               </MenuItem>
               {[1, 2, 3, 4, 5].map((level) => (
                 <MenuItem key={level} value={level}>
@@ -275,7 +278,7 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
 
             <Field.Select
               name="objectiveTypeId"
-              label="Tipo"
+              label={t('strategicObjectives.table.form.fields.type')}
               slotProps={{
                 select: {
                   MenuProps: {
@@ -292,7 +295,7 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
                 setValue('objectiveTypeId', value || null, { shouldValidate: true });
               }}
             >
-              <MenuItem value={0}>Seleccione</MenuItem>
+              <MenuItem value={0}>{t('strategicObjectives.table.form.selectPlaceholder')}</MenuItem>
               {objectiveTypeOptions.map((opt) => (
                 <MenuItem key={opt.value} value={opt.value}>
                   {opt.label}
@@ -304,13 +307,13 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
             <Field.DatePicker
               name="startDate"
-              label="Fecha de Redacción"
+              label={t('strategicObjectives.table.form.fields.startDate')}
               minDate={dayjs()}
               slotProps={{ textField: { required: true } }}
             />
             <Field.DatePicker
               name="endDate"
-              label="Fecha de Expiración"
+              label={t('strategicObjectives.table.form.fields.endDate')}
               minDate={watchStartDate ? dayjs(watchStartDate) : dayjs()}
               slotProps={{ textField: { required: true } }}
             />
@@ -318,7 +321,7 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
 
           <Field.Text
             name="measurementForm"
-            label="Forma de Medición"
+            label={t('strategicObjectives.table.form.fields.measurementForm')}
             required
             multiline
             minRows={3}
@@ -326,7 +329,7 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
           />
           <Field.Text
             name="consequencesOfNotAchieving"
-            label="Consecuencias de no lograrlo"
+            label={t('strategicObjectives.table.form.fields.consequencesOfNotAchieving')}
             required
             multiline
             minRows={3}
@@ -336,13 +339,13 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
             <Field.Select
               name="superiorObjectiveId"
-              label="Objetivo superior"
+              label={t('strategicObjectives.table.form.fields.superiorObjective')}
               onChange={(event) => {
                 const value = Number(event.target.value);
                 setValue('superiorObjectiveId', value || null, { shouldValidate: true });
               }}
             >
-              <MenuItem value={0}>Seleccione</MenuItem>
+              <MenuItem value={0}>{t('strategicObjectives.table.form.selectPlaceholder')}</MenuItem>
               {objectiveOptions.map((opt) => (
                 <MenuItem key={opt.value} value={opt.value}>
                   {opt.label}
@@ -363,7 +366,7 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
                 }
               }}
             >
-              Cancelar
+              {t('strategicObjectives.table.form.actions.cancel')}
             </Button>
 
             <Button
@@ -371,7 +374,7 @@ export function StrategicObjectivesCreateForm({ onSuccess, onCancel, currentObje
               variant="contained"
               loading={isSubmitting}
             >
-              Guardar
+              {t('strategicObjectives.table.form.actions.save')}
             </Button>
           </Stack>
         </Stack>

@@ -4,6 +4,8 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 
+import { useTranslate } from 'src/locales';
+
 import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
@@ -14,6 +16,8 @@ type Props = {
 };
 
 export function ActionMeasuresTableToolbar({ filters, onFilters }: Props) {
+  const { t } = useTranslate('common');
+
   const handleFilterName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       onFilters('name', event.target.value);
@@ -33,7 +37,7 @@ export function ActionMeasuresTableToolbar({ filters, onFilters }: Props) {
           fullWidth
           value={filters.name}
           onChange={handleFilterName}
-          placeholder="Buscar..."
+          placeholder={t('filters.search')}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

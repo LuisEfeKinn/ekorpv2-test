@@ -269,7 +269,7 @@ export function StrategicObjectivesTableView() {
         const merged: ObjectiveFlowFilters = { ...prev, ...next };
 
         if (merged.startDate && merged.endDate && merged.endDate.isBefore(merged.startDate, 'day')) {
-          toast.error('La fecha de fin no puede ser menor a la fecha de inicio');
+          toast.error(t('strategicObjectives.table.form.messages.filterDateError', { defaultValue: 'End date cannot be before start date' }));
           return { ...merged, endDate: null };
         }
 
@@ -306,13 +306,13 @@ export function StrategicObjectivesTableView() {
     const dynamicColumns = ALL_COLUMNS.filter((col) => visibleColumns.includes(col.id));
     return [
       { id: '', width: 88 },
-      ...dynamicColumns,
+      ...dynamicColumns.map((col) => ({ ...col, label: t(col.label) })),
     ];
-  }, [visibleColumns]);
+  }, [visibleColumns, t]);
 
   const STATUS_OPTIONS = useMemo(() => [
-    { value: 'all', label: 'Todas' },
-  ], []);
+    { value: 'all', label: t('strategicObjectives.table.tabs.all', { defaultValue: 'All' }) },
+  ], [t]);
 
   const filters = useSetState<IStrategicObjectiveFilters & { status: string }>({
     name: '',
@@ -453,14 +453,14 @@ export function StrategicObjectivesTableView() {
         if (normalized) {
           setCurrentObjective(normalized);
         } else {
-          toast.error('No se pudo cargar el objetivo');
+          toast.error(t('strategicObjectives.table.form.messages.loadError', { defaultValue: 'Could not load objective' }));
         }
       } catch (error) {
         console.error('Error loading objective:', error);
-        toast.error('No se pudo cargar el objetivo');
+        toast.error(t('strategicObjectives.table.form.messages.loadError', { defaultValue: 'Could not load objective' }));
       }
     },
-    [openDrawer]
+    [openDrawer, t]
   );
 
   const handleDeleteRow = useCallback(
@@ -468,13 +468,13 @@ export function StrategicObjectivesTableView() {
       try {
         await DeleteObjectivesService(id);
         loadData();
-        toast.success('Objetivo estratégico eliminado con éxito');
+        toast.success(t('strategicObjectives.table.form.messages.deleteSuccess', { defaultValue: 'Strategic objective deleted successfully' }));
       } catch (error) {
         console.error('Error deleting objective:', error);
-        toast.error('No se pudo eliminar el objetivo');
+        toast.error(t('strategicObjectives.table.form.messages.deleteError', { defaultValue: 'Could not delete objective' }));
       }
     },
-    [loadData]
+    [loadData, t]
   );
 
   const handleDownloadExcel = useCallback(async () => {
@@ -618,11 +618,11 @@ export function StrategicObjectivesTableView() {
   return (
     <DashboardContent>
       <CustomBreadcrumbs
-        heading="Objetivos Estratégicos"
+        heading={t('strategicObjectives.table.breadcrumbs.title', { defaultValue: 'Strategic Objectives' })}
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
-          { name: 'Arquitectura', href: paths.dashboard.architecture.strategicObjectivesTable },
-          { name: 'Objetivos Estratégicos' },
+          { name: t('strategicObjectives.table.breadcrumbs.architecture', { defaultValue: 'Architecture' }), href: paths.dashboard.architecture.strategicObjectivesTable },
+          { name: t('strategicObjectives.table.breadcrumbs.title', { defaultValue: 'Strategic Objectives' }) },
         ]}
         action={
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>

@@ -43,7 +43,7 @@ import {
 } from 'src/components/table';
 
 import { RiskTypesTableRow } from '../risk-types-table-row';
-import { RiskTypesTableModal } from '../risk-types-table-modal';
+import { RiskTypesTableDrawer } from '../risk-types-table-drawer';
 import { RiskTypesTableToolbar } from '../risk-types-table-toolbar';
 import { RiskTypesConfigureModal } from '../risk-types-configure-modal';
 import { RiskTypesTableFiltersResult } from '../risk-types-table-filters-result';
@@ -390,7 +390,7 @@ export function RiskTypesView() {
 
       {renderConfirmDialog()}
 
-      <RiskTypesTableModal
+      <RiskTypesTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

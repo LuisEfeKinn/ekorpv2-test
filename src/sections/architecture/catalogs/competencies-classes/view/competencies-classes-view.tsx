@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { CompetenciesClassesTableRow } from '../competencies-classes-table-row';
-import { CompetenciesClassesTableModal } from '../competencies-classes-table-modal';
+import { CompetenciesClassesTableDrawer } from '../competencies-classes-table-drawer';
 import { CompetenciesClassesTableToolbar } from '../competencies-classes-table-toolbar';
 import { CompetenciesClassesTableFiltersResult } from '../competencies-classes-table-filters-result';
 
@@ -350,7 +350,7 @@ export function CompetenciesClassesView() {
 
       {renderConfirmDialog()}
 
-      <CompetenciesClassesTableModal
+      <CompetenciesClassesTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

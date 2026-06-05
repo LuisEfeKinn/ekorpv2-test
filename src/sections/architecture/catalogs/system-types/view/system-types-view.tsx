@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { SystemTypesTableRow } from '../system-types-table-row';
-import { SystemTypesTableModal } from '../system-types-table-modal';
+import { SystemTypesTableDrawer } from '../system-types-table-drawer';
 import { SystemTypesTableToolbar } from '../system-types-table-toolbar';
 import { SystemTypesTableFiltersResult } from '../system-types-table-filters-result';
 
@@ -350,7 +350,7 @@ export function SystemTypesView() {
 
       {renderConfirmDialog()}
 
-      <SystemTypesTableModal
+      <SystemTypesTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

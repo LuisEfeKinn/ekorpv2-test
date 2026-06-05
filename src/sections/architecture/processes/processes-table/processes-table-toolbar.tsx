@@ -329,7 +329,7 @@ export function ProcessTableToolbar({
                     onChange={() => onChangeColumns(column.id)}
                   />
                 }
-                label={column.label}
+                label={t(column.label)}
               />
             ))}
           </Stack>

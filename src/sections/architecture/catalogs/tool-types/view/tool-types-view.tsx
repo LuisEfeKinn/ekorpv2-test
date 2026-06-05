@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { ToolTypesTableRow } from '../tool-types-table-row';
-import { ToolTypesTableModal } from '../tool-types-table-modal';
+import { ToolTypesTableDrawer } from '../tool-types-table-drawer';
 import { ToolTypesTableToolbar } from '../tool-types-table-toolbar';
 import { ToolTypesTableFiltersResult } from '../tool-types-table-filters-result';
 
@@ -350,7 +350,7 @@ export function ToolTypesView() {
 
       {renderConfirmDialog()}
 
-      <ToolTypesTableModal
+      <ToolTypesTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

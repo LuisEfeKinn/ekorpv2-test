@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { TechnologyTypesTableRow } from '../technology-types-table-row';
-import { TechnologyTypesTableModal } from '../technology-types-table-modal';
+import { TechnologyTypesTableDrawer } from '../technology-types-table-drawer';
 import { TechnologyTypesTableToolbar } from '../technology-types-table-toolbar';
 import { TechnologyTypesTableFiltersResult } from '../technology-types-table-filters-result';
 
@@ -350,7 +350,7 @@ export function TechnologyTypesView() {
 
       {renderConfirmDialog()}
 
-      <TechnologyTypesTableModal
+      <TechnologyTypesTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

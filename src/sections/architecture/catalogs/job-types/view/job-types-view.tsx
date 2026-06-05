@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { JobTypesTableRow } from '../job-types-table-row';
-import { JobTypesTableModal } from '../job-types-table-modal';
+import { JobTypesTableDrawer } from '../job-types-table-drawer';
 import { JobTypesTableToolbar } from '../job-types-table-toolbar';
 import { JobTypesTableFiltersResult } from '../job-types-table-filters-result';
 
@@ -354,7 +354,7 @@ export function JobTypesView() {
 
       {renderConfirmDialog()}
 
-      <JobTypesTableModal
+      <JobTypesTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

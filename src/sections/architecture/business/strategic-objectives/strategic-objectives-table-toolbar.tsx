@@ -55,6 +55,7 @@ export function StrategicObjectivesTableToolbar({
   onFlowFilters,
 }: Props) {
   const { t } = useTranslate('common');
+  const { t: tArch } = useTranslate('architecture');
   const popover = usePopover();
   const [filtersOpen, setFiltersOpen] = useState(false);
   const fixedColumnSet = useMemo(() => new Set<string>([...FIXED_COLUMNS]), []);
@@ -137,7 +138,7 @@ export function StrategicObjectivesTableToolbar({
             onClick={popover.onOpen}
             sx={{ textTransform: 'capitalize' }}
           >
-            Columnas
+            {t('table.columns')}
           </Button>
         </Stack>
       </Stack>
@@ -246,7 +247,7 @@ export function StrategicObjectivesTableToolbar({
                     }}
                   />
                 }
-                label={column.label}
+                label={tArch(column.label)}
               />
             ))}
           </Stack>

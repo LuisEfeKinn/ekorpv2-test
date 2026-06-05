@@ -214,5 +214,13 @@
       "aiProvidersSettings": "KI-Anbieter-Konfiguration",
       "aiRoutesGenerator": "KI-Routen-Generator"
     }
+  },
+  "notifications": {
+    "title": "Benachrichtigungen",
+    "items": {
+      "announcements": "Ankündigungen",
+      "templates": "Benachrichtigungsvorlagen",
+      "config": "Benachrichtigungseinstellungen"
+    }
   }
 }

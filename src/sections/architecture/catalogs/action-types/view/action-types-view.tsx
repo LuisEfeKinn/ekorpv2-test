@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { ActionTypeTableRow } from '../action-type-table-row';
-import { ActionTypeTableModal } from '../action-type-table-modal';
+import { ActionTypeTableDrawer } from '../action-type-table-drawer';
 import { ActionTypeTableToolbar } from '../action-type-table-toolbar';
 import { ActionTypeTableFiltersResult } from '../action-type-table-filters-result';
 
@@ -353,7 +353,7 @@ export function ActionTypesView() {
 
       {renderConfirmDialog()}
 
-      <ActionTypeTableModal
+      <ActionTypeTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

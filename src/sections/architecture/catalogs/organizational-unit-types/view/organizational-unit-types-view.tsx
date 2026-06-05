@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { OrganizationalUnitTypesTableRow } from '../organizational-unit-types-table-row';
-import { OrganizationalUnitTypesTableModal } from '../organizational-unit-types-table-modal';
+import { OrganizationalUnitTypesTableDrawer } from '../organizational-unit-types-table-drawer';
 import { OrganizationalUnitTypesTableToolbar } from '../organizational-unit-types-table-toolbar';
 import { OrganizationalUnitTypesTableFiltersResult } from '../organizational-unit-types-table-filters-result';
 
@@ -353,7 +353,7 @@ export function OrganizationalUnitTypesView() {
 
       {renderConfirmDialog()}
 
-      <OrganizationalUnitTypesTableModal
+      <OrganizationalUnitTypesTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

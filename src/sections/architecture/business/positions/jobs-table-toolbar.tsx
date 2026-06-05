@@ -143,7 +143,7 @@ export function JobsTableToolbar({
             onClick={popover.onOpen}
             sx={{ textTransform: 'capitalize' }}
           >
-            Columnas
+            {t('common:table.columns')}
           </Button>
         </Stack>
       </Stack>
@@ -308,7 +308,7 @@ export function JobsTableToolbar({
                     onChange={() => onChangeColumns(column.id)}
                   />
                 }
-                label={column.label}
+                label={t(column.label)}
               />
             ))}
           </Stack>

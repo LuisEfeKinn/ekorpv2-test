@@ -20,6 +20,7 @@ import TableContainer from '@mui/material/TableContainer';
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
+import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { DeleteActionMeasureService } from 'src/services/architecture/actionMeasures.service';
 import { ActionMeasureChartService } from 'src/services/architecture/action-measure-chart.service';
@@ -39,6 +40,7 @@ import { ActionMeasuresTableToolbar } from '../action-measures-table-toolbar';
 // ----------------------------------------------------------------------
 
 export function ActionMeasuresView() {
+  const { t } = useTranslate('architecture');
   const table = useTable();
   const modalDialog = useBoolean();
   const confirmDialog = useBoolean();
@@ -57,17 +59,17 @@ export function ActionMeasuresView() {
   const { state: currentFilters, setState: updateFilters } = filters;
 
   const STATUS_OPTIONS = useMemo(() => [
-    { value: 'all', label: 'Todos' },
-  ], []);
+    { value: 'all', label: t('actionMeasures.table.tabs.all', { defaultValue: 'All' }) },
+  ], [t]);
 
   const TABLE_HEAD: TableHeadCellProps[] = useMemo(
     () => [
       { id: '', width: 50 },
-      { id: 'code', label: 'Código/Nomenclatura' },
-      { id: 'name', label: 'Nombre' },
-      { id: 'description', label: 'Descripción' },
+      { id: 'code', label: t('actionMeasures.table.columns.code', { defaultValue: 'Code / Nomenclature' }) },
+      { id: 'name', label: t('actionMeasures.table.columns.name', { defaultValue: 'Name' }) },
+      { id: 'description', label: t('actionMeasures.table.columns.description', { defaultValue: 'Description' }) },
     ],
-    []
+    [t]
   );
 
   // Aplanar jerarquía para mostrar niveles y expansión
@@ -116,13 +118,13 @@ export function ActionMeasuresView() {
       const message =
         (typeof err === 'string' && err) ||
         (typeof err === 'object' && err && 'message' in err && (err as any).message) ||
-        'No se pudo cargar Action Measures.';
+        t('actionMeasures.table.messages.loadError', { defaultValue: 'Could not load Action Measures.' });
       setError(String(message));
       setTableData([]);
     } finally {
       setIsLoading(false);
     }
-  }, [flattenDataWithHierarchy]);
+  }, [flattenDataWithHierarchy, t]);
 
   // Manejar expandir/contraer
   const handleToggleExpand = useCallback((rowId: string, isExpanded: boolean) => {
@@ -177,11 +179,11 @@ export function ActionMeasuresView() {
     
     try {
       await DeleteActionMeasureService(deleteId);
-      toast.success('Eliminado correctamente');
+      toast.success(t('actionMeasures.form.messages.deleteSuccess', { defaultValue: 'Deleted successfully' }));
       loadData();
     } catch (err) {
       console.error(err);
-      toast.error('No se pudo eliminar');
+      toast.error(t('actionMeasures.form.messages.deleteError', { defaultValue: 'Could not delete' }));
     } finally {
       confirmDialog.onFalse();
       setDeleteId(null);
@@ -196,11 +198,11 @@ export function ActionMeasuresView() {
   return (
     <DashboardContent>
       <CustomBreadcrumbs
-        heading="Action Measures"
+        heading={t('actionMeasures.table.breadcrumbs.title', { defaultValue: 'Action Measures' })}
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
-          { name: 'Arquitectura', href: paths.dashboard.architecture.catalogs.root },
-          { name: 'Action Measures' },
+          { name: t('actionMeasures.table.breadcrumbs.architecture', { defaultValue: 'Architecture' }), href: paths.dashboard.architecture.catalogs.root },
+          { name: t('actionMeasures.table.breadcrumbs.title', { defaultValue: 'Action Measures' }) },
         ]}
         action={
           <Box sx={{ display: 'flex', gap: 1 }}>
@@ -210,7 +212,7 @@ export function ActionMeasuresView() {
               variant="outlined"
               startIcon={<Iconify icon={"solar:org-chart-bold" as any} />}
             >
-              Mapa
+              {t('actionMeasures.table.actions.map', { defaultValue: 'Map' })}
             </Button>
             <Button
               onClick={() => {
@@ -220,7 +222,7 @@ export function ActionMeasuresView() {
               variant="contained"
               startIcon={<Iconify icon="mingcute:add-line" />}
             >
-              Agregar
+              {t('actionMeasures.table.actions.add', { defaultValue: 'Add' })}
             </Button>
           </Box>
         }
@@ -233,7 +235,7 @@ export function ActionMeasuresView() {
             severity="error"
             action={
               <Button color="inherit" size="small" onClick={loadData}>
-                Reintentar
+                {t('actionMeasures.table.actions.retry', { defaultValue: 'Retry' })}
               </Button>
             }
           >
@@ -338,11 +340,11 @@ export function ActionMeasuresView() {
       <ConfirmDialog
         open={confirmDialog.value}
         onClose={confirmDialog.onFalse}
-        title="Eliminar"
-        content="¿Estás seguro de que deseas eliminar este elemento?"
+        title={t('actionMeasures.table.dialogs.delete.title', { defaultValue: 'Delete' })}
+        content={t('actionMeasures.table.dialogs.delete.content', { defaultValue: 'Are you sure you want to delete this item?' })}
         action={
           <Button variant="contained" color="error" onClick={handleConfirmDelete}>
-            Eliminar
+            {t('actionMeasures.table.dialogs.deleteButton', { defaultValue: 'Delete' })}
           </Button>
         }
       />

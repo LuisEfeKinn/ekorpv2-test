@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { MeasureActionTypesTableRow } from '../measure-action-types-table-row';
-import { MeasureActionTypesTableModal } from '../measure-action-types-table-modal';
+import { MeasureActionTypesTableDrawer } from '../measure-action-types-table-drawer';
 import { MeasureActionTypesTableToolbar } from '../measure-action-types-table-toolbar';
 import { DataTypesTableFiltersResult } from '../measure-action-types-table-filters-result';
 
@@ -350,7 +350,7 @@ export function MeasureActionTypesView() {
 
       {renderConfirmDialog()}
 
-      <MeasureActionTypesTableModal
+      <MeasureActionTypesTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

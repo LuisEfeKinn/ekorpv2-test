@@ -326,10 +326,10 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
   // TEMP: Mostrar Notificaciones/Anuncios para todos los usuarios
   // (sin depender de asignación de rol/módulo desde backend)
   try {
-    const notificationsSubheader = 'Notificaciones';
-    const announcementsTitle = 'Anuncios';
-    const templatesTitle = 'Plantillas de notificaciones';
-    const configTitle = 'Configuración de notificaciones';
+    const notificationsSubheader = t('notifications.title');
+    const announcementsTitle = t('notifications.items.announcements');
+    const templatesTitle = t('notifications.items.templates');
+    const configTitle = t('notifications.items.config');
 
     const sectionIdx = dynamicNavData.findIndex((s) => s.subheader === notificationsSubheader);
     const announcementsItem = {

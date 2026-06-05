@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { DateControlsTableRow } from '../date-controls-table-row';
-import { DateControlsTableModal } from '../date-controls-table-modal';
+import { DateControlsTableDrawer } from '../date-controls-table-drawer';
 import { DateControlsTableToolbar } from '../date-controls-table-toolbar';
 import { DateControlsTableFiltersResult } from '../date-controls-table-filters-result';
 
@@ -353,7 +353,7 @@ export function DateControlsView() {
 
       {renderConfirmDialog()}
 
-      <DateControlsTableModal
+      <DateControlsTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

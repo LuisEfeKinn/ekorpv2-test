@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { DomainsTableRow } from '../domains-table-row';
-import { DomainsTableModal } from '../domains-table-modal';
+import { DomainsTableDrawer } from '../domains-table-drawer';
 import { DomainsTableToolbar } from '../domains-table-toolbar';
 import { DomainsTableFiltersResult } from '../domains-table-filters-result';
 
@@ -355,7 +355,7 @@ export function DomainsView() {
 
       {renderConfirmDialog()}
 
-      <DomainsTableModal
+      <DomainsTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

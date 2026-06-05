@@ -424,6 +424,26 @@
           "cost": "Kosten",
           "result": "Ergebnis",
           "context": "Kontext",
+          "status": "Status",
+          "startDate": "Startdatum",
+          "endDate": "Enddatum",
+          "scheduleTask": "Geplante Aufgabe",
+          "projectStatus": "Projektstatus",
+          "taskType": "Aufgabentyp",
+          "taskDeadline": "Aufgabenfrist",
+          "taskStartDate": "Aufgaben-Startdatum",
+          "taskUpdateDate": "Aufgaben-Aktualisierungsdatum",
+          "fulfillmentAction": "Erfüllungsmaßnahme",
+          "reminder": "Erinnerung",
+          "sistemRequirement": "Systemanforderung",
+          "superiorProcess": "Übergeordneter Prozess",
+          "processType": "Prozesstyp",
+          "period": "Zeitraum",
+          "timeUnit": "Zeiteinheit",
+          "createdBy": "Erstellt von",
+          "createdDate": "Erstellungsdatum",
+          "lastModifiedBy": "Geändert von",
+          "lastModifiedDate": "Änderungsdatum",
           "actions": "Aktionen"
         },
         "toolbar": {
@@ -750,6 +770,12 @@
           "code": "Code",
           "riskType": "Risikotyp",
           "superiorRisk": "Übergeordnetes Risiko",
+          "toolType": "Werkzeugtyp",
+          "superiorTool": "Übergeordnetes Werkzeug",
+          "createdBy": "Erstellt von",
+          "createdDate": "Erstellungsdatum",
+          "lastModifiedBy": "Geändert von",
+          "lastModifiedDate": "Änderungsdatum",
           "actions": "Aktionen"
         },
         "toolbar": {
@@ -968,6 +994,69 @@
         "uploadSuccess": "Datei erfolgreich hochgeladen",
         "uploadError": "Fehler beim Hochladen der Datei",
         "uploadNoChanges": "Keine Änderungen an den Zielen"
+      },
+      "columns": {
+        "code": "Code",
+        "name": "Name",
+        "description": "Beschreibung",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "measurementForm": "Messform",
+        "consequencesOfNotAchieving": "Folgen bei Nichterfüllung",
+        "objectiveLevel": "Zielebene",
+        "typeName": "Zieltyp",
+        "superiorObjectiveName": "Übergeordnetes Ziel",
+        "createdBy": "Erstellt von",
+        "createdDate": "Erstellungsdatum",
+        "lastModifiedBy": "Geändert von",
+        "lastModifiedDate": "Änderungsdatum"
+      },
+      "tabs": {
+        "all": "Alle"
+      },
+      "breadcrumbs": {
+        "architecture": "Architektur",
+        "title": "Strategische Ziele"
+      },
+      "form": {
+        "titleCreate": "Strategisches Ziel erstellen",
+        "titleEdit": "Strategisches Ziel bearbeiten",
+        "fields": {
+          "name": "Name",
+          "code": "Code",
+          "description": "Beschreibung",
+          "level": "Ebene",
+          "type": "Typ",
+          "startDate": "Entwurfsdatum",
+          "endDate": "Ablaufdatum",
+          "measurementForm": "Messform",
+          "consequencesOfNotAchieving": "Folgen bei Nichterfüllung",
+          "superiorObjective": "Übergeordnetes Ziel"
+        },
+        "selectPlaceholder": "Auswählen",
+        "actions": {
+          "cancel": "Abbrechen",
+          "save": "Speichern"
+        },
+        "messages": {
+          "createSuccess": "Strategisches Ziel erfolgreich erstellt",
+          "updateSuccess": "Strategisches Ziel erfolgreich aktualisiert",
+          "saveError": "Fehler beim Speichern des strategischen Ziels",
+          "loadError": "Strategisches Ziel konnte nicht geladen werden",
+          "deleteSuccess": "Strategisches Ziel erfolgreich gelöscht",
+          "deleteError": "Strategisches Ziel konnte nicht gelöscht werden",
+          "duplicateError": "Strategisches Ziel existiert bereits",
+          "dateError": "Das Ablaufdatum darf nicht vor dem Entwurfsdatum liegen",
+          "filterDateError": "Das Enddatum darf nicht vor dem Startdatum liegen",
+          "nameRequired": "Name ist erforderlich",
+          "codeRequired": "Code ist erforderlich",
+          "descriptionRequired": "Beschreibung ist erforderlich",
+          "levelRequired": "Ebene ist erforderlich",
+          "startDateRequired": "Entwurfsdatum ist erforderlich",
+          "endDateRequired": "Ablaufdatum ist erforderlich",
+          "measurementFormRequired": "Messform ist erforderlich",
+          "consequencesRequired": "Folgen bei Nichterfüllung sind erforderlich"
+        }
       }
     }
   },
@@ -2457,6 +2546,63 @@
       "upload": "Hochladen",
       "download": "Herunterladen",
       "downloadTemplate": "Vorlage herunterladen"
+    }
+  },
+  "actionMeasures": {
+    "table": {
+      "breadcrumbs": {
+        "architecture": "Architektur",
+        "title": "Maßnahmen"
+      },
+      "columns": {
+        "code": "Code / Nomenklatur",
+        "name": "Name",
+        "description": "Beschreibung"
+      },
+      "tabs": {
+        "all": "Alle"
+      },
+      "actions": {
+        "map": "Karte",
+        "add": "Hinzufügen",
+        "retry": "Erneut versuchen"
+      },
+      "dialogs": {
+        "delete": {
+          "title": "Löschen",
+          "content": "Möchten Sie dieses Element wirklich löschen?"
+        },
+        "deleteButton": "Löschen"
+      }
+    },
+    "form": {
+      "titleCreate": "Action Measure erstellen",
+      "titleEdit": "Action Measure bearbeiten",
+      "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "code": "Code",
+        "measureType": "Maßnahmentyp",
+        "resultType": "Ergebnistyp",
+        "provider": "Anbieter",
+        "superiorActionMeasure": "Übergeordnete Action Measure"
+      },
+      "selectNone": "Keiner",
+      "actions": {
+        "cancel": "Abbrechen",
+        "save": "Speichern"
+      },
+      "messages": {
+        "loadCatalogsError": "Fehler beim Laden der Kataloge",
+        "loadDataError": "Fehler beim Laden der Daten",
+        "nameCodeRequired": "Name und Code sind erforderlich",
+        "createSuccess": "Action Measure erfolgreich erstellt",
+        "updateSuccess": "Action Measure erfolgreich aktualisiert",
+        "createError": "Fehler beim Erstellen der Action Measure",
+        "updateError": "Fehler beim Aktualisieren der Action Measure",
+        "deleteSuccess": "Erfolgreich gelöscht",
+        "deleteError": "Löschen fehlgeschlagen"
+      }
     }
   }
 }

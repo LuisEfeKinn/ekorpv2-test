@@ -42,7 +42,7 @@ import {
 } from 'src/components/table';
 
 import { TopicsTableRow } from '../topics-table-row';
-import { TopicsTableModal } from '../topics-table-modal';
+import { TopicsTableDrawer } from '../topics-table-drawer';
 import { TopicsTableToolbar } from '../topics-table-toolbar';
 import { TopicsTableFiltersResult } from '../topics-table-filters-result';
 
@@ -350,7 +350,7 @@ export function TopicsView() {
 
       {renderConfirmDialog()}
 
-      <TopicsTableModal
+      <TopicsTableDrawer
         open={modalDialog.value}
         onClose={handleCloseModal}
         dataId={selectedDataId}

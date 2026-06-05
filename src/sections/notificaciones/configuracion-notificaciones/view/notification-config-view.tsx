@@ -92,7 +92,56 @@ export function NotificationConfigView() {
     try {
       setLoading(true);
       const res = await GetNotificationConfigurationsService();
-      setGroups(Array.isArray(res.data) ? res.data : []);
+
+      const raw = res.data as any;
+
+      // Normalize to flat array regardless of response shape
+      let items: any[] = [];
+      if (Array.isArray(raw) && raw.length > 0 && Array.isArray(raw[0])) {
+        items = raw[0]; // [[items...], count] tuple
+      } else if (Array.isArray(raw)) {
+        items = raw; // direct array
+      } else if (raw?.data && Array.isArray(raw.data)) {
+        items = raw.data; // { data: [...] } wrapper
+      }
+
+      if (items.length === 0) {
+        setGroups([]);
+        return;
+      }
+
+      // Pre-grouped: each item has an `events` array
+      if (Array.isArray(items[0]?.events)) {
+        setGroups(items as NotificationConfigGroup[]);
+        return;
+      }
+
+      // Flat events — group by auditableObject.id
+      const groupMap = new Map<string | number, NotificationConfigGroup>();
+      items.forEach((event: any) => {
+        const obj = event?.auditableObject;
+        const key = obj?.id ?? '__ungrouped__';
+        if (!groupMap.has(key)) {
+          groupMap.set(key, {
+            auditableObject: obj ?? { id: 0, objectKey: 'Sin categoría' },
+            events: [],
+          });
+        }
+        const g = groupMap.get(key)!;
+        const notifRaw = event.notifications;
+        const notifications: NotificationConfigItem[] = Array.isArray(notifRaw)
+          ? notifRaw
+          : Object.values(notifRaw ?? {});
+        g.events.push({
+          id: event.id,
+          notificationEventKey: event.notificationEventKey ?? '',
+          subjectTemplate: event.subjectTemplate ?? '',
+          messageTemplate: event.messageTemplate ?? '',
+          notifications,
+        });
+      });
+
+      setGroups(Array.from(groupMap.values()));
     } catch (err: any) {
       toast.error(err?.message || 'Error al cargar las configuraciones');
       setGroups([]);
@@ -190,9 +239,13 @@ export function NotificationConfigView() {
         ) : groups.length === 0 ? (
           <EmptyState label={t('config.noData')} />
         ) : (
-          groups.map((group) => {
-            const panelKey = `group-${group.auditableObject.id}`;
+          groups.map((group, idx) => {
+            const groupId = group?.auditableObject?.id ?? `idx-${idx}`;
+            const panelKey = `group-${groupId}`;
             const isExpanded = expanded.includes(panelKey);
+            const groupLabel = group?.auditableObject?.objectKey
+              ? formatObjectKey(group.auditableObject.objectKey)
+              : `Grupo ${idx + 1}`;
 
             return (
               <Accordion
@@ -222,7 +275,7 @@ export function NotificationConfigView() {
                   }}
                 >
                   <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                    {formatObjectKey(group.auditableObject.objectKey)}
+                    {groupLabel}
                   </Typography>
                 </AccordionSummary>
 

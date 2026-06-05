@@ -44,6 +44,7 @@ export function ToolsTableToolbar({
   toolTypeOptions,
 }: Props) {
   const { t: tCommon } = useTranslate('common');
+  const { t } = useTranslate('architecture');
   const popover = usePopover();
   const [filtersOpen, setFiltersOpen] = useState(false);
   
@@ -193,7 +194,7 @@ export function ToolsTableToolbar({
                     onChange={() => onChangeColumns(column.id)}
                   />
                 }
-                label={column.label}
+                label={t(column.label)}
               />
             ))}
           </Stack>
