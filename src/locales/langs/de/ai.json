@@ -1,0 +1,833 @@
+{
+  "ai-course-generation": {
+    "title": "KI-Kursliste",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "aiCourses": "KI-Kurse"
+    },
+    "filters": {
+      "all": "Alle",
+      "allDifficulties": "Alle",
+      "orderDefault": "Keine Sortierung",
+      "difficulty": "Schwierigkeitsgrad",
+      "orderBy": "Sortieren nach"
+    },
+    "status": {
+      "draft": "Entwurf",
+      "generating": "Wird generiert",
+      "completed": "Abgeschlossen",
+      "published": "Veröffentlicht",
+      "archived": "Archiviert"
+    },
+    "order": {
+      "titleAsc": "Titel: A → Z",
+      "titleDesc": "Titel: Z → A",
+      "difficultyAsc": "Schwierigkeit: ↑",
+      "difficultyDesc": "Schwierigkeit: ↓",
+      "statusAsc": "Status: A → Z",
+      "statusDesc": "Status: Z → A"
+    },
+    "difficulty": {
+      "beginner": "Anfänger",
+      "principiante": "Anfänger",
+      "intermediate": "Fortgeschrittener",
+      "intermedio": "Fortgeschrittener",
+      "advanced": "Experte",
+      "avanzado": "Experte"
+    },
+    "provider": {
+      "openai": "OpenAI",
+      "gemini": "Google Gemini",
+      "deepseek": "DeepSeek",
+      "minimax": "Minimax"
+    },
+    "languages": {
+      "es": "Spanisch",
+      "en": "Englisch",
+      "pt": "Portugiesisch",
+      "fr": "Französisch"
+    },
+    "sections": "Abschnitte",
+    "actions": {
+      "view": "Ansehen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "duplicate": "Duplizieren",
+      "cancel": "Abbrechen",
+      "create": "Erstellen",
+      "update": "Aktualisieren",
+      "back": "Zurück",
+      "continue": "Weiter",
+      "editMore": "Mehr bearbeiten",
+      "saveCourse": "Kurs speichern",
+      "generateWithAi": "Mit KI generieren",
+      "clearFilters": "Filter zurücksetzen",
+      "publish": "Veröffentlichen",
+      "archive": "Archivieren"
+    },
+    "search": {
+      "placeholder": "Kurse suchen..."
+    },
+    "noResults": "Keine Ergebnisse gefunden",
+    "noResultsHint": "Passen Sie Ihre Suche oder Filter an, um das Gesuchte zu finden.",
+    "noData": "Noch keine Kurse vorhanden",
+    "noDataHint": "Erstellen Sie Ihren ersten KI-generierten Kurs, um zu beginnen.",
+    "create": {
+      "title": "KI-Kurs erstellen"
+    },
+    "edit": {
+      "title": "Kurs bearbeiten",
+      "tabs": {
+        "form": "Formular",
+        "preview": "Vorschau",
+        "ai": "KI-Assistent"
+      }
+    },
+    "preview": {
+      "title": "Kursvorschau",
+      "objectives": "Lernziele",
+      "content": "Kursinhalt",
+      "noContent": "Kein Inhalt verfügbar",
+      "noBlocks": "Keine Inhaltsblöcke in diesem Abschnitt",
+      "quiz": "Quiz",
+      "unknownBlock": "Unbekannter Blocktyp"
+    },
+    "steps": {
+      "generate": "Mit KI generieren",
+      "edit": "Details bearbeiten",
+      "preview": "Vorschau",
+      "skipToManual": "Zu manuell wechseln"
+    },
+    "form": {
+      "courseContent": "Kursinhalt",
+      "basicInfo": "Grundlegende Informationen",
+      "title": "Kurstitel",
+      "titlePlaceholder": "Kurstitel eingeben",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Kursbeschreibung eingeben",
+      "difficulty": "Schwierigkeitsgrad",
+      "language": "Sprache",
+      "duration": "Dauer",
+      "durationPlaceholder": "z.B. 4 Stunden",
+      "targetAudience": "Zielgruppe",
+      "targetAudiencePlaceholder": "Für wen ist dieser Kurs?",
+      "objectives": "Lernziele",
+      "objective": "Ziel",
+      "addObjective": "Ziel hinzufügen",
+      "tags": "Schlagwörter",
+      "tagsLabel": "Kurs-Schlagwörter",
+      "tagsPlaceholder": "Schlagwörter hinzufügen...",
+      "media": "Medien",
+      "bannerUrl": "Banner-URL",
+      "sectionsReadOnly": "Um den Abschnittsinhalt zu bearbeiten, verwenden Sie die Vorschau- oder KI-Registerkarte",
+      "imagesInSection": "Bilder im Abschnitt",
+      "videosInSection": "Videos im Abschnitt",
+      "image": "Bild",
+      "video": "Video",
+      "block": "Inhaltsblock",
+      "sections": "Abschnitte"
+    },
+    "validation": {
+      "titleRequired": "Titel ist erforderlich",
+      "descriptionRequired": "Beschreibung ist erforderlich",
+      "objectivesRequired": "Mindestens ein Ziel ist erforderlich",
+      "targetAudienceRequired": "Zielgruppe ist erforderlich",
+      "durationRequired": "Dauer ist erforderlich",
+      "languageRequired": "Sprache ist erforderlich"
+    },
+    "chat": {
+      "title": "KI-Kursgenerator",
+      "languageModel": "Sprachmodell",
+      "imageModel": "Bildmodell",
+      "videoModel": "Videomodell",
+      "provider": "Anbieter",
+      "model": "Modell",
+      "noProvider": "Kein Anbieter",
+      "providersError": "Fehler beim Laden der Anbieter",
+      "loadingProviders": "Anbieter werden geladen...",
+      "proprietaryOptions": "Proprietäre Optionen",
+      "seconds": "Sekunden",
+      "sceneDuration": "Szenendauer",
+      "scenesNumber": "Anzahl der Szenen",
+      "totalDuration": "Gesamtdauer",
+      "temperature": "Temperatur",
+      "precise": "Präzise",
+      "creative": "Kreativ",
+      "welcome": "Erstellen Sie Ihren Kurs mit KI",
+      "welcomeMessage": "Beschreiben Sie den Kurs, den Sie erstellen möchten, und ich helfe Ihnen dabei, eine vollständige Struktur mit Zielen, Abschnitten und Inhalten zu generieren.",
+      "quickStart": "Ideen zum Einstieg:",
+      "placeholder": "Beschreiben Sie den Kurs, den Sie erstellen möchten...",
+      "generateCourseFor": "Erstellen Sie einen vollständigen Kurs über",
+      "difficultyLevel": "Schwierigkeitsgrad",
+      "quickPrompts": {
+        "webDev": "Grundlagen der Webentwicklung",
+        "webDevDesc": "Behandelt die Grundlagen von HTML, CSS und JavaScript für Anfänger.",
+        "machineLearning": "Einführung in Machine Learning",
+        "machineLearningDesc": "Erkunden Sie die Grundlagen von ML-Algorithmen und Anwendungen.",
+        "leadership": "Führungskompetenzen für Manager",
+        "leadershipDesc": "Wesentliche Führungs- und Teammanagementtechniken."
+      },
+      "courseStructureGenerated": "Kursstruktur generiert",
+      "videoCreditsInfo": "Generierte Videos: {{consumed}} Sekunden verbraucht | {{remaining}} Sekunden in Ihrem Plan verbleibend",
+      "generatingImages": "Bilder werden generiert {{current}} von {{total}}...",
+      "generatingVideos": "Videos werden generiert {{current}} von {{total}}... (dies kann einige Minuten dauern)",
+      "generatingBanner": "Bannerbild wird generiert...",
+      "proprietaryVideoDisclaimer": "Proprietärer Videodienst wird verwendet, Zeiten können je nach Nachfrage und Videokomplexität variieren."
+    },
+    "media": {
+      "download": "Herunterladen",
+      "audioNotSupported": "Ihr Browser unterstützt das Audio-Element nicht.",
+      "clickToPlay": "Zum Abspielen klicken",
+      "clickToExpand": "Zum Erweitern klicken"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Kurs löschen",
+        "content": "Möchten Sie diesen Kurs wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "deleted": "Kurs erfolgreich gelöscht",
+        "duplicated": "Kurs erfolgreich dupliziert",
+        "generated": "Kursstruktur erfolgreich generiert",
+        "saved": "Kurs erfolgreich gespeichert",
+        "updated": "Kurs erfolgreich aktualisiert",
+        "regenerated": "Kursinhalt erfolgreich neu generiert",
+        "published": "Kurs erfolgreich veröffentlicht",
+        "archived": "Kurs erfolgreich archiviert"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Kurse",
+        "deleting": "Fehler beim Löschen des Kurses",
+        "duplicating": "Fehler beim Duplizieren des Kurses",
+        "saving": "Fehler beim Speichern des Kurses",
+        "updating": "Fehler beim Aktualisieren des Kurses",
+        "publishing": "Fehler beim Veröffentlichen des Kurses",
+        "archiving": "Fehler beim Archivieren des Kurses"
+      }
+    }
+  },
+  "ai-program-generation": {
+    "title": "KI-Lernprogramme",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "programs": "Programme",
+      "create": "Programm mit KI erstellen",
+      "edit": "Bearbeiten",
+      "preview": "Vorschau"
+    },
+    "filters": {
+      "all": "Alle"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "search": {
+      "placeholder": "Programme suchen..."
+    },
+    "noResults": "Keine Programme gefunden",
+    "coursesCount": "{{count}} Kurse",
+    "coursesIncluded": "Enthaltene Kurse ({{count}})",
+    "create": {
+      "title": "Programm mit KI erstellen"
+    },
+    "edit": {
+      "title": "Programm bearbeiten"
+    },
+    "steps": {
+      "generate": "Mit KI generieren",
+      "edit": "Informationen bearbeiten",
+      "preview": "Vorschau"
+    },
+    "form": {
+      "basicInfo": "Grundlegende Informationen",
+      "name": "Programmname",
+      "namePlaceholder": "z.B. Fortgeschrittenes Webentwicklungsprogramm",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Lernprogramm beschreiben...",
+      "duration": "Dauer",
+      "durationPlaceholder": "z.B. 40 Stunden",
+      "objective": "Ziel",
+      "objectivePlaceholder": "Was ist das Hauptziel des Programms?",
+      "skillsToAcquire": "Zu erwerbende Fähigkeiten",
+      "skillsToAcquirePlaceholder": "Welche Fähigkeiten wird der Teilnehmer erwerben?",
+      "whatYouWillLearn": "Was Sie lernen werden",
+      "whatYouWillLearnPlaceholder": "Was wird der Teilnehmer in diesem Programm lernen?",
+      "tags": "Schlagwörter",
+      "tagsPlaceholder": "z.B. Webentwicklung, JavaScript, React",
+      "tagsHelper": "Durch Kommas getrennt"
+    },
+    "validation": {
+      "nameRequired": "Name ist erforderlich",
+      "descriptionRequired": "Beschreibung ist erforderlich"
+    },
+    "preview": {
+      "title": "Programmvorschau",
+      "objective": "Ziel",
+      "skillsToAcquire": "Zu erwerbende Fähigkeiten",
+      "whatYouWillLearn": "Was Sie lernen werden",
+      "video": "Präsentationsvideo"
+    },
+    "actions": {
+      "generateWithAi": "Mit KI generieren",
+      "cancel": "Abbrechen",
+      "back": "Zurück",
+      "continue": "Weiter",
+      "editMore": "Mehr bearbeiten",
+      "saveProgram": "Programm speichern",
+      "view": "Ansehen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Programm löschen",
+        "content": "Möchten Sie dieses Programm wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "chat": {
+      "title": "KI-Programm-Generator",
+      "noProvider": "Kein Anbieter",
+      "loadingProviders": "KI-Anbieter werden geladen...",
+      "providersError": "Fehler beim Laden der Anbieter",
+      "integrationInstance": "Integrationsinstanz",
+      "instance": "Instanz",
+      "searchInstance": "Instanz suchen...",
+      "loadingPrograms": "Kurskatalog wird geladen...",
+      "coursesAvailable": "{{count}} Kurse im Katalog verfügbar",
+      "noCoursesFound": "Keine Kurse gefunden. Wählen Sie eine andere Instanz.",
+      "languageModel": "Sprachmodell",
+      "imageModel": "Bildmodell",
+      "videoModel": "Videomodell",
+      "provider": "Anbieter",
+      "model": "Modell",
+      "placeholder": "Beschreiben Sie das benötigte Programm...",
+      "welcomeTitle": "Lernprogramm-Generator",
+      "welcomeMessage": "Beschreiben Sie, welche Art von Programm Sie benötigen, und die KI wählt die relevantesten Kurse aus Ihrem Katalog aus, um ein vollständiges Programm zu erstellen.",
+      "quickStart": "Schnellstart",
+      "createProgramAbout": "Ein Lernprogramm erstellen über",
+      "proprietaryOptions": "Proprietäre Optionen",
+      "sceneDuration": "Szenendauer",
+      "scenesNumber": "Anzahl der Szenen",
+      "seconds": "Sekunden",
+      "totalDuration": "Gesamtdauer",
+      "quickPrompts": {
+        "webDev": "Full-Stack-Webentwicklung",
+        "webDevDesc": "Enthält Frontend- und Backend-Kurse.",
+        "ai": "Künstliche Intelligenz und Machine Learning",
+        "aiDesc": "Von Grundkonzepten bis zu fortgeschrittenen Modellen.",
+        "leadership": "Führung und Teammanagement",
+        "leadershipDesc": "Führungskompetenzen für Manager."
+      },
+      "generatingBanner": "Bannerbild wird generiert...",
+      "generatingCover": "Titelbild wird generiert...",
+      "generatingVideo": "Präsentationsvideo wird generiert...",
+      "programGeneratedSuccess": "Das Programm wurde erfolgreich generiert. Sie können mit dem nächsten Schritt fortfahren, um die Informationen zu überprüfen und zu bearbeiten."
+    },
+    "messages": {
+      "success": {
+        "generated": "Programm erfolgreich generiert",
+        "saved": "Programm erfolgreich gespeichert",
+        "updated": "Programm erfolgreich aktualisiert",
+        "deleted": "Programm erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Programme",
+        "loadingSingle": "Fehler beim Laden des Programms",
+        "saving": "Fehler beim Speichern des Programms",
+        "updating": "Fehler beim Aktualisieren des Programms",
+        "deleting": "Fehler beim Löschen des Programms"
+      }
+    }
+  },
+  "ai-route-generation": {
+    "title": "KI-Lernpfade",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "learningPaths": "Lernpfade",
+      "create": "KI-Lernpfad hinzufügen",
+      "edit": "Bearbeiten",
+      "preview": "Vorschau"
+    },
+    "filters": {
+      "all": "Alle"
+    },
+    "status": {
+      "draft": "Entwurf",
+      "generating": "Wird generiert",
+      "completed": "Abgeschlossen",
+      "published": "Veröffentlicht",
+      "archived": "Archiviert"
+    },
+    "difficulty": {},
+    "languages": {},
+    "actions": {
+      "view": "Ansehen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "back": "Zurück",
+      "continue": "Weiter",
+      "editMore": "Mehr bearbeiten",
+      "saveRoute": "Pfad speichern",
+      "generateWithAi": "Mit KI generieren",
+      "add": "Hinzufügen"
+    },
+    "search": {
+      "placeholder": "Pfade suchen..."
+    },
+    "noResults": "Keine Pfade gefunden",
+    "programsCount": "{{count}} Programme",
+    "programsIncluded": "Enthaltene Programme ({{count}})",
+    "modulesCount": "{{count}} Module",
+    "modulesIncluded": "Enthaltene Module ({{count}})",
+    "module": "Modul",
+    "optional": "Optional",
+    "create": {
+      "title": "KI-Lernpfad hinzufügen"
+    },
+    "edit": {
+      "title": "Pfad bearbeiten"
+    },
+    "preview": {
+      "title": "Vorschau",
+      "programsIncluded": "Enthaltene Programme ({{count}})"
+    },
+    "steps": {
+      "generate": "Generieren",
+      "edit": "Bearbeiten",
+      "preview": "Vorschau"
+    },
+    "form": {
+      "basicInfo": "Grundlegende Informationen",
+      "title": "Titel",
+      "titlePlaceholder": "Lernpfad-Titel",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Pfadbeschreibung",
+      "tags": "Schlagwörter"
+    },
+    "validation": {
+      "titleRequired": "Titel ist erforderlich",
+      "descriptionRequired": "Beschreibung ist erforderlich"
+    },
+    "chat": {
+      "title": "KI-Pfad-Generator",
+      "welcomeTitle": "Lernpfad-Generator",
+      "welcomeMessage": "Beschreiben Sie, welche Art von Lernpfad Sie benötigen, und die KI sucht nach den besten verfügbaren Kursen, um Ihren Pfad zu erstellen.",
+      "quickStart": "Schnellstart",
+      "placeholder": "Beschreiben Sie den benötigten Lernpfad...",
+      "languageModel": "Sprachmodell",
+      "imageModel": "Bildmodell",
+      "videoModel": "Videomodell",
+      "provider": "Anbieter",
+      "model": "Modell",
+      "noProvider": "Kein Anbieter",
+      "loadingProviders": "Anbieter werden geladen...",
+      "providersError": "Fehler beim Laden der Anbieter",
+      "integrationInstance": "Integrationsinstanz (Kursquelle)",
+      "instance": "Instanz",
+      "searchInstance": "Instanz suchen...",
+      "loadingPrograms": "Programmkatalog wird geladen...",
+      "programsAvailable": "{{count}} Programme im Katalog verfügbar",
+      "noProgramsFound": "Keine Programme gefunden",
+      "generatingBanner": "Pfad-Banner wird generiert...",
+      "generatingVideo": "Pfad-Video wird generiert...",
+      "noProviderSelected": "Kein Anbieter oder Modell ausgewählt",
+      "createRouteAbout": "Erstellen Sie einen Lernpfad über \"{{topic}}\". {{description}}",
+      "routeGeneratedSuccess": "Lernpfad erfolgreich generiert",
+      "extractError": "Fehler beim Extrahieren der Pfaddaten",
+      "catalogLoaded": "{{name}}: {{count}} verfügbar",
+      "positions": "Positionen",
+      "competencies": "Kompetenzen",
+      "skillLevels": "Fähigkeitsstufen",
+      "proprietaryOptions": "Proprietäre Optionen",
+      "sceneDuration": "Szenendauer",
+      "scenesNumber": "Anzahl der Szenen",
+      "seconds": "Sekunden",
+      "totalDuration": "Gesamtvideodauer",
+      "quickPrompts": {
+        "webDev": "Webentwicklungs-Pfad",
+        "webDevDesc": "Einen Lernpfad für Webentwicklung von Grund auf erstellen",
+        "ai": "KI-Lernpfad",
+        "aiDesc": "Einen Lernpfad über KI und Machine Learning erstellen",
+        "leadership": "Führungs-Lernpfad",
+        "leadershipDesc": "Einen Lernpfad über Führungskompetenzen erstellen"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Pfad löschen",
+        "content": "Möchten Sie diesen Pfad wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "generated": "Lernpfad erfolgreich generiert",
+        "saved": "Pfad erfolgreich gespeichert",
+        "updated": "Pfad erfolgreich aktualisiert",
+        "deleted": "Pfad erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Lernpfade",
+        "loadingSingle": "Fehler beim Laden des Pfads",
+        "saving": "Fehler beim Speichern des Pfads",
+        "updating": "Fehler beim Aktualisieren des Pfads",
+        "deleting": "Fehler beim Löschen des Pfads"
+      }
+    }
+  },
+  "ai-learning-path": {
+    "heading": "Lernpfad mit KI erstellen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "learningPath": "Lernpfade",
+      "create": "Erstellen"
+    },
+    "toolbar": {
+      "title": "KI-Konfiguration",
+      "noProvider": "Kein Anbieter",
+      "loadingProviders": "Anbieter werden geladen...",
+      "providersError": "Fehler beim Laden der Anbieter",
+      "languageModel": "Sprachmodell",
+      "imageModel": "Bildmodell",
+      "videoModel": "Videomodell",
+      "provider": "Anbieter",
+      "model": "Modell",
+      "proprietaryOptions": "Proprietäre Optionen",
+      "sceneDuration": "Szenendauer",
+      "scenesNumber": "Anzahl der Szenen",
+      "seconds": "Sekunden",
+      "totalDuration": "Gesamtdauer: {{duration}} Sekunden",
+      "imageModelLabel": "Bildmodell",
+      "temperature": "Temperatur",
+      "precise": "Präzise",
+      "creative": "Kreativ"
+    },
+    "steps": {
+      "defineRoute": "Pfad definieren",
+      "generateCourses": "Kurse generieren",
+      "generatePrograms": "Programme generieren",
+      "createRoute": "Pfad erstellen"
+    },
+    "actions": {
+      "back": "Zurück",
+      "next": "Weiter",
+      "stop": "Anhalten",
+      "retryGeneration": "Generierung wiederholen"
+    },
+    "errors": {
+      "unknown": "Unbekannter Fehler",
+      "selectProviderModel": "Wählen Sie einen Anbieter und ein Modell aus, um fortzufahren",
+      "noProviderModelSelected": "Kein Anbieter oder Modell ausgewählt",
+      "noCompletedPrograms": "Keine abgeschlossenen Programme zum Generieren des Pfads vorhanden",
+      "routeGenerationUnknown": "Lernpfad konnte nicht generiert werden"
+    },
+    "messages": {
+      "success": {
+        "structureGenerated": "Pfadstruktur erfolgreich generiert",
+        "coursesGeneratedSaved": "{{count}} Kurse wurden generiert und gespeichert",
+        "programsGeneratedSaved": "{{count}} Programme wurden generiert und gespeichert",
+        "routeSaved": "Lernpfad erfolgreich gespeichert"
+      },
+      "warning": {
+        "coursesGeneratedWithErrors": "{{completed}} Kurse abgeschlossen, {{errors}} mit Fehler",
+        "programsGeneratedWithErrors": "{{completed}} Programme abgeschlossen, {{errors}} mit Fehler"
+      },
+      "error": {
+        "routeSaveError": "Fehler beim Speichern des Lernpfads"
+      }
+    },
+    "chat": {
+      "title": "Pfad mit KI definieren",
+      "welcomeTitle": "Erstellen Sie Ihren Lernpfad",
+      "welcomeMessage": "Beschreiben Sie den Lernpfad, den Sie erstellen möchten, und ich helfe Ihnen dabei, Programme und Kurse zu strukturieren.",
+      "inputPlaceholder": "Beschreiben Sie den Lernpfad, den Sie erstellen möchten...",
+      "generatingStructure": "Pfadstruktur wird generiert...",
+      "quickPromptTemplate": "Erstellen Sie einen Lernpfad über \"{{topic}}\". {{description}}",
+      "errors": {
+        "extractStructure": "Struktur konnte nicht aus der Antwort extrahiert werden",
+        "processResponse": "Fehler bei der Verarbeitung der Antwort"
+      },
+      "quickPrompts": {
+        "webDev": {
+          "title": "Full-Stack-Webentwicklung",
+          "description": "Pfad von Frontend-Grundlagen bis Backend und Deployment."
+        },
+        "dataAi": {
+          "title": "Daten und Künstliche Intelligenz",
+          "description": "Pfad für Datenanalyse, ML und angewandte KI-Grundlagen."
+        },
+        "leadership": {
+          "title": "Führung und Management",
+          "description": "Pfad zur Entwicklung von Führung, Kommunikation und Teammanagement."
+        }
+      },
+      "preview": {
+        "title": "Strukturvorschau",
+        "programsCount": "{{count}} Programme",
+        "coursesCount": "{{count}} Kurse",
+        "readyMessage": "Struktur bereit für den nächsten Schritt"
+      }
+    },
+    "courseStep": {
+      "title": "Kursgenerierung",
+      "generatingCount": "{{count}} Kurse werden generiert",
+      "generatingCourse": "Kurs wird generiert...",
+      "progress": "Fortschritt: {{completed}}/{{total}} Kurse",
+      "allCoursesSuccess": "Alle Kurse wurden erfolgreich generiert",
+      "coursesWithErrors": "{{count}} Kurse hatten Fehler",
+      "generateCoursesCta": "{{count}} Kurse generieren"
+    },
+    "programStep": {
+      "title": "Programmgenerierung",
+      "generatingCount": "{{count}} Programme werden generiert",
+      "loadingCatalogs": "Kataloge werden geladen...",
+      "catalogsLoaded": "Kataloge geladen: {{categories}} Kategorien, {{levels}} Stufen",
+      "progress": "Fortschritt: {{completed}}/{{total}} Programme",
+      "allProgramsSuccess": "Alle Programme wurden erfolgreich generiert",
+      "programsWithErrors": "{{count}} Programme hatten Fehler",
+      "generateProgramsCta": "{{count}} Programme generieren"
+    },
+    "routeStep": {
+      "title": "Pfadgenerierung",
+      "organizingCount": "{{count}} Programme werden in einem Pfad organisiert",
+      "loadingCatalogs": "Pfadkataloge werden geladen...",
+      "catalogsLoaded": "Kataloge geladen: {{positions}} Positionen, {{competencies}} Kompetenzen, {{levels}} Stufen",
+      "availablePrograms": "Für den Pfad verfügbare Programme",
+      "generatingStructure": "Pfadstruktur wird generiert...",
+      "previewTitle": "Pfadvorschau",
+      "fields": {
+        "title": "Titel",
+        "description": "Beschreibung",
+        "tags": "Schlagwörter",
+        "position": "Position",
+        "banner": "Banner"
+      },
+      "modules": "Module ({{count}})",
+      "programIdFallback": "Programm ID {{id}}",
+      "optional": "Optional",
+      "generateCta": "Lernpfad generieren",
+      "saveCta": "Lernpfad speichern"
+    },
+    "summary": {
+      "coursesTitle": "Zusammenfassung der generierten Kurse",
+      "coursesDescription": "Diese Kurse wurden korrekt generiert und gespeichert.",
+      "programCourse": "Programm {{program}} · Kurs {{course}}"
+    },
+    "common": {
+      "idLabel": "ID: {{id}}",
+      "rowIdLabel": "ZeilenID: {{id}}",
+      "withErrorsInline": "({{count}} mit Fehler)"
+    }
+  },
+  "settings": {
+    "title": "KI-Anbieter",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "ai": "Künstliche Intelligenz",
+      "create": "Neu",
+      "edit": "Bearbeiten"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "available": "Verfügbar",
+      "unavailable": "Nicht verfügbar"
+    },
+    "actions": {
+      "add": "Neuer Anbieter",
+      "create": "Erstellen",
+      "edit": "Bearbeiten",
+      "update": "Aktualisieren",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "view": "Details ansehen",
+      "clear": "Zurücksetzen",
+      "addParameter": "Parameter hinzufügen",
+      "models": "Modelle"
+    },
+    "table": {
+      "filters": {
+        "all": "Alle",
+        "active": "Aktiv",
+        "inactive": "Inaktiv",
+        "keyword": "Suche",
+        "order": "Sortierung"
+      },
+      "toolbar": {
+        "search": "Anbieter suchen...",
+        "sortBy": "Sortieren"
+      },
+      "order": {
+        "asc": "Aufsteigend (A-Z)",
+        "desc": "Absteigend (Z-A)"
+      }
+    },
+    "card": {
+      "requiresApiKey": "API-Schlüssel erforderlich",
+      "supportsStreaming": "Streaming unterstützt",
+      "parameters": "Parameter",
+      "yes": "Ja",
+      "no": "Nein"
+    },
+    "empty": {
+      "title": "Keine Anbieter",
+      "description": "Keine KI-Anbieter konfiguriert. Erstellen Sie einen neuen, um zu beginnen."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Anbieter löschen",
+        "content": "Möchten Sie diesen Anbieter wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "form": {
+      "sections": {
+        "basic": "Grundlegende Informationen",
+        "status": "Status",
+        "parameters": "Konfigurationsparameter"
+      },
+      "fields": {
+        "name": {
+          "label": "Anbietername",
+          "placeholder": "z.B. OpenAI",
+          "required": "Name ist erforderlich"
+        },
+        "logo": {
+          "label": "Logo-URL",
+          "placeholder": "https://beispiel.com/logo.svg"
+        },
+        "requiresApiKey": {
+          "label": "API-Schlüssel erforderlich"
+        },
+        "supportsStreaming": {
+          "label": "Streaming unterstützen"
+        },
+        "parameterLabel": {
+          "label": "Parametername",
+          "placeholder": "z.B. API_KEY",
+          "required": "Parametername ist erforderlich"
+        },
+        "parameterValue": {
+          "label": "Wert",
+          "placeholder": "Wert eingeben...",
+          "required": "Wert ist erforderlich"
+        }
+      },
+      "noParameters": "Keine Parameter konfiguriert. Verwenden Sie die Schaltfläche 'Parameter hinzufügen', um einen hinzuzufügen."
+    },
+    "messages": {
+      "success": {
+        "created": "Anbieter erfolgreich erstellt",
+        "updated": "Anbieter erfolgreich aktualisiert",
+        "deleted": "Anbieter erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Anbieter",
+        "saving": "Fehler beim Speichern des Anbieters",
+        "deleting": "Fehler beim Löschen des Anbieters",
+        "notFound": "Anbieter nicht gefunden",
+        "loadError": "Fehler beim Laden des Anbieters",
+        "general": "Fehler"
+      }
+    }
+  },
+  "models": {
+    "title": "KI-Modelle",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "ai": "Künstliche Intelligenz",
+      "providers": "Anbieter",
+      "provider": "Anbieter",
+      "create": "Neu",
+      "edit": "Bearbeiten"
+    },
+    "actions": {
+      "add": "Neues Modell",
+      "create": "Erstellen",
+      "edit": "Bearbeiten",
+      "update": "Aktualisieren",
+      "delete": "Löschen",
+      "cancel": "Abbrechen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "maxTokens": "Max. Token",
+        "contextWindow": "Kontextfenster",
+        "capabilities": "Fähigkeiten",
+        "default": "Standard"
+      },
+      "toolbar": {
+        "search": "Modell suchen..."
+      },
+      "default": "Standard",
+      "noModels": "Keine Modelle für diesen Anbieter konfiguriert."
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Modell löschen",
+        "content": "Möchten Sie dieses Modell wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "form": {
+      "sections": {
+        "basic": "Modellinformationen",
+        "settings": "Konfiguration"
+      },
+      "fields": {
+        "modelKey": {
+          "label": "Modellschlüssel",
+          "placeholder": "z.B. gpt-4o",
+          "required": "Modellschlüssel ist erforderlich"
+        },
+        "name": {
+          "label": "Modellname",
+          "placeholder": "z.B. GPT-4o",
+          "required": "Name ist erforderlich"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "placeholder": "Modellbeschreibung..."
+        },
+        "endpoint": {
+          "label": "Endpunkt",
+          "placeholder": "https://api.example.com/v1/chat/completions",
+          "required": "Endpunkt ist erforderlich"
+        },
+        "maxTokens": {
+          "label": "Max. Token",
+          "placeholder": "z.B. 16384"
+        },
+        "contextWindow": {
+          "label": "Kontextfenster",
+          "placeholder": "z.B. 128000"
+        },
+        "capabilities": {
+          "label": "Fähigkeiten",
+          "placeholder": "Fähigkeiten auswählen..."
+        },
+        "isDefault": {
+          "label": "Standardmodell"
+        }
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Modell erfolgreich erstellt",
+        "updated": "Modell erfolgreich aktualisiert",
+        "deleted": "Modell erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Modelle",
+        "saving": "Fehler beim Speichern des Modells",
+        "deleting": "Fehler beim Löschen des Modells",
+        "notFound": "Modell nicht gefunden",
+        "loadError": "Fehler beim Laden des Modells",
+        "general": "Fehler"
+      }
+    }
+  }
+}

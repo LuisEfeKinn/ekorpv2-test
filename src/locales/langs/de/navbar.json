@@ -1,0 +1,218 @@
+{
+  "dashboard": {
+    "title": "Dashboard",
+    "items": {
+      "dashboardSuperAdmin": "Kontrollpanel - Super Admin",
+      "dashboardCollaborator": "Kontrollpanel",
+      "adminclarity": "Kontrollpanel - Clarity"
+    }
+  },
+  "employees": {
+    "title": "Mitarbeitende",
+    "items": {
+      "employeeType": "Mitarbeitertypen",
+      "employeeManagement": "Mitarbeitendenverwaltung",
+      "paymentPeriod": "Zahlungszeiträume",
+      "skills": "Fähigkeiten",
+      "employeeAssignment": "Mitarbeitendenzuweisung",
+      "competencies": "Kompetenzen"
+    }
+  },
+  "organizations": {
+    "title": "Organisationen",
+    "items": {
+      "company": "Unternehmen",
+      "organizationalUnit": "Organisationseinheit",
+      "positions": "Positionen",
+      "vigency": "Gültigkeit"
+    }
+  },
+  "security": {
+    "title": "Sicherheit",
+    "items": {
+      "users": "Benutzer",
+      "roles": "Rollen"
+    }
+  },
+  "userAdministration": {
+    "title": "Clarity-Benutzer",
+    "items": {
+      "usersClarity": "Benutzer",
+      "roles": "Rollen"
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "items": {
+      "coins": "Währungen",
+      "languages": "Sprachen",
+      "tags": "Tags",
+      "integrations": "Plattformkatalog",
+      "platforms": "Plattformen"
+    }
+  },
+  "learning": {
+    "title": "Unternehmensuniversität",
+    "items": {
+      "learningObjects": "Programme",
+      "learningPaths": "Lernpfade",
+      "learningCategories": "Lernkategorien",
+      "tracking": "Nachverfolgung",
+      "report": "Berichte"
+    }
+  },
+  "assets": {
+    "title": "Assets",
+    "items": {
+      "list": "Asset-Liste",
+      "categories": "Asset-Kategorien",
+      "record": "Asset-Verlauf",
+      "myAssets": "Meine Assets"
+    }
+  },
+  "performance": {
+    "title": "Leistung",
+    "items": {
+      "scales": "Skalen",
+      "configureTests": "Tests konfigurieren",
+      "configureEvaluations": "Bewertungen konfigurieren",
+      "evaluationsList": "Bewertungsliste",
+      "resultsAnalysis": "Ergebnisanalyse",
+      "evaluate": {
+        "title": "Nine Box",
+        "items": {
+          "nineboxConfig": "Ninebox-Konfiguration",
+          "nineboxMatrix": "Ninebox-Matrix"
+        }
+      },
+      "evaluationsListUser": "Meine Bewertungen",
+      "evaluationsListUserHistory": "Verlauf meiner Bewertungen"
+    }
+  },
+  "budget": {
+    "title": "Budgets",
+    "items": {
+      "accounts": "Konten",
+      "concepts": "Konzepte",
+      "generalBudget": "Gesamtbudget",
+      "budgetReport": "Budgetbericht"
+    }
+  },
+  "corporateU": {
+    "title": "Unternehmensuniversität",
+    "items": {
+      "learningPath": "Meine Lernpfade",
+      "learningModule": "Meine Kurse",
+      "rewards": "Belohnungen",
+      "planning": "Planung",
+      "individualTraining": "Einzelschulung",
+      "homologation": "Anerkennung",
+      "reports": "Berichte",
+      "course": "Kurskatalog"
+    }
+  },
+  "rewards": {
+    "title": "Belohnungen",
+    "items": {
+      "rewards": "Belohnungen",
+      "categories": "Kategorien",
+      "history": "Verlauf",
+      "historyEmployee": "Mein Verlauf",
+      "rules": "Regeln",
+      "rulesType": "Regeltypen"
+    }
+  },
+  "business": {
+    "business": "Geschäft",
+    "items": {
+      "processes": {
+        "title": "Prozesse",
+        "table": "Prozesstabelle",
+        "map": "Prozesskarte",
+        "flow": "Abläufe"
+      },
+      "positions": {
+        "title": "Positionen",
+        "map": "Positionskarte",
+        "table": "Positionstabelle"
+      },
+      "actions": {
+        "title": "Aktionen",
+        "table": "Aktionstabelle",
+        "map": "Aktionskarte"
+      },
+      "risks": {
+        "title": "Risiken",
+        "table": "Risikotabelle",
+        "map": "Risikokarte",
+        "matrix": "Risikomatrix",
+        "matrixProcess": "Risikomatrix nach Prozess"
+      },
+      "tools": {
+        "title": "Maschinen und Geräte",
+        "map": "Maschinen- und Gerätekarte",
+        "table": "Maschinen- und Gerätetabelle"
+      },
+      "organizationalStructure": {
+        "title": "Organisationsstruktur",
+        "table": "Tabelle der Organisationsstruktur",
+        "map": "Karte der Organisationsstruktur"
+      },
+      "strategicObjectives": {
+        "title": "Strategische Ziele",
+        "table": "Tabelle der strategischen Ziele",
+        "map": "Karte der strategischen Ziele"
+      }
+    }
+  },
+  "data": {
+    "title": "Daten",
+    "items": {
+      "data": "Datenarchitektur",
+      "dataMap": "Datenkarte"
+    }
+  },
+  "infrastructure": {
+    "title": "Infrastruktur",
+    "items": {
+      "infrastructure": "Infrastrukturarchitektur",
+      "infrastructureMap": "Infrastrukturkarte"
+    }
+  },
+  "applications": {
+    "title": "Anwendungen",
+    "items": {
+      "applications": "Anwendungsarchitektur",
+      "applicationsMap": "Anwendungskarte"
+    }
+  },
+  "architecture": {
+    "title": "Unternehmensarchitektur",
+    "items": {
+      "business": "Geschäft",
+      "infrastructure": "Infrastruktur",
+      "applications": "Anwendungen",
+      "data": "Daten"
+    }
+  },
+  "management": {
+    "title": "Katalogverwaltung",
+    "items": {
+      "catalogs": "Kataloge"
+    }
+  },
+  "documents": {
+    "title": "Dokumente",
+    "items": {
+      "documentManagement": "Dokumentenverwaltung"
+    }
+  },
+  "ai": {
+    "title": "Künstliche Intelligenz",
+    "items": {
+      "aiCourseGenerator": "KI-Kursgenerator",
+      "aiProvidersSettings": "KI-Anbieter-Konfiguration",
+      "aiRoutesGenerator": "KI-Routen-Generator"
+    }
+  }
+}

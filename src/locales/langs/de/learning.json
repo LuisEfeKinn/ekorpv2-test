@@ -1,0 +1,1054 @@
+{
+  "learning-objects": {
+    "title": "Programme",
+    "user-title": "Meine Kurse",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "myCourses": "Meine Kurse",
+      "learningObjects": "Programme",
+      "myLearningObjects": "Meine Programme",
+      "myLearningPathsDetails": "Details meines Lernpfads",
+      "list": "Programmliste",
+      "create": "Programm erstellen",
+      "edit": "Programm bearbeiten",
+      "view": "Programm ansehen",
+      "viewCourse": "Kurs ansehen"
+    },
+    "actions": {
+      "add": "Programm hinzufügen",
+      "addAiProgram": "KI-Programm hinzufügen",
+      "edit": "Programm bearbeiten",
+      "delete": "Programm löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "create": "Programm erstellen",
+      "update": "Programm aktualisieren",
+      "search": "Programme suchen...",
+      "clear": "Zurücksetzen",
+      "back": "Zurück",
+      "downloadAllCertificates": "Alle Zertifikate herunterladen",
+      "addCourse": "Kurs hinzufügen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "createdAt": "Erstellt am",
+        "updatedAt": "Aktualisiert am",
+        "actions": "Aktionen"
+      },
+      "toolbar": {
+        "search": "Programm suchen...",
+        "sortBy": "Sortieren nach",
+        "learningPath": "Lernpfad"
+      },
+      "order": {
+        "nameAsc": "Name (A-Z)",
+        "nameDesc": "Name (Z-A)",
+        "orderAsc": "Reihenfolge (aufsteigend)",
+        "orderDesc": "Reihenfolge (absteigend)",
+        "createdAtAsc": "Älteste zuerst",
+        "createdAtDesc": "Neueste zuerst",
+        "productNameAsc": "Kursname (A-Z)",
+        "productNameDesc": "Kursname (Z-A)",
+        "learningPathNameAsc": "Lernpfad (A-Z)",
+        "learningPathNameDesc": "Lernpfad (Z-A)",
+        "progressAsc": "Fortschritt (niedrig bis hoch)",
+        "progressDesc": "Fortschritt (hoch bis niedrig)",
+        "enrolledAtAsc": "Einschreibedatum (älteste zuerst)",
+        "enrolledAtDesc": "Einschreibedatum (neueste zuerst)"
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Stichwort",
+        "all": "Alle",
+        "inProgress": "Kurse in Bearbeitung",
+        "completed": "Abgeschlossene Kurse",
+        "certified": "Zertifiziert",
+        "learningPath": "Lernpfad"
+      },
+      "emptyState": {
+        "noData": "Keine Programme gefunden",
+        "noResults": "Keine Ergebnisse für Ihre Suche gefunden"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Programmname eingeben",
+          "helperText": "Programmname eingeben",
+          "required": "Name ist erforderlich"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "placeholder": "Detaillierte Beschreibung eingeben",
+          "helperText": "Inhalt und Ziele des Programms beschreiben",
+          "required": "Beschreibung ist erforderlich",
+          "min": "Die Beschreibung muss mindestens 10 Zeichen lang sein"
+        },
+        "duration": {
+          "label": "Dauer (Stunden)",
+          "placeholder": "z.B. 1",
+          "helperText": "Geschätzte Zeit zum Abschluss des Moduls",
+          "required": "Dauer ist erforderlich",
+          "min": "Die Dauer muss größer als 0 sein"
+        },
+        "tags": {
+          "label": "Schlagwörter",
+          "placeholder": "Schlagwörter eingeben und Enter drücken",
+          "helperText": "Schlüsselwörter zur Erleichterung der Suche"
+        },
+        "category": {
+          "label": "Kategorie",
+          "placeholder": "Kategorie auswählen",
+          "helperText": "Thematische Kategorie des Programms",
+          "required": "Kategorie ist erforderlich"
+        },
+        "difficultyLevel": {
+          "label": "Schwierigkeitsgrad",
+          "placeholder": "Stufe auswählen",
+          "helperText": "Komplexitätsgrad des Inhalts",
+          "required": "Schwierigkeitsgrad ist erforderlich"
+        },
+        "courseLms": {
+          "label": "LMS-Kurs",
+          "placeholder": "Kurs suchen und auswählen...",
+          "helperText": "Kurs, zu dem dieses Modul gehört",
+          "required": "LMS-Kurs ist erforderlich",
+          "noOptions": "Keine Kurse gefunden"
+        },
+        "price": {
+          "label": "Preis",
+          "placeholder": "0.00",
+          "helperText": "Preis in der konfigurierten Währung",
+          "required": "Preis ist erforderlich",
+          "min": "Der Preis muss größer oder gleich 0 sein"
+        },
+        "priceDiscount": {
+          "label": "Rabattpreis",
+          "placeholder": "0.00",
+          "helperText": "Aktionspreis (optional)",
+          "min": "Der Rabattpreis muss größer oder gleich 0 sein"
+        },
+        "isFree": {
+          "label": "Kostenlos",
+          "helperText": "Aktivieren, wenn das Modul kostenlos zugänglich ist"
+        },
+        "isActive": {
+          "label": "Aktiv",
+          "helperText": "Aktivieren, wenn das Modul für Studierende verfügbar ist",
+          "active": "Aktiv",
+          "inactive": "Inaktiv"
+        },
+        "order": {
+          "label": "Reihenfolge",
+          "placeholder": "1"
+        },
+        "bannerUrl": {
+          "label": "Banner",
+          "placeholder": "Banner hochladen",
+          "helperText": "Bannerbild, das oben auf der Programmdetailseite angezeigt wird",
+          "preview": "Vorschau:"
+        },
+        "imageUrl": {
+          "label": "Programmcover",
+          "placeholder": "Bild hochladen",
+          "helperText": "Hauptbild, das das Lernpaket repräsentiert",
+          "preview": "Vorschau:"
+        },
+        "selectCourse": "Kurs auswählen",
+        "searchCourse": "Kurs suchen..."
+      },
+      "sections": {
+        "details": "Programmdetails",
+        "basicInfo": "Grundlegende Informationen",
+        "classification": "Klassifikation",
+        "pricing": "Preise",
+        "settings": "Einstellungen",
+        "products": "Kurse des Pakets"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Löschen",
+        "content": "Möchten Sie dieses Programm wirklich löschen?",
+        "contentMultiple": "Möchten Sie wirklich {{count}} Elemente löschen?",
+        "confirm": "Löschen"
+      },
+      "unsavedChanges": {
+        "title": "Nicht gespeicherte Änderungen",
+        "content": "Sie haben nicht gespeicherte Änderungen. Möchten Sie wirklich die Seite verlassen?",
+        "confirm": "Ohne Speichern beenden"
+      }
+    },
+    "messages": {
+      "loading": "Programm wird geladen...",
+      "saving": "Wird gespeichert...",
+      "loadError": "Fehler beim Laden des Programms",
+      "saveError": "Fehler beim Speichern des Programms. Bitte versuchen Sie es erneut.",
+      "notFound": "Programm nicht gefunden",
+      "createSuccess": "Programm erfolgreich erstellt!",
+      "updateSuccess": "Programm erfolgreich aktualisiert!",
+      "noProducts": "Keine Kurse hinzugefügt. Klicken Sie auf \"Kurs hinzufügen\", um zu beginnen.",
+      "success": {
+        "created": "Programm erfolgreich erstellt",
+        "updated": "Programm erfolgreich aktualisiert",
+        "deleted": "Programm erfolgreich gelöscht",
+        "deletedMultiple": "Programme erfolgreich gelöscht",
+        "activityCompleted": "Aktivität als abgeschlossen markiert"
+      },
+      "error": {
+        "loading": "Fehler beim Laden des Programms",
+        "saving": "Fehler beim Speichern des Programms. Bitte versuchen Sie es erneut.",
+        "deleting": "Fehler beim Löschen des Programms",
+        "deletingMultiple": "Fehler beim Löschen der Programme",
+        "notFound": "Programm nicht gefunden",
+        "loadingCategories": "Fehler beim Laden der Kategorien",
+        "loadingLevels": "Fehler beim Laden der Stufen",
+        "loadingCourses": "Fehler beim Laden der Kurse",
+        "notFoundDescription": "Das gesuchte Programm existiert nicht oder wurde gelöscht.",
+        "completingActivity": "Fehler beim Abschließen der Aktivität"
+      }
+    },
+    "status": {
+      "all": "Alle",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "tooltips": {
+      "edit": "Programm bearbeiten",
+      "delete": "Programm löschen",
+      "quickEdit": "Schnellbearbeitung"
+    },
+    "card": {
+      "free": "Kostenlos",
+      "aiGenerated": "Mit KI generiert",
+      "manual": "Manuell erstellt",
+      "noName": "Kein Name",
+      "noDescription": "Keine Beschreibung",
+      "noCategory": "Keine Kategorie",
+      "noDifficulty": "Keine Stufe",
+      "course": "KURS",
+      "theme": "Thema:",
+      "virtual": "Virtuell",
+      "rate": "Bewerten?",
+      "goToCourse": "Zum Kurs",
+      "getCertificate": "Zertifikat erhalten",
+      "homologate": "Anerkennen",
+      "rateDialog": {
+        "title": "Kurs bewerten",
+        "question": "Wie hat Ihnen dieses Modul gefallen?",
+        "cancel": "Abbrechen",
+        "save": "Speichern",
+        "veryBad": "Sehr schlecht",
+        "bad": "Schlecht",
+        "regular": "Mittelmäßig",
+        "good": "Gut",
+        "excellent": "Ausgezeichnet"
+      }
+    },
+    "details": {
+      "noName": "Kein Name",
+      "noDescription": "Keine Beschreibung",
+      "noCategory": "Keine Kategorie",
+      "noCourse": "Kein Kurs",
+      "noDifficulty": "Keine Stufe",
+      "noObjective": "Kein Ziel definiert",
+      "noSkills": "Keine Fähigkeiten definiert",
+      "noWhatYouWillLearn": "Keine Informationen darüber, was Sie lernen werden",
+      "state": "Status",
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "free": "Kostenlos",
+      "overview": "Übersicht",
+      "courses": "Kurse",
+      "content": "Inhalt",
+      "video": "Einführungsvideo",
+      "description": "Beschreibung",
+      "duration": "Dauer",
+      "objective": "Ziel",
+      "tags": "Schlagwörter",
+      "whatYouWillLearn": "Was Sie lernen werden",
+      "skillsToAcquire": "Zu erwerbende Fähigkeiten",
+      "videoTitle": "Kursvideo",
+      "playVideo": "Video ansehen",
+      "createdAt": "Erstellt",
+      "courseInfo": "Kursinformationen",
+      "category": "Kategorie",
+      "difficulty": "Schwierigkeitsgrad",
+      "lmsCourse": "LMS-Kurs",
+      "lmsCourseCode": "Kurscode",
+      "lmsCourseId": "LMS-ID",
+      "enrollNow": "Jetzt einschreiben",
+      "buyCourse": "Kurs kaufen",
+      "contentDuration": "Inhaltsdauer",
+      "certificateOnCompletion": "Zertifikat bei Abschluss",
+      "lifetimeAccess": "Lebenslanger Zugang",
+      "limitedSpots": "Begrenzte Plätze",
+      "fullAccessFree": "Vollständiger kostenloser Zugang",
+      "noContentAvailable": "Keine Inhaltsinformationen verfügbar",
+      "packageContent": "Paketinhalt",
+      "packageDescription": "Zugang zu allen enthaltenen Kursen",
+      "coursesIncluded": "enthaltene Kurse",
+      "totalDuration": "Gesamtdauer",
+      "packageInfo": "Paketinformationen",
+      "user-title": "Details meines Programms",
+      "minutes": "Minuten",
+      "hours": "Stunden",
+      "packageImage": "Paketbild",
+      "uploadImage": "Bild des Lernpakets hochladen",
+      "course": "Kurs",
+      "unnamedCourse": "Unbenannter Kurs",
+      "order": "Reihenfolge",
+      "package": "Programmpaket",
+      "preview": {
+        "difficulty": {
+          "beginner": "Anfänger",
+          "intermediate": "Fortgeschrittener",
+          "advanced": "Experte"
+        },
+        "media": {
+          "clickToExpand": "Zum Erweitern klicken",
+          "clickToPlay": "Zum Abspielen klicken",
+          "audioNotSupported": "Ihr Browser unterstützt die Audiowiedergabe nicht.",
+          "download": "Herunterladen"
+        },
+        "sections": "Abschnitte",
+        "objectives": "Ziele",
+        "unknownBlock": "Unbekannter Block",
+        "quiz": "Quiz",
+        "noContent": "Kein Inhalt verfügbar",
+        "noBlocks": "Keine Inhaltsblöcke in diesem Abschnitt",
+        "content": "Inhalt",
+        "activityCompleted": "Aktivität abgeschlossen",
+        "markAsCompleted": "Als abgeschlossen markieren"
+      }
+    },
+    "selected": "{{count}} ausgewählt",
+    "empty": {
+      "title": "Keine Programme",
+      "description": "Keine Programme gefunden. Passen Sie die Filter an oder erstellen Sie ein neues."
+    }
+  },
+  "learning-paths": {
+    "title": "Lernpfade",
+    "user-title": "Meine Lernpfade",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "user-learningPaths": "Meine Lernpfade",
+      "learningPaths": "Lernpfade",
+      "list": "Lernpfadliste",
+      "create": "Lernpfad erstellen",
+      "edit": "Lernpfad bearbeiten"
+    },
+    "actions": {
+      "add": "Lernpfad hinzufügen",
+      "addWithAI": "Lernpfad mit KI hinzufügen",
+      "addAllWithAI": "Vollständigen Lernpfad mit KI hinzufügen",
+      "edit": "Lernpfad bearbeiten",
+      "delete": "Lernpfad löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "create": "Lernpfad erstellen",
+      "update": "Lernpfad aktualisieren",
+      "search": "Lernpfade suchen...",
+      "clear": "Zurücksetzen",
+      "addModule": "Modul hinzufügen",
+      "addLearningObject": "Lernobjekt hinzufügen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "position": "Position",
+        "modules": "Module",
+        "status": "Status",
+        "createdAt": "Erstellt am",
+        "updatedAt": "Aktualisiert am",
+        "actions": "Aktionen"
+      },
+      "toolbar": {
+        "search": "Lernpfade suchen...",
+        "sortBy": "Sortieren nach",
+        "resetFilters": "Filter zurücksetzen"
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Stichwort",
+        "search": "Lernpfade suchen...",
+        "all": "Alle",
+        "positionId": "Position",
+        "isAIGenerated": {
+          "label": "Mit KI generiert",
+          "all": "Alle",
+          "yes": "Ja",
+          "no": "Nein"
+        }
+      },
+      "order": {
+        "nameAsc": "Name (A-Z)",
+        "nameDesc": "Name (Z-A)",
+        "positionAsc": "Position (A-Z)",
+        "positionDesc": "Position (Z-A)",
+        "createdAtAsc": "Älteste zuerst",
+        "createdAtDesc": "Neueste zuerst"
+      },
+      "emptyState": {
+        "noData": "Keine Lernpfade gefunden",
+        "noResults": "Keine Ergebnisse für Ihre Suche gefunden"
+      }
+    },
+    "form": {
+      "sections": {
+        "basicInfo": "Grundlegende Informationen",
+        "multimedia": "Multimediainhalt",
+        "modules": "Module",
+        "configuration": "Konfiguration"
+      },
+      "preview": {
+        "bannerError": "Das Bannerbild konnte nicht geladen werden. URL überprüfen.",
+        "noMedia": "Video oder Banner hinzufügen, um hier eine Vorschau zu sehen"
+      },
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Lernpfadname eingeben",
+          "helperText": "Lernpfadname eingeben",
+          "required": "Name ist erforderlich"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "placeholder": "Lernpfadbeschreibung eingeben",
+          "helperText": "Lernpfadbeschreibung eingeben",
+          "required": "Beschreibung ist erforderlich"
+        },
+        "videoUrl": {
+          "label": "Video-URL",
+          "placeholder": "https://beispiel.com/video",
+          "helperText": "Unterstützt YouTube und Vimeo (automatisch konvertiert)",
+          "required": "Video-URL ist erforderlich"
+        },
+        "bannerUrl": {
+          "label": "Banner",
+          "placeholder": "https://beispiel.com/bild.jpg",
+          "helperText": "URL des Titelbilds",
+          "required": "Banner ist erforderlich"
+        },
+        "position": {
+          "label": "Positionen",
+          "placeholder": "Eine oder mehrere Positionen auswählen",
+          "helperText": "Zugehörige Positionen auswählen",
+          "required": "Mindestens eine Position muss ausgewählt werden"
+        },
+        "module": {
+          "label": "Modul"
+        },
+        "skill": {
+          "label": "Fähigkeit",
+          "placeholder": "Fähigkeit auswählen",
+          "helperText": "Diesem Modul zugehörige Fähigkeit auswählen",
+          "required": "Fähigkeit ist erforderlich"
+        },
+        "skillLevel": {
+          "label": "Fähigkeitsstufe",
+          "placeholder": "Fähigkeitsstufe auswählen",
+          "helperText": "Schwierigkeitsstufe der Fähigkeit auswählen",
+          "required": "Fähigkeitsstufe ist erforderlich"
+        },
+        "moduleOrder": {
+          "label": "Reihenfolge",
+          "placeholder": "Modulreihenfolge",
+          "helperText": "Modulreihenfolge eingeben",
+          "required": "Reihenfolge ist erforderlich",
+          "min": "Die Reihenfolge muss größer oder gleich 1 sein"
+        },
+        "learningObject": {
+          "label": "Lernobjekt",
+          "placeholder": "Lernobjekt auswählen",
+          "helperText": "Lernobjekt auswählen",
+          "required": "Lernobjekt ist erforderlich"
+        },
+        "learningObjectOrder": {
+          "label": "Reihenfolge",
+          "placeholder": "Objektreihenfolge",
+          "helperText": "Lernobjektreihenfolge eingeben",
+          "required": "Reihenfolge ist erforderlich",
+          "min": "Die Reihenfolge muss größer oder gleich 1 sein"
+        },
+        "learningObjects": {
+          "label": "Lernobjekte",
+          "min": "Mindestens ein Lernobjekt muss hinzugefügt werden"
+        },
+        "isOptional": {
+          "label": "Optional",
+          "helperText": "Aktivieren, wenn das Lernobjekt optional ist"
+        },
+        "modules": {
+          "min": "Mindestens ein Modul muss hinzugefügt werden"
+        }
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Lernpfad löschen",
+        "content": "Möchten Sie diesen Lernpfad wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "confirm": "Löschen",
+        "cancel": "Abbrechen"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Lernpfad erfolgreich erstellt",
+        "updated": "Lernpfad erfolgreich aktualisiert",
+        "deleted": "Lernpfad erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Lernpfade",
+        "saving": "Fehler beim Speichern des Lernpfads",
+        "deleting": "Fehler beim Löschen des Lernpfads",
+        "notFound": "Lernpfad nicht gefunden",
+        "loadingPositions": "Fehler beim Laden der Positionen",
+        "loadingLearningObjects": "Fehler beim Laden der Lernobjekte",
+        "loadingSkills": "Fehler beim Laden der Fähigkeiten",
+        "loadingSkillLevels": "Fehler beim Laden der Fähigkeitsstufen"
+      }
+    },
+    "preview": {
+      "video": {
+        "placeholder": "Video wird hier angezeigt",
+        "urlNotRecognized": "URL nicht erkannt",
+        "supportedPlatforms": "Unterstützt: YouTube und Vimeo"
+      },
+      "banner": {
+        "placeholder": "Banner wird hier angezeigt",
+        "errorLoading": "Bild konnte nicht geladen werden",
+        "verifyUrl": "Banner-URL überprüfen"
+      }
+    },
+    "status": {
+      "all": "Alle",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "tooltips": {
+      "edit": "Lernpfad bearbeiten",
+      "delete": "Lernpfad löschen"
+    },
+    "card": {
+      "badge": "Pfad",
+      "aiGenerated": "Mit KI generiert",
+      "manual": "Manuell erstellt",
+      "noName": "Kein Name",
+      "noDescription": "Keine Beschreibung",
+      "noPosition": "Keine Position",
+      "module": "Modul",
+      "modules": "Module",
+      "duration": "Dauer",
+      "hours": "Std.",
+      "courses": "Kurse",
+      "viewDetails": "Details anzeigen",
+      "progress": "Fortschritt",
+      "status": {
+        "completed": "Abgeschlossen",
+        "inProgress": "In Bearbeitung",
+        "notStarted": "Nicht begonnen"
+      }
+    },
+    "empty": {
+      "title": "Keine Lernpfade",
+      "description": "Keine Lernpfade gefunden. Passen Sie die Filter an oder erstellen Sie einen neuen."
+    },
+    "details": {
+      "programCourses": "Programmkurse",
+      "programCoursesDescription": "In diesem Lernprogramm enthaltene Kurse",
+      "goToCourse": "Zum Kurs",
+      "noCourses": "Keine Kurse verfügbar",
+      "noCoursesDescription": "Dieses Modul hat keine zugewiesenen Kurse",
+      "andMoreCourses": "und {{count}} weiterer Kurs",
+      "coursesAvailable": "In diesem Modul verfügbare Kurse",
+      "coursesLabel": "Kurse",
+      "elementsLabel": "Elemente insgesamt",
+      "hoursLabel": "Std. Video auf Abruf",
+      "hours": "Std.",
+      "viewDetailsButton": "Details anzeigen",
+      "notFound": "Pfad nicht gefunden",
+      "notFoundDescription": "Der gesuchte Lernpfad existiert nicht",
+      "title": "Lernpfaddetails",
+      "noDescription": "Keine Beschreibung verfügbar",
+      "position": "Position",
+      "totalDuration": "Gesamtdauer",
+      "modules": "Kompetenzen",
+      "totalCourses": "Kurse insgesamt",
+      "modulesTitle": "Pfadkompetenzen",
+      "noModules": "Keine Kompetenzen",
+      "noModulesDescription": "Dieser Pfad hat keine konfigurierten Kompetenzen",
+      "positionDescription": "Positionsbeschreibung",
+      "positionAbbreviation": "Abkürzung",
+      "moduleNumber": "Modul {{number}}",
+      "optionalCourse": "Optionaler Kurs",
+      "requiredCourse": "Pflichtkurs",
+      "courseDetails": "Kursdetails",
+      "objective": "Ziel",
+      "skillsToAcquire": "Zu erwerbende Fähigkeiten",
+      "whatYouWillLearn": "Was Sie lernen werden",
+      "price": "Preis",
+      "priceDiscount": "Rabattpreis",
+      "free": "Kostenlos",
+      "tags": "Schlagwörter",
+      "category": "Kategorie",
+      "difficultyLevel": "Schwierigkeitsgrad",
+      "studentLimit": "Teilnehmerlimit",
+      "unlimited": "Unbegrenzt",
+      "statistics": "Statistiken",
+      "averageRating": "Durchschnittsbewertung",
+      "completion": "Abschlussfortschritt",
+      "playVideo": "Video abspielen",
+      "modulesLabel": "Module",
+      "elementsTotal": "Kurse insgesamt",
+      "programContent": "Programminhalt",
+      "articlesLabel": "Kurse",
+      "programSummary": "Programmzusammenfassung",
+      "hoursVideoDemand": "Std. Video auf Abruf",
+      "enrollNow": "Fortfahren",
+      "courseProgress": "Kursfortschritt",
+      "viewDetails": "Details anzeigen",
+      "moduleProgress": "Modulfortschritt",
+      "moduleSingle": "Modul",
+      "modulePlural": "Module",
+      "courseSingle": "Kurs",
+      "coursePlural": "Kurse",
+      "inTotal": "insgesamt",
+      "thisIncludes": "Dies beinhaltet:",
+      "benefit1": "In Ihrem eigenen Tempo lernen",
+      "benefit2": "Zugang zu exklusiven Materialien",
+      "benefit3": "Abschlusszertifikat",
+      "benefit4": "Inhaltsaktualisierungen"
+    }
+  },
+  "learningCategories": {
+    "title": "Lernkategorien",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "positions": "Lernkategorien",
+      "list": "Lernkategorieliste",
+      "create": "Lernkategorie erstellen",
+      "edit": "Lernkategorie bearbeiten"
+    },
+    "actions": {
+      "add": "Lernkategorie hinzufügen",
+      "edit": "Lernkategorie bearbeiten",
+      "delete": "Lernkategorie löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert...",
+      "create": "Lernkategorie erstellen",
+      "update": "Lernkategorie aktualisieren",
+      "search": "Lernkategorien suchen...",
+      "clear": "Zurücksetzen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "abreviation": "Abkürzung",
+        "logo": "Logo",
+        "createdAt": "Erstellt am",
+        "updatedAt": "Aktualisiert am",
+        "actions": "Aktionen"
+      },
+      "toolbar": {
+        "search": "Lernkategorien suchen..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Stichwort",
+        "all": "Alle"
+      },
+      "emptyState": {
+        "noData": "Keine Lernkategorien gefunden",
+        "noResults": "Keine Ergebnisse für Ihre Suche gefunden"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Lernkategoriename eingeben",
+          "helperText": "Lernkategoriename eingeben",
+          "required": "Name ist erforderlich"
+        },
+        "abreviation": {
+          "label": "Abkürzung",
+          "placeholder": "Abkürzung der Lernkategorie eingeben",
+          "helperText": "Abkürzung der Lernkategorie eingeben",
+          "required": "Abkürzung ist erforderlich"
+        },
+        "logo": {
+          "label": "Logo",
+          "placeholder": "Logo-URL der Lernkategorie eingeben",
+          "helperText": "Logo-URL der Lernkategorie eingeben",
+          "required": "Logo ist erforderlich"
+        }
+      },
+      "sections": {
+        "details": "Lernkategoriedetails"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Lernkategorie löschen",
+        "content": "Möchten Sie diese Lernkategorie wirklich löschen?",
+        "contentMultiple": "Möchten Sie diese Elemente wirklich löschen?",
+        "confirm": "Löschen"
+      },
+      "unsavedChanges": {
+        "title": "Nicht gespeicherte Änderungen",
+        "content": "Sie haben nicht gespeicherte Änderungen. Möchten Sie wirklich die Seite verlassen?",
+        "confirm": "Ohne Speichern beenden"
+      }
+    },
+    "messages": {
+      "loading": "Lernkategorien werden geladen...",
+      "saving": "Wird gespeichert...",
+      "loadError": "Fehler beim Laden der Lernkategorie",
+      "saveError": "Fehler beim Speichern der Lernkategorie. Bitte versuchen Sie es erneut.",
+      "notFound": "Lernkategorie nicht gefunden",
+      "createSuccess": "Lernkategorie erfolgreich erstellt!",
+      "updateSuccess": "Lernkategorie erfolgreich aktualisiert!",
+      "success": {
+        "created": "Lernkategorie erfolgreich erstellt",
+        "updated": "Lernkategorie erfolgreich aktualisiert",
+        "deleted": "Lernkategorie erfolgreich gelöscht",
+        "deletedMultiple": "Lernkategorien erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Lernkategorien",
+        "saving": "Fehler beim Speichern der Lernkategorie. Bitte versuchen Sie es erneut.",
+        "deleting": "Fehler beim Löschen der Lernkategorie",
+        "deletingMultiple": "Fehler beim Löschen der Lernkategorien",
+        "notFound": "Lernkategorie nicht gefunden"
+      }
+    },
+    "status": {
+      "all": "Alle",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "tooltips": {
+      "edit": "Lernkategorie bearbeiten",
+      "delete": "Lernkategorie löschen",
+      "quickEdit": "Schnellbearbeitung"
+    }
+  },
+  "learning-reports": {
+    "title": "Lernberichte",
+    "subtitle": "Erstellen Sie detaillierte Berichte über den Fortschritt und die Leistung der Mitarbeiter in ihren Pfaden und Programmen.",
+    "reportTypes": {
+      "learningPaths": "Lernpfade",
+      "programs": "Programme",
+      "courses": "Kurse"
+    },
+    "filters": {
+      "title": "Berichtsfilter",
+      "search": "Suche",
+      "searchPlaceholder": "Suchen...",
+      "order": "Sortieren nach",
+      "noOrder": "Keine Sortierung",
+      "format": "Ausgabeformat",
+      "generate": "Bericht erstellen",
+      "generateTooltip": "Bericht mit den ausgewählten Filtern erstellen",
+      "clear": "Filter zurücksetzen",
+      "employee": "Mitarbeiter",
+      "employeePlaceholder": "Mitarbeiter suchen...",
+      "route": "Lernpfad",
+      "routePlaceholder": "Pfad suchen...",
+      "includeInactive": "Inaktive einbeziehen",
+      "perPage": "Pro Seite",
+      "searching": "Wird gesucht...",
+      "noOptions": "Keine Optionen",
+      "formatOptions": {
+        "json": "Liste",
+        "excel": "Excel",
+        "pdf": "PDF",
+        "csv": "CSV"
+      },
+      "orderOptions": {
+        "learningPathNameAsc": "Pfad (A-Z)",
+        "learningPathNameDesc": "Pfad (Z-A)",
+        "employeeFirstNameAsc": "Vorname (A-Z)",
+        "employeeFirstNameDesc": "Vorname (Z-A)",
+        "employeeLastNameAsc": "Nachname (A-Z)",
+        "employeeLastNameDesc": "Nachname (Z-A)",
+        "jobNameAsc": "Position (A-Z)",
+        "jobNameDesc": "Position (Z-A)",
+        "orgUnitNameAsc": "Org.-Einheit (A-Z)",
+        "orgUnitNameDesc": "Org.-Einheit (Z-A)",
+        "statusAsc": "Status (A-Z)",
+        "statusDesc": "Status (Z-A)",
+        "progressAsc": "Fortschritt (niedrig)",
+        "progressDesc": "Fortschritt (hoch)",
+        "createdAtAsc": "Erstellungsdatum (älteste)",
+        "createdAtDesc": "Erstellungsdatum (neueste)"
+      }
+    },
+    "table": {
+      "results": "Ergebnisse",
+      "totalRecords": "Datensätze insgesamt",
+      "inProgress": "In Bearbeitung",
+      "completed": "Abgeschlossen",
+      "employees": "Mitarbeiter",
+      "columns": {
+        "employee": "Mitarbeiter",
+        "cargo": "Position",
+        "organizationalUnit": "Organisationseinheit",
+        "status": "Status",
+        "progress": "Fortschritt",
+        "completedAt": "Abschlussdatum",
+        "programName": "Programm",
+        "totalCourses": "Kurse insgesamt",
+        "completedCourses": "Abgeschlossen",
+        "completionPercentage": "% Abgeschlossen",
+        "courseName": "Kurs",
+        "isCompleted": "Status"
+      }
+    },
+    "messages": {
+      "loading": "Bericht wird erstellt...",
+      "error": "Fehler beim Erstellen des Berichts. Bitte versuchen Sie es erneut.",
+      "noData": "Keine Daten für die ausgewählten Filter gefunden.",
+      "noDataDescription": "Passen Sie die Filter an und erstellen Sie einen neuen Bericht.",
+      "downloadSuccess": "Datei erfolgreich heruntergeladen.",
+      "downloadError": "Fehler beim Herunterladen der Datei."
+    }
+  },
+  "product-courses": {
+    "title": "Kurskatalog",
+    "breadcrumbs": {
+      "productCourses": "Kurskatalog",
+      "dashboard": "Dashboard",
+      "product-courses": "Kurskatalog",
+      "create": "Kurs erstellen",
+      "edit": "Kurs bearbeiten"
+    },
+    "actions": {
+      "add": "Kurs hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "create": "Kurs erstellen",
+      "update": "Kurs aktualisieren",
+      "viewDetails": "Details anzeigen",
+      "back": "Zurück"
+    },
+    "table": {
+      "filters": {
+        "all": "Alle",
+        "active": "Aktiv",
+        "inactive": "Inaktiv",
+        "status": "Status",
+        "keyword": "Stichwort",
+        "order": "Sortieren nach",
+        "includeInactive": "Inaktive einbeziehen",
+        "includeInactiveLabel": "Inaktive anzeigen",
+        "instance": "Instanz"
+      },
+      "toolbar": {
+        "search": "Kurse suchen...",
+        "order": "Sortieren nach",
+        "includeInactive": "Inaktive Kurse einbeziehen",
+        "instance": "Instanz",
+        "instancePlaceholder": "Instanz suchen..."
+      },
+      "order": {
+        "nameAsc": "Name (A-Z)",
+        "nameDesc": "Name (Z-A)"
+      },
+      "columns": {
+        "name": "Kursname",
+        "code": "Code",
+        "integration": "Katalog",
+        "language": "Sprache",
+        "status": "Status"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Kursname",
+          "placeholder": "Kursname eingeben",
+          "required": "Name ist erforderlich"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "placeholder": "Detaillierte Beschreibung eingeben",
+          "required": "Beschreibung ist erforderlich"
+        },
+        "duration": {
+          "label": "Dauer",
+          "placeholder": "00:00",
+          "helperText": "Format: HH:MM (z.B. 02:30 für 2 Stunden und 30 Minuten)",
+          "required": "Dauer ist erforderlich"
+        },
+        "category": {
+          "label": "Kategorie",
+          "placeholder": "Kategorie auswählen"
+        },
+        "difficultyLevel": {
+          "label": "Schwierigkeitsgrad",
+          "placeholder": "Stufe auswählen",
+          "required": "Schwierigkeitsgrad ist erforderlich"
+        },
+        "courseLms": {
+          "label": "LMS-Kurs",
+          "placeholder": "LMS-Kurs suchen und auswählen",
+          "helperText": "Optional: Diesen Kurs mit einem Kurs im LMS verknüpfen"
+        },
+        "price": {
+          "label": "Preis",
+          "placeholder": "0.00",
+          "min": "Der Preis muss größer oder gleich 0 sein"
+        },
+        "priceDiscount": {
+          "label": "Rabattpreis",
+          "placeholder": "0.00",
+          "helperText": "Optional: Sonderpreis oder Rabattpreis",
+          "min": "Der Rabattpreis muss größer oder gleich 0 sein"
+        },
+        "isFree": {
+          "label": "Kostenloser Kurs",
+          "helperText": "Aktivieren, wenn der Kurs vollständig kostenlos ist"
+        },
+        "isActive": {
+          "label": "Aktiver Kurs",
+          "helperText": "Inaktive Kurse sind für Benutzer nicht sichtbar"
+        },
+        "tags": {
+          "label": "Schlagwörter",
+          "placeholder": "Schlagwörter hinzufügen...",
+          "helperText": "Enter oder Komma (,) drücken, um ein Schlagwort hinzuzufügen",
+          "required": "Mindestens ein Schlagwort ist erforderlich"
+        },
+        "imageUrl": {
+          "label": "Bild-URL",
+          "placeholder": "https://beispiel.com/bild.jpg",
+          "helperText": "URL des Hauptbilds des Kurses",
+          "preview": "Vorschau:"
+        },
+        "videoUrl": {
+          "label": "Video-URL",
+          "placeholder": "https://youtube.com/watch?v=...",
+          "helperText": "URL des Einführungsvideos (YouTube, Vimeo, etc.)"
+        },
+        "bannerUrl": {
+          "label": "Banner-URL",
+          "placeholder": "https://beispiel.com/banner.jpg",
+          "helperText": "URL des Banners für die Detailseite",
+          "preview": "Bannervorschau:"
+        },
+        "isStudentLimited": {
+          "label": "Teilnehmer begrenzen",
+          "helperText": "Aktivieren, wenn Sie eine maximale Teilnehmeranzahl festlegen möchten"
+        },
+        "studentLimit": {
+          "label": "Teilnehmerlimit",
+          "placeholder": "50",
+          "helperText": "Maximale Anzahl zulässiger Teilnehmer"
+        },
+        "objective": {
+          "label": "Ziel",
+          "placeholder": "Hauptziel des Kurses beschreiben",
+          "helperText": "Hauptziel, das der Studierende erreichen wird"
+        },
+        "skillsToAcquire": {
+          "label": "Zu erwerbende Fähigkeiten",
+          "placeholder": "Spezifische Fähigkeiten aufführen, die entwickelt werden",
+          "helperText": "Kompetenzen und Fertigkeiten, die der Studierende erwerben wird"
+        },
+        "whatYouWillLearn": {
+          "label": "Was Sie lernen werden",
+          "placeholder": "Spezifische Kurskenntnisse detaillieren",
+          "helperText": "Spezifische Inhalte und Themen des Programms"
+        }
+      },
+      "sections": {
+        "basicInfo": "Grundlegende Informationen",
+        "classification": "Klassifikation",
+        "pricing": "Preis",
+        "media": "Medien",
+        "content": "Inhalt",
+        "limits": "Grenzen und Einschränkungen",
+        "settings": "Einstellungen"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Kurs löschen",
+        "content": "Möchten Sie diesen Kurs wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "loading": "Kurse werden geladen...",
+      "saving": "Wird gespeichert...",
+      "notFound": "Kurs nicht gefunden",
+      "loadError": "Fehler beim Laden des Kurses",
+      "success": {
+        "created": "Kurs erfolgreich erstellt",
+        "updated": "Kurs erfolgreich aktualisiert",
+        "deleted": "Kurs erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Kurse",
+        "saving": "Fehler beim Speichern des Kurses",
+        "deleting": "Fehler beim Löschen des Kurses",
+        "loadingCategories": "Fehler beim Laden der Kategorien",
+        "loadingLevels": "Fehler beim Laden der Schwierigkeitsstufen",
+        "loadingCourses": "Fehler beim Laden der LMS-Kurse",
+        "notFound": "Der angeforderte Kurs wurde nicht gefunden",
+        "notFoundDescription": "Der gesuchte Kurs existiert nicht oder wurde gelöscht."
+      }
+    },
+    "card": {
+      "free": "Kostenlos",
+      "viewDetails": "Details anzeigen",
+      "noName": "Kein Name",
+      "noDescription": "Keine Beschreibung",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "details": {
+      "title": "Kursdetails",
+      "noName": "Kein Name",
+      "noDescription": "Keine Beschreibung",
+      "noCategory": "Keine Kategorie",
+      "noCourse": "Kein Kurs",
+      "noDifficulty": "Keine Stufe",
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "free": "Kostenlos",
+      "overview": "Übersicht",
+      "content": "Inhalt",
+      "video": "Einführungsvideo",
+      "description": "Beschreibung",
+      "objective": "Ziel",
+      "tags": "Schlagwörter",
+      "whatYouWillLearn": "Was Sie lernen werden",
+      "skillsToAcquire": "Zu erwerbende Fähigkeiten",
+      "videoTitle": "Kursvideo",
+      "courseInfo": "Kursinformationen",
+      "category": "Kategorie",
+      "difficulty": "Schwierigkeitsgrad",
+      "lmsCourse": "LMS-Kurs",
+      "enrollNow": "Jetzt einschreiben",
+      "buyCourse": "Kurs kaufen",
+      "contentDuration": "Inhaltsdauer",
+      "certificateOnCompletion": "Zertifikat bei Abschluss",
+      "lifetimeAccess": "Lebenslanger Zugang",
+      "limitedSpots": "Begrenzte Plätze",
+      "fullAccessFree": "Vollständiger kostenloser Zugang",
+      "noContentAvailable": "Keine Inhaltsinformationen verfügbar"
+    },
+    "empty": {
+      "title": "Keine Kurse",
+      "description": "Keine Kurse gefunden. Versuchen Sie, die Filter anzupassen."
+    }
+  }
+}

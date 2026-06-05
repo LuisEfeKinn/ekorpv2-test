@@ -1,0 +1,668 @@
+{
+  "employment-type": {
+    "title": "Beschäftigungsarten",
+    "breadcrumbs": {
+      "dashboard": "Systemsteuerung",
+      "employmentTypes": "Beschäftigungsarten",
+      "list": "Liste der Beschäftigungsarten",
+      "create": "Beschäftigungsart erstellen",
+      "edit": "Beschäftigungsart bearbeiten"
+    },
+    "actions": {
+      "add": "Beschäftigungsart hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "create": "Beschäftigungsart erstellen",
+      "update": "Beschäftigungsart aktualisieren",
+      "search": "Beschäftigungsarten suchen...",
+      "clear": "Zurücksetzen",
+      "select": "Auswählen",
+      "saving": "Wird gespeichert..."
+    },
+    "table": {
+      "title": "Beschäftigungsart",
+      "columns": {
+        "name": "Name",
+        "createdAt": "Erstellungsdatum",
+        "updatedAt": "Aktualisierungsdatum",
+        "actions": "Aktionen"
+      },
+      "toolbar": {
+        "search": "Beschäftigungsarten suchen..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Stichwort",
+        "all": "Alle"
+      },
+      "emptyState": {
+        "noData": "Keine Beschäftigungsarten gefunden",
+        "noResults": "Keine Ergebnisse für Ihre Suche gefunden"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Name der Beschäftigungsart eingeben",
+          "helperText": "Name der Beschäftigungsart eingeben",
+          "required": "Name ist erforderlich"
+        }
+      },
+      "sections": {
+        "details": "Details der Beschäftigungsart"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Löschen",
+        "content": "Möchten Sie diese Beschäftigungsart wirklich löschen?",
+        "contentMultiple": "Möchten Sie wirklich {{count}} Elemente löschen?",
+        "confirm": "Löschen"
+      },
+      "unsavedChanges": {
+        "title": "Nicht gespeicherte Änderungen",
+        "content": "Sie haben nicht gespeicherte Änderungen. Möchten Sie wirklich die Seite verlassen?",
+        "confirm": "Ohne Speichern beenden"
+      }
+    },
+    "messages": {
+      "loading": "Beschäftigungsarten werden geladen...",
+      "saving": "Wird gespeichert...",
+      "loadError": "Fehler beim Laden der Beschäftigungsart",
+      "saveError": "Fehler beim Speichern der Beschäftigungsart. Bitte versuchen Sie es erneut.",
+      "notFound": "Beschäftigungsart nicht gefunden",
+      "createSuccess": "Beschäftigungsart erfolgreich erstellt!",
+      "updateSuccess": "Beschäftigungsart erfolgreich aktualisiert!",
+      "success": {
+        "created": "Beschäftigungsart erfolgreich erstellt",
+        "updated": "Beschäftigungsart erfolgreich aktualisiert",
+        "deleted": "Beschäftigungsart erfolgreich gelöscht",
+        "deletedMultiple": "Beschäftigungsarten erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Beschäftigungsarten",
+        "saving": "Fehler beim Speichern der Beschäftigungsart. Bitte versuchen Sie es erneut.",
+        "deleting": "Fehler beim Löschen der Beschäftigungsart",
+        "deletingMultiple": "Fehler beim Löschen der Beschäftigungsarten",
+        "notFound": "Beschäftigungsart nicht gefunden"
+      }
+    },
+    "status": {
+      "all": "Alle",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "tooltips": {
+      "edit": "Beschäftigungsart bearbeiten",
+      "delete": "Beschäftigungsart löschen",
+      "quickEdit": "Schnellbearbeitung"
+    }
+  },
+  "user-management": {
+    "title": "Mitarbeiterverwaltung",
+    "breadcrumbs": {
+      "dashboard": "Systemsteuerung",
+      "userManagement": "Mitarbeiterverwaltung",
+      "list": "Mitarbeiterliste",
+      "create": "Mitarbeiter erstellen",
+      "edit": "Mitarbeiter bearbeiten"
+    },
+    "actions": {
+      "add": "Mitarbeiter hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "create": "Mitarbeiter erstellen",
+      "update": "Mitarbeiter aktualisieren",
+      "search": "Mitarbeiter suchen...",
+      "clear": "Zurücksetzen"
+    },
+    "table": {
+      "columns": {
+        "fullName": "Vollständiger Name",
+        "email": "E-Mail-Adresse",
+        "username": "Benutzername",
+        "language": "Sprache",
+        "timezone": "Zeitzone",
+        "immediateSupervisor": "Direkter Vorgesetzter",
+        "position": "Position und Beschäftigung",
+        "skill": "Fähigkeit",
+        "location": "Standort",
+        "billingRate": "Abrechnungsrate",
+        "weeklyHours": "Wochenstunden",
+        "startedWorkOn": "Startdatum",
+        "employmentType": "Beschäftigungsart",
+        "minimumBillingRate": "Min. Abrechnungsrate",
+        "weeklyLimit": "Wochenlimit",
+        "actions": "Aktionen",
+        "perHour": "pro Stunde",
+        "perWeek": "pro Woche"
+      },
+      "extraColumns": {
+        "id": "ID",
+        "userId": "Benutzer-ID",
+        "documentId": "Dokument",
+        "tel": "Telefon",
+        "postalCode": "Postleitzahl",
+        "updatedAt": "Aktualisiert",
+        "address": "Adresse",
+        "billingRatePerHour": "Stundensatz",
+        "minimumBillingRatePerHour": "Mindest-Stundensatz",
+        "recurringWeeklyLimitHours": "Wöchentliches Stundenlimit",
+        "organizationalUnitId": "Organisationseinheit",
+        "municipalityId": "Gemeinde",
+        "paymentPeriod": "Zahlungszeitraum",
+        "coin": "Währung",
+        "employmentType": "Beschäftigungsart",
+        "skills": "Fähigkeiten",
+        "competencyKm": "Kompetenzen",
+        "location": "Standort"
+      },
+      "toolbar": {
+        "search": "Mitarbeiter suchen..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Stichwort",
+        "position": "Position",
+        "skill": "Fähigkeit",
+        "organizationalUnit": "Organisationseinheit",
+        "country": "Land",
+        "region": "Region",
+        "employmentType": "Beschäftigungsart:",
+        "all": "Alle"
+      },
+      "emptyState": {
+        "noData": "Keine Mitarbeiter gefunden",
+        "noResults": "Keine Ergebnisse für Ihre Suche gefunden"
+      },
+      "actions": {
+        "uploadTemplate": "Vorlage hochladen",
+        "downloadExcel": "Excel herunterladen",
+        "downloadTemplate": "Vorlage herunterladen",
+        "viewDetails": "Details anzeigen",
+        "columns": "Spalten"
+      },
+      "messages": {
+        "downloadError": "Fehler beim Herunterladen der Datei",
+        "downloadTemplateError": "Fehler beim Herunterladen der Vorlage",
+        "uploadSuccess": "Vorlage erfolgreich hochgeladen",
+        "uploadError": "Fehler beim Hochladen der Vorlage"
+      },
+      "uploadDrawer": {
+        "title": "Massenimport von Mitarbeitern",
+        "actions": {
+          "close": "Schließen",
+          "cancel": "Abbrechen",
+          "upload": "Hochladen",
+          "remove": "Entfernen"
+        },
+        "instructions": {
+          "title": "Anweisungen",
+          "excelHeadersIntro": "Sie müssen eine Excel-Datei mit folgenden Spaltenüberschriften erstellen:",
+          "excelHeadersList": "- BENUTZER\n- PASSWORT (mindestens 5 Zeichen)\n- VORNAME\n- ERSTER_NACHNAME\n- ZWEITER_NACHNAME (optional)\n- E-MAIL\n- POSITIONSNOMENKLATUR\n- DIREKTER_VORGESETZTER (optional; akzeptiert BENUTZER oder E-Mail)\n- BENUTZERSTATUS (0 = Aktiv, 1 = Inaktiv; akzeptiert auch Text Aktiv/Inaktiv)",
+          "jobOrgUnitNote": "Beachten Sie, dass die Position mit der Organisationseinheit verknüpft sein muss, andernfalls wird sie nicht im System geladen.",
+          "downloadTemplate": "Vorlage herunterladen",
+          "fillAndSave": "Geben Sie die Liste der zu ladenden Benutzer ein, speichern Sie die Datei mit einem Namen ohne Leerzeichen oder Sonderzeichen.",
+          "dragOrSelect": "Sie können die gespeicherte Datei in das untenstehende Feld ziehen oder über die Schaltfläche 'Datei auswählen' auswählen.",
+          "clickUpload": "Klicken Sie auf die Schaltfläche 'Hochladen', um den Ladevorgang zu starten."
+        },
+        "drop": {
+          "title": "Excel-Datei auswählen",
+          "selectedTitle": "Ausgewählte Datei",
+          "subtitle": "oder klicken, um von Ihrem Gerät auszuwählen",
+          "formats": "Erlaubte Formate: .xlsx, .xls • 1 Datei"
+        },
+        "errors": {
+          "tooManyFiles": "Nur 1 Datei ist erlaubt.",
+          "invalidType": "Format nicht erlaubt. Verwenden Sie .xlsx oder .xls.",
+          "generic": "Datei konnte nicht hochgeladen werden. Versuchen Sie es erneut.",
+          "noFile": "Wählen Sie eine Datei aus.",
+          "uploadFailed": "Hochladen fehlgeschlagen. Versuchen Sie es erneut."
+        },
+        "validation": {
+          "title": "Validierungsfehler",
+          "rowLabel": "Zeile",
+          "fieldLabel": "Feld",
+          "messageLabel": "Meldung",
+          "truncatedListNotice": "Einige Fehler wurden ausgelassen ({{total}} insgesamt).",
+          "backendTruncatedNotice": "Die Fehlerliste wurde vom Server gekürzt."
+        }
+      }
+    },
+    "detailsDrawer": {
+      "title": "Mitarbeiterdetails",
+      "sections": {
+        "raw": "Vollständige Daten"
+      },
+      "actions": {
+        "close": "Schließen"
+      }
+    },
+    "form": {
+      "fields": {
+        "firstName": {
+          "label": "Vorname",
+          "placeholder": "Vorname eingeben",
+          "helperText": "Vorname des Mitarbeiters eingeben",
+          "required": "Vorname ist erforderlich"
+        },
+        "secondName": {
+          "label": "Zweiter Vorname",
+          "placeholder": "Zweiten Vornamen eingeben (optional)",
+          "helperText": "Zweiten Vornamen des Mitarbeiters eingeben",
+          "required": "Zweiter Vorname ist erforderlich"
+        },
+        "firstLastName": {
+          "label": "Nachname",
+          "placeholder": "Nachnamen eingeben",
+          "helperText": "Nachnamen des Mitarbeiters eingeben",
+          "required": "Nachname ist erforderlich"
+        },
+        "secondLastName": {
+          "label": "Zweiter Nachname",
+          "placeholder": "Zweiten Nachnamen eingeben (optional)",
+          "helperText": "Zweiten Nachnamen des Mitarbeiters eingeben",
+          "required": "Zweiter Nachname ist erforderlich"
+        },
+        "documentId": {
+          "label": "Ausweis-ID",
+          "placeholder": "Ausweis-ID eingeben"
+        },
+        "address": {
+          "label": "Adresse",
+          "placeholder": "Adresse eingeben",
+          "helperText": "Vollständige Adresse des Mitarbeiters eingeben",
+          "required": "Adresse ist erforderlich"
+        },
+        "countryId": {
+          "label": "Land",
+          "placeholder": "Land eingeben",
+          "helperText": "Land des Mitarbeiters eingeben",
+          "required": "Land ist erforderlich"
+        },
+        "regionId": {
+          "label": "Region/Bundesland",
+          "placeholder": "Region oder Bundesland eingeben",
+          "helperText": "Region oder Bundesland des Mitarbeiters eingeben",
+          "required": "Region ist erforderlich"
+        },
+        "municipalityId": {
+          "label": "Gemeinde",
+          "placeholder": "Gemeinde eingeben",
+          "helperText": "Gemeinde des Mitarbeiters eingeben",
+          "required": "Gemeinde ist erforderlich"
+        },
+        "postalCode": {
+          "label": "Postleitzahl",
+          "placeholder": "Postleitzahl eingeben",
+          "helperText": "Postleitzahl des Mitarbeiters eingeben",
+          "required": "Postleitzahl ist erforderlich"
+        },
+        "startedWorkOn": {
+          "label": "Arbeitsbeginn",
+          "placeholder": "Startdatum auswählen",
+          "helperText": "Auswählen, wann der Mitarbeiter zu arbeiten begann",
+          "required": "Startdatum ist erforderlich"
+        },
+        "paymentPeriodId": {
+          "label": "Zahlungszeitraum",
+          "placeholder": "Zahlungszeitraum eingeben",
+          "helperText": "Zahlungszeitraum eingeben",
+          "required": "Zahlungszeitraum ist erforderlich"
+        },
+        "coindId": {
+          "label": "Währung",
+          "placeholder": "Währung eingeben",
+          "helperText": "Währung eingeben",
+          "required": "Währung ist erforderlich"
+        },
+        "billingRatePerHour": {
+          "label": "Stundensatz",
+          "placeholder": "Abrechnungsrate eingeben",
+          "helperText": "Abrechnungsrate pro Stunde eingeben",
+          "required": "Abrechnungsrate ist erforderlich"
+        },
+        "minimunBllingRatePerHour": {
+          "label": "Mindest-Stundensatz",
+          "placeholder": "Mindest-Abrechnungsrate eingeben",
+          "helperText": "Mindest-Abrechnungsrate pro Stunde eingeben",
+          "required": "Mindest-Abrechnungsrate ist erforderlich"
+        },
+        "recurringWeeklyLimitHours": {
+          "label": "Wöchentliches Stundenlimit",
+          "placeholder": "Wöchentliches Stundenlimit eingeben",
+          "helperText": "Wiederkehrendes wöchentliches Stundenlimit eingeben",
+          "required": "Wöchentliches Limit ist erforderlich"
+        },
+        "organizationalUnitId": {
+          "label": "Organisationseinheit",
+          "placeholder": "Organisationseinheit eingeben",
+          "helperText": "Organisationseinheit eingeben",
+          "required": "Organisationseinheit ist erforderlich"
+        },
+        "employmentTypeId": {
+          "label": "Beschäftigungsart",
+          "placeholder": "Beschäftigungsart eingeben",
+          "helperText": "Beschäftigungsart eingeben",
+          "required": "Beschäftigungsart ist erforderlich"
+        },
+        "skillId": {
+          "label": "Fähigkeit",
+          "placeholder": "Fähigkeit eingeben",
+          "helperText": "Fähigkeit eingeben",
+          "required": "Fähigkeit ist erforderlich"
+        },
+        "positionId": {
+          "label": "Position",
+          "placeholder": "Position eingeben",
+          "helperText": "Position eingeben",
+          "required": "Position ist erforderlich"
+        },
+        "userId": {
+          "label": "Benutzer-ID",
+          "placeholder": "Benutzer eingeben",
+          "helperText": "Benutzer eingeben",
+          "required": "Benutzer ist erforderlich"
+        },
+        "email": {
+          "label": "E-Mail-Adresse",
+          "placeholder": "E-Mail-Adresse eingeben",
+          "helperText": "E-Mail-Adresse des Benutzers eingeben",
+          "required": "E-Mail-Adresse ist erforderlich",
+          "invalid": "Gültige E-Mail-Adresse eingeben"
+        },
+        "tel": {
+          "label": "Telefon",
+          "placeholder": "Telefonnummer eingeben",
+          "helperText": "Telefonnummer des Benutzers eingeben",
+          "required": "Telefonnummer ist erforderlich"
+        },
+        "avatar": {
+          "label": "Profilfoto",
+          "placeholder": "Profilfoto hochladen",
+          "helperText": "Erlaubte Formate: *.jpeg, *.jpg, *.png, *.gif. Maximale Größe 3MB"
+        },
+        "username": {
+          "label": "Benutzername",
+          "placeholder": "Benutzernamen eingeben",
+          "helperText": "Benutzernamen eingeben"
+        },
+        "language": {
+          "label": "Sprache",
+          "empty": "Keine"
+        },
+        "timezone": {
+          "label": "Zeitzone",
+          "placeholder": "z.B. Europe/Berlin",
+          "helperText": "Zeitzone eingeben"
+        },
+        "immediateSupervisor": {
+          "label": "Direkter Vorgesetzter",
+          "placeholder": "Mitarbeiter suchen..."
+        },
+        "password": {
+          "label": "Passwort",
+          "placeholder": "Passwort eingeben",
+          "helperText": "Sicheres Passwort eingeben",
+          "required": "Passwort ist erforderlich",
+          "minLength": "Das Passwort muss mindestens 8 Zeichen lang sein"
+        },
+        "confirmPassword": {
+          "label": "Passwort bestätigen",
+          "placeholder": "Passwort erneut eingeben",
+          "helperText": "Passwort zur Bestätigung erneut eingeben",
+          "required": "Passwortbestätigung ist erforderlich",
+          "mismatch": "Die Passwörter stimmen nicht überein"
+        }
+      },
+      "sections": {
+        "personalInfo": "Persönliche Informationen",
+        "workDetails": "Arbeitsdetails",
+        "locationInfo": "Standortinformationen",
+        "paymentInfo": "Zahlungsinformationen",
+        "accountInfo": "Benutzerkonto",
+        "accountInfoDescription": "Diese Felder sind nur beim Erstellen eines neuen Mitarbeiters erforderlich. Beim Bearbeiten sind sie optional."
+      }
+    },
+    "enums": {
+      "language": {
+        "spanish": "Spanisch",
+        "english": "Englisch"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Mitarbeiter löschen",
+        "content": "Möchten Sie diesen Mitarbeiter wirklich löschen?",
+        "contentMultiple": "Möchten Sie wirklich {{count}} Mitarbeiter löschen?",
+        "confirm": "Löschen"
+      },
+      "unsavedChanges": {
+        "title": "Nicht gespeicherte Änderungen",
+        "content": "Sie haben nicht gespeicherte Änderungen. Möchten Sie wirklich die Seite verlassen?",
+        "confirm": "Ohne Speichern beenden"
+      }
+    },
+    "messages": {
+      "loading": "Mitarbeiter werden geladen...",
+      "saving": "Wird gespeichert...",
+      "loadError": "Fehler beim Laden des Mitarbeiters",
+      "saveError": "Fehler beim Speichern des Mitarbeiters. Bitte versuchen Sie es erneut.",
+      "notFound": "Mitarbeiter nicht gefunden",
+      "createSuccess": "Mitarbeiter erfolgreich erstellt!",
+      "updateSuccess": "Mitarbeiter erfolgreich aktualisiert!",
+      "success": {
+        "created": "Mitarbeiter erfolgreich erstellt",
+        "updated": "Mitarbeiter erfolgreich aktualisiert",
+        "deleted": "Mitarbeiter erfolgreich gelöscht",
+        "deletedMultiple": "Mitarbeiter erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Mitarbeiter",
+        "saving": "Fehler beim Speichern des Mitarbeiters. Bitte versuchen Sie es erneut.",
+        "deleting": "Fehler beim Löschen des Mitarbeiters",
+        "deletingMultiple": "Fehler beim Löschen der Mitarbeiter",
+        "notFound": "Mitarbeiter nicht gefunden"
+      }
+    },
+    "status": {
+      "all": "Alle",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "tooltips": {
+      "edit": "Mitarbeiter bearbeiten",
+      "delete": "Mitarbeiter löschen",
+      "quickEdit": "Schnellbearbeitung"
+    },
+    "learning-paths": {
+      "title": "Lernpfadverwaltung",
+      "manageButton": "Lernpfade",
+      "actions": {
+        "assign": "Lernpfad zuweisen"
+      },
+      "fields": {
+        "learningPath": {
+          "label": "Lernpfad",
+          "placeholder": "Lernpfad suchen..."
+        },
+        "progress": {
+          "label": "Fortschritt"
+        },
+        "assignedAt": {
+          "label": "Zugewiesen am"
+        }
+      },
+      "status": {
+        "notStarted": "Nicht begonnen",
+        "inProgress": "In Bearbeitung",
+        "completed": "Abgeschlossen"
+      },
+      "emptyState": {
+        "noAssignments": "Diesem Mitarbeiter sind keine Lernpfade zugewiesen"
+      },
+      "success": {
+        "assigned": "Lernpfad erfolgreich zugewiesen",
+        "removed": "Lernpfad erfolgreich entfernt"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der zugewiesenen Lernpfade",
+        "loadingOptions": "Fehler beim Laden der verfügbaren Lernpfade",
+        "assigning": "Fehler beim Zuweisen des Lernpfads",
+        "removing": "Fehler beim Entfernen des Lernpfads"
+      },
+      "dialogs": {
+        "deleteConfirmation": {
+          "title": "Lernpfad löschen",
+          "message": "Möchten Sie den Lernpfad \"{{name}}\" wirklich löschen?",
+          "description": "Diese Aktion kann nicht rückgängig gemacht werden und die Zuweisung dieses Pfads wird dauerhaft entfernt.",
+          "confirm": "Löschen",
+          "cancel": "Abbrechen"
+        }
+      }
+    }
+  },
+  "skills": {
+    "title": "Kompetenzen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "skills": "Kompetenzen",
+      "list": "Kompetenzliste",
+      "create": "Kompetenz erstellen",
+      "edit": "Kompetenz bearbeiten"
+    },
+    "actions": {
+      "add": "Kompetenz hinzufügen",
+      "edit": "Kompetenz bearbeiten",
+      "delete": "Kompetenz löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert...",
+      "create": "Kompetenz erstellen",
+      "update": "Kompetenz aktualisieren",
+      "search": "Kompetenzen suchen...",
+      "clear": "Zurücksetzen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "code": "Code",
+        "type": "Typ",
+        "expectedLevel": "Erwartete Stufe",
+        "color": "Farbe",
+        "actions": "Aktionen"
+      },
+      "toolbar": {
+        "search": "Kompetenzen suchen..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Stichwort",
+        "all": "Alle"
+      },
+      "emptyState": {
+        "noData": "Keine Kompetenzen gefunden",
+        "noResults": "Keine Ergebnisse für Ihre Suche gefunden"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Kompetenznamen eingeben",
+          "helperText": "Kompetenznamen eingeben",
+          "required": "Name ist erforderlich"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "placeholder": "Beschreibung eingeben",
+          "helperText": "Kompetenzbeschreibung"
+        },
+        "code": {
+          "label": "Code",
+          "placeholder": "z.B. KOM01",
+          "helperText": "Eindeutiger Kompetenzcode"
+        },
+        "typeId": {
+          "label": "Kompetenztyp",
+          "placeholder": "Typ auswählen"
+        },
+        "expectedLevel": {
+          "label": "Erwartete Stufe",
+          "placeholder": "z.B. 3",
+          "helperText": "Erwartete Kompetenzstufe"
+        },
+        "color": {
+          "label": "Farbe",
+          "placeholder": "Kompetenzfarbe auswählen",
+          "helperText": "Kompetenzfarbe auswählen",
+          "required": "Farbe ist erforderlich",
+          "preview": "Farbvorschau"
+        }
+      },
+      "name": {
+        "required": "Name ist erforderlich"
+      },
+      "code": {
+        "required": "Code ist erforderlich",
+        "maxLength": "Der Code darf nicht mehr als 10 Zeichen haben"
+      },
+      "typeId": {
+        "required": "Kompetenztyp ist erforderlich"
+      },
+      "sections": {
+        "details": "Kompetenzdetails"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Kompetenz löschen",
+        "content": "Möchten Sie diese Kompetenz wirklich löschen?",
+        "contentMultiple": "Möchten Sie wirklich {{count}} Kompetenzen löschen?",
+        "confirm": "Löschen"
+      },
+      "unsavedChanges": {
+        "title": "Nicht gespeicherte Änderungen",
+        "content": "Sie haben nicht gespeicherte Änderungen. Möchten Sie wirklich die Seite verlassen?",
+        "confirm": "Ohne Speichern beenden"
+      }
+    },
+    "messages": {
+      "loading": "Kompetenzen werden geladen...",
+      "saving": "Wird gespeichert...",
+      "loadError": "Fehler beim Laden der Kompetenz",
+      "saveError": "Fehler beim Speichern der Kompetenz. Bitte versuchen Sie es erneut.",
+      "notFound": "Kompetenz nicht gefunden",
+      "createSuccess": "Kompetenz erfolgreich erstellt!",
+      "updateSuccess": "Kompetenz erfolgreich aktualisiert!",
+      "success": {
+        "created": "Kompetenz erfolgreich erstellt",
+        "updated": "Kompetenz erfolgreich aktualisiert",
+        "deleted": "Kompetenz erfolgreich gelöscht",
+        "deletedMultiple": "Kompetenzen erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Kompetenzen",
+        "saving": "Fehler beim Speichern der Kompetenz. Bitte versuchen Sie es erneut.",
+        "deleting": "Fehler beim Löschen der Kompetenz",
+        "deletingMultiple": "Fehler beim Löschen der Kompetenzen",
+        "notFound": "Kompetenz nicht gefunden"
+      }
+    },
+    "status": {
+      "all": "Alle",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "tooltips": {
+      "edit": "Kompetenz bearbeiten",
+      "delete": "Kompetenz löschen",
+      "quickEdit": "Schnellbearbeitung"
+    }
+  }
+}

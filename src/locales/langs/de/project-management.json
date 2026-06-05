@@ -1,0 +1,194 @@
+{
+  "clients": {
+    "title": "Kunden",
+    "breadcrumbs": {
+      "dashboard": "Kontrollpanel",
+      "projectManagement": "Projektmanagement",
+      "clients": "Kunden"
+    },
+    "actions": {
+      "new": "Neuer Kunde",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Änderungen speichern",
+      "create": "Kunde erstellen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name / E-Mail",
+        "nit": "NIT",
+        "status": "Status",
+        "createdAt": "Erstellt"
+      },
+      "toolbar": {
+        "search": "Nach Name, NIT oder E-Mail suchen...",
+        "statusLabel": "Status"
+      },
+      "filters": {
+        "all": "Alle",
+        "active": "Aktiv",
+        "inactive": "Inaktiv",
+        "searchLabel": "Suche:",
+        "statusLabel": "Status:"
+      }
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "drawer": {
+      "titleCreate": "Neuer Kunde",
+      "titleEdit": "Kunde bearbeiten",
+      "fields": {
+        "name": "Name",
+        "nit": "NIT",
+        "email": "E-Mail",
+        "isActive": "Aktiv"
+      },
+      "validation": {
+        "nameRequired": "Der Name ist erforderlich",
+        "nitRequired": "Die NIT ist erforderlich",
+        "emailInvalid": "Bitte gib eine gültige E-Mail ein"
+      }
+    },
+    "messages": {
+      "created": "Kunde erfolgreich erstellt",
+      "updated": "Kunde erfolgreich aktualisiert",
+      "deleted": "Kunde erfolgreich gelöscht",
+      "errorCreate": "Fehler beim Erstellen des Kunden",
+      "errorUpdate": "Fehler beim Aktualisieren des Kunden",
+      "errorDelete": "Fehler beim Löschen des Kunden",
+      "errorLoading": "Fehler beim Laden der Kunden"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Kunde löschen",
+        "content": "Möchtest du \"{{name}}\" wirklich löschen?"
+      }
+    }
+  },
+  "projects": {
+    "title": "Projekte",
+    "breadcrumbs": {
+      "dashboard": "Kontrollpanel",
+      "projectManagement": "Projektmanagement",
+      "projects": "Projekte"
+    },
+    "actions": {
+      "new": "Neues Projekt",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Änderungen speichern",
+      "create": "Projekt erstellen",
+      "viewDetail": "Details ansehen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name / Kunde",
+        "status": "Status",
+        "importance": "Wichtigkeit",
+        "size": "Größe",
+        "dates": "Zeiträume"
+      },
+      "toolbar": {
+        "search": "Nach Name oder Kunde suchen...",
+        "client": "Kunde",
+        "status": "Status",
+        "importanceLevel": "Wichtigkeit"
+      }
+    },
+    "drawer": {
+      "titleCreate": "Neues Projekt",
+      "titleEdit": "Projekt bearbeiten",
+      "fields": {
+        "name": "Projektname",
+        "client": "Kunde",
+        "status": "Status",
+        "importanceLevel": "Wichtigkeitsstufe",
+        "size": "Größe",
+        "complexity": "Komplexität",
+        "reintegroLevel": "Rückerstattungsstufe",
+        "generatesIncome": "Erzeugt Einnahmen",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "observations": "Anmerkungen"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Projekt löschen",
+        "content": "Möchtest du \"{{name}}\" wirklich löschen?"
+      }
+    },
+    "messages": {
+      "created": "Projekt erfolgreich erstellt",
+      "updated": "Projekt erfolgreich aktualisiert",
+      "deleted": "Projekt erfolgreich gelöscht",
+      "errorCreate": "Fehler beim Erstellen des Projekts",
+      "errorUpdate": "Fehler beim Aktualisieren des Projekts",
+      "errorDelete": "Fehler beim Löschen des Projekts",
+      "errorLoading": "Fehler beim Laden der Projekte"
+    },
+    "empty": {
+      "title": "Keine Projekte gefunden"
+    },
+    "card": {
+      "generatesIncome": "Erzeugt Einnahmen"
+    }
+  },
+  "workers": {
+    "title": "Mitarbeitende",
+    "breadcrumbs": {
+      "dashboard": "Kontrollpanel",
+      "projectManagement": "Projektmanagement",
+      "workers": "Mitarbeitende"
+    },
+    "actions": {
+      "edit": "Bearbeiten",
+      "cancel": "Abbrechen",
+      "save": "Änderungen speichern"
+    },
+    "table": {
+      "columns": {
+        "name": "Name / E-Mail",
+        "position": "Position",
+        "experience": "Erfahrung",
+        "technologies": "Technologien",
+        "status": "Status",
+        "employmentType": "Vertragsart"
+      },
+      "toolbar": {
+        "search": "Nach Name oder E-Mail suchen...",
+        "workerStatus": "Status",
+        "experienceLevel": "Erfahrungsstufe",
+        "employmentType": "Vertragsart"
+      },
+      "filters": {
+        "searchLabel": "Suche:",
+        "workerStatusLabel": "Status:",
+        "experienceLevelLabel": "Erfahrung:",
+        "employmentTypeLabel": "Vertrag:"
+      }
+    },
+    "drawer": {
+      "title": "Mitarbeitenden bearbeiten",
+      "fields": {
+        "workerStatus": "Status",
+        "experienceLevel": "Erfahrungsstufe",
+        "employmentType": "Vertragsart",
+        "technologies": "Technologien",
+        "technologiesHint": "Durch Komma getrennt: NestJS, TypeScript, MySQL",
+        "yearsOfExperience": "Berufsjahre",
+        "yearsInCompany": "Jahre im Unternehmen",
+        "observations": "Anmerkungen"
+      }
+    },
+    "messages": {
+      "updated": "Mitarbeitende erfolgreich aktualisiert",
+      "errorUpdate": "Fehler beim Aktualisieren des Mitarbeitenden",
+      "errorLoading": "Fehler beim Laden der Mitarbeitenden"
+    }
+  }
+}

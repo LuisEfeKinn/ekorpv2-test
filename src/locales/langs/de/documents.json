@@ -1,0 +1,234 @@
+{
+  "documentManagement": {
+    "title": "Dokumentenverwaltung",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "documents": "Dokumente"
+    },
+    "table": {
+      "columns": {
+        "id": "ID",
+        "code": "Code",
+        "name": "Name",
+        "description": "Beschreibung",
+        "version": "Version",
+        "writingDate": "Erstellungsdatum",
+        "expirationDate": "Ablaufdatum",
+        "type": "Typ",
+        "status": "Status",
+        "documentType": "Dokumenttyp",
+        "author": "Autor",
+        "ranking": "Ranking",
+        "active": "Aktiv",
+        "file": "Datei",
+        "link": "Link",
+        "createdDate": "Erstellungsdatum",
+        "lastModifiedDate": "Datum der letzten Aktualisierung",
+        "originalFile": "Originaldatei",
+        "options": "Optionen"
+      },
+      "values": {
+        "active": {
+          "yes": "Ja",
+          "no": "Nein"
+        }
+      },
+      "toolbar": {
+        "search": "Nach Code oder Name suchen..."
+      }
+    },
+    "actions": {
+      "create": "Dokument erstellen",
+      "preview": "Vorschau",
+      "download": "Herunterladen",
+      "exportExcel": "Excel exportieren",
+      "open": "Öffnen",
+      "edit": "Bearbeiten",
+      "changeControl": "Änderungsverfolgung",
+      "map": "Karte",
+      "feedbacks": "Lektionen & Vorschläge",
+      "delete": "Löschen",
+      "save": "Speichern",
+      "clear": "Löschen",
+      "cancel": "Abbrechen"
+    },
+    "filters": {
+      "any": "Alle",
+      "order": "Reihenfolge",
+      "orderNone": "Keine Reihenfolge",
+      "orderNameAsc": "Name (A-Z)",
+      "orderNameDesc": "Name (Z-A)",
+      "orderCreatedDesc": "Erstellungsdatum (neueste)"
+    },
+    "map": {
+      "title": "Dokumentenkarte",
+      "subtitle": "Karte",
+      "actions": {
+        "back": "Zurück"
+      },
+      "messages": {
+        "loading": "Karte wird geladen...",
+        "empty": "Keine Daten zur Anzeige vorhanden.",
+        "expandNotAvailable": "Erweiterte Ansicht noch nicht verfügbar",
+        "deleteNotAvailable": "Löschen noch nicht verfügbar"
+      },
+      "relations": {
+        "kinds": {
+          "process": "Prozess",
+          "job": "Stelle",
+          "objective": "Strategisches Ziel",
+          "organizationalUnit": "Organisationseinheit",
+          "tool": "Werkzeug",
+          "topic": "Klassifizierung",
+          "subscriber": "Abonnent",
+          "competency": "Kompetenz",
+          "exam": "Prüfung"
+        },
+        "titles": {
+          "create": "{{entity}} verknüpfen",
+          "edit": "Beziehung von {{entity}} bearbeiten"
+        },
+        "fields": {
+          "process": "Prozess",
+          "job": "Stelle",
+          "objective": "Ziel",
+          "organizationalUnit": "Organisationseinheit",
+          "tool": "Werkzeug",
+          "topic": "Klassifizierung",
+          "subscriber": "Benutzer",
+          "competency": "Kompetenz",
+          "exam": "Prüfung",
+          "observations": "Beobachtungen"
+        },
+        "validation": {
+          "required": "Pflichtfeld"
+        },
+        "actions": {
+          "cancel": "Abbrechen",
+          "create": "Erstellen",
+          "update": "Aktualisieren",
+          "delete": "Löschen"
+        },
+        "dialogs": {
+          "delete": {
+            "title": "Beziehung löschen",
+            "content": "Möchten Sie die Beziehung von \"{{name}}\" löschen?"
+          }
+        },
+        "messages": {
+          "loadError": "Daten konnten nicht geladen werden",
+          "missingData": "Pflichtfelder überprüfen",
+          "saveError": "Fehler beim Speichern der Beziehung",
+          "deleteError": "Fehler beim Löschen der Beziehung",
+          "deleteMissingId": "Die zu löschende Beziehung konnte nicht identifiziert werden",
+          "created": "Beziehung erfolgreich erstellt",
+          "updated": "Beziehung erfolgreich aktualisiert",
+          "deleted": "Beziehung erfolgreich gelöscht"
+        }
+      },
+      "drawer": {
+        "createTitle": "Formular",
+        "editTitle": "Bearbeiten"
+      }
+    },
+    "drawer": {
+      "title": {
+        "create": "Neues Dokument",
+        "edit": "Dokument bearbeiten"
+      }
+    },
+    "changeControl": {
+      "drawer": {
+        "title": "Änderungsverfolgung für Dokument {{code}}"
+      },
+      "form": {
+        "fields": {
+          "comments": "Änderungskommentare"
+        }
+      },
+      "table": {
+        "columns": {
+          "changeDate": "Datum der letzten Änderung",
+          "userName": "Benutzername",
+          "currentStatus": "Aktueller Status",
+          "previousStatus": "Vorheriger Status",
+          "numberOfDays": "Anzahl der Tage seit dem vorherigen Status",
+          "comments": "Kommentare zu den am Dokument vorgenommenen Änderungen"
+        },
+        "filters": {
+          "changeDate": "Datum filtern...",
+          "userName": "Benutzer filtern...",
+          "currentStatus": "Status filtern...",
+          "previousStatus": "Status filtern...",
+          "numberOfDays": "Tage filtern...",
+          "comments": "Kommentare filtern..."
+        }
+      },
+      "messages": {
+        "error": {
+          "loading": "Fehler beim Laden der Änderungsverfolgung",
+          "creating": "Änderungsverfolgung konnte nicht gespeichert werden",
+          "missingUser": "Änderungsverfolgung konnte nicht gespeichert werden: ungültiger Benutzer"
+        }
+      }
+    },
+    "form": {
+      "fields": {
+        "name": "Name",
+        "code": "Code",
+        "description": "Beschreibung",
+        "version": "Version",
+        "documentType": "Dokumenttyp",
+        "documentStatus": "Status",
+        "author": "Autor",
+        "verifier": "Bearbeiter",
+        "writingDate": "Verfassungsdatum",
+        "expirationDate": "Ablaufdatum",
+        "file": "Datei",
+        "type": "Typ",
+        "link": "Externe URL"
+      },
+      "fileDropzone": {
+        "title": "Datei (erforderlich)",
+        "helper": "Ziehen und ablegen oder klicken zum Auswählen",
+        "selected": "Ausgewählt: {{name}}"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Dokument erfolgreich erstellt",
+        "updated": "Dokument erfolgreich aktualisiert",
+        "deleted": "Dokument erfolgreich gelöscht"
+      },
+      "info": {
+        "previewNotSupported": "Dieser Dateityp kann hier nicht angezeigt werden"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Dokumente",
+        "saving": "Fehler beim Speichern des Dokuments",
+        "deleting": "Fehler beim Löschen des Dokuments",
+        "preview": "Dokumentvorschau konnte nicht angezeigt werden",
+        "downloading": "Dokument konnte nicht heruntergeladen werden",
+        "exporting": "Excel konnte nicht exportiert werden",
+        "exportMissingColumns": "Mindestens eine Spalte zum Exportieren auswählen",
+        "invalidForm": "Pflichtfelder überprüfen",
+        "fileRequired": "Datei ist erforderlich"
+      }
+    },
+    "feedbacks": {
+      "title": "Gelernte Lektionen & Verbesserungsvorschläge",
+      "actions": {
+        "back": "Zurück"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Dokument löschen",
+        "content": "Möchten Sie dieses Dokument löschen?"
+      },
+      "preview": {
+        "title": "Vorschau"
+      }
+    }
+  }
+}

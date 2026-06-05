@@ -1,0 +1,503 @@
+{
+  "roles": {
+    "title": "Rollen",
+    "breadcrumbs": {
+      "dashboard": "Kontrollpanel",
+      "security": "Sicherheit",
+      "roles": "Rollen"
+    },
+    "actions": {
+      "add": "Neue Rolle hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "create": "Rolle erstellen",
+      "update": "Rolle aktualisieren",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "permissions": "Berechtigungen",
+      "back": "Zurück"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "isDefault": "Typ",
+        "permissions": "Berechtigungen",
+        "status": "Status",
+        "createdAt": "Erstellungsdatum",
+        "updatedAt": "Letzte Aktualisierung"
+      },
+      "isDefault": {
+        "default": "Standard",
+        "custom": "Benutzerdefiniert"
+      },
+      "filters": {
+        "all": "Alle",
+        "search": "Rollen suchen...",
+        "keyword": "Stichwort"
+      }
+    },
+    "form": {
+      "sections": {
+        "details": "Rolldetails"
+      },
+      "fields": {
+        "name": {
+          "label": "Rollenname",
+          "helperText": "Gib einen aussagekräftigen Namen für die Rolle ein"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "helperText": "Kurze Beschreibung der Aufgaben der Rolle"
+        },
+        "permissions": {
+          "label": "Berechtigungen",
+          "helperText": "Wähle die Berechtigungen für diese Rolle aus"
+        },
+        "status": {
+          "label": "Status",
+          "active": "Aktiv",
+          "inactive": "Inaktiv"
+        }
+      },
+      "validation": {
+        "nameRequired": "Der Rollenname ist erforderlich",
+        "nameMinLength": "Der Name muss mindestens 2 Zeichen lang sein",
+        "nameMaxLength": "Der Name darf nicht länger als 50 Zeichen sein",
+        "descriptionRequired": "Die Beschreibung ist erforderlich",
+        "descriptionMaxLength": "Die Beschreibung darf nicht länger als 200 Zeichen sein",
+        "permissionsRequired": "Du musst mindestens eine Berechtigung auswählen"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Rolle löschen",
+        "description": "Möchtest du diese Rolle wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "confirmButton": "Löschen",
+        "cancelButton": "Abbrechen"
+      },
+      "deleteMultiple": {
+        "title": "Rollen löschen",
+        "description": "Möchtest du wirklich {count} Rollen löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "confirmButton": "Alle löschen",
+        "cancelButton": "Abbrechen"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Rolle erfolgreich erstellt",
+        "updated": "Rolle erfolgreich aktualisiert",
+        "deleted": "Rolle erfolgreich gelöscht",
+        "deletedMultiple": "Rollen erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Rollen",
+        "creating": "Fehler beim Erstellen der Rolle",
+        "updating": "Fehler beim Aktualisieren der Rolle",
+        "deleting": "Fehler beim Löschen der Rolle",
+        "deletingMultiple": "Fehler beim Löschen der Rollen",
+        "notFound": "Rolle nicht gefunden",
+        "duplicateName": "Es existiert bereits eine Rolle mit diesem Namen"
+      },
+      "info": {
+        "noResults": "Keine Rollen gefunden",
+        "emptyState": "Noch keine Rollen erstellt"
+      }
+    },
+    "status": {
+      "active": "Aktiv",
+      "preregistered": "Vorregistriert",
+      "inactive": "Inaktiv",
+      "deleted": "Gelöscht"
+    }
+  },
+  "users": {
+    "title": "Benutzer",
+    "breadcrumbs": {
+      "dashboard": "Kontrollpanel",
+      "security": "Sicherheit",
+      "users": "Benutzer"
+    },
+    "tabs": {
+      "general": "Allgemein",
+      "security": "Sicherheit"
+    },
+    "actions": {
+      "add": "Neuen Benutzer hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "create": "Benutzer erstellen",
+      "update": "Benutzer aktualisieren",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "changePassword": "Passwort ändern"
+    },
+    "table": {
+      "columns": {
+        "names": "Vornamen",
+        "lastnames": "Nachnamen",
+        "email": "E-Mail",
+        "roles": "Rollen",
+        "status": "Status",
+        "createdAt": "Erstellungsdatum",
+        "updatedAt": "Letzte Aktualisierung"
+      },
+      "filters": {
+        "all": "Alle",
+        "search": "Benutzer suchen...",
+        "keyword": "Stichwort"
+      }
+    },
+    "form": {
+      "sections": {
+        "details": "Benutzerdetails"
+      },
+      "fields": {
+        "names": {
+          "label": "Vornamen",
+          "helperText": "Gib die Vornamen des Benutzers ein"
+        },
+        "lastnames": {
+          "label": "Nachnamen",
+          "helperText": "Gib die Nachnamen des Benutzers ein"
+        },
+        "email": {
+          "label": "E-Mail",
+          "helperText": "Gib die E-Mail-Adresse ein"
+        },
+        "password": {
+          "label": "Passwort",
+          "helperText": "Gib ein sicheres Passwort ein"
+        },
+        "confirmPassword": {
+          "label": "Passwort bestätigen",
+          "helperText": "Wiederhole das Passwort"
+        },
+        "oldPassword": {
+          "label": "Aktuelles Passwort",
+          "helperText": "Gib dein aktuelles Passwort ein"
+        },
+        "newPassword": {
+          "label": "Neues Passwort",
+          "helperText": "Gib das neue Passwort ein"
+        },
+        "confirmNewPassword": {
+          "label": "Neues Passwort bestätigen",
+          "helperText": "Wiederhole das neue Passwort"
+        },
+        "roles": {
+          "label": "Rollen",
+          "helperText": "Wähle die Rollen des Benutzers aus"
+        },
+        "status": {
+          "label": "Benutzerstatus",
+          "helperText": "Benutzer aktivieren oder deaktivieren"
+        },
+        "avatar": {
+          "helperText": "Erlaubte Formate: *.jpeg, *.jpg, *.png, *.gif. Maximale Größe 3 MB"
+        },
+        "tel": {
+          "label": "Telefon",
+          "helperText": "Gib die Telefonnummer des Benutzers ein"
+        },
+        "documentId": {
+          "label": "Dokumenten-ID",
+          "helperText": "Gib die Dokumenten-ID des Benutzers ein"
+        },
+        "biometricIsActive": {
+          "label": "Biometrische Registrierung",
+          "helperText": "Biometrische Registrierung aktivieren oder deaktivieren"
+        }
+      },
+      "validation": {
+        "namesRequired": "Der Vorname ist erforderlich",
+        "lastnamesRequired": "Der Nachname ist erforderlich",
+        "emailRequired": "Die E-Mail ist erforderlich",
+        "emailInvalid": "Die E-Mail ist ungültig",
+        "passwordRequired": "Das Passwort ist erforderlich",
+        "passwordMinLength": "Das Passwort muss mindestens 6 Zeichen lang sein",
+        "confirmPasswordRequired": "Die Bestätigung ist erforderlich",
+        "confirmPasswordMatch": "Die Passwörter müssen übereinstimmen",
+        "oldPasswordRequired": "Das aktuelle Passwort ist erforderlich",
+        "newPasswordRequired": "Das neue Passwort ist erforderlich",
+        "rolesRequired": "Du musst mindestens eine Rolle auswählen",
+        "telRequired": "Die Telefonnummer ist erforderlich",
+        "documentIdRequired": "Die Dokumenten-ID ist erforderlich"
+      }
+    },
+    "security": {
+      "changePassword": "Passwort ändern",
+      "title": "Kontosicherheit",
+      "description": "Verwalte die Sicherheit des Benutzerkontos"
+    },
+    "messages": {
+      "success": {
+        "created": "Benutzer erfolgreich erstellt",
+        "updated": "Benutzer erfolgreich aktualisiert",
+        "deleted": "Benutzer erfolgreich gelöscht",
+        "passwordChanged": "Passwort erfolgreich geändert"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Benutzer",
+        "creating": "Fehler beim Erstellen des Benutzers",
+        "updating": "Fehler beim Aktualisieren des Benutzers",
+        "deleting": "Fehler beim Löschen des Benutzers",
+        "changingPassword": "Fehler beim Ändern des Passworts",
+        "notFound": "Benutzer nicht gefunden"
+      },
+      "info": {
+        "noResults": "Keine Benutzer gefunden",
+        "emptyState": "Noch keine Benutzer erstellt"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Benutzer löschen",
+        "description": "Möchtest du diesen Benutzer wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "confirmButton": "Löschen",
+        "cancelButton": "Abbrechen"
+      },
+      "deleteMultiple": {
+        "title": "Benutzer löschen",
+        "description": "Möchtest du wirklich {count} Benutzer löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "confirmButton": "Alle löschen",
+        "cancelButton": "Abbrechen"
+      }
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    }
+  },
+  "usersClarity": {
+    "title": "Benutzerverwaltung",
+    "breadcrumbs": {
+      "dashboard": "Kontrollpanel",
+      "usersAdministration": "Benutzerverwaltung"
+    },
+    "actions": {
+      "refresh": "Tabelle aktualisieren"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Benutzer löschen",
+        "description": "Möchtest du diesen Benutzer wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "confirmButton": "Löschen",
+        "cancelButton": "Abbrechen"
+      }
+    },
+    "table": {
+      "actions": {
+        "uploadTemplate": "Vorlage hochladen",
+        "downloadTemplate": "Vorlage herunterladen",
+        "download": "Herunterladen",
+        "exportExcel": "Excel exportieren"
+      },
+      "toolbar": {
+        "columns": "Spalten"
+      },
+      "columns": {
+        "id": "ID",
+        "userId": "Benutzer-ID",
+        "username": "Benutzer",
+        "names": "Vornamen",
+        "firstLastName": "Erster Nachname",
+        "email1": "E-Mail 1",
+        "roles": "Rollen",
+        "userStatus": "Benutzerstatus",
+        "position": "Positionen",
+        "profile": "Profil",
+        "organizationalUnit": "Organisationseinheit",
+        "immediateBoss": "Direkte Führungskraft",
+        "employeeCode": "Mitarbeitercode",
+        "actions": "Optionen"
+      },
+      "filters": {
+        "all": "Alle",
+        "active": "Aktiv",
+        "preregistered": "Vorregistriert",
+        "inactive": "Inaktiv",
+        "deleted": "Gelöscht",
+        "search": "Benutzer suchen...",
+        "clear": "Filter zurücksetzen",
+        "nombre": "Name",
+        "usuario": "Benutzer",
+        "correo": "E-Mail",
+        "estadoUsuario": "Benutzerstatus",
+        "rol": "Rolle",
+        "cargo": "Position",
+        "unidadOrganizacional": "Organisationseinheit",
+        "jefeInmediato": "Direkte Führungskraft",
+        "tipoUsuario": "Benutzertyp",
+        "tipoUsuarioInterno": "Intern",
+        "tipoUsuarioExterno": "Extern"
+      },
+      "uploadDialog": {
+        "title": "Massenimport von Benutzern",
+        "actions": {
+          "close": "Schließen",
+          "cancel": "Abbrechen",
+          "upload": "Hochladen",
+          "remove": "Entfernen"
+        },
+        "instructions": {
+          "title": "Anweisungen",
+          "step1": "Du musst eine Excel-Datei mit den folgenden Spalten als Kopfzeilen erstellen: ",
+          "columns": "USUARIO, CLAVE, NOMBRES, PRIMER_APELLIDO, SEGUNDO_APELLIDO, CODIGO_EMPLEADO, CORREO_ELECTRONICO, ID_CARGO, JEFE INMEDIATO (Benutzername), TIPO_DE_AUTENTICACION (Datenbank=1, LDAP=2, Extern=3), ESTADO_USUARIO (Aktiv=0, Inaktiv=2), TIPO_USUARIO (Intern=1, Extern=2).",
+          "step2": "Beachte, dass die Position der Organisationseinheit zugeordnet sein muss, sonst wird sie nicht importiert.",
+          "step3": "Vorlage herunterladen.",
+          "step4": "Gib die Liste der zu importierenden Benutzer ein und speichere die Datei ohne Leerzeichen oder Sonderzeichen im Namen.",
+          "step5": "Du kannst die gespeicherte Datei in das Feld unten ziehen und ablegen oder über die Schaltfläche 'Datei auswählen' auswählen.",
+          "step6": "Klicke auf die Schaltfläche 'Hochladen', um den Import zu starten."
+        },
+        "drop": {
+          "selectedTitle": "Ausgewählte Datei",
+          "title": "Excel-Datei auswählen",
+          "subtitle": "oder klicken, um sie von deinem Gerät auszuwählen",
+          "formats": "Erlaubte Formate: .xlsx, .xls • 1 Datei"
+        },
+        "errors": {
+          "tooManyFiles": "Es ist nur 1 Datei erlaubt.",
+          "invalidType": "Nicht erlaubtes Format. Verwende .xlsx oder .xls.",
+          "generic": "Die Datei konnte nicht hochgeladen werden. Bitte versuche es erneut.",
+          "noFile": "Bitte eine Datei auswählen."
+        }
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Fehler beim Laden der Clarity-Benutzer"
+      },
+      "downloadTemplateError": "Fehler beim Herunterladen der Vorlage",
+      "downloadExcelError": "Fehler beim Herunterladen der Excel-Datei",
+      "uploadSuccess": "Vorlage erfolgreich hochgeladen",
+      "uploadError": "Fehler beim Hochladen der Vorlage",
+      "createdCount": "erstellt"
+    },
+    "form": {
+      "sections": {
+        "systemUsers": "Systembenutzer"
+      },
+      "fields": {
+        "nombres": "Vornamen",
+        "primerApellido": "Erster Nachname",
+        "segundoApellido": "Zweiter Nachname",
+        "usuario": "Benutzer",
+        "correoElectronico1": "E-Mail 1",
+        "codigoEmpleado": "Mitarbeitercode",
+        "clave": "Kennwort",
+        "perfil": "Profil",
+        "unidadOrganizacional": "Organisationseinheit",
+        "cargos": "Positionen",
+        "jefeInmediato": "Direkte Führungskraft",
+        "tipoAutenticacion": "Authentifizierungstyp",
+        "estadoUsuario": "Benutzerstatus",
+        "tipoUsuario": "Benutzertyp",
+        "imagen": "Bild",
+        "alias": "Alias",
+        "avatar": "Avatar",
+        "numeroIdentificacion": "Ausweisnummer",
+        "tipoIdentificacion": "Ausweisart",
+        "correoElectronico2": "E-Mail 2",
+        "celular": "Mobiltelefon",
+        "direccionCasa": "Wohnadresse",
+        "telefonoCasa": "Privattelefon",
+        "direccionOficina": "Büroadresse",
+        "usuariosSistema": "Systembenutzer",
+        "tipoPersona": "Personentyp",
+        "empresa": "Unternehmen",
+        "tipoEmpresa": "Unternehmenstyp",
+        "nitEmpresa": "Unternehmens-NIT",
+        "actividadEconomica": "Wirtschaftstätigkeit",
+        "lenguaje": "Sprache",
+        "zonaHoraria": "Zeitzone"
+      },
+      "validation": {
+        "nombresRequired": "Die Vornamen sind erforderlich",
+        "primerApellidoRequired": "Der erste Nachname ist erforderlich",
+        "segundoApellidoRequired": "Der zweite Nachname ist erforderlich",
+        "usuarioRequired": "Der Benutzername ist erforderlich",
+        "correoElectronico1Required": "E-Mail 1 ist erforderlich",
+        "codigoEmpleadoRequired": "Der Mitarbeitercode ist erforderlich",
+        "claveRequired": "Das Kennwort ist erforderlich"
+      },
+      "actions": {
+        "save": "Speichern",
+        "reset": "Leeren",
+        "cancel": "Abbrechen"
+      }
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    }
+  },
+  "permissions": {
+    "title": "Berechtigungen",
+    "breadcrumbs": {
+      "dashboard": "Kontrollpanel",
+      "security": "Sicherheit",
+      "roles": "Rollen",
+      "permissions": "Berechtigungen"
+    },
+    "actions": {
+      "view": "Ansehen",
+      "create": "Erstellen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "assign": "Zuweisen",
+      "revoke": "Widerrufen",
+      "save": "Speichern",
+      "cancel": "Abbrechen"
+    },
+    "table": {
+      "title": "Berechtigungsverwaltung",
+      "subtitle": "Konfiguriere die Elemente für diese Rolle",
+      "saveChanges": "Änderungen speichern",
+      "selectAll": "Alles auswählen",
+      "item": "Element",
+      "itemsCount": "Elemente",
+      "noData": "Keine Daten verfügbar"
+    },
+    "info": {
+      "readOnly": "Dies ist eine Standardrolle. Ihre Elemente können nicht geändert werden."
+    },
+    "modules": {
+      "dashboard": "Kontrollpanel",
+      "users": "Benutzer",
+      "roles": "Rollen",
+      "employees": "Mitarbeitende",
+      "organization": "Organisation",
+      "settings": "Einstellungen",
+      "reports": "Berichte",
+      "security": "Sicherheit",
+      "company": "Unternehmen",
+      "locations": "Standorte"
+    },
+    "items": {
+      "users.list": "Benutzerliste",
+      "users.create": "Benutzer erstellen",
+      "users.edit": "Benutzer bearbeiten",
+      "users.delete": "Benutzer löschen",
+      "roles.list": "Rollenliste",
+      "roles.create": "Rolle erstellen",
+      "roles.edit": "Rolle bearbeiten",
+      "roles.delete": "Rolle löschen",
+      "employees.list": "Mitarbeiterliste",
+      "employees.create": "Mitarbeiter erstellen",
+      "employees.edit": "Mitarbeiter bearbeiten",
+      "employees.delete": "Mitarbeiter löschen",
+      "reports.analytics": "Analytische Berichte",
+      "reports.generate": "Berichte erstellen",
+      "settings.general": "Allgemeine Einstellungen",
+      "settings.security": "Sicherheitseinstellungen"
+    },
+    "empty": {
+      "title": "Keine Module verfügbar",
+      "description": "Für diese Rolle sind keine Module konfiguriert",
+      "noItems": "Keine Elemente",
+      "noItemsDescription": "In diesem Modul sind keine Elemente verfügbar",
+      "noPermissionsAvailable": "Keine Berechtigungen verfügbar"
+    }
+  }
+}

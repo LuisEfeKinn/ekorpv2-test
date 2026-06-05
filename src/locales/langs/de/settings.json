@@ -1,0 +1,180 @@
+{
+  "integrations": {
+    "title": "Integrationen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "settings": "Einstellungen"
+    },
+    "actions": {
+      "loading": "Wird geladen...",
+      "add": "Integration hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "view": "Ansehen",
+      "sync": "Synchronisieren",
+      "viewCategories": "Kategorien anzeigen",
+      "viewCourses": "Kurse anzeigen"
+    },
+    "filters": {
+      "searchPlaceholder": "Integrationen suchen...",
+      "all": "Alle",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "type": "Typ",
+        "status": "Status",
+        "image": "Bild",
+        "createdAt": "Erstellungsdatum"
+      },
+      "filters": {
+        "all": "Alle",
+        "active": "Aktiv",
+        "inactive": "Inaktiv",
+        "search": "Integrationen suchen..."
+      }
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Integration löschen",
+        "content": "Möchtest du diese Integration wirklich löschen?",
+        "contentMultiple": "Möchtest du wirklich {{count}} Integrationen löschen?"
+      }
+    },
+    "messages": {
+      "success": {
+        "deleted": "Integration erfolgreich gelöscht",
+        "deletedMultiple": "Integrationen erfolgreich gelöscht",
+        "updated": "Integration erfolgreich aktualisiert",
+        "created": "Integration erfolgreich erstellt",
+        "synced": "Integration erfolgreich synchronisiert"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Integrationen",
+        "deleting": "Fehler beim Löschen der Integration",
+        "deletingMultiple": "Fehler beim Löschen der Integrationen",
+        "notFound": "Integration nicht gefunden",
+        "updating": "Fehler beim Aktualisieren der Integration",
+        "creating": "Fehler beim Erstellen der Integration",
+        "loadingDetails": "Fehler beim Laden der Integrationsdetails"
+      }
+    },
+    "form": {
+      "title": {
+        "edit": "Integration bearbeiten",
+        "create": "Integration erstellen"
+      },
+      "subtitle": "Konfiguriere die Integrationsdetails",
+      "fields": {
+        "integration": {
+          "label": "Integrationstyp",
+          "placeholder": "Integrationstyp auswählen"
+        },
+        "instanceName": {
+          "label": "Instanzname",
+          "placeholder": "Instanznamen eingeben"
+        },
+        "name": {
+          "label": "Integrationsname",
+          "placeholder": "Integrationsnamen eingeben"
+        },
+        "status": {
+          "label": "Status",
+          "active": "Aktiv",
+          "inactive": "Inaktiv",
+          "helperPositiveText": "Die Integration ist aktiv und funktionsfähig",
+          "helperNegativeText": "Die Integration ist inaktiv und funktioniert nicht"
+        },
+        "parameters": {
+          "title": "Parameter",
+          "subtitle": "Konfiguriere die Parameter der Integration",
+          "noParameters": "Für diese Integration sind keine Parameter verfügbar",
+          "code": "Code",
+          "selectIntegration": "Wähle eine Integration, um ihre Parameter anzuzeigen"
+        }
+      },
+      "buttons": {
+        "save": "Änderungen speichern",
+        "cancel": "Abbrechen",
+        "create": "Integration erstellen"
+      },
+      "validation": {
+        "nameRequired": "Der Integrationsname ist erforderlich",
+        "nameMinLength": "Der Name muss mindestens 2 Zeichen lang sein"
+      }
+    }
+  },
+  "categories": {
+    "title": "Kategorien",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "integrations": "Integrationen"
+    },
+    "table": {
+      "columns": {
+        "name": "Kategorie-Name",
+        "description": "Beschreibung",
+        "status": "Status",
+        "createdAt": "Erstellungsdatum"
+      },
+      "toolbar": {
+        "search": "Nach Name oder Typ suchen...",
+        "includeInactive": "Inaktive einschließen"
+      },
+      "filters": {
+        "keyword": "Stichwort",
+        "includeInactive": "Inaktive einschließen",
+        "showingInactive": "Inaktive werden angezeigt"
+      },
+      "actions": {
+        "viewCourses": "Kurse anzeigen"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Fehler beim Laden der Kategorien"
+      }
+    }
+  },
+  "courses": {
+    "title": "Kurse",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "integrations": "Integrationen",
+      "categories": "Kategorien"
+    },
+    "table": {
+      "columns": {
+        "fullName": "Vollständiger Name",
+        "displayName": "Anzeigename",
+        "description": "Beschreibung",
+        "status": "Status",
+        "noDescription": "Keine Beschreibung verfügbar"
+      },
+      "toolbar": {
+        "selectIntegration": "Integration auswählen",
+        "searchIntegration": "Integration suchen...",
+        "search": "Nach Code suchen...",
+        "includeInactive": "Inaktive einschließen"
+      },
+      "filters": {
+        "keyword": "Stichwort",
+        "integration": "Integration",
+        "selected": "Ausgewählt",
+        "includeInactive": "Inaktive einschließen",
+        "showingInactive": "Inaktive werden angezeigt"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Fehler beim Laden der Kurse"
+      }
+    }
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "config": {
+    "title": "Benachrichtigungseinstellungen",
+    "noData": "Keine Benachrichtigungsgruppen gefunden",
+    "columns": {
+      "event": "Ereignis",
+      "notifications": "Benachrichtigungen",
+      "options": "Optionen"
+    },
+    "actions": {
+      "addNotification": "Benachrichtigung hinzufügen",
+      "editEvent": "Ereignis bearbeiten"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "editDrawer": {
+      "title": "Benachrichtigungsereignis bearbeiten",
+      "eventKey": "Ereignis",
+      "auditableObject": "Prüfobjekt",
+      "subjectTemplate": "Betreff",
+      "messageTemplate": "Nachricht",
+      "existingNotifications": "Konfigurierte Benachrichtigungen",
+      "noNotifications": "Keine Benachrichtigungen konfiguriert",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "successMsg": "Ereignis aktualisiert",
+      "errorMsg": "Fehler beim Aktualisieren des Ereignisses"
+    },
+    "addDrawer": {
+      "title": "Benachrichtigung hinzufügen",
+      "eventContext": "Ereignis",
+      "auditableObject": "Prüfobjekt",
+      "name": "Name",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "successMsg": "Benachrichtigung hinzugefügt",
+      "errorMsg": "Fehler beim Hinzufügen der Benachrichtigung"
+    }
+  },
+  "announcements": {
+    "title": "Ankündigungen",
+    "breadcrumbs": {
+      "notifications": "Benachrichtigungen"
+    },
+    "actions": {
+      "new": "Neu",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "loadImage": "Bild laden",
+      "view": "Ansehen"
+    },
+    "search": "Nach Titel suchen...",
+    "table": {
+      "columns": {
+        "id": "ID",
+        "title": "Titel",
+        "type": "Typ",
+        "status": "Status",
+        "order": "Reihenfolge",
+        "file": "Ankündigungsbild",
+        "deadlineDate": "Fälligkeitsdatum"
+      }
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "deleted": "Gelöscht"
+    },
+    "types": {
+      "news": "Nachricht",
+      "event": "Ereignis",
+      "article": "Artikel"
+    },
+    "form": {
+      "title": "Titel",
+      "type": "Typ",
+      "file": "Ankündigungsbild",
+      "content": "Inhalt",
+      "author": "Autor",
+      "status": "Status",
+      "order": "Reihenfolge",
+      "deadlineDate": "Fälligkeitsdatum",
+      "select": "Auswählen",
+      "filePlaceholder": "https://...",
+      "orderPlaceholder": "0",
+      "contentPlaceholder": "Schreib etwas Großartiges...",
+      "validation": {
+        "titleRequired": "Der Titel ist erforderlich",
+        "typeRequired": "Der Typ ist erforderlich",
+        "statusRequired": "Der Status ist erforderlich",
+        "orderRequired": "Die Reihenfolge ist erforderlich",
+        "orderMin": "Die Reihenfolge muss größer oder gleich 0 sein",
+        "fileRequired": "Das Ankündigungsbild ist erforderlich"
+      }
+    },
+    "drawer": {
+      "createTitle": "Ankündigung erstellen",
+      "editTitle": "Ankündigung bearbeiten"
+    },
+    "messages": {
+      "created": "Ankündigung erstellt",
+      "updated": "Ankündigung aktualisiert",
+      "deleted": "Ankündigung gelöscht",
+      "error": {
+        "loading": "Fehler beim Laden der Ankündigungen",
+        "saving": "Fehler beim Speichern der Ankündigung",
+        "deleting": "Fehler beim Löschen der Ankündigung"
+      }
+    },
+    "confirmDelete": {
+      "title": "Ankündigung löschen",
+      "content": "Möchtest du diese Ankündigung wirklich löschen?"
+    }
+  },
+  "templates": {
+    "title": "Benachrichtigungsvorlagen",
+    "searchPlaceholder": "Nach Ereignis oder Betreff suchen...",
+    "columns": {
+      "id": "ID",
+      "eventName": "Ereignisname",
+      "auditableObject": "Prüfobjekt",
+      "subject": "Betreff"
+    },
+    "editDrawer": {
+      "title": "Vorlage bearbeiten",
+      "id": "ID",
+      "eventName": "Ereignisname",
+      "auditableObject": "Prüfobjekt",
+      "subject": "Betreff",
+      "message": "Nachricht",
+      "cancel": "Abbrechen",
+      "clear": "Leeren",
+      "save": "Speichern",
+      "successMsg": "Vorlage aktualisiert",
+      "errorMsg": "Fehler beim Aktualisieren der Vorlage"
+    }
+  }
+}

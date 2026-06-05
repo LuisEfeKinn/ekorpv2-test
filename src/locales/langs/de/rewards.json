@@ -1,0 +1,571 @@
+{
+  "rewards": {
+    "title": "Belohnungen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "rewards": "Belohnungen",
+      "edit": "Belohnung bearbeiten",
+      "create": "Belohnung erstellen"
+    },
+    "actions": {
+      "add": "Belohnung hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "view": "Ansehen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "category": "Kategorie",
+        "points": "Punkte",
+        "stock": "Bestand",
+        "status": "Status"
+      },
+      "toolbar": {
+        "sortBy": "Sortieren nach",
+        "resetFilters": "Filter zurücksetzen"
+      },
+      "filters": {
+        "all": "Alle",
+        "keyword": "Stichwort",
+        "categoryRewardId": "Kategorien"
+      },
+      "order": {
+        "idAsc": "ID (aufsteigend)",
+        "idDesc": "ID (absteigend)",
+        "nameAsc": "Name (A-Z)",
+        "nameDesc": "Name (Z-A)",
+        "pointsAsc": "Punkte (aufsteigend)",
+        "pointsDesc": "Punkte (absteigend)",
+        "stockAsc": "Bestand (aufsteigend)",
+        "stockDesc": "Bestand (absteigend)",
+        "createdAtAsc": "Älteste",
+        "createdAtDesc": "Neueste",
+        "categoryAsc": "Kategorie (A-Z)",
+        "categoryDesc": "Kategorie (Z-A)"
+      },
+      "search": "Belohnungen suchen..."
+    },
+    "form": {
+      "name": {
+        "required": "Der Name ist erforderlich"
+      },
+      "description": {
+        "required": "Die Beschreibung ist erforderlich"
+      },
+      "category": {
+        "required": "Die Kategorie ist erforderlich"
+      },
+      "stock": {
+        "required": "Der Bestand ist erforderlich"
+      },
+      "isActive": {
+        "required": "Der Status ist erforderlich"
+      },
+      "pointsRequired": {
+        "required": "Die Punkte sind erforderlich"
+      },
+      "startDate": {
+        "required": "Das Startdatum ist erforderlich"
+      },
+      "endDate": {
+        "required": "Das Enddatum ist erforderlich"
+      },
+      "imageUrl": {
+        "required": "Das Bild ist erforderlich"
+      },
+      "fields": {
+        "name": {
+          "label": "Name",
+          "helperText": "Gib den Namen der Belohnung ein"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "helperText": "Gib die Beschreibung der Belohnung ein"
+        },
+        "category": {
+          "label": "Kategorie"
+        },
+        "pointsRequired": {
+          "label": "Punkte",
+          "helperText": "Gib die zum Einlösen erforderlichen Punkte ein"
+        },
+        "stockTotal": {
+          "label": "Bestand",
+          "helperText": "Gib die verfügbare Menge ein"
+        },
+        "startDate": {
+          "label": "Startdatum"
+        },
+        "endDate": {
+          "label": "Enddatum"
+        },
+        "imageUrl": {
+          "label": "Bild",
+          "placeholder": "Ziehe das Belohnungsbild hierher oder wähle es aus",
+          "helperText": "Lade das Bild hoch, das bei der Belohnung angezeigt wird"
+        },
+        "isActive": {
+          "label": "Status"
+        }
+      },
+      "actions": {
+        "cancel": "Abbrechen",
+        "saving": "Wird gespeichert...",
+        "update": "Aktualisieren",
+        "create": "Erstellen"
+      },
+      "messages": {
+        "updateSuccess": "Belohnung erfolgreich aktualisiert",
+        "createSuccess": "Belohnung erfolgreich erstellt",
+        "saveError": "Fehler beim Speichern der Belohnung"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Fehler beim Laden der Belohnung",
+        "deleting": "Fehler beim Löschen der Belohnung",
+        "saveError": "Fehler beim Speichern der Belohnung"
+      },
+      "success": {
+        "deleted": "Belohnung erfolgreich gelöscht",
+        "updateSuccess": "Belohnung erfolgreich aktualisiert",
+        "createSuccess": "Belohnung erfolgreich erstellt"
+      },
+      "confirmDelete": "Möchtest du diese Belohnung wirklich löschen?"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    }
+  },
+  "rewards-categories": {
+    "title": "Belohnungskategorien",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "rewards": "Belohnungen",
+      "rewards-categories": "Belohnungskategorien",
+      "list": "Liste der Belohnungskategorien",
+      "create": "Belohnungskategorie erstellen",
+      "edit": "Belohnungskategorie bearbeiten"
+    },
+    "actions": {
+      "add": "Belohnungskategorie hinzufügen",
+      "edit": "Belohnungskategorie bearbeiten",
+      "delete": "Belohnungskategorie löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert...",
+      "create": "Belohnungskategorie erstellen",
+      "update": "Belohnungskategorie aktualisieren",
+      "search": "Belohnungskategorien suchen...",
+      "clear": "Leeren"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "abreviation": "Abkürzung",
+        "createdAt": "Erstellungsdatum",
+        "updatedAt": "Aktualisiert am",
+        "actions": "Aktionen"
+      },
+      "toolbar": {
+        "search": "Belohnungskategorien suchen..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Stichwort",
+        "all": "Alle"
+      },
+      "emptyState": {
+        "noData": "Keine Belohnungskategorien gefunden",
+        "noResults": "Keine Ergebnisse für deine Suche gefunden"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Gib den Namen der Belohnungskategorie ein",
+          "helperText": "Gib den Namen der Belohnungskategorie ein",
+          "required": "Der Name ist erforderlich"
+        },
+        "abreviation": {
+          "label": "Abkürzung",
+          "placeholder": "Gib die Abkürzung der Belohnungskategorie ein",
+          "helperText": "Gib die Abkürzung der Belohnungskategorie ein",
+          "required": "Die Abkürzung ist erforderlich"
+        }
+      },
+      "sections": {
+        "details": "Details der Belohnungskategorie"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Belohnungskategorie löschen",
+        "content": "Möchtest du diese Belohnungskategorie wirklich löschen?",
+        "contentMultiple": "Möchtest du diese Belohnungskategorien wirklich löschen?",
+        "confirm": "Löschen"
+      },
+      "unsavedChanges": {
+        "title": "Nicht gespeicherte Änderungen",
+        "content": "Du hast nicht gespeicherte Änderungen. Möchtest du wirklich verlassen?",
+        "confirm": "Ohne Speichern verlassen"
+      }
+    },
+    "messages": {
+      "loading": "Belohnungskategorien werden geladen...",
+      "saving": "Wird gespeichert...",
+      "loadError": "Fehler beim Laden der Belohnungskategorie",
+      "saveError": "Fehler beim Speichern der Belohnungskategorie. Bitte versuche es erneut.",
+      "notFound": "Belohnungskategorie nicht gefunden",
+      "createSuccess": "Belohnungskategorie erfolgreich erstellt!",
+      "updateSuccess": "Belohnungskategorie erfolgreich aktualisiert!",
+      "success": {
+        "created": "Belohnungskategorie erfolgreich erstellt",
+        "updated": "Belohnungskategorie erfolgreich aktualisiert",
+        "deleted": "Belohnungskategorie erfolgreich gelöscht",
+        "deletedMultiple": "Belohnungskategorien erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Belohnungskategorien",
+        "saving": "Fehler beim Speichern der Belohnungskategorie. Bitte versuche es erneut.",
+        "deleting": "Fehler beim Löschen der Belohnungskategorie",
+        "deletingMultiple": "Fehler beim Löschen der Belohnungskategorien",
+        "notFound": "Belohnungskategorie nicht gefunden"
+      }
+    },
+    "status": {
+      "all": "Alle",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "tooltips": {
+      "edit": "Belohnungskategorie bearbeiten",
+      "delete": "Belohnungskategorie löschen",
+      "quickEdit": "Schnellbearbeitung"
+    }
+  },
+  "userReward": {
+    "header": {
+      "title": "Belohnungsshop",
+      "subtitle": "Löse deine Punkte gegen tolle Belohnungen ein. Lerne weiter und sammle mehr Punkte!",
+      "pointsAvailable": "Verfügbare Punkte",
+      "nextLevel": "Nächstes Level",
+      "level": "Kein Level",
+      "pointsShort": "Pkt"
+    },
+    "filters": {
+      "title": "Filter",
+      "category": "Kategorie",
+      "all": "Alle",
+      "rewardRange": "Belohnungsbereich",
+      "rangeMin": "Minimum",
+      "rangeMax": "Maximum",
+      "min": "min",
+      "max": "max",
+      "customize": "Anpassen",
+      "clearFilters": "Filter zurücksetzen",
+      "searchPlaceholder": "Suchen..."
+    },
+    "products": {
+      "productsFound": "{{count}} Produkte gefunden",
+      "noProductsFound": "Keine Produkte gefunden",
+      "noProductsDescription": "Passe deine Filter an oder suche nach einem anderen Begriff",
+      "loading": "Belohnungen werden geladen...",
+      "stockAvailable": "Verfügbarer Bestand:",
+      "claim": "Einlösen",
+      "outOfStock": "Ausverkauft"
+    },
+    "actions": {
+      "resetFilters": "Filter zurücksetzen",
+      "personalize": "Personalisieren",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "close": "Schließen",
+      "viewDetails": "Details ansehen"
+    },
+    "messages": {
+      "claimSuccess": "Belohnung erfolgreich eingelöst!",
+      "claimError": "Fehler beim Einlösen der Belohnung. Bitte versuche es erneut.",
+      "notEnoughPoints": "Du hast nicht genug Punkte, um diese Belohnung einzulösen"
+    },
+    "history": {
+      "title": "Belohnungsverlauf",
+      "subtitle": "Sieh dir deine eingelösten Belohnungen an und bewerte deine Erfahrung",
+      "rewardsRedeemed": "Eingelöste Belohnungen",
+      "rewardsCount": "Elemente",
+      "loading": "Verlauf wird geladen...",
+      "itemsFound": "{{count}} Belohnungen gefunden",
+      "noItemsFound": "Du hast noch keine Belohnungen eingelöst",
+      "noItemsDescription": "Löse zuerst Belohnungen in unserem Shop ein, um deinen Verlauf hier zu sehen"
+    },
+    "rating": {
+      "current": "Bewertung",
+      "notRated": "Nicht bewertet",
+      "rate": "Bewerten",
+      "edit": "Bewertung bearbeiten",
+      "title": "Bewerte diese Belohnung",
+      "instruction": "Wie würdest du diese Belohnung bewerten?",
+      "comment": "Kommentar (optional)",
+      "commentPlaceholder": "Erzähle uns von deiner Erfahrung...",
+      "success": "Bewertung erfolgreich gespeichert!",
+      "error": "Fehler beim Speichern der Bewertung",
+      "tapToRate": "Tippen zum Bewerten",
+      "veryBad": "Sehr schlecht",
+      "bad": "Schlecht",
+      "regular": "Befriedigend",
+      "good": "Gut",
+      "veryGood": "Sehr gut"
+    },
+    "details": {
+      "title": "Belohnungsdetails",
+      "points": "Verwendete Punkte",
+      "redeemedAt": "Eingelöst am"
+    }
+  },
+  "rewards-rule-types": {
+    "title": "Regeltypen für Belohnungen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "rewards": "Belohnungen",
+      "rewards-rule-types": "Regeltypen für Belohnungen",
+      "list": "Liste der Regeltypen für Belohnungen",
+      "create": "Regeltyp für Belohnungen erstellen",
+      "edit": "Regeltyp für Belohnungen bearbeiten"
+    },
+    "actions": {
+      "add": "Regeltyp für Belohnungen hinzufügen",
+      "edit": "Regeltyp für Belohnungen bearbeiten",
+      "delete": "Regeltyp für Belohnungen löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert...",
+      "create": "Regeltyp für Belohnungen erstellen",
+      "update": "Regeltyp für Belohnungen aktualisieren",
+      "search": "Regeltypen für Belohnungen suchen...",
+      "clear": "Leeren"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "createdAt": "Erstellt am",
+        "updatedAt": "Aktualisiert am",
+        "actions": "Aktionen"
+      },
+      "toolbar": {
+        "search": "Regeltypen für Belohnungen suchen..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Stichwort",
+        "all": "Alle"
+      },
+      "emptyState": {
+        "noData": "Keine Regeltypen für Belohnungen gefunden",
+        "noResults": "Keine Ergebnisse für deine Suche gefunden"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Gib den Namen des Regeltyps für Belohnungen ein",
+          "helperText": "Gib den Namen des Regeltyps für Belohnungen ein",
+          "required": "Der Name ist erforderlich"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "placeholder": "Gib die Beschreibung des Regeltyps für Belohnungen ein",
+          "helperText": "Gib die Beschreibung des Regeltyps für Belohnungen ein",
+          "required": "Die Beschreibung ist erforderlich"
+        }
+      },
+      "sections": {
+        "details": "Details des Regeltyps für Belohnungen"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Regeltyp für Belohnungen löschen",
+        "content": "Möchtest du diesen Regeltyp für Belohnungen wirklich löschen?",
+        "contentMultiple": "Möchtest du diese Regeltypen für Belohnungen wirklich löschen?",
+        "confirm": "Löschen"
+      },
+      "unsavedChanges": {
+        "title": "Nicht gespeicherte Änderungen",
+        "content": "Du hast nicht gespeicherte Änderungen. Möchtest du wirklich verlassen?",
+        "confirm": "Ohne Speichern verlassen"
+      }
+    },
+    "messages": {
+      "loading": "Regeltyp für Belohnungen wird geladen...",
+      "saving": "Wird gespeichert...",
+      "loadError": "Fehler beim Laden des Regeltyps für Belohnungen",
+      "saveError": "Fehler beim Speichern des Regeltyps für Belohnungen. Bitte versuche es erneut.",
+      "notFound": "Regeltyp für Belohnungen nicht gefunden",
+      "createSuccess": "Regeltyp für Belohnungen erfolgreich erstellt!",
+      "updateSuccess": "Regeltyp für Belohnungen erfolgreich aktualisiert!",
+      "success": {
+        "created": "Regeltyp für Belohnungen erfolgreich erstellt",
+        "updated": "Regeltyp für Belohnungen erfolgreich aktualisiert",
+        "deleted": "Regeltyp für Belohnungen erfolgreich gelöscht",
+        "deletedMultiple": "Regeltypen für Belohnungen erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Regeltypen für Belohnungen",
+        "saving": "Fehler beim Speichern des Regeltyps für Belohnungen. Bitte versuche es erneut.",
+        "deleting": "Fehler beim Löschen des Regeltyps für Belohnungen",
+        "deletingMultiple": "Fehler beim Löschen der Regeltypen für Belohnungen",
+        "notFound": "Regeltyp für Belohnungen nicht gefunden"
+      }
+    },
+    "status": {
+      "all": "Alle",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "tooltips": {
+      "edit": "Regeltyp für Belohnungen bearbeiten",
+      "delete": "Regeltyp für Belohnungen löschen",
+      "quickEdit": "Schnellbearbeitung"
+    }
+  },
+  "reward-rules": {
+    "title": "Belohnungsregeln",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "reward-rules": "Belohnungsregeln",
+      "edit": "Belohnungsregeln bearbeiten",
+      "create": "Belohnungsregeln erstellen"
+    },
+    "actions": {
+      "add": "Belohnungsregeln hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "view": "Ansehen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "typeRule": "Regeltyp",
+        "points": "Punkte",
+        "status": "Status"
+      },
+      "toolbar": {
+        "resetFilters": "Filter zurücksetzen"
+      },
+      "filters": {
+        "all": "Alle",
+        "keyword": "Stichwort",
+        "typeRuleId": "Regeltyp"
+      },
+      "search": "Belohnungsregeln suchen..."
+    },
+    "form": {
+      "name": {
+        "required": "Der Name ist erforderlich"
+      },
+      "typeRule": {
+        "required": "Der Regeltyp ist erforderlich"
+      },
+      "isActive": {
+        "required": "Der Status ist erforderlich"
+      },
+      "points": {
+        "required": "Die Punkte sind erforderlich"
+      },
+      "fields": {
+        "name": {
+          "label": "Name",
+          "helperText": "Gib den Namen der Belohnung ein"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "helperText": "Gib die Beschreibung der Belohnung ein"
+        },
+        "typeRule": {
+          "label": "Regeltyp"
+        },
+        "points": {
+          "label": "Punkte",
+          "helperText": "Gib die zum Einlösen erforderlichen Punkte ein"
+        },
+        "isActive": {
+          "label": "Status"
+        }
+      },
+      "actions": {
+        "cancel": "Abbrechen",
+        "saving": "Wird gespeichert...",
+        "update": "Aktualisieren",
+        "create": "Erstellen"
+      },
+      "messages": {
+        "updateSuccess": "Belohnungsregel erfolgreich aktualisiert",
+        "createSuccess": "Belohnungsregel erfolgreich erstellt",
+        "saveError": "Fehler beim Speichern der Belohnungsregel"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Fehler beim Laden der Belohnungsregel",
+        "deleting": "Fehler beim Löschen der Belohnungsregel",
+        "saveError": "Fehler beim Speichern der Belohnungsregel"
+      },
+      "success": {
+        "deleted": "Belohnungsregel erfolgreich gelöscht",
+        "updateSuccess": "Belohnungsregel erfolgreich aktualisiert",
+        "createSuccess": "Belohnungsregel erfolgreich erstellt"
+      },
+      "confirmDelete": "Möchtest du diese Belohnungsregel wirklich löschen?"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    }
+  },
+  "rewards-history": {
+    "title": "Verlauf eingelöster Belohnungen",
+    "subtitle": "Erstelle Berichte über den Belohnungsverlauf der Mitarbeitenden",
+    "filters": {
+      "title": "Filter",
+      "startDate": "Startdatum",
+      "endDate": "Enddatum",
+      "generate": "Bericht erstellen",
+      "generateTooltip": "Bericht mit den ausgewählten Filtern erstellen",
+      "endDateError": "Das Enddatum darf nicht vor dem Startdatum liegen",
+      "clear": "Filter zurücksetzen"
+    },
+    "table": {
+      "results": "Berichtsergebnisse",
+      "noData": "Keine eingelösten Belohnungen gefunden",
+      "download": "CSV herunterladen",
+      "record": "Eintrag",
+      "records": "Einträge",
+      "columns": {
+        "userEmail": "Benutzer-E-Mail",
+        "rewardName": "Belohnung",
+        "pointsRequired": "Verwendete Punkte",
+        "redeemedAt": "Einlösedatum"
+      }
+    },
+    "messages": {
+      "loading": "Bericht wird erstellt...",
+      "error": "Fehler beim Erstellen des Berichts. Bitte versuche es erneut.",
+      "noData": "Keine eingelösten Belohnungen gefunden",
+      "noDataDescription": "Passe die Filter an und erstelle einen neuen Bericht"
+    },
+    "pagination": {
+      "page": "Seite",
+      "of": "von",
+      "rowsPerPage": "Zeilen pro Seite:",
+      "previous": "Zurück",
+      "next": "Weiter"
+    }
+  }
+}

@@ -1,0 +1,1248 @@
+{
+  "common": {
+    "close": "Schließen",
+    "loading": "Wird geladen...",
+    "noData": "Keine Daten",
+    "unnamed": "Unbenannt",
+    "save": "Speichern",
+    "cancel": "Abbrechen"
+  },
+  "main": {
+    "catalogsManagement": "Katalogverwaltung",
+    "subtitle": "Verwalte und organisiere die Kataloge deiner Unternehmensarchitektur",
+    "viewAction": "Katalog anzeigen",
+    "actions": {
+      "reorderHint": "Ziehen zum Neuordnen",
+      "resetOrder": "Reihenfolge zurücksetzen"
+    },
+    "items": {
+      "actionTypes": {
+        "label": "Aktionsarten",
+        "description": "Definiere und verwalte die verschiedenen Aktionsarten innerhalb der Unternehmensarchitektur."
+      },
+      "competenciesClasses": {
+        "label": "Kompetenzklassen",
+        "description": "Klassifiziere und organisiere Kompetenzen in verschiedene Kategorien für eine bessere Verwaltung."
+      },
+      "competencies": {
+        "label": "Kompetenzen",
+        "description": "Verwalte die Kompetenzen, die für Rollen und Verantwortlichkeiten in der Organisation erforderlich sind."
+      },
+      "dataTypes": {
+        "label": "Datentypen",
+        "description": "Definiere und verwalte die verschiedenen Datentypen, die in der Unternehmensarchitektur verwendet werden."
+      },
+      "jobTypes": {
+        "label": "Stellentypen",
+        "description": "Definiere und verwalte die verschiedenen Stellentypen innerhalb der Organisation."
+      },
+      "measureActionTypes": {
+        "label": "Maßnahmenarten",
+        "description": "Definiere und verwalte die verschiedenen Maßnahmenarten innerhalb der Unternehmensarchitektur."
+      },
+      "objectiveTypes": {
+        "label": "Zielarten",
+        "description": "Definiere und verwalte die verschiedenen Zielarten innerhalb der Organisation."
+      },
+      "organizationalUnitTypes": {
+        "label": "Organisationseinheitstypen",
+        "description": "Definiere und verwalte die verschiedenen Typen von Organisationseinheiten."
+      },
+      "processTypes": {
+        "label": "Prozesstypen",
+        "description": "Definiere und verwalte die verschiedenen Prozesse innerhalb der Unternehmensarchitektur."
+      },
+      "providers": {
+        "label": "Anbieter",
+        "description": "Verwalte die verschiedenen Anbieter innerhalb der Unternehmensarchitektur."
+      },
+      "riskTypes": {
+        "label": "Risikotypen",
+        "description": "Definiere und verwalte die verschiedenen Risikotypen in der Organisation."
+      },
+      "systemTypes": {
+        "label": "Systemtypen",
+        "description": "Definiere und verwalte die verschiedenen Systemtypen innerhalb der Unternehmensarchitektur."
+      },
+      "technologyTypes": {
+        "label": "Technologietypen",
+        "description": "Definiere und verwalte die verschiedenen Technologien, die in der Organisation verwendet werden."
+      },
+      "toolTypes": {
+        "label": "Werkzeugtypen",
+        "description": "Definiere und verwalte die verschiedenen Werkzeuge, die in der Unternehmensarchitektur verwendet werden."
+      },
+      "topics": {
+        "label": "Themen",
+        "description": "Verwalte die verschiedenen Themen im Zusammenhang mit der Unternehmensarchitektur."
+      },
+      "domains": {
+        "label": "Domänen",
+        "description": "Verwalte die verschiedenen Domänen innerhalb der Unternehmensarchitektur."
+      },
+      "dateControls": {
+        "label": "Datumssteuerungen",
+        "description": "Definiere und verwalte die Datumssteuerungen innerhalb der Unternehmensarchitektur."
+      },
+      "documentTypes": {
+        "label": "Dokumententypen",
+        "description": "Definiere und verwalte die verschiedenen Dokumententypen."
+      }
+    }
+  },
+  "document-types": {
+    "title": "Dokumententypen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Dokumententypen suchen..."
+    },
+    "filters": {
+      "all": "Alle"
+    },
+    "columns": {
+      "name": "Name",
+      "documentCode": "Code"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Dokumententyp erstellen"
+      },
+      "edit": {
+        "title": "Dokumententyp bearbeiten"
+      },
+      "delete": {
+        "title": "Dokumententyp löschen",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden.",
+        "contentMultiple": "Möchtest du wirklich {count} Elemente löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Dokumententyp erfolgreich erstellt.",
+        "updated": "Dokumententyp erfolgreich aktualisiert.",
+        "deleted": "Dokumententyp erfolgreich gelöscht.",
+        "deletedMultiple": "{count} Elemente erfolgreich gelöscht."
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Dokumententypen.",
+        "deleting": "Fehler beim Löschen des Dokumententyps.",
+        "deletingMultiple": "Fehler beim Löschen der Dokumententypen.",
+        "validation": "Bitte fülle die Pflichtfelder aus.",
+        "general": "Ein Fehler ist aufgetreten. Bitte versuche es erneut."
+      }
+    }
+  },
+  "action-types": {
+    "title": "Aktionsarten",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Aktionsarten suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name",
+      "nomenclature": "Nomenklatur",
+      "color": "Farbe"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Aktionsart erstellen"
+      },
+      "edit": {
+        "title": "Aktionsart bearbeiten"
+      },
+      "columns": {
+        "name": "Name",
+        "color": "Farbe"
+      },
+      "delete": {
+        "title": "Aktionsart löschen",
+        "message": "Möchtest du diese Aktionsart wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Aktionsart erfolgreich erstellt.",
+        "updated": "Aktionsart erfolgreich aktualisiert.",
+        "deleted": "Aktionsart erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Aktionsarten.",
+        "create": "Fehler beim Erstellen der Aktionsart.",
+        "update": "Fehler beim Aktualisieren der Aktionsart.",
+        "delete": "Fehler beim Löschen der Aktionsart."
+      }
+    }
+  },
+  "competencies-classes": {
+    "title": "Kompetenzklassen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Kompetenzklassen suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Kompetenzklasse erstellen"
+      },
+      "edit": {
+        "title": "Kompetenzklasse bearbeiten"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Kompetenzklasse löschen",
+        "message": "Möchtest du diese Kompetenzklasse wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Kompetenzklasse erfolgreich erstellt.",
+        "updated": "Kompetenzklasse erfolgreich aktualisiert.",
+        "deleted": "Kompetenzklasse erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Kompetenzklassen.",
+        "creating": "Fehler beim Erstellen der Kompetenzklasse.",
+        "updating": "Fehler beim Aktualisieren der Kompetenzklasse.",
+        "deleting": "Fehler beim Löschen der Kompetenzklasse."
+      }
+    }
+  },
+  "competencies": {
+    "title": "Kompetenzen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Kompetenzen suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name",
+      "description": "Beschreibung",
+      "code": "Code",
+      "type": "Typ"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Kompetenz erstellen"
+      },
+      "edit": {
+        "title": "Kompetenz bearbeiten"
+      },
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "code": "Code",
+        "type": "Typ"
+      },
+      "delete": {
+        "title": "Kompetenz löschen",
+        "message": "Möchtest du diese Kompetenz wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Kompetenz erfolgreich erstellt.",
+        "updated": "Kompetenz erfolgreich aktualisiert.",
+        "deleted": "Kompetenz erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Kompetenz.",
+        "creating": "Fehler beim Erstellen der Kompetenz.",
+        "updating": "Fehler beim Aktualisieren der Kompetenz.",
+        "deleting": "Fehler beim Löschen der Kompetenz."
+      }
+    }
+  },
+  "data-types": {
+    "title": "Datentypen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Datentypen suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Datentyp erstellen"
+      },
+      "edit": {
+        "title": "Datentyp bearbeiten"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Datentyp löschen",
+        "message": "Möchtest du diesen Datentyp wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Datentyp erfolgreich erstellt.",
+        "updated": "Datentyp erfolgreich aktualisiert.",
+        "deleted": "Datentyp erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Datentypen.",
+        "creating": "Fehler beim Erstellen des Datentyps.",
+        "updating": "Fehler beim Aktualisieren des Datentyps.",
+        "deleting": "Fehler beim Löschen des Datentyps."
+      }
+    }
+  },
+  "job-types": {
+    "title": "Stellentypen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Stellentypen suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name",
+      "background": "Hintergrund",
+      "internalExternal": "Intern/Extern",
+      "user": "Benutzer",
+      "letter": "Buchstabe"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Stellentyp erstellen"
+      },
+      "edit": {
+        "title": "Stellentyp bearbeiten"
+      },
+      "columns": {
+        "name": "Name",
+        "background": "Hintergrund",
+        "internalExternal": "Intern/Extern",
+        "user": "Benutzer",
+        "letter": "Buchstabe"
+      },
+      "delete": {
+        "title": "Stellentyp löschen",
+        "message": "Möchtest du diesen Stellentyp wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Stellentyp erfolgreich erstellt.",
+        "updated": "Stellentyp erfolgreich aktualisiert.",
+        "deleted": "Stellentyp erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Stellentypen.",
+        "creating": "Fehler beim Erstellen des Stellentyps.",
+        "updating": "Fehler beim Aktualisieren des Stellentyps.",
+        "deleting": "Fehler beim Löschen des Stellentyps."
+      }
+    }
+  },
+  "measure-action-types": {
+    "title": "Maßnahmenarten",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Maßnahmenarten suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Maßnahmenart erstellen"
+      },
+      "edit": {
+        "title": "Maßnahmenart bearbeiten"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Maßnahmenart löschen",
+        "message": "Möchtest du diese Maßnahmenart wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Maßnahmenart erfolgreich erstellt.",
+        "updated": "Maßnahmenart erfolgreich aktualisiert.",
+        "deleted": "Maßnahmenart erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Maßnahmenarten.",
+        "creating": "Fehler beim Erstellen der Maßnahmenart.",
+        "updating": "Fehler beim Aktualisieren der Maßnahmenart.",
+        "deleting": "Fehler beim Löschen der Maßnahmenart."
+      }
+    }
+  },
+  "objective-types": {
+    "title": "Zielarten",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Zielarten suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "typeName": "Typname",
+      "typeCode": "Typcode"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Zielart erstellen"
+      },
+      "edit": {
+        "title": "Zielart bearbeiten"
+      },
+      "columns": {
+        "typeName": "Typname",
+        "typeCode": "Typcode"
+      },
+      "delete": {
+        "title": "Zielart löschen",
+        "message": "Möchtest du diese Zielart wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Zielart erfolgreich erstellt.",
+        "updated": "Zielart erfolgreich aktualisiert.",
+        "deleted": "Zielart erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Zielarten.",
+        "creating": "Fehler beim Erstellen der Zielart.",
+        "updating": "Fehler beim Aktualisieren der Zielart.",
+        "deleting": "Fehler beim Löschen der Zielart.",
+        "duplicate": "Die Zielart existiert bereits.",
+        "duplicateCode": "Der Code der Zielart existiert bereits.",
+        "duplicateName": "Der Name der Zielart existiert bereits.",
+        "duplicateBoth": "Der Code der Zielart existiert bereits und der Name der Zielart existiert bereits."
+      }
+    }
+  },
+  "organizational-unit-types": {
+    "title": "Organisationseinheitstypen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Organisationseinheitstypen suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name",
+      "background": "Hintergrund",
+      "internalExternal": "Intern/Extern",
+      "letter": "Buchstabe"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Organisationseinheitstyp erstellen"
+      },
+      "edit": {
+        "title": "Organisationseinheitstyp bearbeiten"
+      },
+      "columns": {
+        "name": "Name",
+        "background": "Hintergrund",
+        "internalExternal": "Intern/Extern",
+        "letter": "Buchstabe"
+      },
+      "delete": {
+        "title": "Organisationseinheitstyp löschen",
+        "message": "Möchtest du diesen Organisationseinheitstyp wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Organisationseinheitstyp erfolgreich erstellt.",
+        "updated": "Organisationseinheitstyp erfolgreich aktualisiert.",
+        "deleted": "Organisationseinheitstyp erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Organisationseinheitstypen.",
+        "creating": "Fehler beim Erstellen des Organisationseinheitstyps.",
+        "updating": "Fehler beim Aktualisieren des Organisationseinheitstyps.",
+        "deleting": "Fehler beim Löschen des Organisationseinheitstyps."
+      }
+    }
+  },
+  "process-types": {
+    "title": "Prozesstypen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Prozesstypen suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name",
+      "level": "Ebene"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Prozesstyp erstellen"
+      },
+      "edit": {
+        "title": "Prozesstyp bearbeiten"
+      },
+      "columns": {
+        "name": "Name",
+        "level": "Ebene"
+      },
+      "delete": {
+        "title": "Prozesstyp löschen",
+        "message": "Möchtest du diesen Prozesstyp wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Prozesstyp erfolgreich erstellt.",
+        "updated": "Prozesstyp erfolgreich aktualisiert.",
+        "deleted": "Prozesstyp erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Prozesstypen.",
+        "creating": "Fehler beim Erstellen des Prozesstyps.",
+        "updating": "Fehler beim Aktualisieren des Prozesstyps.",
+        "deleting": "Fehler beim Löschen des Prozesstyps."
+      }
+    }
+  },
+  "providers": {
+    "title": "Anbieter",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Anbieter suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name",
+      "contact": "Kontakt",
+      "supportName": "Supportname",
+      "supportEmail": "Support-E-Mail",
+      "supportPhone": "Support-Telefon",
+      "contractualName": "Vertragsname",
+      "contractualEmail": "Vertrags-E-Mail",
+      "contractualPhone": "Vertragstelefon"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Anbieter erstellen"
+      },
+      "edit": {
+        "title": "Anbieter bearbeiten"
+      },
+      "columns": {
+        "name": "Name",
+        "contact": "Kontakt",
+        "supportName": "Supportname",
+        "supportEmail": "Support-E-Mail",
+        "supportPhone": "Support-Telefon",
+        "contractualName": "Vertragsname",
+        "contractualEmail": "Vertrags-E-Mail",
+        "contractualPhone": "Vertragstelefon"
+      },
+      "delete": {
+        "title": "Anbieter löschen",
+        "message": "Möchtest du diesen Anbieter wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Anbieter erfolgreich erstellt.",
+        "updated": "Anbieter erfolgreich aktualisiert.",
+        "deleted": "Anbieter erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Anbieter.",
+        "creating": "Fehler beim Erstellen des Anbieters.",
+        "updating": "Fehler beim Aktualisieren des Anbieters.",
+        "deleting": "Fehler beim Löschen des Anbieters."
+      }
+    }
+  },
+  "risk-types": {
+    "title": "Risikotypen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "configure": "Konfiguration",
+      "back": "Zurück",
+      "map": "Karte",
+      "viewMap": "Risikokarte anzeigen"
+    },
+    "toolbar": {
+      "search": "Risikotypen suchen..."
+    },
+    "dialogs": {
+      "create": {
+        "title": "Risikotyp hinzufügen"
+      },
+      "edit": {
+        "title": "Risikotyp bearbeiten"
+      },
+      "delete": {
+        "title": "Risikotyp löschen",
+        "content": "Möchtest du diesen Risikotyp wirklich löschen?",
+        "contentMultiple": "Möchtest du wirklich {{count}} Elemente löschen?"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Risikotyp erfolgreich erstellt.",
+        "updated": "Risikotyp erfolgreich aktualisiert.",
+        "deleted": "Risikotyp erfolgreich gelöscht.",
+        "deletedMultiple": "Risikotypen erfolgreich gelöscht."
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Risikotypen.",
+        "creating": "Fehler beim Erstellen des Risikotyps.",
+        "updating": "Fehler beim Aktualisieren des Risikotyps.",
+        "deleting": "Fehler beim Löschen des Risikotyps.",
+        "deletingMultiple": "Fehler beim Löschen der Risikotypen.",
+        "validation": "Der Name ist erforderlich."
+      }
+    },
+    "map": {
+      "breadcrumb": "Risikokarte",
+      "view": "Risikokarte anzeigen",
+      "heading": "Risikokarte",
+      "columns": {
+        "riskLevel": "Risikostufe",
+        "probabilityLevel": "Wahrscheinlichkeitsstufe"
+      }
+    },
+    "tolerance": {
+      "panelTitle": "Risikotoleranzstufen",
+      "configTitle": "Konfigurieren",
+      "columns": {
+        "valorization": "Risikobewertung",
+        "acceptance": "Risikozulassung"
+      },
+      "fields": {
+        "name": "Name",
+        "color": "Farbe",
+        "initial": "Start",
+        "final": "Ende"
+      },
+      "add": "Stufe hinzufügen",
+      "messages": {
+        "updated": "Stufe aktualisiert",
+        "created": "Stufe erstellt",
+        "deleted": "Stufe gelöscht",
+        "errorUpdating": "Fehler beim Aktualisieren der Stufe",
+        "errorCreating": "Fehler beim Erstellen der Stufe",
+        "errorDeleting": "Fehler beim Löschen der Stufe"
+      },
+      "dialogs": {
+        "delete": {
+          "title": "Stufe löschen",
+          "message": "Möchtest du diese Stufe wirklich löschen?",
+          "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+        }
+      },
+      "validation": "Der Name ist erforderlich",
+      "validationRange": "Start und Ende sind erforderlich",
+      "empty": "Keine Stufen vorhanden"
+    },
+    "configure": {
+      "title": "Risikotyp konfigurieren",
+      "probability": "Wahrscheinlichkeitsstufen",
+      "impact": "Auswirkungsstufen",
+      "tolerance": "Toleranzstufen",
+      "tolerance_config": "Risikotoleranzstufen konfigurieren",
+      "deficiency": "Mangelstufen"
+    },
+    "levels": {
+      "probability": {
+        "panelTitle": "Wahrscheinlichkeitsstufen",
+        "add": "Stufe hinzufügen",
+        "columns": {
+          "name": "Stufenname",
+          "description": "Stufenbeschreibung",
+          "value": "Wert auf der Skala",
+          "options": "Optionen"
+        },
+        "fields": {
+          "name": "Stufenname",
+          "description": "Stufenbeschreibung",
+          "value": "Wert"
+        },
+        "created": "Wahrscheinlichkeitsstufe erstellt",
+        "updated": "Wahrscheinlichkeitsstufe aktualisiert",
+        "deleted": "Wahrscheinlichkeitsstufe gelöscht",
+        "createError": "Fehler beim Erstellen der Wahrscheinlichkeitsstufe",
+        "updateError": "Fehler beim Aktualisieren der Wahrscheinlichkeitsstufe",
+        "deleteError": "Fehler beim Löschen der Wahrscheinlichkeitsstufe",
+        "validation": "Der Name ist erforderlich",
+        "valueValidation": "Der Wert ist erforderlich"
+      },
+      "impact": {
+        "panelTitle": "Auswirkungsstufen",
+        "add": "Stufe hinzufügen",
+        "columns": {
+          "name": "Auswirkungsname",
+          "description": "Auswirkungsbeschreibung",
+          "value": "Wert auf der Skala",
+          "options": "Optionen"
+        },
+        "fields": {
+          "name": "Auswirkungsname",
+          "description": "Auswirkungsbeschreibung",
+          "value": "Wert"
+        },
+        "created": "Auswirkungsstufe erstellt",
+        "updated": "Auswirkungsstufe aktualisiert",
+        "deleted": "Auswirkungsstufe gelöscht",
+        "createError": "Fehler beim Erstellen der Auswirkungsstufe",
+        "updateError": "Fehler beim Aktualisieren der Auswirkungsstufe",
+        "deleteError": "Fehler beim Löschen der Auswirkungsstufe",
+        "validation": "Der Name ist erforderlich",
+        "valueValidation": "Der Wert ist erforderlich"
+      },
+      "deficiency": {
+        "panelTitle": "Mangelstufen",
+        "add": "Stufe hinzufügen",
+        "columns": {
+          "name": "Mangelname",
+          "description": "Beschreibung",
+          "value": "Wert",
+          "options": "Optionen"
+        },
+        "fields": {
+          "name": "Mangelname",
+          "description": "Beschreibung",
+          "value": "Wert"
+        },
+        "created": "Mangelstufe erstellt",
+        "updated": "Mangelstufe aktualisiert",
+        "deleted": "Mangelstufe gelöscht",
+        "createError": "Fehler beim Erstellen der Mangelstufe",
+        "updateError": "Fehler beim Aktualisieren der Mangelstufe",
+        "deleteError": "Fehler beim Löschen der Mangelstufe",
+        "validation": "Der Name ist erforderlich",
+        "valueValidation": "Der Wert ist erforderlich"
+      }
+    }
+  },
+  "system-types": {
+    "title": "Systemtypen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Systemtypen suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Systemtyp erstellen"
+      },
+      "edit": {
+        "title": "Systemtyp bearbeiten"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Systemtyp löschen",
+        "message": "Möchtest du diesen Systemtyp wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Systemtyp erfolgreich erstellt.",
+        "updated": "Systemtyp erfolgreich aktualisiert.",
+        "deleted": "Systemtyp erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Systemtypen.",
+        "creating": "Fehler beim Erstellen des Systemtyps.",
+        "updating": "Fehler beim Aktualisieren des Systemtyps.",
+        "deleting": "Fehler beim Löschen des Systemtyps."
+      }
+    }
+  },
+  "technology-types": {
+    "title": "Technologietypen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Technologietypen suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Technologietyp erstellen"
+      },
+      "edit": {
+        "title": "Technologietyp bearbeiten"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Technologietyp löschen",
+        "message": "Möchtest du diesen Technologietyp wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Technologietyp erfolgreich erstellt.",
+        "updated": "Technologietyp erfolgreich aktualisiert.",
+        "deleted": "Technologietyp erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Technologietypen.",
+        "creating": "Fehler beim Erstellen des Technologietyps.",
+        "updating": "Fehler beim Aktualisieren des Technologietyps.",
+        "deleting": "Fehler beim Löschen des Technologietyps."
+      }
+    }
+  },
+  "tool-types": {
+    "title": "Werkzeugtypen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Werkzeugtypen suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Werkzeugtyp erstellen"
+      },
+      "edit": {
+        "title": "Werkzeugtyp bearbeiten"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Werkzeugtyp löschen",
+        "message": "Möchtest du diesen Werkzeugtyp wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Werkzeugtyp erfolgreich erstellt.",
+        "updated": "Werkzeugtyp erfolgreich aktualisiert.",
+        "deleted": "Werkzeugtyp erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Werkzeugtypen.",
+        "creating": "Fehler beim Erstellen des Werkzeugtyps.",
+        "updating": "Fehler beim Aktualisieren des Werkzeugtyps.",
+        "deleting": "Fehler beim Löschen des Werkzeugtyps."
+      }
+    }
+  },
+  "topics": {
+    "title": "Themen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Themen suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Thema erstellen"
+      },
+      "edit": {
+        "title": "Thema bearbeiten"
+      },
+      "columns": {
+        "name": "Name"
+      },
+      "delete": {
+        "title": "Thema löschen",
+        "message": "Möchtest du dieses Thema wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Thema erfolgreich erstellt.",
+        "updated": "Thema erfolgreich aktualisiert.",
+        "deleted": "Thema erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Themen.",
+        "creating": "Fehler beim Erstellen des Themas.",
+        "updating": "Fehler beim Aktualisieren des Themas.",
+        "deleting": "Fehler beim Löschen des Themas."
+      }
+    }
+  },
+  "domains": {
+    "title": "Domänen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Domänen suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name",
+      "code": "Code",
+      "color": "Farbe",
+      "corporateScope": "Unternehmensweiter Geltungsbereich",
+      "owner": "Eigentümer",
+      "admin": "Administrator"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Domäne erstellen"
+      },
+      "edit": {
+        "title": "Domäne bearbeiten"
+      },
+      "columns": {
+        "name": "Name",
+        "code": "Code",
+        "color": "Farbe",
+        "corporateScope": "Unternehmensweiter Geltungsbereich",
+        "owner": "Eigentümer",
+        "admin": "Administrator"
+      },
+      "delete": {
+        "title": "Domäne löschen",
+        "message": "Möchtest du diese Domäne wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Domäne erfolgreich erstellt.",
+        "updated": "Domäne erfolgreich aktualisiert.",
+        "deleted": "Domäne erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Domänen.",
+        "creating": "Fehler beim Erstellen der Domäne.",
+        "updating": "Fehler beim Aktualisieren der Domäne.",
+        "deleting": "Fehler beim Löschen der Domäne."
+      }
+    }
+  },
+  "date-controls": {
+    "title": "Datumssteuerungen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "catalogs": "Katalogliste"
+    },
+    "actions": {
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "toolbar": {
+      "search": "Datumssteuerungen suchen..."
+    },
+    "filters": {
+      "all": "Alle",
+      "keyword": "Stichwort"
+    },
+    "columns": {
+      "name": "Name",
+      "alertDays": "Alarmtage",
+      "color": "Farbe"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Datumssteuerung erstellen"
+      },
+      "edit": {
+        "title": "Datumssteuerung bearbeiten"
+      },
+      "columns": {
+        "name": "Name",
+        "alertDays": "Alarmtage",
+        "color": "Farbe"
+      },
+      "delete": {
+        "title": "Datumssteuerung löschen",
+        "message": "Möchtest du diese Datumssteuerung wirklich löschen?",
+        "content": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Datumssteuerung erfolgreich erstellt.",
+        "updated": "Datumssteuerung erfolgreich aktualisiert.",
+        "deleted": "Datumssteuerung erfolgreich gelöscht."
+      },
+      "error": {
+        "fetch": "Fehler beim Abrufen der Datumssteuerungen.",
+        "create": "Fehler beim Erstellen der Datumssteuerung.",
+        "update": "Fehler beim Aktualisieren der Datumssteuerung.",
+        "delete": "Fehler beim Löschen der Datumssteuerung."
+      }
+    }
+  }
+}

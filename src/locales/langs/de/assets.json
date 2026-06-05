@@ -1,0 +1,418 @@
+{
+  "inventory": {
+    "title": "Assets",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "inventory": "Assets",
+      "edit": "Asset bearbeiten",
+      "create": "Asset erstellen"
+    },
+    "actions": {
+      "add": "Asset hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "view": "Ansehen",
+      "history": "Verlauf",
+      "back": "Zurück"
+    },
+    "table": {
+      "columns": {
+        "internalId": "Interne ID",
+        "name": "Asset-Name",
+        "serial": "Seriennummer",
+        "category": "Kategorie",
+        "purchaseDate": "Kaufdatum",
+        "purchaseValue": "Kaufwert",
+        "warrantyExpiration": "Garantieablauf",
+        "stock": "Bestand",
+        "state": "Status",
+        "assignedTo": "Zugewiesen an"
+      },
+      "filters": {
+        "all": "Alle",
+        "available": "Verfügbar",
+        "assigned": "Zugewiesen",
+        "maintenance": "Wartung",
+        "category": "Kategorie",
+        "state": "Status",
+        "status": "Status",
+        "employee": "Mitarbeitende",
+        "serial": "Seriennummer",
+        "internalId": "Interne ID",
+        "hasActiveAssignment": "Mit aktiver Zuweisung"
+      },
+      "search": "Assets suchen...",
+      "filterByCategory": "Nach Kategorie filtern",
+      "filterByState": "Nach Status filtern",
+      "filterByEmployee": "Nach Mitarbeitenden filtern",
+      "filterBySerial": "Nach Seriennummer filtern",
+      "filterByInternalId": "Nach interner ID filtern",
+      "includeInactive": "Inaktive einschließen",
+      "hasActiveAssignment": "Mit aktiver Zuweisung",
+      "withActiveAssignment": "Mit aktiver Zuweisung",
+      "noAssigned": "Nicht zugewiesen",
+      "multipleAssigned": "{{count}} Mitarbeitende zugewiesen",
+      "warrantyExpired": "Garantie abgelaufen",
+      "warrantyExpiringSoon": "Läuft bald ab",
+      "warrantyActive": "Garantie aktiv"
+    },
+    "assignments": {
+      "title": "Mitarbeitende zuweisen oder entziehen",
+      "addAssignment": "Mitarbeitenden zuweisen oder entziehen",
+      "currentAssignments": "Aktuelle Zuweisungen",
+      "noAssignments": "Keine Zuweisungen erfasst",
+      "assignmentNumber": "Zuweisung #{{number}}",
+      "addAnother": "Weitere Zuweisung hinzufügen",
+      "save": "Zuweisungen speichern",
+      "actions": {
+        "ASSIGN": "Zuweisen",
+        "UNASSIGN": "Entziehen",
+        "TRANSFER": "Übertragen",
+        "RETURN": "Zurückgeben"
+      },
+      "form": {
+        "employee": {
+          "label": "Mitarbeitende",
+          "placeholder": "Mitarbeitende suchen...",
+          "required": "Mitarbeitende sind erforderlich"
+        },
+        "action": {
+          "label": "Aktion",
+          "required": "Die Aktion ist erforderlich",
+          "helperText": "Wähle 'Zuweisen', um das Asset einer Person zuzuweisen, oder 'Entziehen', um es freizugeben."
+        },
+        "expectedReturnDate": {
+          "label": "Erwartetes Rückgabedatum",
+          "helperText": "Datum, an dem das Asset zurückgegeben werden soll"
+        },
+        "notes": {
+          "label": "Notizen",
+          "placeholder": "Zusätzliche Notizen eingeben..."
+        },
+        "minimumOne": "Mindestens eine Zuweisung muss hinzugefügt werden"
+      },
+      "table": {
+        "employee": "Mitarbeitende",
+        "assignedAt": "Zuweisungsdatum",
+        "notes": "Notizen"
+      },
+      "messages": {
+        "success": "Zuweisungen erfolgreich gespeichert",
+        "error": "Fehler beim Speichern der Zuweisungen",
+        "completeRequiredFields": "Um dieses Modal zu öffnen, müssen die erforderlichen Felder des Assets ausgefüllt sein."
+      },
+      "confirmSave": {
+        "title": "Vor dem Zuweisen speichern",
+        "content": "Damit Mitarbeitende zugewiesen werden können, muss das Asset zuerst gespeichert werden. Möchtest du jetzt speichern?",
+        "confirm": "Ja, speichern und zuweisen"
+      }
+    },
+    "history": {
+      "title": "Asset-Verlauf",
+      "asset": "Asset",
+      "type": "Typ",
+      "description": "Beschreibung",
+      "date": "Datum",
+      "performedBy": "Ausgeführt von",
+      "targetEmployee": "Ziel-Mitarbeitende",
+      "changes": "Änderungen",
+      "changesDetail": "Änderungsdetails",
+      "oldValue": "Alter Wert",
+      "newValue": "Neuer Wert",
+      "noHistory": "Kein Verlauf verfügbar",
+      "types": {
+        "CREATE": "Erstellung",
+        "UPDATE": "Aktualisierung",
+        "DELETE": "Löschung",
+        "ASSIGN": "Zuweisung",
+        "UNASSIGN": "Entzug"
+      }
+    },
+    "form": {
+      "name": {
+        "required": "Der Name ist erforderlich"
+      },
+      "internalId": {
+        "required": "Die interne ID ist erforderlich"
+      },
+      "serial": {
+        "required": "Die Seriennummer ist erforderlich"
+      },
+      "purchaseDate": {
+        "required": "Das Kaufdatum ist erforderlich"
+      },
+      "depreciationDate": {
+        "required": "Das Abschreibungsdatum ist erforderlich"
+      },
+      "warrantyExpiration": {
+        "required": "Das Garantieablaufdatum ist erforderlich"
+      },
+      "category": {
+        "required": "Die Kategorie ist erforderlich"
+      },
+      "state": {
+        "required": "Der Status ist erforderlich"
+      },
+      "sections": {
+        "details": "Details"
+      },
+      "fields": {
+        "internalId": {
+          "label": "Interne ID",
+          "helperText": "Eindeutiger Code des Assets"
+        },
+        "name": {
+          "label": "Name",
+          "helperText": "Gib den Asset-Namen ein"
+        },
+        "isActive": {
+          "label": "Aktiv"
+        },
+        "serial": {
+          "label": "Seriennummer",
+          "helperText": "Seriennummer des Assets"
+        },
+        "note": {
+          "label": "Notiz",
+          "helperText": "Optionale Notiz eingeben"
+        },
+        "category": {
+          "label": "Kategorie"
+        },
+        "state": {
+          "label": "Status"
+        },
+        "purchaseDate": {
+          "label": "Kaufdatum",
+          "helperText": "Datum, an dem das Asset erworben wurde"
+        },
+        "purchaseValue": {
+          "label": "Kaufwert",
+          "helperText": "Anschaffungspreis"
+        },
+        "depreciationDate": {
+          "label": "Abschreibungsdatum",
+          "helperText": "Geschätztes Abschreibungsdatum"
+        },
+        "warrantyExpiration": {
+          "label": "Garantieablauf",
+          "helperText": "Ablaufdatum der Garantie"
+        }
+      },
+      "actions": {
+        "cancel": "Abbrechen",
+        "saving": "Wird gespeichert...",
+        "update": "Aktualisieren",
+        "create": "Erstellen"
+      },
+      "messages": {
+        "updateSuccess": "Asset erfolgreich aktualisiert",
+        "createSuccess": "Asset erfolgreich erstellt",
+        "saveError": "Fehler beim Speichern des Assets"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Fehler beim Laden des Assets",
+        "deleting": "Fehler beim Löschen des Assets",
+        "saveError": "Fehler beim Speichern des Assets"
+      },
+      "success": {
+        "deleted": "Asset erfolgreich gelöscht",
+        "updateSuccess": "Asset erfolgreich aktualisiert",
+        "createSuccess": "Asset erfolgreich erstellt"
+      },
+      "confirmDelete": "Möchtest du dieses Asset wirklich löschen?"
+    }
+  },
+  "categories": {
+    "title": "Kategorien",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "categories": "Kategorien",
+      "edit": "Kategorie bearbeiten",
+      "create": "Kategorie erstellen"
+    },
+    "actions": {
+      "add": "Kategorie hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "view": "Ansehen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "assetCount": "Anzahl Assets",
+        "status": "Status"
+      },
+      "toolbar": {
+        "sortBy": "Sortieren nach",
+        "resetFilters": "Filter zurücksetzen"
+      },
+      "filters": {
+        "all": "Alle",
+        "keyword": "Stichwort"
+      },
+      "order": {
+        "idAsc": "ID (aufsteigend)",
+        "idDesc": "ID (absteigend)",
+        "nameAsc": "Name (A-Z)",
+        "nameDesc": "Name (Z-A)",
+        "pointsAsc": "Punkte (aufsteigend)",
+        "pointsDesc": "Punkte (absteigend)",
+        "stockAsc": "Bestand (aufsteigend)",
+        "stockDesc": "Bestand (absteigend)",
+        "createdAtAsc": "Älteste",
+        "createdAtDesc": "Neueste",
+        "categoryAsc": "Kategorie (A-Z)",
+        "categoryDesc": "Kategorie (Z-A)"
+      },
+      "search": "Kategorien suchen..."
+    },
+    "form": {
+      "name": {
+        "required": "Der Name ist erforderlich"
+      },
+      "category": {
+        "required": "Die Kategorie ist erforderlich"
+      },
+      "stock": {
+        "required": "Der Bestand ist erforderlich"
+      },
+      "isActive": {
+        "required": "Der Status ist erforderlich"
+      },
+      "pointsRequired": {
+        "required": "Die Punkte sind erforderlich"
+      },
+      "imageUrl": {
+        "required": "Die Bild-URL ist erforderlich"
+      },
+      "fields": {
+        "name": {
+          "label": "Name",
+          "helperText": "Gib den Kategorienamen ein"
+        },
+        "isActive": {
+          "label": "Status"
+        }
+      },
+      "actions": {
+        "cancel": "Abbrechen",
+        "saving": "Wird gespeichert...",
+        "update": "Aktualisieren",
+        "create": "Erstellen"
+      },
+      "messages": {
+        "updateSuccess": "Kategorie erfolgreich aktualisiert",
+        "createSuccess": "Kategorie erfolgreich erstellt",
+        "saveError": "Fehler beim Speichern der Kategorie"
+      }
+    },
+    "messages": {
+      "error": {
+        "loading": "Fehler beim Laden der Kategorie",
+        "deleting": "Fehler beim Löschen der Kategorie",
+        "saveError": "Fehler beim Speichern der Kategorie"
+      },
+      "success": {
+        "deleted": "Kategorie erfolgreich gelöscht",
+        "updateSuccess": "Kategorie erfolgreich aktualisiert",
+        "createSuccess": "Kategorie erfolgreich erstellt"
+      },
+      "confirmDelete": "Möchtest du diese Kategorie wirklich löschen?"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    }
+  },
+  "record": {
+    "title": "Asset-Verlauf",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "record": "Asset-Verlauf"
+    },
+    "actions": {
+      "view": "Details anzeigen",
+      "export": "Exportieren"
+    },
+    "table": {
+      "columns": {
+        "type": "Typ",
+        "asset": "Asset",
+        "description": "Beschreibung",
+        "date": "Datum",
+        "performedBy": "Ausgeführt von",
+        "targetEmployee": "Ziel-Mitarbeitende",
+        "category": "Kategorie"
+      },
+      "search": "Im Verlauf suchen...",
+      "filterByAsset": "Nach Asset filtern",
+      "filterByType": "Nach Typ filtern",
+      "filterByCategory": "Nach Kategorie filtern",
+      "filterByPerformedBy": "Nach Ausführenden filtern",
+      "filterByTargetEmployee": "Nach Ziel-Mitarbeitenden filtern",
+      "filterByFromDate": "Von",
+      "filterByToDate": "Bis",
+      "noRecords": "Keine Einträge gefunden",
+      "dateError": "Das Datum 'Von' darf nicht nach dem Datum 'Bis' liegen"
+    },
+    "types": {
+      "ASSIGN": "Zuweisung",
+      "UNASSIGN": "Entzug",
+      "STATE_CHANGE": "Statusänderung",
+      "CREATE": "Erstellung",
+      "UPDATE": "Aktualisierung"
+    },
+    "filters": {
+      "all": "Alle",
+      "assign": "Zuweisungen",
+      "unassign": "Entzüge",
+      "stateChange": "Statusänderungen",
+      "create": "Erstellungen",
+      "update": "Aktualisierungen"
+    },
+    "messages": {
+      "error": {
+        "loading": "Fehler beim Laden des Verlaufs"
+      }
+    }
+  },
+  "myAssets": {
+    "title": "Meine Assets",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "myAssets": "Meine Assets"
+    },
+    "table": {
+      "columns": {
+        "asset": "Asset",
+        "internalId": "Interne ID",
+        "category": "Kategorie",
+        "serial": "Seriennummer",
+        "assetNote": "Asset-Notiz",
+        "purchaseDate": "Kaufdatum",
+        "purchaseValue": "Kaufwert",
+        "deprecationDate": "Abschreibungsdatum",
+        "warrantyExpiration": "Garantieablauf",
+        "state": "Status",
+        "assignedAt": "Zuweisungsdatum",
+        "notes": "Notizen"
+      },
+      "warrantyExpired": "Garantie abgelaufen",
+      "warrantyExpiringSoon": "Läuft bald ab",
+      "warrantyActive": "Garantie aktiv",
+      "toolbar": {
+        "search": "Assets suchen..."
+      },
+      "noAssets": "Dir sind keine Assets zugewiesen",
+      "results": "Ergebnisse gefunden"
+    },
+    "messages": {
+      "error": {
+        "loading": "Fehler beim Laden meiner Assets"
+      }
+    }
+  }
+}

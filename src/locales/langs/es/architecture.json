@@ -517,6 +517,10 @@
             "helperText": "Ingrese requerimientos de sistemas"
           },
           "periodId": {
+            "label": "Periodicidad",
+            "placeholder": "Seleccione periodicidad"
+          },
+          "timeUnitId": {
             "label": "Unidad de Tiempo de Duración de Ocurrencia",
             "placeholder": "Seleccione unidad de tiempo"
           }

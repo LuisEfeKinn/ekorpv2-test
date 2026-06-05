@@ -1,0 +1,362 @@
+{
+  "positions": {
+    "title": "Positionen",
+    "mapDetail": "Knotendetails",
+    "mapHeading": "Positionskarte",
+    "back": "Zurück",
+    "viewMap": "Karte anzeigen",
+    "modules": {
+      "information": "Informationen",
+      "processes": "Prozesse",
+      "relations": "Beziehungen",
+      "documents": "Dokumente",
+      "lessonsLearned": "Gelernte Lektionen",
+      "proposalsForImprovement": "Verbesserungsvorschläge",
+      "data": "Daten",
+      "systems": "Systeme",
+      "technologies": "Technologien",
+      "nextPositions": "Nächste Positionen",
+      "indicators": "Kennzahlen",
+      "exams": "Prüfungen"
+    },
+    "relations": {
+      "process": {
+        "title": "Prozess verknüpfen",
+        "buttonLabel": "Prozess verknüpfen",
+        "select": "Wähle einen Prozess",
+        "isMain": "Ist Hauptprozess",
+        "actionType": "Aktionstyp",
+        "description": "Beschreibung",
+        "success": "Prozess erfolgreich verknüpft",
+        "error": "Fehler beim Verknüpfen des Prozesses"
+      },
+      "document": {
+        "title": "Dokument verknüpfen",
+        "buttonLabel": "Dokument verknüpfen",
+        "select": "Wähle ein Dokument",
+        "observations": "Anmerkungen",
+        "success": "Dokument erfolgreich verknüpft",
+        "error": "Fehler beim Verknüpfen des Dokuments"
+      },
+      "system": {
+        "title": "System verknüpfen",
+        "buttonLabel": "System verknüpfen",
+        "select": "Wähle ein System",
+        "observations": "Anmerkungen",
+        "success": "System erfolgreich verknüpft",
+        "error": "Fehler beim Verknüpfen des Systems"
+      },
+      "indicator": {
+        "title": "Kennzahl verknüpfen",
+        "buttonLabel": "Kennzahl verknüpfen",
+        "select": "Wähle eine Kennzahl",
+        "observations": "Anmerkungen",
+        "creationDate": "Erstellungsdatum",
+        "creationDateHelper": "Das heutige Datum wird automatisch verwendet",
+        "success": "Kennzahl erfolgreich verknüpft",
+        "error": "Fehler beim Verknüpfen der Kennzahl"
+      },
+      "lessonLearned": {
+        "title": "Gelernte Lektion verknüpfen",
+        "buttonLabel": "Gelernte Lektion verknüpfen",
+        "saveButton": "Lektion speichern",
+        "success": "Gelernte Lektion erfolgreich gespeichert",
+        "error": "Fehler beim Speichern der gelernten Lektion"
+      },
+      "proposal": {
+        "title": "Verbesserungsvorschlag verknüpfen",
+        "buttonLabel": "Verbesserungsvorschlag verknüpfen",
+        "saveButton": "Vorschlag speichern",
+        "success": "Verbesserungsvorschlag erfolgreich gespeichert",
+        "error": "Fehler beim Speichern des Verbesserungsvorschlags"
+      },
+      "common": {
+        "select": "Auswählen",
+        "cancel": "Abbrechen",
+        "relate": "Verknüpfen",
+        "selectElement": "Wähle ein Element zum Verknüpfen aus",
+        "saveError": "Fehler beim Speichern der Beziehung",
+        "saveSuccess": "Beziehung gespeichert",
+        "deleteSuccess": "Beziehung erfolgreich gelöscht",
+        "deleteError": "Fehler beim Löschen der Beziehung"
+      },
+      "data": {
+        "title": "Daten verknüpfen",
+        "buttonLabel": "Daten verknüpfen",
+        "select": "Daten auswählen",
+        "observations": "Anmerkungen",
+        "success": "Daten erfolgreich verknüpft",
+        "error": "Fehler beim Verknüpfen der Daten"
+      },
+      "technology": {
+        "title": "Technologie verknüpfen",
+        "buttonLabel": "Technologie verknüpfen",
+        "select": "Wähle eine Technologie",
+        "observations": "Anmerkungen",
+        "success": "Technologie erfolgreich verknüpft",
+        "error": "Fehler beim Verknüpfen der Technologie"
+      },
+      "relation": {
+        "title": "Position verknüpfen",
+        "editTitle": "Beziehung bearbeiten",
+        "buttonLabel": "Position verknüpfen",
+        "select": "Verknüpfte Position",
+        "name": "Beziehung",
+        "reverseName": "Umgekehrte Beziehung",
+        "success": "Position erfolgreich verknüpft",
+        "error": "Fehler beim Verknüpfen der Position"
+      },
+      "nextJob": {
+        "title": "Nächste Positionen",
+        "editTitle": "Nächste Position bearbeiten",
+        "buttonLabel": "Nächste Position hinzufügen",
+        "select": "Nächste Position",
+        "success": "Nächste Position erfolgreich gespeichert",
+        "error": "Fehler beim Speichern der nächsten Position"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "Position erstellen",
+        "edit": "Position bearbeiten"
+      },
+      "sections": {
+        "details": "Positionsdetails",
+        "requirements": "Anforderungen und Erfahrung",
+        "relationships": "Beziehungen und Kompetenzen"
+      },
+      "fields": {
+        "name": {
+          "label": "Positionsname",
+          "required": "Der Name ist erforderlich"
+        },
+        "code": {
+          "label": "Nomenklatur"
+        },
+        "jobType": {
+          "label": "Positionstyp",
+          "placeholder": "Typ auswählen",
+          "required": "Der Typ ist erforderlich"
+        },
+        "superiorJob": {
+          "label": "Direkte Führungskraft"
+        },
+        "objectives": {
+          "label": "Positionsziele"
+        },
+        "expectedResults": {
+          "label": "Erwartete Ergebnisse"
+        },
+        "requirements": {
+          "label": "Spezifische Anforderungen"
+        },
+        "otherFunctions": {
+          "label": "Weitere Aufgaben"
+        },
+        "minimumAcademicLevel": {
+          "label": "Mindestbildungsniveau"
+        },
+        "desiredAcademicLevel": {
+          "label": "Gewünschtes Bildungsniveau"
+        },
+        "minimumExperience": {
+          "label": "Mindestberufserfahrung"
+        },
+        "desiredExperience": {
+          "label": "Gewünschte Berufserfahrung"
+        },
+        "supervises": {
+          "label": "Überwachte Positionen"
+        },
+        "regionalLocation": {
+          "label": "Regionale Lage"
+        },
+        "headquarters": {
+          "label": "Hauptsitz"
+        },
+        "numberOfPositions": {
+          "label": "Anzahl offener Stellen"
+        },
+        "numberOfHoursPerPosition": {
+          "label": "Stunden pro Position"
+        },
+        "academicProfile": {
+          "label": "Akademisches Profil"
+        },
+        "psychologicalProfile": {
+          "label": "Psychologisches Profil"
+        },
+        "internalRelationship": {
+          "label": "Interne Beziehungen"
+        },
+        "externalRelationship": {
+          "label": "Externe Beziehungen"
+        },
+        "competencies": {
+          "label": "Erforderliche Kompetenzen"
+        }
+      },
+      "messages": {
+        "createSuccess": "Position korrekt erstellt",
+        "createError": "Die Position konnte nicht erstellt werden",
+        "updateSuccess": "Position korrekt aktualisiert",
+        "updateError": "Die Position konnte nicht aktualisiert werden"
+      },
+      "actions": {
+        "cancel": "Abbrechen",
+        "save": "Speichern",
+        "create": "Erstellen",
+        "saveChanges": "Änderungen speichern"
+      },
+      "common": {
+        "none": "Keine"
+      },
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Beschreibung eingeben",
+      "descriptionRequired": "Die Beschreibung ist erforderlich",
+      "problem": "Problem",
+      "problemPlaceholder": "Beschreibe das identifizierte Problem",
+      "rootCause": "Ursache",
+      "rootCausePlaceholder": "Beschreibe die Ursache des Problems",
+      "proposedStrategy": "Vorgeschlagene Strategie",
+      "proposedStrategyPlaceholder": "Beschreibe die vorgeschlagene Strategie",
+      "estimatedResourceCosts": "Geschätzte Ressourcenkosten",
+      "estimatedResourceCostsPlaceholder": "Z. B. $1.000.000 COP",
+      "expectedResults": "Erwartete Ergebnisse",
+      "expectedResultsPlaceholder": "Beschreibe die erwarteten Ergebnisse",
+      "effectivenessIndicators": "Wirksamkeitsindikatoren",
+      "effectivenessIndicatorsPlaceholder": "Beschreibe die Wirksamkeitsindikatoren",
+      "proposedWorkTeam": "Vorgeschlagenes Arbeitsteam",
+      "proposedWorkTeamPlaceholder": "Beschreibe das vorgeschlagene Team",
+      "link": "Link (optional)",
+      "linkPlaceholder": "https://beispiel.com",
+      "linkValidation": "Muss eine gültige URL sein"
+    },
+    "map": {
+      "loading": "Karte wird geladen...",
+      "loadingDetail": "Wird geladen...",
+      "noData": "Keine Daten zum Anzeigen vorhanden.",
+      "noRelations": "Keine Beziehungen zum Anzeigen vorhanden.",
+      "modulesConnected": "Verbundene Module",
+      "back": "Zurück",
+      "controls": {
+        "zoom": "Zoom: Mausrad",
+        "move": "Bewegen: Gedrückt halten und ziehen"
+      }
+    },
+    "errors": {
+      "loadMap": "Fehler beim Laden der Positionskarte",
+      "loadDetail": "Fehler beim Laden der Knotendetails",
+      "loadData": "Daten konnten nicht geladen werden",
+      "invalidJobId": "Ungültige Positions-ID"
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "positions": "Positionen",
+      "map": "Karte",
+      "architecture": "Architektur"
+    },
+    "table": {
+      "title": "Positionstabelle",
+      "all": "Alle",
+      "code": "Nomenklatur",
+      "name": "Name",
+      "email": "E-Mail",
+      "jobType": "Positionstyp",
+      "filters": {
+        "keyword": "Stichwort",
+        "headquarters": "Hauptsitz",
+        "jobType": "Positionstyp",
+        "jobTypePlaceholder": "Typ auswählen",
+        "actorStatus": "Status",
+        "actorStatusActive": "Aktiv",
+        "actorStatusInactive": "Inaktiv",
+        "supervises": "Überwacht"
+      },
+      "actions": {
+        "organigram": "Organigramm",
+        "viewMap": "Karte anzeigen",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "upload": "Vorlage hochladen",
+        "new": "Neu",
+        "create": "Position hinzufügen",
+        "downloadTemplate": "Vorlage herunterladen",
+        "download": "Excel exportieren"
+      },
+      "uploadDrawer": {
+        "title": "Positionen per Stapel hochladen",
+        "instructions": {
+          "title": "Anweisungen",
+          "step1": "Lade die Excel-Vorlage im erforderlichen Format herunter.",
+          "downloadLink": "Vorlage herunterladen",
+          "step2": "Fülle die Datei mit den Spalten: CODIGO_CARGO, NOMBRE_CARGO, CODIGO_CARGO_PADRE.",
+          "step3": "Speichere die Datei ohne Leerzeichen oder Sonderzeichen im Namen.",
+          "step4": "Ziehe die Datei per Drag & Drop hinein oder klicke zum Auswählen."
+        },
+        "drop": {
+          "title": "Excel-Datei auswählen",
+          "subtitle": "oder klicken, um sie von deinem Gerät auszuwählen",
+          "formats": "Erlaubte Formate: .xlsx, .xls • 1 Datei",
+          "selectedTitle": "Ausgewählte Datei"
+        },
+        "actions": {
+          "close": "Schließen",
+          "cancel": "Abbrechen",
+          "upload": "Hochladen",
+          "remove": "Entfernen"
+        },
+        "errors": {
+          "noFile": "Bitte eine Datei auswählen.",
+          "tooManyFiles": "Es ist nur 1 Datei erlaubt.",
+          "invalidType": "Nicht erlaubtes Format. Verwende .xlsx oder .xls.",
+          "generic": "Die Datei konnte nicht hochgeladen werden. Bitte versuche es erneut."
+        }
+      },
+      "messages": {
+        "deleteConfirm": "Möchtest du dieses Element wirklich löschen?",
+        "deleteSuccess": "Position gelöscht",
+        "deleteError": "Fehler beim Löschen der Position",
+        "loadError": "Fehler beim Laden der Positionen",
+        "editPending": "Bearbeitung ausstehend",
+        "uploadSuccess": "Datei erfolgreich hochgeladen",
+        "uploadError": "Fehler beim Hochladen der Datei",
+        "downloadError": "Fehler beim Herunterladen der Vorlage"
+      }
+    }
+  },
+  "organizationalStructure": {
+    "relations": {
+      "title": "Beziehung erstellen",
+      "buttonLabel": "Beziehung hinzufügen",
+      "name": "Name",
+      "reverseName": "Umgekehrter Name",
+      "unit1": "Organisationseinheit 1",
+      "unit2": "Organisationseinheit 2",
+      "select": "Auswählen",
+      "loading": "Wird geladen...",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "requiredName": "Der Name ist erforderlich",
+      "requiredReverseName": "Der umgekehrte Name ist erforderlich",
+      "requiredUnit1": "Die Organisationseinheit ist erforderlich",
+      "requiredUnit2": "Die verknüpfte Einheit ist erforderlich",
+      "success": "Beziehung erfolgreich erstellt",
+      "error": "Fehler beim Erstellen der Beziehung"
+    },
+    "documents": {
+      "title": "Dokument verknüpfen",
+      "buttonLabel": "Dokument hinzufügen",
+      "select": "Dokument",
+      "selectPlaceholder": "Auswählen",
+      "observations": "Anmerkungen",
+      "loading": "Wird geladen...",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "requiredDocument": "Das Dokument ist erforderlich",
+      "requiredObservations": "Die Anmerkungen sind erforderlich",
+      "success": "Dokument erfolgreich verknüpft",
+      "error": "Fehler beim Verknüpfen des Dokuments"
+    }
+  }
+}

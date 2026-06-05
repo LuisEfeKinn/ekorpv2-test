@@ -1,0 +1,679 @@
+{
+  "organization": {
+    "title": "Organisationen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "organizationUnit": "Organisationseinheit",
+      "organizations": "Organisationen",
+      "list": "Organisationsliste",
+      "create": "Organisation erstellen",
+      "edit": "Organisation bearbeiten"
+    },
+    "actions": {
+      "add": "Organisation hinzufügen",
+      "edit": "Organisation bearbeiten",
+      "delete": "Organisation löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert...",
+      "create": "Organisation erstellen",
+      "update": "Organisation aktualisieren",
+      "search": "Organisationen suchen...",
+      "clear": "Leeren",
+      "downloadTemplate": "Vorlage herunterladen",
+      "upload": "Vorlage hochladen",
+      "download": "Excel exportieren",
+      "uploadSuccess": "Erfolgreich hochgeladen",
+      "uploadError": "Fehler beim Hochladen",
+      "deleteSuccess": "Erfolgreich gelöscht",
+      "deleteError": "Fehler beim Löschen",
+      "loadError": "Fehler beim Laden der Daten",
+      "downloadError": "Fehler beim Herunterladen der Vorlage",
+      "viewMap": "Karte anzeigen",
+      "createSuccess": "Organisationsstruktur erfolgreich erstellt",
+      "updateSuccess": "Organisationsstruktur erfolgreich aktualisiert",
+      "saveError": "Fehler beim Speichern der Organisationsstruktur"
+    },
+    "uploadDrawer": {
+      "title": "Organisationseinheiten stapelweise hochladen",
+      "instructions": {
+        "title": "Anweisungen",
+        "step1": "Lade die Excel-Vorlage im erforderlichen Format herunter.",
+        "downloadLink": "Vorlage herunterladen",
+        "step2": "Fülle die Datei mit den Spalten: CODIGO_U_ORGANIZACIONAL, NOMBRE_U_ORGANIZACIONAL, CODIGO_U_ORGANIZACIONAL_PADRE.",
+        "step3": "Speichere die Datei ohne Leerzeichen oder Sonderzeichen im Namen.",
+        "step4": "Ziehe die Datei per Drag & Drop hinein oder klicke zum Auswählen."
+      },
+      "drop": {
+        "title": "Excel-Datei auswählen",
+        "subtitle": "oder klicken, um sie von deinem Gerät auszuwählen",
+        "formats": "Erlaubte Formate: .xlsx, .xls • 1 Datei",
+        "selectedTitle": "Ausgewählte Datei"
+      },
+      "actions": {
+        "close": "Schließen",
+        "cancel": "Abbrechen",
+        "upload": "Hochladen",
+        "remove": "Entfernen"
+      },
+      "errors": {
+        "noFile": "Bitte eine Datei auswählen.",
+        "tooManyFiles": "Es ist nur 1 Datei erlaubt.",
+        "invalidType": "Nicht erlaubtes Format. Verwende .xlsx oder .xls.",
+        "generic": "Die Datei konnte nicht hochgeladen werden. Bitte versuche es erneut."
+      }
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "code": "Code",
+        "description": "Beschreibung",
+        "color": "Farbe",
+        "expectedResults": "Erwartete Ergebnisse",
+        "parent": "Übergeordnete Einheit",
+        "orgUnitType": "Einheitstyp",
+        "createdAt": "Erstellt am",
+        "updatedAt": "Aktualisiert am",
+        "actions": "Aktionen"
+      },
+      "toolbar": {
+        "search": "Organisationen suchen...",
+        "columns": "Spalten"
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Stichwort",
+        "all": "Alle"
+      },
+      "emptyState": {
+        "noData": "Keine Organisationen gefunden",
+        "noResults": "Keine Ergebnisse für deine Suche gefunden"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "required": "Der Name ist erforderlich"
+        },
+        "code": {
+          "required": "Der Code ist erforderlich"
+        },
+        "description": {
+          "required": "Die Beschreibung ist erforderlich"
+        },
+        "color": {
+          "required": "Die Farbe ist erforderlich"
+        },
+        "expectedResults": {
+          "required": "Die erwarteten Ergebnisse sind erforderlich"
+        },
+        "orgUnitTypeId": {
+          "placeholder": "Auswählen"
+        },
+        "parentId": {}
+      },
+      "sections": {
+        "details": "Organisationsdetails"
+      },
+      "titles": {
+        "create": "Organisationsstruktur erstellen",
+        "edit": "Organisationsstruktur bearbeiten"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Organisation löschen",
+        "content": "Möchtest du diese Organisation wirklich löschen?",
+        "contentMultiple": "Möchtest du wirklich {{count}} Elemente löschen?",
+        "confirm": "Löschen"
+      },
+      "unsavedChanges": {
+        "title": "Nicht gespeicherte Änderungen",
+        "content": "Du hast nicht gespeicherte Änderungen. Möchtest du wirklich verlassen?",
+        "confirm": "Ohne Speichern verlassen"
+      },
+      "employees": {
+        "fallbacks": {}
+      }
+    },
+    "messages": {
+      "loading": "Organisationen werden geladen...",
+      "saving": "Wird gespeichert...",
+      "loadError": "Fehler beim Laden der Organisation",
+      "saveError": "Fehler beim Speichern der Organisation. Bitte versuche es erneut.",
+      "notFound": "Organisation nicht gefunden",
+      "createSuccess": "Organisation erfolgreich erstellt!",
+      "updateSuccess": "Organisation erfolgreich aktualisiert!",
+      "success": {
+        "created": "Organisation erfolgreich erstellt",
+        "updated": "Organisation erfolgreich aktualisiert",
+        "deleted": "Organisation erfolgreich gelöscht",
+        "deletedMultiple": "Organisationen erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Organisationen",
+        "saving": "Fehler beim Speichern der Organisation. Bitte versuche es erneut.",
+        "deleting": "Fehler beim Löschen der Organisation",
+        "deletingMultiple": "Fehler beim Löschen der Organisationen",
+        "notFound": "Organisation nicht gefunden"
+      }
+    },
+    "status": {
+      "all": "Alle",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "tooltips": {
+      "edit": "Organisation bearbeiten",
+      "delete": "Organisation löschen",
+      "quickEdit": "Schnellbearbeitung"
+    },
+    "map": {
+      "title": "Karte der Organisationsstruktur",
+      "loading": "Karte wird geladen...",
+      "noData": "Keine Daten zum Anzeigen vorhanden",
+      "noChildren": "Diese Organisationseinheit hat keine Kindknoten zum Anzeigen.",
+      "connectedModules": "Verbundene Module",
+      "zoom": "Zoom: Mausrad",
+      "move": "Bewegen: Gedrückt halten und ziehen",
+      "loadError": "Die Karte der Organisationsstruktur konnte nicht geladen werden",
+      "backTo": "Zurück zu {{label}}",
+      "unitLabel": "Organisationseinheit",
+      "unnamed": "Unbenannt",
+      "organigram": "Organigramm"
+    },
+    "expanded": {
+      "addLesson": "Gelernte Lektion hinzufügen",
+      "addProposal": "Verbesserungsvorschlag hinzufügen",
+      "relate": "Verknüpfen"
+    },
+    "feedbacks": {
+      "lessonTitle": "Neue gelernte Lektion",
+      "proposalTitle": "Neuer Verbesserungsvorschlag",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Details beschreiben...",
+      "problem": "Identifiziertes Problem",
+      "problemPlaceholder": "Problem beschreiben...",
+      "rootCause": "Ursache",
+      "rootCausePlaceholder": "Ursache beschreiben...",
+      "strategy": "Vorgeschlagene Strategie",
+      "strategyPlaceholder": "Strategie beschreiben...",
+      "resources": "Ressourcen und geschätzte Kosten",
+      "resourcesPlaceholder": "Z. B. 5000 USD, 2 Ingenieure...",
+      "results": "Erwartete Ergebnisse",
+      "resultsPlaceholder": "Ergebnisse beschreiben...",
+      "indicators": "Wirksamkeitsindikatoren",
+      "indicatorsPlaceholder": "KPIs, Metriken...",
+      "team": "Vorgeschlagenes Arbeitsteam",
+      "teamPlaceholder": "Rollen oder Personen...",
+      "link": "Referenzlink",
+      "linkPlaceholder": "https://...",
+      "cancel": "Abbrechen",
+      "saveProposal": "Vorschlag speichern",
+      "saveLesson": "Lektion speichern",
+      "invalidUnitId": "Ungültige Organisationseinheits-ID",
+      "lessonSaved": "Gelernte Lektion erfolgreich gespeichert",
+      "lessonError": "Fehler beim Speichern der gelernten Lektion",
+      "proposalSaved": "Verbesserungsvorschlag erfolgreich gespeichert",
+      "proposalError": "Fehler beim Speichern des Verbesserungsvorschlags",
+      "validation": {
+        "descriptionRequired": "Die Beschreibung ist erforderlich",
+        "invalidUrl": "Ungültige URL"
+      }
+    },
+    "relations": {
+      "title": "Beziehung erstellen",
+      "buttonLabel": "Beziehung hinzufügen",
+      "name": "Name",
+      "reverseName": "Umgekehrter Name",
+      "unit1": "Organisationseinheit 1",
+      "unit2": "Organisationseinheit 2",
+      "select": "Auswählen",
+      "loading": "Wird geladen...",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "requiredName": "Der Name ist erforderlich",
+      "requiredReverseName": "Der umgekehrte Name ist erforderlich",
+      "requiredUnit1": "Die Organisationseinheit ist erforderlich",
+      "requiredUnit2": "Die verknüpfte Einheit ist erforderlich",
+      "success": "Beziehung erfolgreich erstellt",
+      "error": "Fehler beim Erstellen der Beziehung"
+    },
+    "documents": {
+      "title": "Dokument verknüpfen",
+      "buttonLabel": "Dokument hinzufügen",
+      "select": "Dokument",
+      "selectPlaceholder": "Auswählen",
+      "observations": "Anmerkungen",
+      "loading": "Wird geladen...",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "requiredDocument": "Das Dokument ist erforderlich",
+      "requiredObservations": "Die Anmerkungen sind erforderlich",
+      "success": "Dokument erfolgreich verknüpft",
+      "error": "Fehler beim Verknüpfen des Dokuments"
+    },
+    "view": {
+      "createTitle": "Organisationsstruktur erstellen",
+      "editTitle": "Organisationsstruktur bearbeiten",
+      "mapTitle": "Karte der Organisationsstruktur",
+      "tableTitle": "Tabelle der Organisationsstruktur",
+      "dashboard": "Dashboard",
+      "list": "Organisationsstruktur",
+      "create": "Erstellen",
+      "edit": "Bearbeiten",
+      "map": "Karte",
+      "back": "Zurück",
+      "organigram": "Organigramm",
+      "downloadTemplate": "Vorlage herunterladen",
+      "upload": "Hochladen",
+      "download": "Herunterladen"
+    }
+  },
+  "position": {
+    "title": "Positionen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "positions": "Positionen",
+      "list": "Positionsliste",
+      "create": "Position erstellen",
+      "edit": "Position bearbeiten"
+    },
+    "actions": {
+      "add": "Position hinzufügen",
+      "edit": "Position bearbeiten",
+      "delete": "Position löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert...",
+      "create": "Position erstellen",
+      "update": "Position aktualisieren",
+      "search": "Positionen suchen...",
+      "clear": "Leeren"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "superiorJob": "Übergeordnete Position",
+        "numberOfPositions": "Erforderliche Mitarbeitende",
+        "objectives": "Ziele",
+        "expectedResults": "Erwartete Ergebnisse",
+        "requirements": "Anforderungen",
+        "otherFunctions": "Weitere Aufgaben",
+        "academic": "Bildungsniveau",
+        "experience": "Erfahrung",
+        "location": "Ort",
+        "createdAt": "Erstellt am",
+        "updatedAt": "Aktualisiert am",
+        "actions": "Aktionen"
+      },
+      "noSuperior": "Keine übergeordnete Position",
+      "toolbar": {
+        "search": "Positionen suchen..."
+      },
+      "filters": {
+        "status": "Status:",
+        "keyword": "Stichwort",
+        "all": "Alle"
+      },
+      "emptyState": {
+        "noData": "Keine Positionen gefunden",
+        "noResults": "Keine Ergebnisse für deine Suche gefunden"
+      }
+    },
+    "form": {
+      "fields": {
+        "name": {
+          "required": "Der Name ist erforderlich"
+        },
+        "code": {
+          "helperText": "Gib den Positionscode ein (max. 80 Zeichen)"
+        },
+        "objectives": {
+          "required": "Die Ziele sind erforderlich"
+        },
+        "expectedResults": {
+          "required": "Die erwarteten Ergebnisse sind erforderlich"
+        },
+        "requirements": {
+          "required": "Die Anforderungen sind erforderlich"
+        },
+        "otherFunctions": {
+          "required": "Die weiteren Aufgaben sind erforderlich"
+        },
+        "minimumAcademicLevel": {
+          "helperText": "Gib das erforderliche Mindestbildungsniveau ein (max. 512 Zeichen)"
+        },
+        "desiredAcademicLevel": {
+          "helperText": "Gib das gewünschte Bildungsniveau ein (max. 512 Zeichen)"
+        },
+        "minimumExperience": {
+          "helperText": "Gib die erforderliche Mindestberufserfahrung ein (max. 512 Zeichen)"
+        },
+        "desiredExperience": {
+          "helperText": "Gib die gewünschte Berufserfahrung ein (max. 512 Zeichen)"
+        },
+        "supervises": {
+          "helperText": "Gib die überwachten Positionen ein (max. 512 Zeichen)"
+        },
+        "regionalLocation": {
+          "helperText": "Gib die regionale Lage ein (max. 512 Zeichen)"
+        },
+        "headquarters": {
+          "helperText": "Gib den Hauptsitz ein (max. 512 Zeichen)"
+        },
+        "version": {
+          "helperText": "Gib die Versionsnummer der Position ein (max. 64 Zeichen)"
+        },
+        "superiorJob": {
+          "helperText": "Wähle die übergeordnete Position, der berichtet wird (optional)"
+        },
+        "organizationalUnit": {
+          "helperText": "Wähle die Organisationseinheit, zu der diese Position gehört (optional)"
+        },
+        "numberOfPositions": {
+          "helperText": "Anzahl der für diese Position benötigten Mitarbeitenden"
+        },
+        "competencies": {}
+      },
+      "sections": {
+        "details": "Positionsdetails"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Position löschen",
+        "content": "Möchtest du diese Position wirklich löschen?",
+        "confirm": "Löschen"
+      },
+      "unsavedChanges": {}
+    },
+    "messages": {
+      "loading": "Positionen werden geladen...",
+      "saving": "Wird gespeichert...",
+      "loadError": "Fehler beim Laden der Position",
+      "saveError": "Fehler beim Speichern der Position. Bitte versuche es erneut.",
+      "notFound": "Position nicht gefunden",
+      "createSuccess": "Position erfolgreich erstellt!",
+      "updateSuccess": "Position erfolgreich aktualisiert!",
+      "success": {
+        "deleted": "Position erfolgreich gelöscht",
+        "deletedMultiple": "Positionen erfolgreich gelöscht"
+      },
+      "error": {}
+    },
+    "status": {
+      "all": "Alle",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "tooltips": {
+      "edit": "Position bearbeiten",
+      "delete": "Position löschen",
+      "quickEdit": "Schnellbearbeitung"
+    }
+  },
+  "company": {
+    "title": "Unternehmen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "company": "Unternehmen",
+      "details": "Unternehmensdetails",
+      "edit": "Unternehmen bearbeiten"
+    },
+    "actions": {
+      "edit": "Unternehmen bearbeiten",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert...",
+      "update": "Unternehmen aktualisieren"
+    },
+    "form": {
+      "fields": {},
+      "sections": {}
+    },
+    "messages": {
+      "loading": "Unternehmensinformationen werden geladen...",
+      "saving": "Wird gespeichert...",
+      "loadError": "Fehler beim Laden der Unternehmensinformationen",
+      "saveError": "Fehler beim Speichern der Unternehmensinformationen. Bitte versuche es erneut.",
+      "notFound": "Unternehmen nicht gefunden",
+      "updateSuccess": "Unternehmensinformationen erfolgreich aktualisiert!",
+      "success": {
+        "updated": "Unternehmensinformationen erfolgreich aktualisiert"
+      },
+      "error": {}
+    }
+  },
+  "organigrama": {
+    "title": "Organigramm",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "organigrama": "Organigramm"
+    },
+    "viewTypes": {
+      "jobs": "Nach Positionen",
+      "organizational": "Nach Einheiten"
+    },
+    "actions": {
+      "manageOrganizations": "Organisationen verwalten",
+      "createPosition": "Position erstellen",
+      "add": "Hinzufügen",
+      "retry": "Erneut versuchen"
+    },
+    "placeholder": {
+      "title": "Organigramm in Entwicklung",
+      "subtitle": "Visualisiere und verwalte die hierarchische Struktur deiner Organisation"
+    },
+    "drawer": {
+      "createPosition": {
+        "close": "Schließen"
+      },
+      "editPosition": {
+        "subtitle": "Ändere die Daten der ausgewählten Position"
+      },
+      "vacancies": {}
+    },
+    "dialogs": {
+      "employees": {},
+      "skills": {}
+    },
+    "form": {
+      "fields": {},
+      "actions": {}
+    },
+    "nodeActions": {
+      "moreOptions": "Weitere Optionen",
+      "assignEmployees": "Mitarbeitende zuweisen",
+      "editPosition": "Position bearbeiten",
+      "deletePosition": "Position löschen",
+      "expandNode": "Knoten ausklappen",
+      "collapseNode": "Knoten einklappen"
+    },
+    "nodeContent": {
+      "assignedTeam": "Zugewiesenes Team",
+      "noTeamAssigned": "Kein Team zugewiesen",
+      "vacancies": "Vakanzen",
+      "required": "Erforderlich",
+      "assignEmployees": "Mitarbeitende zuweisen",
+      "keySkills": "Schlüsselkompetenzen",
+      "allRequiredSkills": "Alle erforderlichen Kompetenzen:",
+      "moreSkills": "weitere Kompetenzen"
+    },
+    "chartControls": {
+      "zoomIn": "Vergrößern",
+      "zoomOut": "Verkleinern",
+      "adjustZoom": "Zoom anpassen",
+      "fitToScreen": "An Bildschirm anpassen",
+      "resetZoom": "Zoom zurücksetzen",
+      "fullscreen": "Vollbild",
+      "zoomLevel": "Zoomstufe"
+    },
+    "metrics": {
+      "totalPositions": "Positionen gesamt",
+      "activeEmployees": "Aktive Mitarbeitende",
+      "organizations": "Organisationen",
+      "openVacancies": "Offene Stellen"
+    },
+    "deleteDialog": {
+      "title": "Position löschen",
+      "message": "Möchtest du die Position \"{{name}}\" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "warning": "Warnung",
+      "employeesWarning": "Diese Position hat {{count}} zugewiesene Mitarbeitende. Sie werden von dieser Position entzogen.",
+      "confirmButton": "Position löschen",
+      "cancelButton": "Abbrechen"
+    },
+    "messages": {
+      "loading": "Organigramm wird geladen...",
+      "loadError": "Fehler beim Laden des Organigramms. Bitte versuche es erneut.",
+      "confirmDelete": "Möchtest du diese Position wirklich löschen?",
+      "deleteError": "Fehler beim Löschen der Position. Bitte versuche es erneut.",
+      "deleteSuccess": "Position erfolgreich gelöscht.",
+      "createSuccess": "Position erfolgreich erstellt!",
+      "updateSuccess": "Position erfolgreich aktualisiert!",
+      "saveError": "Fehler beim Speichern der Position. Bitte versuche es erneut.",
+      "assignmentFor": "Zuweisungsfunktion für diese Position",
+      "noData": "Keine Organigrammdaten gefunden.",
+      "createFirstPosition": "Erste Position erstellen"
+    }
+  },
+  "vigencies": {
+    "title": "Gültigkeiten",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "vigencies": "Gültigkeiten",
+      "list": "Gültigkeitsliste",
+      "create": "Gültigkeit erstellen",
+      "edit": "Gültigkeit bearbeiten"
+    },
+    "actions": {
+      "add": "Gültigkeit hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert...",
+      "viewMore": "Mehr anzeigen",
+      "viewPeriods": "Zeiträume anzeigen"
+    },
+    "table": {
+      "columns": {
+        "actions": "Aktionen"
+      },
+      "search": "Gültigkeiten suchen...",
+      "toolbar": {
+        "resetFilters": "Filter zurücksetzen"
+      },
+      "filters": {
+        "inactive": "Inaktiv"
+      },
+      "emptyState": {}
+    },
+    "form": {
+      "name": {
+        "required": "Der Name ist erforderlich"
+      },
+      "startDate": {
+        "required": "Das Startdatum ist erforderlich"
+      },
+      "endDate": {
+        "required": "Das Enddatum ist erforderlich"
+      },
+      "isActive": {
+        "helperText": "Diese Gültigkeit aktivieren oder deaktivieren"
+      },
+      "actions": {
+        "managePeriods": "Zeiträume verwalten"
+      },
+      "confirmDialog": {}
+    },
+    "periods": {
+      "title": "Zeiträume",
+      "name": "Name",
+      "abbreviation": "Abkürzung",
+      "startDate": "Startdatum",
+      "endDate": "Enddatum",
+      "percentage": "Prozentsatz",
+      "noPeriods": "Keine Zeiträume verfügbar"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "messages": {
+      "success": {
+        "deleted": "Gültigkeit erfolgreich gelöscht"
+      },
+      "error": {
+        "deleting": "Fehler beim Löschen der Gültigkeit"
+      },
+      "confirmDelete": "Möchtest du diese Gültigkeit wirklich löschen?"
+    }
+  },
+  "periods": {
+    "title": "Zeiträume",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "vigencies": "Gültigkeiten",
+      "periods": "Zeiträume",
+      "list": "Zeitraumliste",
+      "create": "Zeitraum erstellen",
+      "edit": "Zeitraum bearbeiten"
+    },
+    "actions": {
+      "add": "Zeitraum hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert..."
+    },
+    "table": {
+      "columns": {
+        "actions": "Aktionen"
+      },
+      "search": "Zeiträume suchen...",
+      "toolbar": {
+        "resetFilters": "Filter zurücksetzen"
+      },
+      "filters": {
+        "keyword": "Stichwort"
+      },
+      "emptyState": {}
+    },
+    "form": {
+      "name": {
+        "required": "Der Name ist erforderlich"
+      },
+      "abbreviation": {
+        "required": "Die Abkürzung ist erforderlich"
+      },
+      "startDate": {
+        "required": "Das Startdatum ist erforderlich"
+      },
+      "endDate": {
+        "required": "Das Enddatum ist erforderlich"
+      },
+      "percentage": {
+        "helperText": "Der Prozentsatz muss zwischen 0 und 100 liegen"
+      },
+      "isActive": {
+        "helperText": "Diesen Zeitraum aktivieren oder deaktivieren"
+      },
+      "actions": {}
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "messages": {
+      "success": {
+        "deleted": "Zeitraum erfolgreich gelöscht"
+      },
+      "error": {
+        "deleting": "Fehler beim Löschen des Zeitraums"
+      },
+      "confirmDelete": "Möchtest du diesen Zeitraum wirklich löschen?"
+    }
+  }
+}

@@ -216,7 +216,13 @@ export async function DownloadAndUploadVideoService(
     });
 
     if (!downloadResponse.ok) {
-      throw new Error('Error al descargar el video');
+      const errorData = await downloadResponse.json().catch(() => null);
+      const errorMessage =
+        errorData && typeof errorData === 'object'
+          ? (errorData as { error?: string }).error || `Error al descargar el video (${downloadResponse.status})`
+          : `Error al descargar el video (${downloadResponse.status})`;
+
+      throw new Error(errorMessage);
     }
 
     // Get video as blob

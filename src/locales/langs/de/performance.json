@@ -1,0 +1,1674 @@
+{
+  "scales": {
+    "title": "Bewertungsskalen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "scales": "Skalen",
+      "create": "Neue Skala",
+      "edit": "Bearbeiten"
+    },
+    "actions": {
+      "create": "Skala erstellen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Änderungen speichern",
+      "saving": "Wird gespeichert...",
+      "update": "Skala aktualisieren",
+      "addLevel": "Stufe hinzufügen",
+      "deleteMultiple": "Ausgewählte löschen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "type": "Typ",
+        "maxValue": "Maximalwert",
+        "levels": "Stufen",
+        "isDefault": "Standard"
+      },
+      "toolbar": {
+        "search": "Skalen suchen..."
+      },
+      "filters": {
+        "all": "Alle",
+        "status": "Status",
+        "keyword": "Stichwort",
+        "type": "Typ"
+      },
+      "empty": {
+        "title": "Keine Skalen gefunden",
+        "description": "Es wurden keine Skalen erstellt oder sie stimmen nicht mit den angewandten Filtern überein."
+      }
+    },
+    "form": {
+      "sections": {
+        "details": "Skalendetails",
+        "levels": "Bewertungsstufen",
+        "loading": "Wird geladen..."
+      },
+      "fields": {
+        "name": {
+          "label": "Skalenname",
+          "helperText": "Geben Sie einen beschreibenden Namen für die Skala ein",
+          "required": "Name ist erforderlich"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "helperText": "Beschreiben Sie Zweck und Verwendung dieser Skala",
+          "required": "Beschreibung ist erforderlich"
+        },
+        "type": {
+          "label": "Skalentyp",
+          "helperText": "Wählen Sie den Typ der Bewertungsskala",
+          "required": "Typ ist erforderlich",
+          "options": {
+            "LIKERT": "Likert",
+            "PERFORMANCE": "Leistung",
+            "NINEBOX_PERFORMANCE": "9Box - Leistung",
+            "NINEBOX_POTENTIAL": "9Box - Potenzial"
+          }
+        },
+        "maxValue": {
+          "label": "Maximalwert",
+          "helperText": "Definieren Sie den Maximalwert der Skala",
+          "required": "Maximalwert ist erforderlich"
+        },
+        "levels": {
+          "noLevels": "Keine Stufen hinzugefügt. Klicken Sie auf \"Stufe hinzufügen\", um zu beginnen.",
+          "value": {
+            "label": "Wert",
+            "helperText": "Numerischer Wert der Stufe",
+            "required": "Wert ist erforderlich"
+          },
+          "label": {
+            "label": "Bezeichnungen",
+            "placeholder": "Tippen und Enter drücken, um Bezeichnungen hinzuzufügen",
+            "helperText": "Fügen Sie eine oder mehrere Bezeichnungen für diese Stufe hinzu",
+            "required": "Bezeichnung ist erforderlich"
+          },
+          "description": {
+            "label": "Beschreibung",
+            "helperText": "Beschreiben Sie, was diese Stufe darstellt",
+            "required": "Beschreibung ist erforderlich"
+          },
+          "actions": "Aktionen"
+        }
+      },
+      "validation": {
+        "minLevels": "Es muss mindestens eine Stufe hinzugefügt werden",
+        "minValue": "Der Wert muss größer als 0 sein"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Skala löschen",
+        "content": "Möchten Sie diese Skala wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "contentMultiple": "Möchten Sie wirklich {{count}} Skalen löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      },
+      "addLevel": {
+        "title": "Stufe hinzufügen",
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen"
+      },
+      "editLevel": {
+        "title": "Stufe bearbeiten",
+        "save": "Speichern"
+      },
+      "deleteLevel": {
+        "title": "Stufe löschen",
+        "content": "Möchten Sie diese Stufe wirklich löschen?"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Skala erfolgreich erstellt",
+        "updated": "Skala erfolgreich aktualisiert",
+        "deleted": "Skala erfolgreich gelöscht",
+        "deletedMultiple": "Skalen erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Skalen",
+        "loadError": "Fehler beim Laden der Skala",
+        "saving": "Fehler beim Speichern der Skala",
+        "deleting": "Fehler beim Löschen der Skala",
+        "deletingMultiple": "Fehler beim Löschen der Skalen"
+      }
+    }
+  },
+  "configure-evaluations": {
+    "title": "Bewertungen konfigurieren",
+    "types": {
+      "PERFORMANCE_90": "90°-Bewertung",
+      "PERFORMANCE_180": "180°-Bewertung",
+      "PERFORMANCE_270": "270°-Bewertung",
+      "PERFORMANCE_360": "360°-Bewertung",
+      "CLIMA_LABORAL": "Arbeitsklima",
+      "OBJECTIVES": "Ziele"
+    },
+    "statuses": {
+      "DRAFT": "Entwurf",
+      "ACTIVE": "Aktiv",
+      "COMPLETED": "Abgeschlossen",
+      "CANCELLED": "Abgebrochen"
+    },
+    "relationships": {
+      "MANAGER": "Direkter Vorgesetzter/Supervisor",
+      "PEER": "Kollege",
+      "SUBORDINATE": "Mitarbeiter",
+      "SELF": "Selbstbewertung",
+      "OTHER": "Andere"
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Bewertungen konfigurieren",
+      "participants": "Teilnehmer",
+      "create": "Neue Bewertung",
+      "edit": "Bearbeiten"
+    },
+    "actions": {
+      "create": "Bewertung erstellen",
+      "edit": "Bearbeiten",
+      "launch": "Starten",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Änderungen speichern",
+      "saving": "Wird gespeichert...",
+      "update": "Bewertung aktualisieren",
+      "deleteMultiple": "Ausgewählte löschen",
+      "viewParticipants": "Bewerter verwalten",
+      "assingnParticipants": "Bewerter zuweisen",
+      "view": "Details anzeigen",
+      "viewAnalysis": "Analyse anzeigen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "type": "Typ",
+        "period": "Zeitraum",
+        "status": "Status",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "totalCompetences": "Kompetenzen",
+        "totalObjectives": "Ziele",
+        "totalDepartments": "Abteilungen",
+        "totalPositions": "Positionen",
+        "totalEmployees": "Mitarbeiter"
+      },
+      "toolbar": {
+        "search": "Bewertungen suchen...",
+        "filterByType": "Nach Typ filtern",
+        "filterByStatus": "Nach Status filtern",
+        "filterByDepartment": "Nach Abteilung filtern",
+        "filterByPosition": "Nach Position filtern",
+        "filterByEmployee": "Nach Mitarbeiter filtern"
+      },
+      "filters": {
+        "all": "Alle",
+        "status": "Status",
+        "type": "Typ",
+        "keyword": "Stichwort",
+        "department": "Abteilung",
+        "position": "Position",
+        "employee": "Mitarbeiter"
+      },
+      "empty": {
+        "title": "Keine Bewertungen gefunden",
+        "description": "Es wurden keine Bewertungen erstellt oder sie stimmen nicht mit den angewandten Filtern überein."
+      }
+    },
+    "form": {
+      "sections": {
+        "basicInfo": "Grundlegende Informationen",
+        "basicInfoSubtitle": "Allgemeine Informationen zur Bewertung",
+        "config": "Konfiguration",
+        "configSubtitle": "Zusätzliche Konfigurationsoptionen",
+        "dates": "Bewertungszeitraum",
+        "datesSubtitle": "Bewertungszeitraum festlegen",
+        "competences": "Kompetenzen",
+        "competencesSubtitle": "Zu bewertende Kompetenzen auswählen",
+        "objectives": "Ziele",
+        "objectivesSubtitle": "Zu bewertende Ziele auswählen",
+        "scope": "Umfang",
+        "scopeSubtitle": "Festlegen, wer an der Bewertung teilnimmt",
+        "evaluators": "Bewerterkonfiguration",
+        "evaluatorsSubtitle": "Zugewiesene Bewerter konfigurieren",
+        "loading": "Wird geladen..."
+      },
+      "fields": {
+        "name": {
+          "label": "Bewertungsname",
+          "helperText": "Geben Sie einen beschreibenden Namen für die Bewertung ein",
+          "required": "Name ist erforderlich"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "helperText": "Beschreiben Sie den Zweck dieser Bewertung",
+          "required": "Beschreibung ist erforderlich"
+        },
+        "template": {
+          "label": "Vorlage",
+          "helperText": "Wählen Sie eine Vorlage zum Vorausfüllen der Bewertungskonfiguration",
+          "required": "Vorlage ist erforderlich",
+          "preview": "Vorschau"
+        },
+        "vigency": {
+          "label": "Gültigkeit",
+          "helperText": "Wählen Sie die Gültigkeit für diese Bewertung",
+          "required": "Gültigkeit ist erforderlich"
+        },
+        "type": {
+          "label": "Bewertungstyp",
+          "helperText": "Wählen Sie den Bewertungstyp",
+          "required": "Typ ist erforderlich"
+        },
+        "period": {
+          "label": "Zeitraum",
+          "helperText": "Beispiel: 2024-Q4",
+          "required": "Zeitraum ist erforderlich"
+        },
+        "objectiveScale": {
+          "label": "Zielskala",
+          "helperText": "Wählen Sie die Skala zur Bewertung der Ziele"
+        },
+        "autoAssign": {
+          "label": "Automatische Zuweisung",
+          "helperText": "Bewerter automatisch zuweisen"
+        },
+        "isActive": {
+          "label": "Status",
+          "helperText": "Legt fest, ob die Bewertung aktiv oder inaktiv ist",
+          "active": "Aktiv",
+          "inactive": "Inaktiv"
+        },
+        "editableEvaluators": {
+          "label": "Bearbeitbare Bewerter",
+          "helperText": "Bearbeitung von Bewertern nach der Erstellung erlauben"
+        },
+        "startDate": {
+          "label": "Startdatum",
+          "helperText": "Startdatum der Bewertung",
+          "required": "Startdatum ist erforderlich"
+        },
+        "endDate": {
+          "label": "Enddatum",
+          "helperText": "Enddatum der Bewertung",
+          "required": "Enddatum ist erforderlich",
+          "afterStart": "Das Enddatum muss nach dem Startdatum liegen"
+        },
+        "competences": {
+          "label": "Kompetenzen",
+          "helperText": "Zu bewertende Kompetenzen auswählen",
+          "addButton": "Kompetenz hinzufügen",
+          "emptyMessage": "Keine Kompetenzen hinzugefügt",
+          "weight": "Gewichtung (%)",
+          "select": "Kompetenz auswählen",
+          "configureQuestions": "Fragen",
+          "configureQuestionsButton": "Fragen konfigurieren"
+        },
+        "objectives": {
+          "label": "Ziele",
+          "helperText": "Zu bewertende Ziele auswählen",
+          "addButton": "Ziel hinzufügen",
+          "emptyMessage": "Keine Ziele hinzugefügt",
+          "weight": "Gewichtung (%)",
+          "targetValue": "Zielwert",
+          "customKpi": "Benutzerdefinierter KPI",
+          "select": "Ziel auswählen"
+        },
+        "departments": {
+          "label": "Organisationseinheiten",
+          "helperText": "Zu bewertende Organisationseinheiten auswählen",
+          "placeholder": "Organisationseinheiten suchen..."
+        },
+        "positions": {
+          "label": "Positionen",
+          "helperText": "Zu bewertende Positionen auswählen",
+          "placeholder": "Positionen suchen..."
+        },
+        "employees": {
+          "label": "Mitarbeiter",
+          "helperText": "Zu bewertende Mitarbeiter auswählen",
+          "placeholder": "Mitarbeiter suchen..."
+        },
+        "evaluatorConfigs": {
+          "label": "Bewerterkonfiguration",
+          "helperText": "Bewertertypen konfigurieren",
+          "addButton": "Bewerter hinzufügen",
+          "emptyMessage": "Keine Bewerter konfiguriert",
+          "relationship": "Beziehung",
+          "weight": "Gewichtung (%)",
+          "maxEvaluators": "Max. Bewerter",
+          "maxEvaluatorsHint": "Wenn die Anzahl der verfügbaren Bewerter geringer als das konfigurierte Maximum ist, weist das System bis zu den verfügbaren Bewertern zu.",
+          "enabled": "Aktiviert",
+          "select": "Beziehung auswählen"
+        }
+      },
+      "validation": {
+        "dateRange": "Das Enddatum muss nach dem Startdatum liegen",
+        "minWeight": "Die Gewichtung muss größer als 0 sein",
+        "maxWeight": "Die Gewichtung darf 100 nicht überschreiten",
+        "totalWeight": "Die Summe der Gewichtungen muss 100 ergeben",
+        "minEvaluators": "Es muss mindestens 1 Bewerter vorhanden sein"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Bewertung löschen",
+        "content": "Möchten Sie diese Bewertung wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "contentMultiple": "Möchten Sie wirklich {{count}} Bewertungen löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      },
+      "addCompetence": {
+        "title": "Kompetenz hinzufügen",
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen"
+      },
+      "addObjective": {
+        "title": "Ziel hinzufügen",
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen"
+      },
+      "addEvaluatorConfig": {
+        "title": "Bewerterkonfiguration hinzufügen",
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen"
+      },
+      "deleteItem": {
+        "title": "Löschen",
+        "content": "Möchten Sie dieses Element wirklich löschen?"
+      },
+      "configureQuestions": {
+        "title": "Speichern und Fragen konfigurieren",
+        "content": "Um die Fragen für diese Kompetenz zu konfigurieren, muss die Bewertung zuerst gespeichert werden. Dabei werden alle bisher eingegebenen Informationen gespeichert.",
+        "competence": "Kompetenz",
+        "continue": "Speichern und fortfahren",
+        "saving": "Wird gespeichert...",
+        "cancel": "Abbrechen"
+      },
+      "cancel": {
+        "title": "Kampagne abbrechen",
+        "content": "Möchten Sie diese Kampagne wirklich abbrechen? Sie wird den Status ABGEBROCHEN erhalten und kann weder bearbeitet noch gestartet werden."
+      }
+    },
+    "drawer": {
+      "createTitle": "Neue Bewertung",
+      "editTitle": "Bewertung bearbeiten",
+      "stepOf": "Schritt {{step}} von {{total}}",
+      "readOnlyBanner": "Diese Kampagne ist aktiv oder abgeschlossen und kann nicht bearbeitet werden.",
+      "readOnlyLabel": "Schreibgeschützt",
+      "steps": {
+        "basicInfo": "Grundlegende Informationen",
+        "basicInfoTitle": "Bewertungsinformationen",
+        "basicInfoDesc": "Name, Typ, Beschreibung, Vorlage und Gültigkeit festlegen",
+        "evaluators": "Bewerter",
+        "evaluatorsTitle": "Bewerterkonfiguration",
+        "evaluatorsDesc": "Bewerter und deren Gewichtung hinzufügen und konfigurieren",
+        "scope": "Umfang",
+        "scopeTitle": "Bewertungsumfang",
+        "scopeDesc": "Organisationseinheiten, Positionen und Mitarbeiter auswählen, die teilnehmen",
+        "config": "Konfiguration",
+        "configTitle": "Endkonfiguration",
+        "configDesc": "Zeitraum und zusätzliche Bewertungsoptionen festlegen",
+        "evaluatorsEmpty": "Keine Bewerter konfiguriert. Fügen Sie mindestens einen hinzu.",
+        "evaluatorsIncomplete": "Füllen Sie alle Bewerterfelder aus, bevor Sie fortfahren",
+        "evaluatorsDuplicateRelationship": "Sie können nicht zwei Bewerter mit demselben Beziehungstyp haben",
+        "evaluatorsWeightSum": "Die Summe der Bewertergewichtungen muss genau 100% betragen",
+        "addEvaluator": "Bewerter hinzufügen",
+        "scopeRequired": "Sie müssen mindestens eine Abteilung, Position oder einen Mitarbeiter auswählen, um fortzufahren"
+      },
+      "launch": {
+        "missingEvaluators": "Sie müssen mindestens einen Bewerter konfigurieren, bevor Sie veröffentlichen",
+        "missingScope": "Sie müssen mindestens eine Abteilung, Position oder einen Mitarbeiter auswählen, bevor Sie veröffentlichen",
+        "missingDates": "Sie müssen Start- und Enddatum festlegen, bevor Sie veröffentlichen"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Bewertung erfolgreich erstellt",
+        "updated": "Bewertung erfolgreich aktualisiert",
+        "launched": "Kampagne erfolgreich gestartet. Mitarbeiter können jetzt ihre Bewertungen einsehen.",
+        "deleted": "Bewertung erfolgreich gelöscht",
+        "deletedMultiple": "Bewertungen erfolgreich gelöscht",
+        "cancelled": "Kampagne erfolgreich abgebrochen."
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Bewertungen",
+        "loadError": "Fehler beim Laden der Bewertung",
+        "launching": "Fehler beim Starten der Kampagne",
+        "saving": "Fehler beim Speichern der Bewertung",
+        "deleting": "Fehler beim Löschen der Bewertung",
+        "deletingMultiple": "Fehler beim Löschen der Bewertungen",
+        "cancelling": "Fehler beim Abbrechen der Kampagne",
+        "notFound": "Bewertung nicht gefunden"
+      }
+    },
+    "stats": {
+      "total": "Gesamt",
+      "active": "Aktiv",
+      "completed": "Abgeschlossen",
+      "draft": "Entwurf",
+      "paginationLabel": "{{total}} Bewertungen insgesamt"
+    },
+    "charts": {
+      "byStatus": "Bewerterfortschritt",
+      "byStatusSubtitle": "Bewerter in aktiven Kampagnen zugewiesen",
+      "byType": "Bewertungen nach Typ",
+      "byTypeSubtitle": "Verteilung nach Bewertungstyp",
+      "completed": "Beantwortet",
+      "pending": "Ausstehend",
+      "totalEvaluations": "Bewertungen insgesamt",
+      "totalLabel": "Bewerter"
+    },
+    "card": {
+      "responses": "Antworten"
+    }
+  },
+  "campaign-participants": {
+    "title": "Bewerter verwalten",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Bewertungen konfigurieren",
+      "edit": "Bearbeiten",
+      "participants": "Teilnehmer"
+    },
+    "statuses": {
+      "PENDING": "Ausstehend",
+      "IN_PROGRESS": "In Bearbeitung",
+      "COMPLETED": "Abgeschlossen",
+      "CANCELLED": "Abgebrochen"
+    },
+    "actions": {
+      "syncParticipants": "Teilnehmer synchronisieren",
+      "syncing": "Wird synchronisiert...",
+      "view": "Ansehen",
+      "assignEvaluators": "Bewerter zuweisen",
+      "assigning": "Wird zugewiesen...",
+      "viewEvaluators": "Bewerter anzeigen"
+    },
+    "table": {
+      "columns": {
+        "employeeName": "Mitarbeitername",
+        "status": "Status",
+        "createdAt": "Registrierungsdatum"
+      },
+      "toolbar": {
+        "search": "Teilnehmer suchen...",
+        "filterByStatus": "Nach Status filtern"
+      },
+      "filters": {
+        "search": "Suche",
+        "status": "Status"
+      },
+      "empty": {
+        "title": "Keine Teilnehmer gefunden",
+        "description": "Dieser Kampagne sind keine Teilnehmer zugewiesen oder sie stimmen nicht mit den angewandten Filtern überein."
+      }
+    },
+    "evaluatorsDialog": {
+      "title": "Bewerter des Teilnehmers",
+      "back": "Zurück",
+      "empty": "Diesem Teilnehmer sind keine Bewerter zugewiesen",
+      "columns": {
+        "evaluatorName": "Bewertername",
+        "relationship": "Beziehung",
+        "weight": "Gewichtung",
+        "completed": "Abgeschlossen",
+        "actions": "Aktionen"
+      },
+      "relationships": {
+        "MANAGER": "Direkter Vorgesetzter/Supervisor",
+        "PEER": "Kollege",
+        "SUBORDINATE": "Mitarbeiter",
+        "SELF": "Selbstbewertung",
+        "OTHER": "Andere"
+      },
+      "completedYes": "Ja",
+      "completedNo": "Nein",
+      "updateForm": {
+        "buttonText": "Bewerter aktualisieren",
+        "title": "Bewerter aktualisieren",
+        "fields": {
+          "employee": "Bewertender Mitarbeiter",
+          "employeePlaceholder": "Mitarbeiter suchen...",
+          "relationship": "Beziehung",
+          "relationshipPlaceholder": "Beziehung auswählen...",
+          "weight": "Gewichtung",
+          "weightHelper": "Wert zwischen 0,0 und 1,0 (z.B. 0,5 = 50%)"
+        },
+        "validation": {
+          "required": "Sie müssen einen Mitarbeiter und eine Beziehung auswählen"
+        },
+        "save": "Speichern",
+        "saving": "Wird gespeichert...",
+        "cancel": "Abbrechen",
+        "success": "Bewerter erfolgreich aktualisiert",
+        "error": "Fehler beim Aktualisieren des Bewerters"
+      },
+      "deleteConfirm": {
+        "title": "Bewerter löschen",
+        "content": "Möchten Sie den Bewerter {{name}} wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "delete": "Löschen",
+        "deleting": "Wird gelöscht...",
+        "success": "Bewerter erfolgreich gelöscht",
+        "error": "Fehler beim Löschen des Bewerters"
+      }
+    },
+    "messages": {
+      "success": {
+        "synced": "Teilnehmer erfolgreich synchronisiert",
+        "assigned": "Bewerter erfolgreich zugewiesen"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Teilnehmer",
+        "syncing": "Fehler beim Synchronisieren der Teilnehmer",
+        "assigned": "Bewerter erfolgreich zugewiesen",
+        "assigning": "Fehler beim Zuweisen der Bewerter zu den Teilnehmern"
+      }
+    }
+  },
+  "participants-with-evaluators": {
+    "title": "Teilnehmer mit Bewertern",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Bewertungen konfigurieren",
+      "edit": "Bearbeiten",
+      "participantsWithEvaluators": "Teilnehmer mit Bewertern"
+    },
+    "relationships": {
+      "MANAGER": "Direkter Vorgesetzter/Supervisor",
+      "PEER": "Kollege",
+      "SUBORDINATE": "Mitarbeiter",
+      "SELF": "Selbstbewertung",
+      "OTHER": "Andere"
+    },
+    "completedYes": "Abgeschlossen",
+    "completedNo": "Ausstehend",
+    "noEvaluators": "Keine Bewerter",
+    "table": {
+      "columns": {
+        "participantName": "Teilnehmername",
+        "evaluators": "Bewerter",
+        "evaluatorsCount": "Anzahl"
+      },
+      "toolbar": {
+        "search": "Teilnehmer suchen...",
+        "filterByOrganizationalUnit": "Nach Organisationseinheit filtern"
+      },
+      "filters": {
+        "search": "Suche",
+        "organizationalUnit": "Organisationseinheit"
+      },
+      "empty": {
+        "title": "Keine Teilnehmer gefunden",
+        "description": "Dieser Kampagne sind keine Teilnehmer mit Bewertern zugewiesen oder sie stimmen nicht mit den angewandten Filtern überein."
+      }
+    },
+    "messages": {
+      "success": {
+        "loaded": "Daten erfolgreich geladen"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Teilnehmer mit Bewertern"
+      }
+    }
+  },
+  "questions": {
+    "title": "Fragen konfigurieren",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Bewertungen konfigurieren",
+      "edit": "Bearbeiten",
+      "questions": "Fragen"
+    },
+    "actions": {
+      "create": "Frage erstellen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Änderungen speichern",
+      "saving": "Wird gespeichert...",
+      "update": "Frage aktualisieren",
+      "add": "Hinzufügen",
+      "addAnother": "Weitere Frage hinzufügen"
+    },
+    "table": {
+      "columns": {
+        "description": "Beschreibung",
+        "weight": "Gewichtung (%)",
+        "isOptional": "Typ",
+        "optional": "Optional",
+        "required": "Erforderlich",
+        "visibleFor": "Sichtbar für",
+        "scale": "Bewertungsskala"
+      },
+      "toolbar": {
+        "search": "Fragen suchen..."
+      },
+      "filters": {
+        "keyword": "Suche"
+      },
+      "empty": {
+        "title": "Keine Fragen gefunden",
+        "description": "Für diese Kompetenz sind keine Fragen konfiguriert."
+      }
+    },
+    "form": {
+      "fields": {
+        "description": "Fragenbeschreibung",
+        "weight": "Gewichtung (%)",
+        "scale": "Bewertungsskala",
+        "isOptional": "Optionale Frage",
+        "visibleFor": "Sichtbar für"
+      },
+      "placeholders": {
+        "description": "Geben Sie die Frage ein, die in der Bewertung angezeigt wird",
+        "scale": "Skala auswählen",
+        "visibleFor": "Auswählen, wer diese Frage sehen kann"
+      },
+      "validation": {
+        "maxWeight": "Die Gewichtung muss zwischen 0 und 100 liegen"
+      },
+      "questionNumber": "Frage {{number}}"
+    },
+    "dialogs": {
+      "add": {
+        "title": "Frage hinzufügen"
+      },
+      "edit": {
+        "title": "Frage bearbeiten"
+      },
+      "delete": {
+        "title": "Frage löschen",
+        "content": "Möchten Sie diese Frage wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "editDialog": {
+      "title": "Frage bearbeiten",
+      "actions": {
+        "update": "Frage aktualisieren",
+        "saving": "Wird gespeichert...",
+        "cancel": "Abbrechen"
+      },
+      "messages": {
+        "success": {
+          "updated": "Frage erfolgreich aktualisiert"
+        },
+        "error": {
+          "updating": "Fehler beim Aktualisieren der Frage",
+          "noId": "Fragen-ID ist erforderlich"
+        }
+      }
+    },
+    "scalePopover": {
+      "levels": "Stufen",
+      "type": "Typ",
+      "maxValue": "Maximalwert"
+    },
+    "messages": {
+      "success": {
+        "created": "Frage erfolgreich erstellt",
+        "updated": "Frage erfolgreich aktualisiert",
+        "deleted": "Frage erfolgreich gelöscht"
+      },
+      "warning": {
+        "weightSum": "Die Gesamtgewichtung aller Fragen ist nicht gleich 100%"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Frage",
+        "loadingScales": "Fehler beim Laden der Skalen",
+        "creating": "Fehler beim Erstellen der Frage",
+        "updating": "Fehler beim Aktualisieren der Frage",
+        "deleting": "Fehler beim Löschen der Frage",
+        "validation": "Bitte füllen Sie alle erforderlichen Felder aus"
+      }
+    }
+  },
+  "evaluation-responses": {
+    "title": "Meine Bewertungen",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "evaluationResponses": "Meine Bewertungen",
+      "myEvaluations": "Meine Bewertungen",
+      "evaluation": "Bewertung"
+    },
+    "relationships": {
+      "MANAGER": "Direkter Vorgesetzter/Supervisor",
+      "PEER": "Kollege",
+      "SUBORDINATE": "Mitarbeiter",
+      "SELF": "Selbstbewertung",
+      "OTHER": "Andere"
+    },
+    "statuses": {
+      "PENDING": "Ausstehend",
+      "COMPLETED": "Abgeschlossen",
+      "INACTIVE": "Inaktiv"
+    },
+    "actions": {
+      "respond": "Antworten",
+      "view": "Bewertung ansehen",
+      "viewResults": "Meine Ergebnisse ansehen"
+    },
+    "myResults": {
+      "title": "Meine Ergebnisse",
+      "subtitle": "Ergebnisse Ihrer Leistungsbewertung",
+      "overallScore": "Gesamtpunktzahl",
+      "competenciesTitle": "Ergebnisse nach Kompetenz",
+      "expectedLevel": "Erwartete Stufe",
+      "obtainedLevel": "Erreichte Stufe",
+      "gap": "Lücke",
+      "compliance": "Erfüllung",
+      "progress": "Fortschritt",
+      "breakdownByRole": "Aufschlüsselung nach Bewerterrolle",
+      "weight": "Gewichtung"
+    },
+    "preview": {
+      "confidential": "(Vertraulich)",
+      "participantData": "Daten des Beurteilten",
+      "evaluatorData": "Daten des Bewerters",
+      "fullName": "Name",
+      "relationshipWithParticipant": "Beziehung zum Beurteilten",
+      "campaignInfo": "Kampagneninformationen",
+      "campaignName": "Kampagnenname",
+      "campaignType": "Bewertungstyp",
+      "status": "Status",
+      "participants": "Teilnehmer",
+      "participant": "Beurteilter",
+      "evaluator": "Bewerter",
+      "relationship": "Beziehung",
+      "completed": "Abgeschlossen",
+      "completedYes": "Abgeschlossen",
+      "completedNo": "Ausstehend",
+      "progress": "Bewertungsfortschritt",
+      "questions": "Fragen",
+      "questionsAnswered": "beantwortete Fragen",
+      "competences": "Kompetenzen",
+      "competencesIndicators": "Kompetenzindikatoren",
+      "objectives": "Ziele",
+      "objectivesIndicators": "Zielindikatoren",
+      "competence": "Kompetenz",
+      "objective": "Ziel",
+      "question": "Frage",
+      "rating": "Bewertung",
+      "weight": "Gewichtung",
+      "targetValue": "Zielwert",
+      "customKpi": "Benutzerdefinierter KPI",
+      "optional": "Optional",
+      "answered": "Antwort erfasst",
+      "notAnswered": "Nicht beantwortet",
+      "comments": "Kommentare",
+      "noComments": "Keine Kommentare",
+      "anonymous": "Anonym"
+    },
+    "table": {
+      "columns": {
+        "campaign": "Kampagne",
+        "participant": "Teilnehmer",
+        "relationship": "Beziehung",
+        "deadline": "Frist",
+        "progress": "Fortschritt",
+        "updatedAt": "Status"
+      },
+      "toolbar": {
+        "search": "Bewertungen suchen...",
+        "resetFilters": "Filter zurücksetzen"
+      },
+      "filters": {
+        "all": "Alle",
+        "status": "Status",
+        "keyword": "Stichwort"
+      },
+      "empty": {
+        "title": "Keine Bewertungen gefunden",
+        "description": "Es sind keine Bewertungen zugewiesen oder sie stimmen nicht mit den angewandten Filtern überein."
+      }
+    },
+    "messages": {
+      "success": {
+        "loaded": "Bewertungen erfolgreich geladen",
+        "answerSaved": "Antwort erfolgreich gespeichert",
+        "progressSaved": "Bewertungsfortschritt erfolgreich gespeichert"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Bewertungen",
+        "loadingQuestions": "Fehler beim Laden der Fragen",
+        "savingAnswer": "Fehler beim Speichern der Antwort"
+      },
+      "noData": "Keine Daten verfügbar"
+    },
+    "history": {
+      "title": "Bewertung beantworten",
+      "breadcrumb": "Antworten",
+      "participant": "Teilnehmer",
+      "evaluator": "Bewerter",
+      "campaign": "Kampagne",
+      "progress": "Fortschritt",
+      "of": "von",
+      "questionsAnswered": "beantwortete Fragen",
+      "section": "Abschnitt",
+      "sections": "Bewertungsabschnitte",
+      "selectSectionPrompt": "Wählen Sie einen Abschnitt aus, um mit der Beantwortung der Bewertung zu beginnen",
+      "current": "Aktuell",
+      "answered": "Beantwortet",
+      "pending": "Ausstehend",
+      "competences": "Kompetenzen",
+      "objectives": "Ziele",
+      "weight": "Gewichtung",
+      "backToSections": "Zurück zu den Abschnitten",
+      "noQuestions": "Keine Fragen verfügbar",
+      "question": "Frage",
+      "completed": "abgeschlossen",
+      "required": "Erforderlich",
+      "requiredQuestion": "Diese Frage ist erforderlich. Bitte wählen Sie eine Antwort",
+      "questionAlreadyAnswered": "Diese Frage wurde bereits beantwortet und kann nicht geändert werden",
+      "comments": "Kommentare",
+      "optional": "Optional",
+      "commentsPlaceholder": "Fügen Sie zusätzliche Kommentare zu Ihrer Antwort hinzu (optional)...",
+      "previous": "Zurück",
+      "saveAndExit": "Speichern und später fortfahren",
+      "continue": "Weiter",
+      "finish": "Fertigstellen",
+      "questions": "Fragen"
+    },
+    "objectives": {
+      "title": "Zielbewertung beantworten",
+      "breadcrumb": "Zielbewertung",
+      "evaluating": "Bewertung von",
+      "totalScore": "Gesamtpunktzahl",
+      "globalPerformance": "Gesamtleistung",
+      "objectivesEvaluated": "Bewertete Ziele",
+      "objectivesDistribution": "Zielverteilung",
+      "objectivesCount": "Ziele",
+      "viewObjectives": "Ziele anzeigen",
+      "objectivesList": "Zielliste",
+      "objective": "Ziel",
+      "of": "von",
+      "weight": "Gewichtung",
+      "targetValue": "Zielwert",
+      "achievedValue": "Tatsächlicher Wert",
+      "enterValue": "95",
+      "currentValue": "Aktueller Wert",
+      "compliance": "Erfüllung",
+      "customKpi": "Benutzerdefinierter KPI",
+      "selectScale": "Skalenstufe auswählen",
+      "comments": "Kommentare",
+      "commentsPlaceholder": "Fügen Sie hier Ihre Kommentare hinzu (optional)",
+      "previous": "Zurück",
+      "saveAndNext": "Weiter",
+      "saveAndExit": "Speichern und beenden",
+      "finish": "Fertigstellen",
+      "next": "Weiter",
+      "completed": "Abgeschlossen",
+      "pending": "Ausstehend",
+      "backToList": "Zurück zur Liste",
+      "backToSummary": "Zurück zur Zusammenfassung",
+      "viewSummary": "Zusammenfassung anzeigen",
+      "completeFields": "Füllen Sie alle Felder aus, um fortzufahren",
+      "objectiveDescription": "Zielbeschreibung",
+      "objectiveDescriptionHelper": "Definieren Sie klar und spezifisch, was erreicht werden soll",
+      "measurementIndicator": "Messindikator",
+      "measurementIndicatorHelper": "Geben Sie die Metrik oder den KPI an, den Sie zur Messung verwenden",
+      "targetValueHelper": "Der zu erreichende Zielwert (100%)",
+      "weightHelper": "Relative Bedeutung des Ziels",
+      "achievedValueHelper": "Erreichtes Ergebnis",
+      "evaluationResult": "Bewertungsergebnis",
+      "evaluationScale": "Bewertungsskala",
+      "evaluationResultDescription": "Ziel: {{target}}% | Gewichtung: {{weight}}%",
+      "objectiveCompleted": "Ziel erfolgreich erreicht",
+      "complianceLevel": "Erfüllungsgrad",
+      "optional": "Optional",
+      "messages": {
+        "selectScale": "Sie müssen eine Skalenstufe auswählen",
+        "enterAchievedValue": "Sie müssen den erreichten Wert eingeben",
+        "answerSaved": "Antwort erfolgreich gespeichert",
+        "noObjectives": "Keine Ziele zur Bewertung verfügbar"
+      }
+    }
+  },
+  "nine-box": {
+    "title": "Nine-Box",
+    "campaignSubtitle": "Talent- und Leistungsanalyse - Kampagne #{{id}}",
+    "participants": "Teilnehmer",
+    "quadrant": "Quadrant",
+    "noParticipants": "Keine Teilnehmer",
+    "performance": "Leistung",
+    "potential": "Potenzial",
+    "performanceAxis": "Leistung",
+    "potentialAxis": "Potenzial",
+    "performanceLabel": "Leistung",
+    "potentialLabel": "Potenzial",
+    "talentDistribution": "Talentverteilung",
+    "types": {
+      "PERFORMANCE_90": "90°-Bewertung",
+      "PERFORMANCE_180": "180°-Bewertung",
+      "PERFORMANCE_270": "270°-Bewertung",
+      "PERFORMANCE_360": "360°-Bewertung",
+      "CLIMA_LABORAL": "Arbeitsklima",
+      "OBJECTIVES": "Ziele"
+    },
+    "statuses": {
+      "DRAFT": "Entwurf",
+      "ACTIVE": "Aktiv",
+      "COMPLETED": "Abgeschlossen",
+      "CANCELLED": "Abgebrochen"
+    },
+    "relationships": {
+      "MANAGER": "Direkter Vorgesetzter/Supervisor",
+      "PEER": "Kollege",
+      "SUBORDINATE": "Mitarbeiter",
+      "SELF": "Selbstbewertung",
+      "OTHER": "Andere"
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureEvaluations": "Bewertungen konfigurieren",
+      "nineBox": "Nine-Box",
+      "matrix": "Matrix",
+      "evaluate": "Bewerten",
+      "participants": "Teilnehmer",
+      "create": "Neue Bewertung",
+      "edit": "Bearbeiten"
+    },
+    "actions": {
+      "create": "Bewertung erstellen",
+      "edit": "Bearbeiten",
+      "view": "Nine-Box ansehen",
+      "viewHistory": "Verlauf ansehen",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Änderungen speichern",
+      "saving": "Wird gespeichert...",
+      "update": "Bewertung aktualisieren",
+      "deleteMultiple": "Ausgewählte löschen",
+      "viewParticipants": "Teilnehmer anzeigen",
+      "assingnParticipants": "Teilnehmer zuweisen",
+      "closeCampaign": "Kampagne schließen",
+      "closing": "Wird geschlossen..."
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "type": "Typ",
+        "period": "Zeitraum",
+        "status": "Status",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "totalCompetences": "Kompetenzen",
+        "totalObjectives": "Ziele",
+        "totalDepartments": "Abteilungen",
+        "totalPositions": "Positionen",
+        "totalEmployees": "Mitarbeiter"
+      },
+      "toolbar": {
+        "search": "Bewertungen suchen...",
+        "filterByType": "Nach Typ filtern",
+        "filterByStatus": "Nach Status filtern",
+        "filterByDepartment": "Nach Abteilung filtern",
+        "filterByPosition": "Nach Position filtern",
+        "filterByEmployee": "Nach Mitarbeiter filtern"
+      },
+      "filters": {
+        "all": "Alle",
+        "status": "Status",
+        "type": "Typ",
+        "keyword": "Stichwort",
+        "department": "Abteilung",
+        "position": "Position",
+        "employee": "Mitarbeiter"
+      },
+      "empty": {
+        "title": "Keine Bewertungen gefunden",
+        "description": "Es wurden keine Bewertungen erstellt oder sie stimmen nicht mit den angewandten Filtern überein."
+      }
+    },
+    "form": {
+      "sections": {
+        "basicInfo": "Grundlegende Informationen",
+        "basicInfoSubtitle": "Allgemeine Informationen zur Bewertung",
+        "config": "Konfiguration",
+        "configSubtitle": "Zusätzliche Konfigurationsoptionen",
+        "dates": "Bewertungszeitraum",
+        "datesSubtitle": "Bewertungszeitraum festlegen",
+        "competences": "Kompetenzen",
+        "competencesSubtitle": "Zu bewertende Kompetenzen auswählen",
+        "objectives": "Ziele",
+        "objectivesSubtitle": "Zu bewertende Ziele auswählen",
+        "scope": "Umfang",
+        "scopeSubtitle": "Festlegen, wer an der Bewertung teilnimmt",
+        "evaluators": "Bewerterkonfiguration",
+        "evaluatorsSubtitle": "Zugewiesene Bewerter konfigurieren",
+        "loading": "Wird geladen..."
+      },
+      "fields": {
+        "name": {
+          "label": "Bewertungsname",
+          "helperText": "Geben Sie einen beschreibenden Namen für die Bewertung ein",
+          "required": "Name ist erforderlich"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "helperText": "Beschreiben Sie den Zweck dieser Bewertung",
+          "required": "Beschreibung ist erforderlich"
+        },
+        "type": {
+          "label": "Bewertungstyp",
+          "helperText": "Wählen Sie den Bewertungstyp",
+          "required": "Typ ist erforderlich"
+        },
+        "period": {
+          "label": "Zeitraum",
+          "helperText": "Beispiel: 2024-Q4",
+          "required": "Zeitraum ist erforderlich"
+        },
+        "autoAssign": {
+          "label": "Automatische Zuweisung",
+          "helperText": "Bewerter automatisch zuweisen"
+        },
+        "editableEvaluators": {
+          "label": "Bearbeitbare Bewerter",
+          "helperText": "Bearbeitung von Bewertern nach der Erstellung erlauben"
+        },
+        "startDate": {
+          "label": "Startdatum",
+          "helperText": "Startdatum der Bewertung",
+          "required": "Startdatum ist erforderlich"
+        },
+        "endDate": {
+          "label": "Enddatum",
+          "helperText": "Enddatum der Bewertung",
+          "required": "Enddatum ist erforderlich",
+          "afterStart": "Das Enddatum muss nach dem Startdatum liegen"
+        },
+        "competences": {
+          "label": "Kompetenzen",
+          "helperText": "Zu bewertende Kompetenzen auswählen",
+          "addButton": "Kompetenz hinzufügen",
+          "emptyMessage": "Keine Kompetenzen hinzugefügt",
+          "weight": "Gewichtung (%)",
+          "select": "Kompetenz auswählen",
+          "configureQuestions": "Fragen"
+        },
+        "objectives": {
+          "label": "Ziele",
+          "helperText": "Zu bewertende Ziele auswählen",
+          "addButton": "Ziel hinzufügen",
+          "emptyMessage": "Keine Ziele hinzugefügt",
+          "weight": "Gewichtung (%)",
+          "targetValue": "Zielwert",
+          "customKpi": "Benutzerdefinierter KPI",
+          "select": "Ziel auswählen"
+        },
+        "departments": {
+          "label": "Organisationseinheiten",
+          "helperText": "Zu bewertende Organisationseinheiten auswählen",
+          "placeholder": "Organisationseinheiten suchen..."
+        },
+        "positions": {
+          "label": "Positionen",
+          "helperText": "Zu bewertende Positionen auswählen",
+          "placeholder": "Positionen suchen..."
+        },
+        "employees": {
+          "label": "Mitarbeiter",
+          "helperText": "Zu bewertende Mitarbeiter auswählen",
+          "placeholder": "Mitarbeiter suchen..."
+        },
+        "evaluatorConfigs": {
+          "label": "Bewerterkonfiguration",
+          "helperText": "Bewertertypen konfigurieren",
+          "addButton": "Bewerter hinzufügen",
+          "emptyMessage": "Keine Bewerter konfiguriert",
+          "relationship": "Beziehung",
+          "weight": "Gewichtung (%)",
+          "maxEvaluators": "Max. Bewerter",
+          "maxEvaluatorsHint": "Wenn die Anzahl der verfügbaren Bewerter geringer als das konfigurierte Maximum ist, weist das System bis zu den verfügbaren Bewertern zu.",
+          "enabled": "Aktiviert",
+          "select": "Beziehung auswählen"
+        }
+      },
+      "validation": {
+        "dateRange": "Das Enddatum muss nach dem Startdatum liegen",
+        "minWeight": "Die Gewichtung muss größer als 0 sein",
+        "maxWeight": "Die Gewichtung darf 100 nicht überschreiten",
+        "totalWeight": "Die Summe der Gewichtungen muss 100 ergeben",
+        "minEvaluators": "Es muss mindestens 1 Bewerter vorhanden sein"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Bewertung löschen",
+        "content": "Möchten Sie diese Bewertung wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "contentMultiple": "Möchten Sie wirklich {{count}} Bewertungen löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      },
+      "addCompetence": {
+        "title": "Kompetenz hinzufügen",
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen"
+      },
+      "addObjective": {
+        "title": "Ziel hinzufügen",
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen"
+      },
+      "addEvaluatorConfig": {
+        "title": "Bewerterkonfiguration hinzufügen",
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen"
+      },
+      "deleteItem": {
+        "title": "Löschen",
+        "content": "Möchten Sie dieses Element wirklich löschen?"
+      },
+      "configureQuestions": {
+        "title": "Speichern und Fragen konfigurieren",
+        "content": "Um die Fragen für diese Kompetenz zu konfigurieren, muss die Bewertung zuerst gespeichert werden.",
+        "competence": "Kompetenz",
+        "continue": "Speichern und fortfahren",
+        "saving": "Wird gespeichert...",
+        "cancel": "Abbrechen"
+      },
+      "cancel": {
+        "title": "Bewertung abbrechen",
+        "content": "Möchten Sie diese Bewertung wirklich abbrechen? Nach dem Abbrechen kann sie gelöscht werden."
+      },
+      "closeCampaign": {
+        "content": "Möchten Sie die Kampagne {{name}} wirklich schließen?",
+        "warning": "Diese Aktion speichert die Ergebnisse im Verlauf und die Kampagne kann anschließend nicht mehr geändert werden."
+      }
+    },
+    "history": {
+      "title": "Nine-Box-Verlauf",
+      "subtitle": "Talent- und Leistungsanalyse - Kampagne #{{id}}",
+      "totalParticipants": "Teilnehmer insgesamt"
+    },
+    "messages": {
+      "success": {
+        "created": "Bewertung erfolgreich erstellt",
+        "updated": "Bewertung erfolgreich aktualisiert",
+        "deleted": "Bewertung erfolgreich gelöscht",
+        "deletedMultiple": "Bewertungen erfolgreich gelöscht",
+        "campaignClosed": "Kampagne geschlossen und Ergebnisse im Verlauf gespeichert",
+        "cancelled": "Bewertung erfolgreich abgebrochen"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Nine-Box-Daten",
+        "loadError": "Fehler beim Laden der Bewertung",
+        "loadingHistory": "Fehler beim Laden des Nine-Box-Verlaufs",
+        "saving": "Fehler beim Speichern der Bewertung",
+        "deleting": "Fehler beim Löschen der Bewertung",
+        "deletingMultiple": "Fehler beim Löschen der Bewertungen",
+        "notFound": "Bewertung nicht gefunden",
+        "noData": "Keine Daten für diese Kampagne gefunden",
+        "closingCampaign": "Fehler beim Schließen der Kampagne",
+        "cancelling": "Fehler beim Abbrechen der Bewertung"
+      }
+    }
+  },
+  "configure-tests": {
+    "title": "Vorlagen konfigurieren",
+    "stats": {
+      "total": "Gesamt",
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "inUse": "In Verwendung"
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "configureTests": "Vorlagen",
+      "create": "Neue Vorlage",
+      "edit": "Bearbeiten"
+    },
+    "actions": {
+      "create": "Vorlage erstellen",
+      "edit": "Bearbeiten",
+      "duplicate": "Duplizieren",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Änderungen speichern",
+      "saving": "Wird gespeichert...",
+      "update": "Vorlage aktualisieren",
+      "deleteMultiple": "Ausgewählte löschen",
+      "questions": "Fragen"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "type": "Typ",
+        "isActive": "Status",
+        "totalCompetences": "Kompetenzen",
+        "totalObjectives": "Ziele",
+        "createdAt": "Erstellungsdatum"
+      },
+      "toolbar": {
+        "search": "Vorlagen suchen...",
+        "filterByType": "Nach Typ filtern",
+        "filterByStatus": "Status"
+      },
+      "filters": {
+        "keyword": "Suche",
+        "type": "Typ",
+        "status": "Status",
+        "statusAll": "Alle",
+        "statusActive": "Aktiv",
+        "statusInactive": "Inaktiv"
+      },
+      "empty": {
+        "title": "Keine Vorlagen",
+        "description": "Keine Vorlagen gefunden"
+      }
+    },
+    "cards": {
+      "status": {
+        "active": "Aktiv",
+        "inactive": "Inaktiv"
+      },
+      "noDescription": "Keine Beschreibung",
+      "competences": "Kompetenzen",
+      "objectives": "Ziele",
+      "tooltips": {
+        "competences": "Bewertete Kompetenzen insgesamt",
+        "objectives": "Bewertete Ziele insgesamt",
+        "updatedAt": "Letzte Änderung"
+      },
+      "empty": {
+        "title": "Keine Vorlagen",
+        "subtitle": "Erstellen Sie Ihre erste Vorlage, um zu beginnen"
+      }
+    },
+    "form": {
+      "sections": {
+        "basicInfo": "Grundlegende Informationen",
+        "generalInfo": "Allgemeine Informationen",
+        "competences": "Kompetenzen",
+        "competencesAndQuestions": "Kompetenzen und Fragen",
+        "objectives": "Ziele",
+        "loading": "Wird geladen..."
+      },
+      "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "type": "Inhaltstyp",
+        "isActive": "Aktiv",
+        "coverImage": "Titelbild",
+        "objectiveScale": "Zielskala",
+        "competences": "Kompetenzen",
+        "objectives": "Ziele",
+        "weight": "Gewichtung",
+        "questions": "Fragen",
+        "target": "Ziel",
+        "kpi": "Benutzerdefinierter KPI",
+        "competence": "Kompetenz"
+      },
+      "placeholders": {
+        "name": "Vorlagenname eingeben",
+        "description": "Beschreibung eingeben",
+        "type": "Typ auswählen",
+        "objectiveScale": "Skala auswählen",
+        "coverImage": "Titelbild hochladen"
+      },
+      "descriptions": {
+        "isActive": "Vorlage aktivieren, damit sie in Bewertungen verfügbar ist"
+      },
+      "validation": {
+        "nameRequired": "Name ist erforderlich",
+        "typeRequired": "Typ ist erforderlich"
+      },
+      "messages": {
+        "noCompetences": "Keine Kompetenzen hinzugefügt",
+        "noObjectives": "Keine Ziele hinzugefügt",
+        "selectTypeFirst": "Wählen Sie einen Inhaltstyp aus, um mit diesem Abschnitt fortzufahren"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Vorlage löschen",
+        "content": "Möchten Sie diese Vorlage wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "contentMultiple": "Möchten Sie wirklich {{count}} Vorlagen löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      },
+      "addCompetence": {
+        "title": "Kompetenz hinzufügen",
+        "weightHelper": "Die Gewichtung muss zwischen 0 und 100 liegen",
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen"
+      },
+      "addObjective": {
+        "title": "Ziel hinzufügen",
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen",
+        "weightHelper": "Die Gewichtung muss zwischen 0 und 100 liegen",
+        "objective": "Ziel",
+        "selectObjective": "Ziel auswählen",
+        "targetValue": "Zielwert",
+        "kpi": "Benutzerdefinierter KPI"
+      },
+      "deleteItem": {
+        "title": "Element löschen",
+        "content": "Möchten Sie dieses Element wirklich löschen?"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Vorlage erfolgreich erstellt",
+        "updated": "Vorlage erfolgreich aktualisiert",
+        "deleted": "Vorlage erfolgreich gelöscht",
+        "deletedMultiple": "Vorlagen erfolgreich gelöscht",
+        "duplicated": "Vorlage erfolgreich dupliziert"
+      },
+      "error": {
+        "create": "Fehler beim Erstellen der Vorlage",
+        "update": "Fehler beim Aktualisieren der Vorlage",
+        "delete": "Fehler beim Löschen der Vorlage",
+        "loading": "Fehler beim Laden der Vorlage",
+        "notFound": "Vorlage nicht gefunden",
+        "duplicate": "Fehler beim Duplizieren der Vorlage"
+      }
+    },
+    "questionsModal": {
+      "title": "Fragen konfigurieren",
+      "questionNumber": "Frage {{number}}",
+      "fields": {
+        "description": "Fragenbeschreibung",
+        "weight": "Gewichtung (%)",
+        "scale": "Bewertungsskala",
+        "visibleFor": "Sichtbar für",
+        "isOptional": "Optionale Frage"
+      },
+      "placeholders": {
+        "description": "Geben Sie die Frage ein, die in der Bewertung angezeigt wird",
+        "scale": "Skala auswählen",
+        "visibleFor": "Auswählen, wer diese Frage sehen kann"
+      },
+      "validation": {
+        "maxWeight": "Die Gewichtung muss zwischen 0 und 100 liegen"
+      },
+      "actions": {
+        "addAnother": "Weitere Frage hinzufügen",
+        "cancel": "Abbrechen",
+        "save": "Speichern",
+        "saving": "Wird gespeichert..."
+      },
+      "messages": {
+        "warning": {
+          "weightSum": "Die Gesamtgewichtung aller Fragen ist nicht gleich 100%"
+        },
+        "success": {
+          "saved": "Fragen erfolgreich gespeichert",
+          "localSaved": "Fragen lokal hinzugefügt"
+        },
+        "error": {
+          "loadingScales": "Fehler beim Laden der Skalen",
+          "loadingRelationships": "Fehler beim Laden der Beziehungen",
+          "validation": "Füllen Sie alle erforderlichen Felder aus",
+          "weightSum": "Die Gewichtungssumme muss 100% betragen",
+          "saving": "Fehler beim Speichern der Fragen"
+        }
+      }
+    }
+  },
+  "nine-box-settings": {
+    "title": "Nine-Box-Konfiguration",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "nineBox": "Nine-Box",
+      "settings": "Konfiguration"
+    },
+    "actions": {
+      "add": "Konfiguration hinzufügen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "update": "Aktualisieren",
+      "deleteMultiple": "Ausgewählte löschen"
+    },
+    "columns": {
+      "label": "Name",
+      "color": "Farbe",
+      "description": "Beschreibung",
+      "recommendedAction": "Empfohlene Maßnahme",
+      "minScoreX": "Min. Punktzahl X",
+      "maxScoreX": "Max. Punktzahl X"
+    },
+    "toolbar": {
+      "search": "Konfigurationen suchen..."
+    },
+    "filters": {
+      "keyword": "Suche",
+      "all": "Alle"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Konfiguration erstellen"
+      },
+      "edit": {
+        "title": "Konfiguration bearbeiten"
+      },
+      "delete": {
+        "title": "Konfiguration löschen",
+        "content": "Möchten Sie diese Konfiguration wirklich löschen?",
+        "contentMultiple": "Möchten Sie wirklich {{count}} Konfigurationen löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Konfiguration erfolgreich erstellt",
+        "updated": "Konfiguration erfolgreich aktualisiert",
+        "deleted": "Konfiguration erfolgreich gelöscht",
+        "deletedMultiple": "Konfigurationen erfolgreich gelöscht"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Konfigurationen",
+        "creating": "Fehler beim Erstellen der Konfiguration",
+        "updating": "Fehler beim Aktualisieren der Konfiguration",
+        "deleting": "Fehler beim Löschen der Konfiguration",
+        "deletingMultiple": "Fehler beim Löschen der Konfigurationen",
+        "validation": "Bitte füllen Sie alle erforderlichen Felder aus"
+      }
+    }
+  },
+  "evaluations-list": {
+    "title": "Bewertungsliste",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "evaluationsList": "Bewertungsliste"
+    },
+    "actions": {
+      "export": "Exportieren",
+      "exportExcel": "Nach Excel exportieren",
+      "exportPdf": "Nach PDF exportieren",
+      "viewParticipants": "Teilnehmer ansehen",
+      "exporting": "Wird exportiert..."
+    },
+    "statuses": {
+      "DRAFT": "Entwurf",
+      "ACTIVE": "Aktiv",
+      "COMPLETED": "Abgeschlossen",
+      "CANCELLED": "Abgebrochen"
+    },
+    "table": {
+      "columns": {
+        "employeeName": "Mitarbeiter",
+        "campaignName": "Kampagne",
+        "jobPosition": "Position",
+        "vigency": "Gültigkeit",
+        "status": "Status",
+        "dueDate": "Frist"
+      },
+      "toolbar": {
+        "search": "Bewertungen suchen...",
+        "filterByVigency": "Nach Gültigkeit filtern",
+        "filterByOrganizationalUnit": "Nach Organisationseinheit filtern",
+        "orderDirection": "Sortieren"
+      },
+      "filters": {
+        "vigency": "Gültigkeit",
+        "organizationalUnit": "Organisationseinheit",
+        "orderAsc": "Aufsteigend (A-Z)",
+        "orderDesc": "Absteigend (Z-A)"
+      },
+      "empty": {
+        "title": "Keine Bewertungen gefunden",
+        "description": "Es gibt keine Bewertungen, die den ausgewählten Filtern entsprechen",
+        "noVigency": "Keine Gültigkeit",
+        "noUnits": "Keine Einheiten"
+      }
+    },
+    "messages": {
+      "success": {
+        "exported": "Bewertungen erfolgreich exportiert"
+      },
+      "error": {
+        "loading": "Fehler beim Laden der Bewertungen",
+        "exporting": "Fehler beim Exportieren der Bewertungen"
+      }
+    }
+  },
+  "campaign-analysis": {
+    "title": "Kampagnenanalyse",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "campaigns": "Kampagnen",
+      "analysis": "Analyse"
+    },
+    "noData": "Keine Daten verfügbar",
+    "relationships": {
+      "SELF": "Selbstbewertung",
+      "MANAGER": "Vorgesetzter",
+      "PEER": "Kollege",
+      "SUBORDINATE": "Untergebener"
+    },
+    "statuses": {
+      "ACTIVE": "Aktiv",
+      "DRAFT": "Entwurf",
+      "COMPLETED": "Abgeschlossen",
+      "CANCELLED": "Abgebrochen"
+    },
+    "charts": {
+      "radarTitle": "Kompetenzradar",
+      "radarSubheader": "Erwartete Stufe vs. erreichte Punktzahl pro Kompetenz",
+      "competenciesTitle": "Kompetenzen",
+      "competenciesSubheader": "Erfüllungsgrad",
+      "pieTitle": "Verteilung nach Bewertertyp",
+      "pieSubheader": "Antworten nach Bewerterbeziehung in dieser Kampagne",
+      "barTitle": "Teilnahme nach Bewertertyp",
+      "barSubheader": "Zugewiesen vs. beantwortet nach Beziehung",
+      "compliance": "Erfüllung",
+      "assigned": "Zugewiesen",
+      "responded": "Beantwortet",
+      "people": "Personen",
+      "responses": "Antworten"
+    },
+    "actions": {
+      "export": "Exportieren",
+      "exporting": "Wird exportiert...",
+      "exportExcel": "Nach Excel exportieren",
+      "exportPdf": "Nach PDF exportieren"
+    },
+    "messages": {
+      "success": {
+        "exported": "Analyse erfolgreich exportiert"
+      },
+      "error": {
+        "exporting": "Fehler beim Exportieren der Analyse"
+      }
+    },
+    "table": {
+      "title": "Teilnehmer",
+      "subheader": "Mitarbeiterliste mit Ergebnissen",
+      "columns": {
+        "employee": "Mitarbeiter",
+        "jobPosition": "Position",
+        "campaign": "Kampagne",
+        "dueDate": "Frist",
+        "status": "Status",
+        "score": "Punktzahl"
+      },
+      "noParticipants": "Keine Teilnehmer",
+      "viewParticipant": "Teilnehmer anzeigen"
+    }
+  },
+  "evaluation-detail": {
+    "title": "Bewertungsdetail",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "evaluationsList": "Bewertungsliste",
+      "detail": "Detail"
+    },
+    "actions": {
+      "export": "Exportieren",
+      "exporting": "Wird exportiert...",
+      "exportExcel": "Nach Excel exportieren",
+      "exportPdf": "Nach PDF exportieren"
+    },
+    "summary": {
+      "title": "Allgemeine Zusammenfassung",
+      "participant": "Teilnehmer",
+      "campaign": "Kampagne",
+      "overallScore": "Gesamtpunktzahl",
+      "competenciesEvaluated": "Bewertete Kompetenzen",
+      "completionRate": "Abschlussrate"
+    },
+    "competencies": {
+      "title": "Bewertete Kompetenzen",
+      "name": "Kompetenz",
+      "expected": "Erwartete Stufe",
+      "obtained": "Erreichte Stufe",
+      "gap": "Lücke",
+      "compliance": "Erfüllung",
+      "progress": "Fortschritt",
+      "questions": "Fragen",
+      "answered": "Beantwortet",
+      "completion": "Vollständigkeit",
+      "breakdownByRole": "Aufschlüsselung nach Rolle",
+      "noCompetencies": "Keine Kompetenzen bewertet",
+      "expectedLevel": "Erwartete Stufe",
+      "totalContribution": "Gesamtbeitrag",
+      "compliancePercentage": "Erfüllungsgrad"
+    },
+    "chart": {
+      "expectedVsObtained": "Erwartet vs. Erreicht",
+      "complianceByCompetence": "Erfüllung nach Kompetenz",
+      "completionProgress": "Beitragsverteilung nach Bewerter",
+      "roleBreakdown": "Bewertung nach Rolle",
+      "expected": "Erwartet",
+      "obtained": "Erreicht",
+      "score": "Punktzahl",
+      "weight": "Gewichtung",
+      "noData": "Keine Daten zum Anzeigen verfügbar",
+      "noEvaluators": "Keine Bewerter zugewiesen"
+    },
+    "relationships": {
+      "MANAGER": "Direkter Vorgesetzter/Supervisor",
+      "PEER": "Kollege",
+      "SUBORDINATE": "Mitarbeiter",
+      "SELF": "Selbstbewertung",
+      "SUPERVISOR": "Supervisor",
+      "OTHER": "Andere"
+    },
+    "spider": {
+      "title": "Analyse nach Bewerter",
+      "description": "Vergleich der erwarteten Stufe vs. Bewertung jedes Bewerters pro Kompetenz",
+      "expectedLevel": "Erwartete Stufe",
+      "noData": "Keine Daten für das Spider-Diagramm verfügbar"
+    },
+    "messages": {
+      "success": {
+        "loaded": "Bewertung erfolgreich geladen",
+        "exported": "Bewertung erfolgreich exportiert"
+      },
+      "error": {
+        "loading": "Fehler beim Laden des Bewertungsdetails",
+        "notFound": "Die angeforderte Bewertung wurde nicht gefunden",
+        "invalidData": "Die Bewertungsdaten sind ungültig",
+        "exporting": "Fehler beim Exportieren der Bewertung",
+        "loadingSpider": "Fehler beim Laden des Bewerterdiagramms"
+      }
+    },
+    "empty": {
+      "title": "Bewertung nicht gefunden",
+      "description": "Die Bewertung konnte nicht gefunden werden oder hat keine verfügbaren Daten"
+    }
+  }
+}

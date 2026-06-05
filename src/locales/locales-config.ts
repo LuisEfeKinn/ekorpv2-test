@@ -5,6 +5,7 @@ import resourcesToBackend from 'i18next-resources-to-backend';
 
 // MUI Core Locales
 import {
+  deDE as deDECore,
   esES as esESCore,
   // frFR as frFRCore,
   // viVN as viVNCore,
@@ -13,6 +14,7 @@ import {
 } from '@mui/material/locale';
 // MUI Date Pickers Locales
 import {
+  deDE as deDEDate,
   enUS as enUSDate,
   esES as esESDate,
   // frFR as frFRDate,
@@ -21,6 +23,7 @@ import {
 } from '@mui/x-date-pickers/locales';
 // MUI Data Grid Locales
 import {
+  deDE as deDEDataGrid,
   enUS as enUSDataGrid,
   esES as esESDataGrid,
   // frFR as frFRDataGrid,
@@ -32,7 +35,7 @@ import {
 // ----------------------------------------------------------------------
 
 // Supported languages
-export const supportedLngs = ['en', 'es'] as const;
+export const supportedLngs = ['en', 'es', 'de'] as const;
 // Commented out other languages: 'fr', 'vi', 'cn', 'ar'
 export type LangCode = (typeof supportedLngs)[number];
 
@@ -82,6 +85,16 @@ export const allLangs: LangOption[] = [
     numberFormat: { code: 'es-CO', currency: 'COP' },
     systemValue: {
       components: { ...esESCore.components, ...esESDate.components, ...esESDataGrid.components },
+    },
+  },
+  {
+    value: 'de',
+    label: 'Deutsch',
+    countryCode: 'DE',
+    adapterLocale: 'de',
+    numberFormat: { code: 'de-DE', currency: 'EUR' },
+    systemValue: {
+      components: { ...deDECore.components, ...deDEDate.components, ...deDEDataGrid.components },
     },
   },
   // Commented out other languages

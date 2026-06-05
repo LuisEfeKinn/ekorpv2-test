@@ -1,0 +1,255 @@
+{
+  "welcome": "Willkommen zurück",
+  "description": "Verwalte und analysiere das Talent deiner Organisation an einem Ort",
+  "actions": {
+    "viewReports": "Berichte ansehen"
+  },
+  "widgets": {
+    "activeRoutes": "Aktive Lernpfade",
+    "licensesExpiring": "Lizenzen laufen bald ab",
+    "pendingEvaluations": "Ausstehende Bewertungen",
+    "newHires": "Neueinstellungen (Monat)",
+    "developmentPlans": "Entwicklungspläne"
+  },
+  "kpis": {
+    "totalEmployees": "Mitarbeitende gesamt",
+    "avgCompetency": "Durchschnittliche Kompetenz",
+    "trainings": "Schulungen",
+    "assignedTeams": "Zugewiesene Teams"
+  },
+  "talent": {
+    "competencyRadar": {
+      "title": "Bewertung organisatorischer Kompetenzen",
+      "subtitle": "Vergleich mit festgelegten Zielen (80 Punkte)",
+      "currentScore": "Aktuelle Punktzahl",
+      "target": "Ziel",
+      "categories": {
+        "liderazgo": "Führung",
+        "trabajoEnEquipo": "Teamarbeit",
+        "comunicacion": "Kommunikation",
+        "innovacion": "Innovation",
+        "resolucionDeProblemas": "Problemlösung",
+        "adaptabilidad": "Anpassungsfähigkeit",
+        "gestionDeProyectos": "Projektmanagement",
+        "analisisDeDatos": "Datenanalyse",
+        "atencionAlCliente": "Kundenorientierung",
+        "pensamientoCritico": "Kritisches Denken",
+        "trabajoColaborativo": "Kollaboratives Arbeiten",
+        "gestionDelCambio": "Change-Management",
+        "creatividad": "Kreativität",
+        "inteligenciaEmocional": "Emotionale Intelligenz",
+        "negociacion": "Verhandlung",
+        "gestionDelTiempo": "Zeitmanagement",
+        "comunicacionEfectiva": "Effektive Kommunikation"
+      },
+      "levels": {
+        "alto": "Hoch",
+        "medio": "Mittel",
+        "bajo": "Niedrig"
+      }
+    },
+    "competencyMap": {
+      "title": "Kompetenzverteilung",
+      "subtitle": "Niveaus nach Kategorie"
+    },
+    "learningPaths": {
+      "title": "Fortschritt der Lernpfade",
+      "subtitle": "Aktueller Status aller Pfade",
+      "paths": "Pfade",
+      "totalPaths": "Pfade gesamt",
+      "completed": "Abgeschlossen",
+      "inProgress": "In Bearbeitung",
+      "notStarted": "Nicht begonnen",
+      "statuses": {
+        "completed": "Abgeschlossen",
+        "inProgress": "In Bearbeitung",
+        "notStarted": "Nicht begonnen"
+      }
+    },
+    "resourceStatus": {
+      "title": "Status von Lizenzen und Geräten",
+      "subtitle": "Aktuelles Ressourceninventar",
+      "quantity": "Einheiten",
+      "labels": {
+        "activeLicenses": "Aktive Lizenzen",
+        "expiringLicenses": "Lizenzen laufen bald ab",
+        "assignedEquipment": "Zugewiesene Geräte",
+        "availableEquipment": "Verfügbare Geräte"
+      }
+    },
+    "recentTrainings": {
+      "title": "Aktuelle Schulungen",
+      "subtitle": "Diesen Monat abgeschlossene Schulungen",
+      "employee": "Mitarbeitende",
+      "course": "Kurs",
+      "date": "Datum",
+      "status": "Status",
+      "score": "Punktzahl",
+      "statuses": {
+        "completed": "Abgeschlossen",
+        "inProgress": "In Bearbeitung",
+        "pending": "Ausstehend"
+      }
+    },
+    "performanceReviews": {
+      "title": "Leistungsmanagement",
+      "subtitle": "Bewertungen herausragender Mitarbeitender",
+      "employee": "Mitarbeitende",
+      "position": "Position",
+      "department": "Abteilung",
+      "overallScore": "Gesamtpunktzahl",
+      "productivity": "Produktivität",
+      "quality": "Qualität",
+      "collaboration": "Zusammenarbeit",
+      "lastReview": "Letzte Bewertung",
+      "status": "Status",
+      "statuses": {
+        "excellent": "Ausgezeichnet",
+        "good": "Gut",
+        "regular": "Befriedigend",
+        "needsImprovement": "Verbesserungsbedarf"
+      }
+    },
+    "nineBox": {
+      "title": "Nine Box - Talent- und Leistungs-Matrix",
+      "subtitle": "Bewertung von Potenzial vs. Leistung zentraler Mitarbeitender",
+      "performance": "Leistung",
+      "potential": "Potenzial",
+      "employee": "Mitarbeitende",
+      "employees": "Mitarbeitende",
+      "noEmployees": "Keine Mitarbeitenden",
+      "categories": {
+        "star": "Star",
+        "highPotential": "Hohes Potenzial",
+        "keyProfessional": "Schlüsselprofi",
+        "effectiveCollaborator": "Effektive Mitarbeitende",
+        "technicalExpert": "Technische Expertin / Technischer Experte",
+        "needsDevelopment": "Entwicklungsbedarf",
+        "emergingTalent": "Aufstrebendes Talent",
+        "inconsistent": "Inkonsistent",
+        "lowPerformance": "Geringe Leistung"
+      },
+      "levels": {
+        "high": "Hoch",
+        "medium": "Mittel",
+        "low": "Niedrig"
+      }
+    }
+  },
+  "performance": {
+    "evaluate": {
+      "heading": "Leistungsbewertung",
+      "links": {
+        "dashboard": "Kontrollpanel",
+        "performanceEvaluation": "Leistungsbewertung"
+      },
+      "nineBox": {
+        "title": "Nine Box - Talent-Matrix",
+        "subheader": "Bewertung von Potenzial vs. Leistung zentraler Mitarbeitender"
+      },
+      "performanceReviews": {
+        "title": "Leistungsmanagement",
+        "subheader": "Bewertungen herausragender Mitarbeitender"
+      }
+    }
+  },
+  "months": {
+    "jan": "Jan",
+    "feb": "Feb",
+    "mar": "Mär",
+    "apr": "Apr",
+    "may": "Mai",
+    "jun": "Jun",
+    "jul": "Jul",
+    "aug": "Aug",
+    "sep": "Sep",
+    "oct": "Okt",
+    "nov": "Nov",
+    "dec": "Dez"
+  },
+  "personal": {
+    "welcome": "Willkommen zurück",
+    "description": "Hier kannst du deinen persönlichen Fortschritt, deine Ziele und ausstehende Aufgaben sehen.",
+    "actions": {
+      "viewProgress": "Meinen Fortschritt ansehen"
+    },
+    "widgets": {
+      "pendingTasks": "Meine ausstehenden Aufgaben",
+      "assignedTrainings": "Zugewiesene Schulungen",
+      "coursesEnrolled": "Eingeschriebene Kurse",
+      "coursesPending": "Ausstehende Kurse",
+      "coursesCompleted": "Abgeschlossene Kurse",
+      "coursesInProgress": "Kurse in Bearbeitung",
+      "totalPointsEarned": "Gesammelte Punkte",
+      "totalPointsSpent": "Ausgegebene Punkte",
+      "availableBalance": "Verfügbare Punkte",
+      "monthlyProgress": "Mein monatlicher Fortschritt",
+      "pendingEvaluations": "Ausstehende Bewertungen",
+      "activeLearningPaths": "Aktive Lernpfade",
+      "expiringLicenses": "Lizenzen laufen bald ab"
+    },
+    "kpis": {
+      "tasksCompleted": "Abgeschlossene Aufgaben",
+      "myScore": "Meine Punktzahl",
+      "learningHours": "Schulungsstunden",
+      "achievedGoals": "Erreichte Ziele",
+      "averageScore": "Durchschnittliche Punktzahl",
+      "totalHours": "Gesamtstunden"
+    },
+    "competency": {
+      "radar": {
+        "title": "Meine Kompetenzbewertung",
+        "subtitle": "Vergleich mit persönlichen Zielen",
+        "currentScore": "Meine Punktzahl",
+        "target": "Persönliches Ziel"
+      },
+      "distribution": {
+        "title": "Meine Kompetenzen",
+        "subtitle": "Verteilung nach Niveaus"
+      }
+    },
+    "learningPaths": {
+      "title": "Meine Lernpfade",
+      "subtitle": "Fortschritt meiner 3 aktiven Pfade",
+      "completed": "Abgeschlossen",
+      "inProgress": "In Bearbeitung",
+      "notStarted": "Nicht begonnen"
+    },
+    "resources": {
+      "title": "Meine Lizenzen und Geräte",
+      "subtitle": "Status meiner zugewiesenen Ressourcen",
+      "activeLicenses": "Aktive Lizenzen",
+      "expiringLicenses": "Lizenzen laufen bald ab",
+      "assignedEquipment": "Zugewiesene Geräte",
+      "availableEquipment": "Verfügbare Geräte"
+    },
+    "courses": {
+      "title": "Meine Kurse",
+      "subtitle": "Status aller meiner Kurse",
+      "course": "Kurs",
+      "learningPath": "Lernpfad",
+      "status": "Status",
+      "startDate": "Startdatum",
+      "score": "Punktzahl",
+      "duration": "Dauer",
+      "progress": "Fortschritt",
+      "totalCourses": "Kurse",
+      "headers": {
+        "learningPath": "Lernpfad",
+        "progress": "Fortschritt",
+        "courses": "Kurse",
+        "status": "Status",
+        "course": "Kurs",
+        "startDate": "Startdatum",
+        "score": "Punktzahl",
+        "duration": "Dauer"
+      },
+      "statuses": {
+        "completed": "Abgeschlossen",
+        "inProgress": "In Bearbeitung",
+        "pending": "Ausstehend",
+        "notStarted": "Nicht begonnen"
+      }
+    }
+  }
+}
