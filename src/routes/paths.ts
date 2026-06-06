@@ -634,6 +634,7 @@ export const paths = {
 
     // Project Management Modules
     projectManagement: {
+      overview: `${ROOTS.DASHBOARD}/project-management`,
       clients: `${ROOTS.DASHBOARD}/project-management/clients`,
       workers: `${ROOTS.DASHBOARD}/project-management/workers`,
       projects: `${ROOTS.DASHBOARD}/project-management/projects`,

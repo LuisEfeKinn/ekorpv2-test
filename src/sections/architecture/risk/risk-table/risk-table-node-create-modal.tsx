@@ -16,14 +16,14 @@ import {
 import { useTranslate } from 'src/locales';
 import { GetRiskTableByIdService } from 'src/services/architecture/risk/riskTable.service';
 import {
+  GetRiskImpactLevelsService,
+  GetRiskProbabilityLevelsService
+} from 'src/services/architecture/risk/riskScales.service';
+import {
   GetProcessesListService,
   SaveProcessRiskRelationService,
   UpdateProcessRiskRelationService
 } from 'src/services/architecture/risk/riskJobs.service';
-import {
-  GetRiskImpactLevelsService,
-  GetRiskProbabilityLevelsService
-} from 'src/services/architecture/risk/riskScales.service';
 
 import { toast } from 'src/components/snackbar';
 

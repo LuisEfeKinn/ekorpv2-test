@@ -116,3 +116,115 @@ export type IProjectManagementMeta = {
   hasPreviousPage: boolean;
   hasNextPage: boolean;
 };
+
+// Project detail (GET /project-management/projects/:id)
+export type IProjectDetail = {
+  id: string;
+  name: string;
+  clientId: string;
+  importanceLevelId: string;
+  sizeId: string;
+  complexityId: string;
+  generatesIncome: boolean;
+  reintegroLevelId: string;
+  statusId: string;
+  startDate: string;
+  endDate: string;
+  observations: string | null;
+  createdAt: string;
+  updatedAt: string;
+  client: {
+    id: string;
+    nit: string;
+    name: string;
+    email: string;
+    isActive: boolean;
+    createdAt: string;
+  };
+  importanceLevel: ICatalogOption;
+  size: ICatalogOption;
+  complexity: ICatalogOption;
+  reintegroLevel: ICatalogOption;
+  status: ICatalogOption;
+};
+
+// Assignment (from GET /project-management/assignments list)
+export type IAssignment = {
+  id: string;
+  projectId: string;
+  projectName: string;
+  employeeId: string;
+  employeeFullName: string;
+  priorityId: string;
+  priorityName: string;
+  statusId: string;
+  statusName: string;
+  dedicacion: number;
+  startDate: string;
+  endDate: string;
+  observations: string | null;
+  roles: ICatalogOption[];
+  createdAt: string;
+};
+
+export type IAssignmentFilters = {
+  search: string;
+  statusId: string;
+  employeeId: string;
+};
+
+export type IAssignmentCreatePayload = {
+  projectId: number;
+  employeeId: number;
+  jobPositionIds: number[];
+  priorityId: number;
+  statusId: number;
+  dedicacion: number;
+  startDate: string;
+  endDate: string;
+  observations?: string | null;
+};
+
+export type IAssignmentUpdatePayload = Partial<IAssignmentCreatePayload>;
+
+// Dashboard types
+export type IDashboardDistributionItem = {
+  id: number;
+  name: string;
+  count: number;
+};
+
+export type IDashboardDedicationItem = {
+  id: number;
+  fullName: string;
+  totalDedicacion: number;
+};
+
+export type IDashboardData = {
+  kpis: {
+    workers: { total: number; totalAssignments: number };
+    projects: { total: number; highReintegroCount: number };
+    activeAssignments: { active: number; total: number };
+    overuse: { count: number };
+    orgChart: { total: number; active: number };
+  };
+  orgChartSummary: {
+    root: { id: number; fullName: string; directReportsCount: number };
+    nodesWithTeam: number;
+    capacityAlerts: number;
+  };
+  experienceLevelDistribution: IDashboardDistributionItem[];
+  roleDistribution: IDashboardDistributionItem[];
+  projectsByImportance: IDashboardDistributionItem[];
+  projectsByIncomeLevel: IDashboardDistributionItem[];
+  dedicationCapacity: IDashboardDedicationItem[];
+  overuseWorkers: IDashboardDedicationItem[];
+  availableWorkers: { workers: IDashboardDedicationItem[]; message: string };
+};
+
+// Job position from /api/jobs-km
+export type IJobPosition = {
+  id: number;
+  name: string;
+  code: string;
+};

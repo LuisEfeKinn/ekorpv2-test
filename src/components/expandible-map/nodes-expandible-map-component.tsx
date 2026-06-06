@@ -140,12 +140,11 @@ function CentralNode({ data }: NodeProps) {
         borderRadius: 3,
         background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
         boxShadow: `0 12px 40px ${alpha(theme.palette.primary.main, 0.5)}`,
-        cursor: 'grab',
+        cursor: 'default',
         width: 'fit-content',
         minWidth: 280,
         maxWidth: 560,
         position: 'relative',
-        '&:active': { cursor: 'grabbing' },
       }}
     >
       <Handle
@@ -563,7 +562,6 @@ export function NodesExpandibleMapInitial<TSectionPayload = unknown>({
       type: 'central',
       position: { x: centerX - centerHalfWidth, y: centerY - 80 },
       data: { label: center.label, subtitle: centerSubtitle },
-      draggable: true,
     };
 
     const childNodes: Node[] = sections.map((section, index) => {
@@ -583,7 +581,6 @@ export function NodesExpandibleMapInitial<TSectionPayload = unknown>({
           color,
           onClick: () => onSectionClick(section),
         } satisfies InitialChildNodeData,
-        draggable: true,
       };
     });
 
@@ -624,6 +621,7 @@ export function NodesExpandibleMapInitial<TSectionPayload = unknown>({
         fitViewOptions={{ padding: 0.3, maxZoom: 1, duration: 800 }}
         minZoom={0.2}
         maxZoom={2}
+        nodesDraggable={false}
         panOnScroll={false}
         panOnDrag
         selectionOnDrag={false}
@@ -852,7 +850,6 @@ export function NodesExpandibleMapExpanded<TItemPayload = unknown>({
       type: 'central',
       position: { x: centerX - 160, y: centerY - 80 },
       data: { label: center.label, subtitle: centerSubtitle },
-      draggable: true,
     };
 
     const childNodes: Node[] = items.map((item, index) => {
@@ -874,7 +871,6 @@ export function NodesExpandibleMapExpanded<TItemPayload = unknown>({
           onEdit: () => onItemEdit?.(item),
           onDelete: () => onItemDelete?.(item),
         } satisfies ExpandedChildNodeData,
-        draggable: true,
       };
     });
 
@@ -1012,6 +1008,7 @@ export function NodesExpandibleMapExpanded<TItemPayload = unknown>({
               fitViewOptions={{ padding: 0.3, maxZoom: 1, duration: 800 }}
               minZoom={0.3}
               maxZoom={1.2}
+              nodesDraggable={false}
               panOnScroll={false}
               panOnDrag={[0, 1]}
               selectionOnDrag={false}

@@ -222,5 +222,13 @@
       "templates": "Benachrichtigungsvorlagen",
       "config": "Benachrichtigungseinstellungen"
     }
+  },
+  "projectManagement": {
+    "title": "Projektverwaltung",
+    "items": {
+      "clients": "Kunden",
+      "workers": "Mitarbeiter",
+      "projects": "Projekte"
+    }
   }
 }

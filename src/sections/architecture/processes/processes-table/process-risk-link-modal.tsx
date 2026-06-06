@@ -6,11 +6,11 @@ import { Box, Stack, Drawer, Button, TextField, Typography, Autocomplete, Circul
 
 import { useTranslate } from 'src/locales';
 import { GetRiskTablePaginationService } from 'src/services/architecture/risk/riskTable.service';
-import { SaveProcessRiskService, UpdateProcessRiskService, DeleteProcessRiskService } from 'src/services/architecture/process/processRelations.service';
 import {
   GetRiskImpactLevelsService,
   GetRiskProbabilityLevelsService
 } from 'src/services/architecture/risk/riskScales.service';
+import { SaveProcessRiskService, UpdateProcessRiskService, DeleteProcessRiskService } from 'src/services/architecture/process/processRelations.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';

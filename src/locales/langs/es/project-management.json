@@ -138,6 +138,123 @@
       "generatesIncome": "Genera ingresos"
     }
   },
+  "detail": {
+    "tabs": {
+      "summary": "Resumen",
+      "team": "Equipo",
+      "tasks": "Tareas"
+    },
+    "summary": {
+      "projectDetails": "Detalles del proyecto",
+      "clientInfo": "Información del cliente",
+      "topTeam": "Equipo asignado",
+      "taskProgress": "Progreso de tareas",
+      "recentActivity": "Actividad reciente",
+      "noActivity": "Actividad reciente próximamente",
+      "noTaskData": "Pendiente de datos del backend",
+      "fields": {
+        "size": "Tamaño",
+        "complexity": "Complejidad",
+        "reintegroLevel": "Nivel de reintegro",
+        "generatesIncome": "Genera ingresos",
+        "profitability": "Rentabilidad",
+        "dates": "Fechas",
+        "createdAt": "Creado",
+        "nit": "NIT",
+        "email": "Correo",
+        "clientStatus": "Estado del cliente",
+        "dedication": "Dedicación"
+      }
+    },
+    "team": {
+      "title": "Equipo del proyecto",
+      "assign": "Asignar empleado",
+      "toolbar": {
+        "search": "Buscar empleado...",
+        "status": "Estado",
+        "employee": "Empleado"
+      },
+      "card": {
+        "roles": "Roles",
+        "dedication": "Dedicación",
+        "unassign": "Desvincular",
+        "edit": "Editar asignación"
+      },
+      "drawer": {
+        "titleCreate": "Asignar empleado",
+        "titleEdit": "Editar asignación",
+        "fields": {
+          "employee": "Empleado",
+          "jobPositions": "Cargos en el proyecto",
+          "priority": "Prioridad",
+          "status": "Estado",
+          "dedication": "Dedicación (%)",
+          "startDate": "Fecha de inicio",
+          "endDate": "Fecha de fin",
+          "observations": "Observaciones"
+        },
+        "validation": {
+          "employeeRequired": "El empleado es requerido",
+          "jobPositionsRequired": "Selecciona al menos un cargo",
+          "priorityRequired": "La prioridad es requerida",
+          "statusRequired": "El estado es requerido",
+          "dedicationRequired": "La dedicación es requerida",
+          "startDateRequired": "La fecha de inicio es requerida",
+          "endDateRequired": "La fecha de fin es requerida",
+          "endDateMin": "La fecha de fin debe ser posterior a la de inicio"
+        }
+      },
+      "dialogs": {
+        "unassign": {
+          "title": "Desvincular empleado",
+          "content": "¿Deseas desvincular a \"{{name}}\" del proyecto?"
+        }
+      },
+      "messages": {
+        "assigned": "Empleado asignado correctamente",
+        "updated": "Asignación actualizada correctamente",
+        "unassigned": "Empleado desvinculado correctamente",
+        "errorAssign": "Error al asignar el empleado",
+        "errorUpdate": "Error al actualizar la asignación",
+        "errorUnassign": "Error al desvincular el empleado",
+        "errorLoading": "Error al cargar el equipo"
+      }
+    }
+  },
+  "overview": {
+    "title": "Resumen General",
+    "breadcrumbs": {
+      "dashboard": "Panel de Control",
+      "projectManagement": "Gestión de Proyectos",
+      "overview": "Resumen General"
+    },
+    "kpis": {
+      "workers": "Empleados",
+      "workersSubtitle": "{{count}} asignados actualmente",
+      "projects": "Proyectos",
+      "projectsSubtitle": "{{count}} de alto reintegro",
+      "activeAssignments": "Asignaciones activas",
+      "activeAssignmentsSubtitle": "de {{total}} en total",
+      "orgChart": "Organigrama",
+      "orgChartSubtitle": "{{count}} nodos activos",
+      "overuse": "Sin sobrecarga",
+      "overuseAlert": "{{count}} en sobrecarga"
+    },
+    "charts": {
+      "experienceLevel": "Distribución por experiencia",
+      "projectsByImportance": "Proyectos por importancia",
+      "projectsByIncome": "Proyectos por nivel de ingreso",
+      "dedicationCapacity": "Capacidad de dedicación",
+      "roleDistribution": "Roles en proyectos",
+      "projectsDistribution": "Distribución de proyectos",
+      "noData": "Sin datos disponibles"
+    },
+    "team": {
+      "overuse": "Empleados en sobrecarga",
+      "overuseEmpty": "Sin empleados en sobrecarga",
+      "available": "Disponibilidad de equipo"
+    }
+  },
   "workers": {
     "title": "Empleados",
     "breadcrumbs": {

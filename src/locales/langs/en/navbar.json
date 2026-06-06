@@ -222,5 +222,13 @@
       "templates": "Notification templates",
       "config": "Notification settings"
     }
+  },
+  "projectManagement": {
+    "title": "Project Management",
+    "items": {
+      "clients": "Clients",
+      "workers": "Employees",
+      "projects": "Projects"
+    }
   }
 }

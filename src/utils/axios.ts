@@ -528,6 +528,13 @@ export const endpoints = {
       edit: '/project-management/projects',   // + /:id
       delete: '/project-management/projects', // + /:id
     },
+    dashboard: '/project-management/dashboard',
+    assignments: {
+      all: '/project-management/assignments',
+      save: '/project-management/assignments',
+      update: '/project-management/assignments', // + /:id
+      delete: '/project-management/assignments', // + /:id
+    },
     catalogs: {
       experienceLevels: '/project-management/catalogs/experience-levels',
       workerStatuses: '/project-management/catalogs/worker-statuses',
@@ -540,6 +547,10 @@ export const endpoints = {
       assignmentStatuses: '/project-management/catalogs/assignment-statuses',
       activityStatuses: '/project-management/catalogs/activity-statuses',
     },
+  },
+
+  jobsKm: {
+    all: '/api/jobs-km',
   },
 
   architecture: {

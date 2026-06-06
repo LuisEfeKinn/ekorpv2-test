@@ -222,5 +222,13 @@
       "templates": "Plantillas de notificaciones",
       "config": "Configuración de notificaciones"
     }
+  },
+  "projectManagement": {
+    "title": "Gestión de Proyectos",
+    "items": {
+      "clients": "Clientes",
+      "workers": "Empleados",
+      "projects": "Proyectos"
+    }
   }
 }

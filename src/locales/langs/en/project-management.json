@@ -138,6 +138,123 @@
       "generatesIncome": "Generates income"
     }
   },
+  "detail": {
+    "tabs": {
+      "summary": "Summary",
+      "team": "Team",
+      "tasks": "Tasks"
+    },
+    "summary": {
+      "projectDetails": "Project details",
+      "clientInfo": "Client information",
+      "topTeam": "Assigned team",
+      "taskProgress": "Task progress",
+      "recentActivity": "Recent activity",
+      "noActivity": "Recent activity coming soon",
+      "noTaskData": "Pending backend data",
+      "fields": {
+        "size": "Size",
+        "complexity": "Complexity",
+        "reintegroLevel": "Reintegro level",
+        "generatesIncome": "Generates income",
+        "profitability": "Profitability",
+        "dates": "Dates",
+        "createdAt": "Created",
+        "nit": "NIT",
+        "email": "Email",
+        "clientStatus": "Client status",
+        "dedication": "Dedication"
+      }
+    },
+    "team": {
+      "title": "Project team",
+      "assign": "Assign employee",
+      "toolbar": {
+        "search": "Search employee...",
+        "status": "Status",
+        "employee": "Employee"
+      },
+      "card": {
+        "roles": "Roles",
+        "dedication": "Dedication",
+        "unassign": "Unassign",
+        "edit": "Edit assignment"
+      },
+      "drawer": {
+        "titleCreate": "Assign employee",
+        "titleEdit": "Edit assignment",
+        "fields": {
+          "employee": "Employee",
+          "jobPositions": "Roles in the project",
+          "priority": "Priority",
+          "status": "Status",
+          "dedication": "Dedication (%)",
+          "startDate": "Start date",
+          "endDate": "End date",
+          "observations": "Observations"
+        },
+        "validation": {
+          "employeeRequired": "Employee is required",
+          "jobPositionsRequired": "Select at least one role",
+          "priorityRequired": "Priority is required",
+          "statusRequired": "Status is required",
+          "dedicationRequired": "Dedication is required",
+          "startDateRequired": "Start date is required",
+          "endDateRequired": "End date is required",
+          "endDateMin": "End date must be after start date"
+        }
+      },
+      "dialogs": {
+        "unassign": {
+          "title": "Unassign employee",
+          "content": "Do you want to unassign \"{{name}}\" from this project?"
+        }
+      },
+      "messages": {
+        "assigned": "Employee assigned successfully",
+        "updated": "Assignment updated successfully",
+        "unassigned": "Employee unassigned successfully",
+        "errorAssign": "Error assigning employee",
+        "errorUpdate": "Error updating assignment",
+        "errorUnassign": "Error unassigning employee",
+        "errorLoading": "Error loading team"
+      }
+    }
+  },
+  "overview": {
+    "title": "General Overview",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "projectManagement": "Project Management",
+      "overview": "General Overview"
+    },
+    "kpis": {
+      "workers": "Employees",
+      "workersSubtitle": "{{count}} currently assigned",
+      "projects": "Projects",
+      "projectsSubtitle": "{{count}} high reintegro",
+      "activeAssignments": "Active assignments",
+      "activeAssignmentsSubtitle": "of {{total}} total",
+      "orgChart": "Org chart",
+      "orgChartSubtitle": "{{count}} active nodes",
+      "overuse": "No overload",
+      "overuseAlert": "{{count}} overloaded"
+    },
+    "charts": {
+      "experienceLevel": "Experience distribution",
+      "projectsByImportance": "Projects by importance",
+      "projectsByIncome": "Projects by income level",
+      "dedicationCapacity": "Dedication capacity",
+      "roleDistribution": "Roles in projects",
+      "projectsDistribution": "Projects distribution",
+      "noData": "No data available"
+    },
+    "team": {
+      "overuse": "Overloaded employees",
+      "overuseEmpty": "No overloaded employees",
+      "available": "Team availability"
+    }
+  },
   "workers": {
     "title": "Employees",
     "breadcrumbs": {

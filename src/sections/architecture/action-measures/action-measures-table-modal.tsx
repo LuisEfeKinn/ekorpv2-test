@@ -14,7 +14,6 @@ import IconButton from '@mui/material/IconButton';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { useTranslate } from 'src/locales';
-
 import { GetProvidersPaginationService } from 'src/services/architecture/catalogs/providers.service';
 import { GetActionMeasuresService, CreateActionMeasureService, UpdateActionMeasureService, GetActionMeasureByIdService } from 'src/services/architecture/actionMeasures.service';
 

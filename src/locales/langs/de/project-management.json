@@ -138,6 +138,123 @@
       "generatesIncome": "Erzeugt Einnahmen"
     }
   },
+  "detail": {
+    "tabs": {
+      "summary": "Übersicht",
+      "team": "Team",
+      "tasks": "Aufgaben"
+    },
+    "summary": {
+      "projectDetails": "Projektdetails",
+      "clientInfo": "Kundeninformationen",
+      "topTeam": "Zugewiesenes Team",
+      "taskProgress": "Aufgabenfortschritt",
+      "recentActivity": "Letzte Aktivität",
+      "noActivity": "Letzte Aktivität demnächst verfügbar",
+      "noTaskData": "Backend-Daten ausstehend",
+      "fields": {
+        "size": "Größe",
+        "complexity": "Komplexität",
+        "reintegroLevel": "Rückerstattungsstufe",
+        "generatesIncome": "Erzeugt Einnahmen",
+        "profitability": "Rentabilität",
+        "dates": "Zeitraum",
+        "createdAt": "Erstellt",
+        "nit": "NIT",
+        "email": "E-Mail",
+        "clientStatus": "Kundenstatus",
+        "dedication": "Widmung"
+      }
+    },
+    "team": {
+      "title": "Projektteam",
+      "assign": "Mitarbeiter zuweisen",
+      "toolbar": {
+        "search": "Mitarbeiter suchen...",
+        "status": "Status",
+        "employee": "Mitarbeiter"
+      },
+      "card": {
+        "roles": "Rollen",
+        "dedication": "Widmung",
+        "unassign": "Entfernen",
+        "edit": "Zuweisung bearbeiten"
+      },
+      "drawer": {
+        "titleCreate": "Mitarbeiter zuweisen",
+        "titleEdit": "Zuweisung bearbeiten",
+        "fields": {
+          "employee": "Mitarbeiter",
+          "jobPositions": "Rollen im Projekt",
+          "priority": "Priorität",
+          "status": "Status",
+          "dedication": "Widmung (%)",
+          "startDate": "Startdatum",
+          "endDate": "Enddatum",
+          "observations": "Anmerkungen"
+        },
+        "validation": {
+          "employeeRequired": "Mitarbeiter ist erforderlich",
+          "jobPositionsRequired": "Mindestens eine Rolle auswählen",
+          "priorityRequired": "Priorität ist erforderlich",
+          "statusRequired": "Status ist erforderlich",
+          "dedicationRequired": "Widmung ist erforderlich",
+          "startDateRequired": "Startdatum ist erforderlich",
+          "endDateRequired": "Enddatum ist erforderlich",
+          "endDateMin": "Enddatum muss nach dem Startdatum liegen"
+        }
+      },
+      "dialogs": {
+        "unassign": {
+          "title": "Mitarbeiter entfernen",
+          "content": "Möchtest du \"{{name}}\" vom Projekt entfernen?"
+        }
+      },
+      "messages": {
+        "assigned": "Mitarbeiter erfolgreich zugewiesen",
+        "updated": "Zuweisung erfolgreich aktualisiert",
+        "unassigned": "Mitarbeiter erfolgreich entfernt",
+        "errorAssign": "Fehler beim Zuweisen des Mitarbeiters",
+        "errorUpdate": "Fehler beim Aktualisieren der Zuweisung",
+        "errorUnassign": "Fehler beim Entfernen des Mitarbeiters",
+        "errorLoading": "Fehler beim Laden des Teams"
+      }
+    }
+  },
+  "overview": {
+    "title": "Allgemeine Übersicht",
+    "breadcrumbs": {
+      "dashboard": "Kontrollpanel",
+      "projectManagement": "Projektmanagement",
+      "overview": "Allgemeine Übersicht"
+    },
+    "kpis": {
+      "workers": "Mitarbeitende",
+      "workersSubtitle": "{{count}} aktuell zugewiesen",
+      "projects": "Projekte",
+      "projectsSubtitle": "{{count}} hohe Rückerstattung",
+      "activeAssignments": "Aktive Zuweisungen",
+      "activeAssignmentsSubtitle": "von {{total}} gesamt",
+      "orgChart": "Organigramm",
+      "orgChartSubtitle": "{{count}} aktive Knoten",
+      "overuse": "Keine Überlastung",
+      "overuseAlert": "{{count}} überlastet"
+    },
+    "charts": {
+      "experienceLevel": "Erfahrungsverteilung",
+      "projectsByImportance": "Projekte nach Wichtigkeit",
+      "projectsByIncome": "Projekte nach Einnahmenniveau",
+      "dedicationCapacity": "Widmungskapazität",
+      "roleDistribution": "Rollen in Projekten",
+      "projectsDistribution": "Projektverteilung",
+      "noData": "Keine Daten verfügbar"
+    },
+    "team": {
+      "overuse": "Überlastete Mitarbeitende",
+      "overuseEmpty": "Keine überlasteten Mitarbeitenden",
+      "available": "Teamverfügbarkeit"
+    }
+  },
   "workers": {
     "title": "Mitarbeitende",
     "breadcrumbs": {

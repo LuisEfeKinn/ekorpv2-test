@@ -17,6 +17,7 @@ const ICONS_MAP: Record<string, any> = {
   'briefcase': icon('ic-job'),
   'user': icon('ic-user'),
   'user-check': icon('ic-user'),
+  'users': icon('ic-type-users'),
 
   // Iconos generales
   'dashboard': icon('ic-dashboard'),

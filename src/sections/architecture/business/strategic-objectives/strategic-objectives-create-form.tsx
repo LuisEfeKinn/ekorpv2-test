@@ -16,7 +16,6 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
 import { useTranslate } from 'src/locales';
-
 import { GetObjectiveTypesPaginationService } from 'src/services/architecture/catalogs/objectiveTypes.service';
 import { SaveOrUpdateObjectivesService, GetObjectivesPaginationService } from 'src/services/architecture/business/objectives.service';
 
