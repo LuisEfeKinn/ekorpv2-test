@@ -234,7 +234,14 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
 
     setSaving(true);
     try {
-      await SaveOrUpdateApplicationTableService(formData, dataId);
+      const payload = {
+        ...formData,
+        adoptionContractDate: formData.adoptionContractDate || null,
+        expirationDate: formData.expirationDate || null,
+        renewalDate: formData.renewalDate || null,
+        obsolescenceDate: formData.obsolescenceDate || null,
+      };
+      await SaveOrUpdateApplicationTableService(payload, dataId);
       toast.success(
         dataId
           ? t('application.table.messages.success.updated')

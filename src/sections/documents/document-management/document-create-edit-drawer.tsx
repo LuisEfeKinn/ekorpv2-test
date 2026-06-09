@@ -237,8 +237,8 @@ export function DocumentCreateEditDrawer({
       (key) => form[key] !== initial[key]
     );
     const fileChanged = file !== null || existingFileName !== initialExistingFileNameRef.current;
-    return formChanged || fileChanged;
-  }, [form, file, existingFileName, isEdit]);
+    return formChanged || fileChanged || !!changeControlComments.trim();
+  }, [form, file, existingFileName, isEdit, changeControlComments]);
 
   const canSave =
     form.name.trim() &&

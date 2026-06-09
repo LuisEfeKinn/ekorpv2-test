@@ -186,6 +186,14 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
     }));
   }, []);
 
+  const adoptionDate = formData.adoptionContractDate;
+  const dateErrors = {
+    expirationDate: !!(adoptionDate && formData.expirationDate && formData.expirationDate < adoptionDate),
+    renewalDate: !!(adoptionDate && formData.renewalDate && formData.renewalDate < adoptionDate),
+    obsolescenceDate: !!(adoptionDate && formData.obsolescenceDate && formData.obsolescenceDate < adoptionDate),
+  };
+  const hasDateErrors = Object.values(dateErrors).some(Boolean);
+
   // Validar formulario
   const isFormValid = () =>
     formData.name.trim() !== '' &&
@@ -193,18 +201,28 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
     formData.code.trim() !== '' &&
     formData.nomenclature.trim() !== '' &&
     formData.localExternal.trim() !== '' &&
-    formData.dataType.id > 0;
+    formData.dataType.id > 0 &&
+    formData.provider.id > 0 &&
+    formData.Domains.id > 0 &&
+    formData.impactRatio.trim() !== '';
 
   // Guardar nuevo nodo
   const handleSave = async () => {
-    if (!isFormValid()) {
+    if (!isFormValid() || hasDateErrors) {
       toast.error(t('data.diagram.messages.error.validation'));
       return;
     }
 
     setSaving(true);
     try {
-      await SaveDataFlowService(formData, parentNodeId);
+      const payload = {
+        ...formData,
+        adoptionContractDate: formData.adoptionContractDate || null,
+        expirationDate: formData.expirationDate || null,
+        renewalDate: formData.renewalDate || null,
+        obsolescenceDate: formData.obsolescenceDate || null,
+      };
+      await SaveDataFlowService(payload, parentNodeId);
       toast.success(t('data.diagram.messages.success.created'));
       onSave(); // Recargar el diagrama
       onClose(); // Cerrar el modal
@@ -632,6 +650,8 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
                     <TextField
                       {...params}
                       label="Proveedor"
+                      required
+                      slotProps={{ inputLabel: { required: true } }}
                       InputProps={{
                         ...params.InputProps,
                         startAdornment: (
@@ -685,6 +705,8 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
                   <TextField
                     {...params}
                     label={t('data.diagram.dialogs.form.domain.label')}
+                    required
+                    slotProps={{ inputLabel: { required: true } }}
                     InputProps={{
                       ...params.InputProps,
                       startAdornment: (
@@ -764,6 +786,8 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
                     onChange={(e) => handleChange('expirationDate', e.target.value)}
                     disabled={saving}
                     InputLabelProps={{ shrink: true }}
+                    error={dateErrors.expirationDate}
+                    helperText={dateErrors.expirationDate ? 'No puede ser anterior a la fecha de adopción de contrato' : undefined}
                     sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
                   />
                 </Box>
@@ -777,6 +801,8 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
                     onChange={(e) => handleChange('renewalDate', e.target.value)}
                     disabled={saving}
                     InputLabelProps={{ shrink: true }}
+                    error={dateErrors.renewalDate}
+                    helperText={dateErrors.renewalDate ? 'No puede ser anterior a la fecha de adopción de contrato' : undefined}
                     sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
                   />
 
@@ -788,6 +814,8 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
                     onChange={(e) => handleChange('obsolescenceDate', e.target.value)}
                     disabled={saving}
                     InputLabelProps={{ shrink: true }}
+                    error={dateErrors.obsolescenceDate}
+                    helperText={dateErrors.obsolescenceDate ? 'No puede ser anterior a la fecha de adopción de contrato' : undefined}
                     sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
                   />
                 </Box>
@@ -855,6 +883,8 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
                       <TextField
                         {...params}
                         label={t('data.diagram.dialogs.form.impactRatio.label')}
+                        required
+                        slotProps={{ inputLabel: { required: true } }}
                         sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
                       />
                     )}
@@ -910,7 +940,7 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
             variant="contained"
             onClick={handleSave}
             loading={saving}
-            disabled={!isFormValid()}
+            disabled={!isFormValid() || hasDateErrors}
             startIcon={<Iconify icon="solar:check-circle-bold" width={20} />}
             sx={{
               borderRadius: 2,

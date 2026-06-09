@@ -189,7 +189,14 @@ export function ApplicationDiagramFlowCreateModal({ open, onClose, parentNodeId,
 
     setSaving(true);
     try {
-      await SaveApplicationFlowService(formData, parentNodeId);
+      const payload = {
+        ...formData,
+        adoptionContractDate: formData.adoptionContractDate || null,
+        expirationDate: formData.expirationDate || null,
+        renewalDate: formData.renewalDate || null,
+        obsolescenceDate: formData.obsolescenceDate || null,
+      };
+      await SaveApplicationFlowService(payload, parentNodeId);
       toast.success(t('application.diagram.messages.success.created'));
       onSave(); // Recargar el diagrama
       onClose(); // Cerrar el modal

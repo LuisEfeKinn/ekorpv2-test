@@ -199,6 +199,14 @@ export function ApplicationTableModal({ open, onClose, applicationId, onSave, ..
     setFormData((prev) => ({ ...prev, [field]: value }));
   }, []);
 
+  const adoptionDate = formData.adoptionContractDate;
+  const dateErrors = {
+    expirationDate: !!(adoptionDate && formData.expirationDate && formData.expirationDate < adoptionDate),
+    renewalDate: !!(adoptionDate && formData.renewalDate && formData.renewalDate < adoptionDate),
+    obsolescenceDate: !!(adoptionDate && formData.obsolescenceDate && formData.obsolescenceDate < adoptionDate),
+  };
+  const hasDateErrors = Object.values(dateErrors).some(Boolean);
+
   // Validar formulario
   const isFormValid = () =>
     formData.name.trim() !== '' &&
@@ -207,18 +215,26 @@ export function ApplicationTableModal({ open, onClose, applicationId, onSave, ..
     formData.nomenclature.trim() !== '' &&
     formData.provider.id > 0 &&
     formData.systemType.id > 0 &&
-    formData.Domains.id > 0;
+    formData.Domains.id > 0 &&
+    formData.impactRatio.trim() !== '';
 
   // Guardar o actualizar
   const handleSave = async () => {
-    if (!isFormValid()) {
+    if (!isFormValid() || hasDateErrors) {
       toast.error(t('application.table.messages.error.validation'));
       return;
     }
 
     setSaving(true);
     try {
-      await SaveOrUpdateApplicationTableService(formData, applicationId);
+      const payload = {
+        ...formData,
+        adoptionContractDate: formData.adoptionContractDate || null,
+        expirationDate: formData.expirationDate || null,
+        renewalDate: formData.renewalDate || null,
+        obsolescenceDate: formData.obsolescenceDate || null,
+      };
+      await SaveOrUpdateApplicationTableService(payload, applicationId);
       toast.success(
         applicationId
           ? t('application.table.messages.success.updated')
@@ -344,6 +360,7 @@ export function ApplicationTableModal({ open, onClose, applicationId, onSave, ..
                     {...params}
                     label={t('application.diagram.dialogs.form.provider.label')}
                     required
+                    slotProps={{ inputLabel: { required: true } }}
                   />
                 )}
               />
@@ -362,6 +379,7 @@ export function ApplicationTableModal({ open, onClose, applicationId, onSave, ..
                   {...params}
                   label={t('application.diagram.dialogs.form.domain.label')}
                   required
+                  slotProps={{ inputLabel: { required: true } }}
                 />
               )}
             />
@@ -403,6 +421,8 @@ export function ApplicationTableModal({ open, onClose, applicationId, onSave, ..
                 onChange={(e) => handleChange('expirationDate', e.target.value)}
                 disabled={saving}
                 InputLabelProps={{ shrink: true }}
+                error={dateErrors.expirationDate}
+                helperText={dateErrors.expirationDate ? t('application.table.messages.error.dateBefore', { defaultValue: 'No puede ser anterior a la fecha de adopción de contrato' }) : undefined}
               />
             </Box>
 
@@ -415,6 +435,8 @@ export function ApplicationTableModal({ open, onClose, applicationId, onSave, ..
                 onChange={(e) => handleChange('renewalDate', e.target.value)}
                 disabled={saving}
                 InputLabelProps={{ shrink: true }}
+                error={dateErrors.renewalDate}
+                helperText={dateErrors.renewalDate ? t('application.table.messages.error.dateBefore', { defaultValue: 'No puede ser anterior a la fecha de adopción de contrato' }) : undefined}
               />
 
               <TextField
@@ -425,6 +447,8 @@ export function ApplicationTableModal({ open, onClose, applicationId, onSave, ..
                 onChange={(e) => handleChange('obsolescenceDate', e.target.value)}
                 disabled={saving}
                 InputLabelProps={{ shrink: true }}
+                error={dateErrors.obsolescenceDate}
+                helperText={dateErrors.obsolescenceDate ? t('application.table.messages.error.dateBefore', { defaultValue: 'No puede ser anterior a la fecha de adopción de contrato' }) : undefined}
               />
             </Box>
 
@@ -485,6 +509,8 @@ export function ApplicationTableModal({ open, onClose, applicationId, onSave, ..
                   <TextField
                     {...params}
                     label={t('application.diagram.dialogs.form.impactRatio.label')}
+                    required
+                    slotProps={{ inputLabel: { required: true } }}
                   />
                 )}
               />
@@ -512,7 +538,7 @@ export function ApplicationTableModal({ open, onClose, applicationId, onSave, ..
           variant="contained"
           onClick={handleSave}
           loading={saving}
-          disabled={loading || !isFormValid()}
+          disabled={loading || !isFormValid() || hasDateErrors}
         >
           {applicationId
             ? t('application.table.actions.update')

@@ -108,6 +108,7 @@ export const endpoints = {
     update: '/api/announcements',
     edit: '/api/announcements',
     delete: '/api/announcements',
+    fileView: '/api/announcements/file/view',
   },
   notifiableEvents: {
     all: '/api/notifiable-events',

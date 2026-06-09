@@ -4,9 +4,13 @@ import type { Announcement, AnnouncementUpsertPayload } from 'src/types/notifica
 
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
-import { useRef, useMemo, useEffect } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { useMemo, useState, useCallback, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { varAlpha } from 'minimal-shared/utils';
+
+import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { LoadingButton } from '@mui/lab';
 import Drawer from '@mui/material/Drawer';
@@ -17,7 +21,10 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 import { useTranslate } from 'src/locales';
-import { SaveOrUpdateAnnouncementService } from 'src/services/notifications/announcements.service';
+import {
+  SaveOrUpdateAnnouncementService,
+  GetAnnouncementFileViewService,
+} from 'src/services/notifications/announcements.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
@@ -29,7 +36,7 @@ export type AnnouncementFormValues = {
   type: string;
   status: number | '';
   order: number | string;
-  file: string;
+  file?: string;
   deadlineDate: string | null;
   content: string;
   author: string;
@@ -48,7 +55,8 @@ const TYPE_VALUES = ['NOTICIA', 'EVENTO', 'ARTICULO'] as const;
 export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }: Props) {
   const { t } = useTranslate('notifications');
   const isEdit = Boolean(current?.id);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const STATUS_OPTIONS = useMemo(() => [
     { value: 1, label: t('announcements.status.active') },
@@ -80,7 +88,7 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
             .number({ required_error: t('announcements.form.validation.orderRequired') })
             .min(0, { message: t('announcements.form.validation.orderMin') })
         ),
-        file: z.string().min(1, { message: t('announcements.form.validation.fileRequired') }),
+        file: z.string().optional().default(''),
         deadlineDate: z.string().nullable(),
         content: z.string().optional().default(''),
         author: z.string().optional().default(''),
@@ -115,31 +123,74 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
     formState: { isSubmitting },
   } = methods;
 
+  const handleDropAccepted = useCallback((files: File[]) => {
+    const selected = files[0];
+    if (!selected) return;
+    setImageFile(selected);
+    setValue('file', '', { shouldValidate: false });
+  }, [setValue]);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    multiple: false,
+    maxFiles: 1,
+    accept: { 'image/*': [] },
+    onDropAccepted: handleDropAccepted,
+  });
+
   useEffect(() => {
     if (!open) return;
     reset(defaultValues);
-  }, [open, defaultValues, reset]);
+    setImageFile(null);
+    setPreviewUrl(null);
+    if (current?.id) {
+      GetAnnouncementFileViewService(current.id)
+        .then(setPreviewUrl)
+        .catch(() => setPreviewUrl(null));
+    }
+  }, [open, defaultValues, reset, current?.id]);
 
   const onSubmit = handleSubmit(async (data) => {
+    if (!imageFile && !data.file?.trim()) {
+      toast.error(t('announcements.form.validation.fileRequired'));
+      return;
+    }
+
     try {
       const now = new Date().toISOString();
-      const payload: AnnouncementUpsertPayload = {
-        title: data.title,
-        order: Number(data.order),
-        file: data.file,
-        type: data.type,
-        rating: Number(current?.rating ?? 0),
-        originalFile: current?.originalFile ?? '',
-        content: data.content ?? '',
-        author: data.author ?? '',
-        status: Number(data.status),
-        deadlineDate: data.deadlineDate ?? null,
-        publicationDate: current?.publicationDate ?? now,
-        announcementType: Number(current?.announcementType ?? 0),
-        updateDate: now,
-      };
 
-      await SaveOrUpdateAnnouncementService(payload, current?.id);
+      if (imageFile) {
+        const fd = new FormData();
+        fd.append('title', data.title);
+        fd.append('order', String(Number(data.order)));
+        fd.append('type', data.type);
+        fd.append('rating', String(Number(current?.rating ?? 0)));
+        fd.append('content', data.content ?? '');
+        fd.append('author', data.author ?? '');
+        fd.append('status', String(Number(data.status)));
+        fd.append('announcementType', String(Number(current?.announcementType ?? 0)));
+        if (data.deadlineDate) fd.append('deadlineDate', data.deadlineDate);
+        fd.append('publicationDate', current?.publicationDate ?? now);
+        fd.append('updateDate', now);
+        fd.append('image', imageFile);
+        await SaveOrUpdateAnnouncementService(fd, current?.id);
+      } else {
+        const payload: AnnouncementUpsertPayload = {
+          title: data.title,
+          order: Number(data.order),
+          file: data.file ?? '',
+          type: data.type,
+          rating: Number(current?.rating ?? 0),
+          originalFile: current?.originalFile ?? '',
+          content: data.content ?? '',
+          author: data.author ?? '',
+          status: Number(data.status),
+          deadlineDate: data.deadlineDate ?? null,
+          publicationDate: current?.publicationDate ?? now,
+          announcementType: Number(current?.announcementType ?? 0),
+          updateDate: now,
+        };
+        await SaveOrUpdateAnnouncementService(payload, current?.id);
+      }
 
       toast.success(isEdit ? t('announcements.messages.updated') : t('announcements.messages.created'));
       onClose();
@@ -186,39 +237,97 @@ export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }
                 ))}
               </Field.Select>
 
-              <Stack spacing={1}>
+              <Stack spacing={1.5}>
                 <Field.Text
                   name="file"
                   label={t('announcements.form.file')}
                   placeholder={t('announcements.form.filePlaceholder')}
-                  required
-                />
-
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  hidden
                   onChange={(e) => {
-                    const selected = e.target.files?.[0];
-                    if (!selected) return;
-
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                      const result = String(reader.result ?? '');
-                      if (result) setValue('file', result, { shouldValidate: true });
-                    };
-                    reader.readAsDataURL(selected);
+                    if (e.target.value) setImageFile(null);
                   }}
                 />
 
-                <Button
-                  variant="contained"
-                  onClick={() => fileInputRef.current?.click()}
-                  sx={{ width: 1 }}
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Divider sx={{ flex: 1 }} />
+                  <Typography variant="caption" color="text.secondary">
+                    {t('announcements.form.orUploadFile', { defaultValue: 'o sube un archivo' })}
+                  </Typography>
+                  <Divider sx={{ flex: 1 }} />
+                </Stack>
+
+                <Box
+                  {...getRootProps()}
+                  sx={[
+                    (theme) => ({
+                      p: 3,
+                      borderRadius: 1.5,
+                      textAlign: 'center',
+                      outline: 'none',
+                      cursor: 'pointer',
+                      border: `dashed 1px ${theme.vars.palette.divider}`,
+                      backgroundColor: theme.vars.palette.background.neutral,
+                      transition: theme.transitions.create(['border-color', 'background-color'], {
+                        duration: theme.transitions.duration.shorter,
+                      }),
+                      ...(isDragActive && {
+                        borderColor: theme.vars.palette.primary.main,
+                        backgroundColor: varAlpha(theme.vars.palette.primary.mainChannel, 0.08),
+                      }),
+                    }),
+                  ]}
                 >
-                  {t('announcements.actions.loadImage')}
-                </Button>
+                  <input {...getInputProps()} />
+
+                  {imageFile ? (
+                    <Stack spacing={0.5} alignItems="center">
+                      <Box
+                        component="img"
+                        src={URL.createObjectURL(imageFile)}
+                        alt={imageFile.name}
+                        sx={{ width: '100%', maxHeight: 160, objectFit: 'contain', borderRadius: 1 }}
+                      />
+                      <Typography variant="caption" color="text.secondary" noWrap sx={{ maxWidth: 320 }}>
+                        {imageFile.name}
+                      </Typography>
+                      <Button
+                        size="small"
+                        variant="text"
+                        color="error"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setImageFile(null);
+                        }}
+                        sx={{ textTransform: 'none' }}
+                      >
+                        {t('announcements.actions.removeFile', { defaultValue: 'Quitar' })}
+                      </Button>
+                    </Stack>
+                  ) : previewUrl ? (
+                    <Stack spacing={0.5} alignItems="center">
+                      <Box
+                        component="img"
+                        src={previewUrl}
+                        alt="preview"
+                        sx={{ width: '100%', maxHeight: 160, objectFit: 'contain', borderRadius: 1 }}
+                      />
+                      <Typography variant="caption" color="text.secondary">
+                        {t('announcements.form.clickToReplace', { defaultValue: 'Haz clic o arrastra para reemplazar' })}
+                      </Typography>
+                    </Stack>
+                  ) : (
+                    <Stack spacing={0.5} alignItems="center">
+                      <Iconify icon="eva:cloud-upload-fill" width={32} sx={{ color: 'text.disabled' }} />
+                      <Typography variant="subtitle2">
+                        {isDragActive
+                          ? t('announcements.form.dropHere', { defaultValue: 'Suelta la imagen aquí' })
+                          : t('announcements.form.dragOrClick', { defaultValue: 'Arrastra una imagen o haz clic para seleccionar' })}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {t('announcements.form.imageFormats', { defaultValue: 'PNG, JPG, GIF, WEBP...' })}
+                      </Typography>
+                    </Stack>
+                  )}
+                </Box>
               </Stack>
 
               <Field.Editor name="content" label={t('announcements.form.content')} placeholder={t('announcements.form.contentPlaceholder')} />

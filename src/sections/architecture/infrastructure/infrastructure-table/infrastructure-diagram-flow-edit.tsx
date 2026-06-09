@@ -230,24 +230,42 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
     }));
   }, []);
 
+  const adoptionDate = formData.adoptionContractDate;
+  const dateErrors = {
+    expirationDate: !!(adoptionDate && formData.expirationDate && formData.expirationDate < adoptionDate),
+    renewalDate: !!(adoptionDate && formData.renewalDate && formData.renewalDate < adoptionDate),
+    obsolescenceDate: !!(adoptionDate && formData.obsolescenceDate && formData.obsolescenceDate < adoptionDate),
+  };
+  const hasDateErrors = Object.values(dateErrors).some(Boolean);
+
   // Validar formulario
   const isFormValid = () =>
     formData.name.trim() !== '' &&
     formData.description.trim() !== '' &&
     formData.code.trim() !== '' &&
     formData.nomenclature.trim() !== '' &&
-    formData.localExternal.trim() !== '';
+    formData.localExternal.trim() !== '' &&
+    formData.provider.id > 0 &&
+    formData.Domains.id > 0 &&
+    formData.impactRatio.trim() !== '';
 
   // Guardar o actualizar
   const handleSave = async () => {
-    if (!isFormValid()) {
+    if (!isFormValid() || hasDateErrors) {
       toast.error(t('infrastructure.table.messages.error.validation'));
       return;
     }
 
     setSaving(true);
     try {
-      await SaveOrUpdateDataTableService(formData, dataId);
+      const payload = {
+        ...formData,
+        adoptionContractDate: formData.adoptionContractDate || null,
+        expirationDate: formData.expirationDate || null,
+        renewalDate: formData.renewalDate || null,
+        obsolescenceDate: formData.obsolescenceDate || null,
+      };
+      await SaveOrUpdateDataTableService(payload, dataId);
       toast.success(
         dataId
           ? t('infrastructure.table.messages.success.updated')
@@ -694,6 +712,8 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
                       <TextField
                         {...params}
                         label={t('infrastructure.diagram.dialogs.form.provider.label')}
+                        required
+                        slotProps={{ inputLabel: { required: true } }}
                         InputProps={{
                           ...params.InputProps,
                           startAdornment: (
@@ -747,6 +767,8 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
                     <TextField
                       {...params}
                       label={t('infrastructure.diagram.dialogs.form.domain.label')}
+                      required
+                      slotProps={{ inputLabel: { required: true } }}
                       InputProps={{
                         ...params.InputProps,
                         startAdornment: (
@@ -826,6 +848,8 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
                       onChange={(e) => handleChange('expirationDate', e.target.value)}
                       disabled={saving}
                       InputLabelProps={{ shrink: true }}
+                      error={dateErrors.expirationDate}
+                      helperText={dateErrors.expirationDate ? 'No puede ser anterior a la fecha de adopción de contrato' : undefined}
                       sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
                     />
                   </Box>
@@ -839,6 +863,8 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
                       onChange={(e) => handleChange('renewalDate', e.target.value)}
                       disabled={saving}
                       InputLabelProps={{ shrink: true }}
+                      error={dateErrors.renewalDate}
+                      helperText={dateErrors.renewalDate ? 'No puede ser anterior a la fecha de adopción de contrato' : undefined}
                       sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
                     />
 
@@ -850,6 +876,8 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
                       onChange={(e) => handleChange('obsolescenceDate', e.target.value)}
                       disabled={saving}
                       InputLabelProps={{ shrink: true }}
+                      error={dateErrors.obsolescenceDate}
+                      helperText={dateErrors.obsolescenceDate ? 'No puede ser anterior a la fecha de adopción de contrato' : undefined}
                       sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
                     />
                   </Box>
@@ -917,6 +945,8 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
                         <TextField
                           {...params}
                           label={t('infrastructure.diagram.dialogs.form.impactRatio.label')}
+                          required
+                          slotProps={{ inputLabel: { required: true } }}
                           sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
                         />
                       )}
@@ -973,7 +1003,7 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
             variant="contained"
             onClick={handleSave}
             loading={saving}
-            disabled={loading || !isFormValid()}
+            disabled={loading || !isFormValid() || hasDateErrors}
             startIcon={<Iconify icon="solar:check-circle-bold" width={20} />}
             sx={{
               borderRadius: 2,

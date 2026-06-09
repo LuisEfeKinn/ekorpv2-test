@@ -41,7 +41,10 @@ export const GetAnnouncementsService = async (params?: Record<string, unknown>) 
   return response;
 };
 
-export const SaveOrUpdateAnnouncementService = async (dataSend: AnnouncementUpsertPayload, id?: string | number) => {
+export const SaveOrUpdateAnnouncementService = async (
+  dataSend: AnnouncementUpsertPayload | FormData,
+  id?: string | number
+) => {
   if (id !== undefined && id !== null && String(id).trim() !== '') {
     return axios.patch(`${endpoints.announcements.update}/${id}`, dataSend);
   }
@@ -50,5 +53,10 @@ export const SaveOrUpdateAnnouncementService = async (dataSend: AnnouncementUpse
 
 export const DeleteAnnouncementService = async (id: string | number) =>
   axios.delete(`${endpoints.announcements.delete}/${id}`);
+
+export const GetAnnouncementFileViewService = async (id: string | number): Promise<string> => {
+  const response = await axios.get<{ url: string }>(`${endpoints.announcements.fileView}/${id}`);
+  return response.data.url;
+};
 
 export const normalizeAnnouncementsResponse = (payload: unknown): Announcement[] => extractAnnouncements(payload);
