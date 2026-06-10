@@ -252,6 +252,7 @@ export function ApplicationSystemProcessesDrawer({
           multiline
           minRows={3}
           InputLabelProps={{ shrink: true }}
+          InputProps={{ notched: true }}
         />
 
         <Stack direction="row" spacing={1.5} justifyContent="flex-end">

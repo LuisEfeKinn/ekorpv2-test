@@ -321,6 +321,7 @@ export function ApplicationDiagramFlowCreateModal({ open, onClose, parentNodeId,
                 required
                 disabled={saving}
                 InputLabelProps={{ shrink: true }}
+                InputProps={{ notched: true }}
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     borderRadius: 2,

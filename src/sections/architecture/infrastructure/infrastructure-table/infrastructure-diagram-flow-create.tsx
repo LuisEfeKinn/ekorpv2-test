@@ -342,6 +342,7 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
                   required
                   disabled={saving}
                   InputLabelProps={{ shrink: true }}
+                  InputProps={{ notched: true }}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       borderRadius: 2,
@@ -434,6 +435,7 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
                   rows={2}
                   disabled={saving}
                   InputLabelProps={{ shrink: true }}
+                  InputProps={{ notched: true }}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       borderRadius: 2,

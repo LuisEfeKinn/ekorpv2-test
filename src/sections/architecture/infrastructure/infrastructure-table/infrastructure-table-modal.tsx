@@ -205,6 +205,7 @@ export function InfrastructureTableModal({ open, onClose, infrastructureId, onSa
               required
               disabled={saving}
               InputLabelProps={{ shrink: true }}
+              InputProps={{ notched: true }}
             />
 
             <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>

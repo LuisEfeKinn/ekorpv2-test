@@ -62,6 +62,7 @@ export function DataTableView() {
   const addChildModal = useBoolean();
 
   const [tableData, setTableData] = useState<any[]>([]);
+  const [rawTreeData, setRawTreeData] = useState<any[]>([]);
   const [totalItems, setTotalItems] = useState(0);
   const [selectedDataId, setSelectedDataId] = useState<string | undefined>(undefined);
   const [parentNodeId, setParentNodeId] = useState<number>(0);
@@ -95,6 +96,28 @@ export function DataTableView() {
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
+
+  // Aplana TODOS los nodos (ignora expansión), para búsqueda global
+  const flattenAllNodes = useCallback((data: any[]): any[] => {
+    const result: any[] = [];
+    const traverse = (items: any[], level = 0, parentId?: number) => {
+      items.forEach((item) => {
+        result.push({
+          ...item.data,
+          id: item.id,
+          label: item.label,
+          level,
+          parentId,
+          hasChildren: !!(item.children?.length),
+          isExpanded: false,
+          children: item.children || [],
+        });
+        if (item.children?.length) traverse(item.children, level + 1, item.id);
+      });
+    };
+    traverse(data);
+    return result;
+  }, []);
 
   // Función para aplanar la estructura jerárquica manteniendo nivel y padre
   const flattenDataWithHierarchy = useCallback((data: any[], level = 0, parentId?: number): any[] => {
@@ -130,7 +153,7 @@ export function DataTableView() {
       const response = await GetDataFlowService();
       const data = response.data || [];
 
-      // Aplanar la estructura jerárquica
+      setRawTreeData(data);
       const flattenedData = flattenDataWithHierarchy(data);
 
       setTableData(flattenedData);
@@ -148,9 +171,13 @@ export function DataTableView() {
     loadData();
   }, [loadData]);
 
-  // Aplicar filtros
+  // Cuando hay búsqueda activa usa todos los nodos; si no, solo los visibles
+  const searchSource = currentFilters.name
+    ? flattenAllNodes(rawTreeData)
+    : Array.isArray(tableData) ? tableData : [];
+
   const dataFiltered = applyFilter({
-    inputData: Array.isArray(tableData) ? tableData : [],
+    inputData: searchSource,
     comparator: getComparator(table.order, table.orderBy),
     filters: currentFilters,
   });
@@ -362,7 +389,7 @@ export function DataTableView() {
           {canReset && (
             <DataTableFiltersResult
               filters={currentFilters}
-              totalResults={totalItems}
+              totalResults={dataFiltered.length}
               onFilters={(name, value) => {
                 updateFilters({ [name]: value });
               }}
@@ -441,7 +468,7 @@ export function DataTableView() {
           <TablePaginationCustom
             page={table.page}
             dense={table.dense}
-            count={totalItems}
+            count={dataFiltered.length}
             rowsPerPage={table.rowsPerPage}
             onPageChange={table.onChangePage}
             onChangeDense={table.onChangeDense}

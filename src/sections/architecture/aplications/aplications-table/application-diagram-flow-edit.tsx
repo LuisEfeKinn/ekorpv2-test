@@ -383,6 +383,7 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
                   required
                   disabled={saving}
                   InputLabelProps={{ shrink: true }}
+                  InputProps={{ notched: true }}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       borderRadius: 2,

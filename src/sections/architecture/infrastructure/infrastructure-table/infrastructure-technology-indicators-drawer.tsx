@@ -217,6 +217,7 @@ export function InfrastructureTechnologyIndicatorsDrawer({ open, onClose, techno
           multiline
           minRows={3}
           InputLabelProps={{ shrink: true }}
+          InputProps={{ notched: true }}
         />
 
         <TextField

@@ -265,6 +265,7 @@ export function ApplicationSystemIndicatorsDrawer({
           multiline
           minRows={3}
           InputLabelProps={{ shrink: true }}
+          InputProps={{ notched: true }}
         />
 
         <TextField
