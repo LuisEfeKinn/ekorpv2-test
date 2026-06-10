@@ -209,6 +209,7 @@ export function InfrastructureJobTechnologiesDrawer({ open, onClose, technologyI
           disabled={saving || relationLoading}
           multiline
           minRows={3}
+          InputLabelProps={{ shrink: true }}
         />
 
         <Stack direction="row" spacing={1.5} justifyContent="flex-end">

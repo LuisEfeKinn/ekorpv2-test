@@ -5,8 +5,8 @@ import { useState, useEffect, useCallback } from 'react';
 import Chip, { chipClasses } from '@mui/material/Chip';
 
 import { useTranslate } from 'src/locales';
+import { GetJobsKmService } from 'src/services/organization/job-km.service';
 import { GetSkillsPaginationService } from 'src/services/employees/skills.service';
-import { GetPositionPaginationService } from 'src/services/organization/position.service';
 import { GetRegionsService, GetCountriesService } from 'src/services/locations/locations.service';
 import {
   GetOrganizationalUnitPaginationService,
@@ -40,8 +40,8 @@ export function UserManagmentTableFiltersResult({ filters, onFilters, onReset, t
     const loadFilterNames = async () => {
       try {
         if (filters.positionId) {
-          const response = await GetPositionPaginationService({ page: 1, perPage: 20 });
-          const position = response.data.data.find((p) => p.id === filters.positionId);
+          const response = await GetJobsKmService({ page: 1, perPage: 20 });
+          const position = response.data.data.find((p) => String(p.id) === String(filters.positionId));
           setPositionName(position?.name || '');
         } else {
           setPositionName('');

@@ -433,7 +433,9 @@
         "numberOfPositions": {
           "label": "Required Employees",
           "placeholder": "E.g.: 3",
-          "helperText": "Number of employees required for this position"
+          "helperText": "Number of employees required for this position",
+          "minAssignedError": "You cannot set a value lower than {{count}} because there are currently {{count}} employees assigned to this position.",
+          "minCurrentValueError": "You cannot set a value lower than {{count}} for this position."
         },
         "competencies": {
           "label": "Competencies",
@@ -721,7 +723,9 @@
         "requiredEmployees": {
           "label": "Required Employees",
           "placeholder": "Number of required employees",
-          "helper": "Total number of employees required for this position"
+          "helper": "Total number of employees required for this position",
+          "required": "The required employees count is mandatory",
+          "min": "The required employees count must be at least 1"
         }
       },
       "actions": {

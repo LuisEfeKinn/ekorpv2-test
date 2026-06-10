@@ -34,10 +34,8 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import {
   useTable,
-  emptyRows,
   TableNoData,
   getComparator,
-  TableEmptyRows,
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
@@ -93,30 +91,8 @@ export function OrganizationView() {
       const response = await GetOrganizationUnitPaginationService(params);
 
       if (response.status === 200) {
-        const raw = response?.data as any;
-
-        let list: IOrganizationalUnit[] = [];
-        let total = 0;
-
-        if (Array.isArray(raw)) {
-          if (Array.isArray(raw[0]) && typeof raw[1] === 'number') {
-            const first = raw[0];
-            list = Array.isArray(first[0]) ? (first[0] as IOrganizationalUnit[]) : (first as IOrganizationalUnit[]);
-            total = raw[1];
-          } else if (Array.isArray(raw[0])) {
-            list = raw[0] as IOrganizationalUnit[];
-            total = (raw[0] as IOrganizationalUnit[]).length;
-          } else {
-            list = raw.filter((it) => typeof it === 'object' && it) as IOrganizationalUnit[];
-            total = list.length;
-          }
-        } else if (Array.isArray((response as any)?.data?.data)) {
-          list = (response as any).data.data as IOrganizationalUnit[];
-          total = list.length;
-        }
-
-        setTableData(Array.isArray(list) ? list : []);
-        setTotalItems(typeof total === 'number' ? total : 0);
+        setTableData(response.data?.data ?? []);
+        setTotalItems(response.data?.meta?.itemCount ?? 0);
       }
     } catch (error) {
       console.error('Error loading organization:', error);
@@ -218,7 +194,7 @@ export function OrganizationView() {
           heading={t('organization.title')}
           links={[
             { name: t('organization.breadcrumbs.dashboard'), href: paths.dashboard.root },
-            { name: t('organization.breadcrumbs.organizationUnit'), href: paths.dashboard.organizations.organizationalUnitTable },
+            { name: t('organization.breadcrumbs.organizationUnit'), href: paths.dashboard.organizations.organizationalUnit },
             { name: t('organization.title') },
           ]}
           action={
@@ -322,12 +298,7 @@ export function OrganizationView() {
                 />
 
                 <TableBody>
-                  {dataFiltered
-                    .slice(
-                      table.page * table.rowsPerPage,
-                      table.page * table.rowsPerPage + table.rowsPerPage
-                    )
-                    .map((row) => (
+                  {dataFiltered.map((row) => (
                       <OrganizationTableRow
                         key={row.id}
                         row={row}
@@ -337,11 +308,6 @@ export function OrganizationView() {
                         editHref={paths.dashboard.organizations.organizationalUnitEdit(row.id)}
                       />
                     ))}
-
-                  <TableEmptyRows
-                    height={table.dense ? 56 : 76}
-                    emptyRows={emptyRows(table.page, table.rowsPerPage, dataFiltered.length)}
-                  />
 
                   <TableNoData notFound={notFound} />
                 </TableBody>
@@ -375,7 +341,7 @@ type ApplyFilterProps = {
 };
 
 function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
-  const { name, status } = filters;
+  const { status } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -386,12 +352,6 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   });
 
   inputData = stabilizedThis.map((el) => el[0]);
-
-  if (name) {
-    inputData = inputData.filter(
-      (item) => item.name.toLowerCase().indexOf(name.toLowerCase()) !== -1
-    );
-  }
 
   if (status !== 'all') {
     // TODO: Implement status filtering when the data model includes a status field

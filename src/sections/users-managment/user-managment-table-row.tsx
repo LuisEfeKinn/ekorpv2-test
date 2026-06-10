@@ -115,6 +115,29 @@ export function UserManagmentTableRow({
     return null;
   };
 
+  const getExtraColumnRawValue = (columnId: string): unknown => {
+    const rowRecord = row as unknown as Record<string, unknown>;
+
+    switch (columnId) {
+      case 'municipalityId':
+        return row.location?.municipality?.name ?? row.municipalityId;
+      case 'paymentPeriodId':
+        return row.paymentPeriod?.name ?? row.paymentPeriodId;
+      case 'coindId':
+        return row.coin?.name ?? row.coindId;
+      case 'employmentTypeId':
+        return row.employmentType?.name ?? row.employmentTypeId;
+      case 'positionId':
+        return row.position?.name ?? row.positionId;
+      case 'skillId':
+        return row.competencyKm ?? row.skillId;
+      case 'immediateSupervisorId':
+        return row.immediateSupervisorId?.name ?? row.immediateSupervisorId;
+      default:
+        return rowRecord[columnId];
+    }
+  };
+
   const renderExtraValue = (value: unknown) => {
     if (value === null || value === undefined || value === '') return '-';
     if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') return String(value);
@@ -272,7 +295,7 @@ export function UserManagmentTableRow({
           <TableCell key={colId}>
             <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
               <Box component="span" sx={{ color: 'text.primary' }}>
-                {renderExtraValue((row as unknown as Record<string, unknown>)[colId])}
+                {renderExtraValue(getExtraColumnRawValue(colId))}
               </Box>
             </Stack>
           </TableCell>

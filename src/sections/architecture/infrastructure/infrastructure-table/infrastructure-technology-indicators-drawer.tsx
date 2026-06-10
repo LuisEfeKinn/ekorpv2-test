@@ -216,6 +216,7 @@ export function InfrastructureTechnologyIndicatorsDrawer({ open, onClose, techno
           disabled={saving || relationLoading}
           multiline
           minRows={3}
+          InputLabelProps={{ shrink: true }}
         />
 
         <TextField

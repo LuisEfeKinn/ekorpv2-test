@@ -17,9 +17,16 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { GetPositionPaginationService } from 'src/services/organization/position.service';
+import { GetJobsKmService } from 'src/services/organization/job-km.service';
 
 // ----------------------------------------------------------------------
+
+interface GetJobsKmServiceParams {
+  page?: number;
+  perPage?: number;
+  search?: string;
+  order?: string;
+}
 
 type Multiple = boolean | undefined;
 type DisableClearable = boolean | undefined;
@@ -66,21 +73,22 @@ export function PositionAutocomplete({
   const fetchPositions = useCallback(async (searchTerm?: string) => {
     try {
       setLoading(true);
-      const params = {
+      const params: GetJobsKmServiceParams = {
         page: 1,
         perPage: 100,
         ...(searchTerm && { search: searchTerm }),
       };
 
-      const response = await GetPositionPaginationService(params);
+      const response = await GetJobsKmService(params);
 
       if (response?.data?.data) {
         const positionsOptions: IPositionOption[] = response.data.data.map((position) => ({
           id: position.id.toString(),
           name: position.name,
-          objectives: position.objectives,
-          expectedResults: position.expectedResults,
-          requirements: position.requirements
+          objectives: position.objectives ?? undefined,
+          expectedResults: position.expectedResults ?? undefined,
+          requirements: position.requirements ?? undefined,
+          otherFunctions: position.otherFunctions ?? undefined,
         }));
         setOptions(positionsOptions);
       }

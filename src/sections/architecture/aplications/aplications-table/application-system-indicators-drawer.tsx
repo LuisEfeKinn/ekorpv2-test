@@ -264,6 +264,7 @@ export function ApplicationSystemIndicatorsDrawer({
           disabled={saving || relationLoading}
           multiline
           minRows={3}
+          InputLabelProps={{ shrink: true }}
         />
 
         <TextField

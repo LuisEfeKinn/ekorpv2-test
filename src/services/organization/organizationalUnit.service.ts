@@ -17,6 +17,18 @@ export type OrganizationalUnitListResponse =
   | [IOrganizationalUnit[], number]
   | [[IOrganizationalUnit[]], number];
 
+export type OrganizationalUnitPaginationResponse = {
+  data: IOrganizationalUnit[];
+  meta: {
+    page: number;
+    perPage: number;
+    itemCount: number;
+    pageCount: number;
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+  };
+};
+
 export const normalizeOrganizationalUnitListResponse = (raw: OrganizationalUnitListResponse): IOrganizationalUnit[] => {
   if (!Array.isArray(raw)) return [];
 
@@ -54,7 +66,7 @@ export const GetOrganizationUnitPaginationService = async (params?: GetOrganizat
     Object.entries(params || {}).filter(([, value]) => value !== undefined && value !== null)
   );
 
-  const response = await axios.get<OrganizationalUnitListResponse>(`${endpoints.organization.organizationalUnits.pagination}`, {
+  const response = await axios.get<OrganizationalUnitPaginationResponse>(`${endpoints.organization.organizationalUnits.pagination}`, {
     params: filteredParams
   });
   return response;

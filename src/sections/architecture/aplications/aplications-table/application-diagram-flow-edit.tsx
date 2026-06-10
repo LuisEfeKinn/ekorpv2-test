@@ -382,6 +382,7 @@ export function ApplicationDiagramFlowEditModal({ open, onClose, dataId, onSave,
                   rows={3}
                   required
                   disabled={saving}
+                  InputLabelProps={{ shrink: true }}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       borderRadius: 2,

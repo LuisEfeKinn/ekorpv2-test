@@ -433,7 +433,9 @@
         "numberOfPositions": {
           "label": "Empleados Requeridos",
           "placeholder": "Ej: 3",
-          "helperText": "Número de empleados requeridos para este cargo"
+          "helperText": "Número de empleados requeridos para este cargo",
+          "minAssignedError": "No se puede establecer una cantidad menor a {{count}} porque actualmente existen {{count}} empleados asignados a este cargo.",
+          "minCurrentValueError": "No se puede establecer una cantidad menor a {{count}} para este cargo."
         },
         "competencies": {
           "label": "Competencias",
@@ -721,7 +723,9 @@
         "requiredEmployees": {
           "label": "Empleados Requeridos",
           "placeholder": "Número de empleados necesarios",
-          "helper": "Cantidad total de empleados que requiere este cargo"
+          "helper": "Cantidad total de empleados que requiere este cargo",
+          "required": "La cantidad de empleados requeridos es obligatoria",
+          "min": "La cantidad de empleados requeridos debe ser al menos 1"
         }
       },
       "actions": {

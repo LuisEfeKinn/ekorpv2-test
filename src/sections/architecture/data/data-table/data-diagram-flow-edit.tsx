@@ -404,6 +404,7 @@ export function DataDiagramFlowEditModal({ open, onClose, dataId, onSave, ...oth
                     rows={3}
                     required
                     disabled={saving}
+                    InputLabelProps={{ shrink: true }}
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         borderRadius: 2,
@@ -495,6 +496,7 @@ export function DataDiagramFlowEditModal({ open, onClose, dataId, onSave, ...oth
                     multiline
                     rows={2}
                     disabled={saving}
+                    InputLabelProps={{ shrink: true }}
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         borderRadius: 2,

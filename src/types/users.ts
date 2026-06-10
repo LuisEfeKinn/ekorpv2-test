@@ -4,6 +4,7 @@ export interface IUser {
   names: string;
   lastnames: string;
   isActive: boolean;
+  biometricIsActive: boolean;
   roles: Array<{
     id: string;
     name: string;

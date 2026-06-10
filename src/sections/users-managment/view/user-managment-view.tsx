@@ -988,7 +988,124 @@ function EmployeeDetailsDrawer({ open, row, onClose }: EmployeeDetailsDrawerProp
     return [row.firstName, row.secondName, row.firstLastName, row.secondLastName].filter(Boolean).join(' ');
   }, [row]);
 
-  const json = useMemo(() => (row ? JSON.stringify(row, null, 2) : ''), [row]);
+  const emptyValue = tUsers('user-management.detailsDrawer.emptyValue');
+
+  const languageLabel = useMemo(() => {
+    if (!row?.language) {
+      return emptyValue;
+    }
+
+    if (row.language === 1) {
+      return tUsers('user-management.enums.language.spanish');
+    }
+
+    if (row.language === 2) {
+      return tUsers('user-management.enums.language.english');
+    }
+
+    return emptyValue;
+  }, [emptyValue, row?.language, tUsers]);
+
+  const formatTextValue = useCallback((value: unknown) => {
+    if (value === null || value === undefined || value === '') {
+      return emptyValue;
+    }
+
+    return String(value);
+  }, [emptyValue]);
+
+  const formatDateValue = useCallback((value: Date | string | undefined | null) => {
+    if (!value) {
+      return emptyValue;
+    }
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return String(value);
+    }
+
+    return date.toLocaleDateString();
+  }, [emptyValue]);
+
+  const formatNamedList = useCallback((items?: Array<{ name: string }>) => {
+    if (!items?.length) {
+      return emptyValue;
+    }
+
+    const names = items.map((item) => item.name).filter(Boolean);
+    return names.length ? names.join(', ') : emptyValue;
+  }, [emptyValue]);
+
+  const detailsSections = useMemo(() => {
+    if (!row) {
+      return [];
+    }
+
+    const sections = [
+      {
+        title: tUsers('user-management.form.sections.personalInfo'),
+        fields: [
+          { label: tUsers('user-management.table.columns.fullName'), value: formatTextValue(fullName) },
+          { label: tUsers('user-management.form.fields.email.label'), value: formatTextValue(row.email) },
+          { label: tUsers('user-management.form.fields.username.label'), value: formatTextValue(row.username) },
+          { label: tUsers('user-management.form.fields.tel.label'), value: formatTextValue(row.tel) },
+          { label: tUsers('user-management.form.fields.documentId.label'), value: formatTextValue(row.documentId) },
+        ],
+      },
+      {
+        title: tUsers('user-management.form.sections.workDetails'),
+        fields: [
+          { label: tUsers('user-management.form.fields.positionId.label'), value: formatTextValue(row.position?.name) },
+          { label: tUsers('user-management.form.fields.employmentTypeId.label'), value: formatTextValue(row.employmentType?.name) },
+          { label: tUsers('user-management.form.fields.immediateSupervisor.label'), value: formatTextValue(row.immediateSupervisorId?.name) },
+          { label: tUsers('user-management.form.fields.skillId.label'), value: formatNamedList(row.competencyKm) },
+          { label: tUsers('user-management.form.fields.organizationalUnitId.label'), value: formatTextValue(row.organizationalUnitId) },
+          { label: tUsers('user-management.form.fields.startedWorkOn.label'), value: formatDateValue(row.startedWorkOn) },
+        ],
+      },
+      {
+        title: tUsers('user-management.form.sections.locationInfo'),
+        fields: [
+          { label: tUsers('user-management.form.fields.address.label'), value: formatTextValue(row.address) },
+          { label: tUsers('user-management.form.fields.municipalityId.label'), value: formatTextValue(row.location?.municipality?.name) },
+          { label: tUsers('user-management.form.fields.regionId.label'), value: formatTextValue(row.location?.region?.name) },
+          { label: tUsers('user-management.form.fields.countryId.label'), value: formatTextValue(row.location?.country?.name) },
+          { label: tUsers('user-management.form.fields.postalCode.label'), value: formatTextValue(row.postalCode) },
+        ],
+      },
+      {
+        title: tUsers('user-management.form.sections.paymentInfo'),
+        fields: [
+          { label: tUsers('user-management.form.fields.paymentPeriodId.label'), value: formatTextValue(row.paymentPeriod?.name) },
+          { label: tUsers('user-management.form.fields.coindId.label'), value: formatTextValue(row.coin?.name) },
+          { label: tUsers('user-management.form.fields.billingRatePerHour.label'), value: formatTextValue(row.billingRatePerHour) },
+          { label: tUsers('user-management.form.fields.minimunBllingRatePerHour.label'), value: formatTextValue(row.minimumBillingRatePerHour) },
+          { label: tUsers('user-management.form.fields.recurringWeeklyLimitHours.label'), value: formatTextValue(row.recurringWeeklyLimitHours) },
+        ],
+      },
+      {
+        title: tUsers('user-management.form.sections.accountInfo'),
+        fields: [
+          { label: tUsers('user-management.table.columns.language'), value: languageLabel },
+          { label: tUsers('user-management.table.columns.timezone'), value: formatTextValue(row.timezone) },
+          { label: tUsers('user-management.table.extraColumns.updatedAt'), value: formatDateValue(row.updatedAt) },
+        ],
+      },
+      {
+        title: tUsers('user-management.detailsDrawer.sections.additionalInfo'),
+        fields: [
+          { label: tUsers('user-management.table.extraColumns.technologies'), value: formatTextValue(row.technologies) },
+          { label: tUsers('user-management.table.extraColumns.workerStatus'), value: formatTextValue(row.workerStatus) },
+          { label: tUsers('user-management.table.extraColumns.experienceLevel'), value: formatTextValue(row.experienceLevel) },
+          { label: tUsers('user-management.table.extraColumns.yearsInCompany'), value: formatTextValue(row.yearsInCompany) },
+          { label: tUsers('user-management.table.extraColumns.yearsOfExperience'), value: formatTextValue(row.yearsOfExperience) },
+          { label: tUsers('user-management.table.extraColumns.observations'), value: formatTextValue(row.observations) },
+        ],
+      },
+    ];
+
+    return sections.filter((section) => section.fields.some((field) => field.value !== emptyValue));
+  }, [emptyValue, formatDateValue, formatNamedList, formatTextValue, fullName, languageLabel, row, tUsers]);
 
   return (
     <Drawer
@@ -1021,21 +1138,47 @@ function EmployeeDetailsDrawer({ open, row, onClose }: EmployeeDetailsDrawerProp
       </Box>
 
       <Box sx={{ px: 3, py: 2.5, overflow: 'auto', flex: '1 1 auto' }}>
-        <Typography variant="subtitle2" sx={{ mb: 1 }}>
-          {tUsers('user-management.detailsDrawer.sections.raw')}
-        </Typography>
-        <Box
-          component="pre"
-          sx={{
-            m: 0,
-            p: 2,
-            borderRadius: 1.5,
-            typography: 'body2',
-            bgcolor: 'background.neutral',
-            overflow: 'auto',
-          }}
-        >
-          {json}
+        <Box sx={{ display: 'grid', gap: 3 }}>
+          {detailsSections.map((section) => (
+            <Box key={section.title} sx={{ display: 'grid', gap: 1.5 }}>
+              <Typography variant="subtitle2">{section.title}</Typography>
+
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, minmax(0, 1fr))' },
+                  gap: 1.5,
+                }}
+              >
+                {section.fields.map((field) => (
+                  <Box
+                    key={`${section.title}-${field.label}`}
+                    sx={{
+                      p: 1.5,
+                      borderRadius: 1.5,
+                      bgcolor: 'background.neutral',
+                      display: 'grid',
+                      gap: 0.5,
+                    }}
+                  >
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                      {field.label}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: field.value === emptyValue ? 'text.disabled' : 'text.primary',
+                        wordBreak: 'break-word',
+                        whiteSpace: 'pre-line',
+                      }}
+                    >
+                      {field.value}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          ))}
         </Box>
       </Box>
     </Drawer>

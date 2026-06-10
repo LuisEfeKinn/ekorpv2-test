@@ -14,8 +14,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useTranslate } from 'src/locales';
+import { GetJobsKmService } from 'src/services/organization/job-km.service';
 import { GetSkillsPaginationService } from 'src/services/employees/skills.service';
-import { GetPositionPaginationService } from 'src/services/organization/position.service';
 import { GetRegionsService, GetCountriesService } from 'src/services/locations/locations.service';
 import {
   GetOrganizationalUnitPaginationService,
@@ -47,6 +47,7 @@ export function UserManagmentTableToolbar({
   const { t: tUsers } = useTranslate('employees');
   const popover = usePopover();
   const fixedColumnSet = useMemo(() => fixedColumnIds, [fixedColumnIds]);
+  const selectedColumnsCount = fixedColumnSet.size + visibleColumns.length;
   
   // Estados para las opciones de cada autocomplete
   const [positionOptions, setPositionOptions] = useState<IPositionOption[]>([]);
@@ -73,12 +74,21 @@ export function UserManagmentTableToolbar({
   const loadPositions = useCallback(async (searchTerm: string) => {
     setPositionLoading(true);
     try {
-      const response = await GetPositionPaginationService({
+      const response = await GetJobsKmService({
         page: 1,
         perPage: 20,
         search: searchTerm || undefined,
       });
-      setPositionOptions(response.data.data || []);
+      setPositionOptions(
+        (response.data.data || []).map((position) => ({
+          id: String(position.id),
+          name: position.name,
+          objectives: position.objectives ?? undefined,
+          expectedResults: position.expectedResults ?? undefined,
+          requirements: position.requirements ?? undefined,
+          otherFunctions: position.otherFunctions ?? undefined,
+        }))
+      );
     } catch (error) {
       console.error('Error loading positions:', error);
       setPositionOptions([]);
@@ -383,15 +393,59 @@ export function UserManagmentTableToolbar({
         open={popover.open}
         anchorEl={popover.anchorEl}
         onClose={popover.onClose}
-        slotProps={{ arrow: { placement: 'top-right' } }}
+        slotProps={{
+          arrow: { placement: 'top-right' },
+          paper: {
+            sx: {
+              width: { xs: 'calc(100vw - 32px)', sm: 420 },
+              maxWidth: 'calc(100vw - 32px)',
+              maxHeight: { xs: '70vh', sm: 520 },
+              overflow: 'hidden',
+            },
+          },
+        }}
       >
-        <Box sx={{ p: 2, maxWidth: 320 }}>
-          <Stack spacing={1}>
+        <Box sx={{ p: 1 }}>
+          <Box
+            sx={{
+              px: 1.5,
+              py: 1.25,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 2,
+            }}
+          >
+            <Box sx={{ typography: 'subtitle2' }}>
+              {tUsers('user-management.table.actions.columns')}
+            </Box>
+            <Box sx={{ typography: 'caption', color: 'text.secondary', whiteSpace: 'nowrap' }}>
+              {selectedColumnsCount}/{allColumns.length}
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              px: 1,
+              pb: 1,
+              maxHeight: { xs: 'calc(70vh - 56px)', sm: 452 },
+              overflowY: 'auto',
+            }}
+          >
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, minmax(0, 1fr))' },
+                gap: 0.5,
+                alignItems: 'start',
+              }}
+            >
             {allColumns.map((column) => (
               <FormControlLabel
                 key={column.id}
                 control={
                   <Checkbox
+                    size="small"
                     checked={fixedColumnSet.has(column.id) || visibleColumns.includes(column.id)}
                     disabled={fixedColumnSet.has(column.id)}
                     onChange={() => {
@@ -400,9 +454,27 @@ export function UserManagmentTableToolbar({
                   />
                 }
                 label={column.label}
+                sx={{
+                  m: 0,
+                  minHeight: 36,
+                  alignItems: 'flex-start',
+                  borderRadius: 1,
+                  px: 0.5,
+                  py: 0.25,
+                  ...(fixedColumnSet.has(column.id) && {
+                    bgcolor: 'background.neutral',
+                  }),
+                  '& .MuiFormControlLabel-label': {
+                    typography: 'body2',
+                    lineHeight: 1.35,
+                    pt: '2px',
+                    overflowWrap: 'anywhere',
+                  },
+                }}
               />
             ))}
-          </Stack>
+            </Box>
+          </Box>
         </Box>
       </CustomPopover>
     </>

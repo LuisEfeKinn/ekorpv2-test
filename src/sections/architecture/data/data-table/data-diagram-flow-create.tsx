@@ -341,6 +341,7 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
                   rows={3}
                   required
                   disabled={saving}
+                  InputLabelProps={{ shrink: true }}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       borderRadius: 2,
@@ -432,6 +433,7 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
                   multiline
                   rows={2}
                   disabled={saving}
+                  InputLabelProps={{ shrink: true }}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       borderRadius: 2,

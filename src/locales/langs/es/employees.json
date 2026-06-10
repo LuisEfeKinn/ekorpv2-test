@@ -145,6 +145,11 @@
       "extraColumns": {
         "id": "ID",
         "userId": "ID de usuario",
+        "firstName": "Primer nombre",
+        "secondName": "Segundo nombre",
+        "firstLastName": "Primer apellido",
+        "secondLastName": "Segundo apellido",
+        "email": "Correo electrónico",
         "documentId": "Documento",
         "tel": "Teléfono",
         "postalCode": "Código postal",
@@ -153,14 +158,26 @@
         "billingRatePerHour": "Tarifa por hora",
         "minimumBillingRatePerHour": "Tarifa mínima por hora",
         "recurringWeeklyLimitHours": "Límite semanal (horas)",
+        "immediateSupervisorId": "Jefe inmediato",
         "organizationalUnitId": "Unidad organizacional",
         "municipalityId": "Municipio",
+        "paymentPeriodId": "Período de pago",
         "paymentPeriod": "Período de pago",
+        "coindId": "Moneda",
         "coin": "Moneda",
+        "positionId": "Cargo",
+        "skillId": "Habilidad",
+        "employmentTypeId": "Tipo de empleo",
         "employmentType": "Tipo de empleo",
         "skills": "Habilidades",
         "competencyKm": "Competencias",
-        "location": "Ubicación"
+        "location": "Ubicación",
+        "experienceLevel": "Nivel de experiencia",
+        "observations": "Observaciones",
+        "technologies": "Tecnologías",
+        "workerStatus": "Estado del trabajador",
+        "yearsInCompany": "Años en la empresa",
+        "yearsOfExperience": "Años de experiencia"
       },
       "toolbar": {
         "search": "Buscar empleados..."
@@ -237,8 +254,10 @@
     "detailsDrawer": {
       "title": "Detalles del empleado",
       "sections": {
-        "raw": "Datos completos"
+        "raw": "Datos completos",
+        "additionalInfo": "Información adicional"
       },
+      "emptyValue": "No disponible",
       "actions": {
         "close": "Cerrar"
       }

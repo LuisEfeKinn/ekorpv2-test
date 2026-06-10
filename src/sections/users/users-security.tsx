@@ -68,9 +68,9 @@ export function UsersSecurity({ currentUser }: Props) {
       });
       toast.success(t('users.messages.success.passwordChanged'));
       reset();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      toast.error(t('users.messages.error.changingPassword'));
+      toast.error(error?.message ?? t('users.messages.error.changingPassword'));
     }
   });
 

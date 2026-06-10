@@ -95,6 +95,17 @@ export function UsersTableRow({ row, onDeleteRow, editHref }: Props) {
           }
         </Label>
       </TableCell>
+
+      <TableCell>
+        <Label
+          variant="soft"
+          color={row.biometricIsActive ? 'success' : 'default'}
+        >
+          {row.biometricIsActive
+            ? t('users.status.active')
+            : t('users.status.inactive')}
+        </Label>
+      </TableCell>
     </TableRow>
   );
 

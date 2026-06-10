@@ -66,6 +66,7 @@ export function UsersListView() {
     { id: 'fullName', label: t('users.table.columns.names'), sortField: 'user.names' },
     { id: 'roles', label: t('users.table.columns.roles'), sortField: 'role.name' },
     { id: 'status', label: t('users.table.columns.status'), width: 100, sortField: 'user.isActive' },
+    { id: 'biometricIsActive', label: t('users.table.columns.biometricIsActive'), width: 160, sortField: 'user.biometricIsActive' },
   ], [t]);
 
   const filters = useSetState<IUserTableFilters>({
@@ -255,7 +256,7 @@ export function UsersListView() {
 
         <Box sx={{ position: 'relative' }}>
           <Scrollbar>
-            <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
+            <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 1120 }}>
               <TableHeadCustom
                 headCells={TABLE_HEAD}
                 serverOrderBy={serverOrderBy}

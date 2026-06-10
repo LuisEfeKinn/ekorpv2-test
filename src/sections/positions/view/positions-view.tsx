@@ -36,7 +36,6 @@ import {
   useTable,
   TableNoData,
   getComparator,
-  TableEmptyRows,
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
@@ -318,11 +317,6 @@ export function PositionView() {
                     />
                   ))}
 
-                  <TableEmptyRows
-                    height={table.dense ? 56 : 76}
-                    emptyRows={Math.max(0, table.rowsPerPage - dataFiltered.length)}
-                  />
-
                   <TableNoData notFound={notFound} />
                 </TableBody>
               </Table>
@@ -361,7 +355,7 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
     return [];
   }
 
-  const { name, status } = filters;
+  const { status } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -372,12 +366,6 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   });
 
   inputData = stabilizedThis.map((el) => el[0]);
-
-  if (name) {
-    inputData = inputData.filter(
-      (item) => item?.name?.toLowerCase().indexOf(name.toLowerCase()) !== -1
-    );
-  }
 
   if (status !== 'all') {
     // TODO: Implement status filtering when the data model includes a status field

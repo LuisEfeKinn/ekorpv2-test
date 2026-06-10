@@ -145,6 +145,11 @@
       "extraColumns": {
         "id": "ID",
         "userId": "User ID",
+        "firstName": "First name",
+        "secondName": "Middle name",
+        "firstLastName": "First last name",
+        "secondLastName": "Second last name",
+        "email": "Email",
         "documentId": "Document",
         "tel": "Phone",
         "postalCode": "Postal code",
@@ -153,14 +158,26 @@
         "billingRatePerHour": "Hourly rate",
         "minimumBillingRatePerHour": "Minimum hourly rate",
         "recurringWeeklyLimitHours": "Weekly limit (hours)",
+        "immediateSupervisorId": "Immediate supervisor",
         "organizationalUnitId": "Organizational Unit",
         "municipalityId": "Municipality",
+        "paymentPeriodId": "Payment period",
         "paymentPeriod": "Payment period",
+        "coindId": "Currency",
         "coin": "Currency",
+        "positionId": "Position",
+        "skillId": "Skill",
+        "employmentTypeId": "Employment type",
         "employmentType": "Employment type",
         "skills": "Skills",
         "competencyKm": "Competencies",
-        "location": "Location"
+        "location": "Location",
+        "experienceLevel": "Experience level",
+        "observations": "Observations",
+        "technologies": "Technologies",
+        "workerStatus": "Worker status",
+        "yearsInCompany": "Years in company",
+        "yearsOfExperience": "Years of experience"
       },
       "toolbar": {
         "search": "Search employees..."
@@ -237,8 +254,10 @@
     "detailsDrawer": {
       "title": "Employee details",
       "sections": {
-        "raw": "Full data"
+        "raw": "Full data",
+        "additionalInfo": "Additional information"
       },
+      "emptyValue": "Not available",
       "actions": {
         "close": "Close"
       }

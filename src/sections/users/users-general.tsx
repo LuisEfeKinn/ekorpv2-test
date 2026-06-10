@@ -134,13 +134,13 @@ export function UsersGeneral({ currentUser }: Props) {
         names: data.names,
         lastnames: data.lastnames,
         isActive: data.isActive,
+        biometricIsActive: data.biometricIsActive,
         roleIds: Array.isArray(data.roleIds)
           ? data.roleIds.map((role: any) => (typeof role === 'object' ? role.id : role))
           : [],
         tel: data.tel,
         documentId: data.documentId,
         avatar: data.avatarUrl || '',
-        ...(isEdit ? {} : { biometricIsActive: data.biometricIsActive }),
         // Solo incluir password si es creación o si se proporciona en edición
         ...(data.password ? { password: data.password } : {}),
       };

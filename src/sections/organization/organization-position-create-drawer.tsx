@@ -19,8 +19,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { useTranslate } from 'src/locales';
 import {
-  GetOrganizationalUnitPaginationService,
-  normalizeOrganizationalUnitListResponse,
+  GetOrganizationUnitPaginationService,
 } from 'src/services/organization/organizationalUnit.service';
 import {
   GetJobsKmService,
@@ -63,7 +62,8 @@ export function PositionCreateDrawer({ open, onClose, editPositionId, onSuccess 
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
   const [headquarters, setHeadquarters] = useState('');
-  const [numberOfPositions, setNumberOfPositions] = useState(1);
+  const [numberOfPositions, setNumberOfPositions] = useState<number | ''>(1);
+  const [numberOfPositionsError, setNumberOfPositionsError] = useState<string | null>(null);
   const [objectives, setObjectives] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -96,12 +96,12 @@ export function PositionCreateDrawer({ open, onClose, editPositionId, onSuccess 
   useEffect(() => {
     if (!open) return;
     setOrgUnitLoading(true);
-    GetOrganizationalUnitPaginationService({
+    GetOrganizationUnitPaginationService({
       search: debouncedOrgSearch || undefined,
       perPage: 20,
     })
       .then((res) => {
-        setOrgUnitOptions(normalizeOrganizationalUnitListResponse(res.data));
+        setOrgUnitOptions(res.data?.data || []);
       })
       .catch(console.error)
       .finally(() => setOrgUnitLoading(false));
@@ -137,6 +137,7 @@ export function PositionCreateDrawer({ open, onClose, editPositionId, onSuccess 
     setCode('');
     setHeadquarters('');
     setNumberOfPositions(1);
+    setNumberOfPositionsError(null);
     setObjectives('');
     setSelectedOrgUnit(null);
     setSelectedSuperiorJob(null);
@@ -160,6 +161,7 @@ export function PositionCreateDrawer({ open, onClose, editPositionId, onSuccess 
           setCode(detail.code || '');
           setHeadquarters(detail.headquarters || '');
           setNumberOfPositions(detail.numberOfPositions || 1);
+          setNumberOfPositionsError(null);
           setObjectives(detail.objectives || '');
 
           if (detail.organizationalUnit) {
@@ -207,15 +209,37 @@ export function PositionCreateDrawer({ open, onClose, editPositionId, onSuccess 
 
   // ----------------------------------------------------------------------
 
+  const validateNumberOfPositions = useCallback(() => {
+    if (numberOfPositions === '') {
+      setNumberOfPositionsError(t('organigrama.form.fields.requiredEmployees.required'));
+      return false;
+    }
+
+    if (!Number.isInteger(numberOfPositions) || numberOfPositions < 1) {
+      setNumberOfPositionsError(t('organigrama.form.fields.requiredEmployees.min'));
+      return false;
+    }
+
+    setNumberOfPositionsError(null);
+    return true;
+  }, [numberOfPositions, t]);
+
   const handleSave = async () => {
     if (!name.trim()) return;
+
+    if (!validateNumberOfPositions()) {
+      return;
+    }
+
+    const safeNumberOfPositions = typeof numberOfPositions === 'number' ? numberOfPositions : undefined;
+
     setLoading(true);
     try {
       const payload = {
         name,
         code: code || undefined,
         headquarters: headquarters || undefined,
-        numberOfPositions: numberOfPositions || undefined,
+        numberOfPositions: safeNumberOfPositions,
         objectives: objectives || undefined,
         organizationalUnitId: selectedOrgUnit ? Number(selectedOrgUnit.id) : undefined,
         superiorJobId: selectedSuperiorJob ? Number(selectedSuperiorJob.id) : undefined,
@@ -451,11 +475,29 @@ export function PositionCreateDrawer({ open, onClose, editPositionId, onSuccess 
           type="number"
           placeholder={t('organigrama.form.fields.requiredEmployees.placeholder')}
           value={numberOfPositions}
-          onChange={(e) =>
-            setNumberOfPositions(Math.max(1, parseInt(e.target.value, 10) || 1))
-          }
+          onChange={(e) => {
+            const nextValue = e.target.value;
+
+            if (nextValue === '') {
+              setNumberOfPositions('');
+              setNumberOfPositionsError(null);
+              return;
+            }
+
+            const parsedValue = Number.parseInt(nextValue, 10);
+
+            if (Number.isNaN(parsedValue)) {
+              setNumberOfPositions('');
+              setNumberOfPositionsError(null);
+              return;
+            }
+
+            setNumberOfPositions(parsedValue);
+            setNumberOfPositionsError(null);
+          }}
           sx={{ flex: 1 }}
-          helperText={t('organigrama.form.fields.requiredEmployees.helper')}
+          error={!!numberOfPositionsError}
+          helperText={numberOfPositionsError || t('organigrama.form.fields.requiredEmployees.helper')}
         />
       </Box>
 
@@ -552,7 +594,7 @@ export function PositionCreateDrawer({ open, onClose, editPositionId, onSuccess 
           <PositionEmployeesAutocomplete
             value={selectedEmployees}
             onChange={setSelectedEmployees}
-            maxEmployees={numberOfPositions}
+            maxEmployees={typeof numberOfPositions === 'number' ? numberOfPositions : undefined}
           />
         </Box>
       </Box>

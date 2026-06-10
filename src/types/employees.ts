@@ -51,6 +51,7 @@ export type IUserManagement = {
   userId: string;
   fullName: string;
   email: string;
+  tel?: string;
   avatar?: string | null;
   avatarUrl?: string | null;
   address: string;
@@ -117,6 +118,12 @@ export type IUserManagement = {
   skillId?: string;
   positionId?: string;
   documentId?: string;
+  technologies?: unknown;
+  workerStatus?: string | null;
+  observations?: string | null;
+  experienceLevel?: string | null;
+  yearsInCompany?: number | string | null;
+  yearsOfExperience?: number | string | null;
   updatedAt?: Date | string;
 };
 

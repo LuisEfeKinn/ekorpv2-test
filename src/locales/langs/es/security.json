@@ -139,6 +139,7 @@
         "email": "Correo electrónico",
         "roles": "Roles",
         "status": "Estado",
+        "biometricIsActive": "Registro Biométrico",
         "createdAt": "Fecha de Creación",
         "updatedAt": "Última Actualización"
       },

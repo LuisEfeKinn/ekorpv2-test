@@ -1,14 +1,15 @@
 import type { IJobKm, ICompetencyKm } from 'src/types/organization';
 
 import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, useWatch, Controller } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
@@ -18,6 +19,7 @@ import { useTranslate } from 'src/locales';
 import { GetOrganizationalUnitPaginationService } from 'src/services/organization/organizationalUnit.service';
 import {
   GetJobsKmService,
+  GetJobKmDetailService,
   SaveOrUpdateJobKmService,
   GetCompetenciesKmService,
 } from 'src/services/organization/job-km.service';
@@ -27,39 +29,100 @@ import { Form, Field } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
-const PositionSchema = z.object({
-  name: z.string().min(1),
-  code: z.string().max(80).optional().or(z.literal('')),
-  objectives: z.string().optional(),
-  expectedResults: z.string().optional(),
-  requirements: z.string().optional(),
-  otherFunctions: z.string().optional(),
-  minimumAcademicLevel: z.string().max(512).optional().or(z.literal('')),
-  desiredAcademicLevel: z.string().max(512).optional().or(z.literal('')),
-  minimumExperience: z.string().max(512).optional().or(z.literal('')),
-  desiredExperience: z.string().max(512).optional().or(z.literal('')),
-  supervises: z.string().max(512).optional().or(z.literal('')),
-  regionalLocation: z.string().max(512).optional().or(z.literal('')),
-  headquarters: z.string().max(512).optional().or(z.literal('')),
-  version: z.string().max(64).optional().or(z.literal('')),
-  numberOfPositions: z.number().int().min(0).optional().nullable(),
-  superiorJobId: z.number().optional().nullable(),
-  organizationalUnitId: z.number().optional().nullable(),
-  // Almacena objetos completos; los IDs se extraen al hacer submit
-  competencyIds: z.array(z.any()).optional(),
-});
+type PositionEmployeeSummary = {
+  id: number | string;
+  fullName?: string;
+  name?: string;
+};
 
-type PositionFormValues = z.infer<typeof PositionSchema>;
+type PositionFormCurrentPosition = IJobKm & {
+  employees?: PositionEmployeeSummary[];
+};
+
+const createPositionSchema = (minimumLockedPositions: number, minimumLockedPositionsErrorMessage: string) =>
+  z.object({
+    name: z.string().min(1),
+    code: z.string().max(80).optional().or(z.literal('')),
+    objectives: z.string().optional(),
+    expectedResults: z.string().optional(),
+    requirements: z.string().optional(),
+    otherFunctions: z.string().optional(),
+    minimumAcademicLevel: z.string().max(512).optional().or(z.literal('')),
+    desiredAcademicLevel: z.string().max(512).optional().or(z.literal('')),
+    minimumExperience: z.string().max(512).optional().or(z.literal('')),
+    desiredExperience: z.string().max(512).optional().or(z.literal('')),
+    supervises: z.string().max(512).optional().or(z.literal('')),
+    regionalLocation: z.string().max(512).optional().or(z.literal('')),
+    headquarters: z.string().max(512).optional().or(z.literal('')),
+    version: z.string().max(64).optional().or(z.literal('')),
+    numberOfPositions: z.number().int().min(0).optional().nullable(),
+    superiorJobId: z.number().optional().nullable(),
+    organizationalUnitId: z.number().optional().nullable(),
+    // Almacena objetos completos; los IDs se extraen al hacer submit
+    competencyIds: z.array(z.any()).optional(),
+  }).superRefine((data, ctx) => {
+    if (
+      minimumLockedPositions > 0
+      && typeof data.numberOfPositions === 'number'
+      && data.numberOfPositions < minimumLockedPositions
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['numberOfPositions'],
+        message: minimumLockedPositionsErrorMessage,
+      });
+    }
+  });
+
+type PositionFormValues = z.infer<ReturnType<typeof createPositionSchema>>;
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  currentPosition?: IJobKm;
+  currentPosition?: PositionFormCurrentPosition;
 };
 
 export function PositionCreateEditForm({ currentPosition }: Props) {
   const router = useRouter();
   const { t } = useTranslate('organization');
+  const currentConfiguredPositions = currentPosition?.numberOfPositions ?? 0;
+  const [assignedEmployeesCount, setAssignedEmployeesCount] = useState<number | null>(
+    currentPosition?.employees?.length ?? (currentPosition?.id ? null : 0)
+  );
+  const resolvedAssignedEmployeesCount = assignedEmployeesCount ?? 0;
+  const isAssignedEmployeesCountLoading = Boolean(currentPosition?.id) && assignedEmployeesCount === null;
+  const minimumLockedPositions = useMemo(() => {
+    if (!currentPosition?.id) {
+      return 0;
+    }
+
+    if (assignedEmployeesCount === null) {
+      return currentConfiguredPositions;
+    }
+
+    return Math.max(resolvedAssignedEmployeesCount, currentConfiguredPositions);
+  }, [assignedEmployeesCount, currentConfiguredPositions, currentPosition?.id, resolvedAssignedEmployeesCount]);
+
+  const minimumLockedPositionsErrorMessage = useMemo(() => {
+    if (resolvedAssignedEmployeesCount > 0 && resolvedAssignedEmployeesCount >= currentConfiguredPositions) {
+      return t('position.form.fields.numberOfPositions.minAssignedError', {
+        count: resolvedAssignedEmployeesCount,
+      });
+    }
+
+    return t('position.form.fields.numberOfPositions.minCurrentValueError', {
+      count: minimumLockedPositions,
+    });
+  }, [currentConfiguredPositions, minimumLockedPositions, resolvedAssignedEmployeesCount, t]);
+
+  const defaultNumberOfPositionsHelperText = useMemo(
+    () => t('position.form.fields.numberOfPositions.helperText'),
+    [t]
+  );
+  const positionSchema = useMemo(
+    () => createPositionSchema(minimumLockedPositions, minimumLockedPositionsErrorMessage),
+    [minimumLockedPositions, minimumLockedPositionsErrorMessage]
+  );
 
   const [jobOptions, setJobOptions] = useState<Array<{ id: number; name: string }>>([]);
   const [loadingJobs, setLoadingJobs] = useState(false);
@@ -93,7 +156,7 @@ export function PositionCreateEditForm({ currentPosition }: Props) {
 
   const methods = useForm<PositionFormValues>({
     mode: 'onSubmit',
-    resolver: zodResolver(PositionSchema),
+    resolver: zodResolver(positionSchema),
     defaultValues,
     values: currentPosition
       ? {
@@ -120,11 +183,68 @@ export function PositionCreateEditForm({ currentPosition }: Props) {
       : undefined,
   });
 
+  const numberOfPositionsValue = useWatch({
+    control: methods.control,
+    name: 'numberOfPositions',
+  });
+
+  const hasAssignedEmployeesValidationError =
+    minimumLockedPositions > 0
+    && typeof numberOfPositionsValue === 'number'
+    && numberOfPositionsValue < minimumLockedPositions;
+
   const {
     reset,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
+
+  useEffect(() => {
+    let active = true;
+
+    if (!currentPosition?.id) {
+      setAssignedEmployeesCount(0);
+    } else if (Array.isArray(currentPosition.employees)) {
+      setAssignedEmployeesCount(currentPosition.employees.length);
+    } else {
+      const loadAssignedEmployeesCount = async () => {
+        try {
+          const response = await GetJobKmDetailService(currentPosition.id);
+          if (!active) {
+            return;
+          }
+
+          setAssignedEmployeesCount(response.data?.employees?.length ?? 0);
+        } catch (error) {
+          console.error('Error loading assigned employees count:', error);
+          if (active) {
+            setAssignedEmployeesCount(0);
+          }
+        }
+      };
+
+      setAssignedEmployeesCount(null);
+      loadAssignedEmployeesCount();
+    }
+
+    return () => {
+      active = false;
+    };
+  }, [currentPosition]);
+
+  useEffect(() => {
+    if (hasAssignedEmployeesValidationError) {
+      methods.setError('numberOfPositions', {
+        type: 'manual',
+        message: minimumLockedPositionsErrorMessage,
+      });
+      return;
+    }
+
+    if (methods.formState.errors.numberOfPositions?.message === minimumLockedPositionsErrorMessage) {
+      methods.clearErrors('numberOfPositions');
+    }
+  }, [hasAssignedEmployeesValidationError, methods, minimumLockedPositionsErrorMessage]);
 
   // Pre-cargar opciones cuando hay datos iniciales
   useEffect(() => {
@@ -223,6 +343,18 @@ export function PositionCreateEditForm({ currentPosition }: Props) {
   // ----------------------------------------------------------------------
 
   const onSubmit = handleSubmit(async (data) => {
+    if (isAssignedEmployeesCountLoading) {
+      return;
+    }
+
+    if (hasAssignedEmployeesValidationError) {
+      methods.setError('numberOfPositions', {
+        type: 'manual',
+        message: minimumLockedPositionsErrorMessage,
+      });
+      return;
+    }
+
     try {
       const payload = {
         ...data,
@@ -334,19 +466,69 @@ export function PositionCreateEditForm({ currentPosition }: Props) {
         </Box>
 
         <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2 }}>
-          <Field.Text
+          <Controller
             name="numberOfPositions"
-            type="number"
-            label={t('position.form.fields.numberOfPositions.label')}
-            helperText={t('position.form.fields.numberOfPositions.helperText')}
-            slotProps={{ htmlInput: { min: 0 } }}
-            onChange={(e) => {
-              const val = e.target.value;
-              methods.setValue(
-                'numberOfPositions',
-                val === '' ? null : parseInt(val, 10)
-              );
-            }}
+            control={methods.control}
+            render={({ field, fieldState: { error } }) => (
+              <TextField
+                {...field}
+                fullWidth
+                type="number"
+                label={t('position.form.fields.numberOfPositions.label')}
+                value={field.value ?? ''}
+                error={!!error || hasAssignedEmployeesValidationError}
+                helperText={error?.message ?? (hasAssignedEmployeesValidationError
+                  ? minimumLockedPositionsErrorMessage
+                  : defaultNumberOfPositionsHelperText)}
+                slotProps={{
+                  htmlInput: {
+                    min: currentPosition?.id ? minimumLockedPositions : 0,
+                    inputMode: 'numeric',
+                    autoComplete: 'new-password',
+                  },
+                }}
+                onChange={(event) => {
+                  const value = event.target.value;
+
+                  if (value === '') {
+                    field.onChange(null);
+                    return;
+                  }
+
+                  const parsedValue = Number.parseInt(value, 10);
+
+                  if (Number.isNaN(parsedValue)) {
+                    field.onChange(null);
+                    return;
+                  }
+
+                  field.onChange(parsedValue);
+                }}
+                onBlur={(event) => {
+                  const value = event.target.value;
+                  const parsedValue = Number.parseInt(value, 10);
+
+                  if (
+                    currentPosition?.id
+                    && minimumLockedPositions > 0
+                    && (value === '' || Number.isNaN(parsedValue) || parsedValue < minimumLockedPositions)
+                  ) {
+                    methods.setValue('numberOfPositions', minimumLockedPositions, {
+                      shouldValidate: true,
+                      shouldDirty: true,
+                      shouldTouch: true,
+                    });
+                    methods.setError('numberOfPositions', {
+                      type: 'manual',
+                      message: minimumLockedPositionsErrorMessage,
+                    });
+                    return;
+                  }
+
+                  field.onBlur();
+                }}
+              />
+            )}
           />
 
           <Field.Text
@@ -477,6 +659,7 @@ export function PositionCreateEditForm({ currentPosition }: Props) {
         size="medium"
         type="submit"
         variant="contained"
+        disabled={isAssignedEmployeesCountLoading || hasAssignedEmployeesValidationError}
         loading={isSubmitting}
         loadingIndicator={t('position.actions.saving')}
       >
