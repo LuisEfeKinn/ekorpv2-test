@@ -10,10 +10,11 @@ import TableCell from '@mui/material/TableCell';
 export type TableEmptyRowsProps = TableRowProps & {
   height?: number;
   emptyRows: number;
+  preserveHeight?: boolean;
 };
 
-export function TableEmptyRows({ emptyRows, height, sx, ...other }: TableEmptyRowsProps) {
-  if (!emptyRows) {
+export function TableEmptyRows({ emptyRows, height, preserveHeight = false, sx, ...other }: TableEmptyRowsProps) {
+  if (!emptyRows || !preserveHeight) {
     return null;
   }
 

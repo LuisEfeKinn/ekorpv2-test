@@ -209,12 +209,7 @@ export function RolesView() {
                 />
 
                 <TableBody>
-                  {dataFiltered
-                    .slice(
-                      table.page * table.rowsPerPage,
-                      table.page * table.rowsPerPage + table.rowsPerPage
-                    )
-                    .map((row) => (
+                  {dataFiltered.map((row) => (
                       <RoleTableRow
                         key={row.id}
                         row={row}
@@ -227,7 +222,7 @@ export function RolesView() {
 
                   <TableEmptyRows
                     height={table.dense ? 56 : 76}
-                    emptyRows={emptyRows(table.page, table.rowsPerPage, dataFiltered.length)}
+                    emptyRows={Math.max(0, table.rowsPerPage - dataFiltered.length)}
                   />
 
                   <TableNoData notFound={notFound} />

@@ -293,12 +293,15 @@ export type IEvaluationResponse = {
   campaignId: string;
   campaignName: string;
   campaignType: string;
+  participantId: number;
   participantName: string;
   relationship: string;
   deadline: string;
   progress: number;
   isCompleted: boolean;
   isCampaignActive: boolean;
+  isExternal: boolean;
+  canViewMyResults: boolean;
 };
 
 export type IEvaluationResponseTableFilters = {

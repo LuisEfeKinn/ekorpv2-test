@@ -18,8 +18,7 @@ import { GetJobsKmService } from 'src/services/organization/job-km.service';
 import { GetSkillsPaginationService } from 'src/services/employees/skills.service';
 import { GetRegionsService, GetCountriesService } from 'src/services/locations/locations.service';
 import {
-  GetOrganizationalUnitPaginationService,
-  normalizeOrganizationalUnitListResponse,
+  GetOrganizationUnitPaginationService,
 } from 'src/services/organization/organizationalUnit.service';
 
 import { Iconify } from 'src/components/iconify';
@@ -119,12 +118,12 @@ export function UserManagmentTableToolbar({
   const loadOrganizationalUnits = useCallback(async (searchTerm: string) => {
     setOrganizationalUnitLoading(true);
     try {
-      const response = await GetOrganizationalUnitPaginationService({
+      const response = await GetOrganizationUnitPaginationService({
         page: 1,
         perPage: 20,
         search: searchTerm || undefined,
       });
-      const list = normalizeOrganizationalUnitListResponse(response.data as any);
+      const list = response.data.data || [];
       setOrganizationalUnitOptions(
         list.map((u) => ({
           id: String(u.id),
@@ -257,9 +256,9 @@ export function UserManagmentTableToolbar({
           options={skillOptions}
           loading={skillLoading}
           getOptionLabel={(option) => option.name}
-          value={skillOptions.find((opt) => opt.id === filters.skillId) || null}
+          value={skillOptions.find((opt) => opt.id === filters.competencyId) || null}
           onChange={(_event, newValue) => {
-            onFilters('skillId', newValue?.id || '');
+            onFilters('competencyId', newValue?.id || '');
           }}
           onOpen={() => {
             if (skillOptions.length === 0) {

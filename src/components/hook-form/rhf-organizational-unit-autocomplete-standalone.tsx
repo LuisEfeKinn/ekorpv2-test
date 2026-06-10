@@ -15,8 +15,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import {
-  GetOrganizationalUnitPaginationService,
-  normalizeOrganizationalUnitListResponse,
+  GetOrganizationUnitPaginationService,
 } from 'src/services/organization/organizationalUnit.service';
 
 // ----------------------------------------------------------------------
@@ -45,6 +44,15 @@ export type OrganizationalUnitAutocompleteStandaloneProps = OrganizationalUnitAu
   };
 };
 
+const mapOrganizationalUnitOptions = (list: IOrganizationalUnitOption[]): IOrganizationalUnitOption[] =>
+  list.map((unit) => ({
+    id: String(unit.id),
+    name: unit.name,
+    code: unit.code,
+    description: unit.description,
+    color: unit.color,
+  }));
+
 export function OrganizationalUnitAutocompleteStandalone({
   name,
   label,
@@ -61,6 +69,7 @@ export function OrganizationalUnitAutocompleteStandalone({
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const preloadedRef = useRef(false);
+  const skipFirstSearchEffectRef = useRef(true);
 
   const { textField } = slotProps ?? {};
 
@@ -74,30 +83,24 @@ export function OrganizationalUnitAutocompleteStandalone({
         ...(searchTerm && { search: searchTerm }),
       };
 
-      const response = await GetOrganizationalUnitPaginationService(params);
+      const response = await GetOrganizationUnitPaginationService(params);
+      const list = response?.data?.data ?? [];
+      const organizationalUnitsOptions = mapOrganizationalUnitOptions(list);
 
-      if (response?.data) {
-        const list = normalizeOrganizationalUnitListResponse(response.data);
-        const organizationalUnitsOptions: IOrganizationalUnitOption[] = list.map((unit) => ({
-          id: unit.id,
-          name: unit.name,
-          code: unit.code,
-          description: unit.description,
-          color: unit.color,
-        }));
+      setOptions(organizationalUnitsOptions);
 
-        setOptions(organizationalUnitsOptions);
+      // Si estamos precargando, buscar y establecer el valor específico
+      if (preloadOrganizationalUnitId && !preloadedRef.current) {
+        const preloadedUnit = organizationalUnitsOptions.find(
+          (unit) => unit.id === String(preloadOrganizationalUnitId)
+        );
 
-        // Si estamos precargando, buscar y establecer el valor específico
-        if (preloadOrganizationalUnitId && !preloadedRef.current) {
-          const preloadedUnit = organizationalUnitsOptions.find(unit => unit.id === preloadOrganizationalUnitId);
-          if (preloadedUnit) {
-            setValue(name, preloadedUnit);
-            if (onOrganizationalUnitChange) {
-              onOrganizationalUnitChange(preloadedUnit);
-            }
-            preloadedRef.current = true;
+        if (preloadedUnit) {
+          setValue(name, preloadedUnit, { shouldValidate: true });
+          if (onOrganizationalUnitChange) {
+            onOrganizationalUnitChange(preloadedUnit);
           }
+          preloadedRef.current = true;
         }
       }
     } catch (error) {
@@ -115,11 +118,21 @@ export function OrganizationalUnitAutocompleteStandalone({
 
   // Buscar con debounce cuando el usuario escribe
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    if (skipFirstSearchEffectRef.current) {
+      skipFirstSearchEffectRef.current = false;
+      return undefined;
+    }
 
-    if (inputValue && inputValue.length >= 2) {
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    const trimmedInputValue = inputValue.trim();
+
+    if (trimmedInputValue.length === 0) {
       timeoutId = setTimeout(() => {
-        fetchOrganizationalUnits(inputValue);
+        fetchOrganizationalUnits();
+      }, 300);
+    } else if (trimmedInputValue.length >= 2) {
+      timeoutId = setTimeout(() => {
+        fetchOrganizationalUnits(trimmedInputValue);
       }, 300);
     }
 

@@ -22,6 +22,14 @@ export type IEmploymentTypeTableFilterValue = string | string[];
 export interface IEmploymentTypesResponse {
   statusCode: number;
   data: IEmploymentType[];
+  meta?: {
+    page: number;
+    perPage: number;
+    itemCount: number;
+    pageCount: number;
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+  };
   message: string;
 }
 
@@ -195,7 +203,7 @@ export type IUserManagementTableFilters = {
   name: string;
   status: string;
   positionId: string;
-  skillId: string;
+  competencyId: string;
   organizationalUnitId: string;
   countryId: string;
   regionId: string;

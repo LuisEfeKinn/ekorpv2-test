@@ -34,7 +34,6 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import {
   useTable,
-  emptyRows,
   TableNoData,
   getComparator,
   TableEmptyRows,
@@ -89,7 +88,7 @@ export function EmploymentTypeView() {
       const response = await GetTypeEmploymentPaginationService(params);
 
       setTableData(response.data.data || []);
-      setTotalItems(response.data.data?.length || 0);
+      setTotalItems(response.data.meta?.itemCount || response.data.data?.length || 0);
     } catch (error) {
       console.error('Error loading employment types:', error);
       toast.error(t('employment-type.messages.error.loading'));
@@ -293,12 +292,7 @@ export function EmploymentTypeView() {
                 />
 
                 <TableBody>
-                  {dataFiltered
-                    .slice(
-                      table.page * table.rowsPerPage,
-                      table.page * table.rowsPerPage + table.rowsPerPage
-                    )
-                    .map((row) => (
+                  {dataFiltered.map((row) => (
                       <EmploymentTypeTableRow
                         key={row.id}
                         row={row}
@@ -311,7 +305,7 @@ export function EmploymentTypeView() {
 
                   <TableEmptyRows
                     height={table.dense ? 56 : 76}
-                    emptyRows={emptyRows(table.page, table.rowsPerPage, dataFiltered.length)}
+                    emptyRows={Math.max(0, table.rowsPerPage - dataFiltered.length)}
                   />
 
                   <TableNoData notFound={notFound} />
@@ -345,6 +339,14 @@ type ApplyFilterProps = {
   comparator: (a: any, b: any) => number;
 };
 
+function normalizeFilterText(value: string) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
 function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   const { name, status } = filters;
 
@@ -359,8 +361,10 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   inputData = stabilizedThis.map((el) => el[0]);
 
   if (name) {
+    const normalizedFilterName = normalizeFilterText(name);
+
     inputData = inputData.filter(
-      (item) => item.name.toLowerCase().indexOf(name.toLowerCase()) !== -1
+      (item) => normalizeFilterText(item.name).includes(normalizedFilterName)
     );
   }
 

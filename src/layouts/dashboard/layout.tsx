@@ -17,8 +17,6 @@ import { allLangs } from 'src/locales'; // import { _contacts, _notifications } 
 import { Logo } from 'src/components/logo';
 import { useSettingsContext } from 'src/components/settings';
 
-import { WsNotificationsBell } from 'src/sections/notificaciones/ws-notifications/ws-notifications-bell';
-
 import { useAuthContext } from 'src/auth/hooks';
 
 import { NavMobile } from './nav-mobile';
@@ -33,6 +31,7 @@ import { AccountDrawer } from '../components/account-drawer';
 import { SettingsButton } from '../components/settings-button';
 import { LanguagePopover } from '../components/language-popover';
 import { dashboardLayoutVars, dashboardNavColorVars } from './css-vars';
+import { RoleSelectorPopover } from '../components/role-selector-popover';
 import { MainSection, layoutClasses, HeaderSection, LayoutSection } from '../core';
 
 // import { _workspaces } from '../nav-config-workspace';
@@ -159,8 +158,8 @@ export function DashboardLayout({
           {/** @slot Language popover */}
           <LanguagePopover data={allLangs} />
 
-          {/** @slot Notifications bell */}
-          <WsNotificationsBell />
+          {/** @slot Role selector */}
+          <RoleSelectorPopover />
 
           {/* * @slot Contacts popover
           <ContactsPopover data={_contacts} /> */}

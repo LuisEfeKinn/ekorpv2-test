@@ -9,8 +9,7 @@ import { GetJobsKmService } from 'src/services/organization/job-km.service';
 import { GetSkillsPaginationService } from 'src/services/employees/skills.service';
 import { GetRegionsService, GetCountriesService } from 'src/services/locations/locations.service';
 import {
-  GetOrganizationalUnitPaginationService,
-  normalizeOrganizationalUnitListResponse,
+  GetOrganizationUnitPaginationService,
 } from 'src/services/organization/organizationalUnit.service';
 
 import { chipProps, FiltersBlock, FiltersResult } from 'src/components/filters-result';
@@ -47,17 +46,17 @@ export function UserManagmentTableFiltersResult({ filters, onFilters, onReset, t
           setPositionName('');
         }
 
-        if (filters.skillId) {
+        if (filters.competencyId) {
           const response = await GetSkillsPaginationService({ page: 1, perPage: 20 });
-          const skill = response.data.data.data.find((s) => s.id === filters.skillId);
+          const skill = response.data.data.data.find((s) => s.id === filters.competencyId);
           setSkillName(skill?.name || '');
         } else {
           setSkillName('');
         }
 
         if (filters.organizationalUnitId) {
-          const response = await GetOrganizationalUnitPaginationService({ page: 1, perPage: 20 });
-          const list = normalizeOrganizationalUnitListResponse(response.data as any);
+          const response = await GetOrganizationUnitPaginationService({ page: 1, perPage: 20 });
+          const list = response.data.data || [];
           const unit = list.find((u) => String(u.id) === String(filters.organizationalUnitId));
           setOrganizationalUnitName(unit?.name || '');
         } else {
@@ -89,7 +88,7 @@ export function UserManagmentTableFiltersResult({ filters, onFilters, onReset, t
     };
 
     loadFilterNames();
-  }, [filters.positionId, filters.skillId, filters.organizationalUnitId, filters.countryId, filters.regionId]);
+  }, [filters.positionId, filters.competencyId, filters.organizationalUnitId, filters.countryId, filters.regionId]);
 
   const handleRemoveKeyword = useCallback(() => {
     onFilters('name', '');
@@ -104,7 +103,7 @@ export function UserManagmentTableFiltersResult({ filters, onFilters, onReset, t
   }, [onFilters]);
 
   const handleRemoveSkill = useCallback(() => {
-    onFilters('skillId', '');
+    onFilters('competencyId', '');
   }, [onFilters]);
 
   const handleRemoveOrganizationalUnit = useCallback(() => {
@@ -138,8 +137,8 @@ export function UserManagmentTableFiltersResult({ filters, onFilters, onReset, t
         <Chip {...chipProps} label={positionName || filters.positionId} onDelete={handleRemovePosition} />
       </FiltersBlock>
 
-      <FiltersBlock label={`${t('user-management.table.filters.skill')}:`} isShow={!!filters.skillId}>
-        <Chip {...chipProps} label={skillName || filters.skillId} onDelete={handleRemoveSkill} />
+      <FiltersBlock label={`${t('user-management.table.filters.skill')}:`} isShow={!!filters.competencyId}>
+        <Chip {...chipProps} label={skillName || filters.competencyId} onDelete={handleRemoveSkill} />
       </FiltersBlock>
 
       <FiltersBlock label={`${t('user-management.table.filters.organizationalUnit')}:`} isShow={!!filters.organizationalUnitId}>

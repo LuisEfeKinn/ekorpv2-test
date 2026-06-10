@@ -172,7 +172,7 @@ export function UserManagmentView() {
     name: '',
     status: 'all',
     positionId: '',
-    skillId: '',
+    competencyId: '',
     organizationalUnitId: '',
     countryId: '',
     regionId: ''
@@ -197,7 +197,7 @@ export function UserManagmentView() {
         perPage: table.rowsPerPage,
         search: currentFilters.name || undefined,
         positionId: currentFilters.positionId || undefined,
-        skillId: currentFilters.skillId || undefined,
+        competencyId: currentFilters.competencyId || undefined,
         organizationalUnitId: currentFilters.organizationalUnitId || undefined,
         countryId: currentFilters.countryId || undefined,
         regionId: currentFilters.regionId || undefined,
@@ -215,7 +215,7 @@ export function UserManagmentView() {
       setTableData([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, currentFilters.name, currentFilters.positionId, currentFilters.skillId, currentFilters.organizationalUnitId, currentFilters.countryId, currentFilters.regionId, serverOrderBy, serverOrder, tUsers]);
+  }, [table.page, table.rowsPerPage, currentFilters.name, currentFilters.positionId, currentFilters.competencyId, currentFilters.organizationalUnitId, currentFilters.countryId, currentFilters.regionId, serverOrderBy, serverOrder, tUsers]);
 
   // Cargar datos cuando cambian los parámetros
   useEffect(() => {
@@ -229,7 +229,7 @@ export function UserManagmentView() {
     filters: currentFilters,
   });
 
-  const canReset = !!currentFilters.name || currentFilters.status !== 'all' || !!currentFilters.positionId || !!currentFilters.skillId || !!currentFilters.organizationalUnitId || !!currentFilters.countryId || !!currentFilters.regionId;
+  const canReset = !!currentFilters.name || currentFilters.status !== 'all' || !!currentFilters.positionId || !!currentFilters.competencyId || !!currentFilters.organizationalUnitId || !!currentFilters.countryId || !!currentFilters.regionId;
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
 
   const handleDeleteRow = useCallback(
@@ -274,7 +274,7 @@ export function UserManagmentView() {
 
   const handleResetFilters = useCallback(() => {
     table.onResetPage();
-    updateFilters({ name: '', status: 'all', positionId: '', skillId: '', organizationalUnitId: '', countryId: '', regionId: '' });
+    updateFilters({ name: '', status: 'all', positionId: '', competencyId: '', organizationalUnitId: '', countryId: '', regionId: '' });
   }, [updateFilters, table]);
 
   const handleDownloadExcel = useCallback(async () => {
@@ -317,7 +317,7 @@ export function UserManagmentView() {
 
       const params: Record<string, string | number | boolean> = {
         ...(currentFilters.positionId ? { positionId: currentFilters.positionId } : {}),
-        ...(currentFilters.skillId ? { skillId: currentFilters.skillId } : {}),
+        ...(currentFilters.competencyId ? { competencyId: currentFilters.competencyId } : {}),
         ...(currentFilters.organizationalUnitId ? { organizationalUnitId: currentFilters.organizationalUnitId } : {}),
         ...(currentFilters.countryId ? { countryId: currentFilters.countryId } : {}),
         ...(currentFilters.regionId ? { regionId: currentFilters.regionId } : {}),
@@ -1270,7 +1270,7 @@ function getEmployeesUploadError(error: unknown, tUsers: TranslateFn): Employees
 }
 
 function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
-  const { name, status, positionId, skillId, organizationalUnitId, countryId, regionId } = filters;
+  const { name, status, positionId, competencyId, organizationalUnitId, countryId, regionId } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -1303,9 +1303,9 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
     inputData = inputData.filter((item) => item.position?.id === positionId);
   }
 
-  if (skillId) {
+  if (competencyId) {
     inputData = inputData.filter((item) => 
-      item.skills?.some((skill) => skill.id === skillId)
+      item.competencyKm?.some((skill) => skill.id === competencyId)
     );
   }
 

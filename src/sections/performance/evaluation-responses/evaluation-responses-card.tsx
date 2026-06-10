@@ -247,14 +247,16 @@ export function EvaluationResponsesCard({ row }: Props) {
             <Iconify icon="solar:eye-bold" />
             {t('evaluation-responses.actions.view')}
           </MenuItem>
-          <MenuItem
-            component={RouterLink}
-            href={paths.dashboard.performance.evaluationMyResults(row.campaignId)}
-            onClick={popover.onClose}
-          >
-            <Iconify icon="solar:file-text-bold" />
-            {t('evaluation-responses.actions.viewResults')}
-          </MenuItem>
+          {row.canViewMyResults && (
+            <MenuItem
+              component={RouterLink}
+              href={paths.dashboard.performance.evaluationMyResults(row.campaignId)}
+              onClick={popover.onClose}
+            >
+              <Iconify icon="solar:file-text-bold" />
+              {t('evaluation-responses.actions.viewResults')}
+            </MenuItem>
+          )}
         </MenuList>
       </CustomPopover>
     </>

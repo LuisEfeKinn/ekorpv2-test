@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import { CONFIG } from 'src/global-config';
 
+import { ACTIVE_ROLE_ID_KEY } from 'src/auth/context/jwt/constant';
+
 // ----------------------------------------------------------------------
 
 const axiosInstance = axios.create({
@@ -37,6 +39,7 @@ axiosInstance.interceptors.response.use(
       sessionStorage.removeItem('accessToken');
       sessionStorage.removeItem('refreshToken');
       sessionStorage.removeItem('jwt_access_token'); // Limpiar también la clave antigua
+      sessionStorage.removeItem(ACTIVE_ROLE_ID_KEY);
       // Redirigir al login si es necesario
       window.location.href = '/auth/jwt/sign-in';
     }

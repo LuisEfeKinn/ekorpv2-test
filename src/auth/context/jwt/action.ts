@@ -3,7 +3,7 @@
 import axios, { endpoints } from 'src/lib/axios';
 
 import { setSession } from './utils';
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './constant';
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY, ACTIVE_ROLE_ID_KEY } from './constant';
 
 // ----------------------------------------------------------------------
 
@@ -37,6 +37,7 @@ export const signInWithPassword = async ({ email, password }: SignInParams): Pro
     // Guardar tokens en sessionStorage
     sessionStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
     sessionStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+    sessionStorage.removeItem(ACTIVE_ROLE_ID_KEY);
 
     setSession(accessToken);
   } catch (error) {
@@ -45,6 +46,7 @@ export const signInWithPassword = async ({ email, password }: SignInParams): Pro
   }
 };
 
+    sessionStorage.removeItem(ACTIVE_ROLE_ID_KEY);
 /** **************************************
  * Sign up
  *************************************** */

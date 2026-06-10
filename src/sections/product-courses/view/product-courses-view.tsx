@@ -39,6 +39,7 @@ export function ProductCoursesView() {
   const { t } = useTranslate('learning');
   const table = useTable({ defaultRowsPerPage: 10 });
   const requestIdRef = useRef(0);
+  const defaultOrder = 'course.displayName:asc';
 
   const [productCourses, setProductCourses] = useState<IProductCourse[]>([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -54,20 +55,19 @@ export function ProductCoursesView() {
   const filters = useSetState<IProductCourseTableFilters>({
     search: '',
     includeInactive: false,
-    order: 'course.displayName:asc',
+    order: defaultOrder,
     instanceId: null,
     instanceName: undefined,
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 
-  const [serverOrderBy, setServerOrderBy] = useState<string>('');
-  const [serverOrder, setServerOrder] = useState<'asc' | 'desc'>('asc');
+  const [serverOrderBy, rawServerOrder] = currentFilters.order.split(':');
+  const serverOrder: 'asc' | 'desc' = rawServerOrder === 'desc' ? 'desc' : 'asc';
 
   const handleServerSort = useCallback((sortField: string, direction: 'asc' | 'desc') => {
     table.onResetPage();
-    setServerOrderBy(sortField);
-    setServerOrder(direction);
-  }, [table]);
+    updateFilters({ order: `${sortField}:${direction}` });
+  }, [table, updateFilters]);
 
 
   // Función para cargar datos
@@ -80,7 +80,7 @@ export function ProductCoursesView() {
         perPage: table.rowsPerPage,
         search: currentFilters.search || undefined,
         includeInactive: currentFilters.includeInactive,
-        order: serverOrderBy ? `${serverOrderBy}:${serverOrder}` : undefined,
+        order: currentFilters.order || undefined,
         instanceId: currentFilters.instanceId || undefined,
       };
 
@@ -108,21 +108,21 @@ export function ProductCoursesView() {
       setProductCourses([]);
       setTotalItems(0);
     }
-  }, [table.page, table.rowsPerPage, currentFilters.search, currentFilters.includeInactive, serverOrderBy, serverOrder, currentFilters.instanceId, t]);
+  }, [table.page, table.rowsPerPage, currentFilters.search, currentFilters.includeInactive, currentFilters.order, currentFilters.instanceId, t]);
 
   // Cargar datos cuando cambian los parámetros
   useEffect(() => {
     loadData();
   }, [loadData]);
 
-  const canReset = !!currentFilters.search || currentFilters.includeInactive || currentFilters.order !== 'course.displayName:asc' || !!currentFilters.instanceId;
+  const canReset = !!currentFilters.search || currentFilters.includeInactive || currentFilters.order !== defaultOrder || !!currentFilters.instanceId;
   const tableData = totalItems === 0 ? [] : productCourses;
   const notFound = !tableData.length;
 
   const handleResetFilters = useCallback(() => {
     table.onResetPage();
-    updateFilters({ search: '', includeInactive: false, order: 'course.displayName:asc', instanceId: null, instanceName: undefined });
-  }, [updateFilters, table]);
+    updateFilters({ search: '', includeInactive: false, order: defaultOrder, instanceId: null, instanceName: undefined });
+  }, [defaultOrder, updateFilters, table]);
 
   return (
     <DashboardContent>

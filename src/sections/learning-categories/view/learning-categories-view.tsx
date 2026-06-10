@@ -34,7 +34,6 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import {
   useTable,
-  emptyRows,
   TableNoData,
   getComparator,
   TableEmptyRows,
@@ -108,9 +107,10 @@ export function LearningCategoriesView() {
       if (response.status === 200) {
         // Verificar la estructura de la respuesta
         const data = response.data?.data || response.data || [];
+        const total = response.data?.meta?.itemCount || data.length || 0;
 
         setTableData(Array.isArray(data) ? data : []);
-        setTotalItems(data.length || 0);
+        setTotalItems(total);
       }
     } catch (error) {
       console.error('Error loading learning categories:', error);
@@ -315,12 +315,7 @@ export function LearningCategoriesView() {
                 />
 
                 <TableBody>
-                  {dataFiltered
-                    .slice(
-                      table.page * table.rowsPerPage,
-                      table.page * table.rowsPerPage + table.rowsPerPage
-                    )
-                    .map((row) => (
+                  {dataFiltered.map((row) => (
                       <LearningCategoriesTableRow
                         key={row.id}
                         row={row}
@@ -333,7 +328,7 @@ export function LearningCategoriesView() {
 
                   <TableEmptyRows
                     height={table.dense ? 56 : 76}
-                    emptyRows={emptyRows(table.page, table.rowsPerPage, dataFiltered.length)}
+                    emptyRows={Math.max(0, table.rowsPerPage - dataFiltered.length)}
                   />
 
                   <TableNoData notFound={notFound} />
@@ -367,6 +362,14 @@ type ApplyFilterProps = {
   comparator: (a: any, b: any) => number;
 };
 
+function normalizeFilterText(value: string) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
 function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   // Asegurar que inputData es un array válido
   if (!Array.isArray(inputData)) {
@@ -387,8 +390,10 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   inputData = stabilizedThis.map((el) => el[0]);
 
   if (name) {
+    const normalizedFilterName = normalizeFilterText(name);
+
     inputData = inputData.filter(
-      (item) => item?.name?.toLowerCase().indexOf(name.toLowerCase()) !== -1
+      (item) => normalizeFilterText(item?.name || '').includes(normalizedFilterName)
     );
   }
 

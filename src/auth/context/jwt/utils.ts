@@ -2,7 +2,7 @@ import { paths } from 'src/routes/paths';
 
 import axios from 'src/lib/axios';
 
-import { JWT_STORAGE_KEY, ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './constant';
+import { JWT_STORAGE_KEY, ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY, ACTIVE_ROLE_ID_KEY } from './constant';
 
 // ----------------------------------------------------------------------
 
@@ -66,6 +66,7 @@ export function tokenExpired(exp: number) {
       sessionStorage.removeItem(JWT_STORAGE_KEY);
       sessionStorage.removeItem(ACCESS_TOKEN_KEY);
       sessionStorage.removeItem(REFRESH_TOKEN_KEY);
+      sessionStorage.removeItem(ACTIVE_ROLE_ID_KEY);
       window.location.href = paths.auth.jwt.signIn;
     } catch (error) {
       console.error('Error during token expiration:', error);
@@ -102,6 +103,7 @@ export async function setSession(accessToken: string | null) {
       sessionStorage.removeItem(JWT_STORAGE_KEY);
       sessionStorage.removeItem(ACCESS_TOKEN_KEY);
       sessionStorage.removeItem(REFRESH_TOKEN_KEY);
+      sessionStorage.removeItem(ACTIVE_ROLE_ID_KEY);
       delete axios.defaults.headers.common.Authorization;
     }
   } catch (error) {

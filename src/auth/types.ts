@@ -32,6 +32,7 @@ export type UserType = {
   photoURL?: string;
   accessToken?: string;
   role?: string;
+  activeRoleId?: string;
   roles?: UserRole[];
   modules?: UserModule[];
 } | null;
@@ -46,5 +47,6 @@ export type AuthContextValue = {
   loading: boolean;
   authenticated: boolean;
   unauthenticated: boolean;
-  checkUserSession?: () => Promise<void>;
+  checkUserSession?: (roleId?: string) => Promise<void>;
+  setActiveRole?: (roleId: string) => Promise<void>;
 };
