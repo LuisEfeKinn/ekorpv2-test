@@ -2,7 +2,7 @@ import type { IRegionOption, ICountryOption } from 'src/types/locations';
 import type { ISkillOption, IUserManagementTableFilters } from 'src/types/employees';
 import type { IPositionOption, IOrganizationalUnitOption } from 'src/types/organization';
 
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -157,11 +157,17 @@ export function UserManagmentTableToolbar({
     }
   }, []);
 
-  // Función para cargar regiones
-  const loadRegions = useCallback(async (searchTerm: string) => {
+  // Función para cargar regiones (requiere countryId; si no hay país, limpia las opciones)
+  const loadRegions = useCallback(async (searchTerm: string, countryId?: string) => {
+    if (!countryId) {
+      setRegionOptions([]);
+      setRegionLoading(false);
+      return;
+    }
     setRegionLoading(true);
     try {
       const response = await GetRegionsService({
+        countryId,
         search: searchTerm || undefined,
       });
       setRegionOptions(response.data.data || []);
@@ -172,6 +178,15 @@ export function UserManagmentTableToolbar({
       setRegionLoading(false);
     }
   }, []);
+
+  // Cargar/limpiar regiones cuando cambia el país seleccionado
+  useEffect(() => {
+    if (filters.countryId) {
+      loadRegions('', filters.countryId);
+    } else {
+      setRegionOptions([]);
+    }
+  }, [filters.countryId, loadRegions]);
 
   return (
     <>
@@ -326,7 +341,13 @@ export function UserManagmentTableToolbar({
           getOptionLabel={(option) => option.name}
           value={countryOptions.find((opt) => opt.id === filters.countryId) || null}
           onChange={(_event, newValue) => {
-            onFilters('countryId', newValue?.id || '');
+            const newCountryId = newValue?.id || '';
+            onFilters('countryId', newCountryId);
+            // Si cambió el país y hay una región seleccionada, resetearla
+            // (las regiones dependen del país)
+            if (newCountryId !== filters.countryId && filters.regionId) {
+              onFilters('regionId', '');
+            }
           }}
           onOpen={() => {
             if (countryOptions.length === 0) {
@@ -352,9 +373,10 @@ export function UserManagmentTableToolbar({
           )}
         />
 
-        {/* Autocomplete para Región */}
+        {/* Autocomplete para Región (depende del país seleccionado) */}
         <Autocomplete
           fullWidth
+          disabled={!filters.countryId}
           options={regionOptions}
           loading={regionLoading}
           getOptionLabel={(option) => option.name}
@@ -363,17 +385,21 @@ export function UserManagmentTableToolbar({
             onFilters('regionId', newValue?.id || '');
           }}
           onOpen={() => {
-            if (regionOptions.length === 0) {
-              loadRegions('');
+            if (regionOptions.length === 0 && filters.countryId) {
+              loadRegions('', filters.countryId);
             }
           }}
           onInputChange={(_event, newInputValue) => {
-            loadRegions(newInputValue);
+            loadRegions(newInputValue, filters.countryId);
           }}
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={tUsers('user-management.table.filters.region')}
+              placeholder={
+                filters.countryId
+                  ? tUsers('user-management.table.filters.region')
+                  : tUsers('user-management.table.filters.regionSelectCountryFirst')
+              }
               InputProps={{
                 ...params.InputProps,
                 startAdornment: (

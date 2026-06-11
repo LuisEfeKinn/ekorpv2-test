@@ -191,6 +191,7 @@
         "country": "Country",
         "region": "Region",
         "employmentType": "Employment Type:",
+        "regionSelectCountryFirst": "Select a country first",
         "all": "All"
       },
       "emptyState": {

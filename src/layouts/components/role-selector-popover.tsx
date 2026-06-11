@@ -13,8 +13,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { paths } from 'src/routes/paths';
-
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { CustomPopover } from 'src/components/custom-popover';
@@ -49,11 +47,11 @@ export function RoleSelectorPopover({ sx, ...other }: ButtonProps) {
         setIsChangingRole(true);
         onClose();
         await setActiveRole(roleId);
-        window.location.assign(paths.dashboard.root);
       } catch (error) {
         console.error(error);
-        setIsChangingRole(false);
         toast.error('No fue posible cambiar de cargo');
+      } finally {
+        setIsChangingRole(false);
       }
     },
     [onClose, setActiveRole]

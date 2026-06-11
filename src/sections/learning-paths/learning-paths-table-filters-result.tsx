@@ -7,7 +7,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Chip from '@mui/material/Chip';
 
 import { useTranslate } from 'src/locales';
-import { GetPositionPaginationService } from 'src/services/learning/position.service';
+import { GetJobsKmService } from 'src/services/organization/job-km.service';
 
 import { chipProps, FiltersBlock, FiltersResult } from 'src/components/filters-result';
 
@@ -35,13 +35,15 @@ export function LearningPathTableFiltersResult({
     const loadFilterNames = async () => {
       try {
         if (currentFilters.positionId) {
-          const positionResponse = await GetPositionPaginationService({
+          const positionResponse = await GetJobsKmService({
             page: 1,
             perPage: 20,
             search: '',
           });
           const positions = positionResponse?.data?.data || [];
-          const position = positions.find((p: any) => p.id === currentFilters.positionId);
+          const position = positions.find(
+            (p: any) => String(p.id) === currentFilters.positionId
+          );
           setPositionName(position?.name || '');
         }
       } catch (error) {

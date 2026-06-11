@@ -372,7 +372,11 @@
           "helperText": "Wähle die Organisationseinheit, zu der diese Position gehört (optional)"
         },
         "numberOfPositions": {
-          "helperText": "Anzahl der für diese Position benötigten Mitarbeitenden"
+          "label": "Erforderliche Mitarbeitende",
+          "placeholder": "Z. B.: 3",
+          "helperText": "Anzahl der für diese Position benötigten Mitarbeitenden",
+          "requiredError": "Gib die Anzahl der für diese Position benötigten Mitarbeitenden ein.",
+          "reduceWarning": "Es wird empfohlen, die Anzahl der Mitarbeitenden nicht drastisch zu reduzieren, da dies die aktuell dieser Position zugewiesenen Personen beeinträchtigen kann."
         },
         "competencies": {}
       },

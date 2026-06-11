@@ -434,8 +434,8 @@
           "label": "Required Employees",
           "placeholder": "E.g.: 3",
           "helperText": "Number of employees required for this position",
-          "minAssignedError": "You cannot set a value lower than {{count}} because there are currently {{count}} employees assigned to this position.",
-          "minCurrentValueError": "You cannot set a value lower than {{count}} for this position."
+          "requiredError": "Enter the number of employees required for this position.",
+          "reduceWarning": "It is recommended not to drastically reduce the number of employees, as it may affect those currently assigned to this position."
         },
         "competencies": {
           "label": "Competencies",

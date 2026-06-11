@@ -112,6 +112,8 @@ export function UserManagmentTableFiltersResult({ filters, onFilters, onReset, t
 
   const handleRemoveCountry = useCallback(() => {
     onFilters('countryId', '');
+    // Al eliminar el país, también limpiamos la región (las regiones dependen del país)
+    onFilters('regionId', '');
   }, [onFilters]);
 
   const handleRemoveRegion = useCallback(() => {

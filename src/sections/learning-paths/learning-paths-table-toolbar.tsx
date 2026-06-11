@@ -13,7 +13,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { useTranslate } from 'src/locales';
-import { GetPositionPaginationService } from 'src/services/learning/position.service';
+import { GetJobsKmService } from 'src/services/organization/job-km.service';
 
 import { Iconify } from 'src/components/iconify';
 
@@ -82,7 +82,7 @@ export function LearningPathTableToolbar({ filters, onResetPage, onResetFilters 
   const loadPositions = useCallback(async (searchTerm: string = '') => {
     try {
       setLoadingPosition(true);
-      const response = await GetPositionPaginationService({
+      const response = await GetJobsKmService({
         page: 1,
         perPage: 20,
         search: searchTerm,

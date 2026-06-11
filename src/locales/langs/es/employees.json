@@ -191,6 +191,7 @@
         "country": "País",
         "region": "Región",
         "employmentType": "Tipo de Empleo:",
+        "regionSelectCountryFirst": "Selecciona un país primero",
         "all": "Todos"
       },
       "emptyState": {

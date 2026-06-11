@@ -23,8 +23,8 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
 import { useTranslate } from 'src/locales';
+import { GetJobsKmService } from 'src/services/organization/job-km.service';
 import { GetSkillsPaginationService } from 'src/services/employees/skills.service';
-import { GetPositionPaginationService } from 'src/services/learning/position.service';
 import { SaveOrUpdateLearningPathsService } from 'src/services/learning/learningPaths.service';
 import {
   GetLearningObjectsPaginationService,
@@ -223,6 +223,31 @@ export function LearningPathsCreateEditForm({ currentLearningPath }: Props) {
     [positions, preloadedPositions]
   );
 
+  // Extraer objetos de aprendizaje ya incluidos en la ruta que se está editando,
+  // para usarlos como fuente inicial del Autocomplete sin pegarle al servicio.
+  const preloadedLearningObjects = useMemo<ILearningObject[]>(() => {
+    if (!currentLearningPath) return [];
+    const objects: ILearningObject[] = [];
+    for (const m of currentLearningPath.modules ?? []) {
+      for (const obj of m.learningObjects ?? []) {
+        if (obj.learningObject) {
+          objects.push(obj.learningObject);
+        }
+      }
+    }
+    return Array.from(new Map(objects.map((o) => [String(o.id), o])).values());
+  }, [currentLearningPath]);
+
+  const availableLearningObjects = useMemo<ILearningObject[]>(
+    () =>
+      Array.from(
+        new Map(
+          [...preloadedLearningObjects, ...learningObjects].map((obj) => [String(obj.id), obj])
+        ).values()
+      ),
+    [learningObjects, preloadedLearningObjects]
+  );
+
   // Función para normalizar URLs (agregar https:// si falta)
   const normalizeUrl = (url: string): string => {
     if (!url) return '';
@@ -377,8 +402,12 @@ export function LearningPathsCreateEditForm({ currentLearningPath }: Props) {
         perPage: 20,
         ...(search && { search }),
       };
-      const response = await GetPositionPaginationService(params);
-      const positionsData = response?.data?.data || [];
+      const response = await GetJobsKmService(params);
+      const jobsData: any[] = response?.data?.data || [];
+      const positionsData: IPosition[] = jobsData.map((job) => ({
+        id: String(job.id),
+        name: job.name,
+      }));
       setPositions(positionsData);
     } catch (error) {
       console.error('Error loading positions:', error);
@@ -428,6 +457,13 @@ export function LearningPathsCreateEditForm({ currentLearningPath }: Props) {
     }
   }, [t]);
 
+  // Disparar la consulta al servicio recién cuando el usuario abre el dropdown
+  // o empieza a buscar; los objetos que ya vienen en la ruta se sirven desde
+  // el payload para no mostrar IDs en los labels.
+  const handleOpenLearningObjects = useCallback(() => {
+    loadLearningObjects();
+  }, [loadLearningObjects]);
+
   // Cargar habilidades con búsqueda
   const loadSkills = useCallback(async (search: string = '') => {
     setSkillsLoading(true);
@@ -464,10 +500,9 @@ export function LearningPathsCreateEditForm({ currentLearningPath }: Props) {
   }, [t]);
 
   useEffect(() => {
-    loadLearningObjects();
     loadSkills();
     loadSkillLevels();
-  }, [loadLearningObjects, loadSkills, loadSkillLevels]);
+  }, [loadSkills, loadSkillLevels]);
 
   // Búsqueda de objetos de aprendizaje con debounce
   useEffect(() => {
@@ -1174,12 +1209,13 @@ export function LearningPathsCreateEditForm({ currentLearningPath }: Props) {
                             <ModuleEditContent
                               moduleIndex={moduleIndex}
                               control={control}
-                              learningObjects={learningObjects}
+                              availableLearningObjects={availableLearningObjects}
                               learningObjectsLoading={learningObjectsLoading}
                               skills={skills}
                               skillsLoading={skillsLoading}
                               skillLevels={skillLevels}
                               skillLevelsLoading={skillLevelsLoading}
+                              onOpenLearningObject={handleOpenLearningObjects}
                               onSearchLearningObject={setLearningObjectSearchTerm}
                               onSearchSkill={setSkillSearchTerm}
                               moduleColor={moduleColor}
@@ -1355,12 +1391,13 @@ export function LearningPathsCreateEditForm({ currentLearningPath }: Props) {
 type ModuleEditContentProps = {
   moduleIndex: number;
   control: any;
-  learningObjects: ILearningObject[];
+  availableLearningObjects: ILearningObject[];
   learningObjectsLoading: boolean;
   skills: any[];
   skillsLoading: boolean;
   skillLevels: any[];
   skillLevelsLoading: boolean;
+  onOpenLearningObject: () => void;
   onSearchLearningObject: (search: string) => void;
   onSearchSkill: (search: string) => void;
   moduleColor: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
@@ -1369,12 +1406,13 @@ type ModuleEditContentProps = {
 function ModuleEditContent({
   moduleIndex,
   control,
-  learningObjects,
+  availableLearningObjects,
   learningObjectsLoading,
   skills,
   skillsLoading,
   skillLevels,
   skillLevelsLoading,
+  onOpenLearningObject,
   onSearchLearningObject,
   onSearchSkill,
   moduleColor,
@@ -1547,8 +1585,9 @@ function ModuleEditContent({
                       name={`modules.${moduleIndex}.learningObjects.${objectIndex}.learningObjectId`}
                       label={t('learning-paths.form.fields.learningObject.label')}
                       placeholder={t('learning-paths.form.fields.learningObject.placeholder')}
-                      options={learningObjects.map((obj) => String(obj.id))}
+                      options={availableLearningObjects.map((obj) => String(obj.id))}
                       loading={learningObjectsLoading}
+                      onOpen={() => onOpenLearningObject()}
                       onInputChange={(event, value, reason) => {
                         if (reason === 'input') {
                           onSearchLearningObject(value);
@@ -1556,7 +1595,9 @@ function ModuleEditContent({
                       }}
                       getOptionLabel={(option) => {
                         if (typeof option === 'string' || typeof option === 'number') {
-                          const found = learningObjects.find((obj) => String(obj.id) === String(option));
+                          const found = availableLearningObjects.find(
+                            (obj) => String(obj.id) === String(option)
+                          );
                           if (found) return found.name;
                           return String(option);
                         }

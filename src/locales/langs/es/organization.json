@@ -434,8 +434,8 @@
           "label": "Empleados Requeridos",
           "placeholder": "Ej: 3",
           "helperText": "Número de empleados requeridos para este cargo",
-          "minAssignedError": "No se puede establecer una cantidad menor a {{count}} porque actualmente existen {{count}} empleados asignados a este cargo.",
-          "minCurrentValueError": "No se puede establecer una cantidad menor a {{count}} para este cargo."
+          "requiredError": "Ingrese la cantidad de empleados requeridos para este cargo.",
+          "reduceWarning": "Se recomienda no reducir drásticamente la cantidad de empleados, ya que puede afectar a quienes están actualmente asignados a este cargo."
         },
         "competencies": {
           "label": "Competencias",

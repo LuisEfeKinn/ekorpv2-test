@@ -231,7 +231,7 @@ export async function POST(req: NextRequest) {
     console.log('[N8N Video] Request payload:', JSON.stringify(payload, null, 2));
 
     // Build the full N8N webhook URL
-    const fullUrl = `${n8nWebhookUrl}/ai-video-generator`;
+    const fullUrl = `${n8nWebhookUrl}`;
     console.log('[N8N Video] Calling webhook:', fullUrl);
 
     // Call N8N webhook - no authentication required
