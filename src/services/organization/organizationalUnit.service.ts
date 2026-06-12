@@ -10,6 +10,7 @@ export interface GetOrganizationalUnitPaginationParams {
   page?: number;
   perPage?: number;
   search?: string;
+  jobPositionId?: string | number;
 }
 
 export type OrganizationalUnitListResponse =

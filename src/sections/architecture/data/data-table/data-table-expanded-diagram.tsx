@@ -285,6 +285,7 @@ export function DataTableExpandedDiagram({
   const [auditOpen, setAuditOpen] = useState(false);
   const [auditId, setAuditId] = useState<number | null>(null);
 
+  const [existingEntityIds, setExistingEntityIds] = useState<number[]>([]);
   const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; nodeId: string | null }>({ open: false, nodeId: null });
   const [deleting, setDeleting] = useState(false);
 
@@ -348,6 +349,7 @@ export function DataTableExpandedDiagram({
         const raw = (res as { data?: unknown })?.data;
         const list: JobDataRelation[] = Array.isArray(raw) ? raw : Array.isArray((raw as any)?.[0]) ? (raw as any)[0] : [];
         const filtered = list.filter((r) => Number(r?.data?.id) === entityId);
+        setExistingEntityIds(filtered.map((r) => Number(r.job?.id)).filter((n) => Number.isFinite(n)));
         setMapData({ id: nodeId, label: nodeLabel, children: filtered.map((r) => ({ id: String(r.id), label: r.job?.name ?? `#${r.job?.id ?? r.id}` })) });
         return;
       }
@@ -357,6 +359,7 @@ export function DataTableExpandedDiagram({
         const raw = (res as { data?: unknown })?.data;
         const list: DataProcessRelation[] = Array.isArray(raw) ? raw : Array.isArray((raw as any)?.[0]) ? (raw as any)[0] : [];
         const filtered = list.filter((r) => Number(r?.data?.id) === entityId);
+        setExistingEntityIds(filtered.map((r) => Number(r.process?.id)).filter((n) => Number.isFinite(n)));
         setMapData({ id: nodeId, label: nodeLabel, children: filtered.map((r) => ({ id: String(r.id), label: r.process?.name ?? `#${r.process?.id ?? r.id}` })) });
         return;
       }
@@ -366,6 +369,7 @@ export function DataTableExpandedDiagram({
         const raw = (res as { data?: unknown })?.data;
         const list: SystemDataRelation[] = Array.isArray(raw) ? raw : Array.isArray((raw as any)?.[0]) ? (raw as any)[0] : [];
         const filtered = list.filter((r) => Number(r?.data?.id ?? (r as any)?.dataId ?? (r as any)?.data_id) === entityId);
+        setExistingEntityIds(filtered.map((r) => Number(r.system?.id)).filter((n) => Number.isFinite(n)));
         setMapData({ id: nodeId, label: nodeLabel, children: filtered.map((r) => ({ id: String(r.id), label: r.system?.name ?? `#${r.system?.id ?? r.id}` })) });
         return;
       }
@@ -375,6 +379,7 @@ export function DataTableExpandedDiagram({
         const raw = (res as { data?: unknown })?.data;
         const list: TechnologyDataRelation[] = Array.isArray(raw) ? raw : Array.isArray((raw as any)?.[0]) ? (raw as any)[0] : [];
         const filtered = list.filter((r) => Number(r?.data?.id ?? (r as any)?.dataId) === entityId);
+        setExistingEntityIds(filtered.map((r) => Number(r.technology?.id)).filter((n) => Number.isFinite(n)));
         setMapData({ id: nodeId, label: nodeLabel, children: filtered.map((r) => ({ id: String(r.id), label: r.technology?.name ?? `#${r.technology?.id ?? r.id}` })) });
         return;
       }
@@ -384,6 +389,7 @@ export function DataTableExpandedDiagram({
         const raw = (res as { data?: unknown })?.data;
         const list: DataIndicatorRelation[] = Array.isArray(raw) ? raw : Array.isArray((raw as any)?.[0]) ? (raw as any)[0] : [];
         const filtered = list.filter((r) => Number(r?.data?.id) === entityId);
+        setExistingEntityIds(filtered.map((r) => Number(r.indicator?.id)).filter((n) => Number.isFinite(n)));
         setMapData({ id: nodeId, label: nodeLabel, children: filtered.map((r) => ({ id: String(r.id), label: r.indicator?.indicatorName ?? r.indicator?.name ?? `#${r.indicator?.id ?? r.id}` })) });
         return;
       }
@@ -393,6 +399,7 @@ export function DataTableExpandedDiagram({
         const raw = (res as { data?: unknown })?.data;
         const list: DataDocumentRelation[] = Array.isArray(raw) ? raw : Array.isArray((raw as any)?.[0]) ? (raw as any)[0] : [];
         const filtered = list.filter((r) => Number(r?.data?.id) === entityId);
+        setExistingEntityIds(filtered.map((r) => Number(r.document?.id)).filter((n) => Number.isFinite(n)));
         setMapData({ id: nodeId, label: nodeLabel, children: filtered.map((r) => ({ id: String(r.id), label: r.document?.name ?? `#${r.document?.id ?? r.id}` })) });
         return;
       }
@@ -558,12 +565,12 @@ export function DataTableExpandedDiagram({
       {!isRelationModule && (
         <DataTableNodeCreateModal open={openCreateModal} onClose={() => setOpenCreateModal(false)} onSuccess={fetchExpandedData} dataId={dataId} parentNodeId={nodeId} />
       )}
-      <DataJobDataDrawer open={jobDataOpen} onClose={() => { setJobDataOpen(false); setJobDataRelationId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} relationId={jobDataRelationId} />
-      <DataProcessDataDrawer open={processDataOpen} onClose={() => { setProcessDataOpen(false); setProcessDataRelationId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} relationId={processDataRelationId} />
-      <DataSystemDataDrawer open={systemDataOpen} onClose={() => { setSystemDataOpen(false); setSystemDataRelationId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} relationId={systemDataRelationId} />
-      <DataTechnologyDataDrawer open={technologyDataOpen} onClose={() => { setTechnologyDataOpen(false); setTechnologyDataRelationId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} relationId={technologyDataRelationId} />
-      <DataIndicatorDataDrawer open={indicatorDataOpen} onClose={() => { setIndicatorDataOpen(false); setIndicatorDataRelationId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} relationId={indicatorDataRelationId} />
-      <DataDocumentsDataDrawer open={documentsDataOpen} onClose={() => { setDocumentsDataOpen(false); setDocumentsDataRelationId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} relationId={documentsDataRelationId} />
+      <DataJobDataDrawer open={jobDataOpen} onClose={() => { setJobDataOpen(false); setJobDataRelationId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} relationId={jobDataRelationId} excludeIds={existingEntityIds} />
+      <DataProcessDataDrawer open={processDataOpen} onClose={() => { setProcessDataOpen(false); setProcessDataRelationId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} relationId={processDataRelationId} excludeIds={existingEntityIds} />
+      <DataSystemDataDrawer open={systemDataOpen} onClose={() => { setSystemDataOpen(false); setSystemDataRelationId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} relationId={systemDataRelationId} excludeIds={existingEntityIds} />
+      <DataTechnologyDataDrawer open={technologyDataOpen} onClose={() => { setTechnologyDataOpen(false); setTechnologyDataRelationId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} relationId={technologyDataRelationId} excludeIds={existingEntityIds} />
+      <DataIndicatorDataDrawer open={indicatorDataOpen} onClose={() => { setIndicatorDataOpen(false); setIndicatorDataRelationId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} relationId={indicatorDataRelationId} excludeIds={existingEntityIds} />
+      <DataDocumentsDataDrawer open={documentsDataOpen} onClose={() => { setDocumentsDataOpen(false); setDocumentsDataRelationId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} relationId={documentsDataRelationId} excludeIds={existingEntityIds} />
       <DataAuditDrawer open={auditOpen} onClose={() => { setAuditOpen(false); setAuditId(null); }} onSuccess={fetchExpandedData} dataId={Number(dataId)} dataLabel={dataLabel} auditId={auditId} />
       <Dialog open={deleteDialog.open} onClose={() => !deleting && setDeleteDialog({ open: false, nodeId: null })} maxWidth="xs" fullWidth>
         <DialogTitle>{t('data.table.dialogs.delete.title')}</DialogTitle>

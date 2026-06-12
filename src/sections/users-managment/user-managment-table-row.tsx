@@ -119,6 +119,8 @@ export function UserManagmentTableRow({
     const rowRecord = row as unknown as Record<string, unknown>;
 
     switch (columnId) {
+      case 'organizationalUnit':
+        return row.organizationalUnit?.name ?? row.organizationalUnitId;
       case 'municipalityId':
         return row.location?.municipality?.name ?? row.municipalityId;
       case 'paymentPeriodId':

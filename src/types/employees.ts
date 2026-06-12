@@ -103,6 +103,10 @@ export type IUserManagement = {
     id: string;
     name: string;
   };
+  organizationalUnit?: {
+    id: string;
+    name: string;
+  } | null;
   startedWorkOn: Date | string;
   createdAt: Date | string;
   deletedAt: Date | string | null;

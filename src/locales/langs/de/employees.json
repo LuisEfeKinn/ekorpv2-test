@@ -154,6 +154,7 @@
         "minimumBillingRatePerHour": "Mindest-Stundensatz",
         "recurringWeeklyLimitHours": "Wöchentliches Stundenlimit",
         "organizationalUnitId": "Organisationseinheit",
+        "organizationalUnit": "Organisationseinheit",
         "municipalityId": "Gemeinde",
         "paymentPeriod": "Zahlungszeitraum",
         "coin": "Währung",

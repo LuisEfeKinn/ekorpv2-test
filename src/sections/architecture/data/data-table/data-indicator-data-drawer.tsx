@@ -36,6 +36,7 @@ type Props = {
   dataLabel?: string;
   relationId?: number | null;
   onSuccess?: () => void;
+  excludeIds?: number[];
   sx?: SxProps<Theme>;
 };
 
@@ -57,7 +58,7 @@ function normalizeList(raw: unknown): unknown[] {
   return [];
 }
 
-export function DataIndicatorDataDrawer({ open, onClose, dataId, dataLabel, relationId, onSuccess, sx }: Props) {
+export function DataIndicatorDataDrawer({ open, onClose, dataId, dataLabel, relationId, onSuccess, excludeIds, sx }: Props) {
   const { t } = useTranslate('architecture');
 
   const [saving, setSaving] = useState(false);
@@ -89,14 +90,15 @@ export function DataIndicatorDataDrawer({ open, onClose, dataId, dataLabel, rela
           return { id, label };
         })
         .filter((o): o is Option => Boolean(o));
-      setOptions(mapped);
+      const finalOptions = !isEditing && excludeIds?.length ? mapped.filter((o) => !excludeIds.includes(o.id)) : mapped;
+      setOptions(finalOptions);
     } catch {
       setOptions([]);
       toast.error(t('data.map.indicatorData.messages.listLoadError'));
     } finally {
       setListLoading(false);
     }
-  }, [t]);
+  }, [excludeIds, isEditing, t]);
 
   const resetForm = useCallback(() => {
     setSelectedId(null);

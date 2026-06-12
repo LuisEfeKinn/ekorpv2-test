@@ -1,4 +1,4 @@
-import type { IPositionOption } from 'src/types/organization';
+import type { IPositionOption, IOrganizationalUnitOption } from 'src/types/organization';
 import type {
   IRegionOption,
   ICountryOption,
@@ -160,7 +160,6 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
   const [preloadPositionId, setPreloadPositionId] = useState<string | undefined>(undefined);
   const [preloadEmploymentTypeId, setPreloadEmploymentTypeId] = useState<string | undefined>(undefined);
   const [preloadSkillIds, setPreloadSkillIds] = useState<string[]>([]);
-  const [preloadOrganizationalUnitId, setPreloadOrganizationalUnitId] = useState<string | undefined>(undefined);
 
   const UserManagementCreateSchema = z.object({
     firstName: z.string().min(1, { message: tUsers('user-management.form.fields.firstName.required') }),
@@ -261,10 +260,14 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
     billingRatePerHour: currentUser.billingRatePerHour || '', // No viene en la respuesta actual
     minimunBllingRatePerHour: currentUser.minimumBillingRatePerHour || '',
     recurringWeeklyLimitHours: currentUser.recurringWeeklyLimitHours || '',
-    organizationalUnitId: null, // Se cargará con el autocomplete (no viene en respuesta)
+    organizationalUnitId: currentUser.organizationalUnit
+      ? { id: String(currentUser.organizationalUnit.id), name: currentUser.organizationalUnit.name }
+      : null,
     employmentTypeId: null, // Se cargará con el autocomplete
     skillId: [], // Se cargará con el autocomplete
-    positionId: null, // Se cargará con el autocomplete
+    positionId: currentUser.position
+      ? { id: String(currentUser.position.id), name: currentUser.position.name }
+      : null,
     documentId: currentUser.documentId || '',
     email: '',
     tel: '',
@@ -315,6 +318,8 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
     control,
     formState: { isSubmitting },
   } = methods;
+  const selectedPosition = watch('positionId');
+  const selectedPositionId = selectedPosition?.id;
 
   const fetchSupervisors = useCallback(async (search?: string) => {
     setSupervisorLoading(true);
@@ -422,13 +427,16 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
         }
 
         // 5. Precargar unidad organizacional
-        if (currentUser.organizationalUnitId) {
-          setPreloadOrganizationalUnitId(currentUser.organizationalUnitId.toString());
+        if (currentUser.organizationalUnit) {
+          const organizationalUnitOption: IOrganizationalUnitOption = {
+            id: String(currentUser.organizationalUnit.id),
+            name: currentUser.organizationalUnit.name,
+          };
+          setValue('organizationalUnitId', organizationalUnitOption);
         }
 
         // 6. Otros campos que pueden venir directamente
         // Nota: firstName, secondName, etc. ahora sí vienen en la respuesta
-        // También se agregó la precarga de organizationalUnitId
 
       } catch (error) {
         console.error('Error loading data for edit:', error);
@@ -497,7 +505,13 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
   };
 
   const handlePositionChange = (position: IPositionOption | null) => {
-    // No hacer nada - la posición se maneja directamente por el autocomplete
+    void position;
+
+    setValue('organizationalUnitId', null, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
   };
 
 
@@ -860,7 +874,8 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
             name="organizationalUnitId"
             label={tUsers('user-management.form.fields.organizationalUnitId.label')}
             placeholder={tUsers('user-management.form.fields.organizationalUnitId.placeholder')}
-            preloadOrganizationalUnitId={preloadOrganizationalUnitId}
+            jobPositionKmId={selectedPositionId}
+            disabled={!selectedPositionId}
           />
         </Grid>
 

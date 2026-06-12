@@ -362,7 +362,88 @@
   "process": {
     "map": {
       "title": "Process Map",
-      "back": "Back"
+      "breadcrumb": "Map",
+      "diagram": {
+        "loading": "Loading map...",
+        "noData": "No data available",
+        "noRelations": "No relations",
+        "connected": "Connected",
+        "zoom": "Zoom",
+        "move": "Move",
+        "systemTitle": "Main System",
+        "errorLoading": "Error loading process map"
+      },
+      "expanded": {
+        "selectedCategory": "Selected Category",
+        "loading": "Loading...",
+        "noData": "No data available",
+        "backTooltip": "Back to main map",
+        "addJob": "Add Job",
+        "addTool": "Add Tool",
+        "addDocument": "Add Document",
+        "addSystem": "Add System",
+        "addCompetency": "Add Competency",
+        "addRisk": "Add Risk",
+        "addObjective": "Add Objective",
+        "addIndicator": "Add Indicator",
+        "addLesson": "Add Lesson",
+        "addProposal": "Add Proposal",
+        "errorLoading": "Error loading node data"
+      },
+      "modals": {
+        "common": {
+          "cancel": "Cancel",
+          "link": "Link",
+          "add": "Add",
+          "save": "Save",
+          "missingData": "Missing required data",
+          "loadError": "Error loading data",
+          "saveError": "Error saving data",
+          "relationType": "Relation Type",
+          "mainProcess": "Main Process",
+          "secondaryProcess": "Secondary Process",
+          "description": "Description",
+          "observations": "Observations",
+          "actionType": "Action Type",
+          "selectScalesAndDeficiency": "Select scales and deficiency level",
+          "high": "High",
+          "medium": "Medium",
+          "low": "Low",
+          "delete": "Delete"
+        },
+        "job": {
+          "title": "Add Job",
+          "fieldLabel": "Job"
+        },
+        "tool": {
+          "title": "Add Tool",
+          "fieldLabel": "Tool"
+        },
+        "document": {
+          "title": "Add Document",
+          "fieldLabel": "Document"
+        },
+        "system": {
+          "title": "Add System",
+          "fieldLabel": "System"
+        },
+        "competency": {
+          "title": "Add Competency",
+          "fieldLabel": "Competency"
+        },
+        "risk": {
+          "title": "Add Risk",
+          "fieldLabel": "Risk"
+        },
+        "objective": {
+          "title": "Add Objective",
+          "fieldLabel": "Objective"
+        },
+        "indicator": {
+          "title": "Add Indicator",
+          "fieldLabel": "Indicator"
+        }
+      }
     },
     "table": {
       "title": "Process Table",
@@ -420,6 +501,7 @@
         }
       },
       "status": {
+        "all": "All",
         "active": "Active",
         "inactive": "Inactive"
       },
@@ -602,100 +684,10 @@
           "notFound": "Process not found"
         }
       },
-      "status": {
-        "all": "All",
-        "active": "Active",
-        "inactive": "Inactive"
-      },
       "tooltips": {
         "edit": "Edit process",
         "delete": "Delete process",
         "quickEdit": "Quick edit"
-      }
-    },
-    "map": {
-      "title": "Process Map",
-      "breadcrumb": "Map",
-      "diagram": {
-        "loading": "Loading map...",
-        "noData": "No data available",
-        "noRelations": "No relations",
-        "connected": "Connected",
-        "zoom": "Zoom",
-        "move": "Move",
-        "systemTitle": "Main System",
-        "errorLoading": "Error loading process map"
-      },
-      "expanded": {
-        "selectedCategory": "Selected Category",
-        "loading": "Loading...",
-        "noData": "No data available",
-        "backTooltip": "Back to main map",
-        "addJob": "Add Job",
-        "addTool": "Add Tool",
-        "addDocument": "Add Document",
-        "addSystem": "Add System",
-        "addCompetency": "Add Competency",
-        "addRisk": "Add Risk",
-        "addObjective": "Add Objective",
-        "addIndicator": "Add Indicator",
-        "addLesson": "Add Lesson",
-        "addProposal": "Add Proposal",
-        "errorLoading": "Error loading node data"
-      },
-      "modals": {
-        "common": {
-          "cancel": "Cancel",
-          "link": "Link",
-          "add": "Add",
-          "save": "Save",
-          "missingData": "Missing required data",
-          "loadError": "Error loading data",
-          "saveError": "Error saving data",
-          "relationType": "Relation Type",
-          "mainProcess": "Main Process",
-          "secondaryProcess": "Secondary Process",
-          "description": "Description",
-          "observations": "Observations",
-          "actionType": "Action Type",
-          "selectScalesAndDeficiency": "Select scales and deficiency level",
-          "high": "High",
-          "medium": "Medium",
-          "low": "Low",
-          "delete": "Delete"
-        },
-        "job": {
-          "title": "Add Job",
-          "fieldLabel": "Job"
-        },
-        "tool": {
-          "title": "Add Tool",
-          "fieldLabel": "Tool"
-        },
-        "document": {
-          "title": "Add Document",
-          "fieldLabel": "Document"
-        },
-        "system": {
-          "title": "Add System",
-          "fieldLabel": "System"
-        },
-        "competency": {
-          "title": "Add Competency",
-          "fieldLabel": "Competency"
-        },
-        "risk": {
-          "title": "Add Risk",
-          "fieldLabel": "Risk"
-        },
-        "objective": {
-          "title": "Add Objective",
-          "fieldLabel": "Objective"
-        },
-        "indicator": {
-          "title": "Add Indicator",
-          "fieldLabel": "Indicator"
-        }
       }
     },
     "feedbacks": {
@@ -1937,6 +1929,182 @@
           "backError": "Error returning to the main diagram",
           "loadMapError": "Error loading the relationship map"
         }
+      },
+      "systemData": {
+        "title": "Application Systems",
+        "titleWithData": "Application Systems of {{data}}",
+        "subtitle": "Associate an application system with this data asset",
+        "form": {
+          "title": "Relationship information",
+          "fields": {
+            "system": "Application System",
+            "observations": "Observations"
+          },
+          "validation": {
+            "required": "Select an application system"
+          }
+        },
+        "actions": {
+          "create": "Save",
+          "update": "Update"
+        },
+        "messages": {
+          "listLoadError": "Error loading application systems",
+          "loadError": "Error loading relationship",
+          "created": "Relationship created successfully",
+          "updated": "Relationship updated successfully",
+          "saveError": "Error saving relationship"
+        }
+      },
+      "documentsData": {
+        "title": "Documents",
+        "titleWithData": "Documents of {{data}}",
+        "subtitle": "Associate a document with this data asset",
+        "form": {
+          "title": "Relationship information",
+          "fields": {
+            "document": "Document",
+            "observations": "Observations"
+          },
+          "validation": {
+            "required": "Select a document",
+            "observationsRequired": "Observations are required"
+          }
+        },
+        "actions": {
+          "create": "Save",
+          "update": "Update"
+        },
+        "messages": {
+          "listLoadError": "Error loading documents",
+          "loadError": "Error loading relationship",
+          "created": "Relationship created successfully",
+          "updated": "Relationship updated successfully",
+          "saveError": "Error saving relationship"
+        }
+      },
+      "indicatorData": {
+        "title": "Indicators",
+        "titleWithData": "Indicators of {{data}}",
+        "subtitle": "Associate an indicator with this data asset",
+        "form": {
+          "title": "Relationship information",
+          "fields": {
+            "indicator": "Indicator",
+            "observations": "Observations"
+          },
+          "validation": {
+            "required": "Select an indicator"
+          }
+        },
+        "actions": {
+          "create": "Save",
+          "update": "Update"
+        },
+        "messages": {
+          "listLoadError": "Error loading indicators",
+          "loadError": "Error loading relationship",
+          "created": "Relationship created successfully",
+          "updated": "Relationship updated successfully",
+          "saveError": "Error saving relationship"
+        }
+      },
+      "jobData": {
+        "title": "Positions",
+        "titleWithData": "Positions of {{data}}",
+        "subtitle": "Associate a job position with this data asset",
+        "form": {
+          "title": "Relationship information",
+          "fields": {
+            "job": "Position",
+            "observations": "Observations"
+          },
+          "validation": {
+            "required": "Select a position"
+          }
+        },
+        "actions": {
+          "create": "Save",
+          "update": "Update"
+        },
+        "messages": {
+          "listLoadError": "Error loading positions",
+          "loadError": "Error loading relationship",
+          "created": "Relationship created successfully",
+          "updated": "Relationship updated successfully",
+          "saveError": "Error saving relationship"
+        }
+      },
+      "processData": {
+        "title": "Processes",
+        "titleWithData": "Processes of {{data}}",
+        "subtitle": "Associate a process with this data asset",
+        "form": {
+          "title": "Relationship information",
+          "fields": {
+            "process": "Process",
+            "observations": "Observations"
+          },
+          "validation": {
+            "required": "Select a process"
+          }
+        },
+        "actions": {
+          "create": "Save",
+          "update": "Update"
+        },
+        "messages": {
+          "listLoadError": "Error loading processes",
+          "loadError": "Error loading relationship",
+          "created": "Relationship created successfully",
+          "updated": "Relationship updated successfully",
+          "saveError": "Error saving relationship"
+        }
+      },
+      "technologyData": {
+        "title": "Technologies",
+        "titleWithData": "Technologies of {{data}}",
+        "subtitle": "Associate a technology with this data asset",
+        "form": {
+          "title": "Relationship information",
+          "fields": {
+            "technology": "Technology",
+            "observations": "Observations"
+          },
+          "validation": {
+            "required": "Select a technology"
+          }
+        },
+        "actions": {
+          "create": "Save",
+          "update": "Update"
+        },
+        "messages": {
+          "listLoadError": "Error loading technologies",
+          "loadError": "Error loading relationship",
+          "created": "Relationship created successfully",
+          "updated": "Relationship updated successfully",
+          "saveError": "Error saving relationship"
+        }
+      },
+      "audits": {
+        "title": "Audits",
+        "messages": {
+          "created": "Audit created successfully",
+          "updated": "Audit updated successfully",
+          "saveError": "Error saving audit",
+          "updateError": "Error updating audit",
+          "loadError": "Error loading audit"
+        }
+      },
+      "nodes": {
+        "jobs": "Jobs",
+        "processes": "Processes",
+        "systems": "Systems",
+        "technologies": "Technologies",
+        "indicators": "Indicators",
+        "documents": "Documents",
+        "audits": "Audits"
       }
     },
     "timeline": {

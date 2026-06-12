@@ -160,6 +160,7 @@
         "recurringWeeklyLimitHours": "Límite semanal (horas)",
         "immediateSupervisorId": "Jefe inmediato",
         "organizationalUnitId": "Unidad organizacional",
+        "organizationalUnit": "Unidad organizacional",
         "municipalityId": "Municipio",
         "paymentPeriodId": "Período de pago",
         "paymentPeriod": "Período de pago",

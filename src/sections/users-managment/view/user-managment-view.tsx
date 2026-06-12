@@ -117,7 +117,7 @@ export function UserManagmentView() {
       'billingRatePerHour',
       'minimumBillingRatePerHour',
       'recurringWeeklyLimitHours',
-      'organizationalUnitId',
+      'organizationalUnit',
       'municipalityId',
       'paymentPeriod',
       'coin',
@@ -130,7 +130,13 @@ export function UserManagmentView() {
     const dynamicKeys = tableData.length ? Object.keys(tableData[0] as Record<string, unknown>) : [];
     const merged = Array.from(new Set([...seed, ...dynamicKeys]));
     return merged
-      .filter((key) => !fixedColumnIds.has(key) && key !== 'createdAt' && key !== 'deletedAt')
+      .filter(
+        (key) =>
+          !fixedColumnIds.has(key)
+          && key !== 'createdAt'
+          && key !== 'deletedAt'
+          && key !== 'organizationalUnitId'
+      )
       .sort((a, b) => a.localeCompare(b));
   }, [fixedColumnIds, tableData]);
 
@@ -1059,7 +1065,7 @@ function EmployeeDetailsDrawer({ open, row, onClose }: EmployeeDetailsDrawerProp
           { label: tUsers('user-management.form.fields.employmentTypeId.label'), value: formatTextValue(row.employmentType?.name) },
           { label: tUsers('user-management.form.fields.immediateSupervisor.label'), value: formatTextValue(row.immediateSupervisorId?.name) },
           { label: tUsers('user-management.form.fields.skillId.label'), value: formatNamedList(row.competencyKm) },
-          { label: tUsers('user-management.form.fields.organizationalUnitId.label'), value: formatTextValue(row.organizationalUnitId) },
+          { label: tUsers('user-management.form.fields.organizationalUnitId.label'), value: formatTextValue(row.organizationalUnit?.name) },
           { label: tUsers('user-management.form.fields.startedWorkOn.label'), value: formatDateValue(row.startedWorkOn) },
         ],
       },

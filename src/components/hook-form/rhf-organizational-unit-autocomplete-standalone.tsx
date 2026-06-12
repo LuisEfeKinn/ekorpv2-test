@@ -4,7 +4,6 @@ import type { IOrganizationalUnitOption } from 'src/types/organization';
 
 import { Controller, useFormContext } from 'react-hook-form';
 import {
-  useRef,
   useState,
   useEffect,
   useCallback,
@@ -36,8 +35,8 @@ export type OrganizationalUnitAutocompleteStandaloneProps = OrganizationalUnitAu
   label?: string;
   placeholder?: string;
   helperText?: React.ReactNode;
+  jobPositionKmId?: string;
   onOrganizationalUnitChange?: (organizationalUnit: IOrganizationalUnitOption | null) => void;
-  preloadOrganizationalUnitId?: string;
   disabled?: boolean;
   slotProps?: OrganizationalUnitAutocompleteStandaloneBaseProps['slotProps'] & {
     textField?: Partial<TextFieldProps>;
@@ -59,27 +58,33 @@ export function OrganizationalUnitAutocompleteStandalone({
   slotProps,
   helperText,
   placeholder,
+  jobPositionKmId,
   onOrganizationalUnitChange,
-  preloadOrganizationalUnitId,
   disabled = false,
   ...other
 }: OrganizationalUnitAutocompleteStandaloneProps) {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, clearErrors } = useFormContext();
   const [options, setOptions] = useState<IOrganizationalUnitOption[]>([]);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const preloadedRef = useRef(false);
-  const skipFirstSearchEffectRef = useRef(true);
 
   const { textField } = slotProps ?? {};
+  const isDisabled = disabled || !jobPositionKmId;
 
   const fetchOrganizationalUnits = useCallback(async (searchTerm?: string) => {
+    if (!jobPositionKmId) {
+      setOptions([]);
+      return;
+    }
+
     try {
       setLoading(true);
 
       const params = {
         page: 1,
         perPage: 50, // Cargar hasta 50 opciones
+        jobPositionId: jobPositionKmId,
         ...(searchTerm && { search: searchTerm }),
       };
 
@@ -88,38 +93,21 @@ export function OrganizationalUnitAutocompleteStandalone({
       const organizationalUnitsOptions = mapOrganizationalUnitOptions(list);
 
       setOptions(organizationalUnitsOptions);
-
-      // Si estamos precargando, buscar y establecer el valor específico
-      if (preloadOrganizationalUnitId && !preloadedRef.current) {
-        const preloadedUnit = organizationalUnitsOptions.find(
-          (unit) => unit.id === String(preloadOrganizationalUnitId)
-        );
-
-        if (preloadedUnit) {
-          setValue(name, preloadedUnit, { shouldValidate: true });
-          if (onOrganizationalUnitChange) {
-            onOrganizationalUnitChange(preloadedUnit);
-          }
-          preloadedRef.current = true;
-        }
-      }
     } catch (error) {
       console.error('Error fetching organizational units:', error);
       setOptions([]);
     } finally {
       setLoading(false);
     }
-  }, [setValue, name, onOrganizationalUnitChange, preloadOrganizationalUnitId]);
+  }, [jobPositionKmId]);
 
-  // Cargar unidades organizacionales al montar el componente
   useEffect(() => {
-    fetchOrganizationalUnits();
-  }, [fetchOrganizationalUnits]);
+    setOptions([]);
+    setInputValue('');
+  }, [jobPositionKmId]);
 
-  // Buscar con debounce cuando el usuario escribe
   useEffect(() => {
-    if (skipFirstSearchEffectRef.current) {
-      skipFirstSearchEffectRef.current = false;
+    if (!open || !jobPositionKmId) {
       return undefined;
     }
 
@@ -139,7 +127,7 @@ export function OrganizationalUnitAutocompleteStandalone({
     return () => {
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [inputValue, fetchOrganizationalUnits]);
+  }, [open, inputValue, fetchOrganizationalUnits, jobPositionKmId]);
 
   return (
     <Controller
@@ -149,19 +137,33 @@ export function OrganizationalUnitAutocompleteStandalone({
         <Autocomplete
           options={options}
           loading={loading}
-          disabled={disabled}
+          disabled={isDisabled}
+          open={open}
           value={field.value || null}
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
           getOptionLabel={(option: any) => option?.name || ''}
           isOptionEqualToValue={(option, value) => option?.id === value?.id}
-          onInputChange={(event, newInputValue, reason) => {
-            if (reason === 'input') {
-              setInputValue(newInputValue);
-            }
+          onInputChange={(event, newInputValue) => {
+            setInputValue(newInputValue);
           }}
           onChange={(event, newValue) => {
-            field.onChange(newValue);
+            const organizationalUnitValue = (newValue && typeof newValue === 'object' && !Array.isArray(newValue))
+              ? newValue as IOrganizationalUnitOption
+              : null;
+
+            setValue(name, organizationalUnitValue, {
+              shouldValidate: true,
+              shouldDirty: true,
+              shouldTouch: true,
+            });
+
+            if (organizationalUnitValue) {
+              clearErrors(name);
+            }
+
             if (onOrganizationalUnitChange) {
-              onOrganizationalUnitChange(newValue as any);
+              onOrganizationalUnitChange(organizationalUnitValue);
             }
           }}
           renderInput={(params) => (

@@ -359,61 +359,61 @@
   },
   "process": {
     "table": {
-        "title": "Prozesstabelle",
-        "breadcrumbs": {
-          "dashboard": "Dashboard",
-          "list": "Prozessliste",
-          "create": "Prozess hinzufügen",
-          "edit": "Prozess bearbeiten"
+      "title": "Prozesstabelle",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Prozessliste",
+        "create": "Prozess hinzufügen",
+        "edit": "Prozess bearbeiten"
+      },
+      "actions": {
+        "add": "Prozess hinzufügen",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "cancel": "Abbrechen",
+        "save": "Speichern",
+        "saving": "Speichern...",
+        "create": "Prozess hinzufügen",
+        "update": "Prozess aktualisieren",
+        "search": "Prozesse suchen...",
+        "clear": "Löschen",
+        "map": "Karte",
+        "viewNodeMap": "Knotenkarte anzeigen",
+        "back": "Zurück",
+        "upload": "Vorlage hochladen",
+        "download": "Excel exportieren",
+        "downloadTemplate": "Vorlage herunterladen"
+      },
+      "uploadDrawer": {
+        "title": "Prozesse stapelweise hochladen",
+        "instructions": {
+          "title": "Anweisungen",
+          "description": "Befolgen Sie die folgenden Anweisungen, um die Prozessvorlage hochzuladen:",
+          "step1": "Laden Sie die Excel-Vorlage mit dem erforderlichen Format herunter.",
+          "step2": "Füllen Sie die Datei aus und speichern Sie sie ohne Leerzeichen oder Sonderzeichen im Namen.",
+          "step3": "Sie können die Datei in das folgende Feld ziehen und ablegen oder über die Schaltfläche 'Datei auswählen' auswählen.",
+          "step4": "Klicken Sie auf 'Hochladen', um den Ladevorgang zu starten."
+        },
+        "drop": {
+          "title": "Excel-Datei auswählen",
+          "subtitle": "oder klicken Sie, um von Ihrem Gerät auszuwählen",
+          "formats": "Erlaubte Formate: .xlsx, .xls • 1 Datei",
+          "selectedTitle": "Ausgewählte Datei"
         },
         "actions": {
-          "add": "Prozess hinzufügen",
-          "edit": "Bearbeiten",
-          "delete": "Löschen",
+          "close": "Schließen",
           "cancel": "Abbrechen",
-          "save": "Speichern",
-          "saving": "Speichern...",
-          "create": "Prozess hinzufügen",
-          "update": "Prozess aktualisieren",
-          "search": "Prozesse suchen...",
-          "clear": "Löschen",
-          "map": "Karte",
-          "viewNodeMap": "Knotenkarte anzeigen",
-          "back": "Zurück",
-          "upload": "Vorlage hochladen",
-          "download": "Excel exportieren",
-          "downloadTemplate": "Vorlage herunterladen"
+          "upload": "Hochladen",
+          "remove": "Entfernen"
         },
-        "uploadDrawer": {
-          "title": "Prozesse stapelweise hochladen",
-          "instructions": {
-            "title": "Anweisungen",
-            "description": "Befolgen Sie die folgenden Anweisungen, um die Prozessvorlage hochzuladen:",
-            "step1": "Laden Sie die Excel-Vorlage mit dem erforderlichen Format herunter.",
-            "step2": "Füllen Sie die Datei aus und speichern Sie sie ohne Leerzeichen oder Sonderzeichen im Namen.",
-            "step3": "Sie können die Datei in das folgende Feld ziehen und ablegen oder über die Schaltfläche 'Datei auswählen' auswählen.",
-            "step4": "Klicken Sie auf 'Hochladen', um den Ladevorgang zu starten."
-          },
-          "drop": {
-            "title": "Excel-Datei auswählen",
-            "subtitle": "oder klicken Sie, um von Ihrem Gerät auszuwählen",
-            "formats": "Erlaubte Formate: .xlsx, .xls • 1 Datei",
-            "selectedTitle": "Ausgewählte Datei"
-          },
-          "actions": {
-            "close": "Schließen",
-            "cancel": "Abbrechen",
-            "upload": "Hochladen",
-            "remove": "Entfernen"
-          },
-          "errors": {
-            "noFile": "Bitte eine Datei auswählen.",
-            "tooManyFiles": "Es ist nur 1 Datei erlaubt.",
-            "invalidType": "Format nicht erlaubt. Verwenden Sie .xlsx oder .xls.",
-            "generic": "Die Datei konnte nicht hochgeladen werden. Bitte erneut versuchen."
-          }
-        },
-        "table": {
+        "errors": {
+          "noFile": "Bitte eine Datei auswählen.",
+          "tooManyFiles": "Es ist nur 1 Datei erlaubt.",
+          "invalidType": "Format nicht erlaubt. Verwenden Sie .xlsx oder .xls.",
+          "generic": "Die Datei konnte nicht hochgeladen werden. Bitte erneut versuchen."
+        }
+      },
+      "table": {
         "columns": {
           "nomenclature": "Nomenklatur",
           "name": "Name",
@@ -2065,6 +2065,182 @@
           "backError": "Fehler beim Zurückkehren zum Hauptdiagramm",
           "loadMapError": "Fehler beim Laden der Beziehungskarte"
         }
+      },
+      "systemData": {
+        "title": "Anwendungssysteme",
+        "titleWithData": "Anwendungssysteme von {{data}}",
+        "subtitle": "Ein Anwendungssystem mit diesem Datenelement verknüpfen",
+        "form": {
+          "title": "Beziehungsinformationen",
+          "fields": {
+            "system": "Anwendungssystem",
+            "observations": "Beobachtungen"
+          },
+          "validation": {
+            "required": "Bitte ein Anwendungssystem auswählen"
+          }
+        },
+        "actions": {
+          "create": "Speichern",
+          "update": "Aktualisieren"
+        },
+        "messages": {
+          "listLoadError": "Fehler beim Laden der Anwendungssysteme",
+          "loadError": "Fehler beim Laden der Beziehung",
+          "created": "Beziehung erfolgreich erstellt",
+          "updated": "Beziehung erfolgreich aktualisiert",
+          "saveError": "Fehler beim Speichern der Beziehung"
+        }
+      },
+      "documentsData": {
+        "title": "Dokumente",
+        "titleWithData": "Dokumente von {{data}}",
+        "subtitle": "Ein Dokument mit diesem Datenelement verknüpfen",
+        "form": {
+          "title": "Beziehungsinformationen",
+          "fields": {
+            "document": "Dokument",
+            "observations": "Beobachtungen"
+          },
+          "validation": {
+            "required": "Bitte ein Dokument auswählen",
+            "observationsRequired": "Beobachtungen sind erforderlich"
+          }
+        },
+        "actions": {
+          "create": "Speichern",
+          "update": "Aktualisieren"
+        },
+        "messages": {
+          "listLoadError": "Fehler beim Laden der Dokumente",
+          "loadError": "Fehler beim Laden der Beziehung",
+          "created": "Beziehung erfolgreich erstellt",
+          "updated": "Beziehung erfolgreich aktualisiert",
+          "saveError": "Fehler beim Speichern der Beziehung"
+        }
+      },
+      "indicatorData": {
+        "title": "Indikatoren",
+        "titleWithData": "Indikatoren von {{data}}",
+        "subtitle": "Einen Indikator mit diesem Datenelement verknüpfen",
+        "form": {
+          "title": "Beziehungsinformationen",
+          "fields": {
+            "indicator": "Indikator",
+            "observations": "Beobachtungen"
+          },
+          "validation": {
+            "required": "Bitte einen Indikator auswählen"
+          }
+        },
+        "actions": {
+          "create": "Speichern",
+          "update": "Aktualisieren"
+        },
+        "messages": {
+          "listLoadError": "Fehler beim Laden der Indikatoren",
+          "loadError": "Fehler beim Laden der Beziehung",
+          "created": "Beziehung erfolgreich erstellt",
+          "updated": "Beziehung erfolgreich aktualisiert",
+          "saveError": "Fehler beim Speichern der Beziehung"
+        }
+      },
+      "jobData": {
+        "title": "Stellen",
+        "titleWithData": "Stellen von {{data}}",
+        "subtitle": "Eine Stelle mit diesem Datenelement verknüpfen",
+        "form": {
+          "title": "Beziehungsinformationen",
+          "fields": {
+            "job": "Stelle",
+            "observations": "Beobachtungen"
+          },
+          "validation": {
+            "required": "Bitte eine Stelle auswählen"
+          }
+        },
+        "actions": {
+          "create": "Speichern",
+          "update": "Aktualisieren"
+        },
+        "messages": {
+          "listLoadError": "Fehler beim Laden der Stellen",
+          "loadError": "Fehler beim Laden der Beziehung",
+          "created": "Beziehung erfolgreich erstellt",
+          "updated": "Beziehung erfolgreich aktualisiert",
+          "saveError": "Fehler beim Speichern der Beziehung"
+        }
+      },
+      "processData": {
+        "title": "Prozesse",
+        "titleWithData": "Prozesse von {{data}}",
+        "subtitle": "Einen Prozess mit diesem Datenelement verknüpfen",
+        "form": {
+          "title": "Beziehungsinformationen",
+          "fields": {
+            "process": "Prozess",
+            "observations": "Beobachtungen"
+          },
+          "validation": {
+            "required": "Bitte einen Prozess auswählen"
+          }
+        },
+        "actions": {
+          "create": "Speichern",
+          "update": "Aktualisieren"
+        },
+        "messages": {
+          "listLoadError": "Fehler beim Laden der Prozesse",
+          "loadError": "Fehler beim Laden der Beziehung",
+          "created": "Beziehung erfolgreich erstellt",
+          "updated": "Beziehung erfolgreich aktualisiert",
+          "saveError": "Fehler beim Speichern der Beziehung"
+        }
+      },
+      "technologyData": {
+        "title": "Technologien",
+        "titleWithData": "Technologien von {{data}}",
+        "subtitle": "Eine Technologie mit diesem Datenelement verknüpfen",
+        "form": {
+          "title": "Beziehungsinformationen",
+          "fields": {
+            "technology": "Technologie",
+            "observations": "Beobachtungen"
+          },
+          "validation": {
+            "required": "Bitte eine Technologie auswählen"
+          }
+        },
+        "actions": {
+          "create": "Speichern",
+          "update": "Aktualisieren"
+        },
+        "messages": {
+          "listLoadError": "Fehler beim Laden der Technologien",
+          "loadError": "Fehler beim Laden der Beziehung",
+          "created": "Beziehung erfolgreich erstellt",
+          "updated": "Beziehung erfolgreich aktualisiert",
+          "saveError": "Fehler beim Speichern der Beziehung"
+        }
+      },
+      "audits": {
+        "title": "Audits",
+        "messages": {
+          "created": "Audit erfolgreich erstellt",
+          "updated": "Audit erfolgreich aktualisiert",
+          "saveError": "Fehler beim Speichern des Audits",
+          "updateError": "Fehler beim Aktualisieren des Audits",
+          "loadError": "Fehler beim Laden des Audits"
+        }
+      },
+      "nodes": {
+        "jobs": "Stellen",
+        "processes": "Prozesse",
+        "systems": "Systeme",
+        "technologies": "Technologien",
+        "indicators": "Indikatoren",
+        "documents": "Dokumente",
+        "audits": "Prüfungen"
       }
     },
     "timeline": {

@@ -281,6 +281,18 @@ export function DataTableDiagram({ dataId, sx }: DataTableDiagramProps) {
     theme.palette.primary.dark,
   ], [theme]);
 
+  const getNodeLabel = useCallback((nodeId: string, fallback: string): string => {
+    const id = nodeId.toLowerCase();
+    if (id === 'jobs' || id === 'job' || id === 'cargos' || id === 'cargo' || id.includes('job') || id.includes('cargo')) return t('data.map.nodes.jobs');
+    if (id === 'process' || id === 'processes' || id === 'proceso' || id === 'procesos' || id.includes('process') || id.includes('proceso')) return t('data.map.nodes.processes');
+    if (id === 'systems' || id === 'system' || id === 'sistemas' || id === 'sistema' || id.includes('system') || id.includes('sistema')) return t('data.map.nodes.systems');
+    if (id === 'technology' || id === 'technologies' || id === 'tecnologia' || id === 'tecnologias' || id.includes('technolog') || id.includes('tecnolog')) return t('data.map.nodes.technologies');
+    if (id === 'indicators' || id === 'indicator' || id === 'indicadores' || id === 'indicador' || id.includes('indicator') || id.includes('indicador')) return t('data.map.nodes.indicators');
+    if (id === 'documents' || id === 'document' || id === 'documentos' || id === 'documento' || id.includes('document')) return t('data.map.nodes.documents');
+    if (id === 'audits' || id === 'audit' || id === 'auditorias' || id === 'auditoria' || id.includes('audit') || id.includes('auditor')) return t('data.map.nodes.audits');
+    return fallback;
+  }, [t]);
+
   const generateNodesAndEdges = useCallback((data: MapData) => {
     const radius = 400;
     const angleStep = (2 * Math.PI) / data.children.length;
@@ -305,17 +317,18 @@ export function DataTableDiagram({ dataId, sx }: DataTableDiagramProps) {
       const x = centerX + Math.cos(angle) * radius - 90;
       const y = centerY + Math.sin(angle) * radius - 90;
       const color = colors[index % colors.length];
+      const translatedLabel = getNodeLabel(child.id, child.label);
 
       return {
         id: child.id,
         type: 'child',
         position: { x, y },
         data: {
-          label: child.label,
+          label: translatedLabel,
           id: child.id,
           color,
           onClick: () => {
-            setExpandedNode({ id: child.id, label: child.label });
+            setExpandedNode({ id: child.id, label: translatedLabel });
           },
         },
         draggable: true,
@@ -344,7 +357,7 @@ export function DataTableDiagram({ dataId, sx }: DataTableDiagramProps) {
 
     setNodes([centralNode, ...childNodes]);
     setEdges(newEdges);
-  }, [colors, setNodes, setEdges]);
+  }, [colors, getNodeLabel, setNodes, setEdges]);
 
   useEffect(() => {
     const fetchMapData = async () => {

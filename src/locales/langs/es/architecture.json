@@ -359,61 +359,61 @@
   },
   "process": {
     "table": {
-        "title": "Tabla de Procesos",
-        "breadcrumbs": {
-          "dashboard": "Dashboard",
-          "list": "Lista de Procesos",
-          "create": "Agregar Proceso",
-          "edit": "Editar Proceso"
+      "title": "Tabla de Procesos",
+      "breadcrumbs": {
+        "dashboard": "Dashboard",
+        "list": "Lista de Procesos",
+        "create": "Agregar Proceso",
+        "edit": "Editar Proceso"
+      },
+      "actions": {
+        "add": "Agregar Proceso",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "saving": "Guardando...",
+        "create": "Agregar Proceso",
+        "update": "Actualizar Proceso",
+        "search": "Buscar procesos...",
+        "clear": "Limpiar",
+        "map": "Mapa",
+        "viewNodeMap": "Ver mapa de nodos",
+        "back": "Atrás",
+        "upload": "Cargar Plantilla",
+        "download": "Exportar Excel",
+        "downloadTemplate": "Descargar Plantilla"
+      },
+      "uploadDrawer": {
+        "title": "Cargar procesos por Lote",
+        "instructions": {
+          "title": "Instrucciones",
+          "description": "Siga las siguientes instrucciones para cargar la plantilla de procesos:",
+          "step1": "Descarga la plantilla Excel con el formato requerido.",
+          "step2": "Completa el archivo y guárdalo con un nombre que no contenga espacios ni caracteres especiales.",
+          "step3": "Puede arrastrar y soltar el archivo guardado en el cuadro a continuación, o seleccionarlo mediante el botón 'Seleccionar archivo'.",
+          "step4": "Haga clic en el botón 'Cargar' para iniciar el proceso de cargue."
+        },
+        "drop": {
+          "title": "Seleccionar archivo Excel",
+          "subtitle": "o haz clic para seleccionar desde tu dispositivo",
+          "formats": "Formatos permitidos: .xlsx, .xls • 1 archivo",
+          "selectedTitle": "Archivo seleccionado"
         },
         "actions": {
-          "add": "Agregar Proceso",
-          "edit": "Editar",
-          "delete": "Eliminar",
+          "close": "Cerrar",
           "cancel": "Cancelar",
-          "save": "Guardar",
-          "saving": "Guardando...",
-          "create": "Agregar Proceso",
-          "update": "Actualizar Proceso",
-          "search": "Buscar procesos...",
-          "clear": "Limpiar",
-          "map": "Mapa",
-          "viewNodeMap": "Ver mapa de nodos",
-          "back": "Atrás",
-          "upload": "Cargar Plantilla",
-          "download": "Exportar Excel",
-          "downloadTemplate": "Descargar Plantilla"
+          "upload": "Cargar",
+          "remove": "Quitar"
         },
-        "uploadDrawer": {
-          "title": "Cargar procesos por Lote",
-          "instructions": {
-            "title": "Instrucciones",
-            "description": "Siga las siguientes instrucciones para cargar la plantilla de procesos:",
-            "step1": "Descarga la plantilla Excel con el formato requerido.",
-            "step2": "Completa el archivo y guárdalo con un nombre que no contenga espacios ni caracteres especiales.",
-            "step3": "Puede arrastrar y soltar el archivo guardado en el cuadro a continuación, o seleccionarlo mediante el botón 'Seleccionar archivo'.",
-            "step4": "Haga clic en el botón 'Cargar' para iniciar el proceso de cargue."
-          },
-          "drop": {
-            "title": "Seleccionar archivo Excel",
-            "subtitle": "o haz clic para seleccionar desde tu dispositivo",
-            "formats": "Formatos permitidos: .xlsx, .xls • 1 archivo",
-            "selectedTitle": "Archivo seleccionado"
-          },
-          "actions": {
-            "close": "Cerrar",
-            "cancel": "Cancelar",
-            "upload": "Cargar",
-            "remove": "Quitar"
-          },
-          "errors": {
-            "noFile": "Selecciona un archivo.",
-            "tooManyFiles": "Solo se permite 1 archivo.",
-            "invalidType": "Formato no permitido. Usa .xlsx o .xls.",
-            "generic": "No se pudo cargar el archivo. Intenta nuevamente."
-          }
-        },
-        "table": {
+        "errors": {
+          "noFile": "Selecciona un archivo.",
+          "tooManyFiles": "Solo se permite 1 archivo.",
+          "invalidType": "Formato no permitido. Usa .xlsx o .xls.",
+          "generic": "No se pudo cargar el archivo. Intenta nuevamente."
+        }
+      },
+      "table": {
         "columns": {
           "nomenclature": "Nomenclatura",
           "name": "Nombre",
@@ -2065,6 +2065,182 @@
           "backError": "Error al volver al diagrama principal",
           "loadMapError": "Error al cargar el mapa de relaciones"
         }
+      },
+      "systemData": {
+        "title": "Sistemas de Aplicación",
+        "titleWithData": "Sistemas de Aplicación de {{data}}",
+        "subtitle": "Asociar un sistema de aplicación a este activo de datos",
+        "form": {
+          "title": "Información de la relación",
+          "fields": {
+            "system": "Sistema de Aplicación",
+            "observations": "Observaciones"
+          },
+          "validation": {
+            "required": "Seleccione un sistema de aplicación"
+          }
+        },
+        "actions": {
+          "create": "Guardar",
+          "update": "Actualizar"
+        },
+        "messages": {
+          "listLoadError": "Error al cargar los sistemas de aplicación",
+          "loadError": "Error al cargar la relación",
+          "created": "Relación creada con éxito",
+          "updated": "Relación actualizada con éxito",
+          "saveError": "Error al guardar la relación"
+        }
+      },
+      "documentsData": {
+        "title": "Documentos",
+        "titleWithData": "Documentos de {{data}}",
+        "subtitle": "Asociar un documento a este activo de datos",
+        "form": {
+          "title": "Información de la relación",
+          "fields": {
+            "document": "Documento",
+            "observations": "Observaciones"
+          },
+          "validation": {
+            "required": "Seleccione un documento",
+            "observationsRequired": "Las observaciones son obligatorias"
+          }
+        },
+        "actions": {
+          "create": "Guardar",
+          "update": "Actualizar"
+        },
+        "messages": {
+          "listLoadError": "Error al cargar los documentos",
+          "loadError": "Error al cargar la relación",
+          "created": "Relación creada con éxito",
+          "updated": "Relación actualizada con éxito",
+          "saveError": "Error al guardar la relación"
+        }
+      },
+      "indicatorData": {
+        "title": "Indicadores",
+        "titleWithData": "Indicadores de {{data}}",
+        "subtitle": "Asociar un indicador a este activo de datos",
+        "form": {
+          "title": "Información de la relación",
+          "fields": {
+            "indicator": "Indicador",
+            "observations": "Observaciones"
+          },
+          "validation": {
+            "required": "Seleccione un indicador"
+          }
+        },
+        "actions": {
+          "create": "Guardar",
+          "update": "Actualizar"
+        },
+        "messages": {
+          "listLoadError": "Error al cargar los indicadores",
+          "loadError": "Error al cargar la relación",
+          "created": "Relación creada con éxito",
+          "updated": "Relación actualizada con éxito",
+          "saveError": "Error al guardar la relación"
+        }
+      },
+      "jobData": {
+        "title": "Cargos",
+        "titleWithData": "Cargos de {{data}}",
+        "subtitle": "Asociar un cargo a este activo de datos",
+        "form": {
+          "title": "Información de la relación",
+          "fields": {
+            "job": "Cargo",
+            "observations": "Observaciones"
+          },
+          "validation": {
+            "required": "Seleccione un cargo"
+          }
+        },
+        "actions": {
+          "create": "Guardar",
+          "update": "Actualizar"
+        },
+        "messages": {
+          "listLoadError": "Error al cargar los cargos",
+          "loadError": "Error al cargar la relación",
+          "created": "Relación creada con éxito",
+          "updated": "Relación actualizada con éxito",
+          "saveError": "Error al guardar la relación"
+        }
+      },
+      "processData": {
+        "title": "Procesos",
+        "titleWithData": "Procesos de {{data}}",
+        "subtitle": "Asociar un proceso a este activo de datos",
+        "form": {
+          "title": "Información de la relación",
+          "fields": {
+            "process": "Proceso",
+            "observations": "Observaciones"
+          },
+          "validation": {
+            "required": "Seleccione un proceso"
+          }
+        },
+        "actions": {
+          "create": "Guardar",
+          "update": "Actualizar"
+        },
+        "messages": {
+          "listLoadError": "Error al cargar los procesos",
+          "loadError": "Error al cargar la relación",
+          "created": "Relación creada con éxito",
+          "updated": "Relación actualizada con éxito",
+          "saveError": "Error al guardar la relación"
+        }
+      },
+      "technologyData": {
+        "title": "Tecnologías",
+        "titleWithData": "Tecnologías de {{data}}",
+        "subtitle": "Asociar una tecnología a este activo de datos",
+        "form": {
+          "title": "Información de la relación",
+          "fields": {
+            "technology": "Tecnología",
+            "observations": "Observaciones"
+          },
+          "validation": {
+            "required": "Seleccione una tecnología"
+          }
+        },
+        "actions": {
+          "create": "Guardar",
+          "update": "Actualizar"
+        },
+        "messages": {
+          "listLoadError": "Error al cargar las tecnologías",
+          "loadError": "Error al cargar la relación",
+          "created": "Relación creada con éxito",
+          "updated": "Relación actualizada con éxito",
+          "saveError": "Error al guardar la relación"
+        }
+      },
+      "audits": {
+        "title": "Auditorías",
+        "messages": {
+          "created": "Auditoría creada con éxito",
+          "updated": "Auditoría actualizada con éxito",
+          "saveError": "Error al guardar la auditoría",
+          "updateError": "Error al actualizar la auditoría",
+          "loadError": "Error al cargar la auditoría"
+        }
+      },
+      "nodes": {
+        "jobs": "Cargos",
+        "processes": "Procesos",
+        "systems": "Sistemas",
+        "technologies": "Tecnologías",
+        "indicators": "Indicadores",
+        "documents": "Documentos",
+        "audits": "Auditorías"
       }
     },
     "timeline": {
