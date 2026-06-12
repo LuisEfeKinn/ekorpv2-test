@@ -222,7 +222,8 @@
       "keyword": "Palabra clave"
     },
     "columns": {
-      "name": "Nombre"
+      "name": "Nombre",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -279,7 +280,8 @@
       "name": "Nombre",
       "description": "Descripción",
       "code": "Código",
-      "type": "Tipo"
+      "type": "Tipo",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -336,7 +338,8 @@
       "keyword": "Palabra clave"
     },
     "columns": {
-      "name": "Nombre"
+      "name": "Nombre",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -394,7 +397,8 @@
       "background": "Fondo",
       "internalExternal": "Interno/Externo",
       "user": "Usuario",
-      "letter": "Letra"
+      "letter": "Letra",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -452,7 +456,8 @@
       "keyword": "Palabra clave"
     },
     "columns": {
-      "name": "Nombre"
+      "name": "Nombre",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -507,7 +512,8 @@
     },
     "columns": {
       "typeName": "Tipo de Nombre",
-      "typeCode": "Tipo de Código"
+      "typeCode": "Tipo de Código",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -569,7 +575,8 @@
       "name": "Nombre",
       "background": "Fondo",
       "internalExternal": "Interno/Externo",
-      "letter": "Letra"
+      "letter": "Letra",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -627,7 +634,8 @@
     },
     "columns": {
       "name": "Nombre",
-      "level": "Nivel"
+      "level": "Nivel",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -689,7 +697,8 @@
       "supportPhone": "Teléfono de Soporte",
       "contractualName": "Nombre Contractual",
       "contractualEmail": "Email Contractual",
-      "contractualPhone": "Teléfono Contractual"
+      "contractualPhone": "Teléfono Contractual",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -739,7 +748,8 @@
       "keyword": "Palabra clave"
     },
     "columns": {
-      "name": "Nombre"
+      "name": "Nombre",
+      "color": "Color"
     },
     "actions": {
       "save": "Guardar",
@@ -929,7 +939,8 @@
       "keyword": "Palabra clave"
     },
     "columns": {
-      "name": "Nombre"
+      "name": "Nombre",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -983,7 +994,8 @@
       "keyword": "Palabra clave"
     },
     "columns": {
-      "name": "Nombre"
+      "name": "Nombre",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -1037,7 +1049,8 @@
       "keyword": "Palabra clave"
     },
     "columns": {
-      "name": "Nombre"
+      "name": "Nombre",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -1091,7 +1104,8 @@
       "keyword": "Palabra clave"
     },
     "columns": {
-      "name": "Nombre"
+      "name": "Nombre",
+      "color": "Color"
     },
     "dialogs": {
       "create": {

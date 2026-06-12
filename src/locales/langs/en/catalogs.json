@@ -224,7 +224,8 @@
       "keyword": "Keyword"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -281,7 +282,8 @@
       "name": "Name",
       "description": "Description",
       "code": "Code",
-      "type": "Type"
+      "type": "Type",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -338,7 +340,8 @@
       "keyword": "Keyword"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -396,7 +399,8 @@
       "background": "Background",
       "internalExternal": "Internal/External",
       "user": "User",
-      "letter": "Letter"
+      "letter": "Letter",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -454,7 +458,8 @@
       "keyword": "Keyword"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -509,7 +514,8 @@
     },
     "columns": {
       "typeName": "Type Name",
-      "typeCode": "Type Code"
+      "typeCode": "Type Code",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -567,7 +573,8 @@
       "name": "Name",
       "background": "Background",
       "internalExternal": "Internal/External",
-      "letter": "Letter"
+      "letter": "Letter",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -625,7 +632,8 @@
     },
     "columns": {
       "name": "Name",
-      "level": "Level"
+      "level": "Level",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -687,7 +695,8 @@
       "supportPhone": "Support Phone",
       "contractualName": "Contractual Name",
       "contractualEmail": "Contractual Email",
-      "contractualPhone": "Contractual Phone"
+      "contractualPhone": "Contractual Phone",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -737,7 +746,8 @@
       "keyword": "Keyword"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Color"
     },
     "actions": {
       "save": "Save",
@@ -926,7 +936,8 @@
       "keyword": "Keyword"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -980,7 +991,8 @@
       "keyword": "Keyword"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -1034,7 +1046,8 @@
       "keyword": "Keyword"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Color"
     },
     "dialogs": {
       "create": {
@@ -1088,7 +1101,8 @@
       "keyword": "Keyword"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Color"
     },
     "dialogs": {
       "create": {

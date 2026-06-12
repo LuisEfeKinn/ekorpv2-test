@@ -1,6 +1,6 @@
 import type { DrawerProps } from '@mui/material/Drawer';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -31,6 +31,7 @@ type Props = DrawerProps & {
 type FormData = {
   typeName: string;
   typeCode: string;
+  color: string;
 };
 
 // ----------------------------------------------------------------------
@@ -41,9 +42,11 @@ export function ObjectiveTypesTableDrawer({ open, onClose, dataId, onSave, ...ot
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
 
+  const colorInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState<FormData>({
     typeName: '',
-    typeCode: ''
+    typeCode: '',
+    color: ''
   });
 
   // Load data when opening in edit mode
@@ -57,7 +60,8 @@ export function ObjectiveTypesTableDrawer({ open, onClose, dataId, onSave, ...ot
         const data = response.data.data;
         setFormData({
           typeName: data.typeName || '',
-          typeCode: data.typeCode || ''
+          typeCode: data.typeCode || '',
+          color: data.color || ''
         });
       }
     } catch (error) {
@@ -77,7 +81,8 @@ export function ObjectiveTypesTableDrawer({ open, onClose, dataId, onSave, ...ot
         // Reset form for creation mode
         setFormData({
           typeName: '',
-          typeCode: ''
+          typeCode: '',
+          color: ''
         });
       }
     }
@@ -107,7 +112,8 @@ export function ObjectiveTypesTableDrawer({ open, onClose, dataId, onSave, ...ot
     try {
       await SaveOrUpdateObjectiveTypeService({
         typeName: formData.typeName,
-        typeCode: formData.typeCode
+        typeCode: formData.typeCode,
+        color: formData.color
       }, dataId ? Number(dataId) : undefined);
       
       toast.success(dataId 
@@ -201,6 +207,26 @@ export function ObjectiveTypesTableDrawer({ open, onClose, dataId, onSave, ...ot
                 disabled={saving}
                 inputProps={{ maxLength: 80 }}
               />
+              <Box>
+                <Box sx={{ mb: 1 }}>
+                  <span style={{ fontSize: '0.875rem', color: '#666' }}>
+                    {t('objective-types.columns.color')}
+                  </span>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, padding: '12px 16px', border: '1px solid', borderColor: 'divider', borderRadius: 1, cursor: 'pointer', transition: 'all 0.2s', '&:hover': { borderColor: 'primary.main', boxShadow: '0 0 8px rgba(0,0,0,0.1)' }, backgroundColor: 'background.paper' }}>
+                  <input
+                    ref={colorInputRef}
+                    type="color"
+                    value={formData.color || '#000000'}
+                    onChange={(e) => handleChange('color', e.target.value)}
+                    disabled={saving}
+                    style={{ width: 40, height: 40, border: '2px solid #e0e0e0', borderRadius: 4, cursor: 'pointer', padding: 0 }}
+                  />
+                  <Box sx={{ flex: 1 }}>
+                    <span style={{ fontSize: '0.875rem', color: '#999' }}>{formData.color || 'Seleccionar color'}</span>
+                  </Box>
+                </Box>
+              </Box>
             </Stack>
           )}
         </Box>

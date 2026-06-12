@@ -222,7 +222,8 @@
       "keyword": "Stichwort"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {
@@ -279,7 +280,8 @@
       "name": "Name",
       "description": "Beschreibung",
       "code": "Code",
-      "type": "Typ"
+      "type": "Typ",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {
@@ -336,7 +338,8 @@
       "keyword": "Stichwort"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {
@@ -394,7 +397,8 @@
       "background": "Hintergrund",
       "internalExternal": "Intern/Extern",
       "user": "Benutzer",
-      "letter": "Buchstabe"
+      "letter": "Buchstabe",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {
@@ -452,7 +456,8 @@
       "keyword": "Stichwort"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {
@@ -507,7 +512,8 @@
     },
     "columns": {
       "typeName": "Typname",
-      "typeCode": "Typcode"
+      "typeCode": "Typcode",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {
@@ -569,7 +575,8 @@
       "name": "Name",
       "background": "Hintergrund",
       "internalExternal": "Intern/Extern",
-      "letter": "Buchstabe"
+      "letter": "Buchstabe",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {
@@ -627,7 +634,8 @@
     },
     "columns": {
       "name": "Name",
-      "level": "Ebene"
+      "level": "Ebene",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {
@@ -689,7 +697,8 @@
       "supportPhone": "Support-Telefon",
       "contractualName": "Vertragsname",
       "contractualEmail": "Vertrags-E-Mail",
-      "contractualPhone": "Vertragstelefon"
+      "contractualPhone": "Vertragstelefon",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {
@@ -739,7 +748,8 @@
       "keyword": "Stichwort"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Farbe"
     },
     "actions": {
       "save": "Speichern",
@@ -929,7 +939,8 @@
       "keyword": "Stichwort"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {
@@ -983,7 +994,8 @@
       "keyword": "Stichwort"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {
@@ -1037,7 +1049,8 @@
       "keyword": "Stichwort"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {
@@ -1091,7 +1104,8 @@
       "keyword": "Stichwort"
     },
     "columns": {
-      "name": "Name"
+      "name": "Name",
+      "color": "Farbe"
     },
     "dialogs": {
       "create": {

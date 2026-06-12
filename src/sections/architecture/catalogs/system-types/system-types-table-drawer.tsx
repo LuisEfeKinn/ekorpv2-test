@@ -1,6 +1,6 @@
 import type { DrawerProps } from '@mui/material/Drawer';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -28,16 +28,21 @@ type Props = DrawerProps & {
   onSave: () => void;
 };
 
-type FormData = { name: string };
+type FormData = { name: string; color: string };
 
 // ----------------------------------------------------------------------
 
 export function SystemTypesTableDrawer({ open, onClose, dataId, onSave, ...other }: Props) {
   const { t } = useTranslate('catalogs');
 
+  const colorInputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [formData, setFormData] = useState<FormData>({ name: '' });
+  const [formData, setFormData] = useState<FormData>({ name: '', color: '' });
+
+  const handleChange = useCallback((field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  }, []);
 
   const loadData = useCallback(async () => {
     if (!dataId) return;
@@ -45,7 +50,8 @@ export function SystemTypesTableDrawer({ open, onClose, dataId, onSave, ...other
     try {
       const response = await GetSystemTypeByIdService(dataId);
       if (response?.data?.data) {
-        setFormData({ name: response.data.data.name || '' });
+        const data = response.data.data;
+        setFormData({ name: data.name || '', color: data.color || '' });
       }
     } catch {
       toast.error(t('system-types.messages.error.loading'));
@@ -57,7 +63,7 @@ export function SystemTypesTableDrawer({ open, onClose, dataId, onSave, ...other
   useEffect(() => {
     if (!open) return;
     if (dataId) { loadData(); return; }
-    setFormData({ name: '' });
+    setFormData({ name: '', color: '' });
   }, [open, dataId, loadData]);
 
   const isFormValid = formData.name.trim() !== '';
@@ -99,8 +105,28 @@ export function SystemTypesTableDrawer({ open, onClose, dataId, onSave, ...other
                 fullWidth required disabled={saving}
                 label={t('system-types.columns.name')}
                 value={formData.name}
-                onChange={(e) => setFormData({ name: e.target.value })}
+                onChange={(e) => handleChange('name', e.target.value)}
               />
+              <Box>
+                <Box sx={{ mb: 1 }}>
+                  <span style={{ fontSize: '0.875rem', color: '#666' }}>
+                    {t('system-types.columns.color')}
+                  </span>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, padding: '12px 16px', border: '1px solid', borderColor: 'divider', borderRadius: 1, cursor: 'pointer', transition: 'all 0.2s', '&:hover': { borderColor: 'primary.main', boxShadow: '0 0 8px rgba(0,0,0,0.1)' }, backgroundColor: 'background.paper' }}>
+                  <input
+                    ref={colorInputRef}
+                    type="color"
+                    value={formData.color || '#000000'}
+                    onChange={(e) => handleChange('color', e.target.value)}
+                    disabled={saving}
+                    style={{ width: 40, height: 40, border: '2px solid #e0e0e0', borderRadius: 4, cursor: 'pointer', padding: 0 }}
+                  />
+                  <Box sx={{ flex: 1 }}>
+                    <span style={{ fontSize: '0.875rem', color: '#999' }}>{formData.color || 'Seleccionar color'}</span>
+                  </Box>
+                </Box>
+              </Box>
             </Stack>
           )}
         </Box>

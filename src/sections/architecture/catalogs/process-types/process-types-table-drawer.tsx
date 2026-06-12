@@ -1,6 +1,6 @@
 import type { DrawerProps } from '@mui/material/Drawer';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -28,7 +28,7 @@ type Props = DrawerProps & {
   onSave: () => void;
 };
 
-type FormData = { name: string; level: number };
+type FormData = { name: string; level: number; color: string };
 
 // ----------------------------------------------------------------------
 
@@ -37,7 +37,8 @@ export function ProcessTypesTableDrawer({ open, onClose, dataId, onSave, ...othe
 
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [formData, setFormData] = useState<FormData>({ name: '', level: 0 });
+  const colorInputRef = useRef<HTMLInputElement>(null);
+  const [formData, setFormData] = useState<FormData>({ name: '', level: 0, color: '' });
 
   const handleChange = useCallback((field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -50,7 +51,7 @@ export function ProcessTypesTableDrawer({ open, onClose, dataId, onSave, ...othe
       const response = await GetProcessTypeByIdService(dataId);
       if (response?.data?.data) {
         const data = response.data.data;
-        setFormData({ name: data.name || '', level: data.level || 0 });
+        setFormData({ name: data.name || '', level: data.level || 0, color: data.color || '' });
       }
     } catch {
       toast.error(t('process-types.messages.error.loading'));
@@ -62,7 +63,7 @@ export function ProcessTypesTableDrawer({ open, onClose, dataId, onSave, ...othe
   useEffect(() => {
     if (!open) return;
     if (dataId) { loadData(); return; }
-    setFormData({ name: '', level: 0 });
+    setFormData({ name: '', level: 0, color: '' });
   }, [open, dataId, loadData]);
 
   const isFormValid = formData.name.trim() !== '' && formData.level !== 0;
@@ -112,6 +113,26 @@ export function ProcessTypesTableDrawer({ open, onClose, dataId, onSave, ...othe
                 value={formData.level}
                 onChange={(e) => handleChange('level', e.target.value)}
               />
+              <Box>
+                <Box sx={{ mb: 1 }}>
+                  <span style={{ fontSize: '0.875rem', color: '#666' }}>
+                    {t('process-types.columns.color')}
+                  </span>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, padding: '12px 16px', border: '1px solid', borderColor: 'divider', borderRadius: 1, cursor: 'pointer', transition: 'all 0.2s', '&:hover': { borderColor: 'primary.main', boxShadow: '0 0 8px rgba(0,0,0,0.1)' }, backgroundColor: 'background.paper' }}>
+                  <input
+                    ref={colorInputRef}
+                    type="color"
+                    value={formData.color || '#000000'}
+                    onChange={(e) => handleChange('color', e.target.value)}
+                    disabled={saving}
+                    style={{ width: 40, height: 40, border: '2px solid #e0e0e0', borderRadius: 4, cursor: 'pointer', padding: 0 }}
+                  />
+                  <Box sx={{ flex: 1 }}>
+                    <span style={{ fontSize: '0.875rem', color: '#999' }}>{formData.color || 'Seleccionar color'}</span>
+                  </Box>
+                </Box>
+              </Box>
             </Stack>
           )}
         </Box>

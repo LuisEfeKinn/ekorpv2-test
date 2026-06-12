@@ -30,7 +30,7 @@ type Props = DrawerProps & {
   onSave: () => void;
 };
 
-type FormData = { name: string; background: string; internalExternal: boolean; letter: string };
+type FormData = { name: string; background: string; color: string; internalExternal: boolean; letter: string };
 
 // ----------------------------------------------------------------------
 
@@ -38,9 +38,10 @@ export function OrganizationalUnitTypesTableDrawer({ open, onClose, dataId, onSa
   const { t } = useTranslate('catalogs');
 
   const colorInputRef = useRef<HTMLInputElement>(null);
+  const colorInputRef2 = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [formData, setFormData] = useState<FormData>({ name: '', background: '', internalExternal: false, letter: '' });
+  const [formData, setFormData] = useState<FormData>({ name: '', background: '', color: '', internalExternal: false, letter: '' });
 
   const handleChange = useCallback((field: string, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -53,7 +54,7 @@ export function OrganizationalUnitTypesTableDrawer({ open, onClose, dataId, onSa
       const response = await GetOrganizationalUnitTypeByIdService(dataId);
       if (response?.data?.data) {
         const data = response.data.data;
-        setFormData({ name: data.name || '', background: data.background || '', internalExternal: data.internalExternal || false, letter: data.letter || '' });
+        setFormData({ name: data.name || '', background: data.background || '', color: data.color || '', internalExternal: data.internalExternal || false, letter: data.letter || '' });
       }
     } catch {
       toast.error(t('organizational-unit-types.messages.error.loading'));
@@ -65,7 +66,7 @@ export function OrganizationalUnitTypesTableDrawer({ open, onClose, dataId, onSa
   useEffect(() => {
     if (!open) return;
     if (dataId) { loadData(); return; }
-    setFormData({ name: '', background: '', internalExternal: false, letter: '' });
+    setFormData({ name: '', background: '', color: '', internalExternal: false, letter: '' });
   }, [open, dataId, loadData]);
 
   const isFormValid = formData.name.trim() !== '';
@@ -136,6 +137,26 @@ export function OrganizationalUnitTypesTableDrawer({ open, onClose, dataId, onSa
                   />
                   <Box sx={{ flex: 1 }}>
                     <span style={{ fontSize: '0.875rem', color: '#999' }}>{formData.background || 'Seleccionar color'}</span>
+                  </Box>
+                </Box>
+              </Box>
+              <Box>
+                <Box sx={{ mb: 1 }}>
+                  <span style={{ fontSize: '0.875rem', color: '#666' }}>
+                    {t('organizational-unit-types.columns.color')}
+                  </span>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, padding: '12px 16px', border: '1px solid', borderColor: 'divider', borderRadius: 1, cursor: 'pointer', transition: 'all 0.2s', '&:hover': { borderColor: 'primary.main', boxShadow: '0 0 8px rgba(0,0,0,0.1)' }, backgroundColor: 'background.paper' }}>
+                  <input
+                    ref={colorInputRef2}
+                    type="color"
+                    value={formData.color || '#000000'}
+                    onChange={(e) => handleChange('color', e.target.value)}
+                    disabled={saving}
+                    style={{ width: 40, height: 40, border: '2px solid #e0e0e0', borderRadius: 4, cursor: 'pointer', padding: 0 }}
+                  />
+                  <Box sx={{ flex: 1 }}>
+                    <span style={{ fontSize: '0.875rem', color: '#999' }}>{formData.color || 'Seleccionar color'}</span>
                   </Box>
                 </Box>
               </Box>

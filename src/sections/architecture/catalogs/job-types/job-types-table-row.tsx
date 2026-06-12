@@ -168,6 +168,19 @@ export function JobTypesTableRow({ row, mapHref, selected, onEditRow, onSelectRo
           </Stack>
         </TableCell>
 
+        <TableCell>
+          <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              {row?.color && (
+                <Box sx={{ width: 20, height: 20, borderRadius: '50%', backgroundColor: row.color, border: '1px solid', borderColor: 'divider', flexShrink: 0 }} />
+              )}
+              <Box component="span" sx={{ color: 'text.primary', fontWeight: 'fontWeightMedium' }}>
+                {row?.color || 'N/A'}
+              </Box>
+            </Box>
+          </Stack>
+        </TableCell>
+
       </TableRow>
 
       {renderMenuActions()}
