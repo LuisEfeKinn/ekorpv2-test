@@ -18,11 +18,11 @@ import { alpha, useTheme } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useTranslate } from 'src/locales';
-import { SaveOrUpdateInfraestructureTableService } from 'src/services/architecture/infrastructure/infrastructureTable.service';
+import { GetInfraestructureTablePaginationService, SaveOrUpdateInfraestructureTableService } from 'src/services/architecture/infrastructure/infrastructureTable.service';
 import { GetDomainPaginationService } from 'src/services/architecture/catalogs/domains.service';
 import { GetProvidersPaginationService } from 'src/services/architecture/catalogs/providers.service';
 import { GetTechnologyTypesPaginationService } from 'src/services/architecture/catalogs/technologyTypes.service';
-import { GetImpactRatioService, GetLocalExternalService } from 'src/services/architecture/related-data/related-data.service';
+import { GetImpactRatioService } from 'src/services/architecture/related-data/related-data.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
@@ -39,22 +39,13 @@ type Props = DrawerProps & {
 type FormData = {
   name: string;
   description: string;
-  file: string;
-  type: string;
-  rules: string;
-  localExternal: string;
+  sla: boolean;
   nomenclature: string;
   code: string;
-  superiorData: string;
-  dataType: {
-    id: number;
-  };
-  provider: {
-    id: number;
-  };
-  Domains: {
-    id: number;
-  };
+  superiorTechnology: { id: number };
+  technologyType: { id: number };
+  provider: { id: number };
+  Domains: { id: number };
   contractedCapacity: string;
   adoptionContractDate: string;
   expirationDate: string;
@@ -73,32 +64,23 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
   const { t } = useTranslate('architecture');
 
   const [saving, setSaving] = useState(false);
-  const [dataTypes, setDataTypes] = useState<any[]>([]);
+  const [technologyTypes, setTechnologyTypes] = useState<any[]>([]);
+  const [technologies, setTechnologies] = useState<any[]>([]);
   const [providers, setProviders] = useState<any[]>([]);
   const [domains, setDomains] = useState<any[]>([]);
   const [impactRatioOptions, setImpactRatioOptions] = useState<string[]>([]);
-  const [localExternalOptions, setLocalExternalOptions] = useState<string[]>([]);
   const [loadingCatalogs, setLoadingCatalogs] = useState(true);
 
   const [formData, setFormData] = useState<FormData>({
     name: '',
     description: '',
-    file: '',
-    type: '',
-    rules: '',
-    localExternal: '',
+    sla: false,
     nomenclature: '',
     code: '',
-    superiorData: '',
-    dataType: {
-      id: 0
-    },
-    provider: {
-      id: 0
-    },
-    Domains: {
-      id: 0
-    },
+    superiorTechnology: { id: 0 },
+    technologyType: { id: 0 },
+    provider: { id: 0 },
+    Domains: { id: 0 },
     contractedCapacity: '',
     adoptionContractDate: '',
     expirationDate: '',
@@ -117,19 +99,19 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
       if (open) {
         setLoadingCatalogs(true);
         try {
-          const [dataTypesRes, providersRes, domainsRes, impactRatioRes, localExternalRes] = await Promise.all([
+          const [technologyTypesRes, technologiesRes, providersRes, domainsRes, impactRatioRes] = await Promise.all([
             GetTechnologyTypesPaginationService({ page: 1, perPage: 100 }),
+            GetInfraestructureTablePaginationService({ page: 1, perPage: 200 }),
             GetProvidersPaginationService({ page: 1, perPage: 100 }),
             GetDomainPaginationService({ page: 1, perPage: 100 }),
             GetImpactRatioService(),
-            GetLocalExternalService()
           ]);
 
-          setDataTypes(dataTypesRes.data?.[0] || []);
+          setTechnologyTypes(technologyTypesRes.data?.[0] || []);
+          setTechnologies(technologiesRes.data?.[0] || []);
           setProviders(providersRes.data?.[0] || []);
           setDomains(domainsRes.data?.[0] || []);
           setImpactRatioOptions(impactRatioRes.data || []);
-          setLocalExternalOptions(localExternalRes.data || []);
         } catch (error) {
           console.error('Error loading catalogs:', error);
           toast.error(t('infrastructure.diagram.messages.error.loadingCatalogs'));
@@ -148,22 +130,13 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
       setFormData({
         name: '',
         description: '',
-        file: '',
-        type: '',
-        rules: '',
-        localExternal: '',
+        sla: false,
         nomenclature: '',
         code: '',
-        superiorData: '',
-        dataType: {
-          id: 0
-        },
-        provider: {
-          id: 0
-        },
-        Domains: {
-          id: 0
-        },
+        superiorTechnology: { id: 0 },
+        technologyType: { id: 0 },
+        provider: { id: 0 },
+        Domains: { id: 0 },
         contractedCapacity: '',
         adoptionContractDate: '',
         expirationDate: '',
@@ -200,8 +173,7 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
     formData.description.trim() !== '' &&
     formData.code.trim() !== '' &&
     formData.nomenclature.trim() !== '' &&
-    formData.localExternal.trim() !== '' &&
-    formData.dataType.id > 0 &&
+    formData.technologyType.id > 0 &&
     formData.provider.id > 0 &&
     formData.Domains.id > 0 &&
     formData.impactRatio.trim() !== '';
@@ -354,99 +326,6 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
 
             <Divider />
 
-            {/* Sección: Configuración */}
-            <Paper elevation={0} sx={{ p: 3, borderRadius: 0 }}>
-              <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 2.5 }}>
-                <Box
-                  sx={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 1.5,
-                    bgcolor: alpha(theme.palette.info.main, 0.1),
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Iconify
-                    icon="solar:settings-bold"
-                    width={20}
-                    sx={{ color: 'info.main' }}
-                  />
-                </Box>
-                <Typography variant="subtitle1" sx={{ fontWeight: 600, color: 'text.primary' }}>
-                  {t('infrastructure.diagram.dialogs.sectionsLabels.settings')}
-                </Typography>
-              </Stack>
-
-              <Stack spacing={2.5}>
-                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
-                  <TextField
-                    fullWidth
-                    label={t('infrastructure.diagram.dialogs.form.type.label')}
-                    value={formData.type}
-                    onChange={(e) => handleChange('type', e.target.value)}
-                    disabled={saving}
-                    InputProps={{
-                      startAdornment: (
-                        <Iconify
-                          icon="solar:add-folder-bold"
-                          width={20}
-                          sx={{ color: 'text.disabled', mr: 1 }}
-                        />
-                      ),
-                    }}
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 2,
-                      },
-                    }}
-                  />
-
-                  <TextField
-                    fullWidth
-                    label={t('infrastructure.diagram.dialogs.form.file.label')}
-                    value={formData.file}
-                    onChange={(e) => handleChange('file', e.target.value)}
-                    disabled={saving}
-                    InputProps={{
-                      startAdornment: (
-                        <Iconify
-                          icon="solar:copy-bold"
-                          width={20}
-                          sx={{ color: 'text.disabled', mr: 1 }}
-                        />
-                      ),
-                    }}
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 2,
-                      },
-                    }}
-                  />
-                </Box>
-
-                <TextField
-                  fullWidth
-                  label={t('infrastructure.diagram.dialogs.form.rules.label')}
-                  value={formData.rules}
-                  onChange={(e) => handleChange('rules', e.target.value)}
-                  multiline
-                  rows={2}
-                  disabled={saving}
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{ notched: true }}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                    },
-                  }}
-                />
-              </Stack>
-            </Paper>
-
-            <Divider />
-
             {/* Sección: Identificación */}
             <Paper
               elevation={0}
@@ -468,53 +347,14 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
                     justifyContent: 'center',
                   }}
                 >
-                  <Iconify
-                    icon="solar:list-bold"
-                    width={20}
-                    sx={{ color: 'success.main' }}
-                  />
+                  <Iconify icon="solar:list-bold" width={20} sx={{ color: 'success.main' }} />
                 </Box>
                 <Typography variant="subtitle1" sx={{ fontWeight: 600, color: 'text.primary' }}>
                   {t('infrastructure.diagram.dialogs.sectionsLabels.identification')}
                 </Typography>
               </Stack>
 
-              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr 1fr' }, gap: 2 }}>
-                <Autocomplete
-                  fullWidth
-                  options={localExternalOptions}
-                  value={formData.localExternal || null}
-                  onChange={(event, newValue) => handleChange('localExternal', newValue || '')}
-                  disabled={saving}
-                  loading={loadingCatalogs}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label={t('infrastructure.diagram.dialogs.form.local/external.label')}
-                      required
-                      placeholder="U/E"
-                      InputProps={{
-                        ...params.InputProps,
-                        startAdornment: (
-                          <>
-                            <Iconify
-                              icon="solar:map-point-bold"
-                              width={20}
-                              sx={{ color: 'text.disabled', ml: 1, mr: 0.5 }}
-                            />
-                            {params.InputProps.startAdornment}
-                          </>
-                        ),
-                      }}
-                    />
-                  )}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                    },
-                  }}
-                />
-
+              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
                 <TextField
                   fullWidth
                   label={t('infrastructure.diagram.dialogs.form.nomenclature.label')}
@@ -524,18 +364,10 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
                   disabled={saving}
                   InputProps={{
                     startAdornment: (
-                      <Iconify
-                        icon="solar:box-minimalistic-bold"
-                        width={20}
-                        sx={{ color: 'text.disabled', mr: 1 }}
-                      />
+                      <Iconify icon="solar:box-minimalistic-bold" width={20} sx={{ color: 'text.disabled', mr: 1 }} />
                     ),
                   }}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                    },
-                  }}
+                  sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
                 />
 
                 <TextField
@@ -547,25 +379,17 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
                   disabled={saving}
                   InputProps={{
                     startAdornment: (
-                      <Iconify
-                        icon="solar:pen-bold"
-                        width={20}
-                        sx={{ color: 'text.disabled', mr: 1 }}
-                      />
+                      <Iconify icon="solar:pen-bold" width={20} sx={{ color: 'text.disabled', mr: 1 }} />
                     ),
                   }}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 2,
-                    },
-                  }}
+                  sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
                 />
               </Box>
             </Paper>
 
             <Divider />
 
-            {/* Sección: Tipo de Dato */}
+            {/* Sección: Tipo de Tecnología */}
             <Paper elevation={0} sx={{ p: 3, borderRadius: 0, bgcolor: alpha(theme.palette.warning.main, 0.02) }}>
               <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 2.5 }}>
                 <Box
@@ -582,38 +406,64 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
                   <Iconify icon="solar:server-square-bold" width={20} sx={{ color: 'warning.main' }} />
                 </Box>
                 <Typography variant="subtitle1" sx={{ fontWeight: 600, color: 'text.primary' }}>
-                  {t('infrastructure.diagram.dialogs.sectionsLabels.dataType')}
+                  {t('infrastructure.diagram.dialogs.form.technologyType.label')}
                 </Typography>
               </Stack>
 
-              <Autocomplete
-                fullWidth
-                options={dataTypes}
-                getOptionLabel={(option) => option.name || ''}
-                value={dataTypes.find(dt => dt.id === formData.dataType.id) || null}
-                onChange={(_, newValue) => {
-                  handleChange('dataType', { id: newValue?.id || 0 });
-                }}
-                disabled={saving || loadingCatalogs}
-                loading={loadingCatalogs}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={t('infrastructure.diagram.dialogs.form.dataType.label')}
-                    required
-                    InputProps={{
-                      ...params.InputProps,
-                      startAdornment: (
-                        <>
-                          <Iconify icon="solar:server-square-bold" width={20} sx={{ color: 'text.disabled', ml: 1, mr: 1 }} />
-                          {params.InputProps.startAdornment}
-                        </>
-                      ),
-                    }}
-                    sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
-                  />
-                )}
-              />
+              <Stack spacing={2.5}>
+                <Autocomplete
+                  fullWidth
+                  options={technologyTypes}
+                  getOptionLabel={(option) => option.name || ''}
+                  value={technologyTypes.find(tt => tt.id === formData.technologyType.id) || null}
+                  onChange={(_, newValue) => handleChange('technologyType', { id: newValue?.id || 0 })}
+                  disabled={saving || loadingCatalogs}
+                  loading={loadingCatalogs}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label={t('infrastructure.diagram.dialogs.form.technologyType.label')}
+                      required
+                      InputProps={{
+                        ...params.InputProps,
+                        startAdornment: (
+                          <>
+                            <Iconify icon="solar:server-square-bold" width={20} sx={{ color: 'text.disabled', ml: 1, mr: 1 }} />
+                            {params.InputProps.startAdornment}
+                          </>
+                        ),
+                      }}
+                      sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+                    />
+                  )}
+                />
+
+                <Autocomplete
+                  fullWidth
+                  options={technologies}
+                  getOptionLabel={(option) => option.name || ''}
+                  value={technologies.find(tech => tech.id === formData.superiorTechnology.id) || null}
+                  onChange={(_, newValue) => handleChange('superiorTechnology', { id: newValue?.id || 0 })}
+                  disabled={saving || loadingCatalogs}
+                  loading={loadingCatalogs}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label={t('infrastructure.diagram.dialogs.form.superiorTechnology.label')}
+                      InputProps={{
+                        ...params.InputProps,
+                        startAdornment: (
+                          <>
+                            <Iconify icon="solar:add-circle-bold" width={20} sx={{ color: 'text.disabled', ml: 1, mr: 1 }} />
+                            {params.InputProps.startAdornment}
+                          </>
+                        ),
+                      }}
+                      sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+                    />
+                  )}
+                />
+              </Stack>
             </Paper>
 
             <Divider />
@@ -850,7 +700,19 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
               </Stack>
 
               <Stack spacing={2.5}>
-                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr 1fr' }, gap: 2 }}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={formData.sla}
+                        onChange={(e) => handleChange('sla', e.target.checked)}
+                        disabled={saving}
+                        color="warning"
+                      />
+                    }
+                    label={t('infrastructure.diagram.dialogs.form.sla.label')}
+                  />
+
                   <FormControlLabel
                     control={
                       <Switch

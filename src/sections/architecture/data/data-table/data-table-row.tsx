@@ -107,7 +107,7 @@ export function DataTableRow({
       title={t('data.table.dialogs.delete.title')}
       content={t('data.table.dialogs.delete.content')}
       action={
-        <Button variant="contained" color="error" onClick={onDeleteRow}>
+        <Button variant="contained" color="error" onClick={() => { confirmDialog.onFalse(); onDeleteRow(); }}>
           {t('data.table.actions.delete')}
         </Button>
       }

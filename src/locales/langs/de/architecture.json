@@ -2394,6 +2394,17 @@
             "label": "Infrastrukturtyp",
             "required": "Infrastrukturtyp ist erforderlich"
           },
+          "technologyType": {
+            "label": "Technologietyp",
+            "required": "Technologietyp ist erforderlich"
+          },
+          "superiorTechnology": {
+            "label": "Übergeordnete Technologie",
+            "required": ""
+          },
+          "sla": {
+            "label": "SLA"
+          },
           "provider": {
             "label": "Anbieter",
             "required": "Anbieter ist erforderlich"

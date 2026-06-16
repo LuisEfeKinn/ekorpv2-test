@@ -151,25 +151,25 @@ export function DataTableView() {
   const loadData = useCallback(async () => {
     try {
       const response = await GetDataFlowService();
-      const data = response.data || [];
-
-      setRawTreeData(data);
-      const flattenedData = flattenDataWithHierarchy(data);
-
-      setTableData(flattenedData);
-      setTotalItems(flattenedData.length);
+      setRawTreeData(response.data || []);
     } catch (error) {
       console.error('Error loading data flow:', error);
       toast.error(t('data.table.messages.error.loading'));
-      setTableData([]);
-      setTotalItems(0);
+      setRawTreeData([]);
     }
-  }, [flattenDataWithHierarchy, t]);
+  }, [t]);
 
-  // Cargar datos cuando cambian los parámetros
+  // Carga inicial
   useEffect(() => {
     loadData();
   }, [loadData]);
+
+  // Recalcular tableData cuando cambian los datos crudos o las filas expandidas
+  useEffect(() => {
+    const flattenedData = flattenDataWithHierarchy(rawTreeData);
+    setTableData(flattenedData);
+    setTotalItems(flattenedData.length);
+  }, [rawTreeData, flattenDataWithHierarchy]);
 
   // Cuando hay búsqueda activa usa todos los nodos; si no, solo los visibles
   const searchSource = currentFilters.name
@@ -188,12 +188,9 @@ export function DataTableView() {
   const handleDeleteRow = useCallback(
     async (id: string) => {
       try {
-        const response = await DeleteDataTableService(id);
-
-        if (response.data.statusCode === 200) {
-          toast.success(t('data.table.messages.success.deleted'));
-          loadData(); // Recargar datos
-        }
+        await DeleteDataTableService(id);
+        toast.success(t('data.table.messages.success.deleted'));
+        loadData();
       } catch (error) {
         console.error('Error deleting data table:', error);
         toast.error(t('data.table.messages.error.deleting'));

@@ -2394,6 +2394,17 @@
             "label": "Tipo de Infraestructura",
             "required": "El tipo de infraestructura es obligatorio"
           },
+          "technologyType": {
+            "label": "Tipo de Tecnología",
+            "required": "El tipo de tecnología es obligatorio"
+          },
+          "superiorTechnology": {
+            "label": "Tecnología Superior",
+            "required": ""
+          },
+          "sla": {
+            "label": "SLA"
+          },
           "provider": {
             "label": "Proveedor",
             "required": "El proveedor es obligatorio"
