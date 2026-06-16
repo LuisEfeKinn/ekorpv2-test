@@ -454,6 +454,7 @@ export function ApplicationTableExpandedDiagram({
     nodeId: null,
   });
   const [deleting, setDeleting] = useState(false);
+  const [existingEntityIds, setExistingEntityIds] = useState<number[]>([]);
 
   const isJobSystemsModule = useMemo(() => {
     const id = String(nodeId ?? '').toLowerCase();
@@ -667,6 +668,8 @@ export function ApplicationTableExpandedDiagram({
 
         const systemRelations = list.filter((r) => Number(r?.system?.id) === systemId);
 
+        setExistingEntityIds(systemRelations.map((r) => Number(r?.job?.id)).filter((n) => Number.isFinite(n)));
+
         const data: MapData = {
           id: nodeId,
           label: nodeLabel,
@@ -690,6 +693,8 @@ export function ApplicationTableExpandedDiagram({
         const list = normalizeSystemProcessRelations((res as { data?: unknown })?.data);
 
         const systemRelations = list.filter((r) => Number(r?.system?.id) === systemId);
+
+        setExistingEntityIds(systemRelations.map((r) => Number(r?.process?.id)).filter((n) => Number.isFinite(n)));
 
         const data: MapData = {
           id: nodeId,
@@ -717,6 +722,8 @@ export function ApplicationTableExpandedDiagram({
           const sysId = Number(r?.system?.id ?? (r as { systemId?: unknown } | undefined)?.systemId);
           return sysId === systemId;
         });
+
+        setExistingEntityIds(systemRelations.map((r) => Number(r?.technology?.id ?? (r as { technologyId?: unknown } | undefined)?.technologyId)).filter((n) => Number.isFinite(n)));
 
         const data: MapData = {
           id: nodeId,
@@ -749,6 +756,8 @@ export function ApplicationTableExpandedDiagram({
           return sysId === systemId;
         });
 
+        setExistingEntityIds(systemRelations.map((r) => Number(r?.data?.id ?? (r as { dataId?: unknown } | undefined)?.dataId)).filter((n) => Number.isFinite(n)));
+
         const data: MapData = {
           id: nodeId,
           label: nodeLabel,
@@ -780,6 +789,8 @@ export function ApplicationTableExpandedDiagram({
           return sysId === systemId;
         });
 
+        setExistingEntityIds(systemRelations.map((r) => Number(r?.document?.id ?? (r as { documentId?: unknown } | undefined)?.documentId)).filter((n) => Number.isFinite(n)));
+
         const data: MapData = {
           id: nodeId,
           label: nodeLabel,
@@ -810,6 +821,8 @@ export function ApplicationTableExpandedDiagram({
           const sysId = Number(r?.system?.id ?? (r as { systemId?: unknown } | undefined)?.systemId);
           return sysId === systemId;
         });
+
+        setExistingEntityIds(systemRelations.map((r) => Number(r?.indicator?.id ?? (r as { indicatorId?: unknown } | undefined)?.indicatorId)).filter((n) => Number.isFinite(n)));
 
         const data: MapData = {
           id: nodeId,
@@ -1331,6 +1344,7 @@ export function ApplicationTableExpandedDiagram({
           systemId={Number(applicationId)}
           systemLabel={systemLabel}
           relationId={jobSystemsRelationId}
+          excludeIds={existingEntityIds}
         />
 
         <ApplicationSystemProcessesDrawer
@@ -1343,6 +1357,7 @@ export function ApplicationTableExpandedDiagram({
           systemId={Number(applicationId)}
           systemLabel={systemLabel}
           relationId={systemProcessesRelationId}
+          excludeIds={existingEntityIds}
         />
 
         <ApplicationSystemTechnologiesDrawer
@@ -1355,6 +1370,7 @@ export function ApplicationTableExpandedDiagram({
           systemId={Number(applicationId)}
           systemLabel={systemLabel}
           relationId={systemTechnologiesRelationId}
+          excludeIds={existingEntityIds}
         />
 
         <ApplicationSystemDataDrawer
@@ -1367,6 +1383,7 @@ export function ApplicationTableExpandedDiagram({
           systemId={Number(applicationId)}
           systemLabel={systemLabel}
           relationId={systemDataRelationId}
+          excludeIds={existingEntityIds}
         />
 
         <ApplicationSystemDocumentsDrawer
@@ -1379,6 +1396,7 @@ export function ApplicationTableExpandedDiagram({
           systemId={Number(applicationId)}
           systemLabel={systemLabel}
           relationId={systemDocumentsRelationId}
+          excludeIds={existingEntityIds}
         />
 
         <ApplicationSystemIndicatorsDrawer
@@ -1391,6 +1409,7 @@ export function ApplicationTableExpandedDiagram({
           systemId={Number(applicationId)}
           systemLabel={systemLabel}
           relationId={systemIndicatorsRelationId}
+          excludeIds={existingEntityIds}
         />
 
         <ApplicationSystemAuditsDrawer
@@ -1758,6 +1777,7 @@ export function ApplicationTableExpandedDiagram({
         systemId={Number(applicationId)}
         systemLabel={systemLabel}
         relationId={jobSystemsRelationId}
+        excludeIds={existingEntityIds}
       />
 
       <ApplicationSystemProcessesDrawer
@@ -1770,6 +1790,7 @@ export function ApplicationTableExpandedDiagram({
         systemId={Number(applicationId)}
         systemLabel={systemLabel}
         relationId={systemProcessesRelationId}
+        excludeIds={existingEntityIds}
       />
 
       <ApplicationSystemTechnologiesDrawer
@@ -1782,6 +1803,7 @@ export function ApplicationTableExpandedDiagram({
         systemId={Number(applicationId)}
         systemLabel={systemLabel}
         relationId={systemTechnologiesRelationId}
+        excludeIds={existingEntityIds}
       />
 
       <ApplicationSystemDataDrawer
@@ -1794,6 +1816,7 @@ export function ApplicationTableExpandedDiagram({
         systemId={Number(applicationId)}
         systemLabel={systemLabel}
         relationId={systemDataRelationId}
+        excludeIds={existingEntityIds}
       />
 
       <ApplicationSystemDocumentsDrawer
@@ -1806,6 +1829,7 @@ export function ApplicationTableExpandedDiagram({
         systemId={Number(applicationId)}
         systemLabel={systemLabel}
         relationId={systemDocumentsRelationId}
+        excludeIds={existingEntityIds}
       />
 
       <ApplicationSystemIndicatorsDrawer
@@ -1818,6 +1842,7 @@ export function ApplicationTableExpandedDiagram({
         systemId={Number(applicationId)}
         systemLabel={systemLabel}
         relationId={systemIndicatorsRelationId}
+        excludeIds={existingEntityIds}
       />
 
       <ApplicationSystemAuditsDrawer

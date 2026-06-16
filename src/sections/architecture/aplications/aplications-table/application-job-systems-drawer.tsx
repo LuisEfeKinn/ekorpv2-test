@@ -35,6 +35,7 @@ type Props = {
   systemId: number;
   systemLabel?: string;
   relationId?: number | null;
+  excludeIds?: number[];
   onSuccess?: () => void;
   sx?: SxProps<Theme>;
 };
@@ -66,6 +67,7 @@ export function ApplicationJobSystemsDrawer({
   systemId,
   systemLabel,
   relationId,
+  excludeIds,
   onSuccess,
   sx,
 }: Props) {
@@ -104,14 +106,15 @@ export function ApplicationJobSystemsDrawer({
         })
         .filter((o): o is Option => Boolean(o));
 
-      setJobOptions(mapped);
+      const finalOptions = !isEditing && excludeIds?.length ? mapped.filter((o) => !excludeIds.includes(o.id)) : mapped;
+      setJobOptions(finalOptions);
     } catch {
       setJobOptions([]);
       toast.error(t('application.map.jobSystems.messages.jobsLoadError'));
     } finally {
       setJobsLoading(false);
     }
-  }, [t]);
+  }, [excludeIds, isEditing, t]);
 
   const resetForm = useCallback(() => {
     setSelectedJobId(null);

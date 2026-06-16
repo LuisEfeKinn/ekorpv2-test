@@ -114,8 +114,8 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
             GetImpactRatioService(),
           ]);
 
-          setTechnologyTypes(technologyTypesRes.data?.[0] || []);
-          setTechnologies(technologiesRes.data?.[0] || []);
+          setTechnologyTypes(Array.isArray(technologyTypesRes.data?.[0]) ? technologyTypesRes.data[0] : []);
+          setTechnologies(Array.isArray(technologiesRes.data?.[0]) ? technologiesRes.data[0] : []);
           setProviders(providersRes.data?.[0] || []);
           setDomains(domainsRes.data?.[0] || []);
           setImpactRatioOptions(impactRatioRes.data || []);
@@ -240,6 +240,7 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
     try {
       const payload = {
         ...formData,
+        superiorTechnology: formData.superiorTechnology.id > 0 ? formData.superiorTechnology : null,
         adoptionContractDate: formData.adoptionContractDate || null,
         expirationDate: formData.expirationDate || null,
         renewalDate: formData.renewalDate || null,
@@ -486,7 +487,7 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
                     fullWidth
                     options={technologyTypes}
                     getOptionLabel={(option) => option.name || ''}
-                    value={technologyTypes.find(tt => tt.id === formData.technologyType.id) || null}
+                    value={(technologyTypes || []).find(tt => tt.id === formData.technologyType.id) || null}
                     onChange={(_, newValue) => handleChange('technologyType', { id: newValue?.id || 0 })}
                     disabled={saving || loadingCatalogs}
                     loading={loadingCatalogs}
@@ -513,7 +514,7 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
                     fullWidth
                     options={technologies}
                     getOptionLabel={(option) => option.name || ''}
-                    value={technologies.find(tech => tech.id === formData.superiorTechnology.id) || null}
+                    value={(technologies || []).find(tech => tech.id === formData.superiorTechnology.id) || null}
                     onChange={(_, newValue) => handleChange('superiorTechnology', { id: newValue?.id || 0 })}
                     disabled={saving || loadingCatalogs}
                     loading={loadingCatalogs}

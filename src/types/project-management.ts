@@ -228,3 +228,40 @@ export type IJobPosition = {
   name: string;
   code: string;
 };
+
+// Activities (Kanban)
+export type IActivityKanbanActivity = {
+  id: number;
+  name: string;
+  priority: string | null;
+  order: number;
+  assignee: { id: number; fullName: string } | null;
+  startDate: string | null;
+  endDate: string | null;
+  subtaskCount: { total: number; done: number };
+  parentId: number | null;
+  createdAt: string;
+};
+
+export type IActivityKanbanColumn = {
+  statusId: number;
+  statusKey: 'TODO' | 'IN_PROGRESS' | 'IN_TESTING' | 'DONE';
+  statusName: string;
+  activities: IActivityKanbanActivity[];
+};
+
+export type IActivityCreatePayload = {
+  projectId: number;
+  name: string;
+  statusId: number;
+  assigneeId?: number;
+  supervisorIds?: number[];
+  parentId?: number;
+  startDate?: string;
+  endDate?: string;
+};
+
+export type IActivityMovePayload = {
+  statusId?: number;
+  order?: number;
+};

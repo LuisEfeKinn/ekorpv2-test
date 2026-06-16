@@ -20,6 +20,7 @@ import { GetAssignmentsPaginationService } from 'src/services/project-management
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 import { ProjectTeamTab } from '../project-team-tab';
+import { ProjectTasksTab } from '../project-tasks-tab';
 import { ProjectSummaryTab } from '../project-summary-tab';
 
 // ----------------------------------------------------------------------
@@ -77,35 +78,36 @@ export function ProjectDetailView({ id }: Props) {
     );
   }
 
+  const isTasksTab = currentTab === 'tasks';
+
   return (
-    <DashboardContent>
-      <CustomBreadcrumbs
-        heading={project.name}
-        links={[
-          { name: t('projects.breadcrumbs.dashboard'), href: paths.dashboard.root },
-          { name: t('projects.breadcrumbs.projectManagement') },
-          { name: t('projects.breadcrumbs.projects'), href: paths.dashboard.projectManagement.projects },
-          { name: project.name },
-        ]}
-        sx={{ mb: 3 }}
-      />
+    <DashboardContent disablePadding={isTasksTab} sx={isTasksTab ? { pt: 'var(--layout-dashboard-content-pt)' } : {}}>
+      <Box sx={isTasksTab ? { px: 'var(--layout-dashboard-content-px)' } : {}}>
+        <CustomBreadcrumbs
+          heading={project.name}
+          links={[
+            { name: t('projects.breadcrumbs.dashboard'), href: paths.dashboard.root },
+            { name: t('projects.breadcrumbs.projectManagement') },
+            { name: t('projects.breadcrumbs.projects'), href: paths.dashboard.projectManagement.projects },
+            { name: project.name },
+          ]}
+          sx={{ mb: 3 }}
+        />
 
-      <Tabs
-        value={currentTab}
-        onChange={handleTabChange}
-        sx={{ mb: 3, borderBottom: (theme) => `1px solid ${theme.vars.palette.divider}` }}
-      >
-        <Tab value="summary" label={t('detail.tabs.summary')} />
-        <Tab value="team" label={t('detail.tabs.team')} />
-        <Tab value="tasks" label={t('detail.tabs.tasks')} disabled />
-      </Tabs>
+        <Tabs
+          value={currentTab}
+          onChange={handleTabChange}
+          sx={{ mb: 3, borderBottom: (theme) => `1px solid ${theme.vars.palette.divider}` }}
+        >
+          <Tab value="summary" label={t('detail.tabs.summary')} />
+          <Tab value="team" label={t('detail.tabs.team')} />
+          <Tab value="tasks" label={t('detail.tabs.tasks')} />
+        </Tabs>
+      </Box>
 
-      {currentTab === 'summary' && (
-        <ProjectSummaryTab project={project} topTeam={topTeam} />
-      )}
-      {currentTab === 'team' && (
-        <ProjectTeamTab projectId={id} />
-      )}
+      {currentTab === 'summary' && <ProjectSummaryTab project={project} topTeam={topTeam} />}
+      {currentTab === 'team' && <ProjectTeamTab projectId={id} />}
+      {currentTab === 'tasks' && <ProjectTasksTab projectId={id} />}
     </DashboardContent>
   );
 }

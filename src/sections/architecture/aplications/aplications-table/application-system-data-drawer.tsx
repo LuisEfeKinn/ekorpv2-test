@@ -35,6 +35,7 @@ type Props = {
   systemId: number;
   systemLabel?: string;
   relationId?: number | null;
+  excludeIds?: number[];
   onSuccess?: () => void;
   sx?: SxProps<Theme>;
 };
@@ -66,6 +67,7 @@ export function ApplicationSystemDataDrawer({
   systemId,
   systemLabel,
   relationId,
+  excludeIds,
   onSuccess,
   sx,
 }: Props) {
@@ -104,14 +106,15 @@ export function ApplicationSystemDataDrawer({
         })
         .filter((o): o is Option => Boolean(o));
 
-      setDataOptions(mapped);
+      const finalOptions = !isEditing && excludeIds?.length ? mapped.filter((o) => !excludeIds.includes(o.id)) : mapped;
+      setDataOptions(finalOptions);
     } catch {
       setDataOptions([]);
       toast.error(t('application.map.systemData.messages.dataLoadError'));
     } finally {
       setDataLoading(false);
     }
-  }, [t]);
+  }, [excludeIds, isEditing, t]);
 
   const resetForm = useCallback(() => {
     setSelectedDataId(null);

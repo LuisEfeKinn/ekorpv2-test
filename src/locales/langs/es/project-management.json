@@ -114,6 +114,18 @@
         "startDate": "Fecha de inicio",
         "endDate": "Fecha de fin",
         "observations": "Observaciones"
+      },
+      "validation": {
+        "nameRequired": "El nombre es requerido",
+        "clientRequired": "El cliente es requerido",
+        "statusRequired": "El estado es requerido",
+        "importanceLevelRequired": "El nivel de importancia es requerido",
+        "sizeRequired": "El tamaño es requerido",
+        "complexityRequired": "La complejidad es requerida",
+        "reintegroLevelRequired": "El nivel de reintegro es requerido",
+        "startDateRequired": "La fecha de inicio es requerida",
+        "endDateRequired": "La fecha de fin es requerida",
+        "endDateMin": "La fecha de fin debe ser posterior a la de inicio"
       }
     },
     "dialogs": {
@@ -201,7 +213,8 @@
           "dedicationRequired": "La dedicación es requerida",
           "startDateRequired": "La fecha de inicio es requerida",
           "endDateRequired": "La fecha de fin es requerida",
-          "endDateMin": "La fecha de fin debe ser posterior a la de inicio"
+          "endDateMin": "La fecha de fin debe ser posterior a la de inicio",
+          "dedicationInvalid": "Ingresa un número válido"
         }
       },
       "dialogs": {
@@ -219,6 +232,44 @@
         "errorUnassign": "Error al desvincular el empleado",
         "errorLoading": "Error al cargar el equipo"
       }
+    },
+    "tasks": {
+      "empty": "No hay actividades en este proyecto",
+      "addTask": "Agregar actividad",
+      "errorLoading": "Error al cargar las actividades",
+      "errorMove": "Error al mover la actividad",
+      "namePlaceholder": "Nombre de la actividad",
+      "assignee": "Asignado",
+      "supervisors": "Supervisores",
+      "startDate": "Fecha inicio",
+      "endDate": "Fecha fin",
+      "dates": "Fechas",
+      "addDates": "Agregar fechas",
+      "selectDates": "Seleccionar fechas",
+      "tabOverview": "Resumen",
+      "tabSubtasks": "Subtareas",
+      "tabComments": "Comentarios",
+      "noSubtasks": "Sin subtareas",
+      "noComments": "Sin comentarios aún",
+      "addAssignee": "Agregar asignado",
+      "changeAssignee": "Cambiar asignado",
+      "addSupervisor": "Agregar supervisor",
+      "selectAssignee": "Seleccionar asignado",
+      "selectSupervisors": "Seleccionar supervisores",
+      "cancel": "Cancelar",
+      "apply": "Aplicar",
+      "clearDates": "Limpiar fechas",
+      "save": "Guardar",
+      "datesError": "La fecha de fin debe ser posterior a la de inicio",
+      "delete": "Eliminar",
+      "close": "Cerrar",
+      "updated": "Actividad actualizada",
+      "created": "Actividad creada",
+      "saveError": "Error al guardar la actividad",
+      "deleted": "Actividad eliminada",
+      "deleteError": "Error al eliminar la actividad",
+      "deleteTitle": "Eliminar actividad",
+      "deleteConfirm": "¿Estás seguro de que deseas eliminar esta actividad?"
     }
   },
   "overview": {

@@ -35,6 +35,7 @@ type Props = {
   systemId: number;
   systemLabel?: string;
   relationId?: number | null;
+  excludeIds?: number[];
   onSuccess?: () => void;
   sx?: SxProps<Theme>;
 };
@@ -66,6 +67,7 @@ export function ApplicationSystemIndicatorsDrawer({
   systemId,
   systemLabel,
   relationId,
+  excludeIds,
   onSuccess,
   sx,
 }: Props) {
@@ -111,14 +113,15 @@ export function ApplicationSystemIndicatorsDrawer({
         })
         .filter((o): o is Option => Boolean(o));
 
-      setIndicatorOptions(mapped);
+      const finalOptions = !isEditing && excludeIds?.length ? mapped.filter((o) => !excludeIds.includes(o.id)) : mapped;
+      setIndicatorOptions(finalOptions);
     } catch {
       setIndicatorOptions([]);
       toast.error(t('application.map.systemIndicators.messages.indicatorsLoadError'));
     } finally {
       setIndicatorsLoading(false);
     }
-  }, [t]);
+  }, [excludeIds, isEditing, t]);
 
   const loadRelationById = useCallback(async () => {
     if (relationId == null) return;

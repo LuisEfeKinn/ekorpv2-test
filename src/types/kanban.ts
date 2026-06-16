@@ -18,7 +18,7 @@ export type IKanbanAssignee = {
   email: string;
   status: string;
   address: string;
-  avatarUrl: string;
+  avatarUrl?: string;
   phoneNumber: string;
   lastActivity: IDateValue;
 };
@@ -39,6 +39,7 @@ export type IKanbanTask = {
     name: string;
     avatarUrl: string;
   };
+  subtaskCount?: { total: number; done: number };
 };
 
 export type IKanbanColumn = {

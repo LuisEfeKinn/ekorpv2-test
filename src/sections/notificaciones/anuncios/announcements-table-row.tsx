@@ -2,7 +2,7 @@
 
 import type { Announcement } from 'src/types/notifications';
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useBoolean, usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
@@ -44,13 +44,30 @@ export function AnnouncementsTableRow({ row, onEdit, onDelete }: Props) {
   const [viewLoading, setViewLoading] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewUrl, setPreviewUrl] = useState('');
+  const [thumbnailUrl, setThumbnailUrl] = useState('');
+
+  useEffect(() => {
+    if (!row.file || !row.id) return;
+    if (row.file.startsWith('http://') || row.file.startsWith('https://')) {
+      setThumbnailUrl(row.file);
+      return;
+    }
+    GetAnnouncementFileViewService(row.id)
+      .then(setThumbnailUrl)
+      .catch(() => setThumbnailUrl(''));
+  }, [row.file, row.id]);
 
   const handleViewImage = useCallback(async () => {
     setPreviewOpen(true);
     setPreviewUrl('');
     setViewLoading(true);
     try {
-      const url = await GetAnnouncementFileViewService(row.id);
+      let url: string;
+      if (row.file && (row.file.startsWith('http://') || row.file.startsWith('https://'))) {
+        url = row.file;
+      } else {
+        url = await GetAnnouncementFileViewService(row.id);
+      }
       setPreviewUrl(url);
     } catch {
       toast.error(t('announcements.messages.error.loadingImage', { defaultValue: 'No se pudo cargar la imagen.' }));
@@ -58,7 +75,7 @@ export function AnnouncementsTableRow({ row, onEdit, onDelete }: Props) {
     } finally {
       setViewLoading(false);
     }
-  }, [row.id, t]);
+  }, [row.file, row.id, t]);
 
   const handleClosePreview = useCallback(() => {
     setPreviewOpen(false);
@@ -128,7 +145,16 @@ export function AnnouncementsTableRow({ row, onEdit, onDelete }: Props) {
         <TableCell>
           {row.file ? (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <FileThumbnail file={row.file} tooltip showImage sx={{ width: 36, height: 36 }} />
+              {thumbnailUrl ? (
+                <Box
+                  component="img"
+                  src={thumbnailUrl}
+                  alt={row.title}
+                  sx={{ width: 36, height: 36, objectFit: 'cover', borderRadius: 1, flexShrink: 0, border: '1px solid', borderColor: 'divider' }}
+                />
+              ) : (
+                <FileThumbnail file={row.file} tooltip showImage sx={{ width: 36, height: 36 }} />
+              )}
               <Button
                 size="small"
                 variant="text"

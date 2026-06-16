@@ -6,6 +6,7 @@ import type { UseDateRangePickerReturn } from './use-date-range-picker';
 
 import { useCallback } from 'react';
 
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -21,6 +22,11 @@ import { DateCalendar, dateCalendarClasses } from '@mui/x-date-pickers/DateCalen
 export type CustomDateRangePickerProps = DialogProps &
   UseDateRangePickerReturn & {
     onSubmit?: () => void;
+    onClear?: () => void;
+    errorMessage?: string;
+    cancelLabel?: string;
+    applyLabel?: string;
+    clearLabel?: string;
   };
 
 export function CustomDateRangePicker({
@@ -28,6 +34,7 @@ export function CustomDateRangePicker({
   error,
   onClose,
   onSubmit,
+  onClear,
   /********/
   startDate,
   endDate,
@@ -37,6 +44,10 @@ export function CustomDateRangePicker({
   slotProps,
   variant = 'input',
   title = 'Select date range',
+  errorMessage = 'End date must be later than start date',
+  cancelLabel = 'Cancel',
+  applyLabel = 'Apply',
+  clearLabel = 'Clear',
   ...other
 }: CustomDateRangePickerProps) {
   const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
@@ -73,10 +84,10 @@ export function CustomDateRangePicker({
       <DialogContent
         sx={[
           (theme) => ({
-            gap: 3,
             display: 'flex',
             overflow: 'unset',
-            flexDirection: isCalendarView ? 'row' : 'column',
+            flexDirection: 'column',
+            gap: 1,
             [`& .${dateCalendarClasses.root}`]: {
               borderRadius: 2,
               border: `dashed 1px ${theme.vars.palette.divider}`,
@@ -84,31 +95,53 @@ export function CustomDateRangePicker({
           }),
         ]}
       >
-        {isCalendarView ? (
-          <>
-            <DateCalendar value={startDate} onChange={onChangeStartDate} />
-            <DateCalendar value={endDate} onChange={onChangeEndDate} />
-          </>
-        ) : (
-          <>
-            <DatePicker label="Start date" value={startDate} onChange={onChangeStartDate} />
-            <DatePicker label="End date" value={endDate} onChange={onChangeEndDate} />
-          </>
-        )}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: isCalendarView ? 'row' : 'column',
+            gap: 3,
+          }}
+        >
+          {isCalendarView ? (
+            <>
+              <DateCalendar value={startDate} onChange={onChangeStartDate} />
+              <DateCalendar
+                value={endDate}
+                onChange={onChangeEndDate}
+                minDate={startDate ? startDate.add(1, 'day') : undefined}
+              />
+            </>
+          ) : (
+            <>
+              <DatePicker label="Start date" value={startDate} onChange={onChangeStartDate} />
+              <DatePicker
+                label="End date"
+                value={endDate}
+                onChange={onChangeEndDate}
+                minDate={startDate ? startDate.add(1, 'day') : undefined}
+              />
+            </>
+          )}
+        </Box>
 
         {error && (
           <FormHelperText error sx={{ px: 2 }}>
-            End date must be later than start date
+            {errorMessage}
           </FormHelperText>
         )}
       </DialogContent>
 
       <DialogActions>
+        {onClear && (
+          <Button variant="soft" color="error" onClick={onClear} sx={{ mr: 'auto' }}>
+            {clearLabel}
+          </Button>
+        )}
         <Button variant="outlined" color="inherit" onClick={onClose}>
-          Cancel
+          {cancelLabel}
         </Button>
         <Button disabled={error} variant="contained" onClick={handleSubmit}>
-          Apply
+          {applyLabel}
         </Button>
       </DialogActions>
     </Dialog>

@@ -39,7 +39,7 @@ const AssignmentSchema = z
     jobPositionIds: z.array(z.string()).min(1),
     priorityId: z.string().min(1),
     statusId: z.string().min(1),
-    dedicacion: z.number({ invalid_type_error: 'Ingresa un número' }).min(1).max(100),
+    dedicacion: z.number().min(1).max(100),
     startDate: z.string().min(1),
     endDate: z.string().min(1),
     observations: z.string().nullable().optional(),
@@ -361,10 +361,13 @@ export function AssignmentCreateEditDrawer({ open, projectId, currentRow, onClos
               InputProps={{
                 endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
-              onChange={(e) => field.onChange(Number(e.target.value))}
+              onChange={(e) => {
+                const val = Number(e.target.value);
+                field.onChange(val > 100 ? 100 : val);
+              }}
               onFocus={(e) => e.target.select()}
               error={!!errors.dedicacion}
-              helperText={errors.dedicacion?.message}
+              helperText={errors.dedicacion ? t('detail.team.drawer.validation.dedicationInvalid') : undefined}
             />
           )}
         />

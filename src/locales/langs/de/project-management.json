@@ -114,6 +114,18 @@
         "startDate": "Startdatum",
         "endDate": "Enddatum",
         "observations": "Anmerkungen"
+      },
+      "validation": {
+        "nameRequired": "Projektname ist erforderlich",
+        "clientRequired": "Kunde ist erforderlich",
+        "statusRequired": "Status ist erforderlich",
+        "importanceLevelRequired": "Wichtigkeitsstufe ist erforderlich",
+        "sizeRequired": "Größe ist erforderlich",
+        "complexityRequired": "Komplexität ist erforderlich",
+        "reintegroLevelRequired": "Rückerstattungsstufe ist erforderlich",
+        "startDateRequired": "Startdatum ist erforderlich",
+        "endDateRequired": "Enddatum ist erforderlich",
+        "endDateMin": "Enddatum muss nach dem Startdatum liegen"
       }
     },
     "dialogs": {
@@ -201,7 +213,8 @@
           "dedicationRequired": "Widmung ist erforderlich",
           "startDateRequired": "Startdatum ist erforderlich",
           "endDateRequired": "Enddatum ist erforderlich",
-          "endDateMin": "Enddatum muss nach dem Startdatum liegen"
+          "endDateMin": "Enddatum muss nach dem Startdatum liegen",
+          "dedicationInvalid": "Bitte eine gültige Zahl eingeben"
         }
       },
       "dialogs": {
@@ -219,6 +232,44 @@
         "errorUnassign": "Fehler beim Entfernen des Mitarbeiters",
         "errorLoading": "Fehler beim Laden des Teams"
       }
+    },
+    "tasks": {
+      "empty": "Keine Aktivitäten für dieses Projekt gefunden",
+      "addTask": "Aktivität hinzufügen",
+      "errorLoading": "Fehler beim Laden der Aktivitäten",
+      "errorMove": "Fehler beim Verschieben der Aktivität",
+      "namePlaceholder": "Aktivitätsname",
+      "assignee": "Zugewiesen",
+      "supervisors": "Supervisoren",
+      "startDate": "Startdatum",
+      "endDate": "Enddatum",
+      "dates": "Zeitraum",
+      "addDates": "Datum hinzufügen",
+      "selectDates": "Zeitraum auswählen",
+      "tabOverview": "Übersicht",
+      "tabSubtasks": "Unteraufgaben",
+      "tabComments": "Kommentare",
+      "noSubtasks": "Keine Unteraufgaben",
+      "noComments": "Noch keine Kommentare",
+      "addAssignee": "Zugewiesene Person hinzufügen",
+      "changeAssignee": "Zugewiesene Person ändern",
+      "addSupervisor": "Supervisor hinzufügen",
+      "selectAssignee": "Zugewiesene Person auswählen",
+      "selectSupervisors": "Supervisoren auswählen",
+      "cancel": "Abbrechen",
+      "apply": "Anwenden",
+      "clearDates": "Datum löschen",
+      "save": "Speichern",
+      "datesError": "Das Enddatum muss nach dem Startdatum liegen",
+      "delete": "Löschen",
+      "close": "Schließen",
+      "updated": "Aktivität aktualisiert",
+      "created": "Aktivität erstellt",
+      "saveError": "Fehler beim Speichern der Aktivität",
+      "deleted": "Aktivität gelöscht",
+      "deleteError": "Fehler beim Löschen der Aktivität",
+      "deleteTitle": "Aktivität löschen",
+      "deleteConfirm": "Möchten Sie diese Aktivität wirklich löschen?"
     }
   },
   "overview": {

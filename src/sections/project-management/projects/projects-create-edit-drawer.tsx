@@ -35,20 +35,19 @@ import { Iconify } from 'src/components/iconify';
 
 const ProjectSchema = z
   .object({
-    name: z.string().min(1, 'El nombre es requerido'),
-    clientId: z.string().min(1, 'El cliente es requerido'),
-    statusId: z.string().min(1, 'El estado es requerido'),
-    importanceLevelId: z.string().min(1, 'El nivel de importancia es requerido'),
-    sizeId: z.string().min(1, 'El tamaño es requerido'),
-    complexityId: z.string().min(1, 'La complejidad es requerida'),
-    reintegroLevelId: z.string().min(1, 'El nivel de reintegro es requerido'),
+    name: z.string().min(1),
+    clientId: z.string().min(1),
+    statusId: z.string().min(1),
+    importanceLevelId: z.string().min(1),
+    sizeId: z.string().min(1),
+    complexityId: z.string().min(1),
+    reintegroLevelId: z.string().min(1),
     generatesIncome: z.boolean(),
-    startDate: z.string().min(1, 'La fecha de inicio es requerida'),
-    endDate: z.string().min(1, 'La fecha de fin es requerida'),
+    startDate: z.string().min(1),
+    endDate: z.string().min(1),
     observations: z.string().nullable().optional(),
   })
   .refine((data) => !data.startDate || !data.endDate || data.endDate > data.startDate, {
-    message: 'La fecha de fin debe ser posterior a la fecha de inicio',
     path: ['endDate'],
   });
 
@@ -188,7 +187,8 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
   const renderAutocomplete = (
     name: keyof ProjectFormData,
     label: string,
-    options: ICatalogOption[]
+    options: ICatalogOption[],
+    errorMessage: string
   ) => (
     <Controller
       name={name}
@@ -206,7 +206,7 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
               {...params}
               label={label}
               error={!!errors[name]}
-              helperText={errors[name]?.message as string}
+              helperText={errors[name] ? errorMessage : undefined}
             />
           )}
         />
@@ -251,7 +251,7 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
               fullWidth
               label={t('projects.drawer.fields.name')}
               error={!!errors.name}
-              helperText={errors.name?.message}
+              helperText={errors.name ? t('projects.drawer.validation.nameRequired') : undefined}
             />
           )}
         />
@@ -275,7 +275,7 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
                   {...params}
                   label={t('projects.drawer.fields.client')}
                   error={!!errors.clientId}
-                  helperText={errors.clientId?.message}
+                  helperText={errors.clientId ? t('projects.drawer.validation.clientRequired') : undefined}
                 />
               )}
             />
@@ -283,16 +283,16 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
         />
 
         <Stack direction="row" spacing={2}>
-          <Box sx={{ flex: 1, minWidth: 0 }}>{renderAutocomplete('statusId', t('projects.drawer.fields.status'), statusOptions)}</Box>
-          <Box sx={{ flex: 1, minWidth: 0 }}>{renderAutocomplete('importanceLevelId', t('projects.drawer.fields.importanceLevel'), importanceOptions)}</Box>
+          <Box sx={{ flex: 1, minWidth: 0 }}>{renderAutocomplete('statusId', t('projects.drawer.fields.status'), statusOptions, t('projects.drawer.validation.statusRequired'))}</Box>
+          <Box sx={{ flex: 1, minWidth: 0 }}>{renderAutocomplete('importanceLevelId', t('projects.drawer.fields.importanceLevel'), importanceOptions, t('projects.drawer.validation.importanceLevelRequired'))}</Box>
         </Stack>
 
         <Stack direction="row" spacing={2}>
-          <Box sx={{ flex: 1, minWidth: 0 }}>{renderAutocomplete('sizeId', t('projects.drawer.fields.size'), sizeOptions)}</Box>
-          <Box sx={{ flex: 1, minWidth: 0 }}>{renderAutocomplete('complexityId', t('projects.drawer.fields.complexity'), complexityOptions)}</Box>
+          <Box sx={{ flex: 1, minWidth: 0 }}>{renderAutocomplete('sizeId', t('projects.drawer.fields.size'), sizeOptions, t('projects.drawer.validation.sizeRequired'))}</Box>
+          <Box sx={{ flex: 1, minWidth: 0 }}>{renderAutocomplete('complexityId', t('projects.drawer.fields.complexity'), complexityOptions, t('projects.drawer.validation.complexityRequired'))}</Box>
         </Stack>
 
-        {renderAutocomplete('reintegroLevelId', t('projects.drawer.fields.reintegroLevel'), reintegroOptions)}
+        {renderAutocomplete('reintegroLevelId', t('projects.drawer.fields.reintegroLevel'), reintegroOptions, t('projects.drawer.validation.reintegroLevelRequired'))}
 
         <Stack direction="row" spacing={2}>
           <Controller
@@ -306,7 +306,7 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
                 label={t('projects.drawer.fields.startDate')}
                 InputLabelProps={{ shrink: true }}
                 error={!!errors.startDate}
-                helperText={errors.startDate?.message}
+                helperText={errors.startDate ? t('projects.drawer.validation.startDateRequired') : undefined}
               />
             )}
           />
@@ -322,7 +322,11 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
                 InputLabelProps={{ shrink: true }}
                 inputProps={{ min: minEndDate }}
                 error={!!errors.endDate}
-                helperText={errors.endDate?.message}
+                helperText={
+                  errors.endDate
+                    ? t(`projects.drawer.validation.${errors.endDate.type === 'custom' ? 'endDateMin' : 'endDateRequired'}`)
+                    : undefined
+                }
               />
             )}
           />

@@ -114,6 +114,18 @@
         "startDate": "Start date",
         "endDate": "End date",
         "observations": "Observations"
+      },
+      "validation": {
+        "nameRequired": "Project name is required",
+        "clientRequired": "Client is required",
+        "statusRequired": "Status is required",
+        "importanceLevelRequired": "Importance level is required",
+        "sizeRequired": "Size is required",
+        "complexityRequired": "Complexity is required",
+        "reintegroLevelRequired": "Reintegro level is required",
+        "startDateRequired": "Start date is required",
+        "endDateRequired": "End date is required",
+        "endDateMin": "End date must be after start date"
       }
     },
     "dialogs": {
@@ -201,7 +213,8 @@
           "dedicationRequired": "Dedication is required",
           "startDateRequired": "Start date is required",
           "endDateRequired": "End date is required",
-          "endDateMin": "End date must be after start date"
+          "endDateMin": "End date must be after start date",
+          "dedicationInvalid": "Enter a valid number"
         }
       },
       "dialogs": {
@@ -219,6 +232,44 @@
         "errorUnassign": "Error unassigning employee",
         "errorLoading": "Error loading team"
       }
+    },
+    "tasks": {
+      "empty": "No activities found for this project",
+      "addTask": "Add activity",
+      "errorLoading": "Error loading activities",
+      "errorMove": "Error moving activity",
+      "namePlaceholder": "Activity name",
+      "assignee": "Assignee",
+      "supervisors": "Supervisors",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "dates": "Due date",
+      "addDates": "Add dates",
+      "selectDates": "Select date range",
+      "tabOverview": "Overview",
+      "tabSubtasks": "Subtasks",
+      "tabComments": "Comments",
+      "noSubtasks": "No subtasks",
+      "noComments": "No comments yet",
+      "addAssignee": "Add assignee",
+      "changeAssignee": "Change assignee",
+      "addSupervisor": "Add supervisor",
+      "selectAssignee": "Select assignee",
+      "selectSupervisors": "Select supervisors",
+      "cancel": "Cancel",
+      "apply": "Apply",
+      "clearDates": "Clear dates",
+      "save": "Save",
+      "datesError": "End date must be later than start date",
+      "delete": "Delete",
+      "close": "Close",
+      "updated": "Activity updated",
+      "created": "Activity created",
+      "saveError": "Error saving activity",
+      "deleted": "Activity deleted",
+      "deleteError": "Error deleting activity",
+      "deleteTitle": "Delete activity",
+      "deleteConfirm": "Are you sure you want to delete this activity?"
     }
   },
   "overview": {

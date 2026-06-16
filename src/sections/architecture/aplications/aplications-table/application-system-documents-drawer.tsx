@@ -36,6 +36,7 @@ type Props = {
   systemId: number;
   systemLabel?: string;
   relationId?: number | null;
+  excludeIds?: number[];
   onSuccess?: () => void;
   sx?: SxProps<Theme>;
 };
@@ -99,6 +100,7 @@ export function ApplicationSystemDocumentsDrawer({
   systemId,
   systemLabel,
   relationId,
+  excludeIds,
   onSuccess,
   sx,
 }: Props) {
@@ -135,14 +137,15 @@ export function ApplicationSystemDocumentsDrawer({
         })
         .filter((o): o is Option => Boolean(o));
 
-      setDocumentOptions(mapped);
+      const finalOptions = !isEditing && excludeIds?.length ? mapped.filter((o) => !excludeIds.includes(o.id)) : mapped;
+      setDocumentOptions(finalOptions);
     } catch {
       setDocumentOptions([]);
       toast.error(t('application.map.systemDocuments.messages.documentsLoadError'));
     } finally {
       setDocumentsLoading(false);
     }
-  }, [t]);
+  }, [excludeIds, isEditing, t]);
 
   const resetForm = useCallback(() => {
     setSelectedDocumentId(null);

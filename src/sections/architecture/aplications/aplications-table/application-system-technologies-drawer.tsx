@@ -35,6 +35,7 @@ type Props = {
   systemId: number;
   systemLabel?: string;
   relationId?: number | null;
+  excludeIds?: number[];
   onSuccess?: () => void;
   sx?: SxProps<Theme>;
 };
@@ -66,6 +67,7 @@ export function ApplicationSystemTechnologiesDrawer({
   systemId,
   systemLabel,
   relationId,
+  excludeIds,
   onSuccess,
   sx,
 }: Props) {
@@ -104,14 +106,15 @@ export function ApplicationSystemTechnologiesDrawer({
         })
         .filter((o): o is Option => Boolean(o));
 
-      setTechnologyOptions(mapped);
+      const finalOptions = !isEditing && excludeIds?.length ? mapped.filter((o) => !excludeIds.includes(o.id)) : mapped;
+      setTechnologyOptions(finalOptions);
     } catch {
       setTechnologyOptions([]);
       toast.error(t('application.map.systemTechnologies.messages.technologiesLoadError'));
     } finally {
       setTechnologiesLoading(false);
     }
-  }, [t]);
+  }, [excludeIds, isEditing, t]);
 
   const resetForm = useCallback(() => {
     setSelectedTechnologyId(null);

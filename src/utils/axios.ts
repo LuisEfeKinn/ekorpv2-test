@@ -530,6 +530,11 @@ export const endpoints = {
       delete: '/project-management/projects', // + /:id
     },
     dashboard: '/project-management/dashboard',
+    activities: {
+      kanban: '/project-management/activities/kanban',
+      all: '/project-management/activities',
+      move: '/project-management/activities', // + /:id/kanban
+    },
     assignments: {
       all: '/project-management/assignments',
       save: '/project-management/assignments',
