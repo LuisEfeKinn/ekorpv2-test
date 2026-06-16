@@ -323,53 +323,6 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
   
   const dynamicNavData = convertModulesToNavData(modules ?? [], t);
 
-  // TEMP: Mostrar Notificaciones/Anuncios para todos los usuarios
-  // (sin depender de asignación de rol/módulo desde backend)
-  try {
-    const notificationsSubheader = t('notifications.title');
-    const announcementsTitle = t('notifications.items.announcements');
-    const templatesTitle = t('notifications.items.templates');
-    const configTitle = t('notifications.items.config');
-
-    const sectionIdx = dynamicNavData.findIndex((s) => s.subheader === notificationsSubheader);
-    const announcementsItem = {
-      title: announcementsTitle,
-      path: paths.dashboard.notifications.announcements,
-      icon: getNavIcon('list-ul'),
-    };
-
-    const templatesItem = {
-      title: templatesTitle,
-      path: paths.dashboard.notifications.templates,
-      icon: getNavIcon('list-ul'),
-    };
-
-    const configItem = {
-      title: configTitle,
-      path: paths.dashboard.notifications.config,
-      icon: getNavIcon('cogs'),
-    };
-
-    if (sectionIdx >= 0) {
-      const section = dynamicNavData[sectionIdx];
-      const existsAnnouncements = section.items?.some((it) => it.path === announcementsItem.path);
-      if (!existsAnnouncements) section.items.push(announcementsItem);
-
-      const existsTemplates = section.items?.some((it) => it.path === templatesItem.path);
-      if (!existsTemplates) section.items.push(templatesItem);
-
-      const existsConfig = section.items?.some((it) => it.path === configItem.path);
-      if (!existsConfig) section.items.push(configItem);
-    } else {
-      dynamicNavData.push({
-        subheader: notificationsSubheader,
-        items: [announcementsItem, templatesItem, configItem],
-      });
-    }
-  } catch (e) {
-    // ignore
-  }
-
   try {
     const archIdx = dynamicNavData.findIndex((s) => s.subheader === t('architecture.title'));
     if (archIdx >= 0) {
@@ -529,40 +482,6 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
     //   }
     }
 
-  } catch {
-    void 0;
-  }
-
-  try {
-    const documentsSubheader = t('documents.title');
-    const documentManagementTitle = t('documents.items.documentManagement');
-
-    const docsSectionIdx = dynamicNavData.findIndex((s) => s.subheader === documentsSubheader);
-    if (docsSectionIdx >= 0) {
-      const section = dynamicNavData[docsSectionIdx];
-      const alreadyExists = section.items.some(
-        (it) => it.title === documentManagementTitle || it.path === paths.dashboard.documents.documentManagement
-      );
-
-      if (!alreadyExists) {
-        section.items.push({
-          title: documentManagementTitle,
-          path: paths.dashboard.documents.documentManagement,
-          icon: getNavIcon('file'),
-        });
-      }
-    } else {
-      dynamicNavData.push({
-        subheader: documentsSubheader,
-        items: [
-          {
-            title: documentManagementTitle,
-            path: paths.dashboard.documents.documentManagement,
-            icon: getNavIcon('file'),
-          },
-        ],
-      });
-    }
   } catch {
     void 0;
   }

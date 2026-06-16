@@ -18,7 +18,7 @@ import { alpha, useTheme } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useTranslate } from 'src/locales';
-import { SaveDataFlowService } from 'src/services/architecture/data/dataMap.service';
+import { SaveOrUpdateInfraestructureTableService } from 'src/services/architecture/infrastructure/infrastructureTable.service';
 import { GetDomainPaginationService } from 'src/services/architecture/catalogs/domains.service';
 import { GetProvidersPaginationService } from 'src/services/architecture/catalogs/providers.service';
 import { GetTechnologyTypesPaginationService } from 'src/services/architecture/catalogs/technologyTypes.service';
@@ -222,7 +222,7 @@ export function InfrastructureDiagramFlowCreateModal({ open, onClose, parentNode
         renewalDate: formData.renewalDate || null,
         obsolescenceDate: formData.obsolescenceDate || null,
       };
-      await SaveDataFlowService(payload, parentNodeId);
+      await SaveOrUpdateInfraestructureTableService(payload, parentNodeId);
       toast.success(t('infrastructure.diagram.messages.success.created'));
       onSave(); // Recargar el diagrama
       onClose(); // Cerrar el modal

@@ -22,7 +22,7 @@ import { useTranslate } from 'src/locales';
 import { GetDomainPaginationService } from 'src/services/architecture/catalogs/domains.service';
 import { GetProvidersPaginationService } from 'src/services/architecture/catalogs/providers.service';
 import { GetTechnologyTypesPaginationService } from 'src/services/architecture/catalogs/technologyTypes.service';
-import { GetDataTableByIdService, SaveOrUpdateDataTableService } from 'src/services/architecture/data/dataTable.service';
+import { GetInfraestructureTableByIdService, SaveOrUpdateInfraestructureTableService } from 'src/services/architecture/infrastructure/infrastructureTable.service';
 import { GetImpactRatioService, GetLocalExternalService, } from 'src/services/architecture/related-data/related-data.service';
 
 import { toast } from 'src/components/snackbar';
@@ -151,7 +151,7 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
 
     setLoading(true);
     try {
-      const response = await GetDataTableByIdService(dataId);
+      const response = await GetInfraestructureTableByIdService(dataId);
       if (response?.data) {
         const data = response.data;
         setFormData({
@@ -265,7 +265,7 @@ export function InfrastructureDiagramFlowEditModal({ open, onClose, dataId, onSa
         renewalDate: formData.renewalDate || null,
         obsolescenceDate: formData.obsolescenceDate || null,
       };
-      await SaveOrUpdateDataTableService(payload, dataId);
+      await SaveOrUpdateInfraestructureTableService(payload, dataId);
       toast.success(
         dataId
           ? t('infrastructure.table.messages.success.updated')
