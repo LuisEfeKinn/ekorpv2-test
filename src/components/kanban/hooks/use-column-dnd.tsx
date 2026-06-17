@@ -55,7 +55,7 @@ export function useColumnDnd(column: IKanbanColumn): UseColumnDndReturn {
     const columnEl = columnRef.current;
     const taskListEl = taskListRef.current;
     const dragHandleEl = dragHandleRef.current;
-    if (!columnWrapperEl || !columnEl || !dragHandleEl || !taskListEl) return undefined;
+    if (!columnWrapperEl || !columnEl || !taskListEl) return undefined;
 
     /**
      * ➤➤ Updates column state when a task is dragged over it.
@@ -73,43 +73,40 @@ export function useColumnDnd(column: IKanbanColumn): UseColumnDndReturn {
     };
 
     /**
-     * ➤➤ Makes the column draggable using its handle.
-     *
-     * (1) getInitialData => Provide initial drag data when the drag starts
-     * (2) onDragStart => When dragging starts
-     * (3) onDrop => When the item is dropped
-     * (4) onGenerateDragPreview => Customize the drag preview behavior
+     * ➤➤ Makes the column draggable using its handle (only when handle is rendered).
      */
-    const dragColumn = draggable({
-      element: columnEl,
-      dragHandle: dragHandleEl,
-      getInitialData: () => getColumnData({ column }),
-      onDragStart: () => setState({ type: kanbanClasses.state.dragging }),
-      onDrop: () => setState({ type: kanbanClasses.state.idle }),
-      onGenerateDragPreview: ({ source, location, nativeSetDragImage }) => {
-        if (!isColumnData(source.data)) return;
+    const dragColumn = dragHandleEl
+      ? draggable({
+          element: columnEl,
+          dragHandle: dragHandleEl,
+          getInitialData: () => getColumnData({ column }),
+          onDragStart: () => setState({ type: kanbanClasses.state.dragging }),
+          onDrop: () => setState({ type: kanbanClasses.state.idle }),
+          onGenerateDragPreview: ({ source, location, nativeSetDragImage }) => {
+            if (!isColumnData(source.data)) return;
 
-        setCustomNativeDragPreview({
-          nativeSetDragImage,
-          getOffset: preserveOffsetOnSource({
-            element: columnEl,
-            input: location.current.input,
-          }),
-          render: ({ container }) => {
-            const rect = columnEl.getBoundingClientRect();
-            const previewEl = columnEl.cloneNode(true);
-            if (!(previewEl instanceof HTMLElement)) return;
+            setCustomNativeDragPreview({
+              nativeSetDragImage,
+              getOffset: preserveOffsetOnSource({
+                element: columnEl,
+                input: location.current.input,
+              }),
+              render: ({ container }) => {
+                const rect = columnEl.getBoundingClientRect();
+                const previewEl = columnEl.cloneNode(true);
+                if (!(previewEl instanceof HTMLElement)) return;
 
-            Object.assign(previewEl.style, {
-              width: `${rect.width}px`,
-              height: `${rect.height}px`,
+                Object.assign(previewEl.style, {
+                  width: `${rect.width}px`,
+                  height: `${rect.height}px`,
+                });
+
+                container.appendChild(previewEl);
+              },
             });
-
-            container.appendChild(previewEl);
           },
-        });
-      },
-    });
+        })
+      : null;
 
     /**
      * ➤➤ Registers the column as a drop target for tasks and other columns.
@@ -159,7 +156,7 @@ export function useColumnDnd(column: IKanbanColumn): UseColumnDndReturn {
     const isTaskListScrollable = taskListOverflow === "auto" || taskListOverflow === "scroll";
 
     if (!isTaskListScrollable) {
-      return combine(dragColumn, dropColumnTarget);
+      return dragColumn ? combine(dragColumn, dropColumnTarget) : dropColumnTarget;
     }
 
     /**
@@ -184,7 +181,9 @@ export function useColumnDnd(column: IKanbanColumn): UseColumnDndReturn {
       }),
     });
 
-    return combine(dragColumn, dropColumnTarget, scrollTaskList, overflowTaskListScroll);
+    return dragColumn
+      ? combine(dragColumn, dropColumnTarget, scrollTaskList, overflowTaskListScroll)
+      : combine(dropColumnTarget, scrollTaskList, overflowTaskListScroll);
   }, [column]);
 
   return {

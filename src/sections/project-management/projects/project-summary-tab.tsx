@@ -1,25 +1,32 @@
 'use client';
 
-import type { IAssignment, IProjectDetail } from 'src/types/project-management';
+import type { IAssignment, IProjectDetail, IActivityListItem } from 'src/types/project-management';
+
+import { useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
+import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
 import Divider from '@mui/material/Divider';
 import { alpha } from '@mui/material/styles';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 
-import { fDate } from 'src/utils/format-time';
+import { fDate, fToNow } from 'src/utils/format-time';
+import { stringToAvatarColor } from 'src/utils/avatar-color';
 
 import { useTranslate } from 'src/locales';
+import { GetActivitiesListService } from 'src/services/project-management/activity.service';
 
 import { Iconify } from 'src/components/iconify';
 import { Chart, useChart } from 'src/components/chart';
+
+import { useProjectView } from '../project-view-context';
 
 // ----------------------------------------------------------------------
 
@@ -39,6 +46,13 @@ const STATUS_COLOR: Record<string, ChipColor> = {
   '4': 'default',
 };
 
+const ACTIVITY_STATUS_COLOR: Record<string, ChipColor> = {
+  TODO: 'default',
+  IN_PROGRESS: 'info',
+  IN_TESTING: 'warning',
+  DONE: 'success',
+};
+
 const getInitials = (name: string) =>
   name
     .split(' ')
@@ -56,16 +70,40 @@ type Props = {
 
 export function ProjectSummaryTab({ project, topTeam }: Props) {
   const { t } = useTranslate('project-management');
+  const { canViewFinancials } = useProjectView();
 
-  // Mock task progress — replace when backend provides taskCount per status
+  const [recentActivities, setRecentActivities] = useState<IActivityListItem[]>([]);
+
+  useEffect(() => {
+    GetActivitiesListService({
+      projectId: Number(project.id),
+      onlyRoot: true,
+      page: 1,
+      perPage: 5,
+      order: 'activity.updatedAt:desc',
+    })
+      .then((res) => setRecentActivities(res.data?.data ?? []))
+      .catch(() => {});
+  }, [project.id]);
+
+  const stats = project.stats;
+
+  const chartLabels = stats?.activitiesByStatus.map((s) => s.name) ?? [];
+  const chartSeries = stats?.activitiesByStatus.map((s) => s.count) ?? [];
+
+  const total = stats?.activityCount ?? 1;
+
   const chartOptions = useChart({
-    labels: ['Por hacer', 'En progreso', 'En pruebas', 'Completado'],
+    labels: chartLabels,
     legend: { position: 'right' as const },
     plotOptions: { pie: { donut: { size: '72%' } } },
-    tooltip: { y: { formatter: (val: number) => `${val}%` } },
+    tooltip: {
+      y: {
+        formatter: (val: number) =>
+          `${val} actividades (${Math.round((val / total) * 100)}%)`,
+      },
+    },
   });
-
-  const mockChartSeries = [30, 25, 15, 30];
 
   return (
     <Grid container spacing={3}>
@@ -89,23 +127,25 @@ export function ProjectSummaryTab({ project, topTeam }: Props) {
                   value={`${project.size.name} · ${project.complexity.name}`}
                 />
               </Grid>
+              {canViewFinancials && (
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <DetailField
+                    icon="solar:chart-square-bold-duotone"
+                    label={t('detail.summary.fields.reintegroLevel')}
+                    value={project.reintegroLevel.name}
+                  />
+                </Grid>
+              )}
               <Grid size={{ xs: 12, sm: 6 }}>
                 <DetailField
-                  icon="solar:layers-bold"
-                  label={t('detail.summary.fields.reintegroLevel')}
-                  value={project.reintegroLevel.name}
-                />
-              </Grid>
-              <Grid size={{ xs: 12, sm: 6 }}>
-                <DetailField
-                  icon="solar:calendar-add-bold"
+                  icon="solar:calendar-date-bold"
                   label={t('detail.summary.fields.createdAt')}
                   value={fDate(project.createdAt)}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <Stack spacing={0.75}>
-                  <Typography variant="caption" sx={{ color: 'text.disabled' }}>Estado</Typography>
+                  <Typography variant="caption" sx={{ color: 'text.disabled' }}>{t('detail.summary.fields.status')}</Typography>
                   <Chip
                     label={project.status.name}
                     size="small"
@@ -129,7 +169,7 @@ export function ProjectSummaryTab({ project, topTeam }: Props) {
                   />
                 </Stack>
               </Grid>
-              {project.generatesIncome && (
+              {canViewFinancials && project.generatesIncome && (
                 <Grid size={{ xs: 12, sm: 6 }}>
                   <Stack spacing={0.75}>
                     <Typography variant="caption" sx={{ color: 'text.disabled' }}>
@@ -149,7 +189,7 @@ export function ProjectSummaryTab({ project, topTeam }: Props) {
               {project.observations && (
                 <Grid size={{ xs: 12 }}>
                   <DetailField
-                    icon="solar:notes-bold"
+                    icon="solar:notes-bold-duotone"
                     label={t('projects.drawer.fields.observations')}
                     value={project.observations}
                   />
@@ -163,7 +203,6 @@ export function ProjectSummaryTab({ project, topTeam }: Props) {
       {/* Client info */}
       <Grid size={{ xs: 12, md: 4 }}>
         <Card sx={{ height: '100%' }}>
-          {/* Cover band — avatar + identity live here; real image fills this area later */}
           <Box
             sx={{
               background: (theme) =>
@@ -178,7 +217,7 @@ export function ProjectSummaryTab({ project, topTeam }: Props) {
             </Avatar>
             <Typography variant="subtitle1" fontWeight={600}>{project.client.name}</Typography>
             <Chip
-              label={project.client.isActive ? 'Activo' : 'Inactivo'}
+              label={project.client.isActive ? t('clients.status.active') : t('clients.status.inactive')}
               size="small"
               variant="soft"
               color={project.client.isActive ? 'success' : 'default'}
@@ -188,27 +227,35 @@ export function ProjectSummaryTab({ project, topTeam }: Props) {
           <Divider />
           <CardContent>
             <Stack spacing={2.5}>
-              <DetailField icon="solar:card-bold" label={t('detail.summary.fields.nit')} value={project.client.nit} />
+              <DetailField icon="solar:user-id-bold" label={t('detail.summary.fields.nit')} value={project.client.nit} />
               <DetailField icon="solar:letter-bold" label={t('detail.summary.fields.email')} value={project.client.email} />
-              <DetailField icon="solar:calendar-add-bold" label={t('detail.summary.fields.createdAt')} value={fDate(project.client.createdAt)} />
+              <DetailField icon="solar:calendar-date-bold" label={t('detail.summary.fields.createdAt')} value={fDate(project.client.createdAt)} />
             </Stack>
           </CardContent>
         </Card>
       </Grid>
 
-      {/* Task progress chart — mock data until backend provides task counts */}
+      {/* Activity status chart */}
       <Grid size={{ xs: 12, md: 8 }}>
         <Card sx={{ height: '100%' }}>
           <CardHeader
             title={t('detail.summary.taskProgress')}
-            subheader={t('detail.summary.noTaskData')}
+            subheader={stats ? t('detail.summary.taskProgressSubheader', { progress: stats.progress, count: stats.activityCount }) : undefined}
           />
-          <Chart
-            type="donut"
-            series={mockChartSeries}
-            options={chartOptions}
-            sx={{ height: 260, py: 2 }}
-          />
+          {chartSeries.length > 0 ? (
+            <Chart
+              type="donut"
+              series={chartSeries}
+              options={chartOptions}
+              sx={{ height: 260, py: 2 }}
+            />
+          ) : (
+            <CardContent>
+              <Typography variant="body2" sx={{ color: 'text.disabled', textAlign: 'center', py: 4 }}>
+                Sin datos disponibles
+              </Typography>
+            </CardContent>
+          )}
         </Card>
       </Grid>
 
@@ -225,7 +272,7 @@ export function ProjectSummaryTab({ project, topTeam }: Props) {
               <Stack spacing={2}>
                 {topTeam.slice(0, 5).map((member) => (
                   <Stack key={member.id} direction="row" spacing={1.5} alignItems="center">
-                    <Avatar sx={{ width: 36, height: 36, flexShrink: 0 }}>
+                    <Avatar sx={{ width: 36, height: 36, fontSize: 14, flexShrink: 0, color: '#fff', bgcolor: stringToAvatarColor(String(member.employeeId)) }}>
                       {getInitials(member.employeeFullName)}
                     </Avatar>
                     <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -245,15 +292,77 @@ export function ProjectSummaryTab({ project, topTeam }: Props) {
         </Card>
       </Grid>
 
-      {/* Recent activity placeholder */}
+      {/* Recent activity */}
       <Grid size={{ xs: 12 }}>
         <Card>
           <CardHeader title={t('detail.summary.recentActivity')} />
-          <CardContent>
-            <Stack direction="row" spacing={1.5} alignItems="center" sx={{ py: 1, color: 'text.disabled' }}>
-              <Iconify icon="solar:history-bold" width={20} />
-              <Typography variant="body2">{t('detail.summary.noActivity')}</Typography>
-            </Stack>
+          <CardContent sx={{ pt: 0 }}>
+            {recentActivities.length === 0 ? (
+              <Typography variant="body2" sx={{ color: 'text.disabled', py: 2 }}>
+                {t('detail.summary.noActivity')}
+              </Typography>
+            ) : (
+              <Stack divider={<Divider />}>
+                {recentActivities.map((activity) => (
+                  <Stack
+                    key={activity.id}
+                    direction="row"
+                    alignItems="center"
+                    spacing={2}
+                    sx={{ py: 1.5 }}
+                  >
+                    <Box sx={{ flex: 1, minWidth: 0 }}>
+                      <Typography variant="body2" noWrap>
+                        {activity.name}
+                      </Typography>
+                      {activity.code && (
+                        <Typography variant="caption" sx={{ color: 'text.disabled' }}>
+                          {activity.code}
+                        </Typography>
+                      )}
+                    </Box>
+
+                    <Chip
+                      label={activity.statusName}
+                      size="small"
+                      variant="soft"
+                      color={ACTIVITY_STATUS_COLOR[activity.statusKey] ?? 'default'}
+                      sx={{ flexShrink: 0 }}
+                    />
+
+                    {activity.assignee ? (
+                      <Tooltip title={activity.assignee.fullName} arrow>
+                        <Avatar
+                          sx={{
+                            width: 28,
+                            height: 28,
+                            fontSize: 11,
+                            flexShrink: 0,
+                            color: '#fff',
+                            bgcolor: stringToAvatarColor(String(activity.assignee.id)),
+                          }}
+                        >
+                          {getInitials(activity.assignee.fullName)}
+                        </Avatar>
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title="Sin asignar" arrow>
+                        <Avatar sx={{ width: 28, height: 28, flexShrink: 0 }}>
+                          <Iconify icon="solar:user-bold" width={16} />
+                        </Avatar>
+                      </Tooltip>
+                    )}
+
+                    <Typography
+                      variant="caption"
+                      sx={{ color: 'text.disabled', flexShrink: 0, minWidth: 80, textAlign: 'right' }}
+                    >
+                      {fToNow(activity.createdAt)}
+                    </Typography>
+                  </Stack>
+                ))}
+              </Stack>
+            )}
           </CardContent>
         </Card>
       </Grid>

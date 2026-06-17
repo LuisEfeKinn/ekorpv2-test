@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { paths } from 'src/routes/paths';
@@ -17,6 +18,7 @@ import { DashboardContent } from 'src/layouts/dashboard';
 import { GetProjectByIdService } from 'src/services/project-management/project.service';
 import { GetAssignmentsPaginationService } from 'src/services/project-management/assignment.service';
 
+import { Iconify } from 'src/components/iconify';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 import { ProjectTeamTab } from '../project-team-tab';
@@ -91,6 +93,15 @@ export function ProjectDetailView({ id }: Props) {
             { name: t('projects.breadcrumbs.projects'), href: paths.dashboard.projectManagement.projects },
             { name: project.name },
           ]}
+          action={
+            <Button
+              variant="outlined"
+              startIcon={<Iconify icon="carbon:chevron-left" width={18} />}
+              onClick={() => router.push(paths.dashboard.projectManagement.projects)}
+            >
+              {t('actions.back')}
+            </Button>
+          }
           sx={{ mb: 3 }}
         />
 

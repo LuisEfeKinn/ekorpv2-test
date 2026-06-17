@@ -18,11 +18,11 @@ import { alpha, useTheme } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useTranslate } from 'src/locales';
-import { GetInfraestructureTablePaginationService, SaveOrUpdateInfraestructureTableService } from 'src/services/architecture/infrastructure/infrastructureTable.service';
 import { GetDomainPaginationService } from 'src/services/architecture/catalogs/domains.service';
+import { GetImpactRatioService } from 'src/services/architecture/related-data/related-data.service';
 import { GetProvidersPaginationService } from 'src/services/architecture/catalogs/providers.service';
 import { GetTechnologyTypesPaginationService } from 'src/services/architecture/catalogs/technologyTypes.service';
-import { GetImpactRatioService } from 'src/services/architecture/related-data/related-data.service';
+import { SaveOrUpdateInfraestructureTableService, GetInfraestructureTablePaginationService } from 'src/services/architecture/infrastructure/infrastructureTable.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';

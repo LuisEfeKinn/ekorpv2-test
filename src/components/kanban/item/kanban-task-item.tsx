@@ -55,14 +55,15 @@ const renderTaskPreview = (state: UseTaskItemDndReturn['state'], task: IKanbanTa
 type TaskItemProps = React.ComponentProps<typeof ItemRoot> & {
   task: IKanbanTask;
   columnId: string;
+  disableDnd?: boolean;
   onDeleteTask?: (taskId: string) => void;
   onUpdateTask?: (task: IKanbanTask) => void;
   onTaskClick?: (task: IKanbanTask) => void;
 };
 
-export function KanbanTaskItem({ task, columnId, onDeleteTask, onUpdateTask, onTaskClick, sx, ...other }: TaskItemProps) {
+export function KanbanTaskItem({ task, columnId, disableDnd, onDeleteTask, onUpdateTask, onTaskClick, sx, ...other }: TaskItemProps) {
   const taskDetailsDialog = useBoolean();
-  const { taskRef, state } = useTaskItemDnd(task, columnId);
+  const { taskRef, state } = useTaskItemDnd(task, columnId, disableDnd);
 
   const handleDeleteTask = useCallback(async () => {
     try {
@@ -124,7 +125,7 @@ export function KanbanTaskItem({ task, columnId, onDeleteTask, onUpdateTask, onT
           state.type === kanbanClasses.state.draggingAndLeftSelf,
         [kanbanClasses.state.openDetails]: taskDetailsDialog.value,
       })}
-      sx={sx}
+      sx={[...(Array.isArray(sx) ? sx : [sx]), ...(disableDnd ? [{ cursor: 'default' }] : [])]}
       onClick={handleClick}
       {...other}
     >

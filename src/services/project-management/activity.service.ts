@@ -11,6 +11,7 @@ export const GetActivitiesListService = async (params?: {
   onlyRoot?: boolean;
   page?: number;
   perPage?: number;
+  order?: string;
 }) => {
   const response = await axios.get(activities.all, { params });
   return response;

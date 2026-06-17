@@ -5,10 +5,9 @@ import type { Announcement, AnnouncementUpsertPayload } from 'src/types/notifica
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { useDropzone } from 'react-dropzone';
-import { useMemo, useState, useCallback, useEffect } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-
 import { varAlpha } from 'minimal-shared/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -22,8 +21,8 @@ import IconButton from '@mui/material/IconButton';
 
 import { useTranslate } from 'src/locales';
 import {
-  SaveOrUpdateAnnouncementService,
   GetAnnouncementFileViewService,
+  SaveOrUpdateAnnouncementService,
 } from 'src/services/notifications/announcements.service';
 
 import { toast } from 'src/components/snackbar';

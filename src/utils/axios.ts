@@ -521,6 +521,8 @@ export const endpoints = {
     workers: {
       all: '/project-management/workers',
       update: '/project-management/workers', // + /:id
+      myProjects: '/project-management/workers/my-projects',
+      myActivitiesKanban: '/project-management/workers/my-activities/kanban',
     },
     projects: {
       all: '/project-management/projects',

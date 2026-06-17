@@ -117,6 +117,24 @@ export type IProjectManagementMeta = {
   hasNextPage: boolean;
 };
 
+export type IProjectStats = {
+  activityCount: number;
+  progress: number;
+  workersAssignedCount: number;
+  activitiesByStatus: { id: string; name: string; key: string; count: number }[];
+};
+
+export type IActivityListItem = {
+  id: number;
+  name: string;
+  code: string | null;
+  statusId: number;
+  statusName: string;
+  statusKey: string;
+  assignee: { id: number; fullName: string } | null;
+  createdAt: string;
+};
+
 // Project detail (GET /project-management/projects/:id)
 export type IProjectDetail = {
   id: string;
@@ -133,6 +151,7 @@ export type IProjectDetail = {
   observations: string | null;
   createdAt: string;
   updatedAt: string;
+  stats?: IProjectStats;
   client: {
     id: string;
     nit: string;
@@ -264,4 +283,23 @@ export type IActivityCreatePayload = {
 export type IActivityMovePayload = {
   statusId?: number;
   order?: number;
+};
+
+export type IMyProject = {
+  id: number;
+  name: string;
+  code: string;
+  statusName: string;
+  importanceLevelName: string;
+  dedicacion: number;
+  assignmentStatusName: string;
+  roles: string[];
+  activityCount: number;
+  startDate: string;
+  endDate: string;
+};
+
+export type IMyProjectResponse = {
+  data: IMyProject[];
+  meta: IProjectManagementMeta;
 };

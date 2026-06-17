@@ -50,6 +50,8 @@ type KanbanBoardProps = {
   board: IKanban;
   boardLoading?: boolean;
   readonlyColumns?: boolean;
+  disableTaskDnd?: boolean;
+  taskTotals?: Record<string, number>;
   dndCallbacks?: UseBoardDndCallbacks;
   onAddTask?: (columnId: string, taskData: IKanbanTask) => void;
   onDeleteTask?: (taskId: string) => void;
@@ -61,13 +63,15 @@ export function KanbanBoard({
   board,
   boardLoading,
   readonlyColumns,
+  disableTaskDnd,
+  taskTotals,
   dndCallbacks,
   onAddTask,
   onDeleteTask,
   onUpdateTask,
   onTaskClick,
 }: KanbanBoardProps) {
-  const { boardRef } = useBoardDnd(board, dndCallbacks);
+  const { boardRef } = useBoardDnd(board, dndCallbacks, disableTaskDnd);
 
   const renderLoading = () => (
     <Box sx={{ gap: 'var(--kanban-column-gap)', display: 'flex', alignItems: 'flex-start' }}>
@@ -85,7 +89,9 @@ export function KanbanBoard({
             key={column.id}
             column={column}
             tasks={board.tasks[column.id] ?? []}
+            taskTotal={taskTotals?.[column.id]}
             readonlyColumns={readonlyColumns}
+            disableTaskDnd={disableTaskDnd}
             onAddTask={onAddTask}
             onDeleteTask={onDeleteTask}
             onUpdateTask={onUpdateTask}
@@ -204,6 +210,7 @@ const ScrollContainer = styled('div')(({ theme }) => ({
   overflowX: 'auto',
   overflowY: 'auto',
   flexDirection: 'column',
+  userSelect: 'none',
 }));
 
 const FlexibleColumnContainer = styled('ul', {

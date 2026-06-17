@@ -2,7 +2,7 @@ import type { IRegionOption, ICountryOption } from 'src/types/locations';
 import type { ISkillOption, IUserManagementTableFilters } from 'src/types/employees';
 import type { IPositionOption, IOrganizationalUnitOption } from 'src/types/organization';
 
-import { useMemo, useState, useCallback, useEffect } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';

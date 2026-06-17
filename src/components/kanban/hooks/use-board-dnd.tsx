@@ -54,7 +54,7 @@ export type UseBoardDndReturn = {
   boardRef: React.RefObject<HTMLDivElement | null>;
 };
 
-export function useBoardDnd(board: IKanban, callbacks?: UseBoardDndCallbacks): UseBoardDndReturn {
+export function useBoardDnd(board: IKanban, callbacks?: UseBoardDndCallbacks, disableDnd?: boolean): UseBoardDndReturn {
   const boardRef = useRef<HTMLDivElement>(null);
   const onMoveTask = callbacks?.onMoveTask;
   const onMoveColumn = callbacks?.onMoveColumn;
@@ -221,7 +221,7 @@ export function useBoardDnd(board: IKanban, callbacks?: UseBoardDndCallbacks): U
      * ➤➤ Task drag-and-drop monitoring
      */
     const taskMonitor = monitorForElements({
-      canMonitor: ({ source }) => isTaskData(source.data),
+      canMonitor: ({ source }) => !disableDnd && isTaskData(source.data),
       onDrop: handleTaskDrop,
     });
 
@@ -229,7 +229,7 @@ export function useBoardDnd(board: IKanban, callbacks?: UseBoardDndCallbacks): U
      * ➤➤ Column drag-and-drop monitoring
      */
     const columnMonitor = monitorForElements({
-      canMonitor: ({ source }) => isColumnData(source.data),
+      canMonitor: ({ source }) => !disableDnd && isColumnData(source.data),
       onDrop: handleColumnDrop,
     });
 
@@ -264,7 +264,7 @@ export function useBoardDnd(board: IKanban, callbacks?: UseBoardDndCallbacks): U
     });
 
     return combine(taskMonitor, columnMonitor, scrollBoard, overflowBoardScroll);
-  }, [board.tasks, handleTaskDrop, handleColumnDrop]);
+  }, [board.tasks, handleTaskDrop, handleColumnDrop, disableDnd]);
 
   // Enable horizontal panning (click + drag to scroll the board)
   useHorizontalPanning(boardRef);

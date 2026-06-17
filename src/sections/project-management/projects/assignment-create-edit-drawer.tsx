@@ -105,12 +105,12 @@ export function AssignmentCreateEditDrawer({ open, projectId, currentRow, onClos
   }, []);
 
   const loadWorkers = useCallback(async (search?: string) => {
-    const response = await GetWorkersPaginationService({ page: 1, perPage: 15, search });
+    const response = await GetWorkersPaginationService({ page: 1, perPage: 30, search });
     setWorkerOptions(response.data?.data ?? []);
   }, []);
 
   const loadJobs = useCallback(async (search?: string) => {
-    const response = await GetJobsKmService({ page: 1, perPage: 15, search });
+    const response = await GetJobsKmService({ page: 1, perPage: 30, search });
     setJobOptions(response.data?.data ?? []);
   }, []);
 

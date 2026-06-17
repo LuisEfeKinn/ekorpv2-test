@@ -8,9 +8,12 @@ import { m } from 'framer-motion';
 
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
+
+import { stringToAvatarColor } from 'src/utils/avatar-color';
 
 import { Iconify } from 'src/components/iconify';
 import { imageClasses } from 'src/components/image';
@@ -241,29 +244,38 @@ export function ItemInfo({ sx, assignee, comments, attachments, subtaskCount, du
       </Box>
 
       {/* Right: avatar */}
-      {assignee.length > 0 ? (
-        <AvatarGroup
-          sx={{
-            flexShrink: 0,
-            [`& .${avatarGroupClasses.avatar}`]: { width: 24, height: 24 },
-          }}
-        >
-          {assignee.map((user) => (
-            <Avatar key={user.id} alt={user.name} src={user.avatarUrl} sx={{ fontSize: 10 }}>
-              {!user.avatarUrl &&
-                user.name
-                  ?.split(' ')
-                  .slice(0, 2)
-                  .map((w) => w.charAt(0).toUpperCase())
-                  .join('')}
+      <Box sx={{ pointerEvents: 'auto', flexShrink: 0 }}>
+        {assignee.length > 0 ? (
+          <AvatarGroup
+            sx={{
+              [`& .${avatarGroupClasses.avatar}`]: { width: 24, height: 24 },
+            }}
+          >
+            {assignee.map((user) => (
+              <Tooltip key={user.id} title={user.name} arrow>
+                <Avatar
+                  alt={user.name}
+                  src={user.avatarUrl}
+                  sx={{ fontSize: 10, ...(!user.avatarUrl && { bgcolor: stringToAvatarColor(user.id), color: '#fff' }) }}
+                >
+                  {!user.avatarUrl &&
+                    user.name
+                      ?.split(' ')
+                      .slice(0, 2)
+                      .map((w) => w.charAt(0).toUpperCase())
+                      .join('')}
+                </Avatar>
+              </Tooltip>
+            ))}
+          </AvatarGroup>
+        ) : (
+          <Tooltip title="Sin asignar" arrow>
+            <Avatar sx={{ width: 24, height: 24 }}>
+              <Iconify icon="solar:user-bold" width={14} />
             </Avatar>
-          ))}
-        </AvatarGroup>
-      ) : (
-        <Avatar sx={{ width: 24, height: 24, bgcolor: 'text.disabled', flexShrink: 0 }}>
-          <Iconify icon="solar:user-bold" width={14} />
-        </Avatar>
-      )}
+          </Tooltip>
+        )}
+      </Box>
     </Box>
   );
 }

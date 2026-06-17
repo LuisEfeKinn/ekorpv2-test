@@ -639,6 +639,8 @@ export const paths = {
       workers: `${ROOTS.DASHBOARD}/project-management/workers`,
       projects: `${ROOTS.DASHBOARD}/project-management/projects`,
       projectDetail: (id: string) => `${ROOTS.DASHBOARD}/project-management/projects/${id}`,
+      myProjects: `${ROOTS.DASHBOARD}/project-management/my-projects`,
+      myProjectDetail: (id: string) => `${ROOTS.DASHBOARD}/project-management/my-projects/${id}`,
     },
 
     documents: {

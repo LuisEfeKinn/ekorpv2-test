@@ -160,10 +160,10 @@
       "projectDetails": "Project details",
       "clientInfo": "Client information",
       "topTeam": "Assigned team",
-      "taskProgress": "Task progress",
+      "taskProgress": "Overall activity status",
+      "taskProgressSubheader": "{{progress}}% complete · {{count}} activities",
       "recentActivity": "Recent activity",
-      "noActivity": "Recent activity coming soon",
-      "noTaskData": "Pending backend data",
+      "noActivity": "No recent activity",
       "fields": {
         "size": "Size",
         "complexity": "Complexity",
@@ -174,6 +174,7 @@
         "createdAt": "Created",
         "nit": "NIT",
         "email": "Email",
+        "status": "Status",
         "clientStatus": "Client status",
         "dedication": "Dedication"
       }
@@ -269,7 +270,10 @@
       "deleted": "Activity deleted",
       "deleteError": "Error deleting activity",
       "deleteTitle": "Delete activity",
-      "deleteConfirm": "Are you sure you want to delete this activity?"
+      "deleteConfirm": "Are you sure you want to delete this activity?",
+      "myTasks": "My tasks",
+      "searchPlaceholder": "Search activities...",
+      "clearFilters": "Clear filters"
     }
   },
   "overview": {
@@ -357,6 +361,28 @@
       "updated": "Employee updated successfully",
       "errorUpdate": "Error updating employee",
       "errorLoading": "Error loading employees"
+    }
+  },
+  "actions": {
+    "back": "Back"
+  },
+  "myProjects": {
+    "title": "My Projects",
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "projectManagement": "Project Management",
+      "myProjects": "My Projects"
+    },
+    "card": {
+      "dedication": "Dedication",
+      "activities": "activities",
+      "assignmentStatus": "Assignment"
+    },
+    "messages": {
+      "errorLoading": "Error loading your projects"
+    },
+    "empty": {
+      "title": "You have no assigned projects"
     }
   }
 }

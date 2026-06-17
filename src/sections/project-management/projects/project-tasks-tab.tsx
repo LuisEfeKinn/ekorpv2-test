@@ -1,24 +1,32 @@
 'use client';
 
 import type { IKanban, IKanbanTask } from 'src/types/kanban';
+import type { AssigneeFilterOption } from './assignee-avatar-filter';
 import type { IActivityKanbanColumn } from 'src/types/project-management';
 import type { MoveTaskInfo } from 'src/components/kanban/hooks/use-board-dnd';
 
 import { toast } from 'sonner';
-import { useState, useEffect, useCallback } from 'react';
+import { useDebounce } from 'minimal-shared/hooks';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { useTranslate } from 'src/locales';
 import {
   CreateActivityService,
   MoveActivityKanbanService,
-  GetActivitiesKanbanService,
 } from 'src/services/project-management/activity.service';
 
+import { Iconify } from 'src/components/iconify';
 import { KanbanBoard } from 'src/components/kanban/view';
 
+import { useProjectView } from '../project-view-context';
+import { AssigneeAvatarFilter } from './assignee-avatar-filter';
 import { ActivityDetailsDrawer } from './activity-details-drawer';
 
 // ----------------------------------------------------------------------
@@ -73,34 +81,89 @@ type Props = {
   projectId: string;
 };
 
+function extractAssignees(board: IKanban): AssigneeFilterOption[] {
+  const map = new Map<string, string>();
+  let hasUnassigned = false;
+
+  for (const tasks of Object.values(board.tasks)) {
+    for (const task of tasks) {
+      if (task.assignee[0]) {
+        map.set(task.assignee[0].id, task.assignee[0].name);
+      } else {
+        hasUnassigned = true;
+      }
+    }
+  }
+
+  const result: AssigneeFilterOption[] = [];
+  if (hasUnassigned) result.push({ id: 'unassigned', label: 'Sin asignar' });
+  for (const [id, label] of map) result.push({ id, label });
+  return result;
+}
+
+// ----------------------------------------------------------------------
+
 export function ProjectTasksTab({ projectId }: Props) {
   const { t } = useTranslate('project-management');
+  const { fetchKanban, canManageTasks } = useProjectView();
 
   const [board, setBoard] = useState<IKanban>({ columns: [], tasks: {} });
   const [loading, setLoading] = useState(true);
   const [selectedTask, setSelectedTask] = useState<IKanbanTask | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedAssignees, setSelectedAssignees] = useState<string[]>([]);
+  const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounce(search, 200);
+
+  const assignees = useMemo(() => extractAssignees(board), [board]);
+
+  const taskTotals = useMemo(() => {
+    const totals: Record<string, number> = {};
+    for (const [colId, tasks] of Object.entries(board.tasks)) {
+      totals[colId] = tasks.length;
+    }
+    return totals;
+  }, [board]);
+
+  const hasFilter = selectedAssignees.length > 0 || search.trim() !== '';
+
+  const displayBoard = useMemo(() => {
+    const term = debouncedSearch.trim().toLowerCase();
+    const hasAssigneeFilter = selectedAssignees.length > 0;
+    if (!term && !hasAssigneeFilter) return board;
+
+    const filtered: IKanban['tasks'] = {};
+    for (const colId of Object.keys(board.tasks)) {
+      filtered[colId] = board.tasks[colId].filter((task) => {
+        const matchesSearch = !term || task.name.toLowerCase().includes(term);
+        const assigneeId = task.assignee[0]?.id ?? 'unassigned';
+        const matchesAssignee = !hasAssigneeFilter || selectedAssignees.includes(assigneeId);
+        return matchesSearch && matchesAssignee;
+      });
+    }
+    return { ...board, tasks: filtered };
+  }, [board, selectedAssignees, debouncedSearch]);
 
   const fetchBoard = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await GetActivitiesKanbanService(projectId);
+      const response = await fetchKanban(projectId);
       setBoard(mapColumnsToBoard(response.data));
     } catch {
       toast.error(t('detail.tasks.errorLoading'));
     } finally {
       setLoading(false);
     }
-  }, [projectId, t]);
+  }, [projectId, t, fetchKanban]);
 
   const silentFetchBoard = useCallback(async () => {
     try {
-      const response = await GetActivitiesKanbanService(projectId);
+      const response = await fetchKanban(projectId);
       setBoard(mapColumnsToBoard(response.data));
     } catch {
       // silent — optimistic state stays
     }
-  }, [projectId]);
+  }, [projectId, fetchKanban]);
 
   useEffect(() => {
     fetchBoard();
@@ -166,12 +229,60 @@ export function ProjectTasksTab({ projectId }: Props) {
         '--kanban-board-pr': '16px',
       }}
     >
+      <Stack
+        direction="row"
+        spacing={2}
+        alignItems="center"
+        sx={{ px: 'var(--layout-dashboard-content-px)', mb: 1.5 }}
+      >
+        <TextField
+          size="small"
+          placeholder={t('detail.tasks.searchPlaceholder')}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Iconify icon="eva:search-fill" width={16} sx={{ color: 'text.disabled' }} />
+                </InputAdornment>
+              ),
+            },
+          }}
+          sx={{ width: 240 }}
+        />
+
+        {assignees.length > 0 && (
+          <AssigneeAvatarFilter
+            assignees={assignees}
+            selected={selectedAssignees}
+            onChange={setSelectedAssignees}
+          />
+        )}
+
+        {hasFilter && (
+          <Button
+            size="small"
+            variant="outlined"
+            color="error"
+            onClick={() => {
+              setSearch('');
+              setSelectedAssignees([]);
+            }}
+          >
+            {t('detail.tasks.clearFilters')}
+          </Button>
+        )}
+      </Stack>
+
       <KanbanBoard
-        board={board}
+        board={displayBoard}
         boardLoading={false}
         readonlyColumns
-        dndCallbacks={{ onMoveTask: handleMoveTask }}
-        onAddTask={handleAddTask}
+        disableTaskDnd={!canManageTasks}
+        taskTotals={hasFilter ? taskTotals : undefined}
+        dndCallbacks={canManageTasks ? { onMoveTask: handleMoveTask } : undefined}
+        onAddTask={canManageTasks ? handleAddTask : undefined}
         onTaskClick={handleTaskClick}
       />
 
@@ -179,6 +290,7 @@ export function ProjectTasksTab({ projectId }: Props) {
         open={drawerOpen}
         task={selectedTask}
         projectId={projectId}
+        readOnly={!canManageTasks}
         onClose={() => {
           setDrawerOpen(false);
           setSelectedTask(null);

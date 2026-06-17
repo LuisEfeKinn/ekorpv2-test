@@ -26,6 +26,7 @@ import { Iconify } from 'src/components/iconify';
 import { EmptyContent } from 'src/components/empty-content';
 
 import { AssignmentCard } from './assignment-card';
+import { useProjectView } from '../project-view-context';
 import { AssignmentCreateEditDrawer } from './assignment-create-edit-drawer';
 
 // ----------------------------------------------------------------------
@@ -38,6 +39,7 @@ const PER_PAGE = 12;
 
 export function ProjectTeamTab({ projectId }: Props) {
   const { t } = useTranslate('project-management');
+  const { canManageTeam } = useProjectView();
   const drawer = useBoolean();
 
   const [assignments, setAssignments] = useState<IAssignment[]>([]);
@@ -160,14 +162,16 @@ export function ProjectTeamTab({ projectId }: Props) {
           sx={{ flex: '1 1 200px' }}
         />
 
-        <Button
-          variant="contained"
-          startIcon={<Iconify icon="mingcute:add-line" />}
-          onClick={handleCreate}
-          sx={{ flexShrink: 0, ml: 'auto' }}
-        >
-          {t('detail.team.assign')}
-        </Button>
+        {canManageTeam && (
+          <Button
+            variant="contained"
+            startIcon={<Iconify icon="mingcute:add-line" />}
+            onClick={handleCreate}
+            sx={{ flexShrink: 0, ml: 'auto' }}
+          >
+            {t('detail.team.assign')}
+          </Button>
+        )}
       </Stack>
 
       {/* Grid */}
@@ -181,6 +185,7 @@ export function ProjectTeamTab({ projectId }: Props) {
                 assignment={assignment}
                 onEdit={() => handleEdit(assignment)}
                 onUnassign={() => handleDelete(assignment.id)}
+                readOnly={!canManageTeam}
               />
             </Grid>
           ))}

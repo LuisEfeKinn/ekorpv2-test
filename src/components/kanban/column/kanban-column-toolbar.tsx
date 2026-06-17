@@ -22,6 +22,7 @@ import { KanbanInputName } from '../components/kanban-input-name';
 
 type Props = BoxProps & {
   totalTasks?: number;
+  filteredCount?: number;
   columnName: string;
   readonlyColumns?: boolean;
   dragHandleRef?: UseColumnDndReturn['dragHandleRef'];
@@ -36,6 +37,7 @@ export function KanbanColumnToolBar({
   dragHandleRef,
   columnName,
   totalTasks,
+  filteredCount,
   readonlyColumns,
   onClearColumn,
   onDeleteColumn,
@@ -175,17 +177,17 @@ export function KanbanColumnToolBar({
         ]}
         {...other}
       >
-        {renderDragHandle()}
+        {!readonlyColumns && renderDragHandle()}
 
         <Label
           sx={[
             (theme) => ({
-              borderRadius: '50%',
+              borderRadius: filteredCount !== undefined ? undefined : '50%',
               borderColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.24),
             }),
           ]}
         >
-          {totalTasks}
+          {filteredCount !== undefined ? `${filteredCount}/${totalTasks}` : totalTasks}
         </Label>
 
         <KanbanInputName
@@ -203,9 +205,11 @@ export function KanbanColumnToolBar({
           sx={{ mx: 1, ...(readonlyColumns && { cursor: 'default', pointerEvents: 'none' }) }}
         />
 
-        <IconButton size="small" color="inherit" onClick={onToggleAddTask}>
-          <Iconify icon="solar:add-circle-bold" />
-        </IconButton>
+        {onToggleAddTask && (
+          <IconButton size="small" color="inherit" onClick={onToggleAddTask}>
+            <Iconify icon="solar:add-circle-bold" />
+          </IconButton>
+        )}
 
         {!readonlyColumns && (
           <>

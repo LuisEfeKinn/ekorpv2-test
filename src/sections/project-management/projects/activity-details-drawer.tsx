@@ -34,6 +34,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { fDateRangeShortLabel } from 'src/utils/format-time';
+import { stringToAvatarColor } from 'src/utils/avatar-color';
 
 import { useTranslate } from 'src/locales';
 import { GetActivityStatusesService } from 'src/services/project-management/filters.service';
@@ -224,7 +225,7 @@ function MemberSelectionDialog({
                     key={opt.id}
                     sx={{ display: 'flex', alignItems: 'center', height: 56, gap: 2 }}
                   >
-                    <Avatar sx={{ width: 36, height: 36, fontSize: 13 }}>
+                    <Avatar sx={{ width: 36, height: 36, fontSize: 13, color: '#fff', bgcolor: stringToAvatarColor(opt.id) }}>
                       {getInitials(opt.label)}
                     </Avatar>
                     <ListItemText primary={opt.label} />
@@ -280,9 +281,10 @@ type Props = {
   onClose: () => void;
   onSuccess: () => void;
   onDelete?: (taskId: string) => void;
+  readOnly?: boolean;
 };
 
-export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSuccess, onDelete }: Props) {
+export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSuccess, onDelete, readOnly = false }: Props) {
   const { t } = useTranslate('project-management');
 
   const assigneeDialog = useBoolean();
@@ -450,19 +452,23 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
           }),
         ]}
       >
-        <Button
-          size="small"
-          variant="soft"
-          endIcon={<Iconify icon="eva:arrow-ios-downward-fill" width={16} sx={{ ml: -0.5 }} />}
-          onClick={statusPopover.onOpen}
-          disabled={statuses.length === 0}
-        >
-          {currentStatus?.name ?? '…'}
-        </Button>
+        {readOnly ? (
+          <Chip label={currentStatus?.name ?? '…'} size="small" variant="soft" />
+        ) : (
+          <Button
+            size="small"
+            variant="soft"
+            endIcon={<Iconify icon="eva:arrow-ios-downward-fill" width={16} sx={{ ml: -0.5 }} />}
+            onClick={statusPopover.onOpen}
+            disabled={statuses.length === 0}
+          >
+            {currentStatus?.name ?? '…'}
+          </Button>
+        )}
 
         <Box sx={{ flexGrow: 1 }} />
 
-        {task && (
+        {task && !readOnly && (
           <Tooltip title={t('detail.tasks.delete')}>
             <IconButton onClick={confirmDelete.onTrue}>
               <Iconify icon="solar:trash-bin-trash-bold" />
@@ -504,17 +510,21 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
   const renderContent = () => (
     <Box sx={{ gap: 3, display: 'flex', flexDirection: 'column' }}>
       {/* Título */}
-      <Controller
-        name="name"
-        control={control}
-        render={({ field }) => (
-          <KanbanInputName
-            {...field}
-            placeholder={t('detail.tasks.namePlaceholder')}
-            inputProps={{ maxLength: ACTIVITY_NAME_MAX, id: 'activity-name-input' }}
-          />
-        )}
-      />
+      {readOnly ? (
+        <Typography variant="h6" sx={{ px: 0.5 }}>{watch('name') || '—'}</Typography>
+      ) : (
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => (
+            <KanbanInputName
+              {...field}
+              placeholder={t('detail.tasks.namePlaceholder')}
+              inputProps={{ maxLength: ACTIVITY_NAME_MAX, id: 'activity-name-input' }}
+            />
+          )}
+        />
+      )}
 
       {/* Asignado */}
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -523,12 +533,14 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
           {pinnedAssignee ? (
             <Tooltip title={pinnedAssignee.label}>
               <Avatar
-                sx={{ width: 36, height: 36, fontSize: 13, cursor: 'pointer' }}
-                onClick={assigneeDialog.onTrue}
+                sx={{ width: 36, height: 36, fontSize: 13, color: '#fff', cursor: readOnly ? 'default' : 'pointer', bgcolor: stringToAvatarColor(pinnedAssignee.id) }}
+                onClick={readOnly ? undefined : assigneeDialog.onTrue}
               >
                 {getInitials(pinnedAssignee.label)}
               </Avatar>
             </Tooltip>
+          ) : readOnly ? (
+            <Typography variant="body2" sx={{ color: 'text.disabled' }}>—</Typography>
           ) : (
             <Tooltip title={t('detail.tasks.addAssignee')}>
               <IconButton
@@ -555,27 +567,32 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
           {pinnedSupervisors.map((s) => (
             <Tooltip key={s.id} title={s.label}>
               <Avatar
-                sx={{ width: 36, height: 36, fontSize: 13, cursor: 'pointer' }}
-                onClick={supervisorsDialog.onTrue}
+                sx={{ width: 36, height: 36, fontSize: 13, color: '#fff', cursor: readOnly ? 'default' : 'pointer', bgcolor: stringToAvatarColor(s.id) }}
+                onClick={readOnly ? undefined : supervisorsDialog.onTrue}
               >
                 {getInitials(s.label)}
               </Avatar>
             </Tooltip>
           ))}
-          <Tooltip title={t('detail.tasks.addSupervisor')}>
-            <IconButton
-              size="small"
-              onClick={supervisorsDialog.onTrue}
-              sx={[
-                (theme) => ({
-                  border: `dashed 1px ${theme.vars.palette.divider}`,
-                  bgcolor: varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
-                }),
-              ]}
-            >
-              <Iconify icon="mingcute:add-line" />
-            </IconButton>
-          </Tooltip>
+          {!readOnly && (
+            <Tooltip title={t('detail.tasks.addSupervisor')}>
+              <IconButton
+                size="small"
+                onClick={supervisorsDialog.onTrue}
+                sx={[
+                  (theme) => ({
+                    border: `dashed 1px ${theme.vars.palette.divider}`,
+                    bgcolor: varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
+                  }),
+                ]}
+              >
+                <Iconify icon="mingcute:add-line" />
+              </IconButton>
+            </Tooltip>
+          )}
+          {readOnly && pinnedSupervisors.length === 0 && (
+            <Typography variant="body2" sx={{ color: 'text.disabled' }}>—</Typography>
+          )}
         </Box>
       </Box>
 
@@ -583,7 +600,11 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <BlockLabel sx={{ height: 40, lineHeight: '40px' }}>{t('detail.tasks.dates')}</BlockLabel>
 
-        {datesSelected ? (
+        {readOnly ? (
+          <Typography variant="body2" sx={{ color: datesSelected ? 'text.primary' : 'text.disabled' }}>
+            {datesSelected ? fDateRangeShortLabel(startDayjs, endDayjs) : '—'}
+          </Typography>
+        ) : datesSelected ? (
           <Button size="small" onClick={datePickerOpen.onTrue}>
             {fDateRangeShortLabel(startDayjs, endDayjs)}
           </Button>
@@ -705,17 +726,25 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
             }),
           ]}
         >
-          <Button variant="outlined" color="inherit" onClick={onClose}>
-            {t('detail.tasks.cancel')}
-          </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={submitting}
-            onClick={handleSubmit(onSubmit)}
-          >
-            {submitting ? <CircularProgress size={18} /> : t('detail.tasks.save')}
-          </Button>
+          {readOnly ? (
+            <Button variant="outlined" color="inherit" onClick={onClose}>
+              {t('detail.tasks.close')}
+            </Button>
+          ) : (
+            <>
+              <Button variant="outlined" color="inherit" onClick={onClose}>
+                {t('detail.tasks.cancel')}
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={submitting}
+                onClick={handleSubmit(onSubmit)}
+              >
+                {submitting ? <CircularProgress size={18} /> : t('detail.tasks.save')}
+              </Button>
+            </>
+          )}
         </Box>
       </Drawer>
 

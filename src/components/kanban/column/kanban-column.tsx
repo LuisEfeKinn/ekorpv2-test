@@ -6,6 +6,9 @@ import { AnimatePresence } from 'framer-motion';
 import { useBoolean } from 'minimal-shared/hooks';
 import { mergeClasses } from 'minimal-shared/utils';
 
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
 import { createTask, clearColumn, updateColumn, deleteColumn } from 'src/actions/kanban';
 
 import { kanbanClasses } from '../classes';
@@ -22,21 +25,24 @@ import { ColumnRoot, ColumnList, ColumnWrapper } from './styles';
 type ColumnProps = React.ComponentProps<typeof ColumnRoot> & {
   column: IKanbanColumn;
   tasks: IKanbanTask[];
+  taskTotal?: number;
   readonlyColumns?: boolean;
+  disableTaskDnd?: boolean;
   onAddTask?: (columnId: string, taskData: IKanbanTask) => void;
   onDeleteTask?: (taskId: string) => void;
   onUpdateTask?: (task: IKanbanTask) => void;
   onTaskClick?: (task: IKanbanTask) => void;
 };
 
-type TaskListProps = Pick<ColumnProps, 'column' | 'tasks' | 'onDeleteTask' | 'onUpdateTask' | 'onTaskClick'>;
+type TaskListProps = Pick<ColumnProps, 'column' | 'tasks' | 'disableTaskDnd' | 'onDeleteTask' | 'onUpdateTask' | 'onTaskClick'>;
 
-const TaskList = memo(({ column, tasks, onDeleteTask, onUpdateTask, onTaskClick }: TaskListProps) =>
+const TaskList = memo(({ column, tasks, disableTaskDnd, onDeleteTask, onUpdateTask, onTaskClick }: TaskListProps) =>
   tasks.map((task) => (
     <KanbanTaskItem
       key={task.id}
       task={task}
       columnId={column.id}
+      disableDnd={disableTaskDnd}
       onDeleteTask={onDeleteTask}
       onUpdateTask={onUpdateTask}
       onTaskClick={onTaskClick}
@@ -46,7 +52,7 @@ const TaskList = memo(({ column, tasks, onDeleteTask, onUpdateTask, onTaskClick 
 
 // ----------------------------------------------------------------------
 
-export function KanbanColumn({ column, tasks, readonlyColumns, onAddTask, onDeleteTask, onUpdateTask, onTaskClick, sx, ...other }: ColumnProps) {
+export function KanbanColumn({ column, tasks, taskTotal, readonlyColumns, disableTaskDnd, onAddTask, onDeleteTask, onUpdateTask, onTaskClick, sx, ...other }: ColumnProps) {
   const { taskListRef, dragHandleRef, columnRef, columnWrapperRef, state } = useColumnDnd(column);
 
   const openAddTask = useBoolean();
@@ -103,13 +109,14 @@ export function KanbanColumn({ column, tasks, readonlyColumns, onAddTask, onDele
   const renderHeader = () => (
     <KanbanColumnToolBar
       dragHandleRef={dragHandleRef}
-      totalTasks={tasks.length}
+      totalTasks={taskTotal ?? tasks.length}
+      filteredCount={taskTotal !== undefined ? tasks.length : undefined}
       columnName={column.name}
       readonlyColumns={readonlyColumns}
       onUpdateColumn={handleUpdateColumn}
       onClearColumn={handleClearColumn}
       onDeleteColumn={handleDeleteColumn}
-      onToggleAddTask={openAddTask.onToggle}
+      onToggleAddTask={onAddTask ? openAddTask.onToggle : undefined}
     />
   );
 
@@ -130,9 +137,16 @@ export function KanbanColumn({ column, tasks, readonlyColumns, onAddTask, onDele
   const renderTaskList = () => (
     <ColumnList ref={taskListRef} className={kanbanClasses.column.list}>
       <AnimatePresence>
-        <TaskList column={column} tasks={tasks} onDeleteTask={onDeleteTask} onUpdateTask={onUpdateTask} onTaskClick={onTaskClick} />
+        <TaskList column={column} tasks={tasks} disableTaskDnd={disableTaskDnd} onDeleteTask={onDeleteTask} onUpdateTask={onUpdateTask} onTaskClick={onTaskClick} />
       </AnimatePresence>
       {renderDropIndicator()}
+      {taskTotal !== undefined && taskTotal > 0 && tasks.length === 0 && (
+        <Box sx={{ py: 3, textAlign: 'center' }}>
+          <Typography variant="body2" sx={{ color: 'text.disabled' }}>
+            Sin resultados
+          </Typography>
+        </Box>
+      )}
     </ColumnList>
   );
 

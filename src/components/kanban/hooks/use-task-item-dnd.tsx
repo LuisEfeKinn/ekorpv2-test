@@ -32,14 +32,14 @@ export type UseTaskItemDndReturn = {
   taskRef: React.RefObject<HTMLLIElement | null>;
 };
 
-export function useTaskItemDnd(task: IKanbanTask, columnId: string): UseTaskItemDndReturn {
+export function useTaskItemDnd(task: IKanbanTask, columnId: string, disabled?: boolean): UseTaskItemDndReturn {
   const taskRef = useRef<HTMLLIElement>(null);
 
   const [state, setState] = useState<TaskState>({ type: kanbanClasses.state.idle });
 
   useEffect(() => {
     const taskEl = taskRef.current;
-    if (!taskEl) return undefined;
+    if (!taskEl || disabled) return undefined;
 
     /**
      * ➤➤ Makes the task draggable.
@@ -142,7 +142,7 @@ export function useTaskItemDnd(task: IKanbanTask, columnId: string): UseTaskItem
     });
 
     return combine(dragTask, dropTaskTarget);
-  }, [task, columnId]);
+  }, [task, columnId, disabled]);
 
   return {
     taskRef,

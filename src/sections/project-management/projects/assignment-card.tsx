@@ -17,6 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
 import { fDate } from 'src/utils/format-time';
+import { stringToAvatarColor } from 'src/utils/avatar-color';
 
 import { useTranslate } from 'src/locales';
 
@@ -55,9 +56,10 @@ type Props = {
   assignment: IAssignment;
   onEdit: () => void;
   onUnassign: () => void;
+  readOnly?: boolean;
 };
 
-export function AssignmentCard({ assignment, onEdit, onUnassign }: Props) {
+export function AssignmentCard({ assignment, onEdit, onUnassign, readOnly = false }: Props) {
   const { t } = useTranslate('project-management');
   const menuActions = usePopover();
   const confirmDialog = useBoolean();
@@ -76,7 +78,7 @@ export function AssignmentCard({ assignment, onEdit, onUnassign }: Props) {
         <Stack sx={{ flex: 1, p: 2.5, gap: 1.5 }}>
           {/* Header */}
           <Stack direction="row" alignItems="flex-start" spacing={1.5}>
-            <Avatar sx={{ width: 44, height: 44, flexShrink: 0 }}>
+            <Avatar sx={{ width: 44, height: 44, flexShrink: 0, color: '#fff', bgcolor: stringToAvatarColor(String(assignment.employeeId)) }}>
               {getInitials(assignment.employeeFullName)}
             </Avatar>
 
@@ -100,14 +102,16 @@ export function AssignmentCard({ assignment, onEdit, onUnassign }: Props) {
               </Stack>
             </Box>
 
-            <IconButton size="small" onClick={menuActions.onOpen} sx={{ flexShrink: 0, mt: -0.25 }}>
-              <Iconify icon="eva:more-vertical-fill" />
-            </IconButton>
+            {!readOnly && (
+              <IconButton size="small" onClick={menuActions.onOpen} sx={{ flexShrink: 0, mt: -0.25 }}>
+                <Iconify icon="eva:more-vertical-fill" />
+              </IconButton>
+            )}
           </Stack>
 
           {/* Dedication */}
           <Stack direction="row" spacing={1} alignItems="center">
-            <Iconify icon="solar:pie-chart-bold" width={14} sx={{ color: 'text.disabled', flexShrink: 0 }} />
+            <Iconify icon="solar:pie-chart-bold-duotone" width={14} sx={{ color: 'text.disabled', flexShrink: 0 }} />
             <Typography variant="caption" sx={{ color: 'text.secondary' }}>
               {t('detail.summary.fields.dedication')}: <strong>{assignment.dedicacion}%</strong>
             </Typography>
@@ -147,52 +151,58 @@ export function AssignmentCard({ assignment, onEdit, onUnassign }: Props) {
 
         <Divider />
 
-        <Box sx={{ px: 2.5, py: 1.5 }}>
-          <Button
-            fullWidth
-            size="small"
-            variant="soft"
-            color="error"
-            onClick={confirmDialog.onTrue}
-            startIcon={<Iconify icon="solar:user-minus-bold" width={16} />}
-          >
-            {t('detail.team.card.unassign')}
-          </Button>
-        </Box>
+        {!readOnly && (
+          <Box sx={{ px: 2.5, py: 1.5 }}>
+            <Button
+              fullWidth
+              size="small"
+              variant="soft"
+              color="error"
+              onClick={confirmDialog.onTrue}
+              startIcon={<Iconify icon="solar:user-minus-bold-duotone" width={16} />}
+            >
+              {t('detail.team.card.unassign')}
+            </Button>
+          </Box>
+        )}
       </Card>
 
-      <CustomPopover
-        open={menuActions.open}
-        anchorEl={menuActions.anchorEl}
-        onClose={menuActions.onClose}
-        slotProps={{ arrow: { placement: 'right-top' } }}
-      >
-        <MenuList>
-          <MenuItem onClick={() => { onEdit(); menuActions.onClose(); }}>
-            <Iconify icon="solar:pen-bold" />
-            {t('detail.team.card.edit')}
-          </MenuItem>
-          <MenuItem
-            onClick={() => { confirmDialog.onTrue(); menuActions.onClose(); }}
-            sx={{ color: 'error.main' }}
+      {!readOnly && (
+        <>
+          <CustomPopover
+            open={menuActions.open}
+            anchorEl={menuActions.anchorEl}
+            onClose={menuActions.onClose}
+            slotProps={{ arrow: { placement: 'right-top' } }}
           >
-            <Iconify icon="solar:user-minus-bold" />
-            {t('detail.team.card.unassign')}
-          </MenuItem>
-        </MenuList>
-      </CustomPopover>
+            <MenuList>
+              <MenuItem onClick={() => { onEdit(); menuActions.onClose(); }}>
+                <Iconify icon="solar:pen-bold" />
+                {t('detail.team.card.edit')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => { confirmDialog.onTrue(); menuActions.onClose(); }}
+                sx={{ color: 'error.main' }}
+              >
+                <Iconify icon="solar:user-minus-bold-duotone" />
+                {t('detail.team.card.unassign')}
+              </MenuItem>
+            </MenuList>
+          </CustomPopover>
 
-      <ConfirmDialog
-        open={confirmDialog.value}
-        onClose={confirmDialog.onFalse}
-        title={t('detail.team.dialogs.unassign.title')}
-        content={t('detail.team.dialogs.unassign.content', { name: assignment.employeeFullName })}
-        action={
-          <Button variant="contained" color="error" onClick={onUnassign}>
-            {t('detail.team.card.unassign')}
-          </Button>
-        }
-      />
+          <ConfirmDialog
+            open={confirmDialog.value}
+            onClose={confirmDialog.onFalse}
+            title={t('detail.team.dialogs.unassign.title')}
+            content={t('detail.team.dialogs.unassign.content', { name: assignment.employeeFullName })}
+            action={
+              <Button variant="contained" color="error" onClick={onUnassign}>
+                {t('detail.team.card.unassign')}
+              </Button>
+            }
+          />
+        </>
+      )}
     </>
   );
 }

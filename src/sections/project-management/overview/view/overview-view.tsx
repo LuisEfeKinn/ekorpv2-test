@@ -132,8 +132,9 @@ export function OverviewView() {
   } = data;
 
   // Scale: all dedication bars share the same max so the 100% line is visually aligned
-  const maxDedication = Math.max(...dedicationCapacity.map((p) => p.totalDedicacion), 100);
-  const hasOverflow = dedicationCapacity.some((p) => p.totalDedicacion > 100);
+  const visibleDedication = dedicationCapacity.slice(0, 6);
+  const maxDedication = Math.max(...visibleDedication.map((p) => p.totalDedicacion), 100);
+  const hasOverflow = visibleDedication.some((p) => p.totalDedicacion > 100);
 
   return (
     <DashboardContent>
@@ -198,7 +199,7 @@ export function OverviewView() {
                 </Typography>
               ) : (
                 <Stack spacing={2.5}>
-                  {dedicationCapacity.map((person) => (
+                  {visibleDedication.map((person) => (
                     <DedicationRow key={person.id} person={person} maxValue={maxDedication} />
                   ))}
                   {hasOverflow && (
