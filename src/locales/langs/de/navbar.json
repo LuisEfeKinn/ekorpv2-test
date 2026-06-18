@@ -228,7 +228,9 @@
     "items": {
       "clients": "Kunden",
       "workers": "Mitarbeiter",
-      "projects": "Projekte"
+      "projects": "Projekte",
+      "dashboard": "Projekt-Dashboard",
+      "myproject": "Meine Projekte"
     }
   }
 }

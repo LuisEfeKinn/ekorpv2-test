@@ -132,6 +132,7 @@
       "auditableObject": "Auditable Object",
       "subject": "Subject",
       "message": "Message",
+      "messagePlaceholder": "Write something awesome...",
       "cancel": "Cancel",
       "clear": "Clear",
       "save": "Save",

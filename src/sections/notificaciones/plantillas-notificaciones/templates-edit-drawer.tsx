@@ -169,7 +169,7 @@ export function TemplatesEditDrawer({ open, onClose, current, onSaved }: Props) 
                 <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
                   {t('templates.editDrawer.message')}
                 </Typography>
-                <Field.Editor name="messageTemplate" />
+                <Field.Editor name="messageTemplate" placeholder={t('templates.editDrawer.messagePlaceholder')} />
               </Stack>
             </Stack>
           </Scrollbar>

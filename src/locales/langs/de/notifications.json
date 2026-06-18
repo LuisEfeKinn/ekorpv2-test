@@ -132,6 +132,7 @@
       "auditableObject": "Prüfobjekt",
       "subject": "Betreff",
       "message": "Nachricht",
+      "messagePlaceholder": "Schreibe etwas Großartiges...",
       "cancel": "Abbrechen",
       "clear": "Leeren",
       "save": "Speichern",

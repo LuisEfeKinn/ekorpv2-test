@@ -204,7 +204,9 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
     formData.dataType.id > 0 &&
     formData.provider.id > 0 &&
     formData.Domains.id > 0 &&
-    formData.impactRatio.trim() !== '';
+    formData.impactRatio.trim() !== '' &&
+    formData.type.trim() !== '' &&
+    formData.file.trim() !== '';
 
   // Guardar nuevo nodo
   const handleSave = async () => {
@@ -383,6 +385,7 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
                 <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
                   <TextField
                     fullWidth
+                    required
                     label={t('data.diagram.dialogs.form.type.label')}
                     value={formData.type}
                     onChange={(e) => handleChange('type', e.target.value)}
@@ -405,6 +408,7 @@ export function DataDiagramFlowCreateModal({ open, onClose, parentNodeId, onSave
 
                   <TextField
                     fullWidth
+                    required
                     label={t('data.diagram.dialogs.form.file.label')}
                     value={formData.file}
                     onChange={(e) => handleChange('file', e.target.value)}

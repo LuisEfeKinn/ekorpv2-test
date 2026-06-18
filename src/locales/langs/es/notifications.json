@@ -132,6 +132,7 @@
       "auditableObject": "Objeto Auditado",
       "subject": "Asunto",
       "message": "Mensaje",
+      "messagePlaceholder": "Escribe algo increíble...",
       "cancel": "Cancelar",
       "clear": "Limpiar",
       "save": "Guardar",

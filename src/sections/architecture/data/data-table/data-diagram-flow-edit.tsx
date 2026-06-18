@@ -247,7 +247,9 @@ export function DataDiagramFlowEditModal({ open, onClose, dataId, onSave, ...oth
     formData.localExternal.trim() !== '' &&
     formData.provider.id > 0 &&
     formData.Domains.id > 0 &&
-    formData.impactRatio.trim() !== '';
+    formData.impactRatio.trim() !== '' &&
+    formData.type.trim() !== '' &&
+    formData.file.trim() !== '';
 
   // Guardar o actualizar
   const handleSave = async () => {
@@ -446,6 +448,7 @@ export function DataDiagramFlowEditModal({ open, onClose, dataId, onSave, ...oth
                   <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
                     <TextField
                       fullWidth
+                      required
                       label={t('data.table.table.columns.type')}
                       value={formData.type}
                       onChange={(e) => handleChange('type', e.target.value)}
@@ -468,6 +471,7 @@ export function DataDiagramFlowEditModal({ open, onClose, dataId, onSave, ...oth
 
                     <TextField
                       fullWidth
+                      required
                       label={t('data.table.table.columns.file')}
                       value={formData.file}
                       onChange={(e) => handleChange('file', e.target.value)}
