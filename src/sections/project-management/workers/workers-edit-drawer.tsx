@@ -97,9 +97,9 @@ export function WorkersEditDrawer({ open, currentRow, onClose, onSuccess }: Prop
         experienceLevelId: currentRow?.experienceLevelId ?? null,
         employmentTypeId: currentRow?.employmentTypeId ?? null,
         technologies: currentRow?.technologies ?? '',
-        observations: '',
-        yearsOfExperience: 0,
-        yearsInCompany: 0,
+        observations: currentRow?.observations ?? '',
+        yearsOfExperience: currentRow?.experienceYears ?? 0,
+        yearsInCompany: currentRow?.experienceYearsInCompany ?? 0,
       });
     }
   }, [open, currentRow, reset, loadCatalogs]);

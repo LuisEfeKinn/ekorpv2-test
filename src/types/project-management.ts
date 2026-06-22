@@ -71,6 +71,9 @@ export type IWorker = {
   experienceLevelId: string | null;
   experienceLevelName: string | null;
   experienceSummary: string;
+  experienceYears: number | null;
+  experienceYearsInCompany: number | null;
+  observations: string | null;
   technologies: string | null;
   workerStatusId: string | null;
   workerStatusName: string | null;

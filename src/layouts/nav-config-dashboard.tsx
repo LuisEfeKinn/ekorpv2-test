@@ -418,11 +418,18 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
       // Ensure Positions (Cargos) Table path is correct
       const positionsTitle = t('business.items.positions.title');
       const positionsTableTitle = t('business.items.positions.table');
-      
+      const positionsMapTitle = t('business.items.positions.map');
+
       const positionsItem = bizItem.children.find((it) => it.title === positionsTitle);
       if (positionsItem) {
         positionsItem.path = paths.dashboard.architecture.positionsTable;
         positionsItem.children = positionsItem.children ?? [];
+
+        // Remove Mapa de Cargos (no route implemented)
+        positionsItem.children = positionsItem.children.filter(
+          (it) => it.title !== positionsMapTitle
+        );
+
         const positionsTableItem = positionsItem.children.find((it) => it.title === positionsTableTitle);
         if (positionsTableItem) {
           positionsTableItem.path = paths.dashboard.architecture.positionsTable;
@@ -433,6 +440,16 @@ export const useNavData = (modules?: UserModule[]): NavSectionProps['data'] => {
             icon: getNavIcon('table'),
           });
         }
+      }
+
+      // Remove Mapa de Procesos (no route implemented)
+      const processesTitle = t('business.items.processes.title');
+      const processesMapTitle = t('business.items.processes.map');
+      const processesItem = bizItem.children.find((it) => it.title === processesTitle);
+      if (processesItem) {
+        processesItem.children = (processesItem.children ?? []).filter(
+          (it) => it.title !== processesMapTitle
+        );
       }
 
       // Organizational Structure
