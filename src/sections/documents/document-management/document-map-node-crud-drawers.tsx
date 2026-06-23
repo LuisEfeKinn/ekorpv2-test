@@ -543,7 +543,7 @@ export function DocumentMapNodeCrudDrawer({
     } finally {
       setLoading(false);
     }
-  }, [kind, mode, relationId, target?.payload]);
+  }, [kind, mode, relationId, target?.payload, targetLabel]);
 
   useEffect(() => {
     if (!open) return;

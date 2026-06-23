@@ -1,0 +1,87 @@
+{
+  "title": "Mein Profil",
+  "breadcrumbs": {
+    "dashboard": "Dashboard",
+    "profile": "Mein Profil"
+  },
+  "sections": {
+    "personalInfo": "Persönliche Informationen",
+    "accountInfo": "Kontoinformationen",
+    "security": "Sicherheit"
+  },
+  "form": {
+    "fields": {
+      "names": {
+        "label": "Vorname"
+      },
+      "lastnames": {
+        "label": "Nachname"
+      },
+      "email": {
+        "label": "E-Mail-Adresse"
+      },
+      "tel": {
+        "label": "Telefon"
+      },
+      "documentId": {
+        "label": "Ausweisdokument"
+      },
+      "avatar": {
+        "helperText": "Erlaubte Formate: *.jpeg, *.jpg, *.png, *.gif. Maximale Größe 3MB"
+      },
+      "roles": {
+        "label": "Rollen"
+      },
+      "status": {
+        "label": "Kontostatus"
+      },
+      "biometric": {
+        "label": "Biometrie"
+      },
+      "twoFactor": {
+        "label": "Zwei-Faktor-Authentifizierung"
+      },
+      "googleLinked": {
+        "label": "Google-Konto"
+      },
+      "microsoftLinked": {
+        "label": "Microsoft-Konto"
+      },
+      "createdAt": {
+        "label": "Erstellt am"
+      },
+      "updatedAt": {
+        "label": "Zuletzt aktualisiert"
+      }
+    },
+    "validation": {
+      "namesRequired": "Vorname ist erforderlich",
+      "lastnamesRequired": "Nachname ist erforderlich",
+      "emailRequired": "E-Mail ist erforderlich",
+      "emailInvalid": "E-Mail ist ungültig",
+      "telRequired": "Telefon ist erforderlich",
+      "documentIdRequired": "Ausweisdokument ist erforderlich"
+    },
+    "actions": {
+      "save": "Änderungen speichern"
+    }
+  },
+  "status": {
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "enabled": "Aktiviert",
+    "disabled": "Deaktiviert",
+    "linked": "Verknüpft",
+    "notLinked": "Nicht verknüpft"
+  },
+  "messages": {
+    "success": {
+      "updated": "Profil erfolgreich aktualisiert"
+    },
+    "error": {
+      "loading": "Fehler beim Laden des Profils",
+      "updating": "Fehler beim Aktualisieren des Profils",
+      "notFound": "Benutzerprofil konnte nicht geladen werden"
+    }
+  }
+}

@@ -104,7 +104,7 @@ export function ProcessCreateEditForm({ currentProcess, onClose }: Props) {
 
   const [processTypes, setProcessTypes] = useState<any[]>([]);
   const [processes, setProcesses] = useState<any[]>([]);
-  const [periods, setPeriods] = useState<any[]>([]);
+  const [, setPeriods] = useState<any[]>([]);
   const [actionTypes, setActionTypes] = useState<any[]>([]);
   const [timeUnits, setTimeUnits] = useState<any[]>([]);
   const [, setLoadingOptions] = useState(false);

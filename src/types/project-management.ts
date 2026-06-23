@@ -79,6 +79,21 @@ export type IWorker = {
   workerStatusName: string | null;
   employmentTypeId: string | null;
   employmentTypeName: string | null;
+  projectCount: number;
+  totalDedicacion: number;
+  pendingActivities: number;
+};
+
+export type IWorkerDetail = {
+  id: string;
+  fullName: string;
+  email: string;
+  positionName: string | null;
+  workerStatusName: string | null;
+  projectCount: number;
+  activeProjectCount: number;
+  totalDedicacion: number;
+  pendingActivitiesCount: number;
 };
 
 export type IWorkerTableFilters = {
@@ -186,6 +201,7 @@ export type IAssignment = {
   endDate: string;
   observations: string | null;
   roles: ICatalogOption[];
+  pendingActivitiesCount: number;
   createdAt: string;
 };
 
@@ -279,6 +295,7 @@ export type IActivityCreatePayload = {
   assigneeId?: number;
   supervisorIds?: number[];
   parentId?: number;
+  description?: string;
   startDate?: string;
   endDate?: string;
 };

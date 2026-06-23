@@ -276,7 +276,7 @@ export function StrategicObjectivesTableView() {
         return merged;
       });
     },
-    []
+    [t]
   );
 
   const flowParams = useMemo(() => {

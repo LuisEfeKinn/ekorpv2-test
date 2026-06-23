@@ -32,6 +32,8 @@ type ColumnProps = React.ComponentProps<typeof ColumnRoot> & {
   onDeleteTask?: (taskId: string) => void;
   onUpdateTask?: (task: IKanbanTask) => void;
   onTaskClick?: (task: IKanbanTask) => void;
+  taskAddPlaceholder?: string;
+  taskAddHelperText?: string;
 };
 
 type TaskListProps = Pick<ColumnProps, 'column' | 'tasks' | 'disableTaskDnd' | 'onDeleteTask' | 'onUpdateTask' | 'onTaskClick'>;
@@ -52,7 +54,7 @@ const TaskList = memo(({ column, tasks, disableTaskDnd, onDeleteTask, onUpdateTa
 
 // ----------------------------------------------------------------------
 
-export function KanbanColumn({ column, tasks, taskTotal, readonlyColumns, disableTaskDnd, onAddTask, onDeleteTask, onUpdateTask, onTaskClick, sx, ...other }: ColumnProps) {
+export function KanbanColumn({ column, tasks, taskTotal, readonlyColumns, disableTaskDnd, onAddTask, onDeleteTask, onUpdateTask, onTaskClick, taskAddPlaceholder, taskAddHelperText, sx, ...other }: ColumnProps) {
   const { taskListRef, dragHandleRef, columnRef, columnWrapperRef, state } = useColumnDnd(column);
 
   const openAddTask = useBoolean();
@@ -126,6 +128,8 @@ export function KanbanColumn({ column, tasks, taskTotal, readonlyColumns, disabl
       openAddTask={openAddTask.value}
       onAddTask={handleAddTask}
       onCloseAddTask={openAddTask.onFalse}
+      placeholder={taskAddPlaceholder}
+      helperText={taskAddHelperText}
     />
   );
 

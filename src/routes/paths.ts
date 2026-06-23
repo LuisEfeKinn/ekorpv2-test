@@ -118,10 +118,13 @@ export const paths = {
       list: `${ROOTS.DASHBOARD}/user/list`,
       cards: `${ROOTS.DASHBOARD}/user/cards`,
       profile: `${ROOTS.DASHBOARD}/user/profile`,
-      account: `${ROOTS.DASHBOARD}/user/account`,
+      account: `${ROOTS.DASHBOARD}/user-profile`,
       edit: (id: string) => `${ROOTS.DASHBOARD}/user/${id}/edit`,
       demo: { edit: `${ROOTS.DASHBOARD}/user/${MOCK_ID}/edit` },
       biometricActivation: `${ROOTS.DASHBOARD}/user/biometric-activation`,
+    },
+    userProfile: {
+      root: `${ROOTS.DASHBOARD}/user-profile`,
     },
     product: {
       root: `${ROOTS.DASHBOARD}/product`,
@@ -637,6 +640,7 @@ export const paths = {
       overview: `${ROOTS.DASHBOARD}/project-management`,
       clients: `${ROOTS.DASHBOARD}/project-management/clients`,
       workers: `${ROOTS.DASHBOARD}/project-management/workers`,
+      workerDetail: (id: string) => `${ROOTS.DASHBOARD}/project-management/workers/${id}`,
       projects: `${ROOTS.DASHBOARD}/project-management/projects`,
       projectDetail: (id: string) => `${ROOTS.DASHBOARD}/project-management/projects/${id}`,
       myProjects: `${ROOTS.DASHBOARD}/project-management/my-projects`,

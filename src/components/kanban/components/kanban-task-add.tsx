@@ -21,16 +21,18 @@ type Props = {
   onCloseAddTask: () => void;
   onAddTask: (task: IKanbanTask) => void;
   maxLength?: number;
+  placeholder?: string;
+  helperText?: string;
 };
 
-export function KanbanTaskAdd({ status, openAddTask, onAddTask, onCloseAddTask, maxLength = 150 }: Props) {
+export function KanbanTaskAdd({ status, openAddTask, onAddTask, onCloseAddTask, maxLength = 150, placeholder = 'Untitled', helperText = 'Presiona Enter para crear la tarea.' }: Props) {
   const [taskName, setTaskName] = useState('');
 
   const defaultTask: IKanbanTask = useMemo(
     () => ({
       id: uuidv4(),
       status,
-      name: taskName.trim() ? taskName : 'Untitled',
+      name: taskName.trim(),
       priority: 'medium',
       attachments: [],
       labels: [],
@@ -43,18 +45,19 @@ export function KanbanTaskAdd({ status, openAddTask, onAddTask, onCloseAddTask, 
   );
 
   const handleChangeName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskName(event.target.value);
+    setTaskName(event.target.value.replace(/[\r\n]/g, ''));
   }, []);
 
   const handleKeyDownAddTask = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
+      if (event.key === 'Enter') {
         event.preventDefault();
+        if (event.shiftKey || !taskName.trim()) return;
         onAddTask(defaultTask);
         setTaskName('');
       }
     },
-    [defaultTask, onAddTask]
+    [defaultTask, onAddTask, taskName]
   );
 
   const handleCancel = useCallback(() => {
@@ -80,7 +83,7 @@ export function KanbanTaskAdd({ status, openAddTask, onAddTask, onCloseAddTask, 
             autoFocus
             fullWidth
             multiline
-            placeholder="Untitled"
+            placeholder={placeholder}
             id={status}
             value={taskName}
             onChange={handleChangeName}
@@ -94,7 +97,7 @@ export function KanbanTaskAdd({ status, openAddTask, onAddTask, onCloseAddTask, 
           />
         </Paper>
 
-        <FormHelperText sx={{ mx: 1 }}>Presiona Enter para crear la tarea.</FormHelperText>
+        <FormHelperText sx={{ mx: 1 }}>{helperText}</FormHelperText>
       </Box>
     </ClickAwayListener>
   );

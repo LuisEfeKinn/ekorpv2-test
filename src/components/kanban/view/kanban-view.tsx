@@ -57,6 +57,8 @@ type KanbanBoardProps = {
   onDeleteTask?: (taskId: string) => void;
   onUpdateTask?: (task: IKanbanTask) => void;
   onTaskClick?: (task: IKanbanTask) => void;
+  taskAddPlaceholder?: string;
+  taskAddHelperText?: string;
 };
 
 export function KanbanBoard({
@@ -70,6 +72,8 @@ export function KanbanBoard({
   onDeleteTask,
   onUpdateTask,
   onTaskClick,
+  taskAddPlaceholder,
+  taskAddHelperText,
 }: KanbanBoardProps) {
   const { boardRef } = useBoardDnd(board, dndCallbacks, disableTaskDnd);
 
@@ -96,6 +100,8 @@ export function KanbanBoard({
             onDeleteTask={onDeleteTask}
             onUpdateTask={onUpdateTask}
             onTaskClick={onTaskClick}
+            taskAddPlaceholder={taskAddPlaceholder}
+            taskAddHelperText={taskAddHelperText}
           />
         ))}
       </AnimatePresence>

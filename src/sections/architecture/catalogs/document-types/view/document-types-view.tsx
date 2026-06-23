@@ -95,7 +95,7 @@ export function DocumentTypesView() {
       const nextData = Array.isArray(data) ? [...data] : [];
       setTableData(nextData);
       setTotalItems(nextData.length);
-    } catch (error) {
+    } catch {
       toast.error(t('document-types.messages.error.loading'));
       setTableData([]);
       setTotalItems(0);
@@ -121,7 +121,7 @@ export function DocumentTypesView() {
         await DeleteDocumentTypeService(id);
         toast.success(t('document-types.messages.success.deleted'));
         loadData();
-      } catch (error) {
+      } catch {
         toast.error(t('document-types.messages.error.deleting'));
       }
     },
@@ -135,7 +135,7 @@ export function DocumentTypesView() {
       toast.success(t('document-types.messages.success.deletedMultiple', { count: table.selected.length }));
       table.setSelected([]);
       loadData();
-    } catch (error) {
+    } catch {
       toast.error(t('document-types.messages.error.deletingMultiple'));
     }
   }, [loadData, t, table]);

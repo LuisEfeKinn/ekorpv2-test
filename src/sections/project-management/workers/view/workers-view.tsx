@@ -3,6 +3,7 @@
 import type { TableHeadCellProps } from 'src/components/table';
 import type { IWorker, ICatalogOption, IWorkerTableFilters } from 'src/types/project-management';
 
+import { useRouter } from 'next/navigation';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useBoolean, useSetState, useDebounce } from 'minimal-shared/hooks';
 
@@ -39,6 +40,7 @@ import { WorkersTableFiltersResult } from '../workers-table-filters-result';
 export function WorkersView() {
   const { t } = useTranslate('project-management');
   const table = useTable();
+  const router = useRouter();
   const editDrawer = useBoolean();
 
   const [tableData, setTableData] = useState<IWorker[]>([]);
@@ -67,6 +69,9 @@ export function WorkersView() {
       { id: 'positionName', label: t('workers.table.columns.position'), width: 180 },
       { id: 'experienceLevel', label: t('workers.table.columns.experience'), width: 200 },
       { id: 'technologies', label: t('workers.table.columns.technologies'), width: 200 },
+      { id: 'projectCount', label: t('workers.table.columns.projects'), width: 110, align: 'center' },
+      { id: 'totalDedicacion', label: t('workers.table.columns.dedication'), width: 120, align: 'center' },
+      { id: 'pendingActivities', label: t('workers.table.columns.pendingActivities'), width: 130, align: 'center' },
       { id: 'workerStatus', label: t('workers.table.columns.status'), width: 130 },
       { id: 'employmentType', label: t('workers.table.columns.employmentType'), width: 180 },
     ],
@@ -198,6 +203,7 @@ export function WorkersView() {
                       key={row.id}
                       row={row}
                       onEditRow={() => handleOpenEdit(row)}
+                      onViewDetail={() => router.push(paths.dashboard.projectManagement.workerDetail(row.id))}
                     />
                   ))}
 

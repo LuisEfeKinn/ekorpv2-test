@@ -70,7 +70,7 @@ export function NotificationConfigView() {
   const [expanded, setExpanded] = useState<string[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<NotificationConfigEvent | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<NotificationConfigGroup | null>(null);
-  const [selectedNotifiableId, setSelectedNotifiableId] = useState<number | null>(null);
+  const [selectedNotifiableId] = useState<number | null>(null);
   const [toggling, setToggling] = useState<Set<number>>(new Set());
   const [roles, setRoles] = useState<Role[]>([]);
 

@@ -92,7 +92,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
       console.error('Error loading catalogs:', error);
       toast.error(t('actionMeasures.form.messages.loadCatalogsError', { defaultValue: 'Error loading catalogs' }));
     }
-  }, []);
+  }, [t]);
 
   const loadData = useCallback(async () => {
     if (!dataId) return;
@@ -135,7 +135,7 @@ export function ActionMeasuresTableModal({ open, onClose, onSave, dataId, ...oth
     } finally {
       setLoading(false);
     }
-  }, [dataId]);
+  }, [dataId, t]);
 
   // Load catalogs when modal opens
   useEffect(() => {

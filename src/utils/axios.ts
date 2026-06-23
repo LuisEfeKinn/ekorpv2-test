@@ -130,7 +130,11 @@ export const endpoints = {
     refresh: '/auth/refresh-token',
     changePassword: '/auth/reset-password',
     forgotPassword: '/auth/forgot-password',
-    resetPassword: '/auth/forgot-password'
+    resetPassword: '/auth/forgot-password',
+    user: {
+      profile: '/user/me/profile',
+      update: '/user/me/profile',
+    }
   },
   register: {
     publicUploadDocument: '/digital-authentication/media/public-upload',
@@ -520,7 +524,8 @@ export const endpoints = {
     },
     workers: {
       all: '/project-management/workers',
-      update: '/project-management/workers', // + /:id
+      detail: '/project-management/workers', // + /:id (GET)
+      update: '/project-management/workers', // + /:id (PATCH)
       myProjects: '/project-management/workers/my-projects',
       myActivitiesKanban: '/project-management/workers/my-activities/kanban',
     },

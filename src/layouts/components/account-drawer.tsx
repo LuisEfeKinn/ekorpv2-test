@@ -65,15 +65,15 @@ export function AccountDrawer({ data = [], sx, ...other }: AccountDrawerProps) {
   const renderList = () => {
     const menuItems = [
       {
+        label: t('nav.viewProfile'),
+        href: paths.dashboard.userProfile.root,
+        icon: <Iconify icon="solar:user-rounded-bold" />,
+      },
+      {
         label: t('accountMenu.dashboard'),
         href: paths.dashboard.root,
         icon: <Iconify icon="solar:home-angle-bold-duotone" />,
       },
-      // {
-      //   label: t('accountMenu.profile'),
-      //   href: paths.dashboard.user.root,
-      //   icon: <Iconify icon="solar:user-rounded-bold" />,
-      // },
       {
         label: t('accountMenu.biometricActivation'),
         href: paths.dashboard.user.biometricActivation,

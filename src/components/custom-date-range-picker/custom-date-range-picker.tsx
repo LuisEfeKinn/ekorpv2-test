@@ -1,5 +1,6 @@
 'use client';
 
+import type { Dayjs } from 'dayjs';
 import type { PaperProps } from '@mui/material/Paper';
 import type { DialogProps } from '@mui/material/Dialog';
 import type { UseDateRangePickerReturn } from './use-date-range-picker';
@@ -27,6 +28,7 @@ export type CustomDateRangePickerProps = DialogProps &
     cancelLabel?: string;
     applyLabel?: string;
     clearLabel?: string;
+    minDate?: Dayjs;
   };
 
 export function CustomDateRangePicker({
@@ -48,6 +50,7 @@ export function CustomDateRangePicker({
   cancelLabel = 'Cancel',
   applyLabel = 'Apply',
   clearLabel = 'Clear',
+  minDate,
   ...other
 }: CustomDateRangePickerProps) {
   const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
@@ -104,7 +107,7 @@ export function CustomDateRangePicker({
         >
           {isCalendarView ? (
             <>
-              <DateCalendar value={startDate} onChange={onChangeStartDate} />
+              <DateCalendar value={startDate} onChange={onChangeStartDate} minDate={minDate} />
               <DateCalendar
                 value={endDate}
                 onChange={onChangeEndDate}
@@ -113,7 +116,7 @@ export function CustomDateRangePicker({
             </>
           ) : (
             <>
-              <DatePicker label="Start date" value={startDate} onChange={onChangeStartDate} />
+              <DatePicker label="Start date" value={startDate} onChange={onChangeStartDate} minDate={minDate} />
               <DatePicker
                 label="End date"
                 value={endDate}

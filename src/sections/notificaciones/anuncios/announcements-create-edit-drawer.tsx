@@ -48,9 +48,6 @@ type Props = {
   onSaved?: () => void;
 };
 
-const STATUS_VALUES = [1, 0, 2] as const;
-const TYPE_VALUES = ['NOTICIA', 'EVENTO', 'ARTICULO'] as const;
-
 export function AnnouncementCreateEditDrawer({ open, onClose, current, onSaved }: Props) {
   const { t } = useTranslate('notifications');
   const isEdit = Boolean(current?.id);

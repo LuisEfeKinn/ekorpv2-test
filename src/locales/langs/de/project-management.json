@@ -260,6 +260,8 @@
       "cancel": "Abbrechen",
       "apply": "Anwenden",
       "clearDates": "Datum löschen",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Beschreibung hinzufügen...",
       "save": "Speichern",
       "datesError": "Das Enddatum muss nach dem Startdatum liegen",
       "delete": "Löschen",
@@ -272,8 +274,24 @@
       "deleteTitle": "Aktivität löschen",
       "deleteConfirm": "Möchten Sie diese Aktivität wirklich löschen?",
       "myTasks": "Meine Aufgaben",
+      "memberDialog": {
+        "search": "Suchen...",
+        "assigned": "Zugewiesen",
+        "assign": "Zuweisen",
+        "cancel": "Abbrechen",
+        "confirm": "Bestätigen",
+        "notFound": "Keine Ergebnisse",
+        "notFoundHint": "Versuche einen anderen Suchbegriff"
+      },
       "searchPlaceholder": "Aktivitäten suchen...",
-      "clearFilters": "Filter löschen"
+      "clearFilters": "Filter löschen",
+      "taskAddHelper": "Enter drücken, um die Aktivität zu erstellen",
+      "statuses": {
+        "TODO": "Zu erledigen",
+        "IN_PROGRESS": "In Bearbeitung",
+        "IN_TESTING": "Im Test",
+        "DONE": "Erledigt"
+      }
     }
   },
   "overview": {
@@ -319,6 +337,7 @@
     },
     "actions": {
       "edit": "Bearbeiten",
+      "viewDetail": "Detail anzeigen",
       "cancel": "Abbrechen",
       "save": "Änderungen speichern"
     },
@@ -328,6 +347,9 @@
         "position": "Position",
         "experience": "Erfahrung",
         "technologies": "Technologien",
+        "projects": "Projekte",
+        "dedication": "Auslastung",
+        "pendingActivities": "Ausstehend",
         "status": "Status",
         "employmentType": "Vertragsart"
       },
@@ -362,6 +384,19 @@
       "errorUpdate": "Fehler beim Aktualisieren des Mitarbeitenden",
       "errorLoading": "Fehler beim Laden der Mitarbeitenden"
     }
+  },
+  "workerDetail": {
+    "title": "Mitarbeitendendetail",
+    "summary": {
+      "projects": "Projekte",
+      "active": "Aktiv",
+      "dedication": "Auslastung",
+      "pendingActivities": "Ausstehend"
+    },
+    "activities": "Aktivitäten",
+    "pending": "ausstehend",
+    "noActivities": "Keine Aktivitäten in diesem Projekt zugewiesen",
+    "empty": "Dieser Mitarbeitende hat keine Zuweisungen"
   },
   "actions": {
     "back": "Zurück"

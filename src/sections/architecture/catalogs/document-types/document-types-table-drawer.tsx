@@ -64,7 +64,7 @@ export function DocumentTypesTableDrawer({ open, onClose, dataId, onSave, ...oth
         const documentCode = typeof record.documentCode === 'string' ? record.documentCode : '';
         setFormData({ name, documentCode });
       }
-    } catch (error) {
+    } catch {
       toast.error(t('document-types.messages.error.loading'));
     } finally {
       setLoading(false);
@@ -102,7 +102,7 @@ export function DocumentTypesTableDrawer({ open, onClose, dataId, onSave, ...oth
       toast.success(dataId ? t('document-types.messages.success.updated') : t('document-types.messages.success.created'));
       onSave();
       onClose();
-    } catch (error) {
+    } catch {
       toast.error(t('document-types.messages.error.general'));
     } finally {
       setSaving(false);

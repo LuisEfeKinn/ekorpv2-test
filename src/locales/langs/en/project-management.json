@@ -260,6 +260,8 @@
       "cancel": "Cancel",
       "apply": "Apply",
       "clearDates": "Clear dates",
+      "description": "Description",
+      "descriptionPlaceholder": "Add a description...",
       "save": "Save",
       "datesError": "End date must be later than start date",
       "delete": "Delete",
@@ -272,8 +274,24 @@
       "deleteTitle": "Delete activity",
       "deleteConfirm": "Are you sure you want to delete this activity?",
       "myTasks": "My tasks",
+      "memberDialog": {
+        "search": "Search...",
+        "assigned": "Assigned",
+        "assign": "Assign",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "notFound": "No results found",
+        "notFoundHint": "Try a different search term"
+      },
       "searchPlaceholder": "Search activities...",
-      "clearFilters": "Clear filters"
+      "clearFilters": "Clear filters",
+      "taskAddHelper": "Press Enter to create the activity",
+      "statuses": {
+        "TODO": "To do",
+        "IN_PROGRESS": "In progress",
+        "IN_TESTING": "In testing",
+        "DONE": "Done"
+      }
     }
   },
   "overview": {
@@ -319,6 +337,7 @@
     },
     "actions": {
       "edit": "Edit",
+      "viewDetail": "View detail",
       "cancel": "Cancel",
       "save": "Save changes"
     },
@@ -328,6 +347,9 @@
         "position": "Position",
         "experience": "Experience",
         "technologies": "Technologies",
+        "projects": "Projects",
+        "dedication": "Dedication",
+        "pendingActivities": "Pending",
         "status": "Status",
         "employmentType": "Contract type"
       },
@@ -362,6 +384,19 @@
       "errorUpdate": "Error updating employee",
       "errorLoading": "Error loading employees"
     }
+  },
+  "workerDetail": {
+    "title": "Employee Detail",
+    "summary": {
+      "projects": "Projects",
+      "active": "Active",
+      "dedication": "Dedication",
+      "pendingActivities": "Pending"
+    },
+    "activities": "Activities",
+    "pending": "pending",
+    "noActivities": "No activities assigned in this project",
+    "empty": "This employee has no assignments"
   },
   "actions": {
     "back": "Back"

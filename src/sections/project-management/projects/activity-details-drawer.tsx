@@ -1,7 +1,7 @@
 'use client';
 
 import type { IKanbanTask } from 'src/types/kanban';
-import type { IAssignment, ICatalogOption } from 'src/types/project-management';
+import type { IAssignment, IActivityStatusOption } from 'src/types/project-management';
 
 import { z } from 'zod';
 import dayjs from 'dayjs';
@@ -10,7 +10,7 @@ import { varAlpha } from 'minimal-shared/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
 import { useBoolean, usePopover } from 'minimal-shared/hooks';
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -51,13 +51,13 @@ import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomPopover } from 'src/components/custom-popover';
-import { SearchNotFound } from 'src/components/search-not-found';
 import { CustomDateRangePicker } from 'src/components/custom-date-range-picker';
 import { KanbanInputName } from 'src/components/kanban/components/kanban-input-name';
 
 // ----------------------------------------------------------------------
 
 const ACTIVITY_NAME_MAX = 150;
+const ACTIVITY_DESCRIPTION_MAX = 2000;
 
 const ActivitySchema = z
   .object({
@@ -65,6 +65,7 @@ const ActivitySchema = z
     statusId: z.string().min(1),
     assigneeId: z.string().nullable().optional(),
     supervisorIds: z.array(z.string()).optional(),
+    description: z.string().max(ACTIVITY_DESCRIPTION_MAX).nullable().optional(),
     startDate: z.string().nullable().optional(),
     endDate: z.string().nullable().optional(),
   })
@@ -106,6 +107,7 @@ type MemberDialogProps = {
   selected: string[];
   onConfirm: (ids: string[], members: MemberOption[]) => void;
   title: string;
+  t: (key: string) => string;
 };
 
 function MemberSelectionDialog({
@@ -114,6 +116,7 @@ function MemberSelectionDialog({
   projectId,
   excludeIds = [],
   pinnedMembers,
+  t,
   multiple = false,
   selected,
   onConfirm,
@@ -194,7 +197,7 @@ function MemberSelectionDialog({
           size="small"
           value={search}
           onChange={(e) => handleSearchChange(e.target.value)}
-          placeholder="Buscar..."
+          placeholder={t('detail.tasks.memberDialog.search')}
           slotProps={{
             input: {
               startAdornment: (
@@ -213,7 +216,14 @@ function MemberSelectionDialog({
             <CircularProgress size={24} />
           </Box>
         ) : allOptions.length === 0 ? (
-          <SearchNotFound query={search} sx={{ mt: 3, mb: 6 }} />
+          <Box sx={{ mt: 3, mb: 6, textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ color: 'text.primary' }}>
+              {t('detail.tasks.memberDialog.notFound')}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
+              {t('detail.tasks.memberDialog.notFoundHint')}
+            </Typography>
+          </Box>
         ) : (
           <Scrollbar sx={{ maxHeight: 320, px: 2.5 }}>
             <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
@@ -241,7 +251,7 @@ function MemberSelectionDialog({
                       }
                       onClick={() => toggle(opt.id)}
                     >
-                      {checked ? 'Asignado' : 'Asignar'}
+                      {checked ? t('detail.tasks.memberDialog.assigned') : t('detail.tasks.memberDialog.assign')}
                     </Button>
                   </Box>
                 );
@@ -254,7 +264,7 @@ function MemberSelectionDialog({
       {multiple && (
         <Box sx={{ px: 2.5, py: 2, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
           <Button variant="outlined" color="inherit" size="small" onClick={onClose}>
-            Cancelar
+            {t('detail.tasks.memberDialog.cancel')}
           </Button>
           <Button
             variant="contained"
@@ -264,7 +274,7 @@ function MemberSelectionDialog({
               onClose();
             }}
           >
-            Confirmar
+            {t('detail.tasks.memberDialog.confirm')}
           </Button>
         </Box>
       )}
@@ -293,7 +303,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
   const datePickerOpen = useBoolean();
   const statusPopover = usePopover();
 
-  const [statuses, setStatuses] = useState<ICatalogOption[]>([]);
+  const [statuses, setStatuses] = useState<IActivityStatusOption[]>([]);
   const [pinnedAssignee, setPinnedAssignee] = useState<MemberOption | null>(null);
   const [pinnedSupervisors, setPinnedSupervisors] = useState<MemberOption[]>([]);
   const [subtasks, setSubtasks] = useState<{ id: string; name: string; statusName: string }[]>([]);
@@ -313,6 +323,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
       statusId: '',
       assigneeId: null,
       supervisorIds: [],
+      description: null,
       startDate: null,
       endDate: null,
     },
@@ -321,6 +332,21 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
   const watchedStatusId = watch('statusId');
   const watchedAssigneeId = watch('assigneeId');
   const watchedSupervisorIds = watch('supervisorIds') ?? [];
+
+  const statusLabels: Record<string, string> = useMemo(
+    () => ({
+      TODO: t('detail.tasks.statuses.TODO'),
+      IN_PROGRESS: t('detail.tasks.statuses.IN_PROGRESS'),
+      IN_TESTING: t('detail.tasks.statuses.IN_TESTING'),
+      DONE: t('detail.tasks.statuses.DONE'),
+    }),
+    [t]
+  );
+
+  const getStatusLabel = useCallback(
+    (status: IActivityStatusOption) => statusLabels[status.key] ?? status.name,
+    [statusLabels]
+  );
 
   const currentStatus = statuses.find((s) => String(s.id) === watchedStatusId);
 
@@ -374,6 +400,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
         statusId: String(detail.status?.id ?? ''),
         assigneeId: assignee?.id ?? null,
         supervisorIds: supervisors.map((s) => s.id),
+        description: detail.description ?? null,
         startDate: detail.startDate ? dayjs(detail.startDate).format('YYYY-MM-DD') : null,
         endDate: detail.endDate ? dayjs(detail.endDate).format('YYYY-MM-DD') : null,
       });
@@ -391,7 +418,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
         setPinnedAssignee(null);
         setPinnedSupervisors([]);
         setSubtasks([]);
-        reset({ name: '', statusId: '', assigneeId: null, supervisorIds: [], startDate: null, endDate: null });
+        reset({ name: '', statusId: '', assigneeId: null, supervisorIds: [], description: null, startDate: null, endDate: null });
       }
     }
   }, [open, task, loadStatuses, loadDetail, reset]);
@@ -404,6 +431,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
         statusId: Number(data.statusId),
         assigneeId: data.assigneeId ? Number(data.assigneeId) : undefined,
         supervisorIds: data.supervisorIds?.map(Number) ?? [],
+        description: data.description || null,
         startDate: data.startDate ?? undefined,
         endDate: data.endDate ?? undefined,
       };
@@ -453,7 +481,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
         ]}
       >
         {readOnly ? (
-          <Chip label={currentStatus?.name ?? '…'} size="small" variant="soft" />
+          <Chip label={currentStatus ? getStatusLabel(currentStatus) : '…'} size="small" variant="soft" />
         ) : (
           <Button
             size="small"
@@ -462,7 +490,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
             onClick={statusPopover.onOpen}
             disabled={statuses.length === 0}
           >
-            {currentStatus?.name ?? '…'}
+            {currentStatus ? getStatusLabel(currentStatus) : '…'}
           </Button>
         )}
 
@@ -499,7 +527,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
                 statusPopover.onClose();
               }}
             >
-              {s.name}
+              {getStatusLabel(s)}
             </MenuItem>
           ))}
         </MenuList>
@@ -519,6 +547,8 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
           render={({ field }) => (
             <KanbanInputName
               {...field}
+              onChange={(e) => field.onChange(e.target.value.replace(/[\r\n]/g, ''))}
+              onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
               placeholder={t('detail.tasks.namePlaceholder')}
               inputProps={{ maxLength: ACTIVITY_NAME_MAX, id: 'activity-name-input' }}
             />
@@ -632,6 +662,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
           cancelLabel={t('detail.tasks.cancel')}
           applyLabel={t('detail.tasks.apply')}
           clearLabel={t('detail.tasks.clearDates')}
+          minDate={dayjs()}
           startDate={startDayjs}
           endDate={endDayjs}
           onChangeStartDate={(v) => {
@@ -652,6 +683,38 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
           error={datesError}
         />
       </Box>
+
+      {/* Descripción */}
+      {readOnly ? (
+        watch('description') ? (
+          <Box>
+            <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
+              {t('detail.tasks.description')}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary', whiteSpace: 'pre-line' }}>
+              {watch('description')}
+            </Typography>
+          </Box>
+        ) : null
+      ) : (
+        <Controller
+          name="description"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              value={field.value ?? ''}
+              fullWidth
+              multiline
+              minRows={5}
+              maxRows={10}
+              label={t('detail.tasks.description')}
+              placeholder={t('detail.tasks.descriptionPlaceholder')}
+              inputProps={{ maxLength: ACTIVITY_DESCRIPTION_MAX }}
+            />
+          )}
+        />
+      )}
 
       {/* Subtareas — inline, solo si existen */}
       {subtasks.length > 0 && (
@@ -758,6 +821,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
         selected={watchedAssigneeId ? [watchedAssigneeId] : []}
         multiple={false}
         title={t('detail.tasks.selectAssignee')}
+        t={t}
         onConfirm={(ids, members) => {
           setValue('assigneeId', ids[0] ?? null);
           setPinnedAssignee(members[0] ?? null);
@@ -774,6 +838,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
         selected={watchedSupervisorIds}
         multiple
         title={t('detail.tasks.selectSupervisors')}
+        t={t}
         onConfirm={(ids, members) => {
           setValue('supervisorIds', ids);
           setPinnedSupervisors(members);

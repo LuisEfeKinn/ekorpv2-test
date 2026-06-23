@@ -31,12 +31,15 @@ import { ActivityDetailsDrawer } from './activity-details-drawer';
 
 // ----------------------------------------------------------------------
 
-function mapColumnsToBoard(columns: IActivityKanbanColumn[]): IKanban {
+function mapColumnsToBoard(
+  columns: IActivityKanbanColumn[],
+  statusLabels?: Record<string, string>
+): IKanban {
   const sortedColumns = [...columns].sort((a, b) => a.statusId - b.statusId);
 
   const kanbanColumns = sortedColumns.map((col) => ({
     id: String(col.statusId),
-    name: col.statusName,
+    name: statusLabels?.[col.statusKey] ?? col.statusName,
   }));
 
   const tasks: IKanban['tasks'] = {};
@@ -115,6 +118,16 @@ export function ProjectTasksTab({ projectId }: Props) {
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 200);
 
+  const statusLabels: Record<string, string> = useMemo(
+    () => ({
+      TODO: t('detail.tasks.statuses.TODO'),
+      IN_PROGRESS: t('detail.tasks.statuses.IN_PROGRESS'),
+      IN_TESTING: t('detail.tasks.statuses.IN_TESTING'),
+      DONE: t('detail.tasks.statuses.DONE'),
+    }),
+    [t]
+  );
+
   const assignees = useMemo(() => extractAssignees(board), [board]);
 
   const taskTotals = useMemo(() => {
@@ -148,22 +161,22 @@ export function ProjectTasksTab({ projectId }: Props) {
     setLoading(true);
     try {
       const response = await fetchKanban(projectId);
-      setBoard(mapColumnsToBoard(response.data));
+      setBoard(mapColumnsToBoard(response.data, statusLabels));
     } catch {
       toast.error(t('detail.tasks.errorLoading'));
     } finally {
       setLoading(false);
     }
-  }, [projectId, t, fetchKanban]);
+  }, [projectId, t, fetchKanban, statusLabels]);
 
   const silentFetchBoard = useCallback(async () => {
     try {
       const response = await fetchKanban(projectId);
-      setBoard(mapColumnsToBoard(response.data));
+      setBoard(mapColumnsToBoard(response.data, statusLabels));
     } catch {
       // silent — optimistic state stays
     }
-  }, [projectId, fetchKanban]);
+  }, [projectId, fetchKanban, statusLabels]);
 
   useEffect(() => {
     fetchBoard();
@@ -284,6 +297,8 @@ export function ProjectTasksTab({ projectId }: Props) {
         dndCallbacks={canManageTasks ? { onMoveTask: handleMoveTask } : undefined}
         onAddTask={canManageTasks ? handleAddTask : undefined}
         onTaskClick={handleTaskClick}
+        taskAddPlaceholder={t('detail.tasks.namePlaceholder')}
+        taskAddHelperText={t('detail.tasks.taskAddHelper')}
       />
 
       <ActivityDetailsDrawer

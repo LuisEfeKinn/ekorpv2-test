@@ -260,6 +260,8 @@
       "cancel": "Cancelar",
       "apply": "Aplicar",
       "clearDates": "Limpiar fechas",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Agrega una descripción...",
       "save": "Guardar",
       "datesError": "La fecha de fin debe ser posterior a la de inicio",
       "delete": "Eliminar",
@@ -272,8 +274,24 @@
       "deleteTitle": "Eliminar actividad",
       "deleteConfirm": "¿Estás seguro de que deseas eliminar esta actividad?",
       "myTasks": "Mis tareas",
+      "memberDialog": {
+        "search": "Buscar...",
+        "assigned": "Asignado",
+        "assign": "Asignar",
+        "cancel": "Cancelar",
+        "confirm": "Confirmar",
+        "notFound": "Sin resultados",
+        "notFoundHint": "Intenta con otro término de búsqueda"
+      },
       "searchPlaceholder": "Buscar actividades...",
-      "clearFilters": "Limpiar filtros"
+      "clearFilters": "Limpiar filtros",
+      "taskAddHelper": "Presiona Enter para crear la actividad",
+      "statuses": {
+        "TODO": "Por hacer",
+        "IN_PROGRESS": "En curso",
+        "IN_TESTING": "En pruebas",
+        "DONE": "Hecho"
+      }
     }
   },
   "overview": {
@@ -319,6 +337,7 @@
     },
     "actions": {
       "edit": "Editar",
+      "viewDetail": "Ver detalle",
       "cancel": "Cancelar",
       "save": "Guardar cambios"
     },
@@ -328,6 +347,9 @@
         "position": "Cargo",
         "experience": "Experiencia",
         "technologies": "Tecnologías",
+        "projects": "Proyectos",
+        "dedication": "Dedicación",
+        "pendingActivities": "Pendientes",
         "status": "Estado",
         "employmentType": "Tipo de contrato"
       },
@@ -362,6 +384,19 @@
       "errorUpdate": "Error al actualizar el empleado",
       "errorLoading": "Error al cargar los empleados"
     }
+  },
+  "workerDetail": {
+    "title": "Detalle del Empleado",
+    "summary": {
+      "projects": "Proyectos",
+      "active": "Activos",
+      "dedication": "Dedicación",
+      "pendingActivities": "Pendientes"
+    },
+    "activities": "Actividades",
+    "pending": "pendientes",
+    "noActivities": "No hay actividades asignadas en este proyecto",
+    "empty": "Este empleado no tiene asignaciones"
   },
   "actions": {
     "back": "Volver"

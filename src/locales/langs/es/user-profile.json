@@ -1,0 +1,87 @@
+{
+  "title": "Mi Perfil",
+  "breadcrumbs": {
+    "dashboard": "Panel de Control",
+    "profile": "Mi Perfil"
+  },
+  "sections": {
+    "personalInfo": "Información personal",
+    "accountInfo": "Información de la cuenta",
+    "security": "Seguridad"
+  },
+  "form": {
+    "fields": {
+      "names": {
+        "label": "Nombres"
+      },
+      "lastnames": {
+        "label": "Apellidos"
+      },
+      "email": {
+        "label": "Correo electrónico"
+      },
+      "tel": {
+        "label": "Teléfono"
+      },
+      "documentId": {
+        "label": "Documento de identidad"
+      },
+      "avatar": {
+        "helperText": "Formatos permitidos: *.jpeg, *.jpg, *.png, *.gif. Tamaño máximo 3MB"
+      },
+      "roles": {
+        "label": "Roles"
+      },
+      "status": {
+        "label": "Estado de la cuenta"
+      },
+      "biometric": {
+        "label": "Biometría"
+      },
+      "twoFactor": {
+        "label": "Autenticación de dos factores"
+      },
+      "googleLinked": {
+        "label": "Cuenta de Google"
+      },
+      "microsoftLinked": {
+        "label": "Cuenta de Microsoft"
+      },
+      "createdAt": {
+        "label": "Fecha de creación"
+      },
+      "updatedAt": {
+        "label": "Última actualización"
+      }
+    },
+    "validation": {
+      "namesRequired": "El nombre es obligatorio",
+      "lastnamesRequired": "El apellido es obligatorio",
+      "emailRequired": "El correo es obligatorio",
+      "emailInvalid": "El correo no es válido",
+      "telRequired": "El teléfono es obligatorio",
+      "documentIdRequired": "El documento es obligatorio"
+    },
+    "actions": {
+      "save": "Guardar cambios"
+    }
+  },
+  "status": {
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "enabled": "Habilitado",
+    "disabled": "Deshabilitado",
+    "linked": "Vinculada",
+    "notLinked": "No vinculada"
+  },
+  "messages": {
+    "success": {
+      "updated": "Perfil actualizado correctamente"
+    },
+    "error": {
+      "loading": "Error al cargar el perfil",
+      "updating": "Error al actualizar el perfil",
+      "notFound": "No se pudo obtener el perfil del usuario"
+    }
+  }
+}

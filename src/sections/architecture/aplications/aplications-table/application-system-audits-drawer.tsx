@@ -158,7 +158,7 @@ export function ApplicationSystemAuditsDrawer({
     } finally {
       setLoading(false);
     }
-  }, [auditId, open, systemId, t]);
+  }, [auditId, open, t]);
 
   useEffect(() => {
     if (!open) return;

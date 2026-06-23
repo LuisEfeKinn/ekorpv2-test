@@ -2,6 +2,11 @@ import type { IWorkerUpdatePayload } from 'src/types/project-management';
 
 import axios, { endpoints } from 'src/utils/axios';
 
+export const GetWorkerByIdService = async (id: string) => {
+  const response = await axios.get(`${endpoints.projectManagement.workers.detail}/${id}`);
+  return response;
+};
+
 export const GetWorkersPaginationService = async (params?: {
   page?: number;
   perPage?: number;

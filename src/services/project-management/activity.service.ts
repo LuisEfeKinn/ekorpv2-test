@@ -7,6 +7,7 @@ const { activities } = endpoints.projectManagement;
 export const GetActivitiesListService = async (params?: {
   projectId?: number;
   statusId?: number;
+  employerId?: number;
   search?: string;
   onlyRoot?: boolean;
   page?: number;

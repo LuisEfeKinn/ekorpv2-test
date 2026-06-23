@@ -1,0 +1,87 @@
+{
+  "title": "My Profile",
+  "breadcrumbs": {
+    "dashboard": "Dashboard",
+    "profile": "My Profile"
+  },
+  "sections": {
+    "personalInfo": "Personal information",
+    "accountInfo": "Account information",
+    "security": "Security"
+  },
+  "form": {
+    "fields": {
+      "names": {
+        "label": "First name"
+      },
+      "lastnames": {
+        "label": "Last name"
+      },
+      "email": {
+        "label": "Email address"
+      },
+      "tel": {
+        "label": "Phone"
+      },
+      "documentId": {
+        "label": "ID document"
+      },
+      "avatar": {
+        "helperText": "Allowed formats: *.jpeg, *.jpg, *.png, *.gif. Max size 3MB"
+      },
+      "roles": {
+        "label": "Roles"
+      },
+      "status": {
+        "label": "Account status"
+      },
+      "biometric": {
+        "label": "Biometrics"
+      },
+      "twoFactor": {
+        "label": "Two-factor authentication"
+      },
+      "googleLinked": {
+        "label": "Google account"
+      },
+      "microsoftLinked": {
+        "label": "Microsoft account"
+      },
+      "createdAt": {
+        "label": "Created at"
+      },
+      "updatedAt": {
+        "label": "Last updated"
+      }
+    },
+    "validation": {
+      "namesRequired": "First name is required",
+      "lastnamesRequired": "Last name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Email is not valid",
+      "telRequired": "Phone is required",
+      "documentIdRequired": "ID document is required"
+    },
+    "actions": {
+      "save": "Save changes"
+    }
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "linked": "Linked",
+    "notLinked": "Not linked"
+  },
+  "messages": {
+    "success": {
+      "updated": "Profile updated successfully"
+    },
+    "error": {
+      "loading": "Error loading profile",
+      "updating": "Error updating profile",
+      "notFound": "Could not load user profile"
+    }
+  }
+}

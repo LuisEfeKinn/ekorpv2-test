@@ -150,6 +150,7 @@ export function AssignmentCreateEditDrawer({ open, projectId, currentRow, onClos
   }, [open, currentRow, reset, loadCatalogs, loadWorkers, loadJobs]);
 
   const watchedStartDate = watch('startDate');
+  const todayStr = dayjs().format('YYYY-MM-DD');
   const minEndDate = watchedStartDate
     ? dayjs(watchedStartDate).add(1, 'day').format('YYYY-MM-DD')
     : undefined;
@@ -384,6 +385,7 @@ export function AssignmentCreateEditDrawer({ open, projectId, currentRow, onClos
                 type="date"
                 label={t('detail.team.drawer.fields.startDate')}
                 InputLabelProps={{ shrink: true }}
+                inputProps={{ min: todayStr }}
                 error={!!errors.startDate}
                 helperText={errors.startDate ? t('detail.team.drawer.validation.startDateRequired') : undefined}
               />

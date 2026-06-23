@@ -1,13 +1,20 @@
 import type { IWorker } from 'src/types/project-management';
 
+import { usePopover } from 'minimal-shared/hooks';
+
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 
+import { useTranslate } from 'src/locales';
+
 import { Iconify } from 'src/components/iconify';
+import { CustomPopover } from 'src/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
@@ -22,15 +29,22 @@ const WORKER_STATUS_COLOR: Record<string, ChipColor> = {
 type Props = {
   row: IWorker;
   onEditRow: () => void;
+  onViewDetail: () => void;
 };
 
-export function WorkersTableRow({ row, onEditRow }: Props) {
+export function WorkersTableRow({ row, onEditRow, onViewDetail }: Props) {
+  const { t } = useTranslate('project-management');
+  const menuActions = usePopover();
 
   return (
+    <>
     <TableRow hover tabIndex={-1}>
         <TableCell>
-          <IconButton onClick={onEditRow}>
-            <Iconify icon="solar:pen-bold" />
+          <IconButton
+            color={menuActions.open ? 'inherit' : 'default'}
+            onClick={menuActions.onOpen}
+          >
+            <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
 
@@ -71,6 +85,31 @@ export function WorkersTableRow({ row, onEditRow }: Props) {
           </Box>
         </TableCell>
 
+        <TableCell align="center">
+          <Box component="span" sx={{ typography: 'body2', fontWeight: 'fontWeightBold' }}>
+            {row.projectCount ?? 0}
+          </Box>
+        </TableCell>
+
+        <TableCell align="center">
+          <Box
+            component="span"
+            sx={{
+              typography: 'body2',
+              fontWeight: 'fontWeightBold',
+              color: (row.totalDedicacion ?? 0) > 100 ? 'error.main' : 'text.primary',
+            }}
+          >
+            {row.totalDedicacion ?? 0}%
+          </Box>
+        </TableCell>
+
+        <TableCell align="center">
+          <Box component="span" sx={{ typography: 'body2' }}>
+            {row.pendingActivities ?? 0}
+          </Box>
+        </TableCell>
+
         <TableCell>
           {row.workerStatusName ? (
             <Chip
@@ -90,5 +129,35 @@ export function WorkersTableRow({ row, onEditRow }: Props) {
           </Box>
         </TableCell>
       </TableRow>
+
+      <CustomPopover
+        open={menuActions.open}
+        anchorEl={menuActions.anchorEl}
+        onClose={menuActions.onClose}
+        slotProps={{ arrow: { placement: 'right-top' } }}
+      >
+        <MenuList>
+          <MenuItem
+            onClick={() => {
+              onViewDetail();
+              menuActions.onClose();
+            }}
+          >
+            <Iconify icon="solar:eye-bold" />
+            {t('workers.actions.viewDetail')}
+          </MenuItem>
+
+          <MenuItem
+            onClick={() => {
+              onEditRow();
+              menuActions.onClose();
+            }}
+          >
+            <Iconify icon="solar:pen-bold" />
+            {t('workers.actions.edit')}
+          </MenuItem>
+        </MenuList>
+      </CustomPopover>
+    </>
   );
 }

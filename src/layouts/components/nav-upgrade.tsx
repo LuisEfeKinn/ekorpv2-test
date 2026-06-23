@@ -70,7 +70,7 @@ export function NavUpgrade({ sx, ...other }: BoxProps) {
 
         <Button
           variant="contained"
-          href={paths.dashboard.user.account}
+          href={paths.dashboard.userProfile.root}
           color="primary"
         >
           {t('nav.viewProfile')}

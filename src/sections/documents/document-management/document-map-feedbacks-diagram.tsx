@@ -36,11 +36,6 @@ type FeedbackNode = {
   data?: unknown;
 };
 
-type MapData = {
-  lessons: FeedbackNode[];
-  proposals: FeedbackNode[];
-};
-
 type Props = {
   lessons: FeedbackNode[];
   proposals: FeedbackNode[];
