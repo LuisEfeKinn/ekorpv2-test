@@ -31,6 +31,7 @@ import ListItemText from '@mui/material/ListItemText';
 import DialogContent from '@mui/material/DialogContent';
 import LinearProgress from '@mui/material/LinearProgress';
 import InputAdornment from '@mui/material/InputAdornment';
+import FormHelperText from '@mui/material/FormHelperText';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { fDateRangeShortLabel } from 'src/utils/format-time';
@@ -316,6 +317,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
     reset,
     watch,
     setValue,
+    formState: { errors },
   } = useForm<ActivityFormData>({
     resolver: zodResolver(ActivitySchema),
     defaultValues: {
@@ -545,13 +547,22 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
           name="name"
           control={control}
           render={({ field }) => (
-            <KanbanInputName
-              {...field}
-              onChange={(e) => field.onChange(e.target.value.replace(/[\r\n]/g, ''))}
-              onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
-              placeholder={t('detail.tasks.namePlaceholder')}
-              inputProps={{ maxLength: ACTIVITY_NAME_MAX, id: 'activity-name-input' }}
-            />
+            <Box sx={{ width: 1 }}>
+              <KanbanInputName
+                {...field}
+                fullWidth
+                onChange={(e) => field.onChange(e.target.value.replace(/[\r\n]/g, ''))}
+                onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
+                placeholder={t('detail.tasks.namePlaceholder')}
+                inputProps={{ maxLength: ACTIVITY_NAME_MAX, id: 'activity-name-input' }}
+                error={!!errors.name}
+              />
+              {errors.name && (
+                <FormHelperText error sx={{ px: 1 }}>
+                  {t('detail.tasks.nameRequired')}
+                </FormHelperText>
+              )}
+            </Box>
           )}
         />
       )}

@@ -11,7 +11,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { useTranslate } from 'src/locales';
-import { GetPositionPaginationService } from 'src/services/organization/position.service';
+import { GetJobsKmService } from 'src/services/organization/job-km.service';
 import { GetPerformanceRelatedDataService } from 'src/services/performance/related-data.service';
 import { GetUserManagmentPaginationService } from 'src/services/employees/user-managment.service';
 import {
@@ -143,7 +143,7 @@ export function ConfigureEvaluationsTableToolbar({ filters, onResetPage }: Props
   const loadPositions = useCallback(async (searchTerm: string) => {
     setPositionLoading(true);
     try {
-      const response = await GetPositionPaginationService({
+      const response = await GetJobsKmService({
         page: 1,
         perPage: 20,
         search: searchTerm || undefined,

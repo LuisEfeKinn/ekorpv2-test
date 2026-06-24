@@ -260,6 +260,7 @@
       "cancel": "Cancel",
       "apply": "Apply",
       "clearDates": "Clear dates",
+      "nameRequired": "Name is required",
       "description": "Description",
       "descriptionPlaceholder": "Add a description...",
       "save": "Save",

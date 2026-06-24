@@ -21,7 +21,7 @@ import StepConnector from '@mui/material/StepConnector';
 import LinearProgress from '@mui/material/LinearProgress';
 
 import { useTranslate } from 'src/locales';
-import { GetJobsPaginationService } from 'src/services/architecture/business/jobs.service';
+import { GetJobsKmService } from 'src/services/organization/job-km.service';
 import { GetVigenciesPaginationService } from 'src/services/organization/vigencies.service';
 import { GetPerformanceRelatedDataService } from 'src/services/performance/related-data.service';
 import { GetUserManagmentPaginationService } from 'src/services/employees/user-managment.service';
@@ -172,10 +172,8 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
 
   const loadPositions = useCallback(async () => {
     try {
-      const response = await GetJobsPaginationService({ page: 1, perPage: 50 });
-      if (response?.data && Array.isArray(response.data)) {
-        setPositions(response?.data || []);
-      }
+      const response = await GetJobsKmService({ page: 1, perPage: 50 });
+      setPositions(response?.data?.data || []);
     } catch (error) {
       console.error('Error loading positions:', error);
     }
