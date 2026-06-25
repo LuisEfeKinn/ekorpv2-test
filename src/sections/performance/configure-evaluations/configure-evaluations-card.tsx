@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
 import LinearProgress from '@mui/material/LinearProgress';
 
-import { fDate } from 'src/utils/format-time';
+import { fDateUTC } from 'src/utils/format-time';
 import { fNumber } from 'src/utils/format-number';
 
 import { useTranslate } from 'src/locales';
@@ -235,9 +235,9 @@ export function ConfigureEvaluationsCard({ row, onEditRow, onLaunchRow, onDelete
               sx={{ color: 'text.disabled', flexShrink: 0 }}
             />
             <Typography variant="caption" color="text.secondary">
-              {fDate(row.startDate, 'DD MMM YYYY')}
+              {fDateUTC(row.startDate, 'DD MMM YYYY')}
               {' — '}
-              {fDate(row.endDate, 'DD MMM YYYY')}
+              {fDateUTC(row.endDate, 'DD MMM YYYY')}
             </Typography>
           </Stack>
         </Box>

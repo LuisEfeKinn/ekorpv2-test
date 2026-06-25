@@ -1,6 +1,7 @@
 import type { Dayjs, OpUnitType } from 'dayjs';
 
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -25,6 +26,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
  * dayjs().utc().format()
  */
 
+dayjs.extend(utc);
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
@@ -83,6 +85,22 @@ export function fDate(input: DateInput, template = FORMAT_PATTERNS.date): string
   if (!input) return '';
 
   const date = dayjs(input);
+  if (!date.isValid()) return INVALID_DATE;
+
+  return date.format(template);
+}
+
+// ----------------------------------------------------------------------
+
+/**
+ * Formats a UTC ISO date string without timezone shift.
+ * Use this when the API returns dates as UTC ISO strings (e.g. "2026-06-26T00:00:00.000Z")
+ * and you want the calendar date, not the local-time-shifted date.
+ */
+export function fDateUTC(input: DateInput, template = FORMAT_PATTERNS.date): string {
+  if (!input) return '';
+
+  const date = typeof input === 'string' ? dayjs.utc(input) : dayjs(input);
   if (!date.isValid()) return INVALID_DATE;
 
   return date.format(template);

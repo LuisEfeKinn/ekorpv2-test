@@ -157,7 +157,7 @@ export function EvaluationResponsesPreviewForm({ evaluationData }: Props) {
                 <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
                   {compIndex + 1}. {competence.name}
                   <Chip
-                    label={`${(competence.weight * 100).toFixed(0)}%`}
+                    label={`${competence.weight.toFixed(0)}%`}
                     size="small"
                     sx={{ ml: 1, fontWeight: 600 }}
                   />
@@ -389,7 +389,7 @@ export function EvaluationResponsesPreviewForm({ evaluationData }: Props) {
                 <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
                   {objIndex + 1}. {objective.name}
                   <Chip
-                    label={`${(objective.weight * 100).toFixed(0)}%`}
+                    label={`${objective.weight.toFixed(0)}%`}
                     size="small"
                     color="success"
                     sx={{ ml: 1, fontWeight: 600 }}

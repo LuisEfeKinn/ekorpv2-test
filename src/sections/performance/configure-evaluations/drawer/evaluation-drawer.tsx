@@ -3,8 +3,8 @@
 import type { EvaluatorConfig } from './steps/step-evaluators';
 import type { IConfigureEvaluation } from 'src/types/performance';
 
-import { useForm, FormProvider } from 'react-hook-form';
-import { useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
+import { useForm, useWatch, FormProvider } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
@@ -26,7 +26,7 @@ import { GetVigenciesPaginationService } from 'src/services/organization/vigenci
 import { GetPerformanceRelatedDataService } from 'src/services/performance/related-data.service';
 import { GetUserManagmentPaginationService } from 'src/services/employees/user-managment.service';
 import { GetConfigureTestsPaginationService } from 'src/services/performance/configure-tests.service';
-import { GetOrganizationalUnitPaginationService } from 'src/services/organization/organizationalUnit.service';
+import { GetOrganizationUnitPaginationService } from 'src/services/organization/organizationalUnit.service';
 import {
   LaunchEvaluationCampaignService,
   GetConfigureEvaluationByIdService,
@@ -120,6 +120,9 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
   const [departments, setDepartments] = useState<any[]>([]);
   const [positions, setPositions] = useState<any[]>([]);
   const [employees, setEmployees] = useState<any[]>([]);
+  const [loadingDepartments, setLoadingDepartments] = useState(false);
+  const [loadingPositions, setLoadingPositions] = useState(false);
+  const [loadingEmployees, setLoadingEmployees] = useState(false);
   const [templates, setTemplates] = useState<any[]>([]);
   const [vigencies, setVigencies] = useState<any[]>([]);
 
@@ -136,6 +139,7 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
 
   // ── Fetched evaluation data (for edit prefill) ────────────────────────────
   const [fetchedEvaluation, setFetchedEvaluation] = useState<any>(null);
+  const prePopulatedRef = useRef<string | number | null>(null);
 
   // ── Template preview ──────────────────────────────────────────────────────
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -159,38 +163,45 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
   });
 
   // ── Loaders ───────────────────────────────────────────────────────────────
-  const loadDepartments = useCallback(async () => {
+  const loadDepartments = useCallback(async (search = '') => {
+    setLoadingDepartments(true);
     try {
-      const response = await GetOrganizationalUnitPaginationService({ page: 1, perPage: 50 });
-      if (response?.data && Array.isArray(response.data)) {
-        setDepartments((response?.data[0] as any) || []);
-      }
+      const response = await GetOrganizationUnitPaginationService({ page: 1, perPage: 50, ...(search ? { search } : {}) });
+      setDepartments(response?.data?.data || []);
     } catch (error) {
       console.error('Error loading departments:', error);
+    } finally {
+      setLoadingDepartments(false);
     }
   }, []);
 
-  const loadPositions = useCallback(async () => {
+  const loadPositions = useCallback(async (search = '') => {
+    setLoadingPositions(true);
     try {
-      const response = await GetJobsKmService({ page: 1, perPage: 50 });
+      const response = await GetJobsKmService({ page: 1, perPage: 50, ...(search ? { search } : {}) });
       setPositions(response?.data?.data || []);
     } catch (error) {
       console.error('Error loading positions:', error);
+    } finally {
+      setLoadingPositions(false);
     }
   }, []);
 
-  const loadEmployees = useCallback(async () => {
+  const loadEmployees = useCallback(async (search = '') => {
+    setLoadingEmployees(true);
     try {
-      const response = await GetUserManagmentPaginationService({ page: 1, perPage: 50 });
+      const response = await GetUserManagmentPaginationService({ page: 1, perPage: 50, ...(search ? { search } : {}) });
       setEmployees(response?.data?.data || []);
     } catch (error) {
       console.error('Error loading employees:', error);
+    } finally {
+      setLoadingEmployees(false);
     }
   }, []);
 
   const loadTemplates = useCallback(async (search: string = '') => {
     try {
-      const response = await GetConfigureTestsPaginationService({ page: 1, perPage: 20, search });
+      const response = await GetConfigureTestsPaginationService({ page: 1, perPage: 20, isActive: true, search });
       setTemplates(response?.data?.data || []);
     } catch (error) {
       console.error('Error loading templates:', error);
@@ -235,6 +246,7 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
 
     if (!currentEvaluation?.id) {
       // Create mode: reset everything
+      prePopulatedRef.current = null;
       setFetchedEvaluation(null);
       setCampaignId(undefined);
       methods.reset({
@@ -315,8 +327,14 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
   }, [open, currentEvaluation?.id]);
 
   // ── Prefill scope once lists and fetchedEvaluation are ready ─────────────
+  // prePopulatedRef prevents this from re-running when departments/positions/employees
+  // change due to search calls — it should only run once per evaluation load.
   useEffect(() => {
     if (!fetchedEvaluation) return;
+    if (prePopulatedRef.current === fetchedEvaluation.id) return;
+    if (departments.length === 0 && positions.length === 0 && employees.length === 0) return;
+
+    prePopulatedRef.current = fetchedEvaluation.id;
 
     if (fetchedEvaluation.campaignDepartments?.length && departments.length > 0) {
       setSelectedDepartments(
@@ -372,8 +390,16 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
     t('configure-evaluations.drawer.steps.config'),
   ];
 
-  const isLastStep = activeStep === STEPS.length - 1;
-  const progress = ((activeStep + 1) / STEPS.length) * 100;
+  const currentType = useWatch({ control: methods.control, name: 'type' });
+  const isClima = currentType === 'CLIMA_LABORAL';
+
+  // CLIMA_LABORAL has no evaluators — remove step 1 from the visible stepper
+  const visibleSteps = isClima ? STEPS.filter((_, i) => i !== 1) : STEPS;
+  // Map internal activeStep (0,2,3) to visual index (0,1,2) for CLIMA_LABORAL
+  const visibleActiveStep = isClima && activeStep > 1 ? activeStep - 1 : activeStep;
+
+  const isLastStep = activeStep === STEPS.length - 1 || (isClima && activeStep === 3);
+  const progress = ((visibleActiveStep + 1) / visibleSteps.length) * 100;
 
   // ── Step-by-step save ─────────────────────────────────────────────────────
 
@@ -447,7 +473,8 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
   const handleNext = async () => {
     // In read-only mode just advance without saving anything
     if (isReadOnly) {
-      setActiveStep((prev) => prev + 1);
+      const type = methods.getValues('type');
+      setActiveStep((prev) => (prev === 0 && type === 'CLIMA_LABORAL' ? 2 : prev + 1));
       return;
     }
 
@@ -510,7 +537,8 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
           }
         }
 
-        setActiveStep((prev) => prev + 1);
+        // CLIMA_LABORAL has no evaluators — skip step 1
+        setActiveStep(currentType === 'CLIMA_LABORAL' ? 2 : 1);
       } catch (error: any) {
         console.error('Error saving step 1:', error);
         toast.error(error?.response?.data?.message || t('configure-evaluations.messages.error.saving'));
@@ -594,7 +622,15 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
     setActiveStep((prev) => prev + 1);
   };
 
-  const handleBack = () => setActiveStep((prev) => prev - 1);
+  const handleBack = () => {
+    const type = methods.getValues('type');
+    // CLIMA_LABORAL skips step 1 — going back from step 2 returns to step 0
+    if (activeStep === 2 && type === 'CLIMA_LABORAL') {
+      setActiveStep(0);
+      return;
+    }
+    setActiveStep((prev) => prev - 1);
+  };
 
   // ── Validate step 4 dates ─────────────────────────────────────────────────
   const validateDates = (): boolean => {
@@ -718,7 +754,7 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
             <Typography variant="body2" color="text.secondary">
               {t('configure-evaluations.drawer.stepOf', {
                 step: String(activeStep + 1),
-                total: String(STEPS.length),
+                total: String(visibleSteps.length),
               })}
             </Typography>
           </Box>
@@ -769,7 +805,7 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
         }}
       >
         <Stepper
-          activeStep={activeStep}
+          activeStep={visibleActiveStep}
           alternativeLabel
           connector={
             <StepConnector
@@ -788,7 +824,7 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
             />
           }
         >
-          {STEPS.map((label, index) => (
+          {visibleSteps.map((label, index) => (
             <Step key={label}>
               <StepLabel
                 StepIconProps={{
@@ -803,8 +839,8 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
                 <Typography
                   variant="caption"
                   sx={{
-                    fontWeight: index === activeStep ? 700 : 400,
-                    color: index === activeStep ? 'primary.main' : 'text.secondary',
+                    fontWeight: index === visibleActiveStep ? 700 : 400,
+                    color: index === visibleActiveStep ? 'primary.main' : 'text.secondary',
                   }}
                 >
                   {label}
@@ -862,6 +898,12 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
                 onDepartmentsChange={setSelectedDepartments}
                 onPositionsChange={setSelectedPositions}
                 onEmployeesChange={setSelectedEmployees}
+                onSearchDepartments={loadDepartments}
+                onSearchPositions={loadPositions}
+                onSearchEmployees={loadEmployees}
+                loadingDepartments={loadingDepartments}
+                loadingPositions={loadingPositions}
+                loadingEmployees={loadingEmployees}
                 disabled={isReadOnly}
               />
             )}
@@ -899,7 +941,7 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
 
                 <Stack direction="row" spacing={1.5} alignItems="center">
                   <Typography variant="caption" color="text.secondary">
-                    {activeStep + 1} / {STEPS.length}
+                    {visibleActiveStep + 1} / {visibleSteps.length}
                   </Typography>
 
                   {isLastStep ? (
@@ -941,7 +983,7 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
 
                 <Stack direction="row" spacing={1.5} alignItems="center">
                   <Typography variant="caption" color="text.secondary">
-                    {activeStep + 1} / {STEPS.length}
+                    {visibleActiveStep + 1} / {visibleSteps.length}
                   </Typography>
 
                   {isLastStep ? (

@@ -36,8 +36,6 @@ export function UserLearningProgramView({ id, idP }: Props) {
   const [learningObject, setLearningObject] = useState<ILearningObject | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  // Simular progreso - en producción esto vendría del backend
-  const [progress] = useState(100); // Cambia a 100 para ver el certificado, o cualquier número entre 0-100
 
   const loadLearningObject = useCallback(async () => {
     if (!id) {
@@ -219,7 +217,7 @@ export function UserLearningProgramView({ id, idP }: Props) {
         />
       </Container>
 
-      <UserLearningProgramDetailsCard learningObject={learningObject} progress={progress} />
+      <UserLearningProgramDetailsCard learningObject={learningObject} />
     </>
   )
 };

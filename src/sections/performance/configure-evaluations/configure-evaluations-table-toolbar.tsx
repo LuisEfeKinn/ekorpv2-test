@@ -14,10 +14,7 @@ import { useTranslate } from 'src/locales';
 import { GetJobsKmService } from 'src/services/organization/job-km.service';
 import { GetPerformanceRelatedDataService } from 'src/services/performance/related-data.service';
 import { GetUserManagmentPaginationService } from 'src/services/employees/user-managment.service';
-import {
-  GetOrganizationalUnitPaginationService,
-  normalizeOrganizationalUnitListResponse,
-} from 'src/services/organization/organizationalUnit.service';
+import { GetOrganizationUnitPaginationService } from 'src/services/organization/organizationalUnit.service';
 
 import { Iconify } from 'src/components/iconify';
 
@@ -122,12 +119,12 @@ export function ConfigureEvaluationsTableToolbar({ filters, onResetPage }: Props
   const loadDepartments = useCallback(async (searchTerm: string) => {
     setDepartmentLoading(true);
     try {
-      const response = await GetOrganizationalUnitPaginationService({
+      const response = await GetOrganizationUnitPaginationService({
         page: 1,
         perPage: 20,
         search: searchTerm || undefined,
       });
-      const departments = normalizeOrganizationalUnitListResponse(response.data as any);
+      const departments = response?.data?.data || [];
       setDepartmentOptions(
         departments.map((dept: any) => ({ id: String(dept.id), name: dept.name }))
       );

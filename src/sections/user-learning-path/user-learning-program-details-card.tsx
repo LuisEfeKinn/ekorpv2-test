@@ -24,7 +24,9 @@ import { paths } from "src/routes/paths";
 import { useRouter } from "src/routes/hooks";
 
 import { useTranslate } from "src/locales";
+import { SingleSignOnService } from "src/services/employees/employment-enroll.service";
 
+import { toast } from "src/components/snackbar";
 import { Iconify } from "src/components/iconify";
 
 // ----------------------------------------------------------------------
@@ -378,7 +380,7 @@ export function UserLearningProgramDetailsCard({ learningObject, progress = 0 }:
     <Grid container spacing={{ xs: 2, md: 3 }}>
       {/* Columna principal con tabs */}
       <Grid size={{ xs: 12, lg: 8 }}>
-        <Card sx={{ mb: 3 }}>
+        <Card id="program-tabs" sx={{ mb: 3 }}>
           <Tabs
             value={currentTab}
             onChange={(e, newValue) => setCurrentTab(newValue)}
@@ -856,11 +858,21 @@ export function UserLearningProgramDetailsCard({ learningObject, progress = 0 }:
 
                             {/* Contenido */}
                             <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 2 }}>
+                              <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1.5 }}>
+                                <Chip
+                                  label={t('learning-objects.card.course')}
+                                  size="small"
+                                  color="primary"
+                                  variant="soft"
+                                  sx={{ fontWeight: 600, fontSize: '0.75rem' }}
+                                />
+                              </Stack>
+
                               <Typography
-                                variant="h6"
+                                variant="subtitle1"
                                 sx={{
                                   mb: 2,
-                                  fontWeight: 600,
+                                  fontWeight: 700,
                                   overflow: 'hidden',
                                   textOverflow: 'ellipsis',
                                   display: '-webkit-box',
@@ -873,27 +885,31 @@ export function UserLearningProgramDetailsCard({ learningObject, progress = 0 }:
                                 {course.fullName || t('learning-paths.details.noCourses')}
                               </Typography>
 
-                              {/* Botón de acción - solo si es eKorp */}
-                              {isEkorp && (
-                                <Button
-                                  variant="contained"
-                                  color="primary"
-                                  fullWidth
-                                  startIcon={<Iconify icon={"solar:alt-arrow-right-bold" as any} />}
-                                  onClick={() => {
-                                    const enrollmentId = course.enrollmentId;
-                                    if (enrollmentId) {
-                                      router.push(paths.dashboard.userLearning.myLearningDetails(enrollmentId));
-                                    }
-                                  }}
-                                  sx={{
-                                    mt: 'auto',
-                                    fontWeight: 600,
-                                  }}
-                                >
-                                  {t('learning-paths.details.goToCourse')}
-                                </Button>
-                              )}
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth
+                                disabled={!course.enrollmentId}
+                                startIcon={<Iconify icon="solar:play-bold" />}
+                                onClick={async () => {
+                                  if (isEkorp) {
+                                    router.push(paths.dashboard.userLearning.myLearningDetails(course.enrollmentId));
+                                    return;
+                                  }
+                                  try {
+                                    const response = await SingleSignOnService(Number(course.enrollmentId));
+                                    const urlRedirect = response?.data?.urlRedirect;
+                                    if (!urlRedirect) throw new Error('urlRedirect not found');
+                                    window.open(urlRedirect, '_blank');
+                                  } catch (error) {
+                                    console.error('SSO error:', error);
+                                    toast.error(t('learning-objects.messages.error.loading'));
+                                  }
+                                }}
+                                sx={{ mt: 'auto', fontWeight: 600 }}
+                              >
+                                {t('learning-paths.details.goToCourse')}
+                              </Button>
                             </CardContent>
                           </Card>
                         </Grid>
@@ -992,8 +1008,13 @@ export function UserLearningProgramDetailsCard({ learningObject, progress = 0 }:
                     variant="contained"
                     size="large"
                     fullWidth
-                    disabled={progress === 100}
                     startIcon={<Iconify icon="solar:notebook-bold-duotone" />}
+                    onClick={() => {
+                      if (learningObject?.courses?.length) {
+                        setCurrentTab("courses");
+                        document.getElementById("program-tabs")?.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
                     sx={{
                       bgcolor: "white",
                       color: theme.palette.primary.main,
@@ -1003,10 +1024,6 @@ export function UserLearningProgramDetailsCard({ learningObject, progress = 0 }:
                         bgcolor: alpha(theme.palette.common.white, 0.9),
                         transform: "translateY(-2px)",
                         boxShadow: `0 8px 24px ${alpha(theme.palette.common.black, 0.2)}`,
-                      },
-                      "&.Mui-disabled": {
-                        bgcolor: alpha(theme.palette.common.white, 0.3),
-                        color: alpha(theme.palette.common.white, 0.5),
                       },
                       transition: "all 0.3s",
                     }}
@@ -1018,7 +1035,6 @@ export function UserLearningProgramDetailsCard({ learningObject, progress = 0 }:
                     variant="contained"
                     size="large"
                     fullWidth
-                    disabled={progress === 100}
                     startIcon={<Iconify icon="solar:notebook-bold-duotone" />}
                     sx={{
                       bgcolor: "white",
@@ -1030,37 +1046,31 @@ export function UserLearningProgramDetailsCard({ learningObject, progress = 0 }:
                         transform: "translateY(-2px)",
                         boxShadow: `0 8px 24px ${alpha(theme.palette.common.black, 0.2)}`,
                       },
-                      "&.Mui-disabled": {
-                        bgcolor: alpha(theme.palette.common.white, 0.3),
-                        color: alpha(theme.palette.common.white, 0.5),
-                      },
                       transition: "all 0.3s",
                     }}
                   >
                     {t('learning-objects.card.homologate')}
                   </Button>
 
-                  {progress === 100 && (
-                    <Button
-                      variant="contained"
-                      size="large"
-                      fullWidth
-                      color="success"
-                      startIcon={<Iconify icon="solar:download-bold" />}
-                      onClick={handleDownloadCertificate}
-                      sx={{
-                        fontWeight: 700,
-                        py: 1.5,
-                        "&:hover": {
-                          transform: "translateY(-2px)",
-                          boxShadow: `0 8px 24px ${alpha(theme.palette.common.black, 0.3)}`,
-                        },
-                        transition: "all 0.3s",
-                      }}
-                    >
-                      {t('learning-objects.card.getCertificate')}
-                    </Button>
-                  )}
+                  <Button
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    color="success"
+                    startIcon={<Iconify icon="solar:download-bold" />}
+                    onClick={handleDownloadCertificate}
+                    sx={{
+                      fontWeight: 700,
+                      py: 1.5,
+                      "&:hover": {
+                        transform: "translateY(-2px)",
+                        boxShadow: `0 8px 24px ${alpha(theme.palette.common.black, 0.3)}`,
+                      },
+                      transition: "all 0.3s",
+                    }}
+                  >
+                    {t('learning-objects.card.getCertificate')}
+                  </Button>
                 </Stack>
 
                 {/* Características rápidas */}

@@ -44,10 +44,7 @@ import { fDate } from 'src/utils/format-time';
 
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
-import {
-  GetOrganizationalUnitPaginationService,
-  normalizeOrganizationalUnitListResponse,
-} from 'src/services/organization/organizationalUnit.service';
+import { GetOrganizationUnitPaginationService } from 'src/services/organization/organizationalUnit.service';
 import {
   ExportCampaignAnalyticsService,
   GetEvaluationListPaginationService,
@@ -364,11 +361,9 @@ function TableToolbar({
   const loadOrgUnits = useCallback(async (search: string) => {
     setOrgUnitLoading(true);
     try {
-      const res = await GetOrganizationalUnitPaginationService({ page: 1, perPage: 20, search: search || undefined });
-      const normalized = normalizeOrganizationalUnitListResponse(res.data);
-      setOrgUnitOptions(
-        (normalized ?? []).map((u: any) => ({ id: String(u.id), name: u.name }))
-      );
+      const res = await GetOrganizationUnitPaginationService({ page: 1, perPage: 20, search: search || undefined });
+      const units = res?.data?.data || [];
+      setOrgUnitOptions(units.map((u: any) => ({ id: String(u.id), name: u.name })));
     } catch {
       setOrgUnitOptions([]);
     } finally {
