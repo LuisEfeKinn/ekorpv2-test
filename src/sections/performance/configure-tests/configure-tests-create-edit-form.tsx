@@ -97,6 +97,13 @@ type QuestionItemInternal = ITestQuestion & {
   _id: string;
 };
 
+const VISIBLE_FOR_PRESETS: Record<string, string[]> = {
+  PERFORMANCE_90: ['MANAGER'],
+  PERFORMANCE_180: ['MANAGER', 'SELF'],
+  PERFORMANCE_270: ['MANAGER', 'SELF', 'PEER'],
+  PERFORMANCE_360: ['MANAGER', 'SELF', 'PEER', 'SUBORDINATE'],
+};
+
 // DnD data type discriminators
 const COMP_DND = '__comp';
 const QUESTION_DND = '__question';
@@ -984,6 +991,10 @@ export function ConfigureTestsCreateEditForm({ currentTest }: Props) {
   const { handleSubmit, watch, setValue, control, formState: { isSubmitting } } = methods;
   const watchType = watch('type');
 
+  // Always-current ref so handleAddQuestion doesn't need watchType in its deps
+  const watchTypeRef = useRef(watchType);
+  watchTypeRef.current = watchType;
+
   // ----------------------------------------------------------------------
   const translateType = useCallback(
     (type: string) => t(`configure-evaluations.types.${type}`),
@@ -1220,7 +1231,7 @@ export function ConfigureTestsCreateEditForm({ currentTest }: Props) {
           weight: 100,
           isOptional: false,
           order: (c.questions?.length || 0) + 1,
-          visibleFor: [],
+          visibleFor: VISIBLE_FOR_PRESETS[watchTypeRef.current] ?? [],
         };
         return { ...c, questions: [...(c.questions || []), newQ] };
       })
@@ -1305,6 +1316,29 @@ export function ConfigureTestsCreateEditForm({ currentTest }: Props) {
   // ----------------------------------------------------------------------
   const onSubmit = handleSubmit(async (data) => {
     const testId = currentTest?.id;
+
+    // Client-side weight validation
+    const competenceTotal = competences.reduce((sum, c) => sum + Number(c.weight ?? 0), 0);
+    if (competences.length > 0 && Math.round(competenceTotal) !== 100) {
+      toast.error(`Las competencias suman ${Math.round(competenceTotal)}%. Deben sumar 100%.`);
+      return;
+    }
+
+    for (const comp of competences) {
+      const qs = comp.questions || [];
+      if (qs.length === 0) continue;
+      const total = qs.reduce((sum, q: any) => {
+        const w = Number(q.weight ?? 0);
+        return sum + (w > 1 ? w / 100 : w);
+      }, 0);
+      const pct = Math.round(total * 100);
+      if (pct !== 100) {
+        const name = comp.competency?.name || comp.competenceName || `Competencia ${comp.competencyId}`;
+        toast.error(`"${name}": las preguntas suman ${pct}%. Deben sumar 100%.`);
+        return;
+      }
+    }
+
     try {
       const normalizeWeight = (w: unknown) => {
         const v = Number(w ?? 0);
@@ -1341,7 +1375,15 @@ export function ConfigureTestsCreateEditForm({ currentTest }: Props) {
       toast.success(testId ? t('configure-tests.messages.success.updated') : t('configure-tests.messages.success.created'));
       router.push(paths.dashboard.performance.configureTests);
     } catch (error: any) {
-      toast.error(testId ? t(error?.message || 'configure-tests.messages.error.update') : t(error?.message || 'configure-tests.messages.error.create'));
+      const backendMessage = error?.message;
+      const backendErrors: string[] = error?.errors || [];
+
+      if (backendMessage) {
+        toast.error(backendMessage);
+        backendErrors.forEach((msg: string) => toast.error(msg));
+      } else {
+        toast.error(testId ? t('configure-tests.messages.error.update') : t('configure-tests.messages.error.create'));
+      }
     }
   });
 
