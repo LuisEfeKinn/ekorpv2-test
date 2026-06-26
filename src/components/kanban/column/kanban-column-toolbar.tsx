@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
@@ -24,12 +25,17 @@ type Props = BoxProps & {
   totalTasks?: number;
   filteredCount?: number;
   columnName: string;
+  isCompletion?: boolean;
   readonlyColumns?: boolean;
   dragHandleRef?: UseColumnDndReturn['dragHandleRef'];
-  onClearColumn?: () => void;
   onDeleteColumn?: () => void;
   onToggleAddTask?: () => void;
-  onUpdateColumn?: (inputName: string) => void;
+  onUpdateColumn?: (inputName: string) => Promise<void> | void;
+  onEditColumn?: () => void;
+  editLabel?: string;
+  deleteLabel?: string;
+  deleteConfirmTitle?: string;
+  deleteConfirmContent?: string;
 };
 
 export function KanbanColumnToolBar({
@@ -38,11 +44,16 @@ export function KanbanColumnToolBar({
   columnName,
   totalTasks,
   filteredCount,
+  isCompletion,
   readonlyColumns,
-  onClearColumn,
   onDeleteColumn,
   onUpdateColumn,
   onToggleAddTask,
+  onEditColumn,
+  editLabel = 'Edit',
+  deleteLabel = 'Delete',
+  deleteConfirmTitle = 'Delete column',
+  deleteConfirmContent = 'Are you sure you want to delete this column?',
   ...other
 }: Props) {
   const uniqueId = useId();
@@ -54,6 +65,14 @@ export function KanbanColumnToolBar({
 
   const [name, setName] = useState(columnName);
   const [isRenaming, setIsRenaming] = useState(false);
+  const committedNameRef = useRef(columnName);
+
+  useEffect(() => {
+    if (!isRenaming) {
+      setName(columnName);
+      committedNameRef.current = columnName;
+    }
+  }, [columnName, isRenaming]);
 
   useEffect(() => {
     if (isRenaming && !menuActions.open && renameRef.current) {
@@ -62,28 +81,22 @@ export function KanbanColumnToolBar({
   }, [isRenaming, menuActions.open]);
 
   const handleChangeName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+    setName(event.target.value.slice(0, 100));
   }, []);
 
   const handleKeyUpUpdateColumn = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter') {
         renameRef.current?.blur();
-        onUpdateColumn?.(name);
       }
     },
-    [name, onUpdateColumn]
+    []
   );
 
-  const handleRename = useCallback(() => {
-    setIsRenaming(true);
+  const handleEdit = useCallback(() => {
+    onEditColumn?.();
     menuActions.onClose();
-  }, [menuActions]);
-
-  const handleClear = useCallback(() => {
-    onClearColumn?.();
-    menuActions.onClose();
-  }, [menuActions, onClearColumn]);
+  }, [menuActions, onEditColumn]);
 
   const handleDelete = useCallback(() => {
     confirmDialog.onTrue();
@@ -97,19 +110,16 @@ export function KanbanColumnToolBar({
       onClose={menuActions.onClose}
     >
       <MenuList>
-        <MenuItem onClick={handleRename}>
-          <Iconify icon="solar:pen-bold" />
-          Rename
-        </MenuItem>
-
-        <MenuItem onClick={handleClear}>
-          <Iconify icon="solar:eraser-bold" />
-          Clear
-        </MenuItem>
+        {onEditColumn && (
+          <MenuItem onClick={handleEdit}>
+            <Iconify icon="solar:pen-bold" />
+            {editLabel}
+          </MenuItem>
+        )}
 
         <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
           <Iconify icon="solar:trash-bin-trash-bold" />
-          Delete
+          {deleteLabel}
         </MenuItem>
       </MenuList>
     </CustomPopover>
@@ -119,15 +129,8 @@ export function KanbanColumnToolBar({
     <ConfirmDialog
       open={confirmDialog.value}
       onClose={confirmDialog.onFalse}
-      title="Delete"
-      content={
-        <>
-          Are you sure you want to delete this column?
-          <Box sx={{ typography: 'caption', color: 'error.main', mt: 2 }}>
-            <strong>NOTE:</strong> All tasks in this column will also be deleted.
-          </Box>
-        </>
-      }
+      title={deleteConfirmTitle}
+      content={deleteConfirmContent}
       action={
         <Button
           variant="contained"
@@ -137,7 +140,7 @@ export function KanbanColumnToolBar({
             confirmDialog.onFalse();
           }}
         >
-          Delete
+          {deleteLabel}
         </Button>
       }
     />
@@ -180,6 +183,7 @@ export function KanbanColumnToolBar({
         {!readonlyColumns && renderDragHandle()}
 
         <Label
+          color={isCompletion ? 'success' : 'default'}
           sx={[
             (theme) => ({
               borderRadius: filteredCount !== undefined ? undefined : '50%',
@@ -190,20 +194,48 @@ export function KanbanColumnToolBar({
           {filteredCount !== undefined ? `${filteredCount}/${totalTasks}` : totalTasks}
         </Label>
 
-        <KanbanInputName
-          inputRef={renameRef}
-          placeholder="Column name"
-          value={name}
-          onChange={handleChangeName}
-          onKeyUp={handleKeyUpUpdateColumn}
-          onFocus={() => !readonlyColumns && setIsRenaming(true)}
-          onBlur={() => setIsRenaming(false)}
-          inputProps={{
-            id: `${columnName}-${uniqueId}-column-input`,
-            readOnly: readonlyColumns,
-          }}
-          sx={{ mx: 1, ...(readonlyColumns && { cursor: 'default', pointerEvents: 'none' }) }}
-        />
+        {isRenaming ? (
+          <KanbanInputName
+            inputRef={renameRef}
+            placeholder="Column name"
+            value={name}
+            onChange={handleChangeName}
+            onKeyUp={handleKeyUpUpdateColumn}
+            onBlur={async () => {
+              const prev = committedNameRef.current;
+              setIsRenaming(false);
+              try {
+                await onUpdateColumn?.(name);
+                committedNameRef.current = name;
+              } catch {
+                setName(prev);
+              }
+            }}
+            inputProps={{ id: `${columnName}-${uniqueId}-column-input`, maxLength: 100 }}
+            typographyVariant="subtitle1"
+            sx={{ mx: 1, flex: '1 1 auto', minWidth: 0 }}
+          />
+        ) : (
+          <Typography
+            variant="subtitle1"
+            onClick={() => !readonlyColumns && setIsRenaming(true)}
+            sx={{
+              mx: 1,
+              flex: '1 1 auto',
+              minWidth: 0,
+              cursor: readonlyColumns ? 'default' : 'text',
+              position: 'relative',
+              zIndex: 1,
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              wordBreak: 'break-word',
+            }}
+          >
+            {name}
+          </Typography>
+        )}
 
         {onToggleAddTask && (
           <IconButton size="small" color="inherit" onClick={onToggleAddTask}>

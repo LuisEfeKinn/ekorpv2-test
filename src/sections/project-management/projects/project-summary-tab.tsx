@@ -1,8 +1,8 @@
 'use client';
 
-import type { IAssignment, IProjectDetail, IActivityListItem } from 'src/types/project-management';
+import type { IBoard, IAssignment, IProjectDetail, IActivityListItem } from 'src/types/project-management';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -10,9 +10,11 @@ import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
+import Select from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
 import Divider from '@mui/material/Divider';
 import { alpha } from '@mui/material/styles';
+import MenuItem from '@mui/material/MenuItem';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
@@ -21,6 +23,7 @@ import { fDate, fToNow } from 'src/utils/format-time';
 import { stringToAvatarColor } from 'src/utils/avatar-color';
 
 import { useTranslate } from 'src/locales';
+import { GetProjectByIdService } from 'src/services/project-management/project.service';
 import { GetActivitiesListService } from 'src/services/project-management/activity.service';
 
 import { Iconify } from 'src/components/iconify';
@@ -66,13 +69,16 @@ const getInitials = (name: string) =>
 type Props = {
   project: IProjectDetail;
   topTeam: IAssignment[];
+  boards: IBoard[];
 };
 
-export function ProjectSummaryTab({ project, topTeam }: Props) {
+export function ProjectSummaryTab({ project, topTeam, boards }: Props) {
   const { t } = useTranslate('project-management');
   const { canViewFinancials } = useProjectView();
 
   const [recentActivities, setRecentActivities] = useState<IActivityListItem[]>([]);
+  const [selectedBoardId, setSelectedBoardId] = useState<string>('all');
+  const [filteredStats, setFilteredStats] = useState(project.stats);
 
   useEffect(() => {
     GetActivitiesListService({
@@ -86,7 +92,18 @@ export function ProjectSummaryTab({ project, topTeam }: Props) {
       .catch(() => {});
   }, [project.id]);
 
-  const stats = project.stats;
+  const handleBoardFilter = useCallback(async (boardId: string) => {
+    setSelectedBoardId(boardId);
+    try {
+      const response = await GetProjectByIdService(
+        project.id,
+        boardId !== 'all' ? Number(boardId) : undefined
+      );
+      setFilteredStats(response.data?.stats ?? null);
+    } catch { /* mantiene stats anteriores */ }
+  }, [project.id]);
+
+  const stats = filteredStats;
 
   const chartLabels = stats?.activitiesByStatus.map((s) => s.name) ?? [];
   const chartSeries = stats?.activitiesByStatus.map((s) => s.count) ?? [];
@@ -241,6 +258,21 @@ export function ProjectSummaryTab({ project, topTeam }: Props) {
           <CardHeader
             title={t('detail.summary.taskProgress')}
             subheader={stats ? t('detail.summary.taskProgressSubheader', { progress: stats.progress, count: stats.activityCount }) : undefined}
+            action={
+              boards.length > 0 && (
+                <Select
+                  size="small"
+                  value={selectedBoardId}
+                  onChange={(e) => handleBoardFilter(e.target.value)}
+                  sx={{ minWidth: 150 }}
+                >
+                  <MenuItem value="all">{t('detail.summary.allBoards')}</MenuItem>
+                  {boards.map((board) => (
+                    <MenuItem key={board.id} value={board.id}>{board.name}</MenuItem>
+                  ))}
+                </Select>
+              )
+            }
           />
           {chartSeries.length > 0 ? (
             <Chart

@@ -15,8 +15,10 @@ export const GetProjectsPaginationService = async (params?: {
   return response;
 };
 
-export const GetProjectByIdService = async (id: string) => {
-  const response = await axios.get(`${endpoints.projectManagement.projects.edit}/${id}`);
+export const GetProjectByIdService = async (id: string, boardId?: number) => {
+  const response = await axios.get(`${endpoints.projectManagement.projects.edit}/${id}`, {
+    params: boardId ? { boardId } : undefined,
+  });
   return response;
 };
 
@@ -29,6 +31,14 @@ export const SaveOrUpdateProjectService = async (
     return response;
   }
   const response = await axios.post(endpoints.projectManagement.projects.save, data);
+  return response;
+};
+
+export const UpdateProjectPermissionsService = async (
+  id: string,
+  data: { restrictActivityVisibility?: boolean; isEditable?: boolean }
+) => {
+  const response = await axios.patch(`${endpoints.projectManagement.projects.update}/${id}`, data);
   return response;
 };
 

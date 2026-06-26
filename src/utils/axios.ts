@@ -528,6 +528,7 @@ export const endpoints = {
       update: '/project-management/workers', // + /:id (PATCH)
       myProjects: '/project-management/workers/my-projects',
       myActivitiesKanban: '/project-management/workers/my-activities/kanban',
+      myBoards: '/project-management/workers/my-boards',
     },
     projects: {
       all: '/project-management/projects',
@@ -537,6 +538,11 @@ export const endpoints = {
       delete: '/project-management/projects', // + /:id
     },
     dashboard: '/project-management/dashboard',
+    boards: {
+      all: '/project-management/boards',
+      columns: '/project-management/boards/columns',
+      columnsReorder: '/project-management/boards/columns/reorder',
+    },
     activities: {
       kanban: '/project-management/activities/kanban',
       all: '/project-management/activities',

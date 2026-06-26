@@ -176,7 +176,7 @@ export function ProjectTeamTab({ projectId }: Props) {
 
       {/* Grid */}
       {!loading && assignments.length === 0 ? (
-        <EmptyContent title={t('projects.empty.title')} sx={{ py: 10 }} />
+        <EmptyContent title={t('detail.team.empty')} sx={{ py: 10 }} />
       ) : (
         <Grid container spacing={3}>
           {assignments.map((assignment) => (

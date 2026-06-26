@@ -122,7 +122,14 @@ export function InventoryHistoryTableRow({ row, sx }: Props) {
                   {t('inventory.history.changesDetail')}
                 </Typography>
                 <Stack spacing={1.5}>
-                  {Object.entries(row.changes).map(([key, change]) => (
+                  {Object.entries(row.changes).map(([key, change]) => {
+                    const displayValue = (v: any): string => {
+                      if (v === null || v === undefined || v === '') return '-';
+                      if (typeof v === 'object' && 'name' in v) return v.name;
+                      if (typeof v === 'boolean') return v ? 'Sí' : 'No';
+                      return String(v);
+                    };
+                    return (
                     <Box key={key}>
                       <Typography variant="caption" color="text.secondary" fontWeight="bold">
                         {change.label}:
@@ -133,7 +140,7 @@ export function InventoryHistoryTableRow({ row, sx }: Props) {
                             {t('inventory.history.oldValue')}:
                           </Typography>
                           <Typography variant="body2">
-                            {change.old || '-'}
+                            {displayValue(change.old)}
                           </Typography>
                         </Box>
                         <Iconify icon={"solar:arrow-right-bold" as any} sx={{ color: 'text.disabled' }} />
@@ -142,12 +149,12 @@ export function InventoryHistoryTableRow({ row, sx }: Props) {
                             {t('inventory.history.newValue')}:
                           </Typography>
                           <Typography variant="body2" fontWeight="medium">
-                            {change.new || '-'}
+                            {displayValue(change.new)}
                           </Typography>
                         </Box>
                       </Stack>
-                    </Box>
-                  ))}
+                    </Box>);
+                  })}
                 </Stack>
               </Box>
             </Collapse>

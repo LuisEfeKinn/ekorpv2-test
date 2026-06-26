@@ -12,9 +12,14 @@ export const GetMyProjectsService = async (params?: {
   return response;
 };
 
-export const GetMyActivitiesKanbanService = async (projectId: string) => {
+export const GetMyActivitiesKanbanService = async (boardId: string) => {
   const response = await axios.get(workers.myActivitiesKanban, {
-    params: { projectId, onlyRoot: true },
+    params: { boardId, onlyRoot: true },
   });
+  return response;
+};
+
+export const GetMyBoardsService = async (projectId: number) => {
+  const response = await axios.get(workers.myBoards, { params: { projectId } });
   return response;
 };

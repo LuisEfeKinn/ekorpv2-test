@@ -11,6 +11,7 @@ export const GetAssignmentsPaginationService = async (params?: {
   projectId?: number;
   statusId?: number;
   employeeId?: number;
+  boardId?: number;
   order?: string;
 }) => {
   const response = await axios.get(assignments.all, { params });

@@ -68,8 +68,8 @@ export function ClientsCreateEditDrawer({ open, currentRow, onClose, onSuccess }
       toast.success(isEdit ? t('clients.messages.updated') : t('clients.messages.created'));
       onSuccess();
       onClose();
-    } catch {
-      toast.error(isEdit ? t('clients.messages.errorUpdate') : t('clients.messages.errorCreate'));
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || (isEdit ? t('clients.messages.errorUpdate') : t('clients.messages.errorCreate')));
     }
   };
 

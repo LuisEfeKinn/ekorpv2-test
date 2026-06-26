@@ -356,6 +356,7 @@
       "filterByFromDate": "From",
       "filterByToDate": "To",
       "noRecords": "No records found",
+      "resultsFound": "results found",
       "dateError": "From date cannot be later than To date"
     },
     "types": {

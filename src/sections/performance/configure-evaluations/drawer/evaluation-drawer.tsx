@@ -695,7 +695,7 @@ export function EvaluationDrawer({ open, onClose, currentEvaluation, onSuccess }
       selectedPositions.length > 0 ||
       selectedEmployees.length > 0;
 
-    if (evaluatorConfigs.length === 0) {
+    if (!isClima && evaluatorConfigs.length === 0) {
       toast.error(t('configure-evaluations.drawer.launch.missingEvaluators'));
       return;
     }

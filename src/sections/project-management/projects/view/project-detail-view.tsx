@@ -1,6 +1,6 @@
 'use client';
 
-import type { IAssignment, IProjectDetail } from 'src/types/project-management';
+import type { IBoard, IAssignment, IProjectDetail } from 'src/types/project-management';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -15,6 +15,7 @@ import { paths } from 'src/routes/paths';
 
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
+import { GetBoardsService } from 'src/services/project-management/board.service';
 import { GetProjectByIdService } from 'src/services/project-management/project.service';
 import { GetAssignmentsPaginationService } from 'src/services/project-management/assignment.service';
 
@@ -23,11 +24,12 @@ import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 import { ProjectTeamTab } from '../project-team-tab';
 import { ProjectTasksTab } from '../project-tasks-tab';
+import { ProjectConfigTab } from '../project-config-tab';
 import { ProjectSummaryTab } from '../project-summary-tab';
 
 // ----------------------------------------------------------------------
 
-type TabValue = 'summary' | 'team' | 'tasks';
+type TabValue = 'summary' | 'team' | 'tasks' | 'config';
 
 type Props = {
   id: string;
@@ -40,8 +42,15 @@ export function ProjectDetailView({ id }: Props) {
 
   const currentTab = (searchParams.get('tab') as TabValue) ?? 'summary';
 
+  const backHref = (() => {
+    const workerId = searchParams.get('workerId');
+    if (workerId) return paths.dashboard.projectManagement.workerDetail(workerId);
+    return paths.dashboard.projectManagement.projects;
+  })();
+
   const [project, setProject] = useState<IProjectDetail | null>(null);
   const [topTeam, setTopTeam] = useState<IAssignment[]>([]);
+  const [boards, setBoards] = useState<IBoard[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchProject = useCallback(async () => {
@@ -62,7 +71,8 @@ export function ProjectDetailView({ id }: Props) {
   useEffect(() => {
     fetchProject();
     fetchTopTeam();
-  }, [fetchProject, fetchTopTeam]);
+    GetBoardsService(Number(id)).then((res) => setBoards(Array.isArray(res.data) ? res.data : [])).catch(() => {});
+  }, [fetchProject, fetchTopTeam, id]);
 
   const handleTabChange = (_: React.SyntheticEvent, value: TabValue) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -97,7 +107,7 @@ export function ProjectDetailView({ id }: Props) {
             <Button
               variant="outlined"
               startIcon={<Iconify icon="carbon:chevron-left" width={18} />}
-              onClick={() => router.push(paths.dashboard.projectManagement.projects)}
+              onClick={() => router.push(backHref)}
             >
               {t('actions.back')}
             </Button>
@@ -113,12 +123,18 @@ export function ProjectDetailView({ id }: Props) {
           <Tab value="summary" label={t('detail.tabs.summary')} />
           <Tab value="team" label={t('detail.tabs.team')} />
           <Tab value="tasks" label={t('detail.tabs.tasks')} />
+          <Tab value="config" label={t('detail.tabs.config')} />
         </Tabs>
       </Box>
 
-      {currentTab === 'summary' && <ProjectSummaryTab project={project} topTeam={topTeam} />}
+      {currentTab === 'summary' && <ProjectSummaryTab project={project} topTeam={topTeam} boards={boards} />}
       {currentTab === 'team' && <ProjectTeamTab projectId={id} />}
       {currentTab === 'tasks' && <ProjectTasksTab projectId={id} />}
+      {currentTab === 'config' && (
+        <Box sx={{ px: { xs: 1, sm: 'var(--layout-dashboard-content-px)' }, pb: 4 }}>
+          <ProjectConfigTab projectId={id} project={project} onProjectUpdated={fetchProject} />
+        </Box>
+      )}
     </DashboardContent>
   );
 }

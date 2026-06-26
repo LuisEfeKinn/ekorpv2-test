@@ -131,7 +131,10 @@
     "dialogs": {
       "delete": {
         "title": "Delete project",
-        "content": "Are you sure you want to delete \"{{name}}\"?"
+        "content": "Are you sure you want to delete \"{{name}}\"?",
+        "warning": "Deleting this project will also delete all its boards and associated activities. This action cannot be undone.",
+        "typeToConfirmPrefix": "To confirm, type the project name",
+        "typeToConfirmSuffix": "in the field below."
       }
     },
     "messages": {
@@ -154,7 +157,32 @@
     "tabs": {
       "summary": "Summary",
       "team": "Team",
-      "tasks": "Tasks"
+      "tasks": "Tasks",
+      "config": "Configuration"
+    },
+    "config": {
+      "boards": {
+        "title": "Boards",
+        "subtitle": "Organize the project work across multiple boards.",
+        "newBoard": "New board",
+        "namePlaceholder": "Board name",
+        "created": "Board created",
+        "deleted": "Board deleted",
+        "empty": "No boards yet. Create one to get started.",
+        "errorLoad": "Error loading boards",
+        "errorCreate": "Error creating board",
+        "errorRename": "Error renaming board",
+        "errorDelete": "Error deleting board"
+      },
+      "permissions": {
+        "title": "Permissions",
+        "subtitle": "Control what project participants can see and do.",
+        "restrictVisibility": "Restricted visibility",
+        "restrictVisibilityDesc": "Each employee only sees their own activities in the kanban.",
+        "isEditable": "Editable project",
+        "isEditableDesc": "When inactive, participants cannot move or edit activities.",
+        "errorSave": "Error saving permission"
+      }
     },
     "summary": {
       "projectDetails": "Project details",
@@ -162,6 +190,7 @@
       "topTeam": "Assigned team",
       "taskProgress": "Overall activity status",
       "taskProgressSubheader": "{{progress}}% complete · {{count}} activities",
+      "allBoards": "All boards",
       "recentActivity": "Recent activity",
       "noActivity": "No recent activity",
       "fields": {
@@ -201,6 +230,7 @@
           "jobPositions": "Roles in the project",
           "priority": "Priority",
           "status": "Status",
+          "boards": "Assigned boards",
           "dedication": "Dedication (%)",
           "startDate": "Start date",
           "endDate": "End date",
@@ -232,7 +262,8 @@
         "errorUpdate": "Error updating assignment",
         "errorUnassign": "Error unassigning employee",
         "errorLoading": "Error loading team"
-      }
+      },
+      "empty": "No assigned employees found"
     },
     "tasks": {
       "empty": "No activities found for this project",
@@ -287,6 +318,23 @@
       "searchPlaceholder": "Search activities...",
       "clearFilters": "Clear filters",
       "taskAddHelper": "Press Enter to create the activity",
+      "column": {
+        "edit": "Edit column",
+        "delete": "Delete",
+        "deleteConfirmTitle": "Delete column",
+        "deleteConfirmContent": "Are you sure you want to delete this column? All activities in this column will be automatically moved to the first column of the board. No activities will be deleted.",
+        "addColumn": "Add column",
+        "noBoards": "No boards for this project. Create one in the Configuration tab.",
+        "noBoardsAssigned": "You have no boards assigned in this project.",
+        "boardSelector": "Board",
+        "columnCreated": "Column created",
+        "columnUpdated": "Column updated",
+        "columnDeleted": "Column deleted",
+        "columnErrorCreate": "Error creating column",
+        "columnErrorUpdate": "Error renaming column",
+        "columnErrorDelete": "Error deleting column",
+        "columnErrorReorder": "Error reordering columns"
+      },
       "statuses": {
         "TODO": "To do",
         "IN_PROGRESS": "In progress",
@@ -400,7 +448,9 @@
     "empty": "This employee has no assignments"
   },
   "actions": {
-    "back": "Back"
+    "back": "Back",
+    "viewProject": "View project",
+    "viewEmployee": "View employee"
   },
   "myProjects": {
     "title": "My Projects",

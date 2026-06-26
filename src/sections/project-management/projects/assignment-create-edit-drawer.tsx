@@ -1,6 +1,6 @@
 'use client';
 
-import type { IWorker, IAssignment, IJobPosition, ICatalogOption } from 'src/types/project-management';
+import type { IBoard, IWorker, IAssignment, IJobPosition, ICatalogOption } from 'src/types/project-management';
 
 import { z } from 'zod';
 import dayjs from 'dayjs';
@@ -17,16 +17,16 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Autocomplete from '@mui/material/Autocomplete';
-import InputAdornment from '@mui/material/InputAdornment';
 
 import { useTranslate } from 'src/locales';
+import { GetBoardsService } from 'src/services/project-management/board.service';
 import { GetJobsKmService } from 'src/services/project-management/jobs-km.service';
 import { GetWorkersPaginationService } from 'src/services/project-management/worker.service';
-import { CreateAssignmentService, UpdateAssignmentService } from 'src/services/project-management/assignment.service';
 import {
   GetAssignmentStatusesService,
   GetAssignmentPrioritiesService,
 } from 'src/services/project-management/filters.service';
+import { CreateAssignmentService, UpdateAssignmentService, GetAssignmentByIdService } from 'src/services/project-management/assignment.service';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
@@ -39,7 +39,7 @@ const AssignmentSchema = z
     jobPositionIds: z.array(z.string()).min(1),
     priorityId: z.string().min(1),
     statusId: z.string().min(1),
-    dedicacion: z.number().min(1).max(100),
+    boardIds: z.array(z.string()).optional(),
     startDate: z.string().min(1),
     endDate: z.string().min(1),
     observations: z.string().nullable().optional(),
@@ -67,9 +67,11 @@ export function AssignmentCreateEditDrawer({ open, projectId, currentRow, onClos
   const [jobOptions, setJobOptions] = useState<IJobPosition[]>([]);
   const [priorityOptions, setPriorityOptions] = useState<ICatalogOption[]>([]);
   const [statusOptions, setStatusOptions] = useState<ICatalogOption[]>([]);
+  const [boardOptions, setBoardOptions] = useState<IBoard[]>([]);
 
   const [pinnedWorker, setPinnedWorker] = useState<IWorker | null>(null);
   const [pinnedJobs, setPinnedJobs] = useState<IJobPosition[]>([]);
+  const [selectedBoards, setSelectedBoards] = useState<IBoard[]>([]);
 
   const workerSearchTimer = useRef<ReturnType<typeof setTimeout>>();
   const jobSearchTimer = useRef<ReturnType<typeof setTimeout>>();
@@ -88,7 +90,7 @@ export function AssignmentCreateEditDrawer({ open, projectId, currentRow, onClos
       jobPositionIds: [],
       priorityId: '',
       statusId: '',
-      dedicacion: 100,
+      boardIds: [],
       startDate: '',
       endDate: '',
       observations: '',
@@ -96,13 +98,15 @@ export function AssignmentCreateEditDrawer({ open, projectId, currentRow, onClos
   });
 
   const loadCatalogs = useCallback(async () => {
-    const [priorities, statuses] = await Promise.all([
+    const [priorities, statuses, boards] = await Promise.all([
       GetAssignmentPrioritiesService(),
       GetAssignmentStatusesService(),
+      GetBoardsService(Number(projectId)),
     ]);
     setPriorityOptions(priorities.data ?? []);
     setStatusOptions(statuses.data ?? []);
-  }, []);
+    setBoardOptions(boards.data?.data ?? boards.data ?? []);
+  }, [projectId]);
 
   const loadWorkers = useCallback(async (search?: string) => {
     const response = await GetWorkersPaginationService({ page: 1, perPage: 30, search });
@@ -115,37 +119,60 @@ export function AssignmentCreateEditDrawer({ open, projectId, currentRow, onClos
   }, []);
 
   useEffect(() => {
-    if (open) {
-      loadCatalogs();
-      loadWorkers();
-      loadJobs();
-      if (currentRow) {
-        setPinnedWorker({ id: currentRow.employeeId, fullName: currentRow.employeeFullName } as IWorker);
-        setPinnedJobs(currentRow.roles.map((r) => ({ id: Number(r.id), name: r.name, code: '' })));
+    if (!open) return;
+
+    loadCatalogs();
+    loadWorkers();
+    loadJobs();
+
+    if (currentRow) {
+      const loadEdit = async () => {
+        const detail = await GetAssignmentByIdService(currentRow.id).then((r) => r.data).catch(() => null);
+        if (!detail) return;
+
+        const boardIds: string[] = (detail.boards ?? []).map((b: any) => String(b.id));
+        const preselectedBoards: IBoard[] = (detail.boards ?? []).map((b: any) => ({
+          id: String(b.id),
+          name: b.name,
+          projectId: detail.project?.id ?? '',
+          createdAt: b.createdAt ?? '',
+          updatedAt: b.updatedAt ?? '',
+        }));
+        const jobs: IJobPosition[] = (detail.jobPositions ?? []).map((j: any) => ({
+          id: Number(j.id),
+          name: j.name,
+          code: j.code ?? '',
+        }));
+
+        setPinnedWorker({ id: String(detail.employee?.id), fullName: detail.employee?.fullName } as IWorker);
+        setPinnedJobs(jobs);
+        setSelectedBoards(preselectedBoards);
         reset({
-          employeeId: currentRow.employeeId,
-          jobPositionIds: currentRow.roles.map((r) => r.id),
-          priorityId: currentRow.priorityId,
-          statusId: currentRow.statusId,
-          dedicacion: currentRow.dedicacion,
-          startDate: currentRow.startDate,
-          endDate: currentRow.endDate,
-          observations: currentRow.observations ?? '',
+          employeeId: String(detail.employee?.id ?? ''),
+          jobPositionIds: jobs.map((j) => String(j.id)),
+          priorityId: String(detail.priority?.id ?? ''),
+          statusId: String(detail.status?.id ?? ''),
+          boardIds,
+          startDate: detail.startDate ?? '',
+          endDate: detail.endDate ?? '',
+          observations: detail.observations ?? '',
         });
-      } else {
+      };
+      loadEdit();
+    } else {
         setPinnedWorker(null);
         setPinnedJobs([]);
+        setSelectedBoards([]);
         reset({
           employeeId: '',
           jobPositionIds: [],
           priorityId: '',
           statusId: '',
-          dedicacion: 100,
+          boardIds: [],
           startDate: '',
           endDate: '',
           observations: '',
         });
-      }
     }
   }, [open, currentRow, reset, loadCatalogs, loadWorkers, loadJobs]);
 
@@ -183,7 +210,7 @@ export function AssignmentCreateEditDrawer({ open, projectId, currentRow, onClos
         jobPositionIds: data.jobPositionIds.map(Number),
         priorityId: Number(data.priorityId),
         statusId: Number(data.statusId),
-        dedicacion: data.dedicacion,
+        boardIds: data.boardIds?.map(Number) ?? [],
         startDate: data.startDate,
         endDate: data.endDate,
         observations: data.observations || null,
@@ -348,28 +375,25 @@ export function AssignmentCreateEditDrawer({ open, projectId, currentRow, onClos
           />
         </Stack>
 
-        {/* Dedication */}
-        <Controller
-          name="dedicacion"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              fullWidth
-              type="number"
-              label={t('detail.team.drawer.fields.dedication')}
-              inputProps={{ min: 1, max: 100 }}
-              InputProps={{
-                endAdornment: <InputAdornment position="end">%</InputAdornment>,
-              }}
-              onChange={(e) => {
-                const val = Number(e.target.value);
-                field.onChange(val > 100 ? 100 : val);
-              }}
-              onFocus={(e) => e.target.select()}
-              error={!!errors.dedicacion}
-              helperText={errors.dedicacion ? t('detail.team.drawer.validation.dedicationInvalid') : undefined}
-            />
+        {/* Boards */}
+        <Autocomplete
+          multiple
+          options={boardOptions}
+          getOptionLabel={(o) => o.name}
+          getOptionKey={(o) => o.id}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          value={selectedBoards}
+          onChange={(_e, vals) => {
+            setSelectedBoards(vals);
+            setValue('boardIds', vals.map((v) => v.id));
+          }}
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => (
+              <Chip {...getTagProps({ index })} key={option.id} label={option.name} size="small" />
+            ))
+          }
+          renderInput={(params) => (
+            <TextField {...params} label={t('detail.team.drawer.fields.boards')} />
           )}
         />
 

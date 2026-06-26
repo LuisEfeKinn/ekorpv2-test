@@ -45,6 +45,8 @@ export type IKanbanTask = {
 export type IKanbanColumn = {
   id: string;
   name: string;
+  isCompletion?: boolean;
+  color?: string;
 };
 
 export type IKanban = {

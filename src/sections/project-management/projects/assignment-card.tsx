@@ -2,6 +2,7 @@
 
 import type { IAssignment } from 'src/types/project-management';
 
+import { useRouter } from 'next/navigation';
 import { useBoolean, usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
@@ -15,6 +16,8 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+
+import { paths } from 'src/routes/paths';
 
 import { fDate } from 'src/utils/format-time';
 import { stringToAvatarColor } from 'src/utils/avatar-color';
@@ -61,6 +64,7 @@ type Props = {
 
 export function AssignmentCard({ assignment, onEdit, onUnassign, readOnly = false }: Props) {
   const { t } = useTranslate('project-management');
+  const router = useRouter();
   const menuActions = usePopover();
   const confirmDialog = useBoolean();
 
@@ -151,58 +155,56 @@ export function AssignmentCard({ assignment, onEdit, onUnassign, readOnly = fals
 
         <Divider />
 
-        {!readOnly && (
-          <Box sx={{ px: 2.5, py: 1.5 }}>
-            <Button
-              fullWidth
-              size="small"
-              variant="soft"
-              color="error"
-              onClick={confirmDialog.onTrue}
-              startIcon={<Iconify icon="solar:user-minus-bold-duotone" width={16} />}
-            >
-              {t('detail.team.card.unassign')}
-            </Button>
-          </Box>
-        )}
+        <Box sx={{ px: 2.5, py: 1.5 }}>
+          <Button
+            fullWidth
+            size="small"
+            variant="soft"
+            color="primary"
+            onClick={() => router.push(`${paths.dashboard.projectManagement.workerDetail(assignment.employeeId)}?projectId=${assignment.projectId}`)}
+            endIcon={<Iconify icon="solar:forward-bold" width={16} />}
+          >
+            {t('actions.viewEmployee')}
+          </Button>
+        </Box>
       </Card>
 
-      {!readOnly && (
-        <>
-          <CustomPopover
-            open={menuActions.open}
-            anchorEl={menuActions.anchorEl}
-            onClose={menuActions.onClose}
-            slotProps={{ arrow: { placement: 'right-top' } }}
-          >
-            <MenuList>
-              <MenuItem onClick={() => { onEdit(); menuActions.onClose(); }}>
-                <Iconify icon="solar:pen-bold" />
-                {t('detail.team.card.edit')}
-              </MenuItem>
-              <MenuItem
-                onClick={() => { confirmDialog.onTrue(); menuActions.onClose(); }}
-                sx={{ color: 'error.main' }}
-              >
-                <Iconify icon="solar:user-minus-bold-duotone" />
-                {t('detail.team.card.unassign')}
-              </MenuItem>
-            </MenuList>
+      <>
+        <CustomPopover
+          open={menuActions.open}
+          anchorEl={menuActions.anchorEl}
+          onClose={menuActions.onClose}
+          slotProps={{ arrow: { placement: 'right-top' } }}
+        >
+          <MenuList>
+            <MenuItem onClick={() => { onEdit(); menuActions.onClose(); }}>
+              <Iconify icon="solar:pen-bold" />
+              {t('detail.team.card.edit')}
+            </MenuItem>
+            <MenuItem
+              onClick={() => { confirmDialog.onTrue(); menuActions.onClose(); }}
+              sx={{ color: 'error.main' }}
+            >
+              <Iconify icon="solar:user-minus-bold-duotone" />
+              {t('detail.team.card.unassign')}
+            </MenuItem>
+          </MenuList>
           </CustomPopover>
 
-          <ConfirmDialog
-            open={confirmDialog.value}
-            onClose={confirmDialog.onFalse}
-            title={t('detail.team.dialogs.unassign.title')}
-            content={t('detail.team.dialogs.unassign.content', { name: assignment.employeeFullName })}
-            action={
-              <Button variant="contained" color="error" onClick={onUnassign}>
-                {t('detail.team.card.unassign')}
-              </Button>
-            }
-          />
+          {!readOnly && (
+            <ConfirmDialog
+              open={confirmDialog.value}
+              onClose={confirmDialog.onFalse}
+              title={t('detail.team.dialogs.unassign.title')}
+              content={t('detail.team.dialogs.unassign.content', { name: assignment.employeeFullName })}
+              action={
+                <Button variant="contained" color="error" onClick={onUnassign}>
+                  {t('detail.team.card.unassign')}
+                </Button>
+              }
+            />
+          )}
         </>
-      )}
     </>
   );
 }

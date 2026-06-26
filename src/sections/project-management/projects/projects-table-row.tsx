@@ -1,16 +1,20 @@
 import type { IProject } from 'src/types/project-management';
 
+import { useState } from 'react';
 import { useBoolean, usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
+import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
+import TextField from '@mui/material/TextField';
 import TableCell from '@mui/material/TableCell';
+import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 import { fDate } from 'src/utils/format-time';
@@ -55,6 +59,12 @@ export function ProjectsTableRow({ row, onEdit, onDelete, onViewDetail }: Props)
   const { t } = useTranslate('project-management');
   const menuActions = usePopover();
   const confirmDialog = useBoolean();
+  const [deleteInput, setDeleteInput] = useState('');
+
+  const handleCloseConfirm = () => {
+    confirmDialog.onFalse();
+    setDeleteInput('');
+  };
 
   return (
     <>
@@ -151,11 +161,32 @@ export function ProjectsTableRow({ row, onEdit, onDelete, onViewDetail }: Props)
 
       <ConfirmDialog
         open={confirmDialog.value}
-        onClose={confirmDialog.onFalse}
+        onClose={handleCloseConfirm}
         title={t('projects.dialogs.delete.title')}
-        content={t('projects.dialogs.delete.content', { name: row.name })}
+        content={
+          <Stack spacing={2}>
+            <Alert severity="error">{t('projects.dialogs.delete.warning')}</Alert>
+            <Typography variant="body2">
+              {t('projects.dialogs.delete.typeToConfirmPrefix')}{' '}
+              <strong>&quot;{row.name}&quot;</strong>{' '}
+              {t('projects.dialogs.delete.typeToConfirmSuffix')}
+            </Typography>
+            <TextField
+              fullWidth
+              size="small"
+              value={deleteInput}
+              onChange={(e) => setDeleteInput(e.target.value)}
+              placeholder={row.name}
+            />
+          </Stack>
+        }
         action={
-          <Button variant="contained" color="error" onClick={onDelete}>
+          <Button
+            variant="contained"
+            color="error"
+            disabled={deleteInput !== row.name}
+            onClick={onDelete}
+          >
             {t('projects.actions.delete')}
           </Button>
         }

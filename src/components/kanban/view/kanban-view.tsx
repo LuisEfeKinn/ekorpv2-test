@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -17,6 +18,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useGetBoard } from 'src/actions/kanban';
 import { DashboardContent } from 'src/layouts/dashboard';
 
+import { Iconify } from 'src/components/iconify';
 import { EmptyContent } from 'src/components/empty-content';
 
 import { kanbanClasses } from '../classes';
@@ -51,12 +53,18 @@ type KanbanBoardProps = {
   boardLoading?: boolean;
   readonlyColumns?: boolean;
   disableTaskDnd?: boolean;
+  disableColumnAdd?: boolean;
   taskTotals?: Record<string, number>;
   dndCallbacks?: UseBoardDndCallbacks;
   onAddTask?: (columnId: string, taskData: IKanbanTask) => void;
   onDeleteTask?: (taskId: string) => void;
   onUpdateTask?: (task: IKanbanTask) => void;
   onTaskClick?: (task: IKanbanTask) => void;
+  onUpdateColumn?: (id: string, name: string) => void;
+  onDeleteColumn?: (id: string) => void;
+  onEditColumn?: (id: string) => void;
+  onAddColumn?: () => void;
+  addColumnLabel?: string;
   taskAddPlaceholder?: string;
   taskAddHelperText?: string;
 };
@@ -66,12 +74,18 @@ export function KanbanBoard({
   boardLoading,
   readonlyColumns,
   disableTaskDnd,
+  disableColumnAdd,
   taskTotals,
   dndCallbacks,
   onAddTask,
   onDeleteTask,
   onUpdateTask,
   onTaskClick,
+  onUpdateColumn,
+  onDeleteColumn,
+  onEditColumn,
+  onAddColumn,
+  addColumnLabel = 'Add column',
   taskAddPlaceholder,
   taskAddHelperText,
 }: KanbanBoardProps) {
@@ -100,12 +114,39 @@ export function KanbanBoard({
             onDeleteTask={onDeleteTask}
             onUpdateTask={onUpdateTask}
             onTaskClick={onTaskClick}
+            onUpdateColumnExt={onUpdateColumn}
+            onDeleteColumnExt={onDeleteColumn}
+            onEditColumnExt={onEditColumn}
             taskAddPlaceholder={taskAddPlaceholder}
             taskAddHelperText={taskAddHelperText}
           />
         ))}
       </AnimatePresence>
-      {!readonlyColumns && <KanbanColumnAdd />}
+
+      {!readonlyColumns && (
+        onAddColumn ? (
+          <>
+            <Box
+              component="li"
+              sx={{ flex: '0 0 auto', width: 'var(--kanban-column-width)', alignSelf: 'flex-start' }}
+            >
+              <Button
+                fullWidth
+                size="large"
+                color="inherit"
+                variant="outlined"
+                startIcon={<Iconify icon="mingcute:add-line" />}
+                onClick={onAddColumn}
+              >
+                {addColumnLabel}
+              </Button>
+            </Box>
+            <Box component="li" sx={{ width: '1px', flexShrink: 0 }} />
+          </>
+        ) : (
+          !disableColumnAdd && <KanbanColumnAdd />
+        )
+      )}
     </FlexibleColumnContainer>
   );
 

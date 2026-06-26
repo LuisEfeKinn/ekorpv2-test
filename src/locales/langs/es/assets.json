@@ -356,6 +356,7 @@
       "filterByFromDate": "Desde",
       "filterByToDate": "Hasta",
       "noRecords": "No se encontraron registros",
+      "resultsFound": "resultados encontrados",
       "dateError": "La fecha 'Desde' no puede ser posterior a la fecha 'Hasta'"
     },
     "types": {

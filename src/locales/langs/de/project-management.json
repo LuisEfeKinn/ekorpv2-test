@@ -131,7 +131,10 @@
     "dialogs": {
       "delete": {
         "title": "Projekt löschen",
-        "content": "Möchtest du \"{{name}}\" wirklich löschen?"
+        "content": "Möchtest du \"{{name}}\" wirklich löschen?",
+        "warning": "Durch das Löschen dieses Projekts werden auch alle zugehörigen Boards und Aktivitäten gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+        "typeToConfirmPrefix": "Gib zur Bestätigung den Projektnamen",
+        "typeToConfirmSuffix": "in das Feld unten ein."
       }
     },
     "messages": {
@@ -154,7 +157,32 @@
     "tabs": {
       "summary": "Übersicht",
       "team": "Team",
-      "tasks": "Aufgaben"
+      "tasks": "Aufgaben",
+      "config": "Konfiguration"
+    },
+    "config": {
+      "boards": {
+        "title": "Boards",
+        "subtitle": "Organisiere die Projektarbeit in mehreren Boards.",
+        "newBoard": "Neues Board",
+        "namePlaceholder": "Board-Name",
+        "created": "Board erstellt",
+        "deleted": "Board gelöscht",
+        "empty": "Noch keine Boards. Erstelle eines, um zu starten.",
+        "errorLoad": "Fehler beim Laden der Boards",
+        "errorCreate": "Fehler beim Erstellen des Boards",
+        "errorRename": "Fehler beim Umbenennen des Boards",
+        "errorDelete": "Fehler beim Löschen des Boards"
+      },
+      "permissions": {
+        "title": "Berechtigungen",
+        "subtitle": "Steuere, was Projektmitglieder sehen und tun können.",
+        "restrictVisibility": "Eingeschränkte Sichtbarkeit",
+        "restrictVisibilityDesc": "Jeder Mitarbeiter sieht nur seine eigenen Aktivitäten im Kanban.",
+        "isEditable": "Bearbeitbares Projekt",
+        "isEditableDesc": "Wenn inaktiv, können Teilnehmer keine Aktivitäten verschieben oder bearbeiten.",
+        "errorSave": "Fehler beim Speichern der Berechtigung"
+      }
     },
     "summary": {
       "projectDetails": "Projektdetails",
@@ -162,6 +190,7 @@
       "topTeam": "Zugewiesenes Team",
       "taskProgress": "Allgemeiner Aktivitätsstatus",
       "taskProgressSubheader": "{{progress}}% abgeschlossen · {{count}} Aktivitäten",
+      "allBoards": "Alle Boards",
       "recentActivity": "Letzte Aktivität",
       "noActivity": "Keine aktuellen Aktivitäten",
       "fields": {
@@ -201,6 +230,7 @@
           "jobPositions": "Rollen im Projekt",
           "priority": "Priorität",
           "status": "Status",
+          "boards": "Zugewiesene Boards",
           "dedication": "Widmung (%)",
           "startDate": "Startdatum",
           "endDate": "Enddatum",
@@ -232,7 +262,8 @@
         "errorUpdate": "Fehler beim Aktualisieren der Zuweisung",
         "errorUnassign": "Fehler beim Entfernen des Mitarbeiters",
         "errorLoading": "Fehler beim Laden des Teams"
-      }
+      },
+      "empty": "Keine zugewiesenen Mitarbeiter gefunden"
     },
     "tasks": {
       "empty": "Keine Aktivitäten für dieses Projekt gefunden",
@@ -287,6 +318,23 @@
       "searchPlaceholder": "Aktivitäten suchen...",
       "clearFilters": "Filter löschen",
       "taskAddHelper": "Enter drücken, um die Aktivität zu erstellen",
+      "column": {
+        "edit": "Spalte bearbeiten",
+        "delete": "Löschen",
+        "deleteConfirmTitle": "Spalte löschen",
+        "deleteConfirmContent": "Möchtest du diese Spalte wirklich löschen? Alle Aktivitäten in dieser Spalte werden automatisch in die erste Spalte des Boards verschoben. Es werden keine Aktivitäten gelöscht.",
+        "addColumn": "Spalte hinzufügen",
+        "noBoards": "Keine Boards für dieses Projekt. Erstelle eines im Tab Konfiguration.",
+        "noBoardsAssigned": "Du hast keine zugewiesenen Boards in diesem Projekt.",
+        "boardSelector": "Board",
+        "columnCreated": "Spalte erstellt",
+        "columnUpdated": "Spalte aktualisiert",
+        "columnDeleted": "Spalte gelöscht",
+        "columnErrorCreate": "Fehler beim Erstellen der Spalte",
+        "columnErrorUpdate": "Fehler beim Umbenennen der Spalte",
+        "columnErrorDelete": "Fehler beim Löschen der Spalte",
+        "columnErrorReorder": "Fehler beim Neuordnen der Spalten"
+      },
       "statuses": {
         "TODO": "Zu erledigen",
         "IN_PROGRESS": "In Bearbeitung",
@@ -400,7 +448,9 @@
     "empty": "Dieser Mitarbeitende hat keine Zuweisungen"
   },
   "actions": {
-    "back": "Zurück"
+    "back": "Zurück",
+    "viewProject": "Projekt anzeigen",
+    "viewEmployee": "Mitarbeiter anzeigen"
   },
   "myProjects": {
     "title": "Meine Projekte",

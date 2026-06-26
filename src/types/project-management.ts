@@ -38,6 +38,8 @@ export type IProject = {
   startDate: string;
   endDate: string;
   observations: string | null;
+  restrictActivityVisibility: boolean;
+  isEditable: boolean;
   createdAt: string;
 };
 
@@ -60,6 +62,8 @@ export type IProjectCreateUpdatePayload = {
   startDate: string;
   endDate: string;
   observations?: string | null;
+  restrictActivityVisibility?: boolean;
+  isEditable?: boolean;
 };
 
 export type IWorker = {
@@ -167,6 +171,8 @@ export type IProjectDetail = {
   startDate: string;
   endDate: string;
   observations: string | null;
+  restrictActivityVisibility: boolean;
+  isEditable: boolean;
   createdAt: string;
   updatedAt: string;
   stats?: IProjectStats;
@@ -201,6 +207,7 @@ export type IAssignment = {
   endDate: string;
   observations: string | null;
   roles: ICatalogOption[];
+  boardIds?: string[];
   pendingActivitiesCount: number;
   createdAt: string;
 };
@@ -217,9 +224,9 @@ export type IAssignmentCreatePayload = {
   jobPositionIds: number[];
   priorityId: number;
   statusId: number;
-  dedicacion: number;
   startDate: string;
   endDate: string;
+  boardIds?: number[];
   observations?: string | null;
 };
 
@@ -267,6 +274,41 @@ export type IJobPosition = {
   code: string;
 };
 
+// Boards
+export type IBoard = {
+  id: string;
+  projectId: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type IBoardColumn = {
+  id: string;
+  boardId: string;
+  name: string;
+  color: string;
+  order: number;
+  isCompletion: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type IBoardColumnCreatePayload = {
+  boardId: number;
+  name: string;
+  color: string;
+  order: number;
+  isCompletion: boolean;
+};
+
+export type IBoardColumnUpdatePayload = {
+  name?: string;
+  color?: string;
+  order?: number;
+  isCompletion?: boolean;
+};
+
 // Activities (Kanban)
 export type IActivityKanbanActivity = {
   id: number;
@@ -283,7 +325,7 @@ export type IActivityKanbanActivity = {
 
 export type IActivityKanbanColumn = {
   statusId: number;
-  statusKey: 'TODO' | 'IN_PROGRESS' | 'IN_TESTING' | 'DONE';
+  statusKey: string | null;
   statusName: string;
   activities: IActivityKanbanActivity[];
 };

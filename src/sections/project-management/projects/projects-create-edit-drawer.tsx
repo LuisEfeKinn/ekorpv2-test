@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
+import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -20,6 +21,10 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useTranslate } from 'src/locales';
 import { GetClientsPaginationService } from 'src/services/project-management/client.service';
 import { SaveOrUpdateProjectService } from 'src/services/project-management/project.service';
+import {
+  CreateBoardService,
+  CreateBoardColumnService,
+} from 'src/services/project-management/board.service';
 import {
   GetProjectSizesService,
   GetProjectStatusesService,
@@ -43,6 +48,8 @@ const ProjectSchema = z
     complexityId: z.string().min(1),
     reintegroLevelId: z.string().min(1),
     generatesIncome: z.boolean(),
+    restrictActivityVisibility: z.boolean(),
+    isEditable: z.boolean(),
     startDate: z.string().min(1),
     endDate: z.string().min(1),
     observations: z.string().nullable().optional(),
@@ -90,6 +97,8 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
       complexityId: '',
       reintegroLevelId: '',
       generatesIncome: false,
+      restrictActivityVisibility: false,
+      isEditable: true,
       startDate: '',
       endDate: '',
       observations: '',
@@ -112,7 +121,7 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
   }, []);
 
   const loadClients = useCallback(async (search?: string) => {
-    const response = await GetClientsPaginationService({ page: 1, perPage: 15, search });
+    const response = await GetClientsPaginationService({ page: 1, perPage: 15, isActive: true, search });
     setClientOptions(response.data?.data ?? response.data ?? []);
   }, []);
 
@@ -131,6 +140,8 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
               complexityId: currentRow.complexityId,
               reintegroLevelId: currentRow.reintegroLevelId,
               generatesIncome: currentRow.generatesIncome,
+              restrictActivityVisibility: currentRow.restrictActivityVisibility ?? false,
+              isEditable: currentRow.isEditable ?? true,
               startDate: currentRow.startDate,
               endDate: currentRow.endDate,
               observations: currentRow.observations ?? '',
@@ -144,6 +155,8 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
               complexityId: '',
               reintegroLevelId: '',
               generatesIncome: false,
+              restrictActivityVisibility: false,
+              isEditable: true,
               startDate: '',
               endDate: '',
               observations: '',
@@ -160,7 +173,7 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
 
   const onSubmit = async (data: ProjectFormData) => {
     try {
-      await SaveOrUpdateProjectService(
+      const response = await SaveOrUpdateProjectService(
         {
           name: data.name,
           clientId: Number(data.clientId),
@@ -170,12 +183,35 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
           complexityId: Number(data.complexityId),
           reintegroLevelId: Number(data.reintegroLevelId),
           generatesIncome: data.generatesIncome,
+          restrictActivityVisibility: data.restrictActivityVisibility,
+          isEditable: data.isEditable,
           startDate: data.startDate,
           endDate: data.endDate,
           observations: data.observations || null,
         },
         currentRow?.id
       );
+
+      // Auto-create default board + columns on new project creation
+      if (!isEdit) {
+        const projectId = response.data?.data?.rowId ?? response.data?.rowId ?? response.data?.id;
+        if (projectId) {
+          try {
+            const boardRes = await CreateBoardService({ projectId, name: 'Principal' });
+            const boardId = boardRes.data?.data?.rowId ?? boardRes.data?.rowId ?? boardRes.data?.id;
+            if (boardId) {
+              await Promise.all([
+                CreateBoardColumnService({ boardId, name: 'Por hacer', color: '#3B82F6', order: 0, isCompletion: false }),
+                CreateBoardColumnService({ boardId, name: 'En progreso', color: '#F59E0B', order: 1, isCompletion: false }),
+                CreateBoardColumnService({ boardId, name: 'Finalizado', color: '#22C55E', order: 2, isCompletion: true }),
+              ]);
+            }
+          } catch {
+            // Silent — board creation is non-blocking for project creation
+          }
+        }
+      }
+
       toast.success(isEdit ? t('projects.messages.updated') : t('projects.messages.created'));
       onSuccess();
       onClose();
@@ -359,6 +395,64 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
               multiline
               rows={3}
               label={t('projects.drawer.fields.observations')}
+            />
+          )}
+        />
+
+        <Divider />
+
+        <Typography variant="subtitle2" color="text.secondary">
+          {t('detail.config.permissions.title')}
+        </Typography>
+
+        <Controller
+          name="restrictActivityVisibility"
+          control={control}
+          render={({ field }) => (
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e.target.checked)}
+                />
+              }
+              label={
+                <Box>
+                  <Typography variant="body2" fontWeight={600}>
+                    {t('detail.config.permissions.restrictVisibility')}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {t('detail.config.permissions.restrictVisibilityDesc')}
+                  </Typography>
+                </Box>
+              }
+              sx={{ alignItems: 'flex-start', mx: 0 }}
+            />
+          )}
+        />
+
+        <Controller
+          name="isEditable"
+          control={control}
+          render={({ field }) => (
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e.target.checked)}
+                />
+              }
+              label={
+                <Box>
+                  <Typography variant="body2" fontWeight={600}>
+                    {t('detail.config.permissions.isEditable')}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {t('detail.config.permissions.isEditableDesc')}
+                  </Typography>
+                </Box>
+              }
+              sx={{ alignItems: 'flex-start', mx: 0 }}
             />
           )}
         />

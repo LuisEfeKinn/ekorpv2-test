@@ -90,9 +90,9 @@ export function AssetRecordTableFiltersResult({
   return (
     <Stack spacing={1.5} sx={{ ...sx }}>
       <Box sx={{ typography: 'body2' }}>
-        <strong>{results}</strong>
-        <Box component="span" sx={{ color: 'text.secondary', ml: 0.25 }}>
-          {t('record.table.noRecords')}
+        <strong>{results}</strong>{' '}
+        <Box component="span" sx={{ color: 'text.secondary' }}>
+          {t('record.table.resultsFound')}
         </Box>
       </Box>
 

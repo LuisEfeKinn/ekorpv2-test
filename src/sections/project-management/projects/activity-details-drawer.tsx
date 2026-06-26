@@ -1,7 +1,7 @@
 'use client';
 
 import type { IKanbanTask } from 'src/types/kanban';
-import type { IAssignment, IActivityStatusOption } from 'src/types/project-management';
+import type { IAssignment, IBoardColumn } from 'src/types/project-management';
 
 import { z } from 'zod';
 import dayjs from 'dayjs';
@@ -10,7 +10,7 @@ import { varAlpha } from 'minimal-shared/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
 import { useBoolean, usePopover } from 'minimal-shared/hooks';
-import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -38,7 +38,7 @@ import { fDateRangeShortLabel } from 'src/utils/format-time';
 import { stringToAvatarColor } from 'src/utils/avatar-color';
 
 import { useTranslate } from 'src/locales';
-import { GetActivityStatusesService } from 'src/services/project-management/filters.service';
+import { GetBoardColumnsService } from 'src/services/project-management/board.service';
 import { GetAssignmentsPaginationService } from 'src/services/project-management/assignment.service';
 import {
   UpdateActivityService,
@@ -102,6 +102,7 @@ type MemberDialogProps = {
   open: boolean;
   onClose: () => void;
   projectId: string;
+  boardId?: string | null;
   excludeIds?: string[];
   pinnedMembers: MemberOption[];
   multiple?: boolean;
@@ -115,6 +116,7 @@ function MemberSelectionDialog({
   open,
   onClose,
   projectId,
+  boardId,
   excludeIds = [],
   pinnedMembers,
   t,
@@ -137,6 +139,7 @@ function MemberSelectionDialog({
       try {
         const res = await GetAssignmentsPaginationService({
           projectId: Number(projectId),
+          boardId: boardId ? Number(boardId) : undefined,
           page: 1,
           perPage: 20,
           search: query || undefined,
@@ -147,7 +150,7 @@ function MemberSelectionDialog({
         setLoading(false);
       }
     },
-    [projectId]
+    [projectId, boardId]
   );
 
   useEffect(() => {
@@ -289,13 +292,14 @@ type Props = {
   open: boolean;
   task: IKanbanTask | null;
   projectId: string;
+  boardId?: string | null;
   onClose: () => void;
   onSuccess: () => void;
   onDelete?: (taskId: string) => void;
   readOnly?: boolean;
 };
 
-export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSuccess, onDelete, readOnly = false }: Props) {
+export function ActivityDetailsDrawer({ open, task, projectId, boardId, onClose, onSuccess, onDelete, readOnly = false }: Props) {
   const { t } = useTranslate('project-management');
 
   const assigneeDialog = useBoolean();
@@ -304,7 +308,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
   const datePickerOpen = useBoolean();
   const statusPopover = usePopover();
 
-  const [statuses, setStatuses] = useState<IActivityStatusOption[]>([]);
+  const [statuses, setStatuses] = useState<IBoardColumn[]>([]);
   const [pinnedAssignee, setPinnedAssignee] = useState<MemberOption | null>(null);
   const [pinnedSupervisors, setPinnedSupervisors] = useState<MemberOption[]>([]);
   const [subtasks, setSubtasks] = useState<{ id: string; name: string; statusName: string }[]>([]);
@@ -335,21 +339,6 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
   const watchedAssigneeId = watch('assigneeId');
   const watchedSupervisorIds = watch('supervisorIds') ?? [];
 
-  const statusLabels: Record<string, string> = useMemo(
-    () => ({
-      TODO: t('detail.tasks.statuses.TODO'),
-      IN_PROGRESS: t('detail.tasks.statuses.IN_PROGRESS'),
-      IN_TESTING: t('detail.tasks.statuses.IN_TESTING'),
-      DONE: t('detail.tasks.statuses.DONE'),
-    }),
-    [t]
-  );
-
-  const getStatusLabel = useCallback(
-    (status: IActivityStatusOption) => statusLabels[status.key] ?? status.name,
-    [statusLabels]
-  );
-
   const currentStatus = statuses.find((s) => String(s.id) === watchedStatusId);
 
   const startDayjs = watch('startDate') ? dayjs(watch('startDate')) : null;
@@ -358,9 +347,11 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
   const datesError = !!(startDayjs && endDayjs && !startDayjs.isBefore(endDayjs));
 
   const loadStatuses = useCallback(async () => {
-    const res = await GetActivityStatusesService();
-    setStatuses(res.data ?? []);
-  }, []);
+    if (!boardId) return;
+    const res = await GetBoardColumnsService(Number(boardId));
+    const columns: IBoardColumn[] = res.data ?? [];
+    setStatuses(columns.sort((a, b) => a.order - b.order));
+  }, [boardId]);
 
   const loadDetail = useCallback(async () => {
     if (!task) return;
@@ -447,8 +438,8 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
       toast.success(task ? t('detail.tasks.updated') : t('detail.tasks.created'));
       onSuccess();
       onClose();
-    } catch {
-      toast.error(t('detail.tasks.saveError'));
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || t('detail.tasks.saveError'));
     } finally {
       setSubmitting(false);
     }
@@ -463,8 +454,8 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
       confirmDelete.onFalse();
       onClose();
       onSuccess();
-    } catch {
-      toast.error(t('detail.tasks.deleteError'));
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || t('detail.tasks.deleteError'));
     }
   };
 
@@ -483,7 +474,12 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
         ]}
       >
         {readOnly ? (
-          <Chip label={currentStatus ? getStatusLabel(currentStatus) : '…'} size="small" variant="soft" />
+          <Chip
+            label={currentStatus?.name ?? '…'}
+            size="small"
+            variant="soft"
+            sx={currentStatus ? { bgcolor: `${currentStatus.color}22`, color: currentStatus.color } : undefined}
+          />
         ) : (
           <Button
             size="small"
@@ -491,8 +487,9 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
             endIcon={<Iconify icon="eva:arrow-ios-downward-fill" width={16} sx={{ ml: -0.5 }} />}
             onClick={statusPopover.onOpen}
             disabled={statuses.length === 0}
+            sx={currentStatus ? { bgcolor: `${currentStatus.color}22`, color: currentStatus.color } : undefined}
           >
-            {currentStatus ? getStatusLabel(currentStatus) : '…'}
+            {currentStatus?.name ?? '…'}
           </Button>
         )}
 
@@ -529,7 +526,11 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
                 statusPopover.onClose();
               }}
             >
-              {getStatusLabel(s)}
+              <Box
+                component="span"
+                sx={{ width: 10, height: 10, borderRadius: '50%', bgcolor: s.color, mr: 1.5, flexShrink: 0, display: 'inline-block' }}
+              />
+              {s.name}
             </MenuItem>
           ))}
         </MenuList>
@@ -827,6 +828,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
         open={assigneeDialog.value}
         onClose={assigneeDialog.onFalse}
         projectId={projectId}
+        boardId={boardId}
         excludeIds={watchedSupervisorIds}
         pinnedMembers={pinnedAssignee ? [pinnedAssignee] : []}
         selected={watchedAssigneeId ? [watchedAssigneeId] : []}
@@ -844,6 +846,7 @@ export function ActivityDetailsDrawer({ open, task, projectId, onClose, onSucces
         open={supervisorsDialog.value}
         onClose={supervisorsDialog.onFalse}
         projectId={projectId}
+        boardId={boardId}
         excludeIds={watchedAssigneeId ? [watchedAssigneeId] : []}
         pinnedMembers={pinnedSupervisors}
         selected={watchedSupervisorIds}

@@ -1,16 +1,19 @@
 import type { IProject } from 'src/types/project-management';
 
+import { useState } from 'react';
 import { useBoolean, usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
+import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
@@ -61,6 +64,12 @@ export function ProjectsCard({ project, onEdit, onDelete, onViewDetail }: Props)
   const { t } = useTranslate('project-management');
   const menuActions = usePopover();
   const confirmDialog = useBoolean();
+  const [deleteInput, setDeleteInput] = useState('');
+
+  const handleCloseConfirm = () => {
+    confirmDialog.onFalse();
+    setDeleteInput('');
+  };
 
   return (
     <>
@@ -179,11 +188,32 @@ export function ProjectsCard({ project, onEdit, onDelete, onViewDetail }: Props)
 
       <ConfirmDialog
         open={confirmDialog.value}
-        onClose={confirmDialog.onFalse}
+        onClose={handleCloseConfirm}
         title={t('projects.dialogs.delete.title')}
-        content={t('projects.dialogs.delete.content', { name: project.name })}
+        content={
+          <Stack spacing={2}>
+            <Alert severity="error">{t('projects.dialogs.delete.warning')}</Alert>
+            <Typography variant="body2">
+              {t('projects.dialogs.delete.typeToConfirmPrefix')}{' '}
+              <strong>&quot;{project.name}&quot;</strong>{' '}
+              {t('projects.dialogs.delete.typeToConfirmSuffix')}
+            </Typography>
+            <TextField
+              fullWidth
+              size="small"
+              value={deleteInput}
+              onChange={(e) => setDeleteInput(e.target.value)}
+              placeholder={project.name}
+            />
+          </Stack>
+        }
         action={
-          <Button variant="contained" color="error" onClick={onDelete}>
+          <Button
+            variant="contained"
+            color="error"
+            disabled={deleteInput !== project.name}
+            onClick={onDelete}
+          >
             {t('projects.actions.delete')}
           </Button>
         }

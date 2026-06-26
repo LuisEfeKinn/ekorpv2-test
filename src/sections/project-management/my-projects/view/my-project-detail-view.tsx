@@ -1,6 +1,6 @@
 'use client';
 
-import type { IAssignment, IProjectDetail } from 'src/types/project-management';
+import type { IBoard, IAssignment, IProjectDetail } from 'src/types/project-management';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo, useState, useEffect, useCallback } from 'react';
@@ -16,8 +16,8 @@ import { paths } from 'src/routes/paths';
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { GetProjectByIdService } from 'src/services/project-management/project.service';
-import { GetActivitiesKanbanService } from 'src/services/project-management/activity.service';
 import { GetAssignmentsPaginationService } from 'src/services/project-management/assignment.service';
+import { GetMyBoardsService, GetMyActivitiesKanbanService } from 'src/services/project-management/my-projects.service';
 
 import { Iconify } from 'src/components/iconify';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
@@ -44,6 +44,7 @@ export function MyProjectDetailView({ id }: Props) {
 
   const [project, setProject] = useState<IProjectDetail | null>(null);
   const [topTeam, setTopTeam] = useState<IAssignment[]>([]);
+  const [allowedBoards, setAllowedBoards] = useState<IBoard[] | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchProject = useCallback(async () => {
@@ -65,10 +66,27 @@ export function MyProjectDetailView({ id }: Props) {
     setTopTeam(response.data?.data ?? []);
   }, [id]);
 
+  const fetchMyBoards = useCallback(async () => {
+    try {
+      const res = await GetMyBoardsService(Number(id));
+      const boards: IBoard[] = (Array.isArray(res.data) ? res.data : []).map((b: any) => ({
+        id: String(b.id),
+        projectId: String(b.projectId),
+        name: b.name,
+        createdAt: b.createdAt,
+        updatedAt: b.updatedAt,
+      }));
+      setAllowedBoards(boards);
+    } catch {
+      setAllowedBoards([]);
+    }
+  }, [id]);
+
   useEffect(() => {
     fetchProject();
     fetchTopTeam();
-  }, [fetchProject, fetchTopTeam]);
+    fetchMyBoards();
+  }, [fetchProject, fetchTopTeam, fetchMyBoards]);
 
   const handleTabChange = (_: React.SyntheticEvent, value: TabValue) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -82,10 +100,12 @@ export function MyProjectDetailView({ id }: Props) {
     () => ({
       canManageTeam: false,
       canViewFinancials: false,
-      canManageTasks: false,
-      fetchKanban: GetActivitiesKanbanService,
+      canManageTasks: project?.isEditable ?? false,
+      canManageColumns: false,
+      allowedBoards,
+      fetchKanban: GetMyActivitiesKanbanService,
     }),
-    []
+    [project?.isEditable, allowedBoards]
   );
 
   if (loading || !project) {

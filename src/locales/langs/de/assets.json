@@ -356,6 +356,7 @@
       "filterByFromDate": "Von",
       "filterByToDate": "Bis",
       "noRecords": "Keine Einträge gefunden",
+      "resultsFound": "Ergebnisse gefunden",
       "dateError": "Das Datum 'Von' darf nicht nach dem Datum 'Bis' liegen"
     },
     "types": {

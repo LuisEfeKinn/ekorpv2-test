@@ -23,9 +23,7 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import {
   useTable,
-  emptyRows,
   TableNoData,
-  TableEmptyRows,
   TableHeadCustom,
   TablePaginationCustom,
 } from 'src/components/table';
@@ -62,7 +60,7 @@ export function InventoryHistoryView({ assetId, assetName, sx }: Props) {
       });
 
       setTableData(response.data.data || []);
-      setTotalRows(response.data.total || 0);
+      setTotalRows(response.data.meta?.itemCount || 0);
     } catch (error) {
       console.error('Error loading history:', error);
       setTableData([]);
@@ -93,8 +91,6 @@ export function InventoryHistoryView({ assetId, assetName, sx }: Props) {
     },
     [filters, table]
   );
-
-  const denseHeight = table.dense ? 56 : 76;
 
   const notFound = !loading && !tableData.length;
 
@@ -138,7 +134,7 @@ export function InventoryHistoryView({ assetId, assetName, sx }: Props) {
 
       <Card sx={sx}>
         <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
-          <Scrollbar sx={{ minHeight: 444 }}>
+          <Scrollbar>
             <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
               <TableHeadCustom
                 order={table.order}
@@ -149,19 +145,9 @@ export function InventoryHistoryView({ assetId, assetName, sx }: Props) {
               />
 
               <TableBody>
-                {tableData
-                  .slice(
-                    table.page * table.rowsPerPage,
-                    table.page * table.rowsPerPage + table.rowsPerPage
-                  )
-                  .map((row) => (
-                    <InventoryHistoryTableRow key={row.id} row={row} />
-                  ))}
-
-                <TableEmptyRows
-                  height={denseHeight}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, tableData.length)}
-                />
+                {tableData.map((row) => (
+                  <InventoryHistoryTableRow key={row.id} row={row} />
+                ))}
 
                 <TableNoData notFound={notFound} />
               </TableBody>

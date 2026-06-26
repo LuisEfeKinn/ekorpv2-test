@@ -9,6 +9,8 @@ import { mergeClasses } from 'minimal-shared/utils';
 
 import { deleteTask, updateTask } from 'src/actions/kanban';
 
+import { Iconify } from 'src/components/iconify';
+
 import { kanbanClasses } from '../classes';
 import { KanbanDetails } from '../details/kanban-details';
 import { useTaskItemDnd } from '../hooks/use-task-item-dnd';
@@ -56,12 +58,13 @@ type TaskItemProps = React.ComponentProps<typeof ItemRoot> & {
   task: IKanbanTask;
   columnId: string;
   disableDnd?: boolean;
+  isCompleted?: boolean;
   onDeleteTask?: (taskId: string) => void;
   onUpdateTask?: (task: IKanbanTask) => void;
   onTaskClick?: (task: IKanbanTask) => void;
 };
 
-export function KanbanTaskItem({ task, columnId, disableDnd, onDeleteTask, onUpdateTask, onTaskClick, sx, ...other }: TaskItemProps) {
+export function KanbanTaskItem({ task, columnId, disableDnd, isCompleted, onDeleteTask, onUpdateTask, onTaskClick, sx, ...other }: TaskItemProps) {
   const taskDetailsDialog = useBoolean();
   const { taskRef, state } = useTaskItemDnd(task, columnId, disableDnd);
 
@@ -125,13 +128,25 @@ export function KanbanTaskItem({ task, columnId, disableDnd, onDeleteTask, onUpd
           state.type === kanbanClasses.state.draggingAndLeftSelf,
         [kanbanClasses.state.openDetails]: taskDetailsDialog.value,
       })}
-      sx={[...(Array.isArray(sx) ? sx : [sx]), ...(disableDnd ? [{ cursor: 'default' }] : [])]}
+      sx={[
+        ...(Array.isArray(sx) ? sx : [sx]),
+        ...(disableDnd ? [{ cursor: 'default' }] : []),
+        ...(isCompleted ? [{ opacity: 0.82 }] : []),
+      ]}
       onClick={handleClick}
       {...other}
     >
       <ItemImage attachments={task.attachments} />
       <ItemContent>
-        <ItemStatus status={task.priority} />
+        {isCompleted ? (
+          <Iconify
+            icon="solar:check-circle-bold"
+            width={18}
+            sx={{ top: 4, right: 4, position: 'absolute', color: 'success.main' }}
+          />
+        ) : (
+          <ItemStatus status={task.priority} />
+        )}
         <ItemName name={task.name} />
         <ItemInfo
           due={task.due}

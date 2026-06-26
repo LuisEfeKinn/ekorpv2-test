@@ -2,9 +2,9 @@
 
 import type { IAssignment, IWorkerDetail } from 'src/types/project-management';
 
-import { useRouter } from 'next/navigation';
 import { useSetState } from 'minimal-shared/hooks';
 import { useState, useEffect, useCallback } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -12,6 +12,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
 import Collapse from '@mui/material/Collapse';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -80,6 +81,13 @@ const ACTIVITY_STATUS_COLOR: Record<string, 'default' | 'info' | 'warning' | 'su
 export function WorkerDetailView({ id }: Props) {
   const { t } = useTranslate('project-management');
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const backHref = (() => {
+    const projectId = searchParams.get('projectId');
+    if (projectId) return `${paths.dashboard.projectManagement.projectDetail(projectId)}?tab=summary`;
+    return paths.dashboard.projectManagement.workers;
+  })();
 
   const ASSIGNMENTS_PER_PAGE = 15;
 
@@ -175,7 +183,7 @@ export function WorkerDetailView({ id }: Props) {
           <Button
             variant="outlined"
             startIcon={<Iconify icon="carbon:chevron-left" width={18} />}
-            onClick={() => router.push(paths.dashboard.projectManagement.workers)}
+            onClick={() => router.push(backHref)}
           >
             {t('actions.back')}
           </Button>
@@ -308,12 +316,26 @@ export function WorkerDetailView({ id }: Props) {
                       )}
                     </Stack>
 
-                    <IconButton size="small" sx={{ flexShrink: 0 }}>
-                      <Iconify
-                        icon={isExpanded ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
-                        width={20}
-                      />
-                    </IconButton>
+                    <Stack direction="row" alignItems="center" spacing={0.5} sx={{ flexShrink: 0 }}>
+                      <Tooltip title={t('actions.viewProject')}>
+                        <IconButton
+                          size="small"
+                          color="primary"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`${paths.dashboard.projectManagement.projectDetail(assignment.projectId)}?tab=summary&workerId=${id}`);
+                          }}
+                        >
+                          <Iconify icon="solar:forward-bold" width={18} />
+                        </IconButton>
+                      </Tooltip>
+                      <IconButton size="small">
+                        <Iconify
+                          icon={isExpanded ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
+                          width={20}
+                        />
+                      </IconButton>
+                    </Stack>
                   </Stack>
 
                   {/* Row 2: Roles · Dedication · Date */}

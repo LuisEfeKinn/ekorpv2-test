@@ -131,7 +131,10 @@
     "dialogs": {
       "delete": {
         "title": "Eliminar proyecto",
-        "content": "¿Estás seguro de que deseas eliminar \"{{name}}\"?"
+        "content": "¿Estás seguro de que deseas eliminar \"{{name}}\"?",
+        "warning": "Al eliminar este proyecto se eliminarán también todos sus tableros y actividades asociadas. Esta acción no se puede deshacer.",
+        "typeToConfirmPrefix": "Para confirmar, escribí el nombre del proyecto",
+        "typeToConfirmSuffix": "en el campo de abajo."
       }
     },
     "messages": {
@@ -154,7 +157,32 @@
     "tabs": {
       "summary": "Resumen",
       "team": "Equipo",
-      "tasks": "Tareas"
+      "tasks": "Tareas",
+      "config": "Configuración"
+    },
+    "config": {
+      "boards": {
+        "title": "Tableros",
+        "subtitle": "Organizá el trabajo del proyecto en múltiples tableros.",
+        "newBoard": "Nuevo tablero",
+        "namePlaceholder": "Nombre del tablero",
+        "created": "Tablero creado",
+        "deleted": "Tablero eliminado",
+        "empty": "No hay tableros aún. Creá uno para empezar.",
+        "errorLoad": "Error al cargar los tableros",
+        "errorCreate": "Error al crear el tablero",
+        "errorRename": "Error al renombrar el tablero",
+        "errorDelete": "Error al eliminar el tablero"
+      },
+      "permissions": {
+        "title": "Permisos",
+        "subtitle": "Controlá qué pueden ver y hacer los participantes del proyecto.",
+        "restrictVisibility": "Visibilidad restringida",
+        "restrictVisibilityDesc": "Cada empleado solo ve sus propias actividades en el kanban.",
+        "isEditable": "Proyecto editable",
+        "isEditableDesc": "Si está inactivo, los participantes no pueden mover ni editar actividades.",
+        "errorSave": "Error al guardar el permiso"
+      }
     },
     "summary": {
       "projectDetails": "Detalles del proyecto",
@@ -162,6 +190,7 @@
       "topTeam": "Equipo asignado",
       "taskProgress": "Estado general de actividades",
       "taskProgressSubheader": "{{progress}}% completado · {{count}} actividades",
+      "allBoards": "Todos los tableros",
       "recentActivity": "Actividad reciente",
       "noActivity": "Sin actividad reciente",
       "fields": {
@@ -201,6 +230,7 @@
           "jobPositions": "Cargos en el proyecto",
           "priority": "Prioridad",
           "status": "Estado",
+          "boards": "Tableros asignados",
           "dedication": "Dedicación (%)",
           "startDate": "Fecha de inicio",
           "endDate": "Fecha de fin",
@@ -232,7 +262,8 @@
         "errorUpdate": "Error al actualizar la asignación",
         "errorUnassign": "Error al desvincular el empleado",
         "errorLoading": "Error al cargar el equipo"
-      }
+      },
+      "empty": "No se encontraron empleados asignados"
     },
     "tasks": {
       "empty": "No hay actividades en este proyecto",
@@ -287,6 +318,23 @@
       "searchPlaceholder": "Buscar actividades...",
       "clearFilters": "Limpiar filtros",
       "taskAddHelper": "Presiona Enter para crear la actividad",
+      "column": {
+        "edit": "Editar columna",
+        "delete": "Eliminar",
+        "deleteConfirmTitle": "Eliminar columna",
+        "deleteConfirmContent": "¿Estás seguro de que querés eliminar esta columna? Las actividades que estén en esta columna pasarán automáticamente a la primera columna del tablero. No se eliminará ninguna actividad.",
+        "addColumn": "Agregar columna",
+        "noBoards": "No hay tableros para este proyecto. Creá uno en la pestaña Configuración.",
+        "noBoardsAssigned": "No tenés tableros asignados en este proyecto.",
+        "boardSelector": "Tablero",
+        "columnCreated": "Columna creada",
+        "columnUpdated": "Columna actualizada",
+        "columnDeleted": "Columna eliminada",
+        "columnErrorCreate": "Error al crear la columna",
+        "columnErrorUpdate": "Error al renombrar la columna",
+        "columnErrorDelete": "Error al eliminar la columna",
+        "columnErrorReorder": "Error al reordenar las columnas"
+      },
       "statuses": {
         "TODO": "Por hacer",
         "IN_PROGRESS": "En curso",
@@ -400,7 +448,9 @@
     "empty": "Este empleado no tiene asignaciones"
   },
   "actions": {
-    "back": "Volver"
+    "back": "Volver",
+    "viewProject": "Ver proyecto",
+    "viewEmployee": "Ver empleado"
   },
   "myProjects": {
     "title": "Mis Proyectos",

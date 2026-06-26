@@ -9,7 +9,8 @@ import { mergeClasses } from 'minimal-shared/utils';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { createTask, clearColumn, updateColumn, deleteColumn } from 'src/actions/kanban';
+import { useTranslate } from 'src/locales';
+import { createTask, updateColumn, deleteColumn } from 'src/actions/kanban';
 
 import { kanbanClasses } from '../classes';
 import { DropIndicator } from '../item/styles';
@@ -32,6 +33,9 @@ type ColumnProps = React.ComponentProps<typeof ColumnRoot> & {
   onDeleteTask?: (taskId: string) => void;
   onUpdateTask?: (task: IKanbanTask) => void;
   onTaskClick?: (task: IKanbanTask) => void;
+  onUpdateColumnExt?: (id: string, name: string) => Promise<void> | void;
+  onDeleteColumnExt?: (id: string) => void;
+  onEditColumnExt?: (id: string) => void;
   taskAddPlaceholder?: string;
   taskAddHelperText?: string;
 };
@@ -45,6 +49,7 @@ const TaskList = memo(({ column, tasks, disableTaskDnd, onDeleteTask, onUpdateTa
       task={task}
       columnId={column.id}
       disableDnd={disableTaskDnd}
+      isCompleted={column.isCompletion}
       onDeleteTask={onDeleteTask}
       onUpdateTask={onUpdateTask}
       onTaskClick={onTaskClick}
@@ -54,43 +59,37 @@ const TaskList = memo(({ column, tasks, disableTaskDnd, onDeleteTask, onUpdateTa
 
 // ----------------------------------------------------------------------
 
-export function KanbanColumn({ column, tasks, taskTotal, readonlyColumns, disableTaskDnd, onAddTask, onDeleteTask, onUpdateTask, onTaskClick, taskAddPlaceholder, taskAddHelperText, sx, ...other }: ColumnProps) {
+export function KanbanColumn({ column, tasks, taskTotal, readonlyColumns, disableTaskDnd, onAddTask, onDeleteTask, onUpdateTask, onTaskClick, onUpdateColumnExt, onDeleteColumnExt, onEditColumnExt, taskAddPlaceholder, taskAddHelperText, sx, ...other }: ColumnProps) {
+  const { t } = useTranslate('project-management');
   const { taskListRef, dragHandleRef, columnRef, columnWrapperRef, state } = useColumnDnd(column);
 
   const openAddTask = useBoolean();
 
   const handleUpdateColumn = useCallback(
     async (columnName: string) => {
-      try {
-        if (column.name !== columnName) {
-          updateColumn(column.id, columnName);
-
-          toast.success('Update success!', { position: 'top-center' });
-        }
-      } catch (error) {
-        console.error(error);
+      if (column.name === columnName) return;
+      if (onUpdateColumnExt) {
+        await onUpdateColumnExt(column.id, columnName);
+      } else {
+        updateColumn(column.id, columnName);
+        toast.success('Update success!', { position: 'top-center' });
       }
     },
-    [column.id, column.name]
+    [column.id, column.name, onUpdateColumnExt]
   );
-
-  const handleClearColumn = useCallback(async () => {
-    try {
-      clearColumn(column.id);
-    } catch (error) {
-      console.error(error);
-    }
-  }, [column.id]);
 
   const handleDeleteColumn = useCallback(async () => {
     try {
-      deleteColumn(column.id);
-
-      toast.success('Delete success!', { position: 'top-center' });
+      if (onDeleteColumnExt) {
+        onDeleteColumnExt(column.id);
+      } else {
+        deleteColumn(column.id);
+        toast.success('Delete success!', { position: 'top-center' });
+      }
     } catch (error) {
       console.error(error);
     }
-  }, [column.id]);
+  }, [column.id, onDeleteColumnExt]);
 
   const handleAddTask = useCallback(
     async (taskData: IKanbanTask) => {
@@ -114,11 +113,16 @@ export function KanbanColumn({ column, tasks, taskTotal, readonlyColumns, disabl
       totalTasks={taskTotal ?? tasks.length}
       filteredCount={taskTotal !== undefined ? tasks.length : undefined}
       columnName={column.name}
+      isCompletion={column.isCompletion}
       readonlyColumns={readonlyColumns}
       onUpdateColumn={handleUpdateColumn}
-      onClearColumn={handleClearColumn}
       onDeleteColumn={handleDeleteColumn}
       onToggleAddTask={onAddTask ? openAddTask.onToggle : undefined}
+      onEditColumn={onEditColumnExt ? () => onEditColumnExt(column.id) : undefined}
+      editLabel={t('detail.tasks.column.edit')}
+      deleteLabel={t('detail.tasks.column.delete')}
+      deleteConfirmTitle={t('detail.tasks.column.deleteConfirmTitle')}
+      deleteConfirmContent={t('detail.tasks.column.deleteConfirmContent')}
     />
   );
 
