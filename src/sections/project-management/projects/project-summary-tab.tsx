@@ -69,10 +69,10 @@ const getInitials = (name: string) =>
 type Props = {
   project: IProjectDetail;
   topTeam: IAssignment[];
-  boards: IBoard[];
+  boards?: IBoard[];
 };
 
-export function ProjectSummaryTab({ project, topTeam, boards }: Props) {
+export function ProjectSummaryTab({ project, topTeam, boards = [] }: Props) {
   const { t } = useTranslate('project-management');
   const { canViewFinancials } = useProjectView();
 

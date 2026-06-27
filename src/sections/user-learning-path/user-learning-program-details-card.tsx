@@ -128,26 +128,6 @@ export function UserLearningProgramDetailsCard({ learningObject, progress = 0 }:
     return "solar:star-bold";
   }
 
-  const handleDownloadCertificate = async () => {
-    try {
-      const response = await fetch('/assets/documents/certificado.pdf');
-      const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `Certificado_${safeData.name.replace(/\s+/g, '_')}.pdf`;
-      link.style.display = 'none';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      setTimeout(() => {
-        window.URL.revokeObjectURL(blobUrl);
-      }, 100);
-    } catch (error) {
-      console.error('Error al descargar el certificado:', error);
-    }
-  };
-
   const renderHeader = (
     <Box
       sx={{
@@ -1031,46 +1011,6 @@ export function UserLearningProgramDetailsCard({ learningObject, progress = 0 }:
                     {t('learning-objects.card.goToCourse')}
                   </Button>
 
-                  <Button
-                    variant="contained"
-                    size="large"
-                    fullWidth
-                    startIcon={<Iconify icon="solar:notebook-bold-duotone" />}
-                    sx={{
-                      bgcolor: "white",
-                      color: theme.palette.primary.main,
-                      fontWeight: 700,
-                      py: 1.5,
-                      "&:hover": {
-                        bgcolor: alpha(theme.palette.common.white, 0.9),
-                        transform: "translateY(-2px)",
-                        boxShadow: `0 8px 24px ${alpha(theme.palette.common.black, 0.2)}`,
-                      },
-                      transition: "all 0.3s",
-                    }}
-                  >
-                    {t('learning-objects.card.homologate')}
-                  </Button>
-
-                  <Button
-                    variant="contained"
-                    size="large"
-                    fullWidth
-                    color="success"
-                    startIcon={<Iconify icon="solar:download-bold" />}
-                    onClick={handleDownloadCertificate}
-                    sx={{
-                      fontWeight: 700,
-                      py: 1.5,
-                      "&:hover": {
-                        transform: "translateY(-2px)",
-                        boxShadow: `0 8px 24px ${alpha(theme.palette.common.black, 0.3)}`,
-                      },
-                      transition: "all 0.3s",
-                    }}
-                  >
-                    {t('learning-objects.card.getCertificate')}
-                  </Button>
                 </Stack>
 
                 {/* Características rápidas */}

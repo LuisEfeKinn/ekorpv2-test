@@ -217,12 +217,12 @@ export function PositionTableRow({ row, selected, editHref, onSelectRow, onDelet
           <Stack spacing={0.5} sx={{ typography: 'body2', fontSize: '0.875rem' }}>
             {row?.minimumAcademicLevel && (
               <Box component="span" sx={{ color: 'text.secondary' }}>
-                Mínimo: {row.minimumAcademicLevel}
+                Mínimo: {typeof row.minimumAcademicLevel === 'object' ? row.minimumAcademicLevel.name : row.minimumAcademicLevel}
               </Box>
             )}
             {row?.desiredAcademicLevel && (
               <Box component="span" sx={{ color: 'text.secondary' }}>
-                Deseado: {row.desiredAcademicLevel}
+                Deseado: {typeof row.desiredAcademicLevel === 'object' ? row.desiredAcademicLevel.name : row.desiredAcademicLevel}
               </Box>
             )}
           </Stack>
@@ -232,12 +232,12 @@ export function PositionTableRow({ row, selected, editHref, onSelectRow, onDelet
           <Stack spacing={0.5} sx={{ typography: 'body2', fontSize: '0.875rem' }}>
             {row?.minimumExperience && (
               <Box component="span" sx={{ color: 'text.secondary' }}>
-                Mínimo: {row.minimumExperience}
+                Mínimo: {typeof row.minimumExperience === 'object' ? row.minimumExperience.name : row.minimumExperience}
               </Box>
             )}
             {row?.desiredExperience && (
               <Box component="span" sx={{ color: 'text.secondary' }}>
-                Deseado: {row.desiredExperience}
+                Deseado: {typeof row.desiredExperience === 'object' ? row.desiredExperience.name : row.desiredExperience}
               </Box>
             )}
           </Stack>
@@ -247,17 +247,17 @@ export function PositionTableRow({ row, selected, editHref, onSelectRow, onDelet
           <Stack spacing={0.5} sx={{ typography: 'body2', fontSize: '0.875rem' }}>
             {row?.regionalLocation && (
               <Box component="span" sx={{ color: 'text.secondary' }}>
-                Región: {row.regionalLocation}
+                Región: {typeof row.regionalLocation === 'object' ? row.regionalLocation.name : row.regionalLocation}
               </Box>
             )}
             {row?.headquarters && (
               <Box component="span" sx={{ color: 'text.secondary' }}>
-                Sede: {row.headquarters}
+                Sede: {typeof row.headquarters === 'object' ? row.headquarters.name : row.headquarters}
               </Box>
             )}
             {row?.supervises && (
               <Box component="span" sx={{ color: 'text.secondary' }}>
-                Supervisa: {row.supervises}
+                Supervisa: {typeof row.supervises === 'object' ? row.supervises.name : row.supervises}
               </Box>
             )}
           </Stack>

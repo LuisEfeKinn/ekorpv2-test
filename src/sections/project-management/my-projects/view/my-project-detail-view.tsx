@@ -161,7 +161,7 @@ export function MyProjectDetailView({ id }: Props) {
           </Tabs>
         </Box>
 
-        {currentTab === 'summary' && <ProjectSummaryTab project={project} topTeam={topTeam} />}
+        {currentTab === 'summary' && <ProjectSummaryTab project={project} topTeam={topTeam} boards={[]} />}
         {currentTab === 'team' && <ProjectTeamTab projectId={id} />}
         {currentTab === 'tasks' && <ProjectTasksTab projectId={id} />}
       </DashboardContent>

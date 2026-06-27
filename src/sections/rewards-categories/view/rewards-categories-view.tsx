@@ -121,7 +121,7 @@ export function RewardsCategoriesView() {
         const data = response.data?.data || response.data || [];
 
         setTableData(Array.isArray(data) ? data : []);
-        setTotalItems(data.length || 0);
+        setTotalItems(response.data?.meta?.itemCount || 0);
       }
     } catch (error) {
       console.error('Error loading rewards categories:', error);
@@ -326,12 +326,7 @@ export function RewardsCategoriesView() {
                 />
 
                 <TableBody>
-                  {dataFiltered
-                    .slice(
-                      table.page * table.rowsPerPage,
-                      table.page * table.rowsPerPage + table.rowsPerPage
-                    )
-                    .map((row) => (
+                  {tableData.map((row) => (
                       <RewardsCategoriesTableRow
                         key={row.id}
                         row={row}
@@ -385,7 +380,7 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
     return [];
   }
 
-  const { name, status } = filters;
+  const { status } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -396,12 +391,6 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   });
 
   inputData = stabilizedThis.map((el) => el[0]);
-
-  if (name) {
-    inputData = inputData.filter(
-      (item) => item?.name?.toLowerCase().indexOf(name.toLowerCase()) !== -1
-    );
-  }
 
   if (status !== 'all') {
     // TODO: Implement status filtering when the data model includes a status field
