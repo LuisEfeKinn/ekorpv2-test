@@ -20,7 +20,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useTranslate } from 'src/locales';
 import { GetClientsPaginationService } from 'src/services/project-management/client.service';
-import { SaveOrUpdateProjectService } from 'src/services/project-management/project.service';
+import { GetProjectByIdService, SaveOrUpdateProjectService } from 'src/services/project-management/project.service';
 import {
   CreateBoardService,
   CreateBoardColumnService,
@@ -37,6 +37,22 @@ import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
+
+const EMPTY_PROJECT_FORM = {
+  name: '',
+  clientId: '',
+  statusId: '',
+  importanceLevelId: '',
+  sizeId: '',
+  complexityId: '',
+  reintegroLevelId: '',
+  generatesIncome: false,
+  restrictActivityVisibility: false,
+  isEditable: true,
+  startDate: '',
+  endDate: '',
+  observations: '',
+};
 
 const ProjectSchema = z
   .object({
@@ -126,42 +142,34 @@ export function ProjectsCreateEditDrawer({ open, currentRow, onClose, onSuccess 
   }, []);
 
   useEffect(() => {
-    if (open) {
-      loadCatalogs();
-      loadClients();
-      reset(
-        currentRow
-          ? {
-              name: currentRow.name,
-              clientId: currentRow.clientId,
-              statusId: currentRow.statusId,
-              importanceLevelId: currentRow.importanceLevelId,
-              sizeId: currentRow.sizeId,
-              complexityId: currentRow.complexityId,
-              reintegroLevelId: currentRow.reintegroLevelId,
-              generatesIncome: currentRow.generatesIncome,
-              restrictActivityVisibility: currentRow.restrictActivityVisibility ?? false,
-              isEditable: currentRow.isEditable ?? true,
-              startDate: currentRow.startDate,
-              endDate: currentRow.endDate,
-              observations: currentRow.observations ?? '',
-            }
-          : {
-              name: '',
-              clientId: '',
-              statusId: '',
-              importanceLevelId: '',
-              sizeId: '',
-              complexityId: '',
-              reintegroLevelId: '',
-              generatesIncome: false,
-              restrictActivityVisibility: false,
-              isEditable: true,
-              startDate: '',
-              endDate: '',
-              observations: '',
-            }
-      );
+    if (!open) {
+      reset(EMPTY_PROJECT_FORM);
+      return;
+    }
+
+    reset(EMPTY_PROJECT_FORM);
+    loadCatalogs();
+    loadClients();
+
+    if (currentRow) {
+      GetProjectByIdService(currentRow.id).then((res) => {
+        const p = res.data;
+        reset({
+          name: p.name,
+          clientId: p.clientId,
+          statusId: p.statusId,
+          importanceLevelId: p.importanceLevelId,
+          sizeId: p.sizeId,
+          complexityId: p.complexityId,
+          reintegroLevelId: p.reintegroLevelId,
+          generatesIncome: p.generatesIncome,
+          restrictActivityVisibility: p.restrictActivityVisibility ?? false,
+          isEditable: p.isEditable ?? true,
+          startDate: p.startDate,
+          endDate: p.endDate,
+          observations: p.observations ?? '',
+        });
+      });
     }
   }, [open, currentRow, reset, loadCatalogs, loadClients]);
 

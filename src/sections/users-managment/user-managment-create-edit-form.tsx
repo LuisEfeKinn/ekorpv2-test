@@ -549,7 +549,7 @@ export function UserManagementCreateEditForm({ currentUser }: Props) {
         municipalityId: municipalityId ? parseInt(municipalityId.id, 10) : 0,
         jobPositionId: positionId ? parseInt(positionId.id, 10) : 0,
         employmentTypeId: employmentTypeId ? parseInt(employmentTypeId.id, 10) : 0,
-        competencyIds: skillId ? skillId.map(skill => parseInt(skill.id, 10)) : [],
+        competencies: skillId ? skillId.map(skill => ({ id: parseInt(skill.id, 10) })) : [],
         organizationalUnitId: organizationalUnitId ? parseInt(organizationalUnitId.id, 10) : 0,
         ...(documentId && { documentId }),
       };

@@ -12,7 +12,6 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
 import Collapse from '@mui/material/Collapse';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -317,18 +316,18 @@ export function WorkerDetailView({ id }: Props) {
                     </Stack>
 
                     <Stack direction="row" alignItems="center" spacing={0.5} sx={{ flexShrink: 0 }}>
-                      <Tooltip title={t('actions.viewProject')}>
-                        <IconButton
-                          size="small"
-                          color="primary"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            router.push(`${paths.dashboard.projectManagement.projectDetail(assignment.projectId)}?tab=summary&workerId=${id}`);
-                          }}
-                        >
-                          <Iconify icon="solar:forward-bold" width={18} />
-                        </IconButton>
-                      </Tooltip>
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                        startIcon={<Iconify icon="solar:forward-bold" width={18} />}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          router.push(`${paths.dashboard.projectManagement.projectDetail(assignment.projectId)}?tab=summary&workerId=${id}`);
+                        }}
+                      >
+                        {t('actions.viewProject')}
+                      </Button>
                       <IconButton size="small">
                         <Iconify
                           icon={isExpanded ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}

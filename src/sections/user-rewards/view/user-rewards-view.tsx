@@ -40,6 +40,10 @@ export function UserRewardsView() {
   const debouncedSearchQuery = useDebounce(searchQuery, 200);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [priceRange, setPriceRange] = useState<number[]>([0, 1000]);
+  const [sliderMax, setSliderMax] = useState(1000);
+  const [showCustomRange, setShowCustomRange] = useState(false);
+  const [customMinInput, setCustomMinInput] = useState('0');
+  const [customMaxInput, setCustomMaxInput] = useState('1000');
   const [categories, setCategories] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -88,11 +92,13 @@ export function UserRewardsView() {
         const params: any = {
           page,
           perPage: rowsPerPage,
-          // isActive: true,
+          isActive: true,
         };
         if (debouncedSearchQuery) params.search = debouncedSearchQuery;
         if (selectedCategory) params.categoryRewardId = selectedCategory;
-        
+        if (priceRange[0] > 0) params.minPoints = priceRange[0];
+        if (priceRange[1] < sliderMax) params.maxPoints = priceRange[1];
+
         const res = await GetRewardsPaginationService(params);
         setProducts(res.data.data);
         setMeta(res.data.meta);
@@ -104,7 +110,7 @@ export function UserRewardsView() {
       setLoading(false);
     };
     fetchProducts();
-  }, [debouncedSearchQuery, selectedCategory, page, rowsPerPage]);
+  }, [debouncedSearchQuery, selectedCategory, page, rowsPerPage, priceRange, sliderMax]);
 
   const handleCategoryChange = useCallback((category: string) => {
     setSelectedCategory(category);
@@ -118,7 +124,17 @@ export function UserRewardsView() {
     setSearchQuery('');
     setSelectedCategory('');
     setPriceRange([0, 1000]);
+    setSliderMax(1000);
+    setShowCustomRange(false);
   }, []);
+
+  const handleApplyCustomRange = useCallback(() => {
+    const min = Math.max(0, Number(customMinInput) || 0);
+    const max = Math.max(min + 1, Number(customMaxInput) || 1000);
+    setSliderMax(max);
+    setPriceRange([min, max]);
+    setShowCustomRange(false);
+  }, [customMinInput, customMaxInput]);
 
   const handleClaimProduct = useCallback(async (productId: string, productPoints?: number) => {
     if (productPoints !== undefined && userInfo.points < productPoints) {
@@ -299,7 +315,7 @@ export function UserRewardsView() {
                   </RadioGroup>
                 </Box>
 
-                {/* Rango de puntos (no implementado aún) */}
+                {/* Rango de puntos */}
                 <Box>
                   <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                     {t('userReward.filters.rewardRange')}
@@ -310,32 +326,64 @@ export function UserRewardsView() {
                       onChange={handlePriceRangeChange}
                       valueLabelDisplay="auto"
                       min={0}
-                      max={1000}
+                      max={sliderMax}
                       marks={[
-                        { value: 0, label: t('userReward.filters.rangeMin') },
-                        { value: 1000, label: t('userReward.filters.rangeMax') },
+                        { value: 0, label: '0' },
+                        { value: sliderMax, label: String(sliderMax) },
                       ]}
                     />
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
-                      <Typography variant="caption" color="text.secondary">
-                        {t('userReward.filters.min')}: {priceRange[0]}
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {t('userReward.filters.max')}: {priceRange[1]}
-                      </Typography>
-                    </Box>
+
+                    {showCustomRange ? (
+                      <Stack direction="row" spacing={1} sx={{ mt: 1.5 }}>
+                        <TextField
+                          size="small"
+                          label={t('userReward.filters.min')}
+                          type="number"
+                          value={customMinInput}
+                          onChange={(e) => setCustomMinInput(e.target.value)}
+                          inputProps={{ min: 0 }}
+                          fullWidth
+                        />
+                        <TextField
+                          size="small"
+                          label={t('userReward.filters.max')}
+                          type="number"
+                          value={customMaxInput}
+                          onChange={(e) => setCustomMaxInput(e.target.value)}
+                          inputProps={{ min: 1 }}
+                          fullWidth
+                        />
+                      </Stack>
+                    ) : (
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
+                        <Typography variant="caption" color="text.secondary">
+                          {t('userReward.filters.min')}: {priceRange[0]}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {t('userReward.filters.max')}: {priceRange[1]}
+                        </Typography>
+                      </Box>
+                    )}
                   </Box>
                 </Box>
 
-                {/* Botón personalizar */}
+                {/* Botón personalizar / guardar */}
                 <Button
                   fullWidth
                   variant="outlined"
                   startIcon={<Iconify icon="solar:settings-bold" />}
-                  onClick={handleResetFilters}
+                  onClick={() => {
+                    if (showCustomRange) {
+                      handleApplyCustomRange();
+                    } else {
+                      setCustomMinInput(String(priceRange[0]));
+                      setCustomMaxInput(String(sliderMax));
+                      setShowCustomRange(true);
+                    }
+                  }}
                   sx={{ textTransform: 'none' }}
                 >
-                  {t('userReward.filters.customize')}
+                  {showCustomRange ? t('userReward.actions.save') : t('userReward.filters.customize')}
                 </Button>
               </Stack>
             </Card>

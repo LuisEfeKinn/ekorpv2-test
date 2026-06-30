@@ -157,7 +157,7 @@ export type IUserManagementFormData = {
   recurringWeeklyLimitHours: string;
   organizationalUnitId: number;
   employmentTypeId: number;
-  competencyIds: number[];
+  competencies: { id: number }[];
   jobPositionId: number;
   documentId?: string;
   email?: string;
