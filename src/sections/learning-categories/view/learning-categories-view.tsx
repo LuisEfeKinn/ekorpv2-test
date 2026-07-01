@@ -66,13 +66,12 @@ export function LearningCategoriesView() {
     { id: '', width: 88 },
     { id: 'name', label: t('learningCategories.table.columns.name'), sortField: 'category.name' },
     { id: 'abreviation', label: t('learningCategories.table.columns.abreviation') },
-    { id: 'logo', label: t('learningCategories.table.columns.logo'), align: 'center' }
+    { id: 'icon', label: t('learningCategories.table.columns.icon'), align: 'center' }
   ], [t]);
 
   const filters = useSetState<ILearningCategoriesTableFilters>({
     name: '',
-    logo: '',
-    status: 'all'
+    status: 'all',
   });
   const { state: currentFilters, setState: updateFilters } = filters;
 

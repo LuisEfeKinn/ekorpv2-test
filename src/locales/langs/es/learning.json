@@ -649,7 +649,7 @@
       "columns": {
         "name": "Nombre",
         "abreviation": "Abreviatura",
-        "logo": "Logo",
+        "icon": "Ícono",
         "createdAt": "Creado En",
         "updatedAt": "Actualizado En",
         "actions": "Acciones"
@@ -681,11 +681,20 @@
           "helperText": "Ingrese la abreviatura de la categoría de aprendizaje",
           "required": "Se requiere abreviatura"
         },
-        "logo": {
-          "label": "Logo",
-          "placeholder": "Ingrese la URL del logo de la categoría de aprendizaje",
-          "helperText": "Ingrese la URL del logo de la categoría de aprendizaje",
-          "required": "Se requiere logo"
+        "description": {
+          "label": "Descripción"
+        },
+        "categoryType": {
+          "label": "Tipo de categoría"
+        },
+        "color": {
+          "label": "Color"
+        },
+        "icon": {
+          "label": "Ícono"
+        },
+        "active": {
+          "label": "Activa"
         }
       },
       "sections": {

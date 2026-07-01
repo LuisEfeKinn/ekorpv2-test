@@ -334,12 +334,30 @@ export type ILearningPathPaginationResponse = {
 
 // ----------------------------------------------------------------------
 
+export type ILearningCategoryIcon = {
+  id: string;
+  name: string;
+  icon: string;
+};
+
+export type ILearningCategoryType = {
+  id: string;
+  name: string;
+  code: string;
+};
+
 export type ILearningCategories = {
   id: string;
   name: string;
-  description: string;
+  description: string | null;
   abreviation: string;
-  logo?: string | null;
+  color: string | null;
+  active: boolean;
+  iconId: string | null;
+  categoryTypeId: string | null;
+  icon: ILearningCategoryIcon | null;
+  categoryType: ILearningCategoryType | null;
+  typeLearning?: ILearningCategoryType | null;
   createdAt: Date | string;
   updatedAt: Date | string;
   deletedAt: Date | string | null;
@@ -347,9 +365,6 @@ export type ILearningCategories = {
 
 export type ILearningCategoriesTableFilters = {
   name: string;
-  description?: string;
-  abreviation?: string;
-  logo?: string | null;
   status?: string;
 };
 

@@ -33,7 +33,7 @@ import { AddCourseModal } from './learning-objects-add-course-modal';
 // ----------------------------------------------------------------------
 
 type CourseItem = {
-  courseLmsId: string;
+  id: string;
   fullName: string;
   order: number;
 };
@@ -139,7 +139,7 @@ export function LearningObjectsCreateEditForm({ currentLearningObject }: Props) 
   useEffect(() => {
     if (currentLearningObject?.courses && Array.isArray(currentLearningObject.courses)) {
       const loadedCourses: CourseItem[] = currentLearningObject.courses.map((course: any) => ({
-        courseLmsId: course.lmsCourseId,
+        id: course.id,
         fullName: course.fullName,
         order: course.order,
       }));
@@ -239,7 +239,7 @@ export function LearningObjectsCreateEditForm({ currentLearningObject }: Props) 
   }, [categorySearch, loadCategories]);
 
   // Funciones para gestionar cursos
-  const handleAddCourse = (course: { courseLmsId: string; fullName: string; order: number }) => {
+  const handleAddCourse = (course: { id: string; fullName: string; order: number }) => {
     setCourses((prev) => [...prev, course]);
   };
 
@@ -257,7 +257,7 @@ export function LearningObjectsCreateEditForm({ currentLearningObject }: Props) 
     try {
       // Preparar cursos con su orden
       const coursesToSend = courses.map((course) => ({
-        courseLmsId: String(course.courseLmsId),
+        courseLmsId: String(course.id),
         order: course.order,
       }));
 
@@ -597,7 +597,7 @@ export function LearningObjectsCreateEditForm({ currentLearningObject }: Props) 
             <Stack flex={1} spacing={0.5}>
               <Typography variant="subtitle2">{course.fullName}</Typography>
               <Typography variant="caption" color="text.secondary">
-                {t('learning-objects.form.fields.courseLmsId.label', 'ID LMS')}: {course.courseLmsId}
+                {t('learning-objects.form.fields.courseLmsId.label', 'ID')}: {course.id}
               </Typography>
             </Stack>
 

@@ -4,7 +4,6 @@ import { useBoolean, usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
@@ -121,24 +120,30 @@ export function LearningCategoriesTableRow({ row, selected, editHref, onSelectRo
 
         <TableCell>
           <Stack direction="row" spacing={2} alignItems="center">
-            <Avatar
-              src={row?.logo || undefined}
-              alt={row?.name || ''}
-              variant="rounded"
+            <Box
               sx={{
                 width: 40,
                 height: 40,
                 borderRadius: 1,
+                bgcolor: row?.color || 'primary.lighter',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
               }}
             >
-              {!row?.logo && row?.name?.[0]?.toUpperCase()}
-            </Avatar>
+              <Iconify
+                icon={row?.icon ? `solar:${row.icon.icon}-bold` : 'solar:tag-bold'}
+                width={22}
+                sx={{ color: row?.color ? 'white' : 'primary.main' }}
+              />
+            </Box>
             <Stack spacing={0.5}>
               <Box component="span" sx={{ typography: 'body2', fontWeight: 'fontWeightMedium' }}>
                 {row?.name || ''}
               </Box>
               <Box component="span" sx={{ color: 'text.secondary', typography: 'caption' }}>
-                {row?.abreviation || ''}
+                {row?.categoryType?.name ?? row?.typeLearning?.name ?? ''}
               </Box>
             </Stack>
           </Stack>
@@ -151,39 +156,29 @@ export function LearningCategoriesTableRow({ row, selected, editHref, onSelectRo
         </TableCell>
 
         <TableCell align="center">
-          {row?.logo ? (
-            <Avatar
-              src={row.logo}
-              alt={row.name || ''}
-              variant="rounded"
-              sx={{
-                width: 40,
-                height: 40,
-                borderRadius: 1,
-                mx: 'auto',
-              }}
-            />
-          ) : (
-            <Box
-              sx={{
-                width: 40,
-                height: 40,
-                borderRadius: 1,
-                border: (theme) => `1px dashed ${theme.palette.divider}`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'background.neutral',
-                mx: 'auto',
-              }}
-            >
-              <Iconify 
-                icon="solar:gallery-add-bold" 
-                width={20}
-                sx={{ color: 'text.disabled' }}
+          <Box
+            sx={{
+              width: 40,
+              height: 40,
+              borderRadius: 1,
+              bgcolor: row?.color || 'background.neutral',
+              border: row?.color ? 'none' : (theme) => `1px dashed ${theme.palette.divider}`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              mx: 'auto',
+            }}
+          >
+            {row?.icon ? (
+              <Iconify
+                icon={`solar:${row.icon.icon}-bold`}
+                width={22}
+                sx={{ color: row?.color ? 'white' : 'text.disabled' }}
               />
-            </Box>
-          )}
+            ) : (
+              <Iconify icon="solar:gallery-add-bold" width={20} sx={{ color: 'text.disabled' }} />
+            )}
+          </Box>
         </TableCell>
 
       </TableRow>

@@ -649,7 +649,7 @@
       "columns": {
         "name": "Name",
         "abreviation": "Abkürzung",
-        "logo": "Logo",
+        "icon": "Symbol",
         "createdAt": "Erstellt am",
         "updatedAt": "Aktualisiert am",
         "actions": "Aktionen"
@@ -681,11 +681,20 @@
           "helperText": "Abkürzung der Lernkategorie eingeben",
           "required": "Abkürzung ist erforderlich"
         },
-        "logo": {
-          "label": "Logo",
-          "placeholder": "Logo-URL der Lernkategorie eingeben",
-          "helperText": "Logo-URL der Lernkategorie eingeben",
-          "required": "Logo ist erforderlich"
+        "description": {
+          "label": "Beschreibung"
+        },
+        "categoryType": {
+          "label": "Kategorietyp"
+        },
+        "color": {
+          "label": "Farbe"
+        },
+        "icon": {
+          "label": "Symbol"
+        },
+        "active": {
+          "label": "Aktiv"
         }
       },
       "sections": {

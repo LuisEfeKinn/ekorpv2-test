@@ -40,7 +40,7 @@ type CourseOption = {
 type Props = {
   open: boolean;
   onClose: () => void;
-  onAddCourse: (course: { courseLmsId: string; fullName: string; order: number }) => void;
+  onAddCourse: (course: { id: string; fullName: string; order: number }) => void;
   currentOrder: number;
 };
 
@@ -226,7 +226,7 @@ export function AddCourseModal({ open, onClose, onAddCourse, currentOrder }: Pro
   const handleSave = () => {
     if (selectedCourse) {
       onAddCourse({
-        courseLmsId: selectedCourse.id,
+        id: selectedCourse.id,
         fullName: selectedCourse.fullName,
         order,
       });

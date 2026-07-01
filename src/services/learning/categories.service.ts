@@ -31,3 +31,17 @@ export const DeleteLearningCategoriesService = async (id: any) => {
   const response = await axios.delete(deleteEndpoint);
   return response;
 };
+
+export const GetLearningCategoryTypesService = async () => {
+  const response = await axios.get(endpoints.learning.learningCategories.catalogTypes, {
+    params: { page: 1, perPage: 100 },
+  });
+  return response;
+};
+
+export const GetLearningCategoryIconsService = async () => {
+  const response = await axios.get(endpoints.learning.learningCategories.catalogIcons, {
+    params: { page: 1, perPage: 100 },
+  });
+  return response;
+};

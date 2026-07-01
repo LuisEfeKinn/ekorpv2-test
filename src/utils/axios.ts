@@ -348,7 +348,9 @@ export const endpoints = {
       save: '/learning-categories',
       update: '/learning-categories',
       edit: '/learning-categories', // + /:id
-      delete: '/learning-categories' // + /:id
+      delete: '/learning-categories', // + /:id
+      catalogTypes: '/learning-categories/catalog/types',
+      catalogIcons: '/learning-categories/catalog/icons',
     },
     positions: {
       all: '/api/jobs',

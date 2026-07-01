@@ -647,7 +647,7 @@
       "columns": {
         "name": "Name",
         "abreviation": "Abreviation",
-        "logo": "Logo",
+        "icon": "Icon",
         "createdAt": "Created At",
         "updatedAt": "Updated At",
         "actions": "Actions"
@@ -679,11 +679,20 @@
           "helperText": "Enter the learning category abreviation",
           "required": "Abreviation is required"
         },
-        "logo": {
-          "label": "Logo",
-          "placeholder": "Enter the learning category logo",
-          "helperText": "Enter the learning category logo",
-          "required": "Logo is required"
+        "description": {
+          "label": "Description"
+        },
+        "categoryType": {
+          "label": "Category type"
+        },
+        "color": {
+          "label": "Color"
+        },
+        "icon": {
+          "label": "Icon"
+        },
+        "active": {
+          "label": "Active"
         }
       },
       "sections": {
